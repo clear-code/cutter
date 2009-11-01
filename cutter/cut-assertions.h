@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -50,13 +50,14 @@ extern "C" {
  *
  * Passes if @expression is not 0 or %NULL.
  */
-#define cut_assert(expression, ...) do                          \
-{                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
-    cut_trace_with_info_expression(                             \
-        cut_assert_helper((expression) ? CUT_TRUE : CUT_FALSE,  \
-                          #expression),                         \
-        cut_assert(expression, __VA_ARGS__));                   \
+#define cut_assert(expression, ...) do                                  \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_helper((expression) ? CUT_TRUE : CUT_FALSE,      \
+                              #expression),                             \
+            __VA_ARGS__),                                               \
+        cut_assert(expression, __VA_ARGS__));                           \
 } while (0)
 
 /**
@@ -72,10 +73,11 @@ extern "C" {
  */
 #define cut_assert_true(expression, ...)  do                            \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_true_helper((expression) ? CUT_TRUE : CUT_FALSE,     \
-                               #expression),                            \
+        cut_test_with_user_message(                                     \
+            cut_assert_true_helper((expression) ? CUT_TRUE : CUT_FALSE, \
+                                   #expression),                        \
+            __VA_ARGS__),                                               \
         cut_assert_true(expression, __VA_ARGS__));                      \
 } while (0)
 
@@ -92,10 +94,11 @@ extern "C" {
  */
 #define cut_assert_false(expression, ...) do                            \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_false_helper((expression) ? CUT_TRUE : CUT_FALSE,    \
-                                #expression),                           \
+        cut_test_with_user_message(                                     \
+            cut_assert_false_helper((expression) ? CUT_TRUE : CUT_FALSE, \
+                                    #expression),                       \
+            __VA_ARGS__),                                               \
         cut_assert_false(expression, __VA_ARGS__));                     \
 } while (0)
 
@@ -117,11 +120,13 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_equal_boolean(expected, actual)  do                  \
+#define cut_assert_equal_boolean(expected, actual, ...)  do             \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_boolean_helper((expected), (actual),           \
-                                        #expected, #actual),            \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_boolean_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
         cut_assert_equal_boolean(expected, actual));                    \
 } while (0)
 
@@ -143,11 +148,13 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_not_equal_boolean(expected, actual)  do              \
+#define cut_assert_not_equal_boolean(expected, actual, ...)  do         \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_boolean_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_boolean_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_boolean(expected, actual));                \
 } while (0)
 
@@ -162,9 +169,10 @@ extern "C" {
  */
 #define cut_assert_null(expression, ...)  do                            \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_null_helper((expression), #expression),              \
+        cut_test_with_user_message(                                     \
+            cut_assert_null_helper((expression), #expression),          \
+            __VA_ARGS__),                                               \
         cut_assert_null(expression, __VA_ARGS__));                      \
 } while (0)
 
@@ -181,9 +189,10 @@ extern "C" {
  */
 #define cut_assert_null_string(string, ...)  do                         \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_null_string_helper((string), #string),               \
+        cut_test_with_user_message(                                     \
+            cut_assert_null_string_helper((string), #string),           \
+            __VA_ARGS__),                                               \
         cut_assert_null_string(string, __VA_ARGS__));                   \
 } while (0)
 
@@ -196,12 +205,13 @@ extern "C" {
  *
  * Passes if @expression is not %NULL.
  */
-#define cut_assert_not_null(expression, ...)  do                \
-{                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
-    cut_trace_with_info_expression(                             \
-        cut_assert_not_null_helper((expression), #expression),  \
-        cut_assert_not_null(expression, __VA_ARGS__));          \
+#define cut_assert_not_null(expression, ...)  do                        \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_null_helper((expression), #expression),      \
+            __VA_ARGS__),                                               \
+        cut_assert_not_null(expression, __VA_ARGS__));                  \
 } while (0)
 
 /**
@@ -216,10 +226,11 @@ extern "C" {
  */
 #define cut_assert_equal_int(expected, actual, ...)  do         \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        cut_assert_equal_int_helper((expected), (actual),       \
-                                    #expected, #actual),        \
+        cut_test_with_user_message(                             \
+            cut_assert_equal_int_helper((expected), (actual),   \
+                                        #expected, #actual),    \
+            __VA_ARGS__),                                       \
         cut_assert_equal_int(expected, actual, __VA_ARGS__));   \
 } while (0)
 
@@ -232,12 +243,14 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_not_equal_int(expected, actual)  do          \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_not_equal_int_helper((expected), (actual),   \
-                                        #expected, #actual),    \
-        cut_assert_not_equal_int(expected, actual));            \
+#define cut_assert_not_equal_int(expected, actual, ...)  do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
+        cut_assert_not_equal_int(expected, actual));                    \
 } while (0)
 
 #ifdef CUT_SUPPORT_C99_STDINT_TYPES
@@ -253,11 +266,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_least8(expected, actual)  do               \
+#define cut_assert_equal_int_least8(expected, actual, ...)  do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_int_least8_helper((expected), (actual),        \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_least8_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_equal_int_least8(expected, actual));                 \
 } while (0)
 
@@ -273,11 +288,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_least8(expected, actual)  do           \
-{                                                                   \
+#define cut_assert_not_equal_int_least8(expected, actual, ...) do       \
+{                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_least8_helper((expected), (actual),    \
-                                               #expected, #actual),     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_least8_helper((expected),          \
+                                                   (actual),            \
+                                                   #expected,           \
+                                                   #actual),            \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_least8(expected, actual));             \
 } while (0)
 
@@ -293,11 +312,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_least16(expected, actual)  do              \
+#define cut_assert_equal_int_least16(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_int_least16_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_least16_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_int_least16(expected, actual));                \
 } while (0)
 
@@ -313,11 +334,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_least16(expected, actual)  do          \
+#define cut_assert_not_equal_int_least16(expected, actual, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_least16_helper((expected), (actual),   \
-                                                #expected, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_least16_helper((expected),         \
+                                                    (actual),           \
+                                                    #expected,          \
+                                                    #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_least16(expected, actual));            \
 } while (0)
 
@@ -333,11 +358,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_least32(expected, actual)  do              \
+#define cut_assert_equal_int_least32(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_int_least32_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_least32_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_int_least32(expected, actual));                \
 } while (0)
 
@@ -353,11 +380,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_least32(expected, actual)  do          \
+#define cut_assert_not_equal_int_least32(expected, actual, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_least32_helper((expected), (actual),   \
-                                                #expected, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_least32_helper((expected),         \
+                                                    (actual),           \
+                                                    #expected,          \
+                                                    #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_least32(expected, actual));            \
 } while (0)
 
@@ -373,11 +404,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_least64(expected, actual)  do              \
+#define cut_assert_equal_int_least64(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_int_least64_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_least64_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_int_least64(expected, actual));                \
 } while (0)
 
@@ -393,11 +426,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_least64(expected, actual)  do          \
+#define cut_assert_not_equal_int_least64(expected, actual, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_least64_helper((expected), (actual),   \
-                                                #expected, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_least64_helper((expected),         \
+                                                    (actual),           \
+                                                    #expected,          \
+                                                    #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_least64(expected, actual));            \
 } while (0)
 
@@ -413,12 +450,14 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast8(expected, actual)  do        \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_equal_int_fast8_helper((expected), (actual), \
-                                          #expected, #actual),  \
-        cut_assert_equal_int_fast8(expected, actual));          \
+#define cut_assert_equal_int_fast8(expected, actual, ...) do            \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_fast8_helper((expected), (actual),     \
+                                              #expected, #actual),      \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_int_fast8(expected, actual));                  \
 } while (0)
 
 /**
@@ -433,11 +472,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_fast8(expected, actual)  do            \
+#define cut_assert_not_equal_int_fast8(expected, actual, ...) do        \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_fast8_helper((expected), (actual),     \
-                                              #expected, #actual),      \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_fast8_helper((expected), (actual), \
+                                                  #expected, #actual),  \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_fast8(expected, actual));              \
 } while (0)
 
@@ -453,11 +494,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast16(expected, actual)  do               \
+#define cut_assert_equal_int_fast16(expected, actual, ...) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_int_fast16_helper((expected), (actual),        \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_fast16_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_equal_int_fast16(expected, actual));                 \
 } while (0)
 
@@ -473,11 +516,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_fast16(expected, actual)  do           \
+#define cut_assert_not_equal_int_fast16(expected, actual, ...) do       \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_fast16_helper((expected), (actual),    \
-                                               #expected, #actual),     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_fast16_helper((expected),          \
+                                                   (actual),            \
+                                                   #expected,           \
+                                                   #actual),            \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_fast16(expected, actual));             \
 } while (0)
 
@@ -493,11 +540,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast32(expected, actual)  do               \
+#define cut_assert_equal_int_fast32(expected, actual, ...) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_int_fast32_helper((expected), (actual),        \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_fast32_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_equal_int_fast32(expected, actual));                 \
 } while (0)
 
@@ -513,11 +562,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_fast32(expected, actual)  do           \
+#define cut_assert_not_equal_int_fast32(expected, actual, ...) do       \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_fast32_helper((expected), (actual),    \
-                                               #expected, #actual),     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_fast32_helper((expected),          \
+                                                   (actual),            \
+                                                   #expected,           \
+                                                   #actual),            \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_fast32(expected, actual));             \
 } while (0)
 
@@ -533,11 +586,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_int_fast64(expected, actual)  do               \
+#define cut_assert_equal_int_fast64(expected, actual, ...) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_int_fast64_helper((expected), (actual),        \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_int_fast64_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_equal_int_fast64(expected, actual));                 \
 } while (0)
 
@@ -553,11 +608,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_int_fast64(expected, actual)  do           \
+#define cut_assert_not_equal_int_fast64(expected, actual, ...) do       \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_int_fast64_helper((expected), (actual),    \
-                                               #expected, #actual),     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_int_fast64_helper((expected),          \
+                                                   (actual),            \
+                                                   #expected,           \
+                                                   #actual),            \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_int_fast64(expected, actual));             \
 } while (0)
 
@@ -573,12 +632,14 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_intptr(expected, actual)  do           \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_equal_intptr_helper((expected), (actual),    \
-                                       #expected, #actual),     \
-        cut_assert_equal_intptr(expected, actual));             \
+#define cut_assert_equal_intptr(expected, actual, ...) do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_intptr_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_intptr(expected, actual));                     \
 } while (0)
 
 /**
@@ -593,11 +654,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_intptr(expected, actual)  do               \
+#define cut_assert_not_equal_intptr(expected, actual, ...) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_intptr_helper((expected), (actual),        \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_intptr_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_intptr(expected, actual));                 \
 } while (0)
 
@@ -613,12 +676,14 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_intmax(expected, actual)  do           \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_equal_intmax_helper((expected), (actual),    \
-                                       #expected, #actual),     \
-        cut_assert_equal_intmax(expected, actual));             \
+#define cut_assert_equal_intmax(expected, actual, ...) do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_intmax_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_intmax(expected, actual));                     \
 } while (0)
 
 /**
@@ -633,11 +698,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_intmax(expected, actual)  do               \
+#define cut_assert_not_equal_intmax(expected, actual, ...) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_intmax_helper((expected), (actual),        \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_intmax_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_intmax(expected, actual));                 \
 } while (0)
 #endif
@@ -652,12 +719,13 @@ extern "C" {
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_uint(expected, actual, ...)  do        \
+#define cut_assert_equal_uint(expected, actual, ...) do        \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        cut_assert_equal_uint_helper((expected), (actual),      \
-                                     #expected, #actual),       \
+        cut_test_with_user_message(                             \
+            cut_assert_equal_uint_helper((expected), (actual),  \
+                                         #expected, #actual),   \
+            __VA_ARGS__),                                       \
         cut_assert_equal_uint(expected, actual, __VA_ARGS__));  \
 } while (0)
 
@@ -670,12 +738,14 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_not_equal_uint(expected, actual)  do         \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_not_equal_uint_helper((expected), (actual),  \
-                                         #expected, #actual),   \
-        cut_assert_not_equal_uint(expected, actual));           \
+#define cut_assert_not_equal_uint(expected, actual, ...) do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_helper((expected), (actual),      \
+                                             #expected, #actual),       \
+            __VA_ARGS__),                                               \
+        cut_assert_not_equal_uint(expected, actual));                   \
 } while (0)
 
 #ifdef CUT_SUPPORT_C99_STDINT_TYPES
@@ -691,11 +761,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least8(expected, actual)  do              \
+#define cut_assert_equal_uint_least8(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_least8_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_least8_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_least8(expected, actual));                \
 } while (0)
 
@@ -711,11 +783,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_least8(expected, actual)  do          \
+#define cut_assert_not_equal_uint_least8(expected, actual, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_least8_helper((expected), (actual),   \
-                                                #expected, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_least8_helper((expected),         \
+                                                    (actual),           \
+                                                    #expected,          \
+                                                    #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_least8(expected, actual));            \
 } while (0)
 
@@ -731,11 +807,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least16(expected, actual)  do             \
+#define cut_assert_equal_uint_least16(expected, actual, ...) do         \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_least16_helper((expected), (actual),      \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_least16_helper((expected), (actual),  \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_least16(expected, actual));               \
 } while (0)
 
@@ -751,11 +829,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_least16(expected, actual)  do         \
+#define cut_assert_not_equal_uint_least16(expected, actual, ...) do     \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_least16_helper((expected), (actual),  \
-                                                 #expected, #actual),   \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_least16_helper((expected),        \
+                                                     (actual),          \
+                                                     #expected,         \
+                                                     #actual),          \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_least16(expected, actual));           \
 } while (0)
 
@@ -771,11 +853,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least32(expected, actual)  do             \
+#define cut_assert_equal_uint_least32(expected, actual, ...) do         \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_least32_helper((expected), (actual),      \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_least32_helper((expected), (actual),  \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_least32(expected, actual));               \
 } while (0)
 
@@ -791,11 +875,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_least32(expected, actual)  do         \
+#define cut_assert_not_equal_uint_least32(expected, actual, ...) do     \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_least32_helper((expected), (actual),  \
-                                                 #expected, #actual),   \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_least32_helper((expected),        \
+                                                     (actual),          \
+                                                     #expected,         \
+                                                     #actual),          \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_least32(expected, actual));           \
 } while (0)
 
@@ -811,11 +899,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_least64(expected, actual)  do             \
+#define cut_assert_equal_uint_least64(expected, actual, ...) do         \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_least64_helper((expected), (actual),      \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_least64_helper((expected), (actual),  \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_least64(expected, actual));               \
 } while (0)
 
@@ -831,11 +921,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_least64(expected, actual)  do         \
+#define cut_assert_not_equal_uint_least64(expected, actual, ...) do     \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_least64_helper((expected), (actual),  \
-                                                 #expected, #actual),   \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_least64_helper((expected),        \
+                                                     (actual),          \
+                                                     #expected,         \
+                                                     #actual),          \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_least64(expected, actual));           \
 } while (0)
 
@@ -851,11 +945,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast8(expected, actual)  do               \
+#define cut_assert_equal_uint_fast8(expected, actual, ...) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_fast8_helper((expected), (actual),        \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_fast8_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_fast8(expected, actual));                 \
 } while (0)
 
@@ -871,11 +967,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_fast8(expected, actual)  do           \
+#define cut_assert_not_equal_uint_fast8(expected, actual, ...) do       \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_fast8_helper((expected), (actual),    \
-                                               #expected, #actual),     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_fast8_helper((expected),          \
+                                                   (actual),            \
+                                                   #expected,           \
+                                                   #actual),            \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_fast8(expected, actual));             \
 } while (0)
 
@@ -891,11 +991,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast16(expected, actual)  do              \
+#define cut_assert_equal_uint_fast16(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_fast16_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_fast16_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_fast16(expected, actual));                \
 } while (0)
 
@@ -911,11 +1013,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_fast16(expected, actual)  do          \
+#define cut_assert_not_equal_uint_fast16(expected, actual, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_fast16_helper((expected), (actual),   \
-                                                #expected, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_fast16_helper((expected),         \
+                                                    (actual),           \
+                                                    #expected,          \
+                                                    #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_fast16(expected, actual));            \
 } while (0)
 
@@ -931,11 +1037,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast32(expected, actual)  do              \
+#define cut_assert_equal_uint_fast32(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_fast32_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_fast32_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_fast32(expected, actual));                \
 } while (0)
 
@@ -951,11 +1059,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_fast32(expected, actual)  do          \
+#define cut_assert_not_equal_uint_fast32(expected, actual, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_fast32_helper((expected), (actual),   \
-                                                #expected, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_fast32_helper((expected),         \
+                                                    (actual),           \
+                                                    #expected,\
+                                                    #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_fast32(expected, actual));            \
 } while (0)
 
@@ -971,11 +1083,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uint_fast64(expected, actual)  do              \
+#define cut_assert_equal_uint_fast64(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_uint_fast64_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uint_fast64_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_uint_fast64(expected, actual));                \
 } while (0)
 
@@ -991,11 +1105,15 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uint_fast64(expected, actual)  do          \
+#define cut_assert_not_equal_uint_fast64(expected, actual, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uint_fast64_helper((expected), (actual),   \
-                                                #expected, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uint_fast64_helper((expected),         \
+                                                    (actual),           \
+                                                    #expected,          \
+                                                    #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uint_fast64(expected, actual));            \
 } while (0)
 
@@ -1011,12 +1129,14 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uintptr(expected, actual)  do          \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_equal_uintptr_helper((expected), (actual),   \
-                                        #expected, #actual),    \
-        cut_assert_equal_uintptr(expected, actual));            \
+#define cut_assert_equal_uintptr(expected, actual, ...) do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uintptr_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_uintptr(expected, actual));                    \
 } while (0)
 
 /**
@@ -1031,11 +1151,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uintptr(expected, actual)  do              \
+#define cut_assert_not_equal_uintptr(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uintptr_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uintptr_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uintptr(expected, actual));                \
 } while (0)
 
@@ -1051,12 +1173,14 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_equal_uintmax(expected, actual)  do          \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_equal_uintmax_helper((expected), (actual),   \
-                                        #expected, #actual),    \
-        cut_assert_equal_uintmax(expected, actual));            \
+#define cut_assert_equal_uintmax(expected, actual, ...) do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_uintmax_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_uintmax(expected, actual));                    \
 } while (0)
 
 /**
@@ -1071,11 +1195,13 @@ extern "C" {
  *
  * Since: 1.1.0
  */
-#define cut_assert_not_equal_uintmax(expected, actual)  do              \
+#define cut_assert_not_equal_uintmax(expected, actual, ...) do          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_uintmax_helper((expected), (actual),       \
-                                            #expected, #actual),        \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_uintmax_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_uintmax(expected, actual));                \
 } while (0)
 #endif
@@ -1092,12 +1218,13 @@ extern "C" {
  *
  * Since: 1.0.6
  */
-#define cut_assert_equal_size(expected, actual, ...)  do                \
+#define cut_assert_equal_size(expected, actual, ...) do                 \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_size_helper((expected), (actual),              \
-                                     #expected, #actual),               \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_size_helper((expected), (actual),          \
+                                         #expected, #actual),           \
+            __VA_ARGS__),                                               \
         cut_assert_equal_size(expected, actual, __VA_ARGS__));          \
 } while (0)
 
@@ -1110,12 +1237,14 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_not_equal_size(expected, actual)  do         \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_not_equal_size_helper((expected), (actual),  \
-                                         #expected, #actual),   \
-        cut_assert_not_equal_size(expected, actual));           \
+#define cut_assert_not_equal_size(expected, actual, ...) do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_size_helper((expected), (actual),      \
+                                             #expected, #actual),       \
+            __VA_ARGS__),                                               \
+        cut_assert_not_equal_size(expected, actual));                   \
 } while (0)
 
 /**
@@ -1131,10 +1260,12 @@ extern "C" {
  */
 #define cut_assert_equal_double(expected, error, actual, ...) do        \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_double_helper((expected), (error), (actual),   \
-                                       #expected, #error, #actual),     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_double_helper((expected), (error),         \
+                                           (actual),                    \
+                                           #expected, #error, #actual), \
+            __VA_ARGS__),                                               \
         cut_assert_equal_double(expected, error, actual, __VA_ARGS__)); \
 } while (0)
 
@@ -1148,13 +1279,15 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_not_equal_double(expected, error, actual) do \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        cut_assert_not_equal_double_helper(                     \
-            (expected), (error), (actual),                      \
-            #expected, #error, #actual),                        \
-        cut_assert_not_equal_double(expected, error, actual));  \
+#define cut_assert_not_equal_double(expected, error, actual, ...) do    \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_double_helper(                         \
+                (expected), (error), (actual),                          \
+                #expected, #error, #actual),                            \
+            __VA_ARGS__),                                               \
+        cut_assert_not_equal_double(expected, error, actual));          \
 } while (0)
 
 /**
@@ -1179,10 +1312,11 @@ extern "C" {
  */
 #define cut_assert_equal_string(expected, actual, ...) do               \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string_helper(expected, actual,                \
-                                       #expected, #actual),             \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_string_helper(expected, actual,            \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
         cut_assert_equal_string(expected, actual, __VA_ARGS__));        \
 } while (0)
 
@@ -1205,11 +1339,13 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_not_equal_string(expected, actual) do                \
+#define cut_assert_not_equal_string(expected, actual, ...) do           \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_string_helper(expected, actual,            \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_string_helper(expected, actual,        \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_string(expected, actual));                 \
 } while (0)
 
@@ -1230,11 +1366,12 @@ extern "C" {
  */
 #define cut_assert_equal_string_with_free(expected, actual, ...) do     \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string_helper(expected,                        \
-                                       cut_take_string(actual),         \
-                                       #expected, #actual),             \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_string_helper(expected,                    \
+                                           cut_take_string(actual),     \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
         cut_assert_equal_string_with_free(expected, actual,             \
                                           __VA_ARGS__));                \
 } while (0)
@@ -1255,9 +1392,10 @@ extern "C" {
  */
 #define cut_assert_equal_string_or_null(expected, actual, ...) do       \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string(expected, actual),                      \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_string(expected, actual),                  \
+            __VA_ARGS__),                                               \
         cut_assert_equal_string_or_null(expected, actual,               \
                                         __VA_ARGS__));                  \
 } while (0)
@@ -1285,11 +1423,14 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_equal_substring(expected, actual, length) do         \
+#define cut_assert_equal_substring(expected, actual, length, ...) do    \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_substring_helper(expected, actual, length,     \
-                                          #expected, #actual, #length), \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_substring_helper(expected, actual, length, \
+                                              #expected, #actual,       \
+                                              #length),                 \
+            __VA_ARGS__),                                               \
         cut_assert_equal_substring(expected, actual, length));          \
 } while (0)
 
@@ -1314,12 +1455,16 @@ extern "C" {
  *
  * Since: 1.0.7
  */
-#define cut_assert_not_equal_substring(expected, actual, length) do     \
+#define cut_assert_not_equal_substring(expected, actual, length,        \
+                                       ...) do                          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_substring_helper(expected, actual, length, \
-                                              #expected, #actual,       \
-                                              #length),                 \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_substring_helper(expected, actual,     \
+                                                  length,               \
+                                                  #expected, #actual,   \
+                                                  #length),             \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_substring(expected, actual, length));      \
 } while (0)
 
@@ -1339,12 +1484,13 @@ extern "C" {
 #define cut_assert_equal_memory(expected, expected_size,                \
                                 actual, actual_size, ...) do            \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_memory_helper(expected, expected_size,         \
-                                       actual, actual_size,             \
-                                       #expected, #expected_size,       \
-                                       #actual, #actual_size),          \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_memory_helper(expected, expected_size,     \
+                                           actual, actual_size,         \
+                                           #expected, #expected_size,   \
+                                           #actual, #actual_size),      \
+            __VA_ARGS__),                                               \
         cut_assert_equal_memory(expected, expected_size,                \
                                 actual, actual_size, __VA_ARGS__));     \
 } while (0)
@@ -1362,13 +1508,17 @@ extern "C" {
  * Since: 1.0.7
  */
 #define cut_assert_not_equal_memory(expected, expected_size,            \
-                                    actual, actual_size) do             \
+                                    actual, actual_size, ...) do        \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        cut_assert_not_equal_memory_helper(expected, expected_size,     \
-                                           actual, actual_size,         \
-                                           #expected, #expected_size,   \
-                                           #actual, #actual_size),      \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_memory_helper(expected, expected_size, \
+                                               actual, actual_size,     \
+                                               #expected,               \
+                                               #expected_size,          \
+                                               #actual,                 \
+                                               #actual_size),           \
+            __VA_ARGS__),                                               \
         cut_assert_not_equal_memory(expected, expected_size,            \
                                     actual, actual_size));              \
 } while (0)
@@ -1386,10 +1536,11 @@ extern "C" {
  */
 #define cut_assert_equal_string_array(expected, actual, ...) do         \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string_array_helper(expected, actual,          \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_string_array_helper(expected, actual,      \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         cut_assert_equal_string_array(expected, actual, __VA_ARGS__));  \
 } while (0)
 
@@ -1409,11 +1560,12 @@ extern "C" {
 #define cut_assert_equal_string_array_with_free(expected, actual,       \
                                                 ...) do                 \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_string_array_helper(                           \
-            expected, (char **)cut_take_string_array(actual),           \
-            #expected, #actual),                                        \
+        cut_test_with_user_message(                             \
+            cut_assert_equal_string_array_helper(                       \
+                expected, (char **)cut_take_string_array(actual),       \
+                #expected, #actual),                                    \
+            __VA_ARGS__),                                               \
         cut_assert_equal_string_array_with_free(expected, actual,       \
                                                 __VA_ARGS__));          \
 } while (0)
@@ -1436,10 +1588,11 @@ extern "C" {
  */
 #define cut_assert_operator(lhs, operator, rhs, ...) do         \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        cut_assert_operator_helper(((lhs) operator (rhs)),      \
-                                   #lhs, #operator, #rhs),      \
+        cut_test_with_user_message(                             \
+            cut_assert_operator_helper(((lhs) operator (rhs)),  \
+                                       #lhs, #operator, #rhs),  \
+            __VA_ARGS__),                                       \
         cut_assert_operator(lhs, operator, rhs, __VA_ARGS__));  \
 } while (0)
 
@@ -1464,11 +1617,12 @@ extern "C" {
     long _lhs = (lhs);                                                  \
     long _rhs = (rhs);                                                  \
                                                                         \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_operator_int_helper((_lhs operator _rhs),            \
-                                       _lhs, _rhs,                      \
-                                       #lhs, #operator, #rhs),          \
+        cut_test_with_user_message(                                     \
+            cut_assert_operator_int_helper((_lhs operator _rhs),        \
+                                           _lhs, _rhs,                  \
+                                           #lhs, #operator, #rhs),      \
+            __VA_ARGS__),                                               \
         cut_assert_operator_int(lhs, operator, rhs, __VA_ARGS__));      \
 } while(0)
 
@@ -1495,11 +1649,12 @@ extern "C" {
     unsigned long _lhs = (lhs);                                     	\
     unsigned long _rhs = (rhs);                                     	\
                                                                         \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_operator_uint_helper((_lhs operator _rhs),           \
-                                        _lhs, _rhs,                     \
-                                        #lhs, #operator, #rhs),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_operator_uint_helper((_lhs operator _rhs),       \
+                                            _lhs, _rhs,                 \
+                                            #lhs, #operator, #rhs),     \
+            __VA_ARGS__),                                               \
         cut_assert_operator_uint(lhs, operator, rhs, __VA_ARGS__));     \
 } while(0)
 
@@ -1526,11 +1681,12 @@ extern "C" {
     size_t _lhs = (lhs);                                     		\
     size_t _rhs = (rhs);                                     		\
                                                                         \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_operator_size_helper((_lhs operator _rhs),           \
-                                        _lhs, _rhs,                     \
-                                        #lhs, #operator, #rhs),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_operator_size_helper((_lhs operator _rhs),       \
+                                            _lhs, _rhs,                 \
+                                            #lhs, #operator, #rhs),     \
+            __VA_ARGS__),                                               \
         cut_assert_operator_size(lhs, operator, rhs, __VA_ARGS__));     \
 } while(0)
 
@@ -1557,11 +1713,12 @@ extern "C" {
     double _lhs = (lhs);                                                \
     double _rhs = (rhs);                                                \
                                                                         \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_operator_double_helper((_lhs operator _rhs),         \
-                                          _lhs, _rhs,                   \
-                                          #lhs, #operator, #rhs),       \
+        cut_test_with_user_message(                                     \
+            cut_assert_operator_double_helper((_lhs operator _rhs),     \
+                                              _lhs, _rhs,               \
+                                              #lhs, #operator, #rhs),   \
+            __VA_ARGS__),                                               \
         cut_assert_operator_double(lhs, operator, rhs, __VA_ARGS__));   \
 } while(0)
 
@@ -1583,10 +1740,11 @@ extern "C" {
  */
 #define cut_assert_equal(function, expected, actual, ...) do            \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_helper(function(expected, actual),             \
-                                #function, #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_helper(function(expected, actual),         \
+                                    #function, #expected, #actual),     \
+            __VA_ARGS__),                                               \
         cut_assert_equal(function, expected, actual, __VA_ARGS__));     \
 } while (0)
 
@@ -1608,9 +1766,10 @@ extern "C" {
  */
 #define cut_assert_errno(...) do                                \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        cut_assert_errno_helper(),                              \
+        cut_test_with_user_message(                             \
+            cut_assert_errno_helper(),                          \
+            __VA_ARGS__),                                       \
         cut_assert_errno(__VA_ARGS__));                         \
 } while (0)
 
@@ -1635,9 +1794,10 @@ extern "C" {
  */
 #define cut_assert_file_exist(path, ...) do                     \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        cut_assert_path_exist(path),                            \
+        cut_test_with_user_message(                             \
+            cut_assert_path_exist(path),                        \
+            __VA_ARGS__),                                       \
         cut_assert_file_exist(path, __VA_ARGS__));              \
 } while (0)
 #endif
@@ -1661,9 +1821,10 @@ extern "C" {
  */
 #define cut_assert_path_exist(path, ...) do                     \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        cut_assert_path_exist_helper(path, #path),              \
+        cut_test_with_user_message(                             \
+            cut_assert_path_exist_helper(path, #path),          \
+            __VA_ARGS__),                                       \
         cut_assert_path_exist(path, __VA_ARGS__));              \
 } while (0)
 
@@ -1686,9 +1847,10 @@ extern "C" {
  */
 #define cut_assert_path_not_exist(path, ...) do                 \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        cut_assert_path_not_exist_helper(path, #path),          \
+        cut_test_with_user_message(                             \
+            cut_assert_path_not_exist_helper(path, #path),      \
+            __VA_ARGS__),                                       \
         cut_assert_path_not_exist(path, __VA_ARGS__));          \
 } while (0)
 
@@ -1712,9 +1874,10 @@ extern "C" {
  */
 #define cut_assert_match(pattern, actual, ...) do                       \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_match_helper(pattern, actual, #pattern, #actual),    \
+        cut_test_with_user_message(                                     \
+            cut_assert_match_helper(pattern, actual, #pattern, #actual),\
+            __VA_ARGS__),                                               \
         cut_assert_match(path, actual, __VA_ARGS__));                   \
 } while (0)
 
@@ -1733,10 +1896,11 @@ extern "C" {
  */
 #define cut_assert_match_with_free(pattern, actual, ...) do             \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_match_helper(pattern, cut_take_string(actual),       \
-                                #pattern, #actual),                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_match_helper(pattern, cut_take_string(actual),   \
+                                    #pattern, #actual),                 \
+            __VA_ARGS__),                                               \
         cut_assert_match_with_free(pattern, actual, __VA_ARGS__));      \
 } while (0)
 
@@ -1754,10 +1918,11 @@ extern "C" {
  */
 #define cut_assert_equal_pointer(expected, actual, ...) do              \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        cut_assert_equal_pointer_helper(expected, actual,               \
-                                        #expected, #actual),            \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_pointer_helper(expected, actual,           \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
         cut_assert_equal_pointer(expected, actual, __VA_ARGS__));       \
 } while (0)
 
@@ -1788,9 +1953,9 @@ extern "C" {
  */
 #define cut_error(...) do                                               \
 {                                                                       \
-    cut_set_message(__VA_ARGS__);                                       \
-    cut_trace_with_info_expression(cut_test_terminate(ERROR, NULL),     \
-                                   cut_error(__VA_ARGS__));             \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(ERROR, NULL, cut_message(__VA_ARGS__)),      \
+        cut_error(__VA_ARGS__));                                        \
 } while (0)
 
 /**
@@ -1814,9 +1979,10 @@ extern "C" {
  */
 #define cut_error_errno(...) do                                         \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
-    cut_trace_with_info_expression(cut_error_errno_helper(),            \
-                                   cut_error_errno(__VA_ARGS__));       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(cut_error_errno_helper(),            \
+                                   __VA_ARGS__),                        \
+        cut_error_errno(__VA_ARGS__));                                  \
 } while (0)
 
 /**
@@ -1828,9 +1994,9 @@ extern "C" {
  */
 #define cut_fail(...) do                                                \
 {                                                                       \
-    cut_set_message(__VA_ARGS__);                                       \
-    cut_trace_with_info_expression(cut_test_terminate(FAILURE, NULL),   \
-                                   cut_fail(__VA_ARGS__));             \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(FAILURE, NULL, cut_message(__VA_ARGS__)),    \
+        cut_fail(__VA_ARGS__));                                         \
 } while (0)
 
 /**
@@ -1843,9 +2009,9 @@ extern "C" {
  */
 #define cut_pend(...) do                                                \
 {                                                                       \
-    cut_set_message(__VA_ARGS__);                                       \
-    cut_trace_with_info_expression(cut_test_terminate(PENDING, NULL),   \
-                                   cut_pend(__VA_ARGS__));              \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(PENDING, NULL, cut_message(__VA_ARGS__)),    \
+        cut_pend(__VA_ARGS__));                                         \
 } while (0)
 
 #ifndef CUTTER_DISABLE_DEPRECATED
@@ -1861,9 +2027,9 @@ extern "C" {
  */
 #define cut_pending(...) do                                             \
 {                                                                       \
-    cut_set_message(__VA_ARGS__);                                       \
-    cut_trace_with_info_expression(cut_test_terminate(PENDING, NULL),   \
-                                   cut_pend(__VA_ARGS__));              \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(PENDING, NULL, cut_message(__VA_ARGS__)),    \
+        cut_pend(__VA_ARGS__));                                         \
 } while (0)
 #endif
 
@@ -1874,12 +2040,12 @@ extern "C" {
  *
  * Leaves a notification message. The test is continued.
  */
-#define cut_notify(...) do                              \
-{                                                       \
-    cut_set_message(__VA_ARGS__);                       \
-    cut_trace_with_info_expression(                     \
-        cut_test_register_result(NOTIFICATION, NULL),   \
-        cut_notify(__VA_ARGS__));                       \
+#define cut_notify(...) do                                              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_register_result(NOTIFICATION, NULL,                    \
+                                 cut_message(__VA_ARGS__)),             \
+        cut_notify(__VA_ARGS__));                                       \
 } while (0)
 
 /**
@@ -1899,9 +2065,9 @@ extern "C" {
  */
 #define cut_omit(...) do                                                \
 {                                                                       \
-    cut_set_message(__VA_ARGS__);                                       \
-    cut_trace_with_info_expression(cut_test_terminate(OMISSION, NULL),  \
-                                   cut_omit(__VA_ARGS__));              \
+    cut_trace_with_info_expression(                                     \
+        cut_test_terminate(OMISSION, NULL, cut_message(__VA_ARGS__)),   \
+        cut_omit(__VA_ARGS__));                                         \
 } while (0)
 
 /**

@@ -188,10 +188,12 @@ draw (cairo_t *cr)
     cairo_surface_destroy (surface);
 
     /* Check that the error made it all that way. */
-    cut_assert_equal_int (CAIRO_STATUS_FILE_NOT_FOUND, cairo_status (cr2),
-			  "Error: Received status of \"%s\" rather than expected \"%s\"\n",
-			  cairo_status_to_string (cairo_status (cr2)),
-			  cairo_status_to_string (CAIRO_STATUS_FILE_NOT_FOUND));
+    cut_assert_equal_int (
+        CAIRO_STATUS_FILE_NOT_FOUND, cairo_status (cr2),
+        cut_message ("Error: Received status of \"%s\" "
+                     "rather than expected \"%s\"",
+                     cairo_status_to_string (cairo_status (cr2)),
+                     cairo_status_to_string (CAIRO_STATUS_FILE_NOT_FOUND)));
 
     cairo_destroy (cr2);
 
@@ -210,10 +212,12 @@ draw (cairo_t *cr)
     cairo_pattern_destroy (pattern);
 
     /* Check that the error made it all that way. */
-    cut_assert_equal_int (CAIRO_STATUS_NULL_POINTER, cairo_status (cr2),
-    			  "Error: Received status of \"%s\" rather than expected \"%s\"\n",
-			  cairo_status_to_string (cairo_status (cr2)),
-			  cairo_status_to_string (CAIRO_STATUS_NULL_POINTER));
+    cut_assert_equal_int (
+        CAIRO_STATUS_NULL_POINTER, cairo_status (cr2),
+        cut_message ("Error: Received status of \"%s\" "
+                     "rather than expected \"%s\"\n",
+                     cairo_status_to_string (cairo_status (cr2)),
+                     cairo_status_to_string (CAIRO_STATUS_NULL_POINTER)));
     cairo_destroy (cr2);
 
     /*
@@ -237,10 +241,12 @@ draw (cairo_t *cr)
 
     /* Trigger invalid restore. */
     cairo_restore (cr2);
-    cut_assert_equal_int (CAIRO_STATUS_INVALID_RESTORE, cairo_status (cr2),
-		          "Error: Received status of \"%s\" rather than expected \"%s\"\n",
-			  cairo_status_to_string (cairo_status (cr2)),
-			  cairo_status_to_string (CAIRO_STATUS_INVALID_RESTORE));
+    cut_assert_equal_int (
+        CAIRO_STATUS_INVALID_RESTORE, cairo_status (cr2),
+        cut_message ("Error: Received status of \"%s\" "
+                     "rather than expected \"%s\"\n",
+                     cairo_status_to_string (cairo_status (cr2)),
+                     cairo_status_to_string (CAIRO_STATUS_INVALID_RESTORE)));
 
     /* Test that we can still call cairo_get_fill_rule without crashing. */
     cairo_get_fill_rule (cr2);
@@ -252,14 +258,16 @@ draw (cairo_t *cr)
      */
     cr2 = cairo_create (NULL);
 
-    cut_assert_equal_int (CAIRO_STATUS_NULL_POINTER, cairo_status (cr2),
-		          "Error: Received status of \"%s\" rather than expected \"%s\"\n",
-			  cairo_status_to_string (cairo_status (cr2)),
-			  cairo_status_to_string (CAIRO_STATUS_NULL_POINTER));
+    cut_assert_equal_int (
+        CAIRO_STATUS_NULL_POINTER, cairo_status (cr2),
+        cut_message ("Error: Received status of \"%s\" "
+                     "rather than expected \"%s\"\n",
+                     cairo_status_to_string (cairo_status (cr2)),
+                     cairo_status_to_string (CAIRO_STATUS_NULL_POINTER)));
 
     /* Test that get_target returns something valid */
     cut_assert (cairo_get_target (cr2),
-		"Error: cairo_get_target() returned NULL\n");
+		cut_message ("Error: cairo_get_target() returned NULL\n"));
 
     /* Test that push_group doesn't crash */
     cairo_push_group (cr2);

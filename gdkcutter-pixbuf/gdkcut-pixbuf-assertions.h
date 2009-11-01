@@ -53,12 +53,15 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.5
  */
-#define gdkcut_pixbuf_assert_equal(expected, actual, threshold) do      \
+#define gdkcut_pixbuf_assert_equal(expected, actual, threshold, ...) do \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        gdkcut_pixbuf_assert_equal_helper(expected, actual, threshold,  \
-                                          #expected, #actual,           \
-                                          #threshold),                  \
+        cut_test_with_user_message(                                     \
+            gdkcut_pixbuf_assert_equal_helper(expected, actual,         \
+                                              threshold,                \
+                                              #expected, #actual,       \
+                                              #threshold),              \
+            __VA_ARGS__),                                               \
         gdkcut_pixbuf_assert_equal(expected, actual, threshold));       \
 } while (0)
 

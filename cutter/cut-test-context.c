@@ -91,6 +91,8 @@ struct _CutTestContextPrivate
     GMutex *mutex;
     gchar *expected;
     gchar *actual;
+    CutTestResult *current_result;
+    gboolean have_user_message_jump;
 };
 
 enum
@@ -262,6 +264,10 @@ cut_test_context_init (CutTestContext *context)
 
     priv->expected = NULL;
     priv->actual = NULL;
+
+    priv->current_result = NULL;
+
+    priv->have_user_message_jump = FALSE;
 }
 
 static void
@@ -300,6 +306,15 @@ clear_additional_test_result_data (CutTestContextPrivate *priv)
     if (priv->actual) {
         g_free(priv->actual);
         priv->actual = NULL;
+    }
+}
+
+static void
+clear_current_result (CutTestContextPrivate *priv)
+{
+    if (priv->current_result) {
+        g_object_unref(priv->current_result);
+        priv->current_result = NULL;
     }
 }
 
@@ -371,6 +386,7 @@ dispose (GObject *object)
     }
 
     clear_additional_test_result_data(priv);
+    clear_current_result(priv);
 
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
 }
@@ -813,46 +829,82 @@ cut_test_context_emit_signal (CutTestContext *context,
 }
 
 void
-cut_test_context_register_result (CutTestContext *context,
-                                  CutTestResultStatus status,
-                                  const char *system_message)
+cut_test_context_set_current_result (CutTestContext *context,
+                                     CutTestResultStatus status,
+                                     const char *system_message)
 {
     CutTestContextPrivate *priv;
-    CutTestResult *result;
     CutTestData *test_data = NULL;
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    clear_current_result(priv);
     if (cut_test_result_status_is_critical(status))
         priv->failed = TRUE;
 
     if (priv->current_data)
         test_data = priv->current_data->data;
-    result = cut_test_result_new(status,
-                                 priv->test, priv->test_iterator,
-                                 priv->test_case, priv->test_suite,
-                                 test_data,
-                                 priv->user_message, system_message,
-                                 priv->backtrace);
+    priv->current_result = cut_test_result_new(status,
+                                               priv->test,
+                                               priv->test_iterator,
+                                               priv->test_case,
+                                               priv->test_suite,
+                                               test_data,
+                                               priv->user_message,
+                                               system_message,
+                                               priv->backtrace);
     clear_user_message(priv);
 
-    cut_test_result_set_expected(result, priv->expected);
-    cut_test_result_set_actual(result, priv->actual);
+    cut_test_result_set_expected(priv->current_result, priv->expected);
+    cut_test_result_set_actual(priv->current_result, priv->actual);
     clear_additional_test_result_data(priv);
+}
+
+void
+cut_test_context_set_current_result_user_message (CutTestContext *context,
+                                                  const char *user_message)
+{
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (!priv->current_result)
+        return;
+
+    cut_test_result_set_user_message(priv->current_result, user_message);
+}
+
+gboolean
+cut_test_context_get_have_current_result (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->current_result != NULL;
+}
+
+void
+cut_test_context_process_current_result (CutTestContext *context)
+{
+    CutTestContextPrivate *priv;
+    CutTestResultStatus status;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (!priv->current_result)
+        return;
+
+    status = cut_test_result_get_status(priv->current_result);
 
     if (priv->test) {
         CutProcess *process;
         /* If the current procss is a child process, the pid is 0. */
         process = get_process_from_pid(context, 0);
         if (process) {
-            cut_process_send_test_result_to_parent(process, result);
-            g_object_unref(result);
+            cut_process_send_test_result_to_parent(process,
+                                                   priv->current_result);
+            clear_current_result(priv);
             if (status == CUT_TEST_RESULT_NOTIFICATION)
                 return;
             cut_process_exit(process);
         }
     }
 
-    cut_test_context_emit_signal(context, result);
+    cut_test_context_emit_signal(context, priv->current_result);
 
     if (status == CUT_TEST_RESULT_FAILURE &&
         priv->run_context &&
@@ -878,8 +930,29 @@ cut_test_context_register_result (CutTestContext *context,
 #  endif
 #endif
     }
+    clear_current_result(priv);
+}
 
-    g_object_unref(result);
+void
+cut_test_context_register_result (CutTestContext *context,
+                                  CutTestResultStatus status,
+                                  const char *system_message)
+{
+    cut_test_context_set_current_result(context, status, system_message);
+    cut_test_context_process_current_result(context);
+}
+
+void
+cut_test_context_set_have_user_message_jump (CutTestContext *context,
+                                             gboolean have)
+{
+    CUT_TEST_CONTEXT_GET_PRIVATE(context)->have_user_message_jump = have;
+}
+
+gboolean
+cut_test_context_get_have_user_message_jump (CutTestContext *context)
+{
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->have_user_message_jump;
 }
 
 void

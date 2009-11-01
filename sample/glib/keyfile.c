@@ -75,9 +75,9 @@ check_error (GError **error,
 {
   cut_assert (*error);
   cut_assert_equal_int (domain, (*error)->domain,
-		  	"Wrong error domain: got %s, expected %s",
-			g_quark_to_string ((*error)->domain),
-			g_quark_to_string (domain));
+		  	cut_message ("Wrong error domain: got %s, expected %s",
+                                     g_quark_to_string ((*error)->domain),
+                                     g_quark_to_string (domain)));
   cut_assert_equal_int (code, (*error)->code);
   g_error_free (*error);
   *error = NULL;
@@ -98,8 +98,10 @@ check_string_value (GKeyFile    *keyfile,
   check_no_error (error);
   cut_assert (value);
   cut_assert_equal_string (expected, value,
-		  	   "Group %s key %s: expected string value '%s', actual value '%s'",
-			   group, key, expected, value);
+		  	   cut_message ("Group %s key %s: "
+                                        "expected string value '%s', "
+                                        "actual value '%s'",
+                                        group, key, expected, value));
   g_free (value);
 }
 
@@ -116,8 +118,10 @@ check_locale_string_value (GKeyFile    *keyfile,
   check_no_error (error);
   cut_assert (value);
   cut_assert_equal_string (expected, value,
-			   "Group %s key %s locale %s: expected string value '%s', actual value '%s'",
-			   group, key, locale, expected, value);
+			   cut_message ("Group %s key %s locale %s: "
+                                        "expected string value '%s', "
+                                        "actual value '%s'",
+                                        group, key, locale, expected, value));
   g_free (value);
 }
 
@@ -138,11 +142,12 @@ check_string_list_value (GKeyFile *keyfile, const gchar *group, const gchar *key
   while (v) 
     { 
       cut_assert (value[i], 
-	  "Group %s key %s: list too short (%d)", 
-		   group, key, i); 
+                  cut_message ("Group %s key %s: list too short (%d)",
+                               group, key, i));
       cut_assert_equal_string (value[i], v, 
-	  "Group %s key %s: mismatch at %d, expected %s, got %s", 
-		   group, key, i, v, value[i]); 
+                               cut_message ("Group %s key %s: mismatch at %d, "
+                                            "expected %s, got %s",
+                                            group, key, i, v, value[i]));
       i++; 
       v = va_arg (args, gchar*); 
     } 
@@ -172,11 +177,12 @@ check_integer_list_value (GKeyFile    *keyfile,
   while (v != -100)
     {
       cut_assert (i != len,
-      		  "Group %s key %s: list too short (%d)\n", 
-		  group, key, i);      
+      		  cut_message ("Group %s key %s: list too short (%d)",
+                               group, key, i));
       cut_assert_equal_int (v, value[i],
-		      	    "Group %s key %s: mismatch at %d, expected %d, got %d\n", 
-			    group, key, i, v, value[i]);      
+		      	    cut_message ("Group %s key %s: mismatch at %d, "
+                                         "expected %d, got %d",
+                                         group, key, i, v, value[i]));
       i++;
       v = va_arg (args, gint);
     }
@@ -208,11 +214,12 @@ check_double_list_value (GKeyFile    *keyfile,
   while (v != -100)
     {
       cut_assert (i != len,
-	  	  "Group %s key %s: list too short (%d)\n", 
-		  group, key, i);      
+	  	  cut_message ("Group %s key %s: list too short (%d)",
+                               group, key, i));
       cut_assert_equal_int (v, value[i],
-		      	    "Group %s key %s: mismatch at %d, expected %e, got %e\n", 
-			    group, key, i, v, value[i]);      
+		      	    cut_message ("Group %s key %s: mismatch at %d, "
+                                         "expected %e, got %e",
+                                         group, key, i, v, value[i]));
       i++;
       v = va_arg (args, gdouble);
     }
@@ -244,11 +251,12 @@ check_boolean_list_value (GKeyFile    *keyfile,
   while (v != -100)
     {
       cut_assert (i != len,
-		  "Group %s key %s: list too short (%d)\n", 
-		  group, key, i);      
+		  cut_message ("Group %s key %s: list too short (%d)",
+                               group, key, i));
       cut_assert_equal_int (v, value[i],
-		      	    "Group %s key %s: mismatch at %d, expected %d, got %d\n", 
-			    group, key, i, v, value[i]);      
+		      	    cut_message ("Group %s key %s: mismatch at %d, "
+                                         "expected %d, got %d",
+                                         group, key, i, v, value[i]));
       i++;
       v = va_arg (args, gboolean);
     }
@@ -269,9 +277,11 @@ check_boolean_value (GKeyFile    *keyfile,
   value = g_key_file_get_boolean (keyfile, group, key, &error);
   check_no_error (error);
   cut_assert_equal_int (expected, value,
-		  	"Group %s key %s: expected boolean value '%s', actual value '%s'",
-			group, key, expected ? "true" : "false",
-			value ? "true" : "false");
+		  	cut_message ("Group %s key %s: "
+                                     "expected boolean value '%s', "
+                                     "actual value '%s'",
+                                     group, key, expected ? "true" : "false",
+                                     value ? "true" : "false"));
 }
 
 static void
@@ -285,8 +295,10 @@ check_integer_value (GKeyFile    *keyfile,
   value = g_key_file_get_integer (keyfile, group, key, &error);
   check_no_error (error);
   cut_assert_equal_int (expected, value,
-		  	"Group %s key %s: expected integer value %d, actual value %d",
-			group, key, expected, value);
+		  	cut_message ("Group %s key %s: "
+                                     "expected integer value %d, "
+                                     "actual value %d",
+                                     group, key, expected, value));
 }
 
 static void
@@ -300,8 +312,10 @@ check_double_value (GKeyFile    *keyfile,
   value = g_key_file_get_double (keyfile, group, key, &error);
   check_no_error (error);
   cut_assert_equal_double (expected, 0.0, value,
-		  	   "Group %s key %s: expected integer value %e, actual value %e",
-			   group, key, expected, value);
+		  	   cut_message ("Group %s key %s: "
+                                        "expected integer value %e, "
+                                        "actual value %e",
+                                        group, key, expected, value));
 }
 
 static void
@@ -312,8 +326,9 @@ check_name (const gchar *what,
 {
   cut_assert (value);
   cut_assert_equal_string (expected, value,
-		  	   "Wrong %s returned: got '%s' at %d, expected '%s'",
-			   what, value, position, expected);
+		  	   cut_message ("Wrong %s returned: "
+                                        "got '%s' at %d, expected '%s'",
+                                        what, value, position, expected));
 }
 
 static void
@@ -323,8 +338,9 @@ check_length (const gchar *what,
 	      gint         expected)
 {
   cut_assert (n_items == length && length == expected,
-	      "Wrong number of %s returned: got %d items, length %d, expected %d",
-	      what, n_items, length, expected);
+	      cut_message ("Wrong number of %s returned: got %d items, "
+                           "length %d, expected %d",
+                           what, n_items, length, expected));
 }
 
 /* check that both \n and \r\n are accepted as line ends,
@@ -504,7 +520,7 @@ test_listing (void)
 	      g_key_file_has_group (keyfile, "group2") &&
 	      !g_key_file_has_group (keyfile, "group10") &&
 	      !g_key_file_has_group (keyfile, "group2 "),
-	      "Group finding trouble");
+	      cut_message ("Group finding trouble"));
 
   start = g_key_file_get_start_group (keyfile);
   cut_assert_equal_string ("group1", start);
@@ -513,7 +529,7 @@ test_listing (void)
   cut_assert (g_key_file_has_key (keyfile, "group1", "key1", &error) &&
 	      g_key_file_has_key (keyfile, "group2", "key3", &error) &&
 	      !g_key_file_has_key (keyfile, "group2", "no-such-key", &error),
-	      "Key finding trouble");
+	      cut_message ("Key finding trouble"));
   check_no_error (error);
   
   g_key_file_has_key (keyfile, "no-such-group", "key", &error);
@@ -1161,11 +1177,11 @@ test_reload_idempotency (void)
 	                          original_data, strlen(original_data),
 	                          G_KEY_FILE_KEEP_COMMENTS,
 	                          &error))
-    gcut_assert_error (error, "Failed to parse keyfile[1]");
+    gcut_assert_error (error, cut_message ("Failed to parse keyfile[1]"));
 
   data1 = g_key_file_to_data (keyfile, &len1, &error);
   if (!data1)
-    gcut_assert_error (error, "Failed to extract keyfile[1]");
+    gcut_assert_error (error, cut_message ("Failed to extract keyfile[1]"));
   g_key_file_free (keyfile);
 
   keyfile = g_key_file_new ();
@@ -1173,20 +1189,27 @@ test_reload_idempotency (void)
 	                          data1, len1,
 				  G_KEY_FILE_KEEP_COMMENTS,
 				  &error))
-      gcut_assert_error (error, "Failed to parse keyfile[2]");
+    gcut_assert_error (error, cut_message ("Failed to parse keyfile[2]"));
 
   data2 = g_key_file_to_data (keyfile, &len2, &error);
   if (!data2)
-    gcut_assert_error (error, "Failed to extract keyfile[2]");
+    gcut_assert_error (error, cut_message ("Failed to extract keyfile[2]"));
 
   g_key_file_free (keyfile);
   keyfile = NULL;
 
   cut_assert_equal_string (data1, data2,
-    "Reloading GKeyFile is not idempotent."
-    "original:\n%s\n---\n", original_data,
-    "pass1:\n%s\n---\n", data1,
-    "pass2:\n%s\n---\n", data2);
+                           cut_message ("Reloading GKeyFile is not idempotent.\n"
+                                        "original:\n"
+                                        "%s\n"
+                                        "---\n"
+                                        "pass1:\n"
+                                        "%s\n"
+                                        "---\n"
+                                        "pass2:\n"
+                                        "%s\n"
+                                        "---\n",
+                                        original_data, data1, data2));
 
   g_free (data2);
   g_free (data1);

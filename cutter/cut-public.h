@@ -26,6 +26,7 @@ extern "C" {
 
 #include <stdarg.h>
 #include <stdlib.h>
+#include <setjmp.h>
 #ifdef HAVE_INTTYPES_H
 #  include <inttypes.h>
 #elif defined(HAVE_STDINT_H)
@@ -73,10 +74,29 @@ void  cut_test_context_set_expected         (CutTestContext *context,
 void  cut_test_context_set_actual           (CutTestContext *context,
                                              const char *actual);
 void  cut_test_context_pass_assertion       (CutTestContext *context);
+void  cut_test_context_set_current_result   (CutTestContext *context,
+                                             CutTestResultStatus status,
+                                             const char *system_message);
+void  cut_test_context_set_current_result_user_message
+                                            (CutTestContext *context,
+                                             const char *user_message);
+void  cut_test_context_process_current_result
+                                            (CutTestContext *context);
+cut_boolean
+      cut_test_context_get_have_current_result
+                                            (CutTestContext *context);
 void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
                                              const char *system_message);
-void  cut_test_context_long_jump            (CutTestContext *context) CUT_GNUC_NORETURN;
+void         cut_test_context_set_have_user_message_jump
+                                            (CutTestContext *context,
+                                             cut_boolean     have);
+cut_boolean  cut_test_context_get_have_user_message_jump
+                                            (CutTestContext *context);
+void         cut_test_context_set_jump      (CutTestContext *context,
+                                             jmp_buf        *buffer);
+jmp_buf     *cut_test_context_get_jump      (CutTestContext *context);
+void         cut_test_context_long_jump     (CutTestContext *context) CUT_GNUC_NORETURN;
 
 const void *cut_test_context_take           (CutTestContext *context,
                                              void           *object,
@@ -99,7 +119,6 @@ const char *cut_test_context_take_printf    (CutTestContext *context,
 const char **cut_test_context_take_string_array
                                             (CutTestContext *context,
                                              char          **strings);
-
 
 char        *cut_utils_inspect_memory       (const void *memory,
                                              size_t      size);

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -48,10 +48,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_type(expected, actual, ...) do                \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_type_helper((expected), (actual),             \
-                                      #expected, #actual),              \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_type_helper((expected), (actual),         \
+                                          #expected, #actual),          \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_type(expected, actual, __VA_ARGS__));         \
 } while (0)
 
@@ -70,10 +71,10 @@ G_BEGIN_DECLS
  */
 #define cut_assert_equal_g_type(expected, actual, ...) do               \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
-                                                                        \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_type(expected, actual),                       \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_type(expected, actual),                   \
+            __VA_ARGS__),                                               \
         cut_assert_equal_g_type(expected, actual, __VA_ARGS__));        \
 } while (0)
 #endif
@@ -92,10 +93,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_value(expected, actual, ...) do               \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_value_helper(expected, actual,                \
-                                       #expected, #actual),             \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_value_helper(expected, actual,            \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_value(expected, actual, __VA_ARGS__));        \
 } while (0)
 
@@ -114,9 +116,10 @@ G_BEGIN_DECLS
  */
 #define cut_assert_equal_g_value(expected, actual, ...) do              \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_value(expected, actual),                      \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_value(expected, actual),                  \
+            __VA_ARGS__),                                               \
         cut_assert_equal_g_value(expected, actual, __VA_ARGS__));       \
 } while (0)
 #endif
@@ -136,15 +139,18 @@ G_BEGIN_DECLS
  * Since: 1.0.6
  */
 #define gcut_assert_equal_list(expected, actual, equal_function,        \
-                               inspect_function, inspect_user_data) do  \
+                               inspect_function, inspect_user_data,     \
+                               ...) do                                  \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_helper(expected, actual,                 \
-                                      equal_function,                   \
-                                      inspect_function,                 \
-                                      inspect_user_data,                \
-                                      #expected, #actual,               \
-                                      #equal_function),                 \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_helper(expected, actual,             \
+                                          equal_function,               \
+                                          inspect_function,             \
+                                          inspect_user_data,            \
+                                          #expected, #actual,           \
+                                          #equal_function),             \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list(expected, actual, equal_function,        \
                                inspect_function, inspect_user_data));   \
 } while (0)
@@ -163,10 +169,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_list_int(expected, actual, ...) do            \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_int_helper(expected, actual,             \
-                                          #expected, #actual),          \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_int_helper(expected, actual,         \
+                                              #expected, #actual),      \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list_int(expected, actual, __VA_ARGS__));     \
 } while (0)
 
@@ -187,10 +194,11 @@ G_BEGIN_DECLS
  */
 #define cut_assert_equal_g_list_int(expected, actual, ...) do           \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_int_helper(expected, actual,             \
-                                          #expected, #actual),          \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_int_helper(expected, actual,         \
+                                              #expected, #actual),      \
+            __VA_ARGS__),                                               \
         cut_assert_equal_g_list_int(expected, actual, __VA_ARGS__));    \
 } while (0)
 #endif
@@ -209,10 +217,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_list_uint(expected, actual, ...) do           \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_uint_helper(expected, actual,            \
-                                           #expected, #actual),         \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_uint_helper(expected, actual,        \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list_uint(expected, actual, __VA_ARGS__));    \
 } while (0)
 
@@ -230,10 +239,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_list_string(expected, actual, ...) do         \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_string_helper(expected, actual,          \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_string_helper(expected, actual,      \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list_string(expected, actual, __VA_ARGS__));  \
 } while (0)
 
@@ -255,10 +265,11 @@ G_BEGIN_DECLS
  */
 #define cut_assert_equal_g_list_string(expected, actual, ...) do        \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_string_helper(expected, actual,          \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_string_helper(expected, actual,      \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         cut_assert_equal_g_list_string(expected, actual, __VA_ARGS__)); \
 } while (0)
 #endif
@@ -278,11 +289,12 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_list_object(expected, actual, ...) do         \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_object_helper(expected, actual,          \
-                                             g_direct_equal,            \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_object_helper(expected, actual,      \
+                                                 g_direct_equal,        \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list_object(expected, actual, __VA_ARGS__));  \
 } while (0)
 
@@ -303,11 +315,12 @@ G_BEGIN_DECLS
 #define gcut_assert_equal_list_object_custom(expected, actual,          \
                                              equal_function, ...) do    \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_object_helper(expected, actual,          \
-                                             equal_function,            \
-                                             #expected, #actual),       \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_object_helper(expected, actual,      \
+                                                 equal_function,        \
+                                                 #expected, #actual),   \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list_object_custom(expected, actual,          \
                                               __VA_ARGS__));            \
 } while (0)
@@ -328,10 +341,12 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_list_enum(type, expected, actual, ...) do     \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_enum_helper(type, expected, actual,      \
-                                           #type, #expected, #actual),  \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_enum_helper(type, expected, actual,  \
+                                               #type,                   \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list_enum(type, expected, actual,             \
                                     __VA_ARGS__));                      \
 } while (0)
@@ -352,10 +367,12 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_list_flags(type, expected, actual, ...) do    \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_list_flags_helper(type, expected, actual,     \
-                                            #type, #expected, #actual), \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_list_flags_helper(type, expected, actual, \
+                                                #type,                  \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_list_flags(type, expected, actual,            \
                                      __VA_ARGS__));                     \
 } while (0)
@@ -380,16 +397,18 @@ G_BEGIN_DECLS
                                      equal_function,                    \
                                      key_inspect_function,              \
                                      value_inspect_function,            \
-                                     inspect_user_data) do              \
+                                     inspect_user_data, ...) do         \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_hash_table_helper(expected, actual,           \
-                                            equal_function,             \
-                                            key_inspect_function,       \
-                                            value_inspect_function,     \
-                                            inspect_user_data,          \
-                                            #expected, #actual,         \
-                                            #equal_function),           \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_hash_table_helper(expected, actual,       \
+                                                equal_function,         \
+                                                key_inspect_function,   \
+                                                value_inspect_function, \
+                                                inspect_user_data,      \
+                                                #expected, #actual,     \
+                                                #equal_function),       \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_hash_table(expected, actual));                \
 } while (0)
 
@@ -408,10 +427,11 @@ G_BEGIN_DECLS
 #define gcut_assert_equal_hash_table_string_string(expected, actual,    \
                                                    ...) do              \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_hash_table_string_string_helper(              \
-            expected, actual, #expected, #actual),                      \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_hash_table_string_string_helper(          \
+                expected, actual, #expected, #actual),                  \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_hash_table_string_string(expected, actual,    \
                                                    __VA_ARGS__));       \
 } while (0)
@@ -427,12 +447,13 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.3
  */
-#define gcut_assert_error(error, ...) do                        \
-{                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
-    cut_trace_with_info_expression(                             \
-        gcut_assert_error_helper(error, #error),                \
-        gcut_assert_error(error, __VA_ARGS__));                 \
+#define gcut_assert_error(error, ...) do                \
+{                                                       \
+    cut_trace_with_info_expression(                     \
+        cut_test_with_user_message(                     \
+            gcut_assert_error_helper(error, #error),    \
+            __VA_ARGS__),                               \
+        gcut_assert_error(error, __VA_ARGS__));         \
 } while (0)
 
 #ifndef CUTTER_DISABLE_DEPRECATED
@@ -451,9 +472,10 @@ G_BEGIN_DECLS
  */
 #define cut_assert_g_error(error, ...) do                       \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
     cut_trace_with_info_expression(                             \
-        gcut_assert_error_helper(error, #error),                \
+        cut_test_with_user_message(                             \
+            gcut_assert_error_helper(error, #error),            \
+            __VA_ARGS__),                                       \
         cut_assert_g_error(error, __VA_ARGS__));                \
 } while (0)
 #endif
@@ -472,10 +494,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_error(expected, actual, ...) do               \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_error_helper(expected, actual,                \
-                                       #expected, #actual),             \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_error_helper(expected, actual,            \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_error(expected, actual, __VA_ARGS__));        \
 } while (0)
 
@@ -525,10 +548,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_time_val(expected, actual, ...) do            \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_time_val_helper(expected, actual,             \
-                                          #expected, #actual),          \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_time_val_helper(expected, actual,         \
+                                              #expected, #actual),      \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_time_val(expected, actual,  __VA_ARGS__));    \
 } while (0)
 
@@ -555,10 +579,12 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_enum(enum_type, expected, actual, ...) do     \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_enum_helper(enum_type, expected, actual,      \
-                                      #enum_type, #expected, #actual),  \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_enum_helper(enum_type, expected, actual,  \
+                                          #enum_type,                   \
+                                          #expected, #actual),          \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_enum(enum_type, expected, actual,             \
                                __VA_ARGS__));                           \
 } while (0)
@@ -591,12 +617,13 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_flags(flags_type, expected, actual, ...) do   \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_flags_helper(flags_type,                      \
-                                       expected, actual,                \
-                                       #flags_type,                     \
-                                       #expected, #actual),             \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_flags_helper(flags_type,                  \
+                                           expected, actual,            \
+                                           #flags_type,                 \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_flags(flags_type, expected, actual,           \
                                 __VA_ARGS__));                          \
 } while (0)
@@ -625,13 +652,14 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_object(expected, actual, ...) do              \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_object_helper(G_OBJECT(expected),             \
-                                        G_OBJECT(actual),               \
-                                        NULL,                           \
-                                        #expected, #actual,             \
-                                        NULL),                          \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_object_helper(G_OBJECT(expected),         \
+                                            G_OBJECT(actual),           \
+                                            NULL,                       \
+                                            #expected, #actual,         \
+                                            NULL),                      \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_object(expected, actual, __VA_ARGS__));       \
 } while (0)
 
@@ -669,13 +697,14 @@ G_BEGIN_DECLS
 #define gcut_assert_equal_object_custom(expected, actual,               \
                                         equal_function, ...) do         \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_object_helper(G_OBJECT(expected),             \
-                                        G_OBJECT(actual),               \
-                                        equal_function,                 \
-                                        #expected, #actual,             \
-                                        #equal_function),               \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_object_helper(G_OBJECT(expected),         \
+                                            G_OBJECT(actual),           \
+                                            equal_function,             \
+                                            #expected, #actual,         \
+                                            #equal_function),           \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_object_custom(expected, actual,               \
                                         equal_function, __VA_ARGS__));  \
 } while (0)
@@ -695,10 +724,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_int64(expected, actual, ...) do               \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_int64_helper((expected), (actual),            \
-                                       #expected, #actual),             \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_int64_helper((expected), (actual),        \
+                                           #expected, #actual),         \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_int64(expected, actual, __VA_ARGS__));        \
 } while (0)
 
@@ -716,10 +746,11 @@ G_BEGIN_DECLS
  */
 #define gcut_assert_equal_uint64(expected, actual, ...) do              \
 {                                                                       \
-    cut_set_message_backward_compatibility(__VA_ARGS__);                \
     cut_trace_with_info_expression(                                     \
-        gcut_assert_equal_uint64_helper((expected), (actual),           \
-                                        #expected, #actual),            \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_uint64_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
         gcut_assert_equal_uint64(expected, actual, __VA_ARGS__));       \
 } while (0)
 
@@ -732,11 +763,13 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.6
  */
-#define gcut_assert_equal_pid(expected, actual) do              \
+#define gcut_assert_equal_pid(expected, actual, ...) do         \
 {                                                               \
     cut_trace_with_info_expression(                             \
-        gcut_assert_equal_pid_helper((expected), (actual),      \
-                                        #expected, #actual),    \
+        cut_test_with_user_message(                             \
+            gcut_assert_equal_pid_helper((expected), (actual),  \
+                                         #expected, #actual),   \
+            __VA_ARGS__),                                       \
         gcut_assert_equal_pid(expected, actual));               \
 } while (0)
 
@@ -749,12 +782,14 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.7
  */
-#define gcut_assert_not_equal_pid(expected, actual) do          \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        gcut_assert_not_equal_pid_helper((expected), (actual),  \
-                                         #expected, #actual),   \
-        gcut_assert_not_equal_pid(expected, actual));           \
+#define gcut_assert_not_equal_pid(expected, actual, ...) do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            gcut_assert_not_equal_pid_helper((expected), (actual),      \
+                                             #expected, #actual),       \
+            __VA_ARGS__),                                               \
+        gcut_assert_not_equal_pid(expected, actual));                   \
 } while (0)
 
 G_END_DECLS

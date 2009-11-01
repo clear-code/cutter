@@ -1122,7 +1122,7 @@ void test_treeview_column (void)
   cut_assert (GTK_IS_TREE_VIEW (treeview));
   column = gtk_tree_view_get_column (GTK_TREE_VIEW (treeview), 0);
   cut_assert (GTK_IS_TREE_VIEW_COLUMN (column));
-  cut_assert_equal_string ("Test", gtk_tree_view_column_get_title (column), "Test");
+  cut_assert_equal_string ("Test", gtk_tree_view_column_get_title (column));
 
   renderers = gtk_tree_view_column_get_cell_renderers (column);
   cut_assert_equal_int (1, g_list_length (renderers));

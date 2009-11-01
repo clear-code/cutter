@@ -182,8 +182,9 @@ cut_assert_regex_new_without_free (const gchar       *pattern,
                                    GRegexMatchFlags   match_opts)
 {
   regex = g_regex_new (pattern, compile_opts, match_opts, NULL);
-  cut_assert (regex, "failed (pattern: \"%s\", compile: %d, match %d)",
-	      pattern, compile_opts, match_opts);
+  cut_assert (regex,
+              cut_message ("failed (pattern: \"%s\", compile: %d, match %d)",
+                           pattern, compile_opts, match_opts));
   cut_assert_equal_string (pattern, g_regex_get_pattern (regex));
 }
 
@@ -221,8 +222,9 @@ cut_assert_regex_new_fail (const gchar       *pattern,
 			   GRegexCompileFlags compile_opts)
 {
   regex = g_regex_new (pattern, compile_opts, 0, NULL);
-  cut_assert_null (regex, "failed (pattern: \"%s\", compile: %d)",
-	           pattern, compile_opts);
+  cut_assert_null (regex,
+                   cut_message ("failed (pattern: \"%s\", compile: %d)",
+                                pattern, compile_opts));
 }
 
 void
@@ -336,12 +338,12 @@ cut_assert_match_full (const gchar        *pattern,
                                      pattern_match_options);
   cut_assert (g_regex_match_full (regex, string, length, start_position,
                                   match_options, NULL, NULL),
-              "/%s/ =~ <%s>", pattern, string);
+              cut_message ("/%s/ =~ <%s>", pattern, string));
   if (length == -1 && start_position == 0)
     {
       cut_assert (g_regex_match (regex, string, match_options, NULL),
-	          "failed (pattern: \"%s\", string: \"%s\")",
-                  pattern, string);
+	          cut_message ("failed (pattern: \"%s\", string: \"%s\")",
+                               pattern, string));
     }
   free_regex ();
 }
@@ -394,11 +396,11 @@ cut_assert_mismatch (const gchar       *pattern,
   cut_assert_regex_new_without_free (pattern, compile_opts, match_opts);
   cut_assert (!g_regex_match_full (regex, string, string_len,
                                    start_position, match_opts2, NULL, NULL),
-              "/%s/ !~ <%s>", pattern, string);
+              cut_message ("/%s/ !~ <%s>", pattern, string));
   if (string_len == -1 && start_position == 0)
     {
       cut_assert (!g_regex_match (regex, string, match_opts2, NULL),
-	          "/%s/ !~ <%s>", pattern, string);
+	          cut_message ("/%s/ !~ <%s>", pattern, string));
     }
   free_regex ();
 }
@@ -460,11 +462,11 @@ cut_assert_match_count (const gchar     *pattern,
   if (expected_count == 0)
     cut_assert (!g_regex_match_full (regex, string, -1, start_position,
                                      match_opts, &match_info, NULL),
-                "/%s/ !~ <%s>", pattern, string);
+                cut_message ("/%s/ !~ <%s>", pattern, string));
   else
     cut_assert (g_regex_match_full (regex, string, -1, start_position,
                                     match_opts, &match_info, NULL),
-                "/%s/ =~ <%s>", pattern, string);
+                cut_message ("/%s/ =~ <%s>", pattern, string));
   cut_assert_equal_int (expected_count,
                         g_match_info_get_match_count (match_info));
   free_regex ();
@@ -519,7 +521,7 @@ cut_assert_escape (const gchar *string,
 {
   escaped_string = g_regex_escape_string (string, length);
   cut_assert_equal_string (expected, escaped_string,
-                           "<%s> -> <%s>", string, escaped_string);
+                           cut_message ("<%s> -> <%s>", string, escaped_string));
   free_escaped_string ();
 }
 
@@ -600,9 +602,9 @@ cut_assert_partial_match (const gchar *pattern,
   cut_assert_regex_new_without_free (pattern, 0, 0);
   g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info);
   cut_assert (!g_match_info_fetch_pos (match_info, 0, NULL, NULL),
-              "/%s/ =~ <%s>", pattern, string);
+              cut_message ("/%s/ =~ <%s>", pattern, string));
   cut_assert (!g_match_info_fetch_pos (match_info, 1, NULL, NULL),
-              "/%s/ =~ <%s>", pattern, string);
+              cut_message ("/%s/ =~ <%s>", pattern, string));
 
   free_regex ();
   free_match_info ();
@@ -615,7 +617,7 @@ cut_assert_partial_mismatch (const gchar *pattern,
   cut_assert_regex_new_without_free (pattern, 0, 0);
   g_regex_match (regex, string, G_REGEX_MATCH_PARTIAL, &match_info);
   cut_assert (!g_match_info_is_partial_match (match_info),
-              "/%s/ =~ <%s>", pattern, string);
+              cut_message ("/%s/ =~ <%s>", pattern, string));
 
   free_regex ();
   free_match_info ();
@@ -928,17 +930,17 @@ cut_assert_sub_pattern (const gchar *pattern,
   cut_assert_regex_new_without_free (pattern, 0, 0);
   cut_assert (g_regex_match_full (regex, string, -1, start_position, 0,
                                   &match_info, NULL),
-              "/%s/ =~ <%s>", pattern, string);
+              cut_message ("/%s/ =~ <%s>", pattern, string));
   substring = g_match_info_fetch (match_info, sub_n);
   cut_assert_equal_string_or_null (expected_sub, substring);
   free_substring ();
 
   if (expected_sub)
     cut_assert (g_match_info_fetch_pos (match_info, sub_n, &start, &end),
-                "$%d", sub_n);
+                cut_message ("$%d", sub_n));
   else
     cut_assert (!g_match_info_fetch_pos (match_info, sub_n, &start, &end),
-                "!$%d", sub_n);
+                cut_message ("!$%d", sub_n));
   cut_assert_equal_int (expected_start, start); /* FIXME */
   cut_assert_equal_int (expected_end, end); /* assert_equal_int_array() */
 
@@ -962,60 +964,67 @@ test_sub_pattern (void)
   cut_assert_sub_pattern ("(a)?(b)", "b", 0, 2, "b", 0, 1);
 }
 
-#define TEST_NAMED_SUB_PATTERN(pattern, string, start_position, sub_name, \
-			       expected_sub, expected_start, expected_end) { \
-  gint start = UNTOUCHED, end = UNTOUCHED; \
-  gchar *sub_expr; \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  g_regex_match_full (regex, string, -1, start_position, 0, &match_info, NULL); \
-  sub_expr = g_match_info_fetch_named (match_info, sub_name); \
-  cut_assert_equal_string (expected_sub, sub_expr); \
-  g_free (sub_expr); \
-  g_match_info_fetch_named_pos (match_info, sub_name, &start, &end); \
-  cut_assert (start == expected_start && end == expected_end, \
-      "failed (got [%d, %d], expected [%d, %d])", \
-	       start, end, expected_start, expected_end); \
-  g_regex_unref (regex); \
-  g_match_info_free (match_info); \
-  regex = NULL; \
-  match_info = NULL; \
+#define TEST_NAMED_SUB_PATTERN(pattern, string, start_position,         \
+                               sub_name, expected_sub,                  \
+                               expected_start, expected_end) {          \
+  gint start = UNTOUCHED, end = UNTOUCHED;                              \
+  gchar *sub_expr;                                                      \
+  regex = g_regex_new (pattern, 0, 0, NULL);                            \
+  g_regex_match_full (regex, string, -1, start_position, 0,             \
+                      &match_info, NULL);                               \
+  sub_expr = g_match_info_fetch_named (match_info, sub_name);           \
+  cut_assert_equal_string (expected_sub, sub_expr);                     \
+  g_free (sub_expr);                                                    \
+  g_match_info_fetch_named_pos (match_info, sub_name, &start, &end);    \
+  cut_assert (start == expected_start && end == expected_end,           \
+              cut_message ("failed (got [%d, %d], expected [%d, %d])",  \
+                           start, end, expected_start, expected_end));  \
+  g_regex_unref (regex);                                                \
+  g_match_info_free (match_info);                                       \
+  regex = NULL;                                                         \
+  match_info = NULL;                                                    \
 }
 
-#define TEST_NAMED_SUB_PATTERN_NULL(pattern, string, start_position, sub_name, \
-			            expected_start, expected_end) { \
-  gint start = UNTOUCHED, end = UNTOUCHED; \
-  gchar *sub_expr; \
-  regex = g_regex_new (pattern, 0, 0, NULL); \
-  g_regex_match_full (regex, string, -1, start_position, 0, &match_info, NULL); \
-  sub_expr = g_match_info_fetch_named (match_info, sub_name); \
-  cut_assert_null (sub_expr); \
-  g_match_info_fetch_named_pos (match_info, sub_name, &start, &end); \
-  cut_assert (start == expected_start && end == expected_end, \
-      "failed (got [%d, %d], expected [%d, %d])", \
-	       start, end, expected_start, expected_end); \
-  g_regex_unref (regex); \
-  g_match_info_free (match_info); \
-  regex = NULL; \
-  match_info = NULL; \
+#define TEST_NAMED_SUB_PATTERN_NULL(pattern, string, start_position,    \
+                                    sub_name,                           \
+                                    expected_start, expected_end) {     \
+  gint start = UNTOUCHED, end = UNTOUCHED;                              \
+  gchar *sub_expr;                                                      \
+  regex = g_regex_new (pattern, 0, 0, NULL);                            \
+  g_regex_match_full (regex, string, -1, start_position, 0,             \
+                      &match_info, NULL);                               \
+  sub_expr = g_match_info_fetch_named (match_info, sub_name);           \
+  cut_assert_null (sub_expr);                                           \
+  g_match_info_fetch_named_pos (match_info, sub_name, &start, &end);    \
+  cut_assert (start == expected_start && end == expected_end,           \
+              cut_message ("failed (got [%d, %d], expected [%d, %d])",  \
+                           start, end, expected_start, expected_end));  \
+  g_regex_unref (regex);                                                \
+  g_match_info_free (match_info);                                       \
+  regex = NULL;                                                         \
+  match_info = NULL;                                                    \
 }
 
-#define TEST_NAMED_SUB_PATTERN_DUPNAMES(pattern, string, start_position, sub_name, \
-					expected_sub, expected_start, expected_end) { \
-  gint start = UNTOUCHED, end = UNTOUCHED; \
-  gchar *sub_expr; \
-  regex = g_regex_new (pattern, G_REGEX_DUPNAMES, 0, NULL); \
-  g_regex_match_full (regex, string, -1, start_position, 0, &match_info, NULL); \
-  sub_expr = g_match_info_fetch_named (match_info, sub_name); \
-  cut_assert_equal_string (expected_sub, sub_expr); \
-  g_free (sub_expr); \
-  g_match_info_fetch_named_pos (match_info, sub_name, &start, &end); \
-  cut_assert (start == expected_start && end == expected_end, \
-      "failed (got [%d, %d], expected [%d, %d])", \
-	       start, end, expected_start, expected_end); \
-  g_regex_unref (regex); \
-  g_match_info_free (match_info); \
-  regex = NULL; \
-  match_info = NULL; \
+#define TEST_NAMED_SUB_PATTERN_DUPNAMES(pattern, string,                \
+                                        start_position, sub_name,       \
+					expected_sub,                   \
+                                        expected_start, expected_end) { \
+  gint start = UNTOUCHED, end = UNTOUCHED;                              \
+  gchar *sub_expr;                                                      \
+  regex = g_regex_new (pattern, G_REGEX_DUPNAMES, 0, NULL);             \
+  g_regex_match_full (regex, string, -1, start_position, 0, \
+                      &match_info, NULL);                               \
+  sub_expr = g_match_info_fetch_named (match_info, sub_name);           \
+  cut_assert_equal_string (expected_sub, sub_expr);                     \
+  g_free (sub_expr);                                                    \
+  g_match_info_fetch_named_pos (match_info, sub_name, &start, &end);    \
+  cut_assert (start == expected_start && end == expected_end,           \
+              cut_message ("failed (got [%d, %d], expected [%d, %d])",  \
+                           start, end, expected_start, expected_end));  \
+  g_regex_unref (regex);                                                \
+  g_match_info_free (match_info);                                       \
+  regex = NULL;                                                         \
+  match_info = NULL;                                                    \
 }
 
 void
@@ -1263,10 +1272,10 @@ cut_assert_match_all_each (const gchar *pattern,
         cut_assert (!g_regex_match_all_full (regex, string, string_len,
                                              start_position, 0, &match_info,
                                              NULL),
-                    "/%s/ !~ <%s>", pattern, string);
+                    cut_message ("/%s/ !~ <%s>", pattern, string));
       else
         cut_assert (!g_regex_match_all (regex, string, 0, &match_info),
-                    "/%s/ !~ <%s>", pattern, string);
+                    cut_message ("/%s/ !~ <%s>", pattern, string));
     }
   else
     {
@@ -1274,10 +1283,10 @@ cut_assert_match_all_each (const gchar *pattern,
         cut_assert (g_regex_match_all_full (regex, string, string_len,
                                             start_position, 0, &match_info,
                                             NULL),
-                    "/%s/ =~ <%s>", pattern, string);
+                    cut_message ("/%s/ =~ <%s>", pattern, string));
       else
         cut_assert (g_regex_match_all (regex, string, 0, &match_info),
-                    "/%s/ =~ <%s>", pattern, string);
+                    cut_message ("/%s/ =~ <%s>", pattern, string));
     }
 
   match_count = g_match_info_get_match_count (match_info);
@@ -1292,15 +1301,17 @@ cut_assert_match_all_each (const gchar *pattern,
 
       matched_string = g_match_info_fetch (match_info, i);
       cut_assert_equal_string (expected_match->string, matched_string,
-                               "/%s/ =~ <%s>",
-                               pattern, expected_match->string, i, match_count);
+                               cut_message ("/%s/ =~ <%s>",
+                                            pattern, expected_match->string));
       g_free (matched_string);
 
       cut_assert (g_match_info_fetch_pos (match_info, i, &start, &end));
       cut_assert_equal_int (expected_match->start, start,
-                            "/%s/ =~ <%s>", pattern, expected_match->string);
+                            cut_message ("/%s/ =~ <%s>",
+                                         pattern, expected_match->string));
       cut_assert_equal_int (expected_match->end, end,
-                            "/%s/ =~ <%s>", pattern, expected_match->string);
+                            cut_message ("/%s/ =~ <%s>",
+                                         pattern, expected_match->string));
 
       expected_node = g_slist_next (expected_node);
     }

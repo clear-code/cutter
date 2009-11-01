@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
  *

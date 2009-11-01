@@ -993,30 +993,27 @@ test_get_grouped_operations (void)
                                          alnum, alnum_garbage);
 }
 
-#define cut_assert_ratio(expected,                                      \
-                         sequence_matcher,                              \
-                         sequence_matcher_inspect) do                   \
-{                                                                       \
-    matcher = (sequence_matcher);                                       \
-    cut_assert_equal_double(expected,                                   \
-                            0.01,                                       \
-                            cut_sequence_matcher_get_ratio(matcher),    \
-                            "cut_sequence_matcher_get_ratio(%s)",       \
-                            sequence_matcher_inspect);                  \
-    g_object_unref(matcher);                                            \
-    matcher = NULL;                                                     \
-} while (0)
+static void
+cut_assert_ratio(gdouble expected, CutSequenceMatcher *sequence_matcher,
+                 const gchar *sequence_matcher_inspect)
+{
+    matcher = sequence_matcher;
+    cut_assert_equal_double(expected,
+                            0.01,
+                            cut_sequence_matcher_get_ratio(matcher),
+                            cut_message("cut_sequence_matcher_get_ratio(%s)",
+                                        sequence_matcher_inspect));
+    g_object_unref(matcher);
+    matcher = NULL;
+}
 
-#define cut_assert_ratio_string(expected, from, to) do                  \
-{                                                                       \
-    gchar **_from, **_to;                                               \
-    _from = (from);                                                     \
-    _to = (to);                                                         \
-                                                                        \
-    cut_assert_ratio(expected,                                          \
-                     string_matcher_new(_from, _to),                    \
-                     inspect_string_matcher(_from, _to));               \
-} while (0)
+static void
+cut_assert_ratio_string (gdouble expected, gchar **from, gchar **to)
+{
+    cut_assert_ratio(expected,
+                     string_matcher_new(from, to),
+                     inspect_string_matcher(from, to));
+}
 
 void
 test_get_ratio_for_string_sequence (void)

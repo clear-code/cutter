@@ -22,8 +22,6 @@
 
 #include <glib-object.h>
 
-#include <setjmp.h>
-
 #include <cutter/cut-private.h>
 #include <cutter/cut-public.h>
 #include <cutter/cut-test-data.h>
@@ -109,9 +107,6 @@ void          cut_test_context_set_failed     (CutTestContext *context,
                                                gboolean        failed);
 gboolean      cut_test_context_is_failed      (CutTestContext *context);
 
-void          cut_test_context_set_jump       (CutTestContext *context,
-                                               jmp_buf        *buffer);
-jmp_buf      *cut_test_context_get_jump       (CutTestContext *context);
 void          cut_test_context_emit_signal    (CutTestContext *context,
                                                CutTestResult  *result);
 

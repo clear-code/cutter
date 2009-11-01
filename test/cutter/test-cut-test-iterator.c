@@ -304,7 +304,7 @@ stub_success_iterated_test (gconstpointer data)
     static int i = 0;
 
     i++;
-    cut_assert_true(TRUE, "always pass");
+    cut_assert_true(TRUE, cut_message("always pass"));
     cut_assert_equal_int(i, GPOINTER_TO_INT(data));
 }
 
@@ -328,9 +328,9 @@ test_success (void)
 static void
 stub_failure_iterated_test (gconstpointer data)
 {
-    cut_assert_true(TRUE, "always pass");
+    cut_assert_true(TRUE, cut_message("always pass"));
     MARK_FAIL(cut_assert_equal_int(2, GPOINTER_TO_INT(data)));
-    cut_assert_true(TRUE, "always pass if come here");
+    cut_assert_true(TRUE, cut_message("always pass if come here"));
 }
 
 void
@@ -372,10 +372,10 @@ test_failure (void)
 static void
 stub_error_iterated_test (gconstpointer data)
 {
-    cut_assert_true(TRUE, "always pass");
+    cut_assert_true(TRUE, cut_message("always pass"));
     if (GPOINTER_TO_INT(data) == 2)
         MARK_FAIL(cut_error("ERROR!"));
-    cut_assert_true(TRUE, "always pass if come here");
+    cut_assert_true(TRUE, cut_message("always pass if come here"));
 }
 
 void
@@ -415,10 +415,10 @@ test_error (void)
 static void
 stub_pending_iterated_test (gconstpointer data)
 {
-    cut_assert_true(TRUE, "always pass");
+    cut_assert_true(TRUE, cut_message("always pass"));
     if (GPOINTER_TO_INT(data) == 2)
         MARK_FAIL(cut_pend("PENDING!"));
-    cut_assert_true(TRUE, "always pass if come here");
+    cut_assert_true(TRUE, cut_message("always pass if come here"));
 }
 
 void
@@ -458,10 +458,10 @@ test_pending (void)
 static void
 stub_notification_iterated_test (gconstpointer data)
 {
-    cut_assert_true(TRUE, "always pass");
+    cut_assert_true(TRUE, cut_message("always pass"));
     if (GPOINTER_TO_INT(data) == 2)
         MARK_FAIL(cut_notify("NOTIFICATION!"));
-    cut_assert_true(TRUE, "always pass if come here");
+    cut_assert_true(TRUE, cut_message("always pass if come here"));
 }
 
 void
@@ -506,10 +506,10 @@ test_notification (void)
 static void
 stub_omission_iterated_test (gconstpointer data)
 {
-    cut_assert_true(TRUE, "always pass");
+    cut_assert_true(TRUE, cut_message("always pass"));
     if (GPOINTER_TO_INT(data) == 2)
         MARK_FAIL(cut_omit("OMISSION!"));
-    cut_assert_true(TRUE, "always pass if come here");
+    cut_assert_true(TRUE, cut_message("always pass if come here"));
 }
 
 void
@@ -563,7 +563,7 @@ stub_error_in_data_setup_iterated_data (void)
 static void
 stub_error_in_data_setup_iterated_test (gconstpointer data)
 {
-    cut_assert_true(TRUE, "always pass");
+    cut_assert_true(TRUE, cut_message("always pass"));
 }
 
 void

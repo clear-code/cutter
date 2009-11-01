@@ -43,11 +43,14 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.8
  */
-#define soupcut_message_assert_equal_content_type(expected, message) do \
+#define soupcut_message_assert_equal_content_type(expected, message,    \
+                                                  ...) do               \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        soupcut_message_assert_equal_content_type_helper(               \
-            expected, message, #expected, #message),                    \
+        cut_test_with_user_message(                                     \
+            soupcut_message_assert_equal_content_type_helper(           \
+                expected, message, #expected, #message),                \
+            __VA_ARGS__),                                               \
         soupcut_message_assert_equal_content_type(expected, message));  \
 } while (0)
 
@@ -61,11 +64,14 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.8
  */
-#define soupcut_client_assert_equal_content_type(expected, client) do   \
+#define soupcut_client_assert_equal_content_type(expected, client,      \
+                                                 ...) do                \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        soupcut_client_assert_equal_content_type_helper(                \
-            expected, client, #expected, #client),                      \
+        cut_test_with_user_message(                                     \
+            soupcut_client_assert_equal_content_type_helper(            \
+                expected, client, #expected, #client),                  \
+            __VA_ARGS__),                                               \
         soupcut_client_assert_equal_content_type(expected, client));    \
 } while (0)
 
@@ -78,11 +84,13 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.8
  */
-#define soupcut_client_assert_response(client) do               \
-{                                                               \
-    cut_trace_with_info_expression(                             \
-        soupcut_client_assert_response_helper(client, #client), \
-        soupcut_client_assert_response(client));                \
+#define soupcut_client_assert_response(client, ...) do                  \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            soupcut_client_assert_response_helper(client, #client),     \
+            __VA_ARGS__),                                               \
+        soupcut_client_assert_response(client));                        \
 } while (0)
 
 /**
@@ -94,11 +102,15 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.8
  */
-#define soupcut_client_assert_equal_body(expected, client) do           \
+#define soupcut_client_assert_equal_body(expected, client, ...) do      \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        soupcut_client_assert_equal_body_helper(expected, client,       \
-                                                #expected, #client),    \
+        cut_test_with_user_message(                                     \
+            soupcut_client_assert_equal_body_helper(expected,           \
+                                                    client,             \
+                                                    #expected,          \
+                                                    #client),           \
+            __VA_ARGS__),                                               \
         soupcut_client_assert_equal_body(expected, client));            \
 } while (0)
 
@@ -112,11 +124,13 @@ G_BEGIN_DECLS
  *
  * Since: 1.0.8
  */
-#define soupcut_client_assert_match_body(pattern, client) do            \
+#define soupcut_client_assert_match_body(pattern, client, ...) do       \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-        soupcut_client_assert_match_body_helper(pattern, client,        \
-                                                #pattern, #client),     \
+        cut_test_with_user_message(                                     \
+            soupcut_client_assert_match_body_helper(pattern, client,    \
+                                                    #pattern, #client), \
+            __VA_ARGS__),                                               \
         soupcut_client_assert_match_body(pattern, client));             \
 } while (0)
 

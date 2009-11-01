@@ -35,7 +35,7 @@ test_small_writes (void)
 
   io = g_io_channel_new_file ("iochannel-test-outfile", "w", &error);
   
-  gcut_assert_error (error, "Unable to open file: iochannel-test-outfile");
+  gcut_assert_error (error);
 
   g_io_channel_set_encoding (io, NULL, NULL);
   g_io_channel_set_buffer_size (io, 1022);
@@ -77,10 +77,10 @@ test_iochannel (void)
   filename = g_build_filename (srcdir, "iochannel-test-infile", NULL);
 
   gio_r = g_io_channel_new_file (filename, "r", &error);
-  gcut_assert_error (error, "Unable to open file");
+  gcut_assert_error (error);
 
   gio_w = g_io_channel_new_file ("iochannel-test-outfile", "w", &error);
-  gcut_assert_error (error, "Unable to open file: iochannel-test-outfile");
+  gcut_assert_error (error);
 
   g_io_channel_set_encoding (gio_r, encoding, &error);
   gcut_assert_error (error);

@@ -1892,14 +1892,15 @@ test_pending (void)
 
     g_signal_connect(test, "pending", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert_false(run(), "cut_pend() did not return FALSE!");
+    cut_assert_false(run(), cut_message("cut_pend() did not return FALSE!"));
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
 
     cut_assert_not_null(test_result,
-                        "Could not get a CutTestResult object "
-                        "since \"pending\" signal was not emitted.");
+                        cut_message("Could not get a CutTestResult object "
+                                    "since \"pending\" signal "
+                                    "was not emitted."));
     cut_assert_equal_int(CUT_TEST_RESULT_PENDING,
                          cut_test_result_get_status(test_result));
 }
@@ -1919,14 +1920,15 @@ test_notification (void)
 
     g_signal_connect(test, "notification", G_CALLBACK(cb_collect_result),
                      &test_result);
-    cut_assert_true(run(), "cut_notify() did return TRUE!");
+    cut_assert_true(run(), cut_message("cut_notify() did return TRUE!"));
     g_signal_handlers_disconnect_by_func(test,
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
 
     cut_assert_not_null(test_result,
-                        "Could not get a CutTestResult object "
-                        "since \"notification\" signal was not emitted.");
+                        cut_message("Could not get a CutTestResult object "
+                                    "since \"notification\" signal "
+                                    "was not emitted."));
     cut_assert_equal_int(CUT_TEST_RESULT_NOTIFICATION,
                          cut_test_result_get_status(test_result));
 }
@@ -1951,8 +1953,9 @@ test_fail (void)
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
     cut_assert_not_null(test_result,
-                        "Could not get a CutTestResult object "
-                        "since \"failure\" signal was not emitted.");
+                        cut_message("Could not get a CutTestResult object "
+                                    "since \"failure\" signal "
+                                    "was not emitted."));
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
 
@@ -1963,7 +1966,7 @@ test_fail (void)
 static void
 stub_assert_message (void)
 {
-    cut_assert(FALSE, "The message of %s", "assertion");
+    cut_assert(FALSE, cut_message("The message of %s", "assertion"));
 }
 
 void
@@ -1981,8 +1984,9 @@ test_assert_message (void)
                                          G_CALLBACK(cb_collect_result),
                                          &test_result);
     cut_assert_not_null(test_result,
-                        "Could not get a CutTestResult object "
-                        "since \"failure\" signal was not emitted.");
+                        cut_message("Could not get a CutTestResult object "
+                                    "since \"failure\" signal "
+                                    "was not emitted."));
     cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
                          cut_test_result_get_status(test_result));
     cut_assert_equal_string("The message of assertion",
@@ -1993,8 +1997,8 @@ static void
 stub_assert_message_with_format_string (void)
 {
     MARK_FAIL(cut_assert_equal_string("%s", "%d",
-                                      "%s and %s have format string",
-                                      "expected", "actual"));
+                                      cut_message("%s and %s have format string",
+                                                  "expected", "actual")));
 }
 
 void
@@ -2113,10 +2117,10 @@ static void
 assert_errno_for_eacces (void)
 {
     errno = 0;
-    cut_assert_errno("Passed");
+    cut_assert_errno(cut_message("Passed"));
 
     errno = EACCES;
-    cut_assert_errno("Failed");
+    cut_assert_errno(cut_message("Failed"));
 }
 
 void
@@ -2201,7 +2205,7 @@ static void
 match_test (void)
 {
     cut_assert_match("^abc", "abc");
-    cut_assert_match("^abc", " abc", "FAILED");
+    cut_assert_match("^abc", " abc", cut_message("FAILED"));
 }
 
 void
@@ -2268,10 +2272,10 @@ static void
 error_errno (void)
 {
     errno = 0;
-    cut_error_errno("Not error");
+    cut_error_errno(cut_message("Not error"));
 
     errno = EACCES;
-    cut_error_errno("Should error");
+    cut_error_errno(cut_message("Should error"));
 }
 
 void

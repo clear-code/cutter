@@ -1109,7 +1109,7 @@ test_lonely_dash (void)
   cut_assert (g_option_context_parse (context, &argc, &argv, &error));
 
   cut_assert (argv[1]);
-  cut_assert ("-", argv[1]);
+  cut_assert_equal_string ("-", argv[1]);
 }
 
 void

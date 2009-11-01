@@ -1,5 +1,17 @@
 2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/, gcutter/gcut-assertions.h,
+	gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h,
+	soupcutter/soupcut-assertions.h:
+	[API CHANGED] re-enable optional assertion user
+	message but API is changed. cut_message() is required:
+	  before:
+	    cut_assert_equal_string("a", "b", "message");
+	  after:
+	    cut_assert_equal_string("a", "b", cut_message("message"));
+
+	* test/, sample/: follow the above changes.
+
 	* cutter/cut-assertions-helper.h: fix indentation.
 
 2009-11-01  Kouhei Sutou  <kou@cozmixng.org>

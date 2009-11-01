@@ -431,6 +431,24 @@ void cut_shutdown(void);
 #define cut_keep_message()                                              \
     cut_test_context_keep_user_message(cut_get_current_test_context())
 
+/**
+ * cut_message:
+ * @format: the message format. See the printf() documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Specifies optional assertion message.
+ *
+ * e.g.:
+ *   cut_assert_equal_string("abc", "def",
+ *                           cut_message("should fail!"));
+ *
+ * Since: 1.1.0
+ */
+#define cut_message(...)                                            \
+    cut_test_context_set_current_result_user_message(               \
+        cut_get_current_test_context(),                             \
+        cut_take_printf(__VA_ARGS__))
+
 #ifdef __cplusplus
 }
 #endif

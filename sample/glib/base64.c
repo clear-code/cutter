@@ -99,8 +99,10 @@ test_incremental_with_line_breaks_for_length (gsize length)
   test_incremental (FALSE, length,
 		    &encoded_length, &decoded_length);
   cut_assert (encoded_length <= max,
-	      "Too long encoded length: got %d, expected max %d",
-	      encoded_length, max);
+	      cut_message ("Too long encoded length: got "
+                           "%" G_GSIZE_FORMAT ", expected max "
+                           "%" G_GSIZE_FORMAT,
+                           encoded_length, max));
   cut_assert_equal_memory (data, length, data2, decoded_length);
 }
 
@@ -112,8 +114,10 @@ test_incremental_no_line_breaks_for_length (gsize length)
   test_incremental (FALSE, length,
 		    &encoded_length, &decoded_length);
   cut_assert (encoded_length <= max,
-	      "Too long encoded length: got %d, expected max %d",
-	      encoded_length, max);
+	      cut_message ("Too long encoded length: got "
+                           "%" G_GSIZE_FORMAT ", expected max "
+                           "%" G_GSIZE_FORMAT,
+                           encoded_length, max));
   cut_assert_equal_memory (data, length, data2, decoded_length);
 }
 

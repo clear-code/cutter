@@ -14,7 +14,7 @@ test_invoke (void)
     const gchar *test_dir;
 
     test_dir = g_getenv(CUTTEST_TEST_DIR_KEY);
-    cut_assert_not_null(test_dir, "ENV[%s]", CUTTEST_TEST_DIR_KEY);
+    cut_assert_not_null(test_dir, cut_message("ENV[%s]", CUTTEST_TEST_DIR_KEY));
     sub_process = cut_take_new_sub_process(test_dir);
     cut_sub_process_run(sub_process);
 }

@@ -27,32 +27,6 @@
 #include <cutter/cut-loader.h>
 #include "../lib/cuttest-assertions.h"
 
-CPPCUT_BEGIN_TEST_DECLS
-void test_equal_int(void);
-void test_equal_int_reference(void);
-void test_equal_unsigned_int(void);
-void test_equal_long(void);
-void test_equal_unsigned_long(void);
-void test_equal_long_long(void);
-void test_equal_unsigned_long_long(void);
-void test_equal_c_string(void);
-void test_equal_c_string_reference(void);
-void test_equal_string(void);
-CPPCUT_END_TEST_DECLS
-
-static CutTest *test;
-static CutRunContext *run_context;
-static CutTestContext *test_context;
-static CutTestResult *test_result;
-
-static GError *error;
-static GError *error1, *error2;
-static gboolean need_to_free_error;
-
-static GType flags_type = 0;
-
-static gint fail_line;
-
 #define MARK_FAIL(assertion) do                 \
 {                                               \
     fail_line = __LINE__;                       \
@@ -61,322 +35,350 @@ static gint fail_line;
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
 
-static gboolean
-run (void)
+namespace assertions
 {
-    gboolean success;
+    CutTest *test;
+    CutRunContext *run_context;
+    CutTestContext *test_context;
+    CutTestResult *test_result;
 
-    run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
+    GError *error;
+    GError *error1, *error2;
+    gboolean need_to_free_error;
 
-    test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
-    cut_test_context_current_push(test_context);
-    success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
-                                       test, test_context);
-    cut_test_context_current_pop();
+    GType flags_type = 0;
 
-    return success;
-}
+    gint fail_line;
 
-void
-cut_setup (void)
-{
-    test = NULL;
-    run_context = NULL;
-    test_context = NULL;
-    test_result = NULL;
+    static gboolean
+    run (void)
+    {
+        gboolean success;
 
-    fail_line = 0;
-}
+        run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
 
-void
-cut_teardown (void)
-{
-    if (test)
-        g_object_unref(test);
-    if (run_context)
-        g_object_unref(run_context);
-    if (test_context)
-        g_object_unref(test_context);
-    if (test_result)
-        g_object_unref(test_result);
-}
+        test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
+        cut_test_context_current_push(test_context);
+        success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                           test, test_context);
+        cut_test_context_current_pop();
+
+        return success;
+    }
+
+    void
+    cut_setup (void)
+    {
+        test = NULL;
+        run_context = NULL;
+        test_context = NULL;
+        test_result = NULL;
+
+        fail_line = 0;
+    }
+
+    void
+    cut_teardown (void)
+    {
+        if (test)
+            g_object_unref(test);
+        if (run_context)
+            g_object_unref(run_context);
+        if (test_context)
+            g_object_unref(test_context);
+        if (test_result)
+            g_object_unref(test_result);
+    }
 
 
-static void
-stub_equal_int (void)
-{
-    cppcut_assert_equal(100, 100);
-    MARK_FAIL(cppcut_assert_equal(100, 1 - 2));
-}
+    static void
+    stub_equal_int (void)
+    {
+        cppcut_assert_equal(100, 100);
+        MARK_FAIL(cppcut_assert_equal(100, 1 - 2));
+    }
 
-void
-test_equal_int (void)
-{
-    test = cut_test_new("equal_int test", stub_equal_int);
-    cut_assert_not_null(test);
+    void
+    test_equal_int (void)
+    {
+        test = cut_test_new("equal_int test", stub_equal_int);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_int test",
-                           NULL,
-                           "<100 == 1 - 2>",
-                           "100", "-1",
-                           FAIL_LOCATION, "void stub_equal_int()",
-                           NULL);
-}
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_int test",
+                               NULL,
+                               "<100 == 1 - 2>",
+                               "100", "-1",
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_int()",
+                               NULL);
+    }
 
-static void
-stub_equal_int_reference (void)
-{
-    int expected = 100;
-    int actual = -100;
-    cppcut_assert_equal(expected, expected);
-    MARK_FAIL(cppcut_assert_equal(expected, actual));
-}
+    static void
+    stub_equal_int_reference (void)
+    {
+        int expected = 100;
+        int actual = -100;
+        cppcut_assert_equal(expected, expected);
+        MARK_FAIL(cppcut_assert_equal(expected, actual));
+    }
 
-void
-test_equal_int_reference (void)
-{
-    test = cut_test_new("equal_int_reference test", stub_equal_int_reference);
-    cut_assert_not_null(test);
+    void
+    test_equal_int_reference (void)
+    {
+        test = cut_test_new("equal_int_reference test",
+                            stub_equal_int_reference);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_int_reference test",
-                           NULL,
-                           "<expected == actual>",
-                           "100", "-100",
-                           FAIL_LOCATION, "void stub_equal_int_reference()",
-                           NULL);
-}
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_int_reference test",
+                               NULL,
+                               "<expected == actual>",
+                               "100", "-100",
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_int_reference()",
+                               NULL);
+    }
 
-static void
-stub_equal_unsigned_int (void)
-{
-    cppcut_assert_equal(100, 100);
-    MARK_FAIL(cppcut_assert_equal(100, 2 - 1));
-}
+    static void
+    stub_equal_unsigned_int (void)
+    {
+        cppcut_assert_equal(100, 100);
+        MARK_FAIL(cppcut_assert_equal(100, 2 - 1));
+    }
 
-void
-test_equal_unsigned_int (void)
-{
-    test = cut_test_new("equal_unsigned_int test", stub_equal_unsigned_int);
-    cut_assert_not_null(test);
+    void
+    test_equal_unsigned_int (void)
+    {
+        test = cut_test_new("equal_unsigned_int test", stub_equal_unsigned_int);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_unsigned_int test",
-                           NULL,
-                           "<100 == 2 - 1>",
-                           "100", "1",
-                           FAIL_LOCATION, "void stub_equal_unsigned_int()",
-                           NULL);
-}
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_unsigned_int test",
+                               NULL,
+                               "<100 == 2 - 1>",
+                               "100", "1",
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_unsigned_int()",
+                               NULL);
+    }
 
-static void
-stub_equal_long (void)
-{
+    static void
+    stub_equal_long (void)
+    {
 #if GLIB_SIZEOF_LONG == 8
-    cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
-    MARK_FAIL(cppcut_assert_equal(G_MAXINT64, G_MAXINT64 - 1));
+        cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
+        MARK_FAIL(cppcut_assert_equal(G_MAXINT64, G_MAXINT64 - 1));
 #else
-    cppcut_assert_equal(G_MAXINT32, G_MAXINT32);
-    MARK_FAIL(cppcut_assert_equal(G_MAXINT32, G_MAXINT32 - 1));
+        cppcut_assert_equal(G_MAXINT32, G_MAXINT32);
+        MARK_FAIL(cppcut_assert_equal(G_MAXINT32, G_MAXINT32 - 1));
 #endif
-}
+    }
 
-void
-test_equal_long (void)
-{
-    test = cut_test_new("equal_long test", stub_equal_long);
-    cut_assert_not_null(test);
+    void
+    test_equal_long (void)
+    {
+        test = cut_test_new("equal_long test", stub_equal_long);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_long test",
-                           NULL,
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_long test",
+                               NULL,
 #if GLIB_SIZEOF_LONG == 8
-                           "<G_MAXINT64 == G_MAXINT64 - 1>",
-                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
-                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
+                               "<G_MAXINT64 == G_MAXINT64 - 1>",
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
 #else
-                           "<G_MAXINT32 == G_MAXINT32 - 1>",
-                           cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32),
-                           cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32 - 1),
+                               "<G_MAXINT32 == G_MAXINT32 - 1>",
+                               cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32),
+                               cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32 - 1),
 #endif
-                           FAIL_LOCATION, "void stub_equal_long()",
-                           NULL);
-}
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_long()",
+                               NULL);
+    }
 
-static void
-stub_equal_unsigned_long (void)
-{
+    static void
+    stub_equal_unsigned_long (void)
+    {
 #if GLIB_SIZEOF_LONG == 8
-    cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
-    MARK_FAIL(cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64 - 1));
+        cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
+        MARK_FAIL(cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64 - 1));
 #else
-    cppcut_assert_equal(G_MAXUINT32, G_MAXUINT32);
-    MARK_FAIL(cppcut_assert_equal(G_MAXUINT32, G_MAXUINT32 - 1));
+        cppcut_assert_equal(G_MAXUINT32, G_MAXUINT32);
+        MARK_FAIL(cppcut_assert_equal(G_MAXUINT32, G_MAXUINT32 - 1));
 #endif
-}
+    }
 
-void
-test_equal_unsigned_long (void)
-{
-    test = cut_test_new("equal_unsigned_long test", stub_equal_unsigned_long);
-    cut_assert_not_null(test);
+    void
+    test_equal_unsigned_long (void)
+    {
+        test = cut_test_new("equal_unsigned_long test",
+                            stub_equal_unsigned_long);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_unsigned_long test",
-                           NULL,
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_unsigned_long test",
+                               NULL,
 #if GLIB_SIZEOF_LONG == 8
-                           "<G_MAXUINT64 == G_MAXUINT64 - 1>",
-                           cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
-                           cut_take_printf("%" G_GUINT64_FORMAT,
-                                           G_MAXUINT64 - 1),
+                               "<G_MAXUINT64 == G_MAXUINT64 - 1>",
+                               cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
+                               cut_take_printf("%" G_GUINT64_FORMAT,
+                                               G_MAXUINT64 - 1),
 #else
-                           "<G_MAXUINT32 == G_MAXUINT32 - 1>",
-                           cut_take_printf("%" G_GUINT32_FORMAT, G_MAXUINT32),
-                           cut_take_printf("%" G_GUINT32_FORMAT,
-                                           G_MAXUINT32 - 1),
+                               "<G_MAXUINT32 == G_MAXUINT32 - 1>",
+                               cut_take_printf("%" G_GUINT32_FORMAT, G_MAXUINT32),
+                               cut_take_printf("%" G_GUINT32_FORMAT,
+                                               G_MAXUINT32 - 1),
 #endif
-                           FAIL_LOCATION, "void stub_equal_unsigned_long()",
-                           NULL);
-}
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_unsigned_long()",
+                               NULL);
+    }
 
-static void
-stub_equal_long_long (void)
-{
-    cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
-    MARK_FAIL(cppcut_assert_equal(G_MAXINT64, G_MAXINT64 - 1));
-}
+    static void
+    stub_equal_long_long (void)
+    {
+        cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
+        MARK_FAIL(cppcut_assert_equal(G_MAXINT64, G_MAXINT64 - 1));
+    }
 
-void
-test_equal_long_long (void)
-{
-    test = cut_test_new("equal_long_long test", stub_equal_long_long);
-    cut_assert_not_null(test);
+    void
+    test_equal_long_long (void)
+    {
+        test = cut_test_new("equal_long_long test", stub_equal_long_long);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_long_long test",
-                           NULL,
-                           "<G_MAXINT64 == G_MAXINT64 - 1>",
-                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
-                           cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
-                           FAIL_LOCATION, "void stub_equal_long_long()",
-                           NULL);
-}
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_long_long test",
+                               NULL,
+                               "<G_MAXINT64 == G_MAXINT64 - 1>",
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_long_long()",
+                               NULL);
+    }
 
-static void
-stub_equal_unsigned_long_long (void)
-{
-    cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
-    MARK_FAIL(cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64 - 1));
-}
+    static void
+    stub_equal_unsigned_long_long (void)
+    {
+        cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
+        MARK_FAIL(cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64 - 1));
+    }
 
-void
-test_equal_unsigned_long_long (void)
-{
-    test = cut_test_new("equal_unsigned_long_long test",
-                        stub_equal_unsigned_long_long);
-    cut_assert_not_null(test);
+    void
+    test_equal_unsigned_long_long (void)
+    {
+        test = cut_test_new("equal_unsigned_long_long test",
+                            stub_equal_unsigned_long_long);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_unsigned_long_long test",
-                           NULL,
-                           "<G_MAXUINT64 == G_MAXUINT64 - 1>",
-                           cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
-                           cut_take_printf("%" G_GUINT64_FORMAT,
-                                           G_MAXUINT64 - 1U),
-                           FAIL_LOCATION, "void stub_equal_unsigned_long_long()",
-                           NULL);
-}
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_unsigned_long_long test",
+                               NULL,
+                               "<G_MAXUINT64 == G_MAXUINT64 - 1>",
+                               cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
+                               cut_take_printf("%" G_GUINT64_FORMAT,
+                                               G_MAXUINT64 - 1U),
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_unsigned_long_long()",
+                               NULL);
+    }
 
-static void
-stub_equal_c_string (void)
-{
-    cppcut_assert_equal("abcde", "abcde");
-    MARK_FAIL(cppcut_assert_equal("abcde", "ABcDE"));
-}
+    static void
+    stub_equal_c_string (void)
+    {
+        cppcut_assert_equal("abcde", "abcde");
+        MARK_FAIL(cppcut_assert_equal("abcde", "ABcDE"));
+    }
 
-void
-test_equal_c_string (void)
-{
-    test = cut_test_new("equal_c_string test", stub_equal_c_string);
-    cut_assert_not_null(test);
+    void
+    test_equal_c_string (void)
+    {
+        test = cut_test_new("equal_c_string test", stub_equal_c_string);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_c_string test",
-                           NULL,
-                           "<\"abcde\" == \"ABcDE\">",
-                           "abcde", "ABcDE",
-                           FAIL_LOCATION, "void stub_equal_c_string()",
-                           NULL);
-}
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_c_string test",
+                               NULL,
+                               "<\"abcde\" == \"ABcDE\">",
+                               "abcde", "ABcDE",
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_c_string()",
+                               NULL);
+    }
 
-static void
-stub_equal_c_string_reference (void)
-{
-    char expected[] = "abcde";
-    char actual[] = "ABcDE";
-    cppcut_assert_equal(expected, expected);
-    MARK_FAIL(cppcut_assert_equal(expected, actual));
-}
+    static void
+    stub_equal_c_string_reference (void)
+    {
+        char expected[] = "abcde";
+        char actual[] = "ABcDE";
+        cppcut_assert_equal(expected, expected);
+        MARK_FAIL(cppcut_assert_equal(expected, actual));
+    }
 
-void
-test_equal_c_string_reference (void)
-{
-    test = cut_test_new("equal_c_string_reference test",
-                        stub_equal_c_string_reference);
-    cut_assert_not_null(test);
+    void
+    test_equal_c_string_reference (void)
+    {
+        test = cut_test_new("equal_c_string_reference test",
+                            stub_equal_c_string_reference);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_c_string_reference test",
-                           NULL,
-                           "<expected == actual>",
-                           "abcde", "ABcDE",
-                           FAIL_LOCATION, "void stub_equal_c_string_reference()",
-                           NULL);
-}
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_c_string_reference test",
+                               NULL,
+                               "<expected == actual>",
+                               "abcde", "ABcDE",
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_c_string_reference()",
+                               NULL);
+    }
 
-static void
-stub_equal_string (void)
-{
-    std::string expected("abcde");
-    std::string actual("ABcDE");
-    cppcut_assert_equal(expected, expected);
-    MARK_FAIL(cppcut_assert_equal(expected, actual));
-}
+    static void
+    stub_equal_string (void)
+    {
+        std::string expected("abcde");
+        std::string actual("ABcDE");
+        cppcut_assert_equal(expected, expected);
+        MARK_FAIL(cppcut_assert_equal(expected, actual));
+    }
 
-void
-test_equal_string (void)
-{
-    test = cut_test_new("equal_string test", stub_equal_string);
-    cut_assert_not_null(test);
+    void
+    test_equal_string (void)
+    {
+        test = cut_test_new("equal_string test", stub_equal_string);
+        cut_assert_not_null(test);
 
-    cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                           "equal_string test",
-                           NULL,
-                           "<expected == actual>",
-                           "abcde", "ABcDE",
-                           FAIL_LOCATION, "void stub_equal_string()",
-                           NULL);
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_string test",
+                               NULL,
+                               "<expected == actual>",
+                               "abcde", "ABcDE",
+                               FAIL_LOCATION,
+                               "void assertions::stub_equal_string()",
+                               NULL);
+    }
 }
 
 /*

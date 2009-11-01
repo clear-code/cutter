@@ -49,7 +49,7 @@ cut_teardown (void)
 static void
 report_error (CutRunContext *context, GError *error, gpointer user_data)
 {
-    gcut_assert_error(error, "Pipeline Error");
+    gcut_assert_error(error, cut_message("Pipeline Error"));
 }
 
 static gboolean
