@@ -1,5 +1,9 @@
 2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.h: fix indentation.
+
+2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
+
 	* cutter/cut-loader.[ch], cutter/cut-repository.c,
 	test/cutter/test-cut-loader.c,
 	test/fixtures/loader/cpp-fixture/: support fixture functions
