@@ -1,5 +1,8 @@
 2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-helper.h: use cut_test_with_user_message() instead of
+	cut_set_message_backward_compatibility().
+
 	* cutter/cut-assertions-helper.h
 	(cut_set_message_backward_compatibility): remove.
 

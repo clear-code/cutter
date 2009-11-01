@@ -159,8 +159,9 @@ extern "C" {
  */
 #define cut_test_fail_va_list(system_message, ...) do           \
 {                                                               \
-    cut_set_message_backward_compatibility(__VA_ARGS__);        \
-    cut_test_terminate(FAILURE, system_message);                \
+    cut_test_with_user_message(                                 \
+        cut_test_terminate(FAILURE, system_message),            \
+        __VA_ARGS__);                                           \
 } while (0)
 #endif
 
