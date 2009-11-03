@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -394,6 +394,7 @@ void cut_shutdown(void);
 #define cut_set_current_test_context(test_context)      \
     cut_test_context_current_push(test_context)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_set_message:
  * @format: the message format. See the printf() documentation.
@@ -402,6 +403,7 @@ void cut_shutdown(void);
  * Sets a message to be used by the next assertion.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.0: Use cut_message() instead.
  */
 #define cut_set_message(...)                                            \
     cut_test_context_set_user_message(cut_get_current_test_context(),   \
@@ -415,6 +417,7 @@ void cut_shutdown(void);
  * Sets a message to be used by the next assertion.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.0: Use cut_message() instead.
  */
 #define cut_set_message_va_list(format, args)           \
     cut_test_context_set_user_message_va_list(          \
@@ -427,9 +430,11 @@ void cut_shutdown(void);
  * cut_set_message_va_list() after the next assertion.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.0: Use cut_message() instead.
  */
 #define cut_keep_message()                                              \
     cut_test_context_keep_user_message(cut_get_current_test_context())
+#endif
 
 /**
  * cut_message:

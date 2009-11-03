@@ -38,9 +38,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_type:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -61,9 +59,7 @@ G_BEGIN_DECLS
  * cut_assert_equal_g_type:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -83,9 +79,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_value:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -106,9 +100,7 @@ G_BEGIN_DECLS
  * cut_assert_equal_g_value:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -133,6 +125,7 @@ G_BEGIN_DECLS
  * @inspect_function: a function that inspected @expected
  *                    and @actual list.
  * @inspect_user_data: a data to be passed to @inspect_function.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @equal_function(@expected, @actual) == %CUT_TRUE.
  *
@@ -159,9 +152,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_list_int:
  * @expected: an expected list of integer.
  * @actual: an actual list of integer.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -182,9 +173,7 @@ G_BEGIN_DECLS
  * cut_assert_equal_g_list_int:
  * @expected: an expected list of integer.
  * @actual: an actual list of integer.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -207,9 +196,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_list_uint:
  * @expected: an expected list of unsigned integer.
  * @actual: an actual list of unsigned integer.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -229,9 +216,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_list_string:
  * @expected: an expected list of string.
  * @actual: an actual list of string.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -253,9 +238,7 @@ G_BEGIN_DECLS
  * cut_assert_equal_g_list_string:
  * @expected: an expected list of string.
  * @actual: an actual list of string.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -278,9 +261,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_list_object:
  * @expected: an expected list of #GObject.
  * @actual: an actual list of #GObject.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected and @actual has same GObject * in
  * same order.
@@ -303,9 +284,7 @@ G_BEGIN_DECLS
  * @expected: an expected list of #GObject.
  * @actual: an actual list of #GObject.
  * @equal_function: a function that compares two #GObject.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected and @actual has same #GObject in same
  * order. Each comparison of #GObject uses @equal_function.
@@ -330,9 +309,7 @@ G_BEGIN_DECLS
  * @type: a #GEnum type.
  * @expected: an expected list of enum value.
  * @actual: an actual list of enum value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected and @actual has same enum values in
  * same order.
@@ -356,9 +333,7 @@ G_BEGIN_DECLS
  * @type: a #GFlags type.
  * @expected: an expected list of flags value.
  * @actual: an actual list of flags value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected and @actual has same flags values in
  * same order.
@@ -388,6 +363,7 @@ G_BEGIN_DECLS
  * @value_inspect_function: a function that inspected a value of
  *                          @expected and @actual hash table.
  * @inspect_user_data: a data to be passed to @inspect_function.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -416,9 +392,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_hash_table_string_string:
  * @expected: an expected #GHashTable of string.
  * @actual: an actual #GHashTable of string.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -439,9 +413,7 @@ G_BEGIN_DECLS
 /**
  * gcut_assert_error:
  * @error: a target #GError.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @error == %NULL.
  *
@@ -460,9 +432,7 @@ G_BEGIN_DECLS
 /**
  * cut_assert_g_error:
  * @error: a target #GError.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @error == %NULL.
  *
@@ -484,9 +454,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_error:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -538,9 +506,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_time_val:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -561,9 +527,7 @@ G_BEGIN_DECLS
  * @enum_type: a #GEnum type.
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -594,9 +558,7 @@ G_BEGIN_DECLS
  * @flags_type: a #GFlags type.
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -632,9 +594,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_object:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual. See
  * gcut_assert_equal_object_custom() when you need to customize
@@ -668,9 +628,7 @@ G_BEGIN_DECLS
  * @expected: an expected value.
  * @actual: an actual value.
  * @equal_function: a function that compare two objects.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @equal_function(@expected, @actual) == %CUT_TRUE.
  *
@@ -714,9 +672,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_int64:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -736,9 +692,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_uint64:
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -758,6 +712,7 @@ G_BEGIN_DECLS
  * gcut_assert_equal_pid:
  * @expected: an expected value.
  * @actual: an actual value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -777,6 +732,7 @@ G_BEGIN_DECLS
  * gcut_assert_not_equal_pid:
  * @expected: an expected value.
  * @actual: an actual value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *

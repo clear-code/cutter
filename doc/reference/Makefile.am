@@ -121,6 +121,7 @@ IGNORE_HFILES=					\
 	cut-utils.h				\
 	cut-verbose-level.h			\
 	cppcut-assertions-helper.h		\
+	cppcut-message.h			\
 	gbsearcharray.h
 
 INCLUDES =					\

@@ -1,5 +1,9 @@
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, gcutter/gcut-assertions.h,
+	gdkcutter-pixbuf/gdkcut-pixbuf-assertions.h,
+	soupcutter/soupcut-assertions.h, doc/reference/: update document.
+
 	* cppcutter/, test/cppcutter/: support optional assertion message by
 	cppcut_message().
 

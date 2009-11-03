@@ -44,11 +44,22 @@ extern "C" {
 /**
  * cut_assert:
  * @expression: the expression to be checked.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expression is not 0 or %NULL.
+ *
+ * e.g.:
+ * |[
+ * char *string;
+ * string = malloc(16);
+ * cut_assert(string);
+ * ]|
+ *
+ * |[
+ * MyObject *object;
+ * object = my_object_new();
+ * cut_assert(object, cut_message("my_object_new() should not be failed"));
+ * ]|
  */
 #define cut_assert(expression, ...) do                                  \
 {                                                                       \
@@ -63,9 +74,7 @@ extern "C" {
 /**
  * cut_assert_true:
  * @expression: the expression to be checked.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expression is %CUT_TRUE value (not 0 or %NULL).
  *
@@ -84,9 +93,7 @@ extern "C" {
 /**
  * cut_assert_false:
  * @expression: the expression to be checked.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expression is 0 or %NULL.
  *
@@ -106,6 +113,7 @@ extern "C" {
  * cut_assert_equal_boolean:
  * @expected: the expected boolean.
  * @actual: the actual boolean.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if both of @expected and @actual are %CUT_TRUE
  * value or both of @expected and @actual are %CUT_FALSE
@@ -134,6 +142,7 @@ extern "C" {
  * cut_assert_not_equal_boolean:
  * @expected: the expected boolean.
  * @actual: the actual boolean.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected is %CUT_TRUE value
  * but @actual is %CUT_FALSE value or @expected is
@@ -161,9 +170,7 @@ extern "C" {
 /**
  * cut_assert_null:
  * @expression: the expression to be checked.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expression is %NULL.
  */
@@ -179,9 +186,7 @@ extern "C" {
 /**
  * cut_assert_null_string:
  * @string: the string to be checked.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @string is %NULL.
  *
@@ -199,9 +204,7 @@ extern "C" {
 /**
  * cut_assert_not_null:
  * @expression: the expression to be checked.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expression is not %NULL.
  */
@@ -218,9 +221,7 @@ extern "C" {
  * cut_assert_equal_int:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  */
@@ -238,6 +239,7 @@ extern "C" {
  * cut_assert_not_equal_int:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -258,6 +260,7 @@ extern "C" {
  * cut_assert_equal_int_least8:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -280,6 +283,7 @@ extern "C" {
  * cut_assert_not_equal_int_least8:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -304,6 +308,7 @@ extern "C" {
  * cut_assert_equal_int_least16:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -326,6 +331,7 @@ extern "C" {
  * cut_assert_not_equal_int_least16:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -350,6 +356,7 @@ extern "C" {
  * cut_assert_equal_int_least32:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -372,6 +379,7 @@ extern "C" {
  * cut_assert_not_equal_int_least32:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -396,6 +404,7 @@ extern "C" {
  * cut_assert_equal_int_least64:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -442,6 +451,7 @@ extern "C" {
  * cut_assert_equal_int_fast8:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -464,6 +474,7 @@ extern "C" {
  * cut_assert_not_equal_int_fast8:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -486,6 +497,7 @@ extern "C" {
  * cut_assert_equal_int_fast16:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -508,6 +520,7 @@ extern "C" {
  * cut_assert_not_equal_int_fast16:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -532,6 +545,7 @@ extern "C" {
  * cut_assert_equal_int_fast32:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -554,6 +568,7 @@ extern "C" {
  * cut_assert_not_equal_int_fast32:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -578,6 +593,7 @@ extern "C" {
  * cut_assert_equal_int_fast64:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -600,6 +616,7 @@ extern "C" {
  * cut_assert_not_equal_int_fast64:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -624,6 +641,7 @@ extern "C" {
  * cut_assert_equal_intptr:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -646,6 +664,7 @@ extern "C" {
  * cut_assert_not_equal_intptr:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -668,6 +687,7 @@ extern "C" {
  * cut_assert_equal_intmax:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -690,6 +710,7 @@ extern "C" {
  * cut_assert_not_equal_intmax:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -713,13 +734,11 @@ extern "C" {
  * cut_assert_equal_uint:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  */
-#define cut_assert_equal_uint(expected, actual, ...) do        \
+#define cut_assert_equal_uint(expected, actual, ...) do         \
 {                                                               \
     cut_trace_with_info_expression(                             \
         cut_test_with_user_message(                             \
@@ -733,6 +752,7 @@ extern "C" {
  * cut_assert_not_equal_uint:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -753,6 +773,7 @@ extern "C" {
  * cut_assert_equal_uint_least8:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -775,6 +796,7 @@ extern "C" {
  * cut_assert_not_equal_uint_least8:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -799,6 +821,7 @@ extern "C" {
  * cut_assert_equal_uint_least16:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -821,6 +844,7 @@ extern "C" {
  * cut_assert_not_equal_uint_least16:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -845,6 +869,7 @@ extern "C" {
  * cut_assert_equal_uint_least32:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -867,6 +892,7 @@ extern "C" {
  * cut_assert_not_equal_uint_least32:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -891,6 +917,7 @@ extern "C" {
  * cut_assert_equal_uint_least64:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -913,6 +940,7 @@ extern "C" {
  * cut_assert_not_equal_uint_least64:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -959,6 +987,7 @@ extern "C" {
  * cut_assert_not_equal_uint_fast8:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -983,6 +1012,7 @@ extern "C" {
  * cut_assert_equal_uint_fast16:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -1005,6 +1035,7 @@ extern "C" {
  * cut_assert_not_equal_uint_fast16:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -1029,6 +1060,7 @@ extern "C" {
  * cut_assert_equal_uint_fast32:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -1051,6 +1083,7 @@ extern "C" {
  * cut_assert_not_equal_uint_fast32:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -1075,6 +1108,7 @@ extern "C" {
  * cut_assert_equal_uint_fast64:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -1097,6 +1131,7 @@ extern "C" {
  * cut_assert_not_equal_uint_fast64:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -1121,6 +1156,7 @@ extern "C" {
  * cut_assert_equal_uintptr:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -1143,6 +1179,7 @@ extern "C" {
  * cut_assert_not_equal_uintptr:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -1165,6 +1202,7 @@ extern "C" {
  * cut_assert_equal_uintmax:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -1187,6 +1225,7 @@ extern "C" {
  * cut_assert_not_equal_uintmax:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -1210,9 +1249,7 @@ extern "C" {
  * cut_assert_equal_size:
  * @expected: an expected size_t value.
  * @actual: an actual size_t value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -1232,6 +1269,7 @@ extern "C" {
  * cut_assert_not_equal_size:
  * @expected: an expected size_t value.
  * @actual: an actual size_t value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -1252,9 +1290,7 @@ extern "C" {
  * @expected: an expected float value.
  * @error: a float value that specifies error range.
  * @actual: an actual float value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (@expected - @error) <= @actual <= (@expected + @error).
  */
@@ -1274,6 +1310,7 @@ extern "C" {
  * @expected: an expected float value.
  * @error: a float value that specifies error range.
  * @actual: an actual float value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @actual < (@expected - @error) && (@expected + @error) < @actual.
  *
@@ -1294,9 +1331,7 @@ extern "C" {
  * cut_assert_equal_string:
  * @expected: an expected string value.
  * @actual: an actual string value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
@@ -1324,6 +1359,7 @@ extern "C" {
  * cut_assert_not_equal_string:
  * @expected: an expected string value.
  * @actual: an actual string value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if one of @expected and @actual is %NULL or
  * strcmp(@expected, @actual) != 0.
@@ -1353,9 +1389,7 @@ extern "C" {
  * cut_assert_equal_string_with_free:
  * @expected: an expected string value.
  * @actual: an actual string value that is freed.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if both @expected and @actual are %NULL or
  * strcmp(@expected, @actual) == 0.
@@ -1381,12 +1415,7 @@ extern "C" {
  * cut_assert_equal_string_or_null:
  * @expected: an expected string value.
  * @actual: an actual string value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
- *
- * Passes if both @expected and @actual are %NULL or
- * strcmp(@expected, @actual) == 0.
+ * @...: optional message. See cut_message() for details.
  *
  * Deprecated: 0.3: Use cut_assert_equal_string() instead.
  */
@@ -1406,6 +1435,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value.
  * @length: compared string length.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (1) both @expected and @actual are %NULL and
  * @length == 1 or (2) strncmp(@expected, @actual, @length)
@@ -1439,6 +1469,7 @@ extern "C" {
  * @expected: an expected string value.
  * @actual: an actual string value.
  * @length: compared string length.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (1) one of @expected and @actual is %NULL or
  * (2) strncmp(@expected, @actual, @length) != 0.
@@ -1474,9 +1505,7 @@ extern "C" {
  * @expected_size: a size of @expected.
  * @actual: an actual data.
  * @actual_size: a size of @actual.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected_size == @actual_size and
  * memcmp(@expected, @actual, @expected_size) == 0.
@@ -1501,6 +1530,7 @@ extern "C" {
  * @expected_size: a size of @expected.
  * @actual: an actual data.
  * @actual_size: a size of @actual.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected_size != @actual_size or
  * memcmp(@expected, @actual, @expected_size) != 0.
@@ -1527,9 +1557,7 @@ extern "C" {
  * cut_assert_equal_string_array:
  * @expected: an expected %NULL-terminated array of strings.
  * @actual: an actual %NULL-terminated array of strings.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if both @expected and @actual are not %NULL and
  * have same content (strcmp() == 0) strings.
@@ -1548,9 +1576,7 @@ extern "C" {
  * cut_assert_equal_string_array_with_free:
  * @expected: an expected %NULL-terminated array of strings.
  * @actual: an actual %NULL-terminated array of strings that are freed.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if both @expected and @actual are not %NULL and
  * have same content (strcmp() == 0) strings.
@@ -1575,9 +1601,7 @@ extern "C" {
  * @lhs: a left hand side value.
  * @operator: a binary operator.
  * @rhs: a right hand side value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
@@ -1601,9 +1625,7 @@ extern "C" {
  * @lhs: a left hand side integer value.
  * @operator: a binary operator.
  * @rhs: a right hand side integer value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
@@ -1631,9 +1653,7 @@ extern "C" {
  * @lhs: a left hand side unsigned integer value.
  * @operator: a binary operator.
  * @rhs: a right hand side unsigned integer value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
@@ -1663,9 +1683,7 @@ extern "C" {
  * @lhs: a left hand side size_t value.
  * @operator: a binary operator.
  * @rhs: a right hand side size_t value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
@@ -1695,9 +1713,7 @@ extern "C" {
  * @lhs: a left hand side double value.
  * @operator: a binary operator.
  * @rhs: a right hand side double value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if (@lhs @operator @rhs) is TRUE.
  *
@@ -1727,9 +1743,7 @@ extern "C" {
  * @function: a function that compares @actual with @expected.
  * @expected: an expected value.
  * @actual: an actual value.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @function(@expected, @actual) returns %CUT_TRUE.
  *
@@ -1750,9 +1764,7 @@ extern "C" {
 
 /**
  * cut_assert_errno:
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if errno is 0.
  *
@@ -1777,9 +1789,7 @@ extern "C" {
 /**
  * cut_assert_file_exist:
  * @path: the path to test.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @path exists. It may or may not be a regular file.
  *
@@ -1805,9 +1815,7 @@ extern "C" {
 /**
  * cut_assert_path_exist:
  * @path: the path to test.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @path exists. It may or may not be a regular file.
  *
@@ -1831,9 +1839,7 @@ extern "C" {
 /**
  * cut_assert_path_not_exist:
  * @path: the path to test.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @path doesn't exist.
  *
@@ -1858,9 +1864,7 @@ extern "C" {
  * cut_assert_match:
  * @pattern: the regular expression pattern.
  * @actual: the string to be matched.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @pattern matches @string.
  *
@@ -1885,9 +1889,7 @@ extern "C" {
  * cut_assert_match_with_free:
  * @pattern: the regular expression as string.
  * @actual: the string to be matched that is freed.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @pattern matches @string. See cut_assert_match()
  * for detail.
@@ -1908,9 +1910,7 @@ extern "C" {
  * cut_assert_equal_pointer:
  * @expected: an expected pointer.
  * @actual: an actual pointer.
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
@@ -1960,9 +1960,7 @@ extern "C" {
 
 /**
  * cut_error_errno:
- * @...: optional format string, followed by parameters to insert
- *       into the format string. (as with printf()) This is
- *       deprecated since 0.1.6. Use cut_set_message() instead.
+ * @...: optional message. See cut_message() for details.
  *
  * e.g.:
  * |[

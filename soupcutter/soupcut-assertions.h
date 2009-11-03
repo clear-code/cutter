@@ -38,6 +38,7 @@ G_BEGIN_DECLS
  * soupcut_message_assert_equal_content_type:
  * @expected: an expected Content-Type.
  * @message: a #SoupMessage.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @message->response_headers->content_type.
  *
@@ -58,6 +59,7 @@ G_BEGIN_DECLS
  * soupcut_client_assert_equal_content_type:
  * @expected: an expected Content-Type.
  * @client: a #SoupCutClient.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected equals to Content-Type of the latest
  * message of @client.
@@ -79,6 +81,7 @@ G_BEGIN_DECLS
 /**
  * soupcut_client_assert_response:
  * @client: a #SoupCutClient.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if status code of @client is 2XX.
  *
@@ -97,6 +100,7 @@ G_BEGIN_DECLS
  * soupcut_client_assert_equal_body:
  * @expected: an expected response body.
  * @client: a #SoupCutClient.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @client->response_body->data.
  *
@@ -118,6 +122,7 @@ G_BEGIN_DECLS
  * soupcut_client_assert_match_body:
  * @pattern: the regular expression pattern.
  * @client: a #SoupCutClient.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @pattern matches the response body of
  * the latest message of @client.

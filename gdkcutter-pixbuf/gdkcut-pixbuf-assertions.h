@@ -39,6 +39,7 @@ G_BEGIN_DECLS
  * @expected: an expected #GdkPixbuf.
  * @actual: an actual #GdkPixbuf.
  * @threshold: an threshold used for detecting pixel difference.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual. If difference of each
  * corresponding pixel value is within threshold, @expected
