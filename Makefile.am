@@ -92,6 +92,8 @@ update-latest-release:
 	  $(OLD_RELEASE) $(OLD_RELEASE_DATE)			\
 	  $(VERSION) $(NEW_RELEASE_DATE)			\
 	  rpm/fedora/cutter.spec.in				\
+	  apt/build-deb.sh					\
+	  apt/Makefile						\
 	  html/index.html					\
 	  html/index.html.ja					\
 	  doc/reference/header.html				\

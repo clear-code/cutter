@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VERSION=1.0.9
+VERSION=1.1.0
 
 sudo aptitude -V -D update && sudo aptitude -V -D -y safe-upgrade
 sudo aptitude install -y subversion devscripts debhelper cdbs autotools-dev \
