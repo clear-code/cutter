@@ -1,5 +1,7 @@
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* rpm/fedora/cutter.spec.in: add 1.1.0 entry.
+
 	* NEWS*: add 1.1.0 entry.
 
 	* README*: add Yuto Hayamizu to authors.
