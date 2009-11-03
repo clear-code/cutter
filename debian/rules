@@ -111,6 +111,8 @@ install/libcutter-cpp-dev::
 		debian/libcutter-cpp-dev/usr/include/cutter/
 	cp -ar debian/tmp/usr/include/cutter/cppcutter/ \
 		debian/libcutter-cpp-dev/usr/include/cutter/
+	cp -ar debian/tmp/usr/lib/libcppcutter* \
+		debian/libcutter-cpp-dev/usr/lib/
 	cp -ar debian/tmp/usr/lib/pkgconfig/cppcutter.pc \
 		debian/libcutter-cpp-dev/usr/lib/pkgconfig/
 
