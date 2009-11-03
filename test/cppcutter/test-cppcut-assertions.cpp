@@ -1,4 +1,4 @@
-/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
  *
@@ -377,6 +377,54 @@ namespace assertions
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
                                "void assertions::stub_equal_string()",
+                               NULL);
+    }
+
+    static void
+    stub_message (void)
+    {
+        MARK_FAIL(cppcut_assert_equal(
+                      "abcde", "ABCDE",
+                      cppcut_message("The message of %s", "assertion")));
+    }
+
+    void
+    test_message (void)
+    {
+        test = cut_test_new("optional message test", stub_message);
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "optional message test",
+                               "The message of assertion",
+                               "<\"abcde\" == \"ABCDE\">",
+                               "abcde", "ABCDE",
+                               FAIL_LOCATION,
+                               "void assertions::stub_message()",
+                               NULL);
+    }
+
+    static void
+    stub_message_shift (void)
+    {
+        MARK_FAIL(cppcut_assert_equal(
+                      "abcde", "ABCDE",
+                      cppcut_message() << "The message of " << "assertion"));
+    }
+
+    void
+    test_message_shift (void)
+    {
+        test = cut_test_new("optional message test", stub_message_shift);
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "optional message test",
+                               "The message of assertion",
+                               "<\"abcde\" == \"ABCDE\">",
+                               "abcde", "ABCDE",
+                               FAIL_LOCATION,
+                               "void assertions::stub_message_shift()",
                                NULL);
     }
 }

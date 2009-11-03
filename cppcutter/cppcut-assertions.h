@@ -34,17 +34,30 @@
  * cppcut_assert_equal:
  * @expected: an expected value.
  * @actual: an actual value.
+ * @message: an optional message. Use cppcut_message() for this.
  *
  * This assertion is a generic method based on template. You
  * can pass any object's reference as @expected and @actual.
  *
  * Passes if @expected == @actual.
  *
+ * e.g.:
+ * |[
+ * cppcut_assert_equal(3, 1 + 2);
+ * cppcut_assert_equal(3, 1 + 2, cppcut_message("easy expression"));
+ * cppcut_assert_equal(3, 1 + 2, cppcut_message() << "easy expression"));
+ * ]|
+ *
  * Since: 1.0.9
  */
-#define cppcut_assert_equal(expected, actual)             \
-    cut_trace(cut::assert_equal(expected, actual,         \
-                                #expected, #actual))
+#define cppcut_assert_equal(expected, actual, ...) do                   \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+    cut_test_with_user_message(cut::assert_equal(expected, actual,      \
+                                                 #expected, #actual),   \
+                               __VA_ARGS__),                            \
+        cppcut_assert_equal(expected, actual, __VA_ARGS__));            \
+} while (0)
 
 #endif /* __CPPCUT_ASSERTIONS_H__ */
 

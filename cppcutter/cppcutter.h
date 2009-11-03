@@ -22,6 +22,7 @@
 
 #include <cutter.h>
 #include <cppcutter/cppcut-assertions.h>
+#include <cppcutter/cppcut-message.h>
 
 /**
  * SECTION: cppcutter
@@ -100,6 +101,31 @@
  * Since: 1.0.9
  */
 #define CPPCUT_END_TEST_DECLS }
+
+/**
+ * cppcut_message:
+ * @format: the optional message format. See the printf()
+ *          documentation.
+ * @...: the parameters to insert into the format string.
+ *
+ * Specifies optional assertion message with C++ friendly
+ * API. The optional message can be specified with printf()
+ * style API or "<<" stream style API.
+ *
+ * e.g.:
+ * |[
+ * cppcut_assert_equal("abc", "def",
+ *                     cppcut_message("should fail!"));
+ * cppcut_assert_equal("abc", "def",
+ *                     cppcut_message() << "should fail!");
+ * ]|
+ *
+ * Since: 1.1.0
+ */
+#define cppcut_message(...)                     \
+    cut::Message cppcut_message;                \
+    cppcut_message.printf(__VA_ARGS__);         \
+    cppcut_message
 
 #endif /* __CPPCUTTER_H__ */
 
