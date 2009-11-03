@@ -60,8 +60,34 @@
  * +XXX_LIBS = $(CPPCUTTER_LIBS)
  * ]|
  *
- * NOTE: You need to extern test functions in C scope. See
- * %CPPCUT_BEGIN_TEST_DECLS.
+ * Test functions are defined in namespace. Naming
+ * convention is the same as Cutter. i.e.: 'test_...'
+ * function is test function, 'setup' or 'cut_setup' is
+ * setup function and 'teardown' or 'cut_teardown' is
+ * teardown function.
+ *
+ * test-calc.cpp:
+ * |[
+ * #include <cppcutter.h>
+ *
+ * namespace calc
+ * {
+ *     void
+ *     test_add (void)
+ *     {
+ *         cppcut_assert_equal(3, calc.add(1, 2));
+ *     }
+ *
+ *     void
+ *     test_sub (void)
+ *     {
+ *         cppcut_assert_equal(5, calc.sub(9, 4));
+ *     }
+ * }
+ * ]|
+ *
+ * You just define a function for adding a new test. You
+ * don't need to use magical macros.
  */
 
 /**
@@ -73,6 +99,7 @@
  */
 #define CPPCUTTER_ENABLED 1
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * CPPCUT_BEGIN_TEST_DECLS
  *
@@ -90,6 +117,7 @@
  * test functions with 'extern "C" {...}'.
  *
  * Since: 1.0.9
+ * Deprecated: 1.1.0: Use namespace instead.
  */
 #define CPPCUT_BEGIN_TEST_DECLS extern "C" {
 
@@ -99,8 +127,10 @@
  * See %CPPCUT_BEGIN_TEST_DECLS.
  *
  * Since: 1.0.9
+ * Deprecated: 1.1.0: Use namespace instead.
  */
 #define CPPCUT_END_TEST_DECLS }
+#endif
 
 /**
  * cppcut_message:
