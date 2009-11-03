@@ -2,6 +2,49 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-1-0] 1.1.0: 2009-11-03
+
+NOTE: This release includes API incompatibility.
+
+=== Cutter
+
+==== Improvements
+
+  * Add assertions for types defined in stdint.h [Yuto Hayamizu]
+  * ((*API CHANGE*)): Re-enable optional assertion message
+
+    Before:
+      cut_assert_equal_string("a", "b", "message");
+
+    After:
+      cut_assert_equal_string("a", "b", cut_message("message"));
+
+    * Add ((<cut_message()|cutter-cutter.html#cut-message>))
+    * Make ((<cut_set_message()|cutter-cutter.html#cut-set-message>))
+      obsolete
+    * Make ((<cut_keep_message()|cutter-cutter.html#cut-keep-message>))
+      obsolete
+
+=== CppCutter
+
+==== Improvements
+
+  * Add supported types by
+    ((<cppcut_assert_equal()|cutter-cppcut-assertions.html#cppcut-assert-equal>))
+  * Support test definition detection in namespace
+    * Make
+      ((<CPPCUT_BEGIN_TEST_DECLS|cutter-cppcutter.html#CPPCUT-BEGIN-TEST-DECLS>))
+      obsolete
+    * Make
+      ((<CPPCUT_END_TEST_DECLS|cutter-cppcutter.html#CPPCUT-END-TEST-DECLS>))
+      obsolete
+  * Support optional assertion message
+    * Add ((<cppcut_message()|cutter-cppcutter.html#cppcut-message>))
+
+=== Thanks
+
+  * Yuto Hayamizu
+
 == [release-1-0-9] 1.0.9: 2009-10-20
 
 === Improvements

@@ -1,5 +1,9 @@
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: add 1.1.0 entry.
+
+	* README*: add Yuto Hayamizu to authors.
+
 	* gcutter/gcut-data.h: fix a typo.
 
 	* debian/rules (install/libcutter-cpp-dev): install libcppcutter.so.
