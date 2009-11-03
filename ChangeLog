@@ -1,5 +1,9 @@
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am: add update-latest-release target.
+
+	* doc/, html/: 1.0.9 -> 1.1.0.
+
 	* rpm/fedora/cutter.spec.in: add 1.1.0 entry.
 
 	* NEWS*: add 1.1.0 entry.

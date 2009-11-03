@@ -74,6 +74,39 @@ update-po:
 	cd po && $(MAKE) $(AM_MAKEFLAGS) update-po
 	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) update-po
 
+update-latest-release:
+	@if test -z "$(OLD_RELEASE)"; then	\
+	  echo "\$$(OLD_RELEASE) is missing";	\
+	  exit 1;				\
+	fi
+	@if test -z "$(OLD_RELEASE_DATE)"; then		\
+	  echo "\$$(OLD_RELEASE_DATE) is missing";	\
+	  exit 1;					\
+	fi
+	@if test -z "$(NEW_RELEASE_DATE)"; then		\
+	  echo "\$$(NEW_RELEASE_DATE) is missing";	\
+	  exit 1;					\
+	fi
+	cd $(top_srcdir) &&					\
+	  misc/update-latest-release.rb				\
+	  $(OLD_RELEASE) $(OLD_RELEASE_DATE)			\
+	  $(VERSION) $(NEW_RELEASE_DATE)			\
+	  rpm/fedora/cutter.spec.in				\
+	  html/index.html					\
+	  html/index.html.ja					\
+	  doc/reference/header.html				\
+	  doc/reference/header-ja.html				\
+	  doc/install-to-cygwin.rd				\
+	  doc/install-to-cygwin.rd.ja				\
+	  doc/install-to-fedora.rd				\
+	  doc/install-to-fedora.rd.ja				\
+	  doc/install-to-freebsd.rd				\
+	  doc/install-to-freebsd.rd.ja				\
+	  doc/install-to-others.rd				\
+	  doc/install-to-others.rd.ja				\
+	  doc/install-to-solaris.rd				\
+	  doc/install-to-solaris.rd.ja
+
 tag:
 	svn ls $(SF_REPOS)/tags/$(VERSION) > /dev/null 2>&1; 	\
 	  if test "$$?" = "0"; then				\

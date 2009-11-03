@@ -69,9 +69,9 @@ GLibは/usr/local/以下にインストールします。/usr/local/以下に
 まず、GLibを/usr/local/以下にインストールした場合です。
 
   % cd
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.9.tar.gz
-  % tar xvzf cutter-1.0.9.tar.gz
-  % cd cutter-1.0.9
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
+  % tar xvzf cutter-1.1.0.tar.gz
+  % cd cutter-1.1.0
   % ./configure PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
   % make
   % make install
@@ -80,9 +80,9 @@ GLibを/usr/以下にインストールした場合はこうなります。
 configureのときにPKG_CONFIG_PATHの代わりに--prefixを指定します。
 
   % cd
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.9.tar.gz
-  % tar xvzf cutter-1.0.9.tar.gz
-  % cd cutter-1.0.9
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
+  % tar xvzf cutter-1.1.0.tar.gz
+  % cd cutter-1.1.0
   % ./configure --prefix=/usr
   % make
   % make install
