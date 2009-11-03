@@ -139,9 +139,9 @@ G_BEGIN_DECLS
  *       <para>#GType value</para>
  *       <para>e.g.:
  * |[
- * gut_add_datum("data name",
- *               "field-name", G_TYPE_GTYPE, G_TYPE_OBJECT,
- *               NULL);
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_GTYPE, G_TYPE_OBJECT,
+ *                NULL);
  * ]|
  *       </para>
  *     </listitem>
