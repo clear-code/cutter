@@ -1,6 +1,6 @@
 # -*- rd -*-
 
-= README --- An introduction of Cutter, a Unit Testing Framework for C
+= README --- An introduction of Cutter, a Unit Testing Framework for C and C++
 
 == Name
 
@@ -8,8 +8,8 @@ Cutter
 
 == Author
 
-  * Kouhei Sutou <kou@cozmixng.org>
-  * Hiroyuki Ikezoe <poincare@ikezoe.net>
+  * Kouhei Sutou <kou@clear-code.com>
+  * Hiroyuki Ikezoe <ikezoe@clear-code.com>
 
 == License
 
@@ -17,7 +17,8 @@ LGPLv3 or later. See license/lgpl.txt for more details.
 
 == What's this?
 
-Cutter is a xUnit family Unit Testing Framework for C.
+Cutter is a xUnit family Unit Testing Framework for C and
+C++.
 
 This is a list of features of Cutter:
   * easy to write tests.
@@ -33,7 +34,7 @@ See ((<FEATURES>)) for more details.
 == Get
 
 tar.gz:
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.0.8.tar.gz
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
 
 Subversion:
   % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter

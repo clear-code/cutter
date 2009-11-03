@@ -35,11 +35,11 @@ extern "C" {
 /**
  * SECTION: cutter
  * @title: Cutter
- * @short_description: A Unit Testing Framework for C.
+ * @short_description: A Unit Testing Framework for C and C++.
  * @see_also: <link linkend="cutter-cut-assertions">Assertions</link>
  *
- * Cutter is a Unit Testing Framework for C and has the
- * following features:
+ * Cutter is a Unit Testing Framework for C and C++ and has
+ * the following features:
  * <itemizedlist>
  *   <listitem><para>
  * Easy to use. Cutter doesn't introduce any magic macros

@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.0\n"
-"POT-Creation-Date: 2009-11-03 12:52+0900\n"
-"PO-Revision-Date: 2009-11-03 13:11+0900\n"
+"POT-Creation-Date: 2009-11-03 14:34+0900\n"
+"PO-Revision-Date: 2009-11-03 14:34+0900\n"
 "Last-Translator: Kouhei Sutou <kou@cozmixng.org>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -258,7 +258,7 @@ msgstr ""
 #: xml/cut-diff-writer.xml:79(title) xml/cut-console.xml:58(title)
 #: xml/cut-console-diff-writer.xml:71(title)
 #: xml/cut-colorize-differ.xml:42(title) xml/cut-assertions.xml:260(title)
-#: xml/cppcutter.xml:106(title) xml/cppcut-message.xml:42(title)
+#: xml/cppcutter.xml:107(title) xml/cppcut-message.xml:42(title)
 #: xml/cppcut-assertions.xml:44(title)
 msgid "Details"
 msgstr "詳細"
@@ -287,7 +287,7 @@ msgstr "1.0.8から"
 #: xml/soupcutter.xml:89(title) xml/soupcut-server.xml:99(title)
 #: xml/soupcut-client.xml:202(title) xml/gdkcutter-pixbuf.xml:89(title)
 #: xml/gcutter.xml:87(title) xml/cutter.xml:471(title)
-#: xml/cppcutter.xml:174(title)
+#: xml/cppcutter.xml:175(title)
 msgid "See Also"
 msgstr "参考"
 
@@ -1207,7 +1207,7 @@ msgstr "ひとつめのクエリパラメータの名前"
 #: xml/cut-assertions.xml:1992(term) xml/cut-assertions.xml:2012(term)
 #: xml/cut-assertions.xml:2027(term) xml/cut-assertions.xml:2043(term)
 #: xml/cut-assertions.xml:2060(term) xml/cut-assertions.xml:2075(term)
-#: xml/cut-assertions.xml:2097(term) xml/cppcutter.xml:164(term)
+#: xml/cut-assertions.xml:2097(term) xml/cppcutter.xml:165(term)
 msgid "<parameter>...</parameter> :"
 msgstr ""
 
@@ -2499,7 +2499,7 @@ msgstr ""
 #: xml/cut-assertions.xml:1859(para) xml/cut-assertions.xml:1881(para)
 #: xml/cut-assertions.xml:1904(para) xml/cut-assertions.xml:1999(para)
 #: xml/cut-assertions.xml:2086(para) xml/cut-assertions.xml:2107(para)
-#: xml/cppcutter.xml:154(para) xml/cppcut-assertions.xml:56(para)
+#: xml/cppcutter.xml:155(para) xml/cppcut-assertions.xml:56(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
@@ -5443,8 +5443,8 @@ msgid "inspected and sorted <parameter>hash</parameter> as a string."
 msgstr "<parameter>hash</parameter>を並び替えて詳細を示した文字列。"
 
 #: xml/gcut-hash-table.xml:175(para) xml/cut-helper.xml:456(para)
-#: xml/cut-helper.xml:475(para) xml/cppcutter.xml:114(para)
-#: xml/cppcutter.xml:136(para) xml/cppcutter.xml:145(para)
+#: xml/cut-helper.xml:475(para) xml/cppcutter.xml:115(para)
+#: xml/cppcutter.xml:137(para) xml/cppcutter.xml:146(para)
 #: xml/cppcut-assertions.xml:71(para)
 msgid "Since 1.0.9"
 msgstr "1.0.9から"
@@ -9962,8 +9962,8 @@ msgid "Cutter"
 msgstr ""
 
 #: xml/cutter.xml:14(refpurpose)
-msgid "A Unit Testing Framework for C."
-msgstr "C言語用単体テストフレームワーク"
+msgid "A Unit Testing Framework for C and C++."
+msgstr "C言語・C++言語用単体テストフレームワーク"
 
 #: xml/cutter.xml:21(link) xml/cutter.xml:157(primary)
 #: xml/api-index-full.xml:475(link) xml/api-index-deprecated.xml:38(link)
@@ -10212,11 +10212,9 @@ msgstr ""
 
 #: xml/cutter.xml:51(para)
 msgid ""
-"Cutter is a Unit Testing Framework for C and has the following features: "
-"<placeholder-1/>"
-msgstr ""
-"Cutterは以下のような特徴をもったC言語用の単体テストフレームワークです。"
-"<placeholder-1/>"
+"Cutter is a Unit Testing Framework for C and C++ and has the following "
+"features: <placeholder-1/>"
+msgstr "Cutterは以下のような特徴をもったC言語・C++言語用の単体テストフレームワークです。<placeholder-1/>"
 
 #: xml/cutter.xml:156(title)
 msgid "setup ()"
@@ -10701,7 +10699,7 @@ msgstr ""
 #: xml/cut-assertions.xml:1993(simpara) xml/cut-assertions.xml:2028(simpara)
 #: xml/cut-assertions.xml:2044(simpara) xml/cut-assertions.xml:2061(simpara)
 #: xml/cut-assertions.xml:2076(simpara) xml/cut-assertions.xml:2098(simpara)
-#: xml/cppcutter.xml:165(simpara)
+#: xml/cppcutter.xml:166(simpara)
 msgid "the parameters to insert into the format string."
 msgstr "整形文字列に挿入されるパラメータ。"
 
@@ -10798,7 +10796,7 @@ msgstr ""
 #: xml/cut-assertions.xml:1197(para) xml/cut-assertions.xml:1220(para)
 #: xml/cut-assertions.xml:1239(para) xml/cut-assertions.xml:1262(para)
 #: xml/cut-assertions.xml:1281(para) xml/cut-assertions.xml:1304(para)
-#: xml/cut-assertions.xml:1323(para) xml/cppcutter.xml:167(para)
+#: xml/cut-assertions.xml:1323(para) xml/cppcutter.xml:168(para)
 msgid "Since 1.1.0"
 msgstr "1.1.0から"
 
@@ -16357,7 +16355,8 @@ msgstr ""
 #: xml/cut-assertions.xml:1290(para) xml/cut-assertions.xml:1312(para)
 msgid ""
 "This function is available only when CUT_SUPPORT_C99_STDINT_TYPES is defined."
-msgstr "この関数はCUT_SUPPORT_C99_STDINT_TYPESが定義されているときだけ使用できます。"
+msgstr ""
+"この関数はCUT_SUPPORT_C99_STDINT_TYPESが定義されているときだけ使用できます。"
 
 #: xml/cut-assertions.xml:474(title)
 msgid "cut_assert_not_equal_int_least8 ()"
@@ -17912,25 +17911,25 @@ msgstr ""
 msgid "Cutter with C++ support."
 msgstr "C++サポート付きのCutter。"
 
-#: xml/cppcutter.xml:21(link) xml/cppcutter.xml:108(title)
-#: xml/cppcutter.xml:109(primary) xml/api-index-full.xml:7(link)
+#: xml/cppcutter.xml:21(link) xml/cppcutter.xml:109(title)
+#: xml/cppcutter.xml:110(primary) xml/api-index-full.xml:7(link)
 #: xml/api-index-1.0.9.xml:7(link)
 msgid "CPPCUTTER_ENABLED"
 msgstr ""
 
-#: xml/cppcutter.xml:22(link) xml/cppcutter.xml:116(title)
-#: xml/cppcutter.xml:117(primary) xml/api-index-full.xml:9(link)
+#: xml/cppcutter.xml:22(link) xml/cppcutter.xml:117(title)
+#: xml/cppcutter.xml:118(primary) xml/api-index-full.xml:9(link)
 #: xml/api-index-deprecated.xml:7(link) xml/api-index-1.0.9.xml:9(link)
 msgid "CPPCUT_BEGIN_TEST_DECLS"
 msgstr ""
 
-#: xml/cppcutter.xml:23(link) xml/cppcutter.xml:138(title)
-#: xml/cppcutter.xml:139(primary) xml/api-index-full.xml:10(link)
+#: xml/cppcutter.xml:23(link) xml/cppcutter.xml:139(title)
+#: xml/cppcutter.xml:140(primary) xml/api-index-full.xml:10(link)
 #: xml/api-index-deprecated.xml:8(link) xml/api-index-1.0.9.xml:10(link)
 msgid "CPPCUT_END_TEST_DECLS"
 msgstr ""
 
-#: xml/cppcutter.xml:24(link) xml/cppcutter.xml:148(primary)
+#: xml/cppcutter.xml:24(link) xml/cppcutter.xml:149(primary)
 #: xml/api-index-full.xml:11(link) xml/api-index-1.1.0.xml:7(link)
 msgid "cppcut_message"
 msgstr ""
@@ -17996,7 +17995,10 @@ msgid ""
 "Test functions are defined in namespace. Naming convention is the same as "
 "Cutter. i.e.: 'test_...' function is test function, 'setup' or 'cut_setup' "
 "is setup function and 'teardown' or 'cut_teardown' is teardown function."
-msgstr "テスト関数はnamespaceの中に定義します。名前付け規則はCutterと同じです。つまり、'test_...'関数はテスト関数、'setup'または'cut_setup'は初期化関数、'teardown'または'cut_teardown'は後始末関数になります。"
+msgstr ""
+"テスト関数はnamespaceの中に定義します。名前付け規則はCutterと同じです。つま"
+"り、'test_...'関数はテスト関数、'setup'または'cut_setup'は初期化関"
+"数、'teardown'または'cut_teardown'は後始末関数になります。"
 
 #: xml/cppcutter.xml:80(programlisting)
 #, no-wrap
@@ -18017,39 +18019,45 @@ msgid ""
 "    {\n"
 "        cppcut_assert_equal(5, calc.sub(9, 4));\n"
 "    }\n"
+"}\n"
 msgstr ""
 
 #: xml/cppcutter.xml:78(para)
 msgid "test-calc.cpp: <placeholder-1/>"
 msgstr ""
 
-#: xml/cppcutter.xml:98(para)
+#: xml/cppcutter.xml:99(para)
 msgid ""
 "You just define a function for adding a new test. You don't need to use "
 "magical macros."
-msgstr "新しいテストを追加するときはいつも通り関数を定義するだけです。よくわからないマクロを使う必要はありません。"
+msgstr ""
+"新しいテストを追加するときはいつも通り関数を定義するだけです。よくわからない"
+"マクロを使う必要はありません。"
 
-#: xml/cppcutter.xml:109(programlisting)
+#: xml/cppcutter.xml:110(programlisting)
 #, no-wrap
 msgid "#define CPPCUTTER_ENABLED 1\n"
 msgstr ""
 
-#: xml/cppcutter.xml:111(para)
+#: xml/cppcutter.xml:112(para)
 msgid "Defined when CppCutter is enabled."
 msgstr "CppCutterが有効なとき定義されます。"
 
-#: xml/cppcutter.xml:117(programlisting)
+#: xml/cppcutter.xml:118(programlisting)
 #, no-wrap
 msgid "#define CPPCUT_BEGIN_TEST_DECLS extern \"C\" {\n"
 msgstr ""
 
-#: xml/cppcutter.xml:119(para)
+#: xml/cppcutter.xml:120(para)
 msgid ""
 "<literal>CPPCUT_BEGIN_TEST_DECLS</literal> has been deprecated since version "
 "1.1.0 and should not be used in newly-written code. Use namespace instead."
-msgstr "<literal>CPPCUT_BEGIN_TEST_DECLS</literal>はバージョン1.1.0から非推奨になりました。新しく書くコードでは使わないでください。代わりにnamespaceを使ってください。"
+msgstr ""
+"<literal>CPPCUT_BEGIN_TEST_DECLS</literal>はバージョン1.1.0から非推奨になりま"
+"した。新しく書くコードでは使わないでください。代わりにnamespaceを使ってくださ"
+"い。"
 
-#: xml/cppcutter.xml:120(para)
+#: xml/cppcutter.xml:121(para)
 msgid ""
 "Use <link linkend=\"CPPCUT-BEGIN-TEST-DECLS--CAPS"
 "\"><literal>CPPCUT_BEGIN_TEST_DECLS</literal></link> and <link linkend="
@@ -18061,7 +18069,7 @@ msgstr ""
 "END-TEST-DECLS--CAPS\"><literal>CPPCUT_END_TEST_DECLS</literal></link>で囲み"
 "ます:"
 
-#: xml/cppcutter.xml:125(programlisting)
+#: xml/cppcutter.xml:126(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -18071,7 +18079,7 @@ msgid ""
 "CPPCUT_END_TEST_DECLS\n"
 msgstr ""
 
-#: xml/cppcutter.xml:132(para)
+#: xml/cppcutter.xml:133(para)
 msgid ""
 "Those macros just surround prototype declarations for test functions with "
 "'extern \"C\" {...}'."
@@ -18079,18 +18087,21 @@ msgstr ""
 "このマクロは単にテスト関数のプロトタイプ宣言を'extern \"C\" {...}'で囲むだけ"
 "です。"
 
-#: xml/cppcutter.xml:139(programlisting)
+#: xml/cppcutter.xml:140(programlisting)
 #, no-wrap
 msgid "#define CPPCUT_END_TEST_DECLS }\n"
 msgstr ""
 
-#: xml/cppcutter.xml:141(para)
+#: xml/cppcutter.xml:142(para)
 msgid ""
 "<literal>CPPCUT_END_TEST_DECLS</literal> has been deprecated since version "
 "1.1.0 and should not be used in newly-written code. Use namespace instead."
-msgstr "<literal>CPPCUT_END_TEST_DECLS</literal>はバージョン1.1.0から非推奨になりました。新しく書くコードでは使わないでください。代わりにnamespaceを使ってください。"
+msgstr ""
+"<literal>CPPCUT_END_TEST_DECLS</literal>はバージョン1.1.0から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりにnamespaceを使ってくださ"
+"い。"
 
-#: xml/cppcutter.xml:142(para)
+#: xml/cppcutter.xml:143(para)
 msgid ""
 "See <link linkend=\"CPPCUT-BEGIN-TEST-DECLS--CAPS"
 "\"><literal>CPPCUT_BEGIN_TEST_DECLS</literal></link>."
@@ -18098,23 +18109,26 @@ msgstr ""
 "<link linkend=\"CPPCUT-BEGIN-TEST-DECLS--CAPS"
 "\"><literal>CPPCUT_BEGIN_TEST_DECLS</literal></link>を見て下さい。"
 
-#: xml/cppcutter.xml:147(title)
+#: xml/cppcutter.xml:148(title)
 msgid "cppcut_message()"
 msgstr ""
 
-#: xml/cppcutter.xml:148(programlisting)
+#: xml/cppcutter.xml:149(programlisting)
 #, no-wrap
 msgid "#define             cppcut_message(...)"
 msgstr ""
 
-#: xml/cppcutter.xml:149(para)
+#: xml/cppcutter.xml:150(para)
 msgid ""
 "Specifies optional assertion message with C++ friendly API. The optional "
 "message can be specified with <link linkend=\"printf\"><function>printf()</"
 "function></link> style API or \"&lt;&lt;\" stream style API."
-msgstr "C++らしいAPIで検証の省略可能なメッセージを指定します。メッセージは<link linkend=\"printf\"><function>printf()</function></link>と同じAPIか\"&lt;&lt;\"を使ったストリームと同じAPIを使って指定します。"
+msgstr ""
+"C++らしいAPIで検証の省略可能なメッセージを指定します。メッセージは<link "
+"linkend=\"printf\"><function>printf()</function></link>と同じAPIか\"&lt;&lt;"
+"\"を使ったストリームと同じAPIを使って指定します。"
 
-#: xml/cppcutter.xml:156(programlisting)
+#: xml/cppcutter.xml:157(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -18124,7 +18138,7 @@ msgid ""
 "                    cppcut_message() &lt;&lt; \"should fail!\");\n"
 msgstr ""
 
-#: xml/cppcutter.xml:176(link) xml/cppcut-assertions.xml:7(refentrytitle)
+#: xml/cppcutter.xml:177(link) xml/cppcut-assertions.xml:7(refentrytitle)
 #: xml/cppcut-assertions.xml:13(refname)
 msgid "Assertions with C++ support"
 msgstr "C++サポート付きの検証"

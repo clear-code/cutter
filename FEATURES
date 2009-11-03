@@ -268,11 +268,11 @@ See about AC_CHECK_COVERAGE in ((<README>)) and
 
 === Backtrace on crash
 
-It's natural that a program written in C crashes. Cutter
-tries to retrieve a backtrace on SEGV signal is raised. If a
-backtrace is retrieved, Cutter outputs it and exit. Of
-course Cutter cannot always retrieve a backtrace because the
-test process is broken.
+It's natural that a program written in C and/or
+C++crashes. Cutter tries to retrieve a backtrace on SEGV
+signal is raised. If a backtrace is retrieved, Cutter
+outputs it and exit. Of course Cutter cannot always retrieve
+a backtrace because the test process is broken.
 
 To check details of a problem, we need to use a debugger
 like GDB. But we can use a backtrace as the first step.

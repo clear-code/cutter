@@ -7,13 +7,13 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="description" content="C言語用の書きやすくデバッグしやすいxUnit系のテスティングフレームワーク（単体テスト・ユニットテストを自動化するツール）" />
     <link rel="stylesheet" href="cutter.css" type="text/css" />
-    <title>C言語用テスティングフレームワーク - Cutter</title>
+    <title>C言語・C++言語用テスティングフレームワーク - Cutter</title>
   </head>
   <body>
     <div class="header">
       <h1>
 	<a href="index.html.ja">
-	  <span class="title">C言語用単体テスト・ユニットテストフレームワーク</span>
+	  <span class="title">C言語・C++言語用単体テスト・ユニットテストフレームワーク</span>
 	  <span class="title-separator">-</span>
 	  <span class="title-project">Cutter</span>
         </a>
@@ -44,7 +44,7 @@
 
         <h2 id="about">Cutterとは</h2>
 	<p>
-	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
+	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語・C++言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
 	</p>
 
         <h2 id="platform">動作環境</h2>

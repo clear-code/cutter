@@ -1,5 +1,7 @@
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: C -> C and C++.
+
 	* cppcutter/cppcutter.h, doc/reference/: update document.
 
 	* cutter/cut-assertions.h, gcutter/gcut-assertions.h,

@@ -2,7 +2,7 @@
 
 == NAME
 
-cutter - xUnit family unit testing framework for C
+cutter - xUnit family unit testing framework for C and C++
 
 == SYNOPSIS
 
@@ -12,8 +12,8 @@ cutter - xUnit family unit testing framework for C
 
 == DESCRIPTION
 
-Cutter is a xUnit family unit testing framework for
-C. Cutter provides programmers two important interfaces:
+Cutter is a xUnit family unit testing framework for C and
+C++. Cutter provides programmers two important interfaces:
 
   (1) easy to write API
   (2) easy to debug UI
