@@ -1,5 +1,7 @@
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: 1.1.0 -> 1.1.1.
+
 	* debian/changelog: add 1.1.0 entry.
 
 	* Makefile.am, apt/: update versions under apt/.
