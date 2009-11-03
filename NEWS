@@ -22,6 +22,9 @@ NOTE: This release includes API incompatibility.
     * Add ((<cut_message()|cutter-cutter.html#cut-message>))
     * Make ((<cut_set_message()|cutter-cutter.html#cut-set-message>))
       obsolete
+    * Make
+      ((<cut_set_message_va_list()|cutter-cutter.html#cut-set-message-va-list>))
+      obsolete
     * Make ((<cut_keep_message()|cutter-cutter.html#cut-keep-message>))
       obsolete
 
@@ -33,10 +36,10 @@ NOTE: This release includes API incompatibility.
     ((<cppcut_assert_equal()|cutter-cppcut-assertions.html#cppcut-assert-equal>))
   * Support test definition detection in namespace
     * Make
-      ((<CPPCUT_BEGIN_TEST_DECLS|cutter-cppcutter.html#CPPCUT-BEGIN-TEST-DECLS>))
+      ((<CPPCUT_BEGIN_TEST_DECLS|cutter-cppcutter.html#CPPCUT-BEGIN-TEST-DECLS--CAPS>))
       obsolete
     * Make
-      ((<CPPCUT_END_TEST_DECLS|cutter-cppcutter.html#CPPCUT-END-TEST-DECLS>))
+      ((<CPPCUT_END_TEST_DECLS|cutter-cppcutter.html#CPPCUT-END-TEST-DECLS--CAPS>))
       obsolete
   * Support optional assertion message
     * Add ((<cppcut_message()|cutter-cppcutter.html#cppcut-message>))
