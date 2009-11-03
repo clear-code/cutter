@@ -439,8 +439,10 @@ void cut_shutdown(void);
  * Specifies optional assertion message.
  *
  * e.g.:
- *   cut_assert_equal_string("abc", "def",
- *                           cut_message("should fail!"));
+ * |[
+ * cut_assert_equal_string("abc", "def",
+ *                         cut_message("should fail!"));
+ * ]|
  *
  * Since: 1.1.0
  */

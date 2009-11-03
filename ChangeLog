@@ -1,5 +1,7 @@
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h: fix document format.
+
 	* test/cutter/test-cut-assertions.c (test_assert_message): rewrite
 	with cut_assert_test_result().
 
