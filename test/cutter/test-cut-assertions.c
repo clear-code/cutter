@@ -1966,31 +1966,23 @@ test_fail (void)
 static void
 stub_assert_message (void)
 {
-    cut_assert(FALSE, cut_message("The message of %s", "assertion"));
+    MARK_FAIL(cut_assert(FALSE, cut_message("The message of %s", "assertion")));
 }
 
 void
 test_assert_message (void)
 {
-    /* FIXME: use cut_assert_test_result_summary() */
     test = cut_test_new("stub-assertion-message-test",
                         stub_assert_message);
-    cut_assert_not_null(test);
-
-    g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
-                     &test_result);
     cut_assert_false(run());
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_collect_result),
-                                         &test_result);
-    cut_assert_not_null(test_result,
-                        cut_message("Could not get a CutTestResult object "
-                                    "since \"failure\" signal "
-                                    "was not emitted."));
-    cut_assert_equal_int(CUT_TEST_RESULT_FAILURE,
-                         cut_test_result_get_status(test_result));
-    cut_assert_equal_string("The message of assertion",
-                            cut_test_result_get_user_message(test_result));
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "stub-assertion-message-test",
+                           "The message of assertion",
+                           "expected: <FALSE> is neither FALSE nor NULL",
+                           NULL, NULL,
+                           FAIL_LOCATION, "stub_assert_message",
+                           NULL);
 }
 
 static void
@@ -2006,15 +1998,7 @@ test_assert_message_with_format_string (void)
 {
     test = cut_test_new("stub-assert-message-with-string",
                         stub_assert_message_with_format_string);
-    cut_assert_not_null(test);
-
-    g_signal_connect(test, "failure", G_CALLBACK(cb_collect_result),
-                     &test_result);
     cut_assert_false(run());
-    g_signal_handlers_disconnect_by_func(test,
-                                         G_CALLBACK(cb_collect_result),
-                                         &test_result);
-
     cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "stub-assert-message-with-string",

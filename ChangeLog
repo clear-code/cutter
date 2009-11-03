@@ -1,3 +1,8 @@
+2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/cutter/test-cut-assertions.c (test_assert_message): rewrite
+	with cut_assert_test_result().
+
 2009-11-01  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-helper.h: use cut_test_with_user_message() instead of
