@@ -50,7 +50,7 @@
 /* #undef HAVE_GTK_ENABLE_DEBUG */
 
 /* Define to 1 if you have the <inttypes.h> header file. */
-#define HAVE_INTTYPES_H 1
+/* #define HAVE_INTTYPES_H 1 */
 
 /* Define to 1 if you have the <io.h> header file. */
 #define HAVE_IO_H 1
@@ -77,7 +77,7 @@
 #define HAVE_PANGO_CAIRO 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
-#define HAVE_STDINT_H 1
+/* #define HAVE_STDINT_H 1 */
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1

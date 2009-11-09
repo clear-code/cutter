@@ -21,7 +21,6 @@ LIBCUTTER_OBJECTS = \
 	$(top_builddir)/cutter/cut-main.obj \
 	$(top_builddir)/cutter/cut-module-factory-utils.obj \
 	$(top_builddir)/cutter/cut-module-factory.obj \
-	$(top_builddir)/cutter/cut-module-impl.h \
 	$(top_builddir)/cutter/cut-module.obj \
 	$(top_builddir)/cutter/cut-pe-loader.obj \
 	$(top_builddir)/cutter/cut-pipeline.obj \
