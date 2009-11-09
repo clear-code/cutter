@@ -2,7 +2,7 @@
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
 /* always defined to indicate that i18n is enabled */
-/* #undef ENABLE_NLS */
+#define ENABLE_NLS 1
 
 /* Gettext package */
 #define GETTEXT_PACKAGE "cutter"
@@ -11,7 +11,10 @@
 /* #undef HAVE_BFD_H */
 
 /* Define to 1 if you have the `bind_textdomain_codeset' function. */
-/* #undef HAVE_BIND_TEXTDOMAIN_CODESET */
+#define HAVE_BIND_TEXTDOMAIN_CODESET 1
+
+/* Define to 1 if you have <stdint.h> or <inttypes.h> */
+/* #define HAVE_C99_STDINT_TYPES 1 */
 
 /* Define to 1 if you have cairo installed */
 #define HAVE_CAIRO 1
@@ -26,7 +29,7 @@
 #define HAVE_DLFCN_H 1
 
 /* Define to 1 if you have the <elf.h> header file. */
-/* #undef HAVE_ELF_H */
+/* #define HAVE_ELF_H 1 */
 
 /* Define to 1 if you have gdk-pixbuf installed */
 #define HAVE_GDK_PIXBUF 1
@@ -38,7 +41,7 @@
 /* #undef HAVE_GOFFICE */
 
 /* Define to 1 if you have gstreamer installed */
-/* #undef HAVE_GSTREAMER */
+/* #define HAVE_GSTREAMER 1 */
 
 /* Define to 1 if you have GTK+ installed */
 #define HAVE_GTK 1
@@ -53,13 +56,16 @@
 #define HAVE_IO_H 1
 
 /* Define if your <locale.h> file defines LC_MESSAGES. */
-/* #undef HAVE_LC_MESSAGES */
+/* #define HAVE_LC_MESSAGES 1 */
 
 /* Define to 1 if you have the BFD library. */
 /* #undef HAVE_LIBBFD */
 
+/* Define to 1 if you have libsoup installed */
+/* #define HAVE_LIBSOUP 1 */
+
 /* Define to 1 if you have the <locale.h> header file. */
-/* #unedf HAVE_LOCALE_H */
+/* #define HAVE_LOCALE_H 1 */
 
 /* Define to 1 if you have the <mach-o/loader.h> header file. */
 /* #undef HAVE_MACH_O_LOADER_H */
@@ -89,10 +95,10 @@
 #define HAVE_SYS_TYPES_H 1
 
 /* Define to 1 if you have <sys/wait.h> that is POSIX.1 compatible. */
-/* #undef HAVE_SYS_WAIT_H */
+/* #define HAVE_SYS_WAIT_H 1 */
 
 /* Define to 1 if you have the <unistd.h> header file. */
-/* #undef HAVE_UNISTD_H */
+/* #define HAVE_UNISTD_H 1 */
 
 /* Define to 1 if you have the <windows.h> header file. */
 #define HAVE_WINDOWS_H 1
@@ -108,22 +114,25 @@
 #define PACKAGE "cutter"
 
 /* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "kou@cozmixng.org"
+#define PACKAGE_BUGREPORT "kou@clear-code.com"
 
 /* Define to the full name of this package. */
 #define PACKAGE_NAME "cutter"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "cutter 1.0.8"
+#define PACKAGE_STRING "cutter 1.1.1"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "cutter"
 
+/* Define to the home page for this package. */
+#define PACKAGE_URL ""
+
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "1.0.8"
+#define PACKAGE_VERSION "1.1.1"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "1.0.8"
+#define VERSION "1.1.1"

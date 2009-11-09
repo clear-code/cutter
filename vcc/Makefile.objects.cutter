@@ -1,5 +1,5 @@
 LIBCUTTER_OBJECTS = \
-	$(top_builddir)/cutter/cut-enum-types.obj \
+	$(top_builddir)/vcc/source/cutter/cut-enum-types.obj \
 	$(top_builddir)/cutter/cut-analyzer.obj \
 	$(top_builddir)/cutter/cut-assertions-helper.obj \
 	$(top_builddir)/cutter/cut-backtrace-entry.obj \
