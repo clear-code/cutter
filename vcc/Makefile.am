@@ -14,8 +14,8 @@ nobase_EXTRA_DIST =				\
 
 sync:
 	sed -i''								\
-	  -e 's/VERSION ".+"/VERSION "$(VERSION)"/'				\
-	  -e 's/PACKAGE_STRING ".+"/PACKAGE_STRING "$(PACKAGE_STRING)"/'	\
+	  -e 's/VERSION ".*"/VERSION "$(VERSION)"/'				\
+	  -e 's/PACKAGE_STRING ".*"/PACKAGE_STRING "$(PACKAGE_STRING)"/'	\
 	  include/config.h
 	cp $(top_builddir)/cutter/cut-version.h include/cutter/
 	cp $(top_builddir)/cutter/cut-enum-types.h include/cutter/

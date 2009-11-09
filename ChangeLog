@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.am: fix regexp.
+
 	* gcutter/Makefile.win32: split to.
 	* cutter/Makefile.win32, vcc/Makefile.build: ... them.
 
