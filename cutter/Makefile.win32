@@ -18,5 +18,8 @@ OBJS =				\
 
 all: cutter.dll
 
+clean:
+	@del $(OBJS)
+
 cutter.dll: $(OBJS)
 	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) /implib:cutter.lib

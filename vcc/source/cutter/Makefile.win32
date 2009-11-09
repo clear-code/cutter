@@ -12,3 +12,6 @@ OBJS =				\
 	cut-marshalers.obj
 
 all: $(OBJS)
+
+clean:
+	@del $(OBJS)

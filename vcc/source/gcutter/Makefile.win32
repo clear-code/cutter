@@ -11,3 +11,6 @@ OBJS =				\
 	gcut-marshalers.obj
 
 all: $(OBJS)
+
+clean:
+	@del $(OBJS)

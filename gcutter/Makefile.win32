@@ -15,3 +15,6 @@ OBJS =				\
 	$(LIBGCUTTER_OBJECTS)
 
 all: $(OBJS)
+
+clean:
+	@del $(OBJS)
