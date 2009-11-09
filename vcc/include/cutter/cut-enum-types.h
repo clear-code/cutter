@@ -22,6 +22,8 @@ GType cut_verbose_level_error_get_type (void);
 #define CUT_TYPE_VERBOSE_LEVEL_ERROR (cut_verbose_level_error_get_type())
 GType cut_sequence_match_operation_type_get_type (void);
 #define CUT_TYPE_SEQUENCE_MATCH_OPERATION_TYPE (cut_sequence_match_operation_type_get_type())
+GType cut_diff_writer_tag_get_type (void);
+#define CUT_TYPE_DIFF_WRITER_TAG (cut_diff_writer_tag_get_type())
 GType cut_stream_reader_error_get_type (void);
 #define CUT_TYPE_STREAM_READER_ERROR (cut_stream_reader_error_get_type())
 GType cut_file_stream_reader_error_get_type (void);

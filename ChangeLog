@@ -1,5 +1,10 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/: sync.
+
+	* cutter/Makefile.am, gcutter/Makefile.am, vcc/Makefile.am:
+	generate object files for Win32.
+
 	* misc/generate-makefile-object.rb: add.
 
 	* cutter/Makefile.am: reorder.

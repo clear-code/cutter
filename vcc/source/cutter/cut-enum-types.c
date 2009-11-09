@@ -34,10 +34,14 @@
 #include "cut-stream-parser.h"
 #include "cut-verbose-level.h"
 #include "cut-sequence-matcher.h"
-#include "cut-diff.h"
-#include "cut-differ-readable.h"
-#include "cut-differ-colorize.h"
-#include "cut-console-colors.h"
+#include "cut-differ.h"
+#include "cut-diff-writer.h"
+#include "cut-string-diff-writer.h"
+#include "cut-console-diff-writer.h"
+#include "cut-readable-differ.h"
+#include "cut-unified-differ.h"
+#include "cut-colorize-differ.h"
+#include "cut-console.h"
 #include "cut-analyzer.h"
 #include "cut-stream-reader.h"
 #include "cut-file-stream-reader.h"
@@ -154,6 +158,33 @@ cut_sequence_match_operation_type_get_type (void)
       { 0, NULL, NULL }
     };
     etype = g_enum_register_static ("CutSequenceMatchOperationType", values);
+  }
+  return etype;
+}
+GType
+cut_diff_writer_tag_get_type (void)
+{
+  static GType etype = 0;
+  if (etype == 0) {
+    static const GEnumValue values[] = {
+      { CUT_DIFF_WRITER_TAG_NONE, "CUT_DIFF_WRITER_TAG_NONE", "none" },
+      { CUT_DIFF_WRITER_TAG_SUMMARY, "CUT_DIFF_WRITER_TAG_SUMMARY", "summary" },
+      { CUT_DIFF_WRITER_TAG_CONTEXT, "CUT_DIFF_WRITER_TAG_CONTEXT", "context" },
+      { CUT_DIFF_WRITER_TAG_EQUAL_MARK, "CUT_DIFF_WRITER_TAG_EQUAL_MARK", "equal-mark" },
+      { CUT_DIFF_WRITER_TAG_DELETED_MARK, "CUT_DIFF_WRITER_TAG_DELETED_MARK", "deleted-mark" },
+      { CUT_DIFF_WRITER_TAG_INSERTED_MARK, "CUT_DIFF_WRITER_TAG_INSERTED_MARK", "inserted-mark" },
+      { CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK, "CUT_DIFF_WRITER_TAG_DIFFERENCE_MARK", "difference-mark" },
+      { CUT_DIFF_WRITER_TAG_EQUAL_LINE, "CUT_DIFF_WRITER_TAG_EQUAL_LINE", "equal-line" },
+      { CUT_DIFF_WRITER_TAG_DELETED_LINE, "CUT_DIFF_WRITER_TAG_DELETED_LINE", "deleted-line" },
+      { CUT_DIFF_WRITER_TAG_INSERTED_LINE, "CUT_DIFF_WRITER_TAG_INSERTED_LINE", "inserted-line" },
+      { CUT_DIFF_WRITER_TAG_DIFFERENCE_LINE, "CUT_DIFF_WRITER_TAG_DIFFERENCE_LINE", "difference-line" },
+      { CUT_DIFF_WRITER_TAG_EQUAL_SEGMENT, "CUT_DIFF_WRITER_TAG_EQUAL_SEGMENT", "equal-segment" },
+      { CUT_DIFF_WRITER_TAG_DELETED_SEGMENT, "CUT_DIFF_WRITER_TAG_DELETED_SEGMENT", "deleted-segment" },
+      { CUT_DIFF_WRITER_TAG_INSERTED_SEGMENT, "CUT_DIFF_WRITER_TAG_INSERTED_SEGMENT", "inserted-segment" },
+      { CUT_DIFF_WRITER_TAG_DIFFERENCE_SEGMENT, "CUT_DIFF_WRITER_TAG_DIFFERENCE_SEGMENT", "difference-segment" },
+      { 0, NULL, NULL }
+    };
+    etype = g_enum_register_static ("CutDiffWriterTag", values);
   }
   return etype;
 }

@@ -54,6 +54,22 @@ extern void _cut_marshal_VOID__STRING_STRING (GClosure     *closure,
                                               gpointer      invocation_hint,
                                               gpointer      marshal_data);
 
+/* VOID:OBJECT,BOOLEAN (../cutter/cut-marshalers.list:7) */
+extern void _cut_marshal_VOID__OBJECT_BOOLEAN (GClosure     *closure,
+                                               GValue       *return_value,
+                                               guint         n_param_values,
+                                               const GValue *param_values,
+                                               gpointer      invocation_hint,
+                                               gpointer      marshal_data);
+
+/* VOID:OBJECT,OBJECT,BOOLEAN (../cutter/cut-marshalers.list:8) */
+extern void _cut_marshal_VOID__OBJECT_OBJECT_BOOLEAN (GClosure     *closure,
+                                                      GValue       *return_value,
+                                                      guint         n_param_values,
+                                                      const GValue *param_values,
+                                                      gpointer      invocation_hint,
+                                                      gpointer      marshal_data);
+
 G_END_DECLS
 
 #endif /* ___cut_marshal_MARSHAL_H__ */

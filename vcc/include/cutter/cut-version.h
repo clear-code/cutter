@@ -43,14 +43,14 @@
  *
  * The minor version number of the Cutter.
  */
-#define CUTTER_VERSION_MINOR 0
+#define CUTTER_VERSION_MINOR 1
 
 /**
  * CUTTER_VERSION_MICRO:
  *
  * The micro version number of the Cutter.
  */
-#define CUTTER_VERSION_MICRO 9
+#define CUTTER_VERSION_MICRO 1
 
 /**
  * CUTTER_VERSION_STRING:
@@ -58,7 +58,7 @@
  * The version number string of the Cutter with
  * "#{MAJOR}.#{MINOR}.#{MICRO}" format.
  */
-#define CUTTER_VERSION_STRING "1.0.9"
+#define CUTTER_VERSION_STRING "1.1.1"
 
 /**
  * CUTTER_CHECK_VERSION:
