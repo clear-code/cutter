@@ -1,0 +1,19 @@
+# -*- makefile -*-
+
+CFLAGS =					\
+	-nologo					\
+	$(INCLUDES)
+
+LDFLAGS =					\
+	/link					\
+	/machine:ix86
+
+GLIB_CFLAGS =							\
+	-I $(top_srcdir)/vcc/vendor/include/glib-2.0		\
+	-I $(top_srcdir)/vcc/vendor/lib/glib-2.0/include/
+
+GLIB_LIBS =						\
+	$(top_srcdir)/vcc/vendor/lib/gmodule-2.0.lib	\
+	$(top_srcdir)/vcc/vendor/lib/gobject-2.0.lib	\
+	$(top_srcdir)/vcc/vendor/lib/gthread-2.0.lib	\
+	$(top_srcdir)/vcc/vendor/lib/glib-2.0.lib

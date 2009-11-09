@@ -1,0 +1,29 @@
+# -*- makefile -*-
+
+top_srcdir = ..
+top_builddir = ..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+!INCLUDE $(top_srcdir)/vcc/Makefile.objects.cutter
+!INCLUDE $(top_srcdir)/vcc/Makefile.objects.gcutter
+
+CFLAGS += $(GLIB_CFLAGS)
+
+INCLUDES =							\
+	-I $(top_srcdir)					\
+	-I $(top_srcdir)/cutter					\
+	-I $(top_srcdir)/gcutter				\
+	-I $(top_srcdir)/vcc/include/cutter			\
+	-I $(top_srcdir)/vcc/include/gcutter
+
+LIBS =							\
+	$(GLIB_LIBS)
+
+all: cutter.dll
+
+OBJS =				\
+	$(LIBCUTTER_OBJECTS)	\
+	$(LIBGCUTTER_OBJECTS)
+
+cutter.dll: $(OBJS)
+	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) /implib:cutter.lib

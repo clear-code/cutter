@@ -1,5 +1,10 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/Makefile.win32: split to.
+	* cutter/Makefile.win32, vcc/Makefile.build: ... them.
+
+	* Makefile.win32: gcutter -> cutter.
+
 	* vcc/: sync.
 
 	* cutter/Makefile.am, gcutter/Makefile.am, vcc/Makefile.am:

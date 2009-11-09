@@ -3,14 +3,13 @@
 top_srcdir = .
 
 SUBDIRS = 			\
-	gcutter			\
 	cutter			\
 	gdkcutter-pixbuf	\
 	soupcutter		\
 	module			\
 	test
 
-SUBDIRS = gcutter
+SUBDIRS = cutter
 
 all: cutter
 
