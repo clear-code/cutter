@@ -1,0 +1,45 @@
+# -*- makefile -*-
+
+top_srcdir = ..
+
+CFLAGS = $(INCLUDES)
+
+INCLUDES =							\
+	-I $(top_srcdir)					\
+	-I $(top_srcdir)/cutter					\
+	-I $(top_srcdir)/vcc/include/gcutter			\
+	-I $(top_srcdir)/vcc/vendor/include/glib-2.0		\
+	-I $(top_srcdir)/vcc/vendor/lib/glib-2.0/include/
+
+LIBS =							\
+	$(top_srcdir)/vcc/vendor/lib/glib-2.0.lib	\
+	$(top_srcdir)/vcc/vendor/lib/gobject-2.0.lib	\
+	$(top_srcdir)/vcc/vendor/lib/gthread-2.0.lib
+
+LDFLAGS =					\
+	/link					\
+	/machine:ix86
+
+
+OBJS =						\
+	gcut-value-equal.obj			\
+	gcut-list.obj				\
+	gcut-hash-table.obj			\
+	gcut-error.obj				\
+	gcut-enum.obj				\
+	gcut-assertions-helper.obj		\
+	gcut-object.obj				\
+	gcut-string-io-channel.obj		\
+	gcut-egg.obj				\
+	gcut-io.obj				\
+	gcut-key-file.obj			\
+	gcut-inspect.obj			\
+	gcut-data-helper.obj			\
+	gcut-dynamic-data.obj			\
+	gcut-main.obj				\
+	gcut-types.obj
+
+all: gcutter.dll
+
+gcutter.dll: $(OBJS)
+	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) /implib:gcutter.lib

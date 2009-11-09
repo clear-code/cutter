@@ -1,0 +1,27 @@
+# -*- makefile -*-
+
+top_srcdir = .
+
+SUBDIRS = 			\
+	gcutter			\
+	cutter			\
+	gdkcutter-pixbuf	\
+	soupcutter		\
+	module			\
+	test
+
+SUBDIRS = gcutter
+
+all: cutter
+
+cutter: vcc/include/cutter/cut-features.h
+	for %d in ($(SUBDIRS)) do			\
+		$(MAKE) -nologo -f Makefile.win32 sub-one DIRECTORY=%d TARGET=all
+
+sub-one:
+	@cd $(DIRECTORY)
+	@$(MAKE) -nologo -f Makefile.win32 $(TARGET)
+	@cd ..
+
+check: cutter
+	$(MAKE) -C test -f Makefle.wi32 check

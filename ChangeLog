@@ -1,3 +1,7 @@
+2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.win32, gcutter/Makefile.win32: add but not worked yet.
+
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac: 1.1.0 -> 1.1.1.
