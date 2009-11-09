@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-makefile-object.rb: add.
+
 	* cutter/Makefile.am: reorder.
 
 	* gcutter/Makefile.am: reorder.
