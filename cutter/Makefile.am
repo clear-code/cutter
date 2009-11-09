@@ -136,7 +136,6 @@ libcutter_sources = 			\
 	cut-main.c			\
 	cut-module-factory-utils.c	\
 	cut-module-factory.c		\
-	cut-module-impl.h		\
 	cut-module.c			\
 	cut-pe-loader.c			\
 	cut-pipeline.c			\
