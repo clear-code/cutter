@@ -12,76 +12,76 @@ CLEANFILES = *.gcno *.gcda
 lib_LTLIBRARIES = libcutter.la
 
 cutter_public_headers = 		\
-	cut-version.h			\
-	cut-features.h			\
-	cut-assertions.h		\
 	cut-assertions-helper.h		\
-	cut-test-utils.h		\
+	cut-assertions.h		\
 	cut-experimental.h		\
-	cut-public.h			\
-	cut-types.h			\
+	cut-features.h			\
+	cut-helper.h			\
 	cut-macros.h			\
 	cut-multi-process.h		\
-	cut-helper.h			\
-	cut-test-utils-helper.h
+	cut-public.h			\
+	cut-test-utils-helper.h		\
+	cut-test-utils.h		\
+	cut-types.h			\
+	cut-version.h
 
 libcutter_public_headers = 		\
-	cut-private.h			\
-	cut-runner.h			\
-	cut-run-context.h		\
-	cut-test-runner.h		\
-	cut-listener.h			\
-	cut-listener-utils.h		\
-	cut-main.h			\
-	cut-test.h			\
-	cut-iterated-test.h		\
-	cut-test-container.h		\
-	cut-test-iterator.h		\
-	cut-test-case.h			\
-	cut-test-suite.h		\
-	cut-test-context.h		\
-	cut-test-result.h		\
-	cut-test-data.h			\
-	cut-ui.h			\
-	cut-contractor.h		\
-	cut-factory-builder.h		\
-	cut-report-factory-builder.h	\
-	cut-stream-factory-builder.h	\
-	cut-ui-factory-builder.h	\
-	cut-module-factory.h		\
-	cut-module-factory-utils.h	\
-	cut-report.h			\
-	cut-stream.h			\
-	cut-process.h			\
-	cut-pipeline.h			\
-	cut-stream-parser.h		\
-	cut-verbose-level.h		\
-	cut-sequence-matcher.h		\
-	cut-differ.h			\
-	cut-diff-writer.h		\
-	cut-string-diff-writer.h	\
-	cut-console-diff-writer.h	\
-	cut-readable-differ.h		\
-	cut-unified-differ.h		\
-	cut-colorize-differ.h		\
-	cut-console.h			\
 	cut-analyzer.h			\
-	cut-stream-reader.h		\
+	cut-backtrace-entry.h		\
+	cut-colorize-differ.h		\
+	cut-console-diff-writer.h	\
+	cut-console.h			\
+	cut-contractor.h		\
+	cut-diff-writer.h		\
+	cut-differ.h			\
+	cut-factory-builder.h		\
 	cut-file-stream-reader.h	\
-	cut-sub-process.h		\
+	cut-iterated-test.h		\
+	cut-listener-utils.h		\
+	cut-listener.h			\
+	cut-main.h			\
+	cut-module-factory-utils.h	\
+	cut-module-factory.h		\
+	cut-pipeline.h			\
+	cut-private.h			\
+	cut-process.h			\
+	cut-readable-differ.h		\
+	cut-report-factory-builder.h	\
+	cut-report.h			\
+	cut-run-context.h		\
+	cut-runner.h			\
+	cut-sequence-matcher.h		\
+	cut-stream-factory-builder.h	\
+	cut-stream-parser.h		\
+	cut-stream-reader.h		\
+	cut-stream.h			\
+	cut-string-diff-writer.h	\
 	cut-sub-process-group.h		\
-	cut-backtrace-entry.h
+	cut-sub-process.h		\
+	cut-test-case.h			\
+	cut-test-container.h		\
+	cut-test-context.h		\
+	cut-test-data.h			\
+	cut-test-iterator.h		\
+	cut-test-result.h		\
+	cut-test-runner.h		\
+	cut-test-suite.h		\
+	cut-test.h			\
+	cut-ui-factory-builder.h	\
+	cut-ui.h			\
+	cut-unified-differ.h		\
+	cut-verbose-level.h
 
 noinst_headers = 		\
-	cut-loader.h		\
+	cut-crash-backtrace.h	\
 	cut-elf-loader.h	\
+	cut-loader.h		\
 	cut-mach-o-loader.h	\
-	cut-pe-loader.h		\
-	cut-module.h		\
 	cut-module-impl.h	\
+	cut-module.h		\
+	cut-pe-loader.h		\
 	cut-repository.h	\
-	cut-utils.h		\
-	cut-crash-backtrace.h
+	cut-utils.h
 
 pkginclude_HEADERS = 		\
 	cutter.h
@@ -114,66 +114,66 @@ cutter_SOURCES = main.c
 cut_diff_SOURCES = cut-diff.c
 
 libcutter_la_SOURCES =			\
-	cut-enum-types.h		\
-	cut-enum-types.c		\
 	$(cutter_public_headers)	\
 	$(libcutter_public_headers)	\
 	$(noinst_headers)		\
+	cut-enum-types.h		\
+	cut-analyzer.c			\
+	cut-assertions-helper.c		\
+	cut-backtrace-entry.c		\
+	cut-colorize-differ.c		\
+	cut-console-diff-writer.c	\
+	cut-console.c			\
+	cut-contractor.c		\
+	cut-crash-backtrace.c		\
+	cut-diff-writer.c		\
+	cut-differ.c			\
+	cut-elf-loader.c		\
+	cut-enum-types.c		\
+	cut-factory-builder.c		\
+	cut-file-stream-reader.c	\
+	cut-helper.c			\
+	cut-iterated-test.c		\
+	cut-listener.c			\
+	cut-loader.c			\
+	cut-mach-o-loader.c		\
+	cut-main.c			\
+	cut-module-factory-utils.c	\
+	cut-module-factory.c		\
+	cut-module-impl.h		\
+	cut-module.c			\
+	cut-pe-loader.c			\
+	cut-pipeline.c			\
+	cut-process.c			\
+	cut-readable-differ.c		\
+	cut-report-factory-builder.c	\
+	cut-report.c			\
+	cut-repository.c		\
 	cut-run-context.c		\
 	cut-runner.c			\
-	cut-test-runner.c		\
-	cut-listener.c			\
-	cut-main.c			\
-	cut-test.c			\
-	cut-iterated-test.c		\
-	cut-test-container.c		\
-	cut-test-iterator.c		\
-	cut-test-case.c			\
-	cut-test-suite.c		\
-	cut-test-context.c		\
-	cut-test-result.c		\
-	cut-test-data.c			\
-	cut-verbose-level.c		\
-	cut-loader.c			\
-	cut-elf-loader.c		\
-	cut-mach-o-loader.c		\
-	cut-pe-loader.c			\
-	cut-repository.c		\
-	cut-module.c			\
-	cut-module-impl.h		\
-	cut-ui.c			\
-	cut-contractor.c		\
-	cut-factory-builder.c		\
-	cut-report-factory-builder.c	\
-	cut-stream-factory-builder.c	\
-	cut-ui-factory-builder.c	\
-	cut-module-factory.c		\
-	cut-module-factory-utils.c	\
-	cut-report.c			\
-	cut-stream.c			\
-	cut-process.c			\
-	cut-pipeline.c			\
-	cut-utils.c			\
-	cut-stream-parser.c		\
 	cut-sequence-matcher.c		\
-	cut-differ.c			\
-	cut-diff-writer.c		\
-	cut-string-diff-writer.c	\
-	cut-console-diff-writer.c	\
-	cut-readable-differ.c		\
-	cut-unified-differ.c		\
-	cut-colorize-differ.c		\
-	cut-console.c			\
-	cut-analyzer.c			\
+	cut-stream-factory-builder.c	\
+	cut-stream-parser.c		\
 	cut-stream-reader.c		\
-	cut-file-stream-reader.c	\
-	cut-sub-process.c		\
+	cut-stream.c			\
+	cut-string-diff-writer.c	\
 	cut-sub-process-group.c		\
-	cut-backtrace-entry.c		\
-	cut-assertions-helper.c		\
+	cut-sub-process.c		\
+	cut-test-case.c			\
+	cut-test-container.c		\
+	cut-test-context.c		\
+	cut-test-data.c			\
+	cut-test-iterator.c		\
+	cut-test-result.c		\
+	cut-test-runner.c		\
+	cut-test-suite.c		\
 	cut-test-utils-helper.c		\
-	cut-helper.c			\
-	cut-crash-backtrace.c
+	cut-test.c			\
+	cut-ui-factory-builder.c	\
+	cut-ui.c			\
+	cut-unified-differ.c		\
+	cut-utils.c			\
+	cut-verbose-level.c
 
 libcutter_la_LDFLAGS =				\
 	-version-info $(LT_VERSION_INFO)	\
