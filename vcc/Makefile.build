@@ -2,6 +2,7 @@
 
 CFLAGS =					\
 	-nologo					\
+	-MD					\
 	$(INCLUDES)				\
 	$(DEFS)					\
 	$(LOCAL_CFLAGS)				\

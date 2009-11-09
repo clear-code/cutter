@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: add -MD.
+
 	* **/Makefile.win32: add clean target.
 
 	* misc/generate-makefile-objects.rb: support marshalers.
