@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-makefile-objects.rb: specialize enum-types C source.
+
 	* vcc/Makefile.am: fix regexp.
 
 	* gcutter/Makefile.win32: split to.
