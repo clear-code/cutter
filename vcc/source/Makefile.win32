@@ -1,0 +1,16 @@
+# -*- makefile -*-
+
+top_srcdir = ../../
+
+SUBDIRS =	\
+	gcutter	\
+	cutter
+
+all:
+	for %d in ($(SUBDIRS)) do			\
+		$(MAKE) -nologo -f Makefile.win32 sub-one DIRECTORY=%d TARGET=all
+
+sub:
+	@cd $(DIRECTORY)
+	@$(MAKE) -nologo -f Makefile.win32 $(TARGET)
+	@cd ..

@@ -1,0 +1,13 @@
+# -*- makefile -*-
+
+top_srcdir = ../../../
+top_builddir = ../../../
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+
+LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+
+OBJS =				\
+	gcut-marshalers.obj
+
+all: $(OBJS)

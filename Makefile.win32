@@ -9,18 +9,21 @@ SUBDIRS = 			\
 	module			\
 	test
 
-SUBDIRS = cutter
+SUBDIRS =	\
+	vcc	\
+	gcutter	\
+	cutter
 
 all: cutter
 
-cutter: vcc/include/cutter/cut-features.h
+cutter: $(top_srcdir)/vcc/include/cutter/cut-features.h
 	for %d in ($(SUBDIRS)) do			\
-		$(MAKE) -nologo -f Makefile.win32 sub-one DIRECTORY=%d TARGET=all
-
-sub-one:
-	@cd $(DIRECTORY)
-	@$(MAKE) -nologo -f Makefile.win32 $(TARGET)
-	@cd ..
+		$(MAKE) -nologo -f Makefile.win32 sub DIRECTORY=%d TARGET=all
 
 check: cutter
 	$(MAKE) -C test -f Makefle.wi32 check
+
+sub:
+	@cd $(DIRECTORY)
+	@$(MAKE) -nologo -f Makefile.win32 $(TARGET)
+	@cd ..

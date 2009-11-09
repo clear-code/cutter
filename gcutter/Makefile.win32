@@ -4,7 +4,6 @@ top_srcdir = ..
 top_builddir = ..
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
-!INCLUDE $(top_srcdir)/vcc/Makefile.objects.cutter
 !INCLUDE $(top_srcdir)/vcc/Makefile.objects.gcutter
 
 LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
@@ -13,10 +12,6 @@ LIBS =							\
 	$(GLIB_LIBS)
 
 OBJS =				\
-	$(LIBCUTTER_OBJECTS)	\
 	$(LIBGCUTTER_OBJECTS)
 
-all: cutter.dll
-
-cutter.dll: $(OBJS)
-	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) /implib:cutter.lib
+all: $(OBJS)

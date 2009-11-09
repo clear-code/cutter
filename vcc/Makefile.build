@@ -2,18 +2,44 @@
 
 CFLAGS =					\
 	-nologo					\
-	$(INCLUDES)
+	$(INCLUDES)				\
+	$(DEFS)					\
+	$(LOCAL_CFLAGS)				\
+	$(LOCAL_DEF)
+
+DEFS =						\
+	-DHAVE_CONFIG_H
 
 LDFLAGS =					\
 	/link					\
 	/machine:ix86
 
+CUTTER_CFLAGS =					\
+	$(GLIB_CFLAGS)				\
+	-I $(top_srcdir)			\
+	-I $(top_srcdir)/cutter			\
+	-I $(top_srcdir)/vcc/include		\
+	-I $(top_srcdir)/vcc/include/cutter
+
+GCUTER_CFLAGS =					\
+	$(CUTTER_CFLAGS)			\
+	-I $(top_srcdir)/gcutter		\
+	-I $(top_srcdir)/vcc/include/gcutter
+
 GLIB_CFLAGS =							\
+	$(INTL_CFLAGS)						\
 	-I $(top_srcdir)/vcc/vendor/include/glib-2.0		\
 	-I $(top_srcdir)/vcc/vendor/lib/glib-2.0/include/
 
 GLIB_LIBS =						\
+	$(INTL_LIBS)					\
 	$(top_srcdir)/vcc/vendor/lib/gmodule-2.0.lib	\
 	$(top_srcdir)/vcc/vendor/lib/gobject-2.0.lib	\
 	$(top_srcdir)/vcc/vendor/lib/gthread-2.0.lib	\
 	$(top_srcdir)/vcc/vendor/lib/glib-2.0.lib
+
+INTL_CFLAGS =					\
+	-I $(top_srcdir)/vcc/vendor/include
+
+INTL_LIBS =					\
+	$(top_srcdir)/vcc/vendor/lib/intl.lib

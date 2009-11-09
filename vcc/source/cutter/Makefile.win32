@@ -1,0 +1,14 @@
+# -*- makefile -*-
+
+top_srcdir = ../../../
+top_builddir = ../../../
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+
+LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+
+OBJS =				\
+	cut-enum-types.obj	\
+	cut-marshalers.obj
+
+all: $(OBJS)

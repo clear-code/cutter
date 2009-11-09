@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/**/Makefile.win32: add.
+
 	* cutter/Makefile.am: remove duplicated file.
 
 	* misc/generate-makefile-objects.rb: specialize enum-types C source.
