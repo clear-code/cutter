@@ -113,11 +113,8 @@ bin_PROGRAMS = cutter cut-diff
 cutter_SOURCES = main.c
 cut_diff_SOURCES = cut-diff.c
 
-libcutter_la_SOURCES =			\
-	$(cutter_public_headers)	\
-	$(libcutter_public_headers)	\
-	$(noinst_headers)		\
-	cut-enum-types.h		\
+libcutter_sources = 			\
+	cut-enum-types.c		\
 	cut-analyzer.c			\
 	cut-assertions-helper.c		\
 	cut-backtrace-entry.c		\
@@ -129,7 +126,6 @@ libcutter_la_SOURCES =			\
 	cut-diff-writer.c		\
 	cut-differ.c			\
 	cut-elf-loader.c		\
-	cut-enum-types.c		\
 	cut-factory-builder.c		\
 	cut-file-stream-reader.c	\
 	cut-helper.c			\
@@ -174,6 +170,13 @@ libcutter_la_SOURCES =			\
 	cut-unified-differ.c		\
 	cut-utils.c			\
 	cut-verbose-level.c
+
+libcutter_la_SOURCES =			\
+	$(cutter_public_headers)	\
+	$(libcutter_public_headers)	\
+	$(noinst_headers)		\
+	cut-enum-types.h		\
+	$(libcutter_sources)
 
 libcutter_la_LDFLAGS =				\
 	-version-info $(LT_VERSION_INFO)	\
@@ -240,3 +243,6 @@ echo-public-headers:
 	    echo $(abs_srcdir)/$${header};				\
 	  fi;								\
 	done
+
+echo-libcutter-sources:
+	@echo $(libcutter_sources)
