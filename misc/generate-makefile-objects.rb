@@ -5,7 +5,7 @@ prefix = ARGV.shift
 files = ARGV.collect do |file|
   _prefix = prefix
   case file
-  when /-enum-types/
+  when /(-enum-types|-marshalers)/
     _prefix = _prefix.sub(/(\$\(top_builddir\))/, '\1/vcc/source')
   end
   "\t#{_prefix}#{file.sub(/\.c/, '.obj')}"

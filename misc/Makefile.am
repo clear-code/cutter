@@ -4,4 +4,6 @@ dist_noinst_SCRIPTS =				\
 	rd2man-lib.rb				\
 	prepare-gtk-doc-html-for-publishing.rb	\
 	release.rb				\
-	update-latest-release.rb
+	update-latest-release.rb		\
+	generate-def.rb				\
+	generate-makefile-objects.rb

@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-makefile-objects.rb: support marshalers.
+
 	* cutter/Makefile.am, gcutter/Makefile.am: add missing source files.
 
 	* vcc/**/Makefile.win32: add.
