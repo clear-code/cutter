@@ -1,5 +1,4 @@
 LIBCUTTER_OBJECTS = \
-	$(top_builddir)/vcc/source/cutter/cut-enum-types.obj \
 	$(top_builddir)/cutter/cut-analyzer.obj \
 	$(top_builddir)/cutter/cut-assertions-helper.obj \
 	$(top_builddir)/cutter/cut-backtrace-entry.obj \
@@ -53,4 +52,5 @@ LIBCUTTER_OBJECTS = \
 	$(top_builddir)/cutter/cut-ui.obj \
 	$(top_builddir)/cutter/cut-unified-differ.obj \
 	$(top_builddir)/cutter/cut-utils.obj \
-	$(top_builddir)/cutter/cut-verbose-level.obj
+	$(top_builddir)/cutter/cut-verbose-level.obj \
+	$(top_builddir)/vcc/source/cutter/cut-enum-types.obj

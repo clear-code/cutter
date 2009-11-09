@@ -19,10 +19,8 @@ sync:
 	  include/config.h
 	cp $(top_builddir)/cutter/cut-version.h include/cutter/
 	cp $(top_builddir)/cutter/cut-enum-types.h include/cutter/
-	cp $(top_builddir)/cutter/cut-marshalers.h include/cutter/
 	cp $(top_builddir)/gcutter/gcut-marshalers.h include/gcutter/
 	cp $(top_builddir)/cutter/cut-enum-types.c source/cutter/
-	cp $(top_builddir)/cutter/cut-marshalers.c source/cutter/
 	cp $(top_builddir)/gcutter/gcut-marshalers.c source/gcutter/
 	($(MAKE) -s -C $(top_builddir)/cutter echo-public-headers;	\
 	 $(MAKE) -s -C $(top_builddir)/gcutter echo-public-headers) |	\

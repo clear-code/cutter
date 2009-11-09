@@ -14,4 +14,5 @@ LIBGCUTTER_OBJECTS = \
 	$(top_builddir)/gcutter/gcut-object.obj \
 	$(top_builddir)/gcutter/gcut-string-io-channel.obj \
 	$(top_builddir)/gcutter/gcut-types.obj \
-	$(top_builddir)/gcutter/gcut-value-equal.obj
+	$(top_builddir)/gcutter/gcut-value-equal.obj \
+	$(top_builddir)/vcc/source/gcutter/gcut-marshalers.obj
