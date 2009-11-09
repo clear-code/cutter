@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/Makefile.am: reorder.
+
 	* Makefile.win32, gcutter/Makefile.win32: add but not worked yet.
 
 2009-11-03  Kouhei Sutou  <kou@cozmixng.org>

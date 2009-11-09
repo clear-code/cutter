@@ -57,22 +57,22 @@ libgcutter_la_SOURCES =			\
 	$(gcutter_public_headers)	\
 	$(noinst_headers)		\
 	$(marshal_sources)		\
-	gcut-value-equal.c		\
-	gcut-list.c			\
-	gcut-hash-table.c		\
-	gcut-error.c			\
-	gcut-enum.c			\
 	gcut-assertions-helper.c	\
-	gcut-object.c			\
-	gcut-string-io-channel.c	\
-	gcut-egg.c			\
-	gcut-io.c			\
-	gcut-key-file.c			\
-	gcut-inspect.c			\
 	gcut-data-helper.c		\
 	gcut-dynamic-data.c		\
+	gcut-egg.c			\
+	gcut-enum.c			\
+	gcut-error.c			\
+	gcut-hash-table.c		\
+	gcut-inspect.c			\
+	gcut-io.c			\
+	gcut-key-file.c			\
+	gcut-list.c			\
 	gcut-main.c			\
-	gcut-types.c
+	gcut-object.c			\
+	gcut-string-io-channel.c	\
+	gcut-types.c			\
+	gcut-value-equal.c
 
 
 gcut-marshalers.h : gcut-marshalers.list
