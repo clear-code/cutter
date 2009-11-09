@@ -114,7 +114,6 @@ cutter_SOURCES = main.c
 cut_diff_SOURCES = cut-diff.c
 
 libcutter_sources = 			\
-	cut-enum-types.c		\
 	cut-analyzer.c			\
 	cut-assertions-helper.c		\
 	cut-backtrace-entry.c		\
@@ -174,7 +173,7 @@ libcutter_la_SOURCES =			\
 	$(cutter_public_headers)	\
 	$(libcutter_public_headers)	\
 	$(noinst_headers)		\
-	cut-enum-types.h		\
+	$(enum_sources)			\
 	$(libcutter_sources)
 
 libcutter_la_LDFLAGS =				\
@@ -244,4 +243,4 @@ echo-public-headers:
 	done
 
 echo-libcutter-sources:
-	@echo $(libcutter_sources)
+	@echo $(libcutter_sources) $(enum_source_prefix).c

@@ -1,5 +1,7 @@
 2009-11-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.am, gcutter/Makefile.am: add missing source files.
+
 	* vcc/**/Makefile.win32: add.
 
 	* cutter/Makefile.am: remove duplicated file.

@@ -90,4 +90,4 @@ echo-public-headers:
 	done
 
 echo-libgcutter-sources:
-	@echo $(libgcutter_sources)
+	@echo $(libgcutter_sources) gcut-marshalers.c
