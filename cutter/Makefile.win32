@@ -9,7 +9,7 @@ top_builddir = ..
 
 LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
 
-LIBS =							\
+LIBS =				\
 	$(GLIB_LIBS)
 
 OBJS =				\

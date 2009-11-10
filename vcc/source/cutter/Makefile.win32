@@ -8,8 +8,7 @@ top_builddir = ../../../
 LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
 
 OBJS =				\
-	cut-enum-types.obj	\
-	cut-marshalers.obj
+	cut-enum-types.obj
 
 all: $(OBJS)
 
