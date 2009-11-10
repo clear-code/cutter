@@ -8,6 +8,6 @@ files = ARGV.collect do |file|
   when /(-enum-types|-marshalers)/
     _prefix = _prefix.sub(/(\$\(top_builddir\))/, '\1/vcc/source')
   end
-  "\t#{_prefix}#{file.sub(/\.c/, '.obj')}"
+  "\t#{_prefix}#{file.sub(/\.c/, '.obj')}".gsub(/\//, "\\")
 end.join(" \\\n")
 puts files

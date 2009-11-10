@@ -1,5 +1,8 @@
 2009-11-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-makefile-objects.rb: use '\' instead of '/' for
+	path separator.
+
 	* vcc/source/cutter/Makefile.win32: remove a needless file.
 
 	* vcc/source/Makefile.win32, vcc/Makefile.build: fix a typo.

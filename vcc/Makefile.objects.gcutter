@@ -1,18 +1,18 @@
 LIBGCUTTER_OBJECTS = \
-	$(top_builddir)/gcutter/gcut-assertions-helper.obj \
-	$(top_builddir)/gcutter/gcut-data-helper.obj \
-	$(top_builddir)/gcutter/gcut-dynamic-data.obj \
-	$(top_builddir)/gcutter/gcut-egg.obj \
-	$(top_builddir)/gcutter/gcut-enum.obj \
-	$(top_builddir)/gcutter/gcut-error.obj \
-	$(top_builddir)/gcutter/gcut-hash-table.obj \
-	$(top_builddir)/gcutter/gcut-inspect.obj \
-	$(top_builddir)/gcutter/gcut-io.obj \
-	$(top_builddir)/gcutter/gcut-key-file.obj \
-	$(top_builddir)/gcutter/gcut-list.obj \
-	$(top_builddir)/gcutter/gcut-main.obj \
-	$(top_builddir)/gcutter/gcut-object.obj \
-	$(top_builddir)/gcutter/gcut-string-io-channel.obj \
-	$(top_builddir)/gcutter/gcut-types.obj \
-	$(top_builddir)/gcutter/gcut-value-equal.obj \
-	$(top_builddir)/vcc/source/gcutter/gcut-marshalers.obj
+	$(top_builddir)\gcutter\gcut-assertions-helper.obj \
+	$(top_builddir)\gcutter\gcut-data-helper.obj \
+	$(top_builddir)\gcutter\gcut-dynamic-data.obj \
+	$(top_builddir)\gcutter\gcut-egg.obj \
+	$(top_builddir)\gcutter\gcut-enum.obj \
+	$(top_builddir)\gcutter\gcut-error.obj \
+	$(top_builddir)\gcutter\gcut-hash-table.obj \
+	$(top_builddir)\gcutter\gcut-inspect.obj \
+	$(top_builddir)\gcutter\gcut-io.obj \
+	$(top_builddir)\gcutter\gcut-key-file.obj \
+	$(top_builddir)\gcutter\gcut-list.obj \
+	$(top_builddir)\gcutter\gcut-main.obj \
+	$(top_builddir)\gcutter\gcut-object.obj \
+	$(top_builddir)\gcutter\gcut-string-io-channel.obj \
+	$(top_builddir)\gcutter\gcut-types.obj \
+	$(top_builddir)\gcutter\gcut-value-equal.obj \
+	$(top_builddir)\vcc\source\gcutter\gcut-marshalers.obj
