@@ -9,16 +9,8 @@ EXPORTS
 	cut_assert_not_null_helper
 	cut_assert_equal_int_helper
 	cut_assert_not_equal_int_helper
-	cut_assert_equal_intptr_helper
-	cut_assert_not_equal_intptr_helper
-	cut_assert_equal_intmax_helper
-	cut_assert_not_equal_intmax_helper
 	cut_assert_equal_uint_helper
 	cut_assert_not_equal_uint_helper
-	cut_assert_equal_uintptr_helper
-	cut_assert_not_equal_uintptr_helper
-	cut_assert_equal_uintmax_helper
-	cut_assert_not_equal_uintmax_helper
 	cut_assert_equal_size_helper
 	cut_assert_not_equal_size_helper
 	cut_assert_equal_double_helper
