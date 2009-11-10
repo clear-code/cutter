@@ -5,19 +5,24 @@ top_builddir = ../..
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 
-LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+LOCAL_CFLAGS =					\
+	$(GCUTTER_CFLAGS)			\
+	$(GTK_CFLAGS)
 
 LIBS =						\
-	$(GLIB_LIBS)				\
 	$(top_builddir)/cutter/cutter.lib
 
 OBJS =						\
 	cut-console-ui.obj			\
-	cut-console-ui-factory.obj
+	cut-console-ui-factory.obj		\
+	cut-gtk-ui.obj				\
+	cu-gtk-ui-factory.obj
 
 libraries =					\
 	cut-console-ui.dll			\
-	cut-console-ui-factory.dll
+	cut-console-ui-factory.dll		\
+	cut-gtk-ui.dll				\
+	cut-gtk-ui-factory.dll
 
 all: $(libraries)
 
@@ -25,7 +30,13 @@ clean:
 	@del $(OBJS) $(libraries)
 
 cut-console-ui.dll: cut-console-ui.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ cut-console-ui.obj $(LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
 
 cut-console-ui-factory.dll: cut-console-ui-factory.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ cut-console-ui-factory.obj $(LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui-factory.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
+
+cut-gtk-ui.dll: cut-gtk-ui.obj
+	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui.obj $(LIBS) $(GTK_LIBS) $(LDFLAGS)
+
+cut-gtk-ui-factory.dll: cut-gtk-ui-factory.obj
+	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui-factory.obj $(LIBS) $(GTK_LIBS) $(LDFLAGS)

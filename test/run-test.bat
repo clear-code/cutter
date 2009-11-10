@@ -19,4 +19,4 @@ set CUT_STREAM_FACTORY_MODULE_DIR=%TOP_DIR%\module\stream
 
 @echo on
 
-%CUTTER% -s %BASE_DIR% --exclude-directory fixtures --exclude-directory lib %BASE_DIR%
+%CUTTER% -s %BASE_DIR% --exclude-directory fixtures --exclude-directory lib -u gtk %BASE_DIR%
