@@ -1,0 +1,3 @@
+EXPORTS
+	cuttest_event_receiver_get_type
+	cuttest_event_receiver_new

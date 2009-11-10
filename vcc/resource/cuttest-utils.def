@@ -1,0 +1,6 @@
+EXPORTS
+	cuttest_get_base_dir
+	cuttest_add_test
+	cut_assert_test_result_summary_helper
+	cut_assert_test_result_helper
+	cuttest_flags_get_type

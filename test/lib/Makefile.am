@@ -26,14 +26,29 @@ AM_LDFLAGS =                    \
         -avoid-version          \
         -no-undefined
 
-libcuttest_utils_la_SOURCES = 		\
-	cuttest-utils.c			\
-	cuttest-utils.h			\
-	cuttest-assertions.c		\
-	cuttest-assertions.h		\
-	cuttest-enum.c			\
+libcuttest_utils_public_headers =		\
+	cuttest-utils.h				\
+	cuttest-assertions.h			\
 	cuttest-enum.h
 
-libcuttest_event_receiver_la_SOURCES = 		\
-	cuttest-event-receiver.c		\
+libcuttest_utils_la_SOURCES =			\
+	$(libcuttest_utils_public_headers)	\
+	cuttest-utils.c				\
+	cuttest-assertions.c			\
+	cuttest-enum.c
+
+libcuttest_event_receiver_public_headers =	\
 	cuttest-event-receiver.h
+
+libcuttest_event_receiver_la_SOURCES = 		\
+	cuttest-event-receiver.c
+
+echo-cuttest-utils-public-headers:
+	@for header in $(libcuttest_utils_public_headers); do		\
+	  echo $(abs_srcdir)/$${header};				\
+	done
+
+echo-cuttest-event-receiver-public-headers:
+	@for header in $(libcuttest_event_receiver_public_headers); do	\
+	  echo $(abs_srcdir)/$${header};				\
+	done
