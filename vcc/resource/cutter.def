@@ -76,6 +76,7 @@ EXPORTS
 	cut_test_context_set_current_result
 	cut_test_context_set_current_result_user_message
 	cut_test_context_process_current_result
+	cut_test_context_get_have_current_result
 	cut_test_context_register_result
 	cut_test_context_set_have_user_message_jump
 	cut_test_context_get_have_user_message_jump
@@ -121,6 +122,7 @@ EXPORTS
 	cut_diff_unified
 	cut_utils_take_new_sub_process
 	cut_utils_take_new_sub_process_group
+	cut_take_replace_helper
 	cut_analyzer_get_type
 	cut_analyzer_new
 	cut_analyzer_analyze
@@ -178,6 +180,7 @@ EXPORTS
 	cut_differ_diff
 	cut_differ_get_best_ratio
 	cut_differ_get_cut_off_ratio
+	cut_differ_get_sequence_matcher
 	cut_differ_need_diff
 	cut_differ_util_is_space_character
 	cut_differ_util_compute_width

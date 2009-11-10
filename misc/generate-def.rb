@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 puts "EXPORTS"
-ARGF.each_line do |line|
-  case line
-  when /^\w.+\s+\*?((?:|g|gdk)cut_[a-z_]+)\s*(?:\(|\z)/
+ARGV.each do |file|
+  content = File.read(file)
+  content.scan(/^\w(?-m:.+)\s+\*?((?:|g|gdk)cut_[a-z_]+)\s*(?:\(|$)/m) do
     function = $1
     case function
     when /u?int(max|ptr)/
