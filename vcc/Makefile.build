@@ -22,7 +22,7 @@ CUTTER_CFLAGS =					\
 	-I $(top_srcdir)/vcc/include		\
 	-I $(top_srcdir)/vcc/include/cutter
 
-GCUTTER_CFLAGS =					\
+GCUTTER_CFLAGS =				\
 	$(CUTTER_CFLAGS)			\
 	-I $(top_srcdir)/gcutter		\
 	-I $(top_srcdir)/vcc/include/gcutter

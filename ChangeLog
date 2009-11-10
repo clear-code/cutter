@@ -1,5 +1,7 @@
 2009-11-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/Makefile.win32: create cutter.exe.
+
 	* misc/generate-makefile-objects.rb: use '\' instead of '/' for
 	path separator.
 
