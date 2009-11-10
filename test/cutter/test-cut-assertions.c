@@ -301,6 +301,7 @@ test_not_equal_int (void)
                            NULL);
 }
 
+#ifdef HAVE_STDINT_H
 static void
 stub_equal_int_least8 (void)
 {
@@ -740,6 +741,7 @@ test_not_equal_intmax (void)
                            FAIL_LOCATION, "stub_not_equal_intmax",
                            NULL);
 }
+#endif
 
 static void
 stub_equal_uint (void)
@@ -783,6 +785,7 @@ test_not_equal_uint (void)
                            NULL);
 }
 
+#ifdef HAVE_STDINT_H
 static void
 stub_equal_uint_least8 (void)
 {
@@ -1222,6 +1225,7 @@ test_not_equal_uintmax (void)
                            FAIL_LOCATION, "stub_not_equal_uintmax",
                            NULL);
 }
+#endif
 
 static void
 stub_equal_size (void)

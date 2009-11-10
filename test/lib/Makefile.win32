@@ -1,0 +1,49 @@
+# -*- makefile -*-
+
+top_srcdir = ..\..
+top_builddir = ..\..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+!INCLUDE $(top_srcdir)/vcc/Makefile.objects.cutter
+!INCLUDE $(top_srcdir)/vcc/Makefile.objects.gcutter
+
+LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+
+LIBS =						\
+	$(GLIB_LIBS)				\
+	$(top_builddir)/cutter/cutter.lib
+
+cuttest_utils_objects =				\
+	cuttest-utils.obj			\
+	cuttest-assertions.obj			\
+	cuttest-enum.obj
+
+cuttest_event_receiver_objects =		\
+	cuttest-event-receiver.obj
+
+cuttest_utils_def = \
+	$(top_builddir)\vcc\resource\cuttest-utils.def
+cuttest_event_receiver_def = \
+	$(top_builddir)\vcc\resource\cuttest-event-receiver.def
+
+OBJS =						\
+	$(cuttest_utils_objects)		\
+	$(cuttest_event_receiver_objects)
+
+libraries =					\
+	cuttest-utils.dll			\
+	cuttest-event-receiver.dll
+
+all: $(libraries)
+
+clean:
+	@del $(OBJS) $(libraries)
+
+cuttest-utils.dll: $(cuttest_utils_objects) $(cuttest_utils_def)
+	$(CC) $(CFLAGS) -LD -Fe$@ $(cuttest_utils_objects) $(LIBS) $(LDFLAGS) \
+	  /implib:cuttest-utils.lib /def:$(cuttest_utils_def)
+
+cuttest-event-receiver.dll: $(cuttest_event_receiver_objects) $(cuttest_event_receiver_def)
+	$(CC) $(CFLAGS) -LD -Fe$@ $(cuttest_event_receiver_objects) $(LIBS) \
+	  $(LDFLAGS) /implib:cuttest-event-receiver.lib \
+	  /def:$(cuttest_event_receiver_def)

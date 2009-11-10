@@ -1,0 +1,24 @@
+# -*- makefile -*-
+
+top_srcdir = ../..
+top_builddir = ../..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+
+LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+
+LIBS =							\
+	$(GLIB_LIBS)					\
+	$(top_builddir)/cutter/cutter.lib		\
+	$(top_builddir)/test/lib/cuttest-utils.lib
+
+tests =						\
+	test-cut-assertions.dll
+
+all: $(tests)
+
+clean:
+	@del $(tests)
+
+test-cut-assertions.dll: test-cut-assertions.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ test-cut-assertions.obj $(LIBS) $(LDFLAGS)

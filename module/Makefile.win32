@@ -1,6 +1,6 @@
 # -*- makefile -*-
 
-top_srcdir = ../
+top_srcdir = ..
 
 SUBDIRS =	\
 	ui
