@@ -1,5 +1,7 @@
 2009-11-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils-helper.h: fix format.
+
 	* misc/generate-def.rb: also collect new line separated functions.
 
 	* module/ui/Makefile.win32, vcc/Makefile.build: support GTK UI build.

@@ -26,9 +26,10 @@ extern "C" {
 
 #include <cutter/cut-types.h>
 
-const char *
-cut_take_replace_helper (const char *target, const char *pattern,
-                         const char *replacement, CutCallbackFunction callback);
+const char *cut_take_replace_helper (const char          *target,
+                                     const char          *pattern,
+                                     const char          *replacement,
+                                     CutCallbackFunction  callback);
 
 
 #ifdef __cplusplus
