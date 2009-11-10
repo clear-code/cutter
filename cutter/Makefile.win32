@@ -19,7 +19,7 @@ OBJS =				\
 all: cutter.exe
 
 clean:
-	@del $(OBJS)
+	@del $(OBJS) cutter.dll cutter.exe
 
 def = $(top_srcdir)\vcc\resource\cutter.def
 

@@ -1,0 +1,31 @@
+# -*- makefile -*-
+
+top_srcdir = ../..
+top_builddir = ../..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+
+LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+
+LIBS =						\
+	$(GLIB_LIBS)				\
+	$(top_builddir)/cutter/cutter.lib
+
+OBJS =						\
+	cut-console-ui.obj			\
+	cut-console-ui-factory.obj
+
+libraries =					\
+	cut-console-ui.dll			\
+	cut-console-ui-factory.dll
+
+all: $(libraries)
+
+clean:
+	@del $(OBJS) $(libraries)
+
+cut-console-ui.dll: cut-console-ui.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ cut-console-ui.obj $(LIBS) $(LDFLAGS)
+
+cut-console-ui-factory.dll: cut-console-ui-factory.obj
+	$(CC) $(CFLAGS) -LD -Fe$@ cut-console-ui-factory.obj $(LIBS) $(LDFLAGS)
