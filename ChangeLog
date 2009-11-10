@@ -1,5 +1,7 @@
 2009-11-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.bat: add.
+
 	* module/ui/Makefile.win32: add.
 
 	* misc/generate-def.rb: ignore intmax/intptr/uintmax/uintptr.
