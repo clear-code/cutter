@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -216,6 +216,7 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
     IMAGE_SECTION_HEADER *first_section;
     IMAGE_SECTION_HEADER *text_section = NULL;
     IMAGE_SECTION_HEADER *edata_section = NULL;
+    IMAGE_SECTION_HEADER *rdata_section = NULL;
     IMAGE_EXPORT_DIRECTORY *export_directory;
     const gchar *base_address;
     ULONG *name_addresses;
@@ -232,21 +233,43 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
             text_section = first_section + i;
         } else if (g_str_equal(".edata", section_name)) {
             edata_section = first_section + i;
+        } else if (g_str_equal(".rdata", section_name)) {
+            rdata_section = first_section + i;
         }
     }
 
     if (!text_section)
         return NULL;
-    if (!edata_section)
+    if (!edata_section && !rdata_section)
         return NULL;
 
-    export_directory =
-        (IMAGE_EXPORT_DIRECTORY *)(priv->content +
+    if (edata_section) {
+        export_directory =
+            (IMAGE_EXPORT_DIRECTORY *)(priv->content +
                                    edata_section->PointerToRawData);
-    base_address =
-        priv->content +
-        edata_section->PointerToRawData -
-        edata_section->VirtualAddress;
+        base_address =
+            priv->content +
+            edata_section->PointerToRawData -
+            edata_section->VirtualAddress;
+    } else {
+        IMAGE_OPTIONAL_HEADER *optional_header;
+        IMAGE_DATA_DIRECTORY *export_data_directory;
+
+        optional_header = &(priv->nt_headers->OptionalHeader);
+        export_data_directory =
+            &(optional_header->DataDirectory[IMAGE_DIRECTORY_ENTRY_EXPORT]);
+
+        export_directory =
+            (IMAGE_EXPORT_DIRECTORY *)(priv->content +
+                                       rdata_section->PointerToRawData +
+                                       export_data_directory->VirtualAddress -
+                                       rdata_section->VirtualAddress);
+        base_address =
+            priv->content +
+            rdata_section->PointerToRawData -
+            rdata_section->VirtualAddress;
+    }
+
     name_addresses = (ULONG *)(base_address + export_directory->AddressOfNames);
     function_addresses =
         (ULONG *)(base_address + export_directory->AddressOfFunctions);
