@@ -1,0 +1,3 @@
+LIBCPPCUTTER_OBJECTS = \
+	$(top_builddir)\cppcutter\cppcut-assertions-helper.obj \
+	$(top_builddir)\cppcutter\cppcut-message.obj
