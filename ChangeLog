@@ -1,3 +1,7 @@
+2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/cutter/test-cut-unified-differ.c: remove nonexistent declarations.
+
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/generate-def.rb: support 'char **'.

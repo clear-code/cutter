@@ -24,9 +24,6 @@ void test_same_contents_unified_diff(void);
 void test_inserted_unified_diff(void);
 void test_deleted_unified_diff(void);
 void test_replace_unified_diff(void);
-void test_difference_unified_diff(void);
-void test_complex_unified_diff(void);
-void test_double_width_unified_diff(void);
 void test_empty_unified_diff(void);
 
 #define cut_assert_unified_diff(expected, from, to, from_label, to_label) \
