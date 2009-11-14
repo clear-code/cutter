@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: support debug build.
+
 	* test/cutter/test-cut-xml-stream.c: add missing NULL.
 
 	* module/stream/cut-xml-stream-factory.c (STDOUT_FILENO): define

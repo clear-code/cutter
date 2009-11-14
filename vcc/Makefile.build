@@ -1,19 +1,33 @@
 # -*- makefile -*-
 
+# DEBUG = yes
+
 CFLAGS =					\
-	-nologo					\
-	-MD					\
+	/nologo					\
+	$(OPTIMIZE)				\
+	$(CRUNTIME)				\
 	$(INCLUDES)				\
 	$(DEFS)					\
 	$(LOCAL_CFLAGS)				\
 	$(LOCAL_DEF)
+
+!IFDEF DEBUG
+OPTIMIZE =
+CRUNTIME = /MTd
+DEBUG_LDFLAGS = /debug
+!ELSE
+OPTIMIZE =
+CRUNTIME = /MT
+DEBUG_LDFLAGS =
+!ENDIF
 
 DEFS =						\
 	-DHAVE_CONFIG_H
 
 LDFLAGS =					\
 	/link					\
-	/machine:ix86
+	/machine:ix86				\
+	$(DEBUG_LDFLAGS)
 
 CUTTER_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
