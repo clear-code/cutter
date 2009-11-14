@@ -9,7 +9,6 @@
 
 void test_get_name(void);
 void test_get_description(void);
-void test_increment_assertion_count(void);
 void test_run(void);
 void test_start_signal(void);
 void test_complete_signal(void);
