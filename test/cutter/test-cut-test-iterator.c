@@ -1,3 +1,22 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 #include <gcutter.h>
 #include <cutter/cut-test-iterator.h>
 #include <cutter/cut-test-runner.h>
@@ -295,7 +314,8 @@ stub_iterated_data (void)
 {
     cut_add_data("First", GINT_TO_POINTER(1), NULL,
                  "Second", GINT_TO_POINTER(2), NULL,
-                 "Third", GINT_TO_POINTER(3), NULL);
+                 "Third", GINT_TO_POINTER(3), NULL,
+		 NULL);
 }
 
 static void
@@ -565,10 +585,13 @@ test_omission (void)
 static void
 stub_error_in_data_setup_iterated_data (void)
 {
-    cut_add_data("First", GINT_TO_POINTER(1), NULL);
-    cut_add_data("Second", GINT_TO_POINTER(2), NULL);
+    cut_add_data("First", GINT_TO_POINTER(1), NULL,
+		 NULL);
+    cut_add_data("Second", GINT_TO_POINTER(2), NULL,
+		 NULL);
     cut_error("error in data setup");
-    cut_add_data("Third", GINT_TO_POINTER(3), NULL);
+    cut_add_data("Third", GINT_TO_POINTER(3), NULL,
+                 NULL);
 }
 
 static void
