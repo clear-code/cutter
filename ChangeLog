@@ -1,3 +1,9 @@
+2009-11-14  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/generate-test-defs.rb, misc/generate-test-makefile.rb,
+	vcc/Makefile.am, test/fixture/**/Makefile.win32: start supporting
+	test fixture build.
+
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-assertions.c: don't call close() on Windows

@@ -21,3 +21,6 @@ LIBS =							\
 	$(GLIB_LIBS)
 
 stub_namespace_la_SOURCES = stub-namespace.cpp
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

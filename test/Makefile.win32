@@ -2,8 +2,9 @@
 
 top_srcdir = ..
 
-SUBDIRS =	\
-	lib	\
+SUBDIRS =		\
+	lib		\
+	fixtures	\
 	cutter
 
 all:

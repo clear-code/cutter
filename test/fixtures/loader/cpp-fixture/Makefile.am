@@ -27,3 +27,5 @@ with_prefix_la_SOURCES = with-prefix.cpp
 without_prefix_la_SOURCES = without-prefix.cpp
 all_la_SOURCES = all.cpp
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

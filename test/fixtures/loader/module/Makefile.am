@@ -21,4 +21,7 @@ LIBS =						\
 test1_la_SOURCES = test1.c
 test2_la_SOURCES = test2.c
 
-cannot_load_module_la_SOURCES = cannot_load_module.c
+cannot_load_module_la_SOURCES = cannot-load-module.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

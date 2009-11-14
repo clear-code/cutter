@@ -18,6 +18,9 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
-module1_factory_la_SOURCES = factory-module1.c
-module2_factory_la_SOURCES = factory-module2.c
-module3_factory_la_SOURCES = factory-module3.c
+module1_factory_la_SOURCES = module1-factory.c
+module2_factory_la_SOURCES = module2-factory.c
+module3_factory_la_SOURCES = module3-factory.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

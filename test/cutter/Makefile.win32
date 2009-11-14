@@ -17,7 +17,7 @@ LIBS =							\
 test_cut_stream_parser_LDFLAGS =				\
 	$(top_builddir)/test/lib/cuttest-event-receiver.lib
 
-!INCLUDE $(top_srcdir)/vcc/Makefile.test-cutter
+!INCLUDE $(top_srcdir)/vcc/Makefile.test.cutter
 
 all: $(tests)
 

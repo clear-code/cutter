@@ -19,3 +19,5 @@ LIBS =						\
 
 omission_test_la_SOURCES = omission-test.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

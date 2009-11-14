@@ -21,3 +21,5 @@ LIBS =						\
 
 test_invoker_la_SOURCES = test-invoker.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

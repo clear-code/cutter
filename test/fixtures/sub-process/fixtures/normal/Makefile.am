@@ -17,3 +17,6 @@ LIBS =						\
 	$(GLIB_LIBS)
 
 test_normal_la_SOURCES = test-normal.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

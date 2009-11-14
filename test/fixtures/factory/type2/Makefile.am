@@ -21,3 +21,6 @@ LIBS =						\
 factory_module1_la_SOURCES = factory-module1.c
 factory_module2_la_SOURCES = factory-module2.c
 factory_module3_la_SOURCES = factory-module2.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

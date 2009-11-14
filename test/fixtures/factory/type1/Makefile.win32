@@ -1,0 +1,19 @@
+# -*- makefile -*-
+
+top_srcdir = ..\..\..\..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+
+LOCAL_CFLAGS =					\
+	$(GCUTTER_CFLAGS)
+
+LIBS =							\
+	$(GLIB_LIBS)					\
+	$(top_builddir)/cutter/cutter.lib
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.test.fixtures.type1
+
+all: $(tests)
+
+clean:
+	@del $(tests)

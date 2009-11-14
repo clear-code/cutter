@@ -19,3 +19,5 @@ LIBS =						\
 
 pending_test_la_SOURCES = pending-test.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

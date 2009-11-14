@@ -18,7 +18,9 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
-repository_test_case1_la_SOURCES = test-case1.c
-repository_test_case2_la_SOURCES = test-case2.c
-repository_test_case3_la_SOURCES = test-case3.c
+repository_test_case1_la_SOURCES = repository-test-case1.c
+repository_test_case2_la_SOURCES = repository-test-case2.c
+repository_test_case3_la_SOURCES = repository-test-case3.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

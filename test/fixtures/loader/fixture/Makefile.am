@@ -23,3 +23,5 @@ with_prefix_la_SOURCES = with-prefix.c
 without_prefix_la_SOURCES = without-prefix.c
 all_la_SOURCES = all.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

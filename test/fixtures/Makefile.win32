@@ -1,0 +1,23 @@
+# -*- makefile -*-
+
+top_srcdir = ..\..
+
+SUBDIRS =					\
+	factory					\
+	loader					\
+	path					\
+	pipeline				\
+	repository				\
+	sub-process-group			\
+	sub-process				\
+	test-context
+
+all:
+	for %d in ($(SUBDIRS)) do			\
+		$(MAKE) -nologo -f Makefile.win32 sub DIRECTORY=%d TARGET=all
+
+clean:
+	for %d in ($(SUBDIRS)) do			\
+		$(MAKE) -nologo -f Makefile.win32 sub DIRECTORY=%d TARGET=clean
+
+!INCLUDE $(top_srcdir)\vcc\Makefile.sub

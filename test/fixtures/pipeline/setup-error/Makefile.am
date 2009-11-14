@@ -19,3 +19,5 @@ LIBS =						\
 
 setup_error_test_la_SOURCES = setup-error-test.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

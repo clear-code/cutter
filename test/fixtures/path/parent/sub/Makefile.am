@@ -17,3 +17,6 @@ LIBS =						\
 	$(GLIB_LIBS)
 
 test_deep_la_SOURCES = test-deep.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

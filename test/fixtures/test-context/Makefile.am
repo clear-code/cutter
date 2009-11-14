@@ -22,3 +22,6 @@ LIBS =						\
 	$(GLIB_LIBS)
 
 test_relative_path_la_SOURCES = test-relative-path.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

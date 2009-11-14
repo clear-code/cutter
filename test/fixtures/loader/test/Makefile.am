@@ -19,3 +19,5 @@ LIBS =						\
 
 stub_test_functions_la_SOURCES = stub-test-functions.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

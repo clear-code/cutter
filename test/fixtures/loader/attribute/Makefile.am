@@ -17,5 +17,7 @@ LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
 	$(GLIB_LIBS)
 
-stub_attribute_test_la_SOURCES = stub-test-functions.c
+stub_attribute_test_la_SOURCES = stub-attribute-test.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

@@ -21,3 +21,6 @@ LIBS =						\
 suite_cuttest_loader_valid_la_SOURCES = suite-cuttest-loader-valid.c
 suite_cuttest_loader_invalid_la_SOURCES = suite-cuttest-loader-invalid.c
 suite_cuttest_loader_none_la_SOURCES = suite-cuttest-loader-none.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

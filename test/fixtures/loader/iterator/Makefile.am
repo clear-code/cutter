@@ -18,3 +18,6 @@ LIBS =						\
 	$(GLIB_LIBS)
 
 success_iterated_test_la_SOURCES = success-iterated-test.c
+
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)

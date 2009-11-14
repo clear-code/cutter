@@ -18,3 +18,5 @@ LIBS =						\
 
 success_test_la_SOURCES = success-test.c
 
+echo-tests:
+	@echo $(noinst_LTLIBRARIES)
