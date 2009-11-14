@@ -1,5 +1,8 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* module/stream/cut-xml-stream-factory.c: add missing
+	HAVE_UNISTD_H guard.
+
 	* module/stream/Makefile.win32: add.
 
 	* vcc/Makefile.sub: add.

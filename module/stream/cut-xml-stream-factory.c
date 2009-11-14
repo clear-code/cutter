@@ -23,7 +23,9 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include <unistd.h>
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
 #include <glib.h>
 #include <glib/gstdio.h>
 #include <glib/gi18n-lib.h>
