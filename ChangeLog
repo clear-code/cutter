@@ -1,5 +1,7 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: use /Zi option for debugging.
+
 	* cppcutter/cppcut-macros.h, cpcutter/cppcut-assertions-helper.h,
 	cppcutter/Makfile.am, vcc/Makefile.am: export CppCutter symbols by
 	declaration instead of .def.
