@@ -4,7 +4,8 @@ top_srcdir = ..
 
 SUBDIRS =	\
 	ui	\
-	stream
+	stream	\
+	report
 
 all:
 	for %d in ($(SUBDIRS)) do			\

@@ -1,0 +1,31 @@
+# -*- makefile -*-
+
+top_srcdir = ..\..
+top_builddir = ..\..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+
+LOCAL_CFLAGS =					\
+	$(GCUTTER_CFLAGS)
+
+LIBS =						\
+	$(top_builddir)/cutter/cutter.lib
+
+OBJS =						\
+	cut-xml-report.obj			\
+	cut-xml-report-factory.obj
+
+libraries =					\
+	xml.dll					\
+	xml-factory.dll
+
+all: $(libraries)
+
+clean:
+	@del $(OBJS) $(libraries)
+
+xml.dll: cut-xml-report.obj
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-xml-report.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
+
+xml-factory.dll: cut-xml-report-factory.obj
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-xml-report-factory.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)

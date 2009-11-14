@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/Makefile.win32: add.
+
 	* test/cutter/test-cut-test-iterator.c: add missing NULL.
 
 	* module/ui/Makefile.win32, module/report/Makefile.win32: fix paths.
