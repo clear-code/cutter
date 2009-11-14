@@ -11,6 +11,15 @@ CFLAGS =					\
 	$(LOCAL_CFLAGS)				\
 	$(LOCAL_DEF)
 
+CPPFLAGS =					\
+	/nologo					\
+	/EHsc					\
+	$(OPTIMIZE)				\
+	$(INCLUDES)				\
+	$(DEFS)					\
+	$(LOCAL_CFLAGS)				\
+	$(LOCAL_DEF)
+
 !IFDEF DEBUG
 OPTIMIZE =
 CRUNTIME = /MTd
@@ -40,6 +49,10 @@ GCUTTER_CFLAGS =				\
 	$(CUTTER_CFLAGS)			\
 	-I $(top_srcdir)/gcutter		\
 	-I $(top_srcdir)/vcc/include/gcutter
+
+CPPCUTTER_CFLAGS =				\
+	$(CUTTER_CFLAGS)			\
+	-I $(top_srcdir)/cppcutter
 
 GLIB_CFLAGS =							\
 	$(INTL_CFLAGS)						\
