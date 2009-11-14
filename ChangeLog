@@ -1,3 +1,9 @@
+2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/Makefile.win32: cutter.dll includes all symbols.
+
+	* test/cutter/Makefile.win32: use generated sources.
+
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* vcc/Makefile.am: cutter.def provides all symbols.

@@ -1,24 +1,25 @@
 # -*- makefile -*-
 
-top_srcdir = ../..
-top_builddir = ../..
+top_srcdir = ..\..
+top_builddir = ..\..
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 
-LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+LOCAL_CFLAGS =					\
+	$(GCUTTER_CFLAGS)			\
+	$(GTK_CFLAGS)
 
 LIBS =							\
 	$(GLIB_LIBS)					\
 	$(top_builddir)/cutter/cutter.lib		\
 	$(top_builddir)/test/lib/cuttest-utils.lib
 
-tests =						\
-	test-cut-assertions.dll
+test_cut_stream_parser_LDFLAGS =				\
+	$(top_builddir)/test/lib/cuttest-event-receiver.lib
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.test-cutter
 
 all: $(tests)
 
 clean:
 	@del $(tests)
-
-test-cut-assertions.dll: test-cut-assertions.obj
-	$(CC) $(CFLAGS) -LD -Fe$@ test-cut-assertions.obj $(LIBS) $(LDFLAGS)
