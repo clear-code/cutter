@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/Makefile.win32, module/report/Makefile.win32: fix paths.
+
 	* vcc/Makefile.build: support debug build.
 
 	* test/cutter/test-cut-xml-stream.c: add missing NULL.

@@ -19,24 +19,24 @@ OBJS =						\
 	cut-gtk-ui-factory.obj
 
 libraries =					\
-	cut-console-ui.dll			\
-	cut-console-ui-factory.dll		\
-	cut-gtk-ui.dll				\
-	cut-gtk-ui-factory.dll
+	console.dll				\
+	console-factory.dll			\
+	gtk.dll					\
+	gtk-factory.dll
 
 all: $(libraries)
 
 clean:
 	@del $(OBJS) $(libraries)
 
-cut-console-ui.dll: cut-console-ui.obj
+console.dll: cut-console-ui.obj
 	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
 
-cut-console-ui-factory.dll: cut-console-ui-factory.obj
+console-factory.dll: cut-console-ui-factory.obj
 	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui-factory.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
 
-cut-gtk-ui.dll: cut-gtk-ui.obj
+gtk.dll: cut-gtk-ui.obj
 	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui.obj $(LIBS) $(GTK_LIBS) $(LDFLAGS)
 
-cut-gtk-ui-factory.dll: cut-gtk-ui-factory.obj
+gtk-factory.dll: cut-gtk-ui-factory.obj
 	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui-factory.obj $(LIBS) $(GTK_LIBS) $(LDFLAGS)
