@@ -60,7 +60,9 @@ loader_new (const gchar *directory, const gchar *module_name)
                                  "fixtures",
                                  "loader",
                                  directory,
+#ifndef G_OS_WIN32
                                  ".libs",
+#endif
                                  module_name,
                                  NULL);
     loader = cut_loader_new(test_path);

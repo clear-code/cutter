@@ -1,3 +1,7 @@
+2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/cutter/test-cut-loader.c: don't add ".libs" on Windows.
+
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/generate-test-defs.rb, misc/generate-test-makefile.rb,
