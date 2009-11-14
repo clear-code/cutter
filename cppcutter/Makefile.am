@@ -14,6 +14,7 @@ lib_LTLIBRARIES = libcppcutter.la
 cppcutter_public_headers =			\
 	cppcut-assertions.h			\
 	cppcut-assertions-helper.h		\
+	cppcut-macros.h				\
 	cppcut-message.h
 
 pkginclude_HEADERS = 	\

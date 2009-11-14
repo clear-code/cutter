@@ -41,9 +41,6 @@ generate-def:
 	 $(MAKE) -s -C $(top_builddir)/gcutter echo-public-headers) |	\
 	  xargs $(top_srcdir)/misc/generate-def.rb >			\
 	    resource/cutter.def
-	$(MAKE) -s -C $(top_builddir)/cppcutter echo-public-headers |	\
-	  xargs $(top_srcdir)/misc/generate-def.rb >			\
-	    resource/cppcutter.def
 	$(MAKE) -s -C $(top_builddir)/gdkcutter-pixbuf echo-public-headers |	\
 	  xargs $(top_srcdir)/misc/generate-def.rb >				\
 	    resource/gdkcutter-pixbuf.def

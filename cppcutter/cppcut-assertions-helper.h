@@ -26,21 +26,27 @@
 
 namespace cut
 {
+    CPPCUT_DECL
     void assert_equal(int expected, int actual,
                       const char *expression_expected,
                       const char *expression_actual);
+    CPPCUT_DECL
     void assert_equal(unsigned int expected, unsigned int actual,
                       const char *expression_expected,
                       const char *expression_actual);
+    CPPCUT_DECL
     void assert_equal(long expected, long actual,
                       const char *expression_expected,
                       const char *expression_actual);
+    CPPCUT_DECL
     void assert_equal(unsigned long expected, unsigned long actual,
                       const char *expression_expected,
                       const char *expression_actual);
+    CPPCUT_DECL
     void assert_equal(long long expected, long long actual,
                       const char *expression_expected,
                       const char *expression_actual);
+    CPPCUT_DECL
     void assert_equal(unsigned long long expected, unsigned long long actual,
                       const char *expression_expected,
                       const char *expression_actual);

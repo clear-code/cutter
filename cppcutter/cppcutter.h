@@ -21,6 +21,7 @@
 #define __CPPCUTTER_H__
 
 #include <cutter.h>
+#include <cppcutter/cppcut-macros.h>
 #include <cppcutter/cppcut-assertions.h>
 #include <cppcutter/cppcut-message.h>
 

@@ -1,5 +1,9 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cppcutter/cppcut-macros.h, cpcutter/cppcut-assertions-helper.h,
+	cppcutter/Makfile.am, vcc/Makefile.am: export CppCutter symbols by
+	declaration instead of .def.
+
 	* cppcutter/Makefile.am, vcc/Makefile.am,
 	misc/generate-makefile-objects.rb: support CppCutter build.
 
