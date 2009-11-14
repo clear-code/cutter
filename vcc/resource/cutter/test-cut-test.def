@@ -1,7 +1,6 @@
 EXPORTS
 	test_get_name
 	test_get_description
-	test_increment_assertion_count
 	test_run
 	test_start_signal
 	test_complete_signal
