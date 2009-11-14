@@ -1,0 +1,6 @@
+tests =  \
+	test-invoker.dll
+
+test-invoker.dll: test-invoker.obj
+	$(CC) $(CFLAGS) $(test_invoker_CFLAGS) -LD -Fe$@ test-invoker.obj $(LIBS) $(LDFLAGS) $(test_invoker_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\sub-process\test-invoker.def
+

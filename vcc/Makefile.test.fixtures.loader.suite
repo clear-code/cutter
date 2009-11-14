@@ -1,0 +1,14 @@
+tests =  \
+	suite-cuttest-loader-valid.dll \
+	suite-cuttest-loader-invalid.dll \
+	suite-cuttest-loader-none.dll
+
+suite-cuttest-loader-valid.dll: suite-cuttest-loader-valid.obj
+	$(CC) $(CFLAGS) $(suite_cuttest_loader_valid_CFLAGS) -LD -Fe$@ suite-cuttest-loader-valid.obj $(LIBS) $(LDFLAGS) $(suite_cuttest_loader_valid_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\suite\suite-cuttest-loader-valid.def
+
+suite-cuttest-loader-invalid.dll: suite-cuttest-loader-invalid.obj
+	$(CC) $(CFLAGS) $(suite_cuttest_loader_invalid_CFLAGS) -LD -Fe$@ suite-cuttest-loader-invalid.obj $(LIBS) $(LDFLAGS) $(suite_cuttest_loader_invalid_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\suite\suite-cuttest-loader-invalid.def
+
+suite-cuttest-loader-none.dll: suite-cuttest-loader-none.obj
+	$(CC) $(CFLAGS) $(suite_cuttest_loader_none_CFLAGS) -LD -Fe$@ suite-cuttest-loader-none.obj $(LIBS) $(LDFLAGS) $(suite_cuttest_loader_none_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\suite\suite-cuttest-loader-none.def
+

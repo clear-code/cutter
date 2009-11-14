@@ -1,0 +1,14 @@
+tests =  \
+	module1-factory.dll \
+	module2-factory.dll \
+	module3-factory.dll
+
+module1-factory.dll: module1-factory.obj
+	$(CC) $(CFLAGS) $(module1_factory_CFLAGS) -LD -Fe$@ module1-factory.obj $(LIBS) $(LDFLAGS) $(module1_factory_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\factory\type1\module1-factory.def
+
+module2-factory.dll: module2-factory.obj
+	$(CC) $(CFLAGS) $(module2_factory_CFLAGS) -LD -Fe$@ module2-factory.obj $(LIBS) $(LDFLAGS) $(module2_factory_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\factory\type1\module2-factory.def
+
+module3-factory.dll: module3-factory.obj
+	$(CC) $(CFLAGS) $(module3_factory_CFLAGS) -LD -Fe$@ module3-factory.obj $(LIBS) $(LDFLAGS) $(module3_factory_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\factory\type1\module3-factory.def
+

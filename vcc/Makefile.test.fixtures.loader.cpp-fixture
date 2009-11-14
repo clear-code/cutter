@@ -1,0 +1,14 @@
+tests =  \
+	with-prefix.dll \
+	without-prefix.dll \
+	all.dll
+
+with-prefix.dll: with-prefix.obj
+	$(CC) $(CFLAGS) $(with_prefix_CFLAGS) -LD -Fe$@ with-prefix.obj $(LIBS) $(LDFLAGS) $(with_prefix_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\cpp-fixture\with-prefix.def
+
+without-prefix.dll: without-prefix.obj
+	$(CC) $(CFLAGS) $(without_prefix_CFLAGS) -LD -Fe$@ without-prefix.obj $(LIBS) $(LDFLAGS) $(without_prefix_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\cpp-fixture\without-prefix.def
+
+all.dll: all.obj
+	$(CC) $(CFLAGS) $(all_CFLAGS) -LD -Fe$@ all.obj $(LIBS) $(LDFLAGS) $(all_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\cpp-fixture\all.def
+

@@ -1,0 +1,6 @@
+tests =  \
+	success-test.dll
+
+success-test.dll: success-test.obj
+	$(CC) $(CFLAGS) $(success_test_CFLAGS) -LD -Fe$@ success-test.obj $(LIBS) $(LDFLAGS) $(success_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\pipeline\success\success-test.def
+

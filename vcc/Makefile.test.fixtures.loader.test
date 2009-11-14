@@ -1,0 +1,6 @@
+tests =  \
+	stub-test-functions.dll
+
+stub-test-functions.dll: stub-test-functions.obj
+	$(CC) $(CFLAGS) $(stub_test_functions_CFLAGS) -LD -Fe$@ stub-test-functions.obj $(LIBS) $(LDFLAGS) $(stub_test_functions_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\test\stub-test-functions.def
+

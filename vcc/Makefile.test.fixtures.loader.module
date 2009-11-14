@@ -1,0 +1,14 @@
+tests =  \
+	test1.dll \
+	test2.dll \
+	cannot-load-module.dll
+
+test1.dll: test1.obj
+	$(CC) $(CFLAGS) $(test1_CFLAGS) -LD -Fe$@ test1.obj $(LIBS) $(LDFLAGS) $(test1_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\module\test1.def
+
+test2.dll: test2.obj
+	$(CC) $(CFLAGS) $(test2_CFLAGS) -LD -Fe$@ test2.obj $(LIBS) $(LDFLAGS) $(test2_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\module\test2.def
+
+cannot-load-module.dll: cannot-load-module.obj
+	$(CC) $(CFLAGS) $(cannot_load_module_CFLAGS) -LD -Fe$@ cannot-load-module.obj $(LIBS) $(LDFLAGS) $(cannot_load_module_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\module\cannot-load-module.def
+

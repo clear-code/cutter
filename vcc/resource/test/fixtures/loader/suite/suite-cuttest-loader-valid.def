@@ -1,0 +1,5 @@
+EXPORTS
+	cuttest_loader_valid_warmup
+	cuttest_loader_valid_cooldown
+	cuttest_loader_valid_warmup
+	cuttest_loader_valid_cooldown

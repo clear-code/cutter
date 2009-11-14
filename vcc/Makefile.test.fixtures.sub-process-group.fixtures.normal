@@ -1,0 +1,6 @@
+tests =  \
+	test-normal.dll
+
+test-normal.dll: test-normal.obj
+	$(CC) $(CFLAGS) $(test_normal_CFLAGS) -LD -Fe$@ test-normal.obj $(LIBS) $(LDFLAGS) $(test_normal_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\sub-process-group\fixtures\normal\test-normal.def
+

@@ -1,0 +1,6 @@
+tests =  \
+	test-deep.dll
+
+test-deep.dll: test-deep.obj
+	$(CC) $(CFLAGS) $(test_deep_CFLAGS) -LD -Fe$@ test-deep.obj $(LIBS) $(LDFLAGS) $(test_deep_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\path\parent\sub\test-deep.def
+

@@ -1,0 +1,6 @@
+tests =  \
+	error-test.dll
+
+error-test.dll: error-test.obj
+	$(CC) $(CFLAGS) $(error_test_CFLAGS) -LD -Fe$@ error-test.obj $(LIBS) $(LDFLAGS) $(error_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\pipeline\error\error-test.def
+

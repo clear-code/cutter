@@ -1,0 +1,4 @@
+EXPORTS
+	test_do_nothing
+	cut_setup
+	test_do_nothing

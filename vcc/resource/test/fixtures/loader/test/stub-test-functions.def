@@ -1,0 +1,4 @@
+EXPORTS
+	test_invalid_argument_type_function
+	text_invalid_prefix_function
+	text_invalid_prefix_function

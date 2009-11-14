@@ -1,0 +1,14 @@
+tests =  \
+	repository-test-case1.dll \
+	repository-test-case2.dll \
+	repository-test-case3.dll
+
+repository-test-case1.dll: repository-test-case1.obj
+	$(CC) $(CFLAGS) $(repository_test_case1_CFLAGS) -LD -Fe$@ repository-test-case1.obj $(LIBS) $(LDFLAGS) $(repository_test_case1_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\repository\repository-test-case1.def
+
+repository-test-case2.dll: repository-test-case2.obj
+	$(CC) $(CFLAGS) $(repository_test_case2_CFLAGS) -LD -Fe$@ repository-test-case2.obj $(LIBS) $(LDFLAGS) $(repository_test_case2_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\repository\repository-test-case2.def
+
+repository-test-case3.dll: repository-test-case3.obj
+	$(CC) $(CFLAGS) $(repository_test_case3_CFLAGS) -LD -Fe$@ repository-test-case3.obj $(LIBS) $(LDFLAGS) $(repository_test_case3_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\repository\repository-test-case3.def
+

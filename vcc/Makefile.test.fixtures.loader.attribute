@@ -1,0 +1,6 @@
+tests =  \
+	stub-attribute-test.dll
+
+stub-attribute-test.dll: stub-attribute-test.obj
+	$(CC) $(CFLAGS) $(stub_attribute_test_CFLAGS) -LD -Fe$@ stub-attribute-test.obj $(LIBS) $(LDFLAGS) $(stub_attribute_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\attribute\stub-attribute-test.def
+

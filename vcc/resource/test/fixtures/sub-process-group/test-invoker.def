@@ -1,0 +1,5 @@
+EXPORTS
+	test_run
+	test_run_async
+	test_run
+	test_run_async
