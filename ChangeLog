@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.bat: support command line argument.
+
 	* vcc/Makefile.build: support .cpp build.
 
 	* test/cutter/test-cut-loader.c: don't add ".libs" on Windows.
