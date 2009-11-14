@@ -1,0 +1,4 @@
+sub:
+	@cd $(DIRECTORY)
+	@$(MAKE) -nologo -f Makefile.win32 $(TARGET)
+	@cd ..

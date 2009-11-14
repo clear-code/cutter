@@ -29,7 +29,4 @@ clean:
 check: cutter
 	$(MAKE) -C test -f Makefle.wi32 check
 
-sub:
-	@cd $(DIRECTORY)
-	@$(MAKE) -nologo -f Makefile.win32 $(TARGET)
-	@cd ..
+!INCLUDE $(top_srcdir)\vcc\Makefile.sub

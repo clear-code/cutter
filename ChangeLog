@@ -1,3 +1,8 @@
+2009-11-14  Kouhei Sutou  <kou@clear-code.com>
+
+	* vcc/Makefile.sub: add.
+	* **/Makefile.win32: use vcc/Makefile.sub.
+
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/Makefile.win32: cutter.dll includes all symbols.

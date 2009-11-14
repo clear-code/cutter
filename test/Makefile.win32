@@ -14,7 +14,4 @@ clean:
 	for %d in ($(SUBDIRS)) do			\
 		$(MAKE) -nologo -f Makefile.win32 sub DIRECTORY=%d TARGET=clean
 
-sub:
-	@cd $(DIRECTORY)
-	@$(MAKE) -nologo -f Makefile.win32 $(TARGET)
-	@cd ..
+!INCLUDE $(top_srcdir)\vcc\Makefile.sub
