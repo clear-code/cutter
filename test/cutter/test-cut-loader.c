@@ -197,7 +197,8 @@ data_fixture_function (void)
                                        "cut_setup",
                                        "cut_teardown",
                                        "cut_shutdown"),
-                 fixture_test_data_free);
+                 fixture_test_data_free,
+                 NULL);
 }
 
 void
@@ -388,7 +389,8 @@ data_cpp_fixture_function (void)
                                        "cut_setup",
                                        "cut_teardown",
                                        "cut_shutdown"),
-                 fixture_test_data_free);
+                 fixture_test_data_free,
+                 NULL);
 }
 
 void
