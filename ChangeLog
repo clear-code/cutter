@@ -1,5 +1,8 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-public.h, cutter/cut-utils.h, misc/generate-def.rb:
+	make cut_utils_get_cutter_command_path() public.
+
 	* vcc/Makefile.am: fix a path.
 
 	* misc/generate-test-makefile.rb: remove needless expression expand.

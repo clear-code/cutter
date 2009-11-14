@@ -61,8 +61,6 @@ gchar  **cut_utils_strv_concat          (const gchar **str_array,
 void     cut_utils_close_pipe           (int         *pipe,
                                          CutPipeMode  mode);
 
-const gchar *cut_utils_get_cutter_command_path (void);
-
 gchar       *cut_utils_expand_path           (const gchar *path);
 gchar       *cut_utils_expand_path_va_list   (const gchar *path, va_list args);
 
