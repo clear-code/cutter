@@ -6,7 +6,7 @@ set TOP_DIR=%BASE_DIR%..
 cd %TOP_DIR%
 nmake -nologo -f Makefile.win32
 
-set PATH=%PATH%;%TOP_DIR%\vcc\vendor\bin;%TOP_DIR%\test\lib
+set PATH=%PATH%;%TOP_DIR%\vcc\vendor\bin;%TOP_DIR%\cppcutter;%TOP_DIR%\test\lib
 
 set CUTTER=%TOP_DIR%\cutter\cutter.exe
 
