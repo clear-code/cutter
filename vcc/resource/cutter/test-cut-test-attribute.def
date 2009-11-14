@@ -1,0 +1,11 @@
+EXPORTS
+	test_set_attribute
+	test_bug_id
+	test_multi_attributes
+	test_description
+	cut_setup
+	cut_teardown
+	test_set_attribute
+	test_bug_id
+	test_multi_attributes
+	test_description

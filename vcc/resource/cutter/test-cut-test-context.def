@@ -1,0 +1,21 @@
+EXPORTS
+	test_set_data
+	test_set_failed
+	test_simple_xml
+	test_xml_with_test_suite
+	test_xml_with_test_case
+	test_xml_with_test_iterator
+	test_xml_with_test
+	test_xml_with_test_data
+	test_relative_path
+	cut_setup
+	cut_teardown
+	test_set_data
+	test_set_failed
+	test_simple_xml
+	test_xml_with_test_suite
+	test_xml_with_test_iterator
+	test_xml_with_test_case
+	test_xml_with_test
+	test_xml_with_test_data
+	test_relative_path

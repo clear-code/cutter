@@ -522,15 +522,15 @@ EXPORTS
 	cut_verbose_level_error_quark
 	cut_verbose_level_parse
 	cut_test_result_status_get_type
-	cut_order_get_type
-	cut_test_context_error_get_type
+	cut_diff_writer_tag_get_type
+	cut_file_stream_reader_error_get_type
 	cut_pipeline_error_get_type
+	cut_order_get_type
+	cut_sequence_match_operation_type_get_type
+	cut_stream_reader_error_get_type
+	cut_test_context_error_get_type
 	cut_verbose_level_get_type
 	cut_verbose_level_error_get_type
-	cut_sequence_match_operation_type_get_type
-	cut_diff_writer_tag_get_type
-	cut_stream_reader_error_get_type
-	cut_file_stream_reader_error_get_type
 	gcut_assert_equal_type_helper
 	gcut_assert_equal_value_helper
 	gcut_assert_equal_list_helper

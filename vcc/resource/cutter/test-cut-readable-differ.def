@@ -1,0 +1,21 @@
+EXPORTS
+	test_same_contents_readable_diff
+	test_inserted_readable_diff
+	test_deleted_readable_diff
+	test_replace_readable_diff
+	test_difference_readable_diff
+	test_complex_readable_diff
+	test_double_width_readable_diff
+	test_empty_readable_diff
+	test_is_interested
+	test_need_fold
+	test_same_contents_readable_diff
+	test_inserted_readable_diff
+	test_deleted_readable_diff
+	test_replace_readable_diff
+	test_difference_readable_diff
+	test_complex_readable_diff
+	test_double_width_readable_diff
+	test_empty_readable_diff
+	test_is_interested
+	test_need_fold
