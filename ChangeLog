@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* vcc/Makefile.am: cutter.def provides all symbols.
+
 	* test/lib/cuttest-assertions.h,
 	test/cutter/test-cut-test-iterator.c: don't use '## __VA_ARGS__'.
 
