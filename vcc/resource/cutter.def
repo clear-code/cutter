@@ -49,9 +49,13 @@ EXPORTS
 	cut_sub_process_set_multi_thread
 	cut_sub_process_get_max_threads
 	cut_sub_process_set_max_threads
+	cut_sub_process_get_exclude_files
 	cut_sub_process_set_exclude_files
+	cut_sub_process_get_exclude_directories
 	cut_sub_process_set_exclude_directories
+	cut_sub_process_get_target_test_case_names
 	cut_sub_process_set_target_test_case_names
+	cut_sub_process_get_target_test_names
 	cut_sub_process_set_target_test_names
 	cut_sub_process_get_elapsed
 	cut_sub_process_get_total_elapsed
@@ -90,6 +94,7 @@ EXPORTS
 	cut_test_context_take_strndup
 	cut_test_context_take_memdup
 	cut_test_context_take_printf
+	cut_test_context_take_string_array
 	cut_utils_inspect_memory
 	cut_utils_equal_string
 	cut_utils_equal_substring
@@ -180,6 +185,8 @@ EXPORTS
 	cut_differ_diff
 	cut_differ_get_best_ratio
 	cut_differ_get_cut_off_ratio
+	cut_differ_get_from
+	cut_differ_get_to
 	cut_differ_get_sequence_matcher
 	cut_differ_need_diff
 	cut_differ_util_is_space_character
@@ -273,9 +280,13 @@ EXPORTS
 	cut_run_context_set_handle_signals
 	cut_run_context_get_handle_signals
 	cut_run_context_set_exclude_files
+	cut_run_context_get_exclude_files
 	cut_run_context_set_exclude_directories
+	cut_run_context_get_exclude_directories
 	cut_run_context_set_target_test_case_names
+	cut_run_context_get_target_test_case_names
 	cut_run_context_set_target_test_names
+	cut_run_context_get_target_test_names
 	cut_run_context_get_n_tests
 	cut_run_context_get_n_successes
 	cut_run_context_get_n_assertions
@@ -307,6 +318,7 @@ EXPORTS
 	cut_run_context_emit_complete_run
 	cut_run_context_emit_error
 	cut_run_context_set_command_line_args
+	cut_run_context_get_command_line_args
 	cut_run_context_delegate_signals
 	cut_run_context_is_completed
 	cut_run_context_set_fatal_failures
@@ -612,6 +624,7 @@ EXPORTS
 	gcut_egg_set_flags
 	gcut_egg_get_flags
 	gcut_egg_set_env
+	gcut_egg_get_env
 	gcut_egg_hatch
 	gcut_egg_close
 	gcut_egg_write
