@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/generate-def.rb: support 'char **'.
+
 	* test/cutter/test-cut-test.c: remove a nonexistent declaration.
 
 	* cutter/Makefile.am, cutter/Makefile.win32, vcc/Makefile.am:
