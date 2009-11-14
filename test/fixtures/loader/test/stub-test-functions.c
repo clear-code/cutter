@@ -6,8 +6,8 @@ void test_stub_function2 (void);
 void test_stub_function3 (void);
 
 /*
-int  test_invalid_return_value_function (void);
-void test_invalid_argument_type_function (int arugment);
+  int  test_invalid_return_value_function (void);
+  void test_invalid_argument_type_function (int argument);
 */
 void text_invalid_prefix_function (void);
 
