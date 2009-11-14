@@ -1,3 +1,21 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <cutter.h>
 #include <cut-utils.h>
 
@@ -56,13 +74,13 @@ static const gchar *help_message;
 void
 cut_setup (void)
 {
+    const gchar *format;
     stdout_string = NULL;
     stderr_string = NULL;
     exit_status = 0;
     lang = g_strdup(g_getenv("LANG"));
 
-    help_message = cut_take_printf(
-        "Usage:" LINE_FEED_CODE
+    format =        "Usage:" LINE_FEED_CODE
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "" LINE_FEED_CODE
@@ -94,9 +112,8 @@ cut_setup (void)
         "  --keep-opening-modules                          Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
         "  --enable-convenience-attribute-definition       Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
         "  --stop-before-test                              Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
-        "" LINE_FEED_CODE,
-        g_get_prgname(),
-        g_get_prgname());
+      "" LINE_FEED_CODE;
+    help_message = cut_take_printf(format, g_get_prgname(), g_get_prgname());
 }
 
 void
@@ -179,9 +196,10 @@ test_no_option (void)
 void
 test_help_all (void)
 {
+    const gchar *format;
     const gchar *help_all_message;
 
-    help_all_message = cut_take_printf(
+    format =
         "Usage:" LINE_FEED_CODE
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
@@ -269,9 +287,9 @@ test_help_all (void)
 #ifdef HAVE_GTK
         "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
 #endif
-        "" LINE_FEED_CODE,
-        g_get_prgname(),
-        g_get_prgname());
+        "" LINE_FEED_CODE;
+
+    help_all_message = cut_take_printf(format, g_get_prgname(), g_get_prgname());
 
     cut_assert(run_cutter("--help-all"));
     cut_assert_exit_success();

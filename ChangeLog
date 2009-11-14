@@ -1,5 +1,10 @@
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-fork.c,
+	test/cutter/test-cut-readable-differ.c,
+	test/cutter/test-cut-utils.c, test/cutter/test-cutter.c: make
+	buildable with VC++.
+
 	* cutter/cut-test-utils.h: add missing ts=4.
 
 	* test/cutter/test-cut-unified-differ.c: remove nonexistent declarations.

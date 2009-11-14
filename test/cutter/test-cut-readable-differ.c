@@ -160,6 +160,10 @@ test_complex_readable_diff (void)
 void
 test_double_width_readable_diff (void)
 {
+#ifdef G_OS_WIN32
+    cut_omit("need to put BOF at the head of the file to use multi-byte literal "
+             "but BOF can't handle with GCC. :<");
+#else
     cut_assert_readable_diff("- あいうえおかきくけこ\n"
                              "?           ^^^^\n"
                              "+ あいうえおカキくけこ\n"
@@ -168,6 +172,7 @@ test_double_width_readable_diff (void)
                              "あいうえおかきくけこ",
 
                              "あいうえおカキくけこ");
+#endif
 }
 
 void

@@ -1,17 +1,40 @@
-#include "cutter.h"
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include <cutter.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test-context.h>
 
-#include <unistd.h>
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif /* HAVE_CONFIG_H */
+
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
+
 #include <stdlib.h>
 #include <glib.h>
 
 void test_message_from_forked_process (void);
-#ifndef G_OS_WIN32
 void test_fail_in_forked_process (void);
-#endif
 
 static CutRunContext *run_context;
 static CutTest *test;
@@ -104,10 +127,14 @@ cb_collect_message (CutTest *test, CutTestContext *context,
     const gchar **message = data;
     *message = cut_take_string(g_strdup(cut_test_result_get_message(result)));
 }
+#endif
 
 void
 test_fail_in_forked_process (void)
 {
+#ifdef G_OS_WIN32
+    cut_omit("fork() isn't available on Windows.");
+#else
     const gchar *failure_message = NULL;
     const gchar *notification_message = NULL;
     const gchar *omission_message = NULL;
@@ -144,8 +171,8 @@ test_fail_in_forked_process (void)
                                 notification_message);
         cut_assert_equal_string(NULL, omission_message);
     }
-}
 #endif
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

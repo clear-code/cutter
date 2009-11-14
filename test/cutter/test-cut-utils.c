@@ -71,7 +71,7 @@ void
 test_inspect_memory (void)
 {
     gchar binary[] = {0x00, 0x01, 0x02, 0x1f};
-    gchar empty[] = {};
+    gchar *empty = NULL;
 
     cut_assert_equal_string_with_free("(null)",
                                       cut_utils_inspect_memory(empty, 0));
