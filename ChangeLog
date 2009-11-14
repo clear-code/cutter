@@ -9,6 +9,9 @@
 
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-test-data.c: make
+	buildable with VC++.
+
 	* test/cutter/test-cut-fork.c,
 	test/cutter/test-cut-readable-differ.c,
 	test/cutter/test-cut-utils.c, test/cutter/test-cutter.c: make

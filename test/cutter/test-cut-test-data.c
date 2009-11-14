@@ -6,7 +6,6 @@ void test_new (void);
 void test_new_empty (void);
 void test_new_and_destroy (void);
 void test_set_name (void);
-void test_set_value (void);
 void test_to_xml (void);
 void test_to_xml_empty (void);
 void test_to_xml_string (void);
