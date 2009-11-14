@@ -3,7 +3,6 @@ EXPORTS
 	test_new_empty
 	test_new_and_destroy
 	test_set_name
-	test_set_value
 	test_to_xml
 	test_to_xml_empty
 	test_to_xml_string
