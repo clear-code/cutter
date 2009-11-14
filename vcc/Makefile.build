@@ -36,7 +36,8 @@ DEFS =						\
 LDFLAGS =					\
 	/link					\
 	/machine:ix86				\
-	$(DEBUG_LDFLAGS)
+	$(DEBUG_LDFLAGS)			\
+	$(LOCAL_LDFLAGS)
 
 CUTTER_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
@@ -45,32 +46,50 @@ CUTTER_CFLAGS =					\
 	-I $(top_srcdir)/vcc/include		\
 	-I $(top_srcdir)/vcc/include/cutter
 
+CUTTER_LDFLAGS =				\
+	$(GLIB_LDFLAGS)				\
+	/libpath:$(top_builddir)\cutter
+
 GCUTTER_CFLAGS =				\
 	$(CUTTER_CFLAGS)			\
 	-I $(top_srcdir)/gcutter		\
 	-I $(top_srcdir)/vcc/include/gcutter
 
+GCUTTER_LDFLAGS =				\
+	$(CUTTER_LDFLAGS)			\
+	/libpath:$(top_builddir)\gcutter
+
 CPPCUTTER_CFLAGS =				\
 	$(CUTTER_CFLAGS)			\
 	-I $(top_srcdir)/cppcutter
+
+CPPCUTTER_LDFLAGS =				\
+	$(CUTTER_LDFLAGS)			\
+	/libpath:$(top_builddir)\cppcutter
 
 GLIB_CFLAGS =							\
 	$(INTL_CFLAGS)						\
 	-I $(top_srcdir)/vcc/vendor/include/glib-2.0		\
 	-I $(top_srcdir)/vcc/vendor/lib/glib-2.0/include
 
-GLIB_LIBS =						\
-	$(INTL_LIBS)					\
-	$(top_srcdir)/vcc/vendor/lib/gmodule-2.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/gobject-2.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/gthread-2.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/glib-2.0.lib
+GLIB_LDFLAGS =					\
+	$(INTL_LDFLAGS)
+
+GLIB_LIBS =					\
+	$(INTL_LIBS)				\
+	gmodule-2.0.lib				\
+	gobject-2.0.lib				\
+	gthread-2.0.lib				\
+	glib-2.0.lib
 
 INTL_CFLAGS =					\
 	-I $(top_srcdir)/vcc/vendor/include
 
+INTL_LDFLAGS =					\
+	/libpath:$(top_srcdir)\vcc\vendor\lib
+
 INTL_LIBS =					\
-	$(top_srcdir)/vcc/vendor/lib/intl.lib
+	intl.lib
 
 GTK_CFLAGS =						\
 	$(GLIB_CFLAGS)					\
@@ -81,17 +100,20 @@ GTK_CFLAGS =						\
 	-I $(top_srcdir)/vcc/vendor/include/gtk-2.0	\
 	-I $(top_srcdir)/vcc/vendor/lib/gtk-2.0/include
 
-GTK_LIBS =						\
-	$(GLIB_LIBS)					\
-	$(top_srcdir)/vcc/vendor/lib/libpng.lib		\
-	$(top_srcdir)/vcc/vendor/lib/cairo.lib		\
-	$(top_srcdir)/vcc/vendor/lib/gio-2.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/atk-1.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/gdk_pixbuf-2.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/pango-1.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/pangocairo-1.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/pangowin32-1.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/gdk_pixbuf-2.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/gdk-win32-2.0.lib	\
-	$(top_srcdir)/vcc/vendor/lib/gtk-win32-2.0.lib	\
+GTK_LDFLAGS =					\
+	$(INTL_LDFLAGS)
+
+GTK_LIBS =					\
+	$(GLIB_LIBS)				\
+	libpng.lib				\
+	cairo.lib				\
+	gio-2.0.lib				\
+	atk-1.0.lib				\
+	gdk_pixbuf-2.0.lib			\
+	pango-1.0.lib				\
+	pangocairo-1.0.lib			\
+	pangowin32-1.0.lib			\
+	gdk_pixbuf-2.0.lib			\
+	gdk-win32-2.0.lib			\
+	gtk-win32-2.0.lib			\
 	gdi32.lib

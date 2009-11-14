@@ -8,10 +8,13 @@ top_builddir = ..\..\..\..
 LOCAL_CFLAGS =					\
 	$(CPPCUTTER_CFLAGS)
 
-LIBS =							\
-	$(GLIB_LIBS)					\
-	$(top_builddir)/cutter/cutter.lib		\
-	$(top_builddir)/cppcutter/cppcutter.lib
+LOCAL_LDFLAGS =					\
+	$(CPPCUTTER_LDFLAGS)
+
+LIBS =						\
+	$(GLIB_LIBS)				\
+	cutter.lib				\
+	cppcutter.lib
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.test.fixtures.loader.cpp-fixture
 

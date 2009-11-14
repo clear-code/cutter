@@ -8,6 +8,7 @@ top_builddir = ..
 !INCLUDE $(top_srcdir)/vcc/Makefile.objects.gcutter
 
 LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+LOCAL_LDFLAGS = $(GCUTTER_LDFLAGS)
 
 LIBS =				\
 	$(GLIB_LIBS)

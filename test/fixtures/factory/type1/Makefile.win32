@@ -7,9 +7,12 @@ top_srcdir = ..\..\..\..
 LOCAL_CFLAGS =					\
 	$(GCUTTER_CFLAGS)
 
-LIBS =							\
-	$(GLIB_LIBS)					\
-	$(top_builddir)/cutter/cutter.lib
+LOCAL_LDFLAGS =					\
+	$(GCUTTER_LDFLAGS)
+
+LIBS =						\
+	$(GLIB_LIBS)				\
+	cutter.lib
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.test.fixtures.type1
 

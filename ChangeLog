@@ -1,5 +1,7 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build, **/Makefile.win32: use /libpath.
+
 	* vcc/Makefile.build, vcc/Makefile.am: CFLAGS -> CPPFLAGS.
 
 	* cppcutter/cppcut-assertions-helper.h: include cppcut-macros.h.

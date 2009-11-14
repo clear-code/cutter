@@ -9,13 +9,18 @@ LOCAL_CFLAGS =					\
 	$(GCUTTER_CFLAGS)			\
 	$(GTK_CFLAGS)
 
-LIBS =							\
-	$(GLIB_LIBS)					\
-	$(top_builddir)/cutter/cutter.lib		\
-	$(top_builddir)/test/lib/cuttest-utils.lib
+LOCAL_LDFLAGS =					\
+	$(GCUTTER_LDFLAGS)			\
+	$(GTK_LDFLAGS)				\
+	/libpath:$(top_builddir)\test\lib
 
-test_cut_stream_parser_LDFLAGS =				\
-	$(top_builddir)/test/lib/cuttest-event-receiver.lib
+LIBS =						\
+	$(GTK_LIBS)				\
+	cutter.lib				\
+	cuttest-utils.lib
+
+test_cut_stream_parser_LDFLAGS =		\
+	cuttest-event-receiver.lib
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.test.cutter
 
