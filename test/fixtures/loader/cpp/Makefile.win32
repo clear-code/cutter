@@ -10,7 +10,8 @@ LOCAL_CFLAGS =					\
 
 LIBS =							\
 	$(GLIB_LIBS)					\
-	$(top_builddir)/cutter/cutter.lib
+	$(top_builddir)/cutter/cutter.lib		\
+	$(top_builddir)/cppcutter/cppcutter.lib
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.test.fixtures.loader.cpp
 

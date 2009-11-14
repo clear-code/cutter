@@ -1,5 +1,7 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/fixtures/loader/cpp{,-fixture}/Makefile.win32: use cppcutter.lib.
+
 	* vcc/Makefile.build: use /Zi option for debugging.
 
 	* cppcutter/cppcut-macros.h, cpcutter/cppcut-assertions-helper.h,
