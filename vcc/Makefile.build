@@ -1,6 +1,6 @@
 # -*- makefile -*-
 
-# DEBUG = yes
+DEBUG = yes
 
 CFLAGS =					\
 	/nologo					\
@@ -17,7 +17,7 @@ CPPFLAGS =					\
 	$(OPTIMIZE)				\
 	$(INCLUDES)				\
 	$(DEFS)					\
-	$(LOCAL_CFLAGS)				\
+	$(LOCAL_CPPFLAGS)			\
 	$(LOCAL_DEF)
 
 !IFDEF DEBUG

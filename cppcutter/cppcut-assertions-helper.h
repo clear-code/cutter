@@ -23,6 +23,7 @@
 #include <string>
 #include <sstream>
 #include <cutter/cut-helper.h>
+#include <cppcutter/cppcut-macros.h>
 
 namespace cut
 {

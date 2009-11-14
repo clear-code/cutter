@@ -6,8 +6,10 @@ top_builddir = ..
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 !INCLUDE $(top_srcdir)/vcc/Makefile.objects.cppcutter
 
-LOCAL_CFLAGS =					\
-	$(CPPCUTTER_CFLAGS)			\
+LOCAL_CPPFLAGS =		\
+	$(CPPCUTTER_CFLAGS)
+
+LOCAL_DEF =			\
 	-DCPPCUT_BUILDING
 
 LIBS =						\
