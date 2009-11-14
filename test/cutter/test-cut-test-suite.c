@@ -94,7 +94,9 @@ cut_setup (void)
                                  "fixtures",
                                  "loader",
                                  "test",
+#ifndef G_OS_WIN32
                                  ".libs",
+#endif
                                  "stub-test-functions." G_MODULE_SUFFIX,
                                  NULL);
     loader = cut_loader_new(test_path);

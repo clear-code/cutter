@@ -36,7 +36,9 @@ create_loader (const gchar *so_filename)
                                "fixtures",
                                "loader",
                                "suite",
+#ifndef G_OS_WIN32
                                ".libs",
+#endif
                                so_filename,
                                NULL);
     new_loader = cut_loader_new(so_path);

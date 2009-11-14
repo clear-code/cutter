@@ -30,7 +30,9 @@ cut_startup (void)
                                    "fixtures",
                                    "loader",
                                    "module",
+#ifndef G_OS_WIN32
                                    ".libs",
+#endif
                                    NULL);
     modules = cut_module_load_modules(modules_dir);
 }

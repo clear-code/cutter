@@ -1,5 +1,7 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/: don't add ".libs" on Windows.
+
 	* test/run-test.bat: add cppcutter/ to PATH.
 
 	* test/fixtures/loader/cpp{,-fixture}/Makefile.win32: use cppcutter.lib.
