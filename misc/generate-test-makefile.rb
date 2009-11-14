@@ -18,7 +18,7 @@ test_bases.each do |base|
   local_cflags = base.gsub(/-/, "_") + "_CFLAGS"
   local_ldflags = base.gsub(/-/, "_") + "_LDFLAGS"
   puts("#{dll}: #{obj}")
-  puts("\t$(CC) $(CFLAGS) $(#{local_cflags}) -LD -Fe$@ $(#{obj}) " +
+  puts("\t$(CC) $(CFLAGS) $(#{local_cflags}) -LD -Fe$@ #{obj} " +
        "$(LIBS) $(LDFLAGS) $(#{local_ldflags}) " +
        "/def:#{resource_dir}\\#{base}.def")
   puts

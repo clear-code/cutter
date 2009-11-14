@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/generate-test-makefile.rb: remove needless expression expand.
+
 	* misc/generate-test-defs.rb, misc/generate-test-makefile.rb,
 	test/cutter/Makefile.am, vcc/Makefile.am: add test build files
 	generator.
