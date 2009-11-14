@@ -135,7 +135,8 @@ data_signal (void)
                  signal_test_data_free,
                  "omission",
                  signal_test_data_new("omission", TRUE),
-                 signal_test_data_free);
+                 signal_test_data_free,
+                 NULL);
 }
 
 static void
@@ -207,7 +208,8 @@ data_count (void)
     get_count = cut_run_context_get_n_ ## result_plural;                \
     cut_add_data(#result,                                               \
                  count_test_data_new(#result, get_count, success),      \
-                 count_test_data_free);                                 \
+                 count_test_data_free,                                  \
+                 NULL);                                                 \
 } while (0)
 
     ADD_DATA(success, successes, TRUE);
