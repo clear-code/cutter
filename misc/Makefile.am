@@ -6,4 +6,6 @@ dist_noinst_SCRIPTS =				\
 	release.rb				\
 	update-latest-release.rb		\
 	generate-def.rb				\
-	generate-makefile-objects.rb
+	generate-makefile-objects.rb		\
+	generate-test-defs.rb			\
+	generate-test-makefile.rb
