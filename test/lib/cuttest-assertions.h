@@ -63,12 +63,12 @@ G_BEGIN_DECLS
                                       test_name, user_message,          \
                                       system_message, message,          \
                                       expected, actual,                 \
-                                      backtrace, ## __VA_ARGS__, NULL), \
+                                      backtrace, __VA_ARGS__),          \
         cut_assert_test_result_with_message(run_context, i, status,     \
                                             test_name, user_message,    \
                                             system_message, message,    \
                                             expected, actual,           \
-                                            backtrace, ## __VA_ARGS__))
+                                            backtrace, __VA_ARGS__))
 
 #define cut_assert_test_result(run_context, i, status, test_name,       \
                                user_message, system_message,            \
@@ -79,11 +79,11 @@ G_BEGIN_DECLS
                                       test_name, user_message,          \
                                       system_message, NULL,             \
                                       expected, actual,                 \
-                                      backtrace, ## __VA_ARGS__, NULL), \
+                                      backtrace, __VA_ARGS__),          \
         cut_assert_test_result(run_context, i, status, test_name,       \
                                user_message, system_message,            \
                                expected, actual,                        \
-                               backtrace, ## __VA_ARGS__))
+                               backtrace, __VA_ARGS__))
 
 
 void cut_assert_test_result_summary_helper (CutRunContext *run_context,

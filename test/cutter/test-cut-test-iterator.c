@@ -359,6 +359,7 @@ test_failure (void)
                            "failure test iterator (Second)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_FAILURE,
                            "failure test iterator (Third)",
@@ -397,6 +398,7 @@ test_error (void)
                            "error test iterator (First)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_ERROR,
                            "error test iterator (Second)",
@@ -409,6 +411,7 @@ test_error (void)
                            "error test iterator (Third)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
 }
 
@@ -440,6 +443,7 @@ test_pending (void)
                            "pending test iterator (First)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_PENDING,
                            "pending test iterator (Second)",
@@ -452,6 +456,7 @@ test_pending (void)
                            "pending test iterator (Third)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
 }
 
@@ -483,6 +488,7 @@ test_notification (void)
                            "notification test iterator (First)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_NOTIFICATION,
                            "notification test iterator (Second)",
@@ -495,11 +501,13 @@ test_notification (void)
                            "notification test iterator (Second)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
     cut_assert_test_result(run_context, 3, CUT_TEST_RESULT_SUCCESS,
                            "notification test iterator (Third)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
 }
 
@@ -531,6 +539,7 @@ test_omission (void)
                            "omission test iterator (First)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_OMISSION,
                            "omission test iterator (Second)",
@@ -543,11 +552,13 @@ test_omission (void)
                            "omission test iterator (Second)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
     cut_assert_test_result(run_context, 3, CUT_TEST_RESULT_SUCCESS,
                            "omission test iterator (Third)",
                            NULL, NULL,
                            NULL, NULL,
+                           NULL,
                            NULL);
 }
 

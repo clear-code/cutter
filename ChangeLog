@@ -1,5 +1,8 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/lib/cuttest-assertions.h,
+	test/cutter/test-cut-test-iterator.c: don't use '## __VA_ARGS__'.
+
 	* test/cutter/test-cut-test-suite.c: fix path.
 
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
