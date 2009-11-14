@@ -1,7 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
-	* cutter/cut-public.h, cutter/cut-utils.h, misc/generate-def.rb:
-	make cut_utils_get_cutter_command_path() public.
+	* cutter/Makefile.am, cutter/Makefile.win32, vcc/Makefile.am:
+	generate cutter-all.dll for testing.
 
 	* vcc/Makefile.am: fix a path.
 

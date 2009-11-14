@@ -149,7 +149,6 @@ char        *cut_utils_fold                 (const char *string);
 char        *cut_utils_append_diff          (const char *message,
                                              const char *from,
                                              const char *to);
-const char  *cut_utils_get_cutter_command_path (void);
 
 char       *cut_test_context_build_fixture_data_path
                                             (CutTestContext *context,

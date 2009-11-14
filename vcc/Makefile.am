@@ -26,6 +26,11 @@ sync:
 	 $(MAKE) -s -C $(top_builddir)/gcutter echo-public-headers) |	\
 	  xargs $(top_srcdir)/misc/generate-def.rb >			\
 	    resource/cutter.def
+	($(MAKE) -s -C $(top_builddir)/cutter echo-public-headers;	\
+	 $(MAKE) -s -C $(top_builddir)/cutter echo-private-headers;	\
+	 $(MAKE) -s -C $(top_builddir)/gcutter echo-public-headers) |	\
+	  xargs $(top_srcdir)/misc/generate-def.rb >			\
+	    resource/cutter-all.def
 	$(MAKE) -s -C $(top_builddir)/gdkcutter-pixbuf echo-public-headers |	\
 	  xargs $(top_srcdir)/misc/generate-def.rb >				\
 	    resource/gdkcutter-pixbuf.def

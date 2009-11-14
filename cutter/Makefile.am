@@ -233,6 +233,11 @@ stamp-$(enum_source_prefix)-h: $(enum_sources_h) Makefile
 	rm -f tmp-$(enum_source_prefix).h && \
 	echo timestamp > $(@F)
 
+echo-private-headers:					\
+	@for header in $(noinst_HEADERS); do		\
+	  echo $(abs_srcdir)/$${header};		\
+	done
+
 echo-public-headers:
 	@for header in $(cutter_include_HEADERS); do			\
 	  if test "$${header}" = "$(enum_source_prefix).h"; then	\
