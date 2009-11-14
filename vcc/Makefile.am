@@ -50,7 +50,7 @@ sync:
 
 	($(MAKE) -s -C $(top_builddir)/test/cutter echo-tests) |	\
 	  xargs $(top_srcdir)/misc/generate-test-defs.rb		\
-	    $(top_srcdir)/test/cutter resource/cutter
+	    $(top_srcdir)/test/cutter resource/test/cutter
 	($(MAKE) -s -C $(top_builddir)/test/cutter echo-tests) |	\
 	  xargs $(top_srcdir)/misc/generate-test-makefile.rb		\
 	    '$$(top_srcdir)\vcc\resource\cutter' > Makefile.test-cutter
