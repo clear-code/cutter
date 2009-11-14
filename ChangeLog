@@ -1,3 +1,7 @@
+2009-11-14  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/cutter/test-cut-test-suite.c: fix path.
+
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-fork.c,

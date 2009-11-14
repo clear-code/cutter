@@ -95,7 +95,7 @@ cut_setup (void)
                                  "loader",
                                  "test",
                                  ".libs",
-                                 "stub-loader-test." G_MODULE_SUFFIX,
+                                 "stub-test-functions." G_MODULE_SUFFIX,
                                  NULL);
     loader = cut_loader_new(test_path);
     g_free(test_path);
