@@ -33,7 +33,8 @@ static void
 stub_iterated_data (void)
 {
     cut_add_data("first data", NULL, NULL,
-                 "second data", NULL, NULL);
+                 "second data", NULL, NULL,
+		 NULL);
 }
 
 static void
@@ -204,7 +205,8 @@ data_stream (void)
                  stream_test_data_free,
                  "iterated test",
                  stream_test_data_new("iterated-test.xml", setup_iterated_test),
-                 stream_test_data_free);
+                 stream_test_data_free,
+		 NULL);
 }
 
 void
