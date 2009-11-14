@@ -36,6 +36,10 @@
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-enum-types.h>
 
+#ifndef STDOUT_FILENO
+#  define STDOUT_FILENO 1
+#endif
+
 #define CUT_TYPE_XML_STREAM_FACTORY            cut_type_xml_stream_factory
 #define CUT_XML_STREAM_FACTORY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_XML_STREAM_FACTORY, CutXMLStreamFactory))
 #define CUT_XML_STREAM_FACTORY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_XML_STREAM_FACTORY, CutXMLStreamFactoryClass))

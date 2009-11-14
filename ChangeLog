@@ -1,3 +1,8 @@
+2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/stream/cut-xml-stream-factory.c (STDOUT_FILENO): define
+	by hand if not defined by system.
+
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* module/stream/cut-xml-stream-factory.c: add missing
