@@ -3,9 +3,6 @@ EXPORTS
 	test_inserted_unified_diff
 	test_deleted_unified_diff
 	test_replace_unified_diff
-	test_difference_unified_diff
-	test_complex_unified_diff
-	test_double_width_unified_diff
 	test_empty_unified_diff
 	test_same_contents_unified_diff
 	test_inserted_unified_diff
