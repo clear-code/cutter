@@ -283,5 +283,5 @@ extern "C" {
 #endif /* __CUT_TEST_UTILS_H__ */
 
 /*
-vi:nowrap:ai:expandtab:sw=4
+vi:ts=4:nowrap:ai:expandtab:sw=4
 */

@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h: add missing ts=4.
+
 	* test/cutter/test-cut-unified-differ.c: remove nonexistent declarations.
 
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
