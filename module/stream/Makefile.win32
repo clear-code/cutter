@@ -1,0 +1,31 @@
+# -*- makefile -*-
+
+top_srcdir = ..\..
+top_builddir = ..\..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+
+LOCAL_CFLAGS =					\
+	$(GCUTTER_CFLAGS)
+
+LIBS =						\
+	$(top_builddir)/cutter/cutter.lib
+
+OBJS =						\
+	cut-xml-stream.obj			\
+	cut-xml-stream-factory.obj
+
+libraries =					\
+	cut-xml-stream.dll			\
+	cut-xml-stream-factory.dll
+
+all: $(libraries)
+
+clean:
+	@del $(OBJS) $(libraries)
+
+cut-xml-stream.dll: cut-xml-stream.obj
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-xml-stream.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
+
+cut-xml-stream-factory.dll: cut-xml-stream-factory.obj
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-xml-stream-factory.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)

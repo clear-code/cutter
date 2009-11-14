@@ -16,7 +16,7 @@ OBJS =						\
 	cut-console-ui.obj			\
 	cut-console-ui-factory.obj		\
 	cut-gtk-ui.obj				\
-	cu-gtk-ui-factory.obj
+	cut-gtk-ui-factory.obj
 
 libraries =					\
 	cut-console-ui.dll			\

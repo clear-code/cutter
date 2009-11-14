@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* module/stream/Makefile.win32: add.
+
 	* vcc/Makefile.sub: add.
 	* **/Makefile.win32: use vcc/Makefile.sub.
 
