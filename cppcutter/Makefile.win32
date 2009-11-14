@@ -1,0 +1,27 @@
+# -*- makefile -*-
+
+top_srcdir = ..
+top_builddir = ..
+
+!INCLUDE $(top_srcdir)/vcc/Makefile.build
+!INCLUDE $(top_srcdir)/vcc/Makefile.objects.cppcutter
+
+LOCAL_CFLAGS = $(CPPCUTTER_CFLAGS)
+
+LIBS =						\
+	$(GLIB_LIBS)				\
+	$(top_builddir)\cutter\cutter.lib
+
+OBJS =				\
+	$(LIBCPPCUTTER_OBJECTS)
+
+all: cppcutter.dll
+
+clean:
+	@del $(OBJS) cppcutter.dll
+
+def = $(top_srcdir)\vcc\resource\cppcutter.def
+
+cutter.dll: $(OBJS) $(def)
+	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) \
+	  /implib:cppcutter.lib /def:$(def)

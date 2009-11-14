@@ -41,17 +41,12 @@ generate-def:
 	 $(MAKE) -s -C $(top_builddir)/gcutter echo-public-headers) |	\
 	  xargs $(top_srcdir)/misc/generate-def.rb >			\
 	    resource/cutter.def
+	$(MAKE) -s -C $(top_builddir)/cppcutter echo-public-headers |	\
+	  xargs $(top_srcdir)/misc/generate-def.rb >			\
+	    resource/cppcutter.def
 	$(MAKE) -s -C $(top_builddir)/gdkcutter-pixbuf echo-public-headers |	\
 	  xargs $(top_srcdir)/misc/generate-def.rb >				\
 	    resource/gdkcutter-pixbuf.def
-	$(MAKE) -s -C $(top_builddir)/test/lib		\
-	  echo-cuttest-utils-public-headers |		\
-	    xargs $(top_srcdir)/misc/generate-def.rb >	\
-	      resource/cuttest-utils.def
-	$(MAKE) -s -C $(top_builddir)/test/lib		\
-	  echo-cuttest-event-receiver-public-headers |	\
-	    xargs $(top_srcdir)/misc/generate-def.rb >	\
-	      resource/cuttest-event-receiver.def
 
 generate-makefile:
 	($(MAKE) -s -C $(top_builddir)/cutter echo-libcutter-sources) |	\
@@ -69,6 +64,14 @@ generate-test-def:
 	    $(top_srcdir)/test/cutter resource/test/cutter
 
 generate-test-makefile:
+	$(MAKE) -s -C $(top_builddir)/test/lib		\
+	  echo-cuttest-utils-public-headers |		\
+	    xargs $(top_srcdir)/misc/generate-def.rb >	\
+	      resource/cuttest-utils.def
+	$(MAKE) -s -C $(top_builddir)/test/lib		\
+	  echo-cuttest-event-receiver-public-headers |	\
+	    xargs $(top_srcdir)/misc/generate-def.rb >	\
+	      resource/cuttest-event-receiver.def
 	($(MAKE) -s -C $(top_builddir)/test/cutter echo-tests) |	\
 	  xargs $(top_srcdir)/misc/generate-test-makefile.rb		\
 	    '$$(top_srcdir)' test/cutter

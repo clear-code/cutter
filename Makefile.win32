@@ -2,18 +2,12 @@
 
 top_srcdir = .
 
-SUBDIRS = 			\
-	cutter			\
-	gdkcutter-pixbuf	\
-	soupcutter		\
-	module			\
-	test
-
-SUBDIRS =	\
-	vcc	\
-	gcutter	\
-	cutter	\
-	module	\
+SUBDIRS =					\
+	vcc					\
+	gcutter					\
+	cutter					\
+	cppcutter				\
+	module					\
 	test
 
 all: cutter
