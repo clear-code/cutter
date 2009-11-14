@@ -233,8 +233,8 @@ stamp-$(enum_source_prefix)-h: $(enum_sources_h) Makefile
 	rm -f tmp-$(enum_source_prefix).h && \
 	echo timestamp > $(@F)
 
-echo-private-headers:					\
-	@for header in $(noinst_HEADERS); do		\
+echo-private-headers:
+	@for header in $(noinst_headers); do		\
 	  echo $(abs_srcdir)/$${header};		\
 	done
 
