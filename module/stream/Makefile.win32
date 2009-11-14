@@ -8,6 +8,9 @@ top_builddir = ..\..
 LOCAL_CFLAGS =					\
 	$(GCUTTER_CFLAGS)
 
+LOCAL_LDFLAGS =					\
+	$(GCUTTER_LDFLAGS)
+
 LIBS =						\
 	$(top_builddir)/cutter/cutter.lib
 

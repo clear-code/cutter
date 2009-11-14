@@ -12,9 +12,14 @@ LOCAL_CPPFLAGS =		\
 LOCAL_DEF =			\
 	-DCPPCUT_BUILDING
 
+LOCAL_LDFLAGS =					\
+	$(CPPCUTTER_LDFLAGS)
+
 LIBS =						\
 	$(GLIB_LIBS)				\
-	$(top_builddir)\cutter\cutter.lib
+	cutter.lib
+
+LIBPATHS =
 
 OBJS =				\
 	$(LIBCPPCUTTER_OBJECTS)

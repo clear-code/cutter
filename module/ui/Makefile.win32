@@ -9,6 +9,10 @@ LOCAL_CFLAGS =					\
 	$(GCUTTER_CFLAGS)			\
 	$(GTK_CFLAGS)
 
+LOCAL_LDFLAGS =					\
+	$(GCUTTER_LDFLAGS)			\
+	$(GTK_LDFLAGS)
+
 LIBS =						\
 	$(top_builddir)/cutter/cutter.lib
 

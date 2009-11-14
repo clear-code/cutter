@@ -15,7 +15,7 @@ CPPFLAGS =					\
 	/nologo					\
 	/EHsc					\
 	$(OPTIMIZE)				\
-	$(INCLUDES)				\
+	$(CPP_INCLUDES)				\
 	$(DEFS)					\
 	$(LOCAL_CPPFLAGS)			\
 	$(LOCAL_DEF)
@@ -30,14 +30,21 @@ CRUNTIME = /MT
 DEBUG_LDFLAGS =
 !ENDIF
 
+INCLUDES =					\
+	-I "C:\WinDDK\7600.16385.0\inc\crt"
+
 DEFS =						\
 	-DHAVE_CONFIG_H
 
 LDFLAGS =					\
 	/link					\
 	/machine:ix86				\
+	$(LIBPATHS)				\
 	$(DEBUG_LDFLAGS)			\
 	$(LOCAL_LDFLAGS)
+
+LIBPATHS =						\
+	/libpath:"C:\WinDDK\7600.16385.0\lib\crt\i386"
 
 CUTTER_CFLAGS =					\
 	$(GLIB_CFLAGS)				\

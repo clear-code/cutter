@@ -8,6 +8,7 @@ top_builddir = ..\..
 !INCLUDE $(top_srcdir)/vcc/Makefile.objects.gcutter
 
 LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
+LOCAL_LDFLAGS = $(GCUTTER_LDFLAGS)
 
 LIBS =						\
 	$(GLIB_LIBS)				\
@@ -40,10 +41,10 @@ clean:
 	@del $(OBJS) $(libraries)
 
 cuttest-utils.dll: $(cuttest_utils_objects) $(cuttest_utils_def)
-	$(CC) $(CFLAGS) -LD -Fe$@ $(cuttest_utils_objects) $(LIBS) $(LDFLAGS) \
+	$(CC) $(CFLAGS) -LD -Fe$@ $(cuttest_utils_objects) $(LDFLAGS) $(LIBS) \
 	  /implib:cuttest-utils.lib /def:$(cuttest_utils_def)
 
 cuttest-event-receiver.dll: $(cuttest_event_receiver_objects) $(cuttest_event_receiver_def)
-	$(CC) $(CFLAGS) -LD -Fe$@ $(cuttest_event_receiver_objects) $(LIBS) \
+	$(CC) $(CFLAGS) -LD -Fe$@ $(cuttest_event_receiver_objects) \
 	  $(LDFLAGS) /implib:cuttest-event-receiver.lib \
-	  /def:$(cuttest_event_receiver_def)
+	  /def:$(cuttest_event_receiver_def) $(LIBS)
