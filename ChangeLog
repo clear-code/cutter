@@ -1,5 +1,7 @@
 2009-11-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* vcc/Makefile.am: fix a path.
+
 	* misc/generate-test-makefile.rb: remove needless expression expand.
 
 	* misc/generate-test-defs.rb, misc/generate-test-makefile.rb,
