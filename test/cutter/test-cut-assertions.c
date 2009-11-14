@@ -26,6 +26,8 @@
 #include <glib/gstdio.h>
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
+#else
+#  include <io.h>
 #endif
 #include <errno.h>
 
@@ -2148,7 +2150,9 @@ path_exist_test (void)
         g_error_free(error);
         cut_error("can't create temporary file: %s", message);
     }
+#ifndef G_OS_WIN32
     close(fd);
+#endif
 
     cut_assert_path_exist(tmp_file_name);
     g_remove(tmp_file_name);
@@ -2171,7 +2175,9 @@ path_not_exist_test (void)
 
     fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
     gcut_assert_error(error);
+#ifndef G_OS_WIN32
     close(fd);
+#endif
 
     g_remove(tmp_file_name);
     cut_assert_path_not_exist(tmp_file_name);

@@ -1,5 +1,8 @@
 2009-11-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-assertions.c: don't call close() on Windows
+	beause it causes crash but why???
+
 	* test/cutter/test-cut-loader.c: add missing NULL.
 
 	* test/cutter/test-cut-pipeline.c: add missing NULL.
