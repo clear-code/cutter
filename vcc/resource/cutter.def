@@ -104,6 +104,7 @@ EXPORTS
 	cut_utils_regex_match
 	cut_utils_fold
 	cut_utils_append_diff
+	cut_utils_get_cutter_command_path
 	cut_test_context_build_fixture_data_path
 	cut_utils_get_fixture_data_string
 	cut_utils_get_fixture_data_string_va_list
