@@ -16,13 +16,12 @@ OBJS =				\
 	$(LIBCUTTER_OBJECTS)	\
 	$(LIBGCUTTER_OBJECTS)
 
-all: cutter-all.dll cutter.exe
+all: cutter.exe
 
 clean:
 	@del $(OBJS) cutter.dll cutter.exe
 
 def = $(top_srcdir)\vcc\resource\cutter.def
-all_def = $(top_srcdir)\vcc\resource\cutter.def
 
 cutter.dll: $(OBJS) $(def)
 	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) \
