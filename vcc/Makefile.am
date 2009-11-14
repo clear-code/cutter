@@ -49,14 +49,18 @@ generate-def:
 	    resource/gdkcutter-pixbuf.def
 
 generate-makefile:
-	($(MAKE) -s -C $(top_builddir)/cutter echo-libcutter-sources) |	\
+	$(MAKE) -s -C $(top_builddir)/cutter echo-libcutter-sources |	\
 	  xargs $(top_srcdir)/misc/generate-makefile-objects.rb		\
 	    LIBCUTTER_OBJECTS '$$(top_builddir)/cutter/' > 		\
 	      Makefile.objects.cutter
-	($(MAKE) -s -C $(top_builddir)/gcutter echo-libgcutter-sources) |	\
-	  xargs $(top_srcdir)/misc/generate-makefile-objects.rb			\
-	    LIBGCUTTER_OBJECTS '$$(top_builddir)/gcutter/' >			\
+	$(MAKE) -s -C $(top_builddir)/gcutter echo-libgcutter-sources |	\
+	  xargs $(top_srcdir)/misc/generate-makefile-objects.rb		\
+	    LIBGCUTTER_OBJECTS '$$(top_builddir)/gcutter/' >		\
 	      Makefile.objects.gcutter
+	$(MAKE) -s -C $(top_builddir)/cppcutter echo-libcppcutter-sources |	\
+	  xargs $(top_srcdir)/misc/generate-makefile-objects.rb			\
+	    LIBCPPCUTTER_OBJECTS '$$(top_builddir)/cppcutter/' >		\
+	      Makefile.objects.cppcutter
 
 generate-test-def:
 	($(MAKE) -s -C $(top_builddir)/test/cutter echo-tests) |	\

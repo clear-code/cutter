@@ -1,5 +1,8 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cppcutter/Makefile.am, vcc/Makefile.am,
+	misc/generate-makefile-objects.rb: support CppCutter build.
+
 	* Makefile.win32, cppcutter/Makefile.win32, vcc/Makefile.am:
 	support CppCutter build.
 
