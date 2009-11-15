@@ -29,4 +29,4 @@ cutter.dll: $(OBJS) $(def)
 	  /implib:cutter.lib /def:$(def)
 
 cutter.exe: main.obj cutter.dll
-	$(CC) $(CFLAGS) -Fe$@ main.obj cutter.lib $(MSVCRT_LIB)
+	$(CC) $(CFLAGS) -Fe$@ main.obj cutter.lib $(CRUNTIME)

@@ -1,6 +1,7 @@
 # -*- makefile -*-
 
 top_srcdir = ..\..\..\..
+top_builddir = ..\..\..\..
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 
@@ -14,7 +15,7 @@ LIBS =						\
 	$(GLIB_LIBS)				\
 	cutter.lib
 
-!INCLUDE $(top_srcdir)/vcc/Makefile.test.fixtures.type1
+!INCLUDE $(top_srcdir)/vcc/Makefile.test.fixtures.factory.type1
 
 all: $(tests)
 
