@@ -20,11 +20,14 @@
 #ifndef __CPPCUT_MACROS_H__
 #define __CPPCUT_MACROS_H__
 
-
-#ifdef CPPCUT_BUILDING
-#  define CPPCUT_DECL __declspec(dllexport)
+#ifdef _WIN32
+#  ifdef CPPCUT_BUILDING
+#    define CPPCUT_DECL __declspec(dllexport)
+#  else
+#    define CPPCUT_DECL __declspec(dllimport)
+#  endif
 #else
-#  define CPPCUT_DECL __declspec(dllimport)
+#  define CPPCUT_DECL
 #endif
 
 #endif /* __CPPCUT_MACROS_H__ */

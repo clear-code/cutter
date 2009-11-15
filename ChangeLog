@@ -1,5 +1,8 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cppcutter/cppcut-macros.h (CPPCUT_DECL): define as empty on
+	non-Windows.
+
 	* vcc/Makefile.build, **/Makefile.win32: use /libpath.
 
 	* vcc/Makefile.build, vcc/Makefile.am: CFLAGS -> CPPFLAGS.
