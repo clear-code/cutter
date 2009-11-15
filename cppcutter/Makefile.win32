@@ -6,6 +6,8 @@ top_builddir = ..
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 !INCLUDE $(top_srcdir)/vcc/Makefile.objects.cppcutter
 
+NODEFAULTLIB =
+
 LOCAL_CPPFLAGS =		\
 	$(CPPCUTTER_CFLAGS)
 
@@ -30,5 +32,5 @@ clean:
 	@del $(OBJS) cppcutter.dll
 
 cppcutter.dll: $(OBJS)
-	$(CC) $(CFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) \
+	$(CC) $(CPPFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(CPP_LDFLAGS) \
 	  /implib:cppcutter.lib

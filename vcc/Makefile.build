@@ -1,8 +1,8 @@
 # -*- makefile -*-
 
-DEBUG = yes
-WDK_DIR = "C:\WinDDK\7600.16385.0"
-WDK_LIB_DIR = "$(WDK_DIR)\lib\crt\i386"
+# DEBUG = yes
+WDK_DIR = C:\WinDDK\7600.16385.0
+WDK_LIB_DIR = $(WDK_DIR)\lib\crt\i386
 
 CFLAGS =					\
 	/nologo					\
@@ -37,13 +37,25 @@ INCLUDES =					\
 DEFS =						\
 	-DHAVE_CONFIG_H
 
-LDFLAGS =					\
+COMMON_LDFLAGS =				\
 	/link					\
 	/machine:ix86				\
-	$(CRUNTIME)				\
 	$(LIBPATHS)				\
 	$(DEBUG_LDFLAGS)			\
 	$(LOCAL_LDFLAGS)
+
+LDFLAGS =					\
+	$(COMMON_LDFLAGS)			\
+	$(NODEFAULTLIB)				\
+	$(CRUNTIME)
+
+CPP_LDFLAGS =					\
+	$(COMMON_LDFLAGS)
+
+NODEFAULTLIB =					\
+	/nodefaultlib:libcmt			\
+	/nodefaultlib:libcmtd			\
+	/nodefaultlib:msvcrt
 
 CUTTER_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
