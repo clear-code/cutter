@@ -37,20 +37,16 @@ INCLUDES =					\
 DEFS =						\
 	-DHAVE_CONFIG_H
 
-COMMON_LDFLAGS =				\
+LDFLAGS =					\
 	/link					\
 	/machine:ix86				\
 	$(LIBPATHS)				\
 	$(DEBUG_LDFLAGS)			\
 	$(LOCAL_LDFLAGS)
 
-LDFLAGS =					\
-	$(COMMON_LDFLAGS)			\
+USE_MSVCRT_LDFLAGS =				\
 	$(NODEFAULTLIB)				\
 	$(CRUNTIME)
-
-CPP_LDFLAGS =					\
-	$(COMMON_LDFLAGS)
 
 NODEFAULTLIB =					\
 	/nodefaultlib:libcmt			\

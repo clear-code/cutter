@@ -34,13 +34,17 @@ clean:
 	@del $(OBJS) $(libraries)
 
 console.dll: cut-console-ui.obj
-	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui.obj \
+	  $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
 
 console-factory.dll: cut-console-ui-factory.obj
-	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui-factory.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-console-ui-factory.obj \
+	  $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
 
 gtk.dll: cut-gtk-ui.obj
-	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui.obj $(LIBS) $(GTK_LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui.obj \
+	  $(LIBS) $(GTK_LIBS) $(LDFLAGS)
 
 gtk-factory.dll: cut-gtk-ui-factory.obj
-	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui-factory.obj $(LIBS) $(GTK_LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(GTK_CFLAGS) -LD -Fe$@ cut-gtk-ui-factory.obj \
+	  $(LIBS) $(GTK_LIBS) $(LDFLAGS)

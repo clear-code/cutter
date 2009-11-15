@@ -7,8 +7,12 @@ top_builddir = ..
 !INCLUDE $(top_srcdir)/vcc/Makefile.objects.cutter
 !INCLUDE $(top_srcdir)/vcc/Makefile.objects.gcutter
 
-LOCAL_CFLAGS = $(GCUTTER_CFLAGS)
-LOCAL_LDFLAGS = $(GCUTTER_LDFLAGS)
+LOCAL_CFLAGS =			\
+	$(GCUTTER_CFLAGS)
+
+LOCAL_LDFLAGS =			\
+	$(GCUTTER_LDFLAGS)	\
+	$(USE_MSVCRT_LDFLAGS)
 
 LIBS =				\
 	$(GLIB_LIBS)
@@ -29,5 +33,4 @@ cutter.dll: $(OBJS) $(def)
 	  /implib:cutter.lib /def:$(def)
 
 cutter.exe: main.obj cutter.dll
-	$(CC) $(CFLAGS) -Fe$@ main.obj cutter.lib \
-	  /link $(NODEFAULTLIB) $(CRUNTIME)
+	$(CC) $(CFLAGS) -Fe$@ main.obj cutter.lib $(LDFLAGS)

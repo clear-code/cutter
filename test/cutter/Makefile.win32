@@ -12,7 +12,8 @@ LOCAL_CFLAGS =					\
 LOCAL_LDFLAGS =					\
 	$(GCUTTER_LDFLAGS)			\
 	$(GTK_LDFLAGS)				\
-	/libpath:$(top_builddir)\test\lib
+	/libpath:$(top_builddir)\test\lib	\
+	$(USE_MSVCRT_LDFLAGS)
 
 LIBS =						\
 	$(GTK_LIBS)				\

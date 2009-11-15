@@ -32,5 +32,5 @@ clean:
 	@del $(OBJS) cppcutter.dll
 
 cppcutter.dll: $(OBJS)
-	$(CC) $(CPPFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(CPP_LDFLAGS) \
+	$(CC) $(CPPFLAGS) -LD -Fe$@ $(OBJS) $(LIBS) $(LDFLAGS) \
 	  /implib:cppcutter.lib
