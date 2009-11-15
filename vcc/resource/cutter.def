@@ -106,6 +106,7 @@ EXPORTS
 	cut_utils_build_path
 	cut_utils_build_path_va_list
 	cut_utils_remove_path_recursive_force
+	cut_utils_make_directory_recursive_force
 	cut_utils_regex_match
 	cut_utils_fold
 	cut_utils_append_diff
