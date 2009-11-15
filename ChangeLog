@@ -3,6 +3,9 @@
 	* cppcutter/cppcut-macros.h (CPPCUT_DECL): define as empty on
 	non-Windows.
 
+	* cutter/cut-test-utils.h, cutter/cut-utils.c, cutter/cut-public.h,
+	test/cutter/test-cut-test-utils.c: add cut_make_directory().
+
 	* vcc/Makefile.build, **/Makefile.win32: use /libpath.
 
 	* vcc/Makefile.build, vcc/Makefile.am: CFLAGS -> CPPFLAGS.

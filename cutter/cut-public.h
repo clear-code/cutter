@@ -143,6 +143,8 @@ char        *cut_utils_build_path_va_list   (const char *path,
                                              va_list args);
 void         cut_utils_remove_path_recursive_force
                                             (const char *path);
+void         cut_utils_make_directory_recursive_force
+                                            (const char *path);
 cut_boolean  cut_utils_regex_match          (const char *pattern,
                                              const char *string);
 char        *cut_utils_fold                 (const char *string);

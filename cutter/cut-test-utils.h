@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -264,7 +264,7 @@ extern "C" {
 
 /**
  * cut_build_path:
- * @path: a first element of the path to be removed.
+ * @path: a first element of the path.
  * @...: remaining elements in path. %NULL terminated.
  *
  * Builds path from @path and the following elements.
@@ -275,6 +275,19 @@ extern "C" {
  */
 #define cut_build_path(...)                                            \
     cut_take_string(cut_utils_build_path(__VA_ARGS__))
+
+/**
+ * cut_make_directory:
+ * @path: a first element of the path to be made.
+ * @...: remaining elements in path. %NULL terminated.
+ *
+ * Makes @path and it's parents recursively. It doesn't
+ * report any errors.
+ *
+ * Since: 1.1.1
+ */
+#define cut_make_directory(...)                                            \
+    cut_utils_make_directory_recursive_force(cut_build_path(__VA_ARGS__))
 
 #ifdef __cplusplus
 }

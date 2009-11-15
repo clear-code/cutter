@@ -545,6 +545,12 @@ cut_utils_remove_path_recursive_force (const gchar *path)
     cut_utils_remove_path_recursive(path, NULL);
 }
 
+void
+cut_utils_make_directory_recursive_force (const gchar *path)
+{
+    g_mkdir_with_parents(path, 0700);
+}
+
 gchar *
 cut_utils_append_diff (const gchar *message, const gchar *from, const gchar *to)
 {
