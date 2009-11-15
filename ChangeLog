@@ -1,5 +1,7 @@
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: link msvcrt.lib explicitly.
+
 	* cppcutter/cppcut-macros.h (CPPCUT_DECL): define as empty on
 	non-Windows.
 

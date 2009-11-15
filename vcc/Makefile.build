@@ -39,12 +39,13 @@ DEFS =						\
 LDFLAGS =					\
 	/link					\
 	/machine:ix86				\
+	$(MSVCRT_LIB)				\
 	$(LIBPATHS)				\
 	$(DEBUG_LDFLAGS)			\
 	$(LOCAL_LDFLAGS)
 
-LIBPATHS =						\
-	/libpath:"C:\WinDDK\7600.16385.0\lib\crt\i386"
+MSVCRT_LIB =							\
+	"C:\WinDDK\7600.16385.0\lib\crt\i386\msvcrt.lib"
 
 CUTTER_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
