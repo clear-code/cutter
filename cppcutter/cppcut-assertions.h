@@ -53,9 +53,9 @@
 #define cppcut_assert_equal(expected, actual, ...) do                   \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
-    cut_test_with_user_message(cut::assert_equal(expected, actual,      \
-                                                 #expected, #actual),   \
-                               __VA_ARGS__),                            \
+        cut_test_with_user_message(                                     \
+            cut::assert_equal(expected, actual, #expected, #actual),    \
+            __VA_ARGS__),                                               \
         cppcut_assert_equal(expected, actual, __VA_ARGS__));            \
 } while (0)
 
