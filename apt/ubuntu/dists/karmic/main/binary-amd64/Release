@@ -1,6 +1,6 @@
-Archive: jaunty
-Version: 9.04
+Archive: karmic
+Version: 9.10
 Component: main
 Origin: The Cutter project
 Label: The Cutter project
-Architecture: source
+Architecture: amd64

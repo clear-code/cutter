@@ -1,3 +1,7 @@
+2009-11-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* apt/: jaunty -> karmic.
+
 2009-11-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* vcc/Makefile.build: link msvcrt.lib explicitly.

@@ -3,7 +3,7 @@ SF_HTDOCS = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
-CODES = lenny unstable hardy jaunty
+CODES = lenny unstable hardy karmic
 
 update:
 	for distribution in $(DISTRIBUTIONS); do			\
