@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -37,6 +37,17 @@
 #include <cutter/cut-utils.h>
 #include <cutter/cut-test-runner.h>
 #include "../lib/cuttest-assertions.h"
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+#  ifdef HAVE_WINSOCK2_H
+#    include <winsock2.h>
+#    include <ws2tcpip.h>
+#  else
+#    include <sys/socket.h>
+#    include <netinet/in.h>
+#    include <arpa/inet.h>
+#  endif
+#endif
 
 void test_equal_boolean(void);
 void test_not_equal_boolean(void);
@@ -127,6 +138,7 @@ void test_equal_pointer (void);
 void test_equal_fixture_data_string (void);
 void test_equal_fixture_data_string_without_file (void);
 void test_error_errno (void);
+void test_equal_sockaddr (void);
 
 static gboolean compare_function_is_called;
 static gchar *tmp_file_name;
@@ -2281,6 +2293,59 @@ test_error_errno (void)
     result = cut_run_context_get_results(run_context)->data;
     cut_assert_equal_string("Should error",
                             cut_test_result_get_user_message(result));
+}
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+static void
+setup_sockaddr_in (struct sockaddr_in *address, const gchar *host, guint16 port)
+{
+    address->sin_family = AF_INET;
+    if (host) {
+        address->sin_addr.s_addr = inet_addr(host);
+    } else {
+        address->sin_addr.s_addr = INADDR_ANY;
+    }
+    address->sin_port = g_htons(port);
+}
+
+static void
+stub_equal_sockaddr (void)
+{
+    struct sockaddr *address1;
+    struct sockaddr *address2;
+    struct sockaddr_in address_in1;
+    struct sockaddr_in address_in2;
+
+    setup_sockaddr_in(&address_in1, "127.0.0.1", 2929);
+    setup_sockaddr_in(&address_in2, "192.168.0.254", 5959);
+
+    address1 = (struct sockaddr *)&address_in1;
+    address2 = (struct sockaddr *)&address_in2;
+
+    cut_assert_equal_sockaddr(address1, address1);
+    cut_assert_equal_sockaddr(NULL, NULL);
+    MARK_FAIL(cut_assert_equal_sockaddr(address1, address2));
+}
+#endif
+
+void
+test_equal_sockaddr (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_assert_equal_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+    test = cut_test_new("assert-equal-sockaddr", stub_equal_sockaddr);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "assert-equal-sockaddr", NULL,
+                           "<address1 == address2>",
+                           "inet:127.0.0.1:2929",
+                           "inet:192.168.0.254:5959",
+                           FAIL_LOCATION, "stub_equal_sockaddr",
+                           NULL);
+#endif
 }
 
 /*

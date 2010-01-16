@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -496,6 +496,49 @@ void cut_pop_backtrace(void);
  */
 #define cut_equal_double(double1, double2, error)       \
     cut_utils_equal_double(double1, double2, error)
+
+/**
+ * cut_equal_sockaddr:
+ * @address1: a socket address.
+ * @address2: a socket address.
+ *
+ * Compare @address1 to @address2.
+ *
+ * This function can be disabled by defining CUT_DISABLE_SOCKET_SUPPORT.
+ *
+ * Returns: %CUT_TRUE if @address1 == @address2,
+ *          %CUT_FALSE otherwise.
+ *
+ * Since: 1.1.1
+ */
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+#define cut_equal_sockaddr(address1, address2) CUT_FALSE
+#else
+#define cut_equal_sockaddr(address1, address2)                  \
+    cut_utils_equal_sockaddr(address1, address2)
+#endif
+
+/**
+ * cut_inspect_sockaddr:
+ * @address: the socket address to be inspected.
+ *
+ * Formats @address as human readable string that is owned
+ * by Cutter.
+ *
+ * This function can be disabled by defining CUT_DISABLE_SOCKET_SUPPORT.
+ *
+ * Returns: a inspected socket address owned by Cutter. Don't free it.
+ *
+ * Since: 1.1.1
+ */
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+#define cut_inspect_sockaddr(address)                               \
+    cut_take_strdup("don't define CUT_DISABLE_SOCKET_SUPPORT "      \
+                    "to use cut_inspect_sockaddr().")
+#else
+#define cut_inspect_sockaddr(address)                               \
+    cut_take_string(cut_utils_inspect_sockaddr(address))
+#endif
 
 #ifdef __cplusplus
 }

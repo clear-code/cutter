@@ -1,5 +1,11 @@
 2010-01-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.[ch],
+	cutter/cut-assertions.h, cutter/cut-helper.h,
+	test/cutter/test-cut-assertions.c: add
+	cut_assert_equal_sockaddr(), cut_equal_sockaddr() and
+	cut_inspect_sockaddr().
+
 	* cutter/cut-public.h, cutter/cut-utils.c: add missing const.
 
 	* cutter/cut-public.h, cutter/cut-utils.c,

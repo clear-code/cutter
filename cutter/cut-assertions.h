@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -1943,6 +1943,34 @@ extern "C" {
                                                     path, __VA_ARGS__), \
         cut_assert_equal_fixture_data_string(expected, path,            \
                                              __VA_ARGS__))
+
+/**
+ * cut_assert_equal_sockaddr:
+ * @expected: an expected socket address.
+ * @actual: an actual socket address.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @expected == @actual.
+ *
+ * This assertion can be disabled by defining CUT_DISABLE_SOCKET_SUPPORT.
+ *
+ * Since: 1.1.1
+ */
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+#define cut_assert_equal_sockaddr(expected, actual, ...)  \
+    cut_notify("don't define CUT_DISABLE_SOCKET_SUPPORT " \
+               "to use cut_assert_equal_sockaddr().")
+#else
+#define cut_assert_equal_sockaddr(expected, actual, ...) do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_sockaddr_helper(expected, actual,          \
+                                             #expected, #actual),       \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_sockaddr(expected, actual, __VA_ARGS__));      \
+} while (0)
+#endif
 
 /**
  * cut_error:

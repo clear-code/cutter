@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -1533,6 +1533,25 @@ cut_assert_equal_fixture_data_string_helper (const void     *expected,
                                    expression_expected,
                                    cut_take_string(full_path));
 }
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+void
+cut_assert_equal_sockaddr_helper (const struct sockaddr *expected,
+                                  const struct sockaddr *actual,
+                                  const char     *expression_expected,
+                                  const char     *expression_actual)
+{
+    if (cut_equal_sockaddr(expected, actual)) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_inspect_sockaddr(expected));
+        cut_set_actual(cut_inspect_sockaddr(actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+#endif
 
 void
 cut_error_errno_helper (void)
