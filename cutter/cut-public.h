@@ -153,6 +153,7 @@ const char  *cut_utils_inspect_string       (const char *string);
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 cut_boolean  cut_utils_equal_sockaddr       (struct sockaddr *address1,
                                              struct sockaddr *address2);
+char        *cut_utils_inspect_sockaddr     (struct sockaddr *address);
 #endif
 
 cut_boolean  cut_utils_path_exist           (const char *path);

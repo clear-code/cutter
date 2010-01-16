@@ -314,6 +314,59 @@ cut_utils_equal_sockaddr (struct sockaddr *address1,
     return FALSE;
 }
 
+gchar *
+cut_utils_inspect_sockaddr (struct sockaddr *address)
+{
+    gchar *spec = NULL;
+
+    if (!address)
+        return g_strdup("(null)");
+
+    switch (address->sa_family) {
+#ifdef HAVE_SYS_UN_H
+    case AF_UNIX:
+    {
+        struct sockaddr_un *address_unix = (struct sockaddr_un *)address;
+        spec = g_strdup_printf("unix:%s", address_unix->sun_path);
+        break;
+    }
+#endif
+    case AF_INET:
+    {
+        struct sockaddr_in *address_inet = (struct sockaddr_in *)address;
+        gchar ip_address_string[INET_ADDRSTRLEN];
+
+        if (inet_ntop(AF_INET, &address_inet->sin_addr,
+                      (gchar *)ip_address_string, INET_ADDRSTRLEN)) {
+            spec = g_strdup_printf("inet:%s:%d",
+                                   ip_address_string,
+                                   g_ntohs(address_inet->sin_port));
+        }
+        break;
+    }
+    case AF_INET6:
+    {
+        struct sockaddr_in6 *address_inet6 = (struct sockaddr_in6 *)address;
+        gchar ip_address_string[INET6_ADDRSTRLEN];
+
+        if (inet_ntop(AF_INET6, &address_inet6->sin6_addr,
+                      (gchar *)ip_address_string, INET6_ADDRSTRLEN)) {
+            spec = g_strdup_printf("inet6:[%s]:%d",
+                                   ip_address_string,
+                                   g_ntohs(address_inet6->sin6_port));
+        }
+        break;
+    }
+    case AF_UNSPEC:
+        spec = g_strdup("unknown");
+        break;
+    default:
+        spec = g_strdup_printf("unexpected:%d", address->sa_family);
+        break;
+    }
+
+    return spec;
+}
 #endif
 
 gboolean

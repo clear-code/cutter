@@ -55,6 +55,10 @@ void test_equal_sockaddr (void);
 void test_equal_sockaddr_un (void);
 void test_equal_sockaddr_in (void);
 void test_equal_sockaddr_in6 (void);
+void test_inspect_sockaddr (void);
+void test_inspect_sockaddr_un (void);
+void test_inspect_sockaddr_in (void);
+void test_inspect_sockaddr_in6 (void);
 void data_parse_gdb_backtrace (void);
 void test_parse_gdb_backtrace (gconstpointer data);
 void test_compare_string (void);
@@ -308,7 +312,11 @@ static void
 setup_sockaddr_un (struct sockaddr_un *address, const gchar *path)
 {
     address->sun_family = AF_UNIX;
-    strcpy(address->sun_path, path);
+    if (path) {
+        strcpy(address->sun_path, path);
+    } else {
+        memset(address->sun_path, 0, sizeof(address->sun_path));
+    }
 }
 #  endif
 #endif
@@ -317,7 +325,8 @@ void
 test_equal_sockaddr_un (void)
 {
 #ifdef CUT_DISABLE_SOCKET_SUPPORT
-    cut_omit("cut_equal_sockaddr() is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+    cut_omit("cut_utils_equal_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
 #else
 #  ifndef HAVE_SYS_UN_H
     cut_omit("sockaddr_un isn't available on the current environment.");
@@ -364,7 +373,8 @@ void
 test_equal_sockaddr_in (void)
 {
 #ifdef CUT_DISABLE_SOCKET_SUPPORT
-    cut_omit("cut_equal_sockaddr() is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+    cut_omit("cut_utils_equal_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
 #else
     struct sockaddr *address1;
     struct sockaddr *address2;
@@ -412,7 +422,8 @@ void
 test_equal_sockaddr_in6 (void)
 {
 #ifdef CUT_DISABLE_SOCKET_SUPPORT
-    cut_omit("cut_equal_sockaddr() is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+    cut_omit("cut_utils_equal_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
 #else
     struct sockaddr *address1;
     struct sockaddr *address2;
@@ -434,6 +445,116 @@ test_equal_sockaddr_in6 (void)
     cut_assert_false(cut_utils_equal_sockaddr(address1, address2));
     cut_assert_true(cut_utils_equal_sockaddr(address1, address_same));
     cut_assert_false(cut_utils_equal_sockaddr(address2, address_same));
+#endif
+}
+
+void
+test_inspect_sockaddr (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_utils_inspect_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+    struct sockaddr address_unspec;
+    struct sockaddr address_unknown;
+
+    address_unspec.sa_family = AF_UNSPEC;
+    address_unknown.sa_family = 1000;
+
+    cut_assert_equal_string_with_free(
+        "(null)",
+        cut_utils_inspect_sockaddr(NULL));
+    cut_assert_equal_string_with_free(
+        "unknown",
+        cut_utils_inspect_sockaddr(&address_unspec));
+    cut_assert_equal_string_with_free(
+        "unexpected:1000",
+        cut_utils_inspect_sockaddr(&address_unknown));
+#endif
+}
+
+void
+test_inspect_sockaddr_un (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_utils_equal_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+#  ifndef HAVE_SYS_UN_H
+    cut_omit("sockaddr_un isn't available on the current environment.");
+#  else
+    struct sockaddr *address;
+    struct sockaddr *address_no_path;
+    struct sockaddr_un address_un;
+    struct sockaddr_un address_un_no_path;
+
+    setup_sockaddr_un(&address_un, "/tmp/socket1");
+    setup_sockaddr_un(&address_un_no_path, NULL);
+
+    address = (struct sockaddr *)&address_un;
+    address_no_path = (struct sockaddr *)&address_un_no_path;
+
+    cut_assert_equal_string_with_free(
+        "unix:/tmp/socket1",
+        cut_utils_inspect_sockaddr(address));
+    cut_assert_equal_string_with_free(
+        "unix:",
+        cut_utils_inspect_sockaddr(address_no_path));
+#  endif
+#endif
+}
+
+void
+test_inspect_sockaddr_in (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_utils_equal_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+    struct sockaddr *address;
+    struct sockaddr *address_no_host;
+    struct sockaddr_in address_in;
+    struct sockaddr_in address_in_no_host;
+
+    setup_sockaddr_in(&address_in, "127.0.0.1", 2929);
+    setup_sockaddr_in(&address_in_no_host, NULL, 2929);
+
+    address = (struct sockaddr *)&address_in;
+    address_no_host = (struct sockaddr *)&address_in_no_host;
+
+    cut_assert_equal_string_with_free(
+        "inet:127.0.0.1:2929",
+        cut_utils_inspect_sockaddr(address));
+    cut_assert_equal_string_with_free(
+        "inet:0.0.0.0:2929",
+        cut_utils_inspect_sockaddr(address_no_host));
+#endif
+}
+
+void
+test_inspect_sockaddr_in6 (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_utils_equal_sockaddr() "
+             "is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+    struct sockaddr *address;
+    struct sockaddr *address_no_host;
+    struct sockaddr_in6 address_in6;
+    struct sockaddr_in6 address_in6_no_host;
+
+    setup_sockaddr_in6(&address_in6, "::1", 2929);
+    setup_sockaddr_in6(&address_in6_no_host, NULL, 2929);
+
+    address = (struct sockaddr *)&address_in6;
+    address_no_host = (struct sockaddr *)&address_in6_no_host;
+
+    cut_assert_equal_string_with_free(
+        "inet6:[::1]:2929",
+        cut_utils_inspect_sockaddr(address));
+    cut_assert_equal_string_with_free(
+        "inet6:[::]:2929",
+        cut_utils_inspect_sockaddr(address_no_host));
 #endif
 }
 

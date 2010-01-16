@@ -1,6 +1,9 @@
 2010-01-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-public.h, cutter/cut-utils.c,
+	test/cutter/test-cut-utils.c: add cut_utils_inspect_sockaddr().
+
+	* cutter/cut-public.h, cutter/cut-utils.c,
 	test/cutter/test-cut-utils.c,
 	test/fixtures/loader/fixture/all.c,
 	test/fixtures/loader/fixture/without-prefix.c: add
