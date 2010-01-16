@@ -129,6 +129,9 @@ AC_CHECK_HEADERS(mach-o/loader.h)
 AC_CHECK_HEADERS(elf.h)
 AC_CHECK_HEADERS(stdint.h, [have_stdint_h=yes], [have_stdint_h=no])
 AC_CHECK_HEADERS(inttypes.h, [have_inttypes_h=yes], [have_inttypes_h=no])
+AC_CHECK_HEADERS(winsock2.h, [have_winsock2_h=yes], [have_winsock2_h=no])
+AC_CHECK_HEADERS(sys/socket.h, [have_sys_socket_h=yes], [have_sys_socket_h=no])
+AC_CHECK_HEADERS(sys/un.h, [have_sys_un_h=yes], [have_sys_un_h=no])
 
 if test "$have_stdint_h" = "yes" -o "$have_inttypes_h" = "yes"; then
    have_c99_stdint_types=yes
@@ -539,6 +542,92 @@ CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULEDIR=\\\"\"\$(stream_moduledir)\"\\\
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULEDIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULEDIR=\\\"\"\$(factory_moduledir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
+
+dnl **************************************************************
+dnl cutter/cut-config.h
+dnl **************************************************************
+
+AC_CONFIG_COMMANDS([cutter/cut-config.h-start],
+[
+  cat > cutter/cut-config.h <<\_______EOF
+/* cut-config.h
+ *
+ * This is a generated file.  Please modify 'configure.ac'
+ */
+
+#ifndef __CUT_CONFIG_H__
+#define __CUT_CONFIG_H__
+
+_______EOF
+])
+
+if test "$have_stdint_h" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-config.h-have-stdint.h],
+[
+    echo "#define CUT_HAVE_STDINT_H 1" >> cutter/cut-config.h
+])
+else
+AC_CONFIG_COMMANDS([cutter/cut-config.h-not-have-stdint.h],
+[
+    echo "/* #undef CUT_HAVE_STDINT_H */" >> cutter/cut-config.h
+])
+fi
+
+if test "$have_inttypes_h" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-config.h-have-inttypes.h],
+[
+    echo "#define CUT_HAVE_INTTYPES_H 1" >> cutter/cut-config.h
+])
+else
+AC_CONFIG_COMMANDS([cutter/cut-config.h-not-have-inttypes.h],
+[
+    echo "/* #undef CUT_HAVE_INTTYPES_H */" >> cutter/cut-config.h
+])
+fi
+
+if test "$have_winsock2_h" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-config.h-have-winsock2.h],
+[
+    echo "#define CUT_HAVE_WINSOCK2_H 1" >> cutter/cut-config.h
+])
+else
+AC_CONFIG_COMMANDS([cutter/cut-config.h-not-have-winsock2.h],
+[
+    echo "/* #undef CUT_HAVE_WINSOCK2_H */" >> cutter/cut-config.h
+])
+fi
+
+if test "$have_sys_socket_h" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-config.h-have-sys-socket.h],
+[
+    echo "#define CUT_HAVE_SYS_SOCKET_H 1" >> cutter/cut-config.h
+])
+else
+AC_CONFIG_COMMANDS([cutter/cut-config.h-not-have-sys-socket.h],
+[
+    echo "/* #socketdef CUT_HAVE_SYS_SOCKET_H */" >> cutter/cut-config.h
+])
+fi
+
+if test "$have_sys_un_h" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-config.h-have-sys-un.h],
+[
+    echo "#define CUT_HAVE_SYS_UN_H 1" >> cutter/cut-config.h
+])
+else
+AC_CONFIG_COMMANDS([cutter/cut-config.h-not-have-sys-un.h],
+[
+    echo "/* #undef CUT_HAVE_SYS_UN_H */" >> cutter/cut-config.h
+])
+fi
+
+AC_CONFIG_COMMANDS([cutter/cut-config.h-end],
+[
+  cat >> cutter/cut-config.h <<\_______EOF
+
+#endif
+_______EOF
+])
 
 dnl **************************************************************
 dnl cutter/cut-features.h

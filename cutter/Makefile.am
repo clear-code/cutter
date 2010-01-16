@@ -23,7 +23,8 @@ cutter_public_headers = 		\
 	cut-test-utils-helper.h		\
 	cut-test-utils.h		\
 	cut-types.h			\
-	cut-version.h
+	cut-version.h			\
+	cut-config.h
 
 libcutter_public_headers = 		\
 	cut-analyzer.h			\

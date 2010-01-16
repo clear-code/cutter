@@ -1,3 +1,7 @@
+2010-01-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: generate cutter/cut-config.h for installation.
+
 2009-12-08  Kouhei Sutou  <kou@clear-code.com>
 
 	* doc/reference/ja.po: fix a typo.
