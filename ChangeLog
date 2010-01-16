@@ -1,5 +1,7 @@
 2010-01-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-public.h, cutter/cut-utils.c: add missing const.
+
 	* cutter/cut-public.h, cutter/cut-utils.c,
 	test/cutter/test-cut-utils.c: add cut_utils_inspect_sockaddr().
 

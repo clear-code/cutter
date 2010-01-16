@@ -253,8 +253,8 @@ cut_utils_inspect_string (const gchar *string)
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 gboolean
-cut_utils_equal_sockaddr (struct sockaddr *address1,
-                          struct sockaddr *address2)
+cut_utils_equal_sockaddr (const struct sockaddr *address1,
+                          const struct sockaddr *address2)
 {
     if (address1 == address2)
         return TRUE;
@@ -315,7 +315,7 @@ cut_utils_equal_sockaddr (struct sockaddr *address1,
 }
 
 gchar *
-cut_utils_inspect_sockaddr (struct sockaddr *address)
+cut_utils_inspect_sockaddr (const struct sockaddr *address)
 {
     gchar *spec = NULL;
 

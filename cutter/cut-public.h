@@ -151,9 +151,9 @@ char        *cut_utils_inspect_string_array (char **strings);
 const char  *cut_utils_inspect_string       (const char *string);
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
-cut_boolean  cut_utils_equal_sockaddr       (struct sockaddr *address1,
-                                             struct sockaddr *address2);
-char        *cut_utils_inspect_sockaddr     (struct sockaddr *address);
+cut_boolean  cut_utils_equal_sockaddr       (const struct sockaddr *address1,
+                                             const struct sockaddr *address2);
+char        *cut_utils_inspect_sockaddr     (const struct sockaddr *address);
 #endif
 
 cut_boolean  cut_utils_path_exist           (const char *path);
