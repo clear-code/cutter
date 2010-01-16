@@ -1,5 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 
+#define CUT_DISABLE_SOCKET_SUPPORT
 #include <cutter.h>
 
 void test_nothing (void);

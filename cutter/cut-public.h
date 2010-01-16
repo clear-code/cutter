@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,6 +24,8 @@
 extern "C" {
 #endif
 
+#include <cutter/cut-config.h>
+
 #include <stdarg.h>
 #include <stdlib.h>
 #include <setjmp.h>
@@ -31,6 +33,18 @@ extern "C" {
 #  include <inttypes.h>
 #elif defined(HAVE_STDINT_H)
 #  include <stdint.h>
+#endif
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+#  ifdef HAVE_WINSOCK2_H
+#    include <winsock2.h>
+#    include <ws2tcpip.h>
+#  else
+#    include <sys/socket.h>
+#    ifdef HAVE_SYS_UN_H
+#      include <sys/un.h>
+#    endif
+#  endif
 #endif
 
 #include <cutter/cut-types.h>
@@ -135,6 +149,11 @@ cut_boolean  cut_utils_equal_string_array   (char **strings1,
                                              char **strings2);
 char        *cut_utils_inspect_string_array (char **strings);
 const char  *cut_utils_inspect_string       (const char *string);
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+cut_boolean  cut_utils_equal_sockaddr       (struct sockaddr *address1,
+                                             struct sockaddr *address2);
+#endif
 
 cut_boolean  cut_utils_path_exist           (const char *path);
 char        *cut_utils_build_path           (const char *path,

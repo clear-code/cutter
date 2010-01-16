@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,10 +19,26 @@
 
 #include <string.h>
 
+#ifdef HAVE_CONFIG_H
+#  include <config.h>
+#endif
+
 #include <gcutter.h>
 #include <cutter/cut-utils.h>
 #include <cutter/cut-backtrace-entry.h>
 #include "../lib/cuttest-utils.h"
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+#  ifdef HAVE_WINSOCK2_H
+#    include <winsock2.h>
+#    include <ws2tcpip.h>
+#  else
+#    include <sys/socket.h>
+#    include <netinet/in.h>
+#    include <arpa/inet.h>
+#    include <sys/un.h>
+#  endif
+#endif
 
 void test_inspect_memory (void);
 void test_inspect_memory_with_printable (void);
@@ -35,6 +51,10 @@ void test_fold (void);
 void test_equal_string (void);
 void test_equal_substring (void);
 void test_equal_double (void);
+void test_equal_sockaddr (void);
+void test_equal_sockaddr_un (void);
+void test_equal_sockaddr_in (void);
+void test_equal_sockaddr_in6 (void);
 void data_parse_gdb_backtrace (void);
 void test_parse_gdb_backtrace (gconstpointer data);
 void test_compare_string (void);
@@ -246,6 +266,175 @@ test_equal_double (void)
     cut_assert_true(cut_utils_equal_double(0.11, 0.19, 0.1));
     cut_assert_true(cut_utils_equal_double(0.11, 0.12, 0.01));
     cut_assert_false(cut_utils_equal_double(0.11, 0.12, 0.009));
+}
+
+void
+test_equal_sockaddr (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_equal_sockaddr() is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+    struct sockaddr address_unspec;
+    struct sockaddr address_unknown1;
+    struct sockaddr address_unknown2;
+    struct sockaddr address_unknown_same;
+
+    address_unspec.sa_family = AF_UNSPEC;
+    address_unknown1.sa_family = 1000;
+    address_unknown2.sa_family = 2000;
+    address_unknown_same.sa_family = 1000;
+
+    cut_assert_true(cut_utils_equal_sockaddr(NULL, NULL));
+
+    cut_assert_false(cut_utils_equal_sockaddr(&address_unspec, NULL));
+    cut_assert_true(cut_utils_equal_sockaddr(&address_unspec, &address_unspec));
+
+    cut_assert_false(cut_utils_equal_sockaddr(&address_unspec,
+                                              &address_unknown1));
+
+    cut_assert_false(cut_utils_equal_sockaddr(&address_unknown1, NULL));
+    cut_assert_true(cut_utils_equal_sockaddr(&address_unknown1,
+                                             &address_unknown1));
+    cut_assert_false(cut_utils_equal_sockaddr(&address_unknown1,
+                                              &address_unknown2));
+    cut_assert_false(cut_utils_equal_sockaddr(&address_unknown1,
+                                              &address_unknown_same));
+#endif
+}
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+#  ifdef HAVE_SYS_UN_H
+static void
+setup_sockaddr_un (struct sockaddr_un *address, const gchar *path)
+{
+    address->sun_family = AF_UNIX;
+    strcpy(address->sun_path, path);
+}
+#  endif
+#endif
+
+void
+test_equal_sockaddr_un (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_equal_sockaddr() is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+#  ifndef HAVE_SYS_UN_H
+    cut_omit("sockaddr_un isn't available on the current environment.");
+#  else
+    struct sockaddr *address1;
+    struct sockaddr *address2;
+    struct sockaddr *address_same;
+    struct sockaddr_un address_un1;
+    struct sockaddr_un address_un2;
+    struct sockaddr_un address_un_same;
+
+    setup_sockaddr_un(&address_un1, "/tmp/socket1");
+    setup_sockaddr_un(&address_un2, "/tmp/socket2");
+    setup_sockaddr_un(&address_un_same, "/tmp/socket1");
+
+    address1 = (struct sockaddr *)&address_un1;
+    address2 = (struct sockaddr *)&address_un2;
+    address_same = (struct sockaddr *)&address_un_same;
+
+    cut_assert_false(cut_utils_equal_sockaddr(address1, NULL));
+    cut_assert_true(cut_utils_equal_sockaddr(address1, address1));
+    cut_assert_false(cut_utils_equal_sockaddr(address1, address2));
+    cut_assert_true(cut_utils_equal_sockaddr(address1, address_same));
+    cut_assert_false(cut_utils_equal_sockaddr(address2, address_same));
+#  endif
+#endif
+}
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+static void
+setup_sockaddr_in (struct sockaddr_in *address, const gchar *host, guint16 port)
+{
+    address->sin_family = AF_INET;
+    if (host) {
+        address->sin_addr.s_addr = inet_addr(host);
+    } else {
+        address->sin_addr.s_addr = INADDR_ANY;
+    }
+    address->sin_port = g_htons(port);
+}
+#endif
+
+void
+test_equal_sockaddr_in (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_equal_sockaddr() is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+    struct sockaddr *address1;
+    struct sockaddr *address2;
+    struct sockaddr *address_same;
+    struct sockaddr_in address_in1;
+    struct sockaddr_in address_in2;
+    struct sockaddr_in address_in_same;
+
+    setup_sockaddr_in(&address_in1, "127.0.0.1", 2929);
+    setup_sockaddr_in(&address_in2, "127.0.0.1", 29292);
+    setup_sockaddr_in(&address_in_same, "127.0.0.1", 2929);
+
+    address1 = (struct sockaddr *)&address_in1;
+    address2 = (struct sockaddr *)&address_in2;
+    address_same = (struct sockaddr *)&address_in_same;
+
+    cut_assert_false(cut_utils_equal_sockaddr(address1, NULL));
+    cut_assert_true(cut_utils_equal_sockaddr(address1, address1));
+    cut_assert_false(cut_utils_equal_sockaddr(address1, address2));
+    cut_assert_true(cut_utils_equal_sockaddr(address1, address_same));
+    cut_assert_false(cut_utils_equal_sockaddr(address2, address_same));
+#endif
+}
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+static void
+setup_sockaddr_in6 (struct sockaddr_in6 *address,
+                    const gchar *host, guint16 port)
+{
+    memset(address, 0, sizeof(*address));
+
+    address->sin6_family = AF_INET6;
+    if (host) {
+        if (inet_pton(AF_INET6, host, &(address->sin6_addr)) == 0) {
+            cut_error("invalid host address: <%s>", host);
+        }
+    } else {
+        address->sin6_addr = in6addr_any;
+    }
+    address->sin6_port = g_htons(port);
+}
+#endif
+
+void
+test_equal_sockaddr_in6 (void)
+{
+#ifdef CUT_DISABLE_SOCKET_SUPPORT
+    cut_omit("cut_equal_sockaddr() is disabled by CUT_DISABLE_SOCKET_SUPPORT.");
+#else
+    struct sockaddr *address1;
+    struct sockaddr *address2;
+    struct sockaddr *address_same;
+    struct sockaddr_in6 address_in6_1;
+    struct sockaddr_in6 address_in6_2;
+    struct sockaddr_in6 address_in6_same;
+
+    setup_sockaddr_in6(&address_in6_1, "::1", 2929);
+    setup_sockaddr_in6(&address_in6_2, "::1", 29292);
+    setup_sockaddr_in6(&address_in6_same, "::1", 2929);
+
+    address1 = (struct sockaddr *)&address_in6_1;
+    address2 = (struct sockaddr *)&address_in6_2;
+    address_same = (struct sockaddr *)&address_in6_same;
+
+    cut_assert_false(cut_utils_equal_sockaddr(address1, NULL));
+    cut_assert_true(cut_utils_equal_sockaddr(address1, address1));
+    cut_assert_false(cut_utils_equal_sockaddr(address1, address2));
+    cut_assert_true(cut_utils_equal_sockaddr(address1, address_same));
+    cut_assert_false(cut_utils_equal_sockaddr(address2, address_same));
+#endif
 }
 
 static GList *

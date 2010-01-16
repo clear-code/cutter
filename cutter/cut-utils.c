@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -45,6 +45,20 @@
 #include "../gcutter/gcut-public.h"
 #include "../gcutter/gcut-error.h"
 #include "../gcutter/gcut-assertions-helper.h"
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+#  ifdef HAVE_WINSOCK2_H
+#    include <winsock2.h>
+#    include <ws2tcpip.h>
+#  else
+#    include <sys/types.h>
+#    include <sys/socket.h>
+#    include <arpa/inet.h>
+#    ifdef HAVE_SYS_UN_H
+#      include <sys/un.h>
+#    endif
+#  endif
+#endif
 
 gchar *
 cut_utils_create_regex_pattern (const gchar *string)
@@ -236,6 +250,71 @@ cut_utils_inspect_string (const gchar *string)
     else
         return "(null)";
 }
+
+#ifndef CUT_DISABLE_SOCKET_SUPPORT
+gboolean
+cut_utils_equal_sockaddr (struct sockaddr *address1,
+                          struct sockaddr *address2)
+{
+    if (address1 == address2)
+        return TRUE;
+    if (!address1 || !address2)
+        return FALSE;
+    if (address1->sa_family != address2->sa_family)
+        return FALSE;
+
+    switch (address1->sa_family) {
+#ifdef HAVE_SYS_UN_H
+    case AF_UNIX:
+    {
+        struct sockaddr_un *address_unix1 = (struct sockaddr_un *)address1;
+        struct sockaddr_un *address_unix2 = (struct sockaddr_un *)address2;
+
+        return cut_utils_equal_string(address_unix1->sun_path,
+                                      address_unix2->sun_path);
+        break;
+    }
+#endif
+    case AF_INET:
+    {
+        struct sockaddr_in *address_inet1 = (struct sockaddr_in *)address1;
+        struct sockaddr_in *address_inet2 = (struct sockaddr_in *)address2;
+
+        if (address_inet1->sin_addr.s_addr != address_inet2->sin_addr.s_addr)
+            return FALSE;
+        if (address_inet1->sin_port != address_inet2->sin_port)
+            return FALSE;
+
+        return TRUE;
+        break;
+    }
+    case AF_INET6:
+    {
+        struct sockaddr_in6 *address_inet6_1 = (struct sockaddr_in6 *)address1;
+        struct sockaddr_in6 *address_inet6_2 = (struct sockaddr_in6 *)address2;
+
+        if (memcmp(address_inet6_1->sin6_addr.s6_addr,
+                   address_inet6_2->sin6_addr.s6_addr,
+                   sizeof(address_inet6_1->sin6_addr.s6_addr)) != 0)
+            return FALSE;
+        if (address_inet6_1->sin6_port != address_inet6_2->sin6_port)
+            return FALSE;
+
+        return TRUE;
+        break;
+    }
+    case AF_UNSPEC:
+        return TRUE;
+        break;
+    default:
+        return FALSE;
+        break;
+    }
+
+    return FALSE;
+}
+
+#endif
 
 gboolean
 cut_utils_path_exist (const gchar *path)

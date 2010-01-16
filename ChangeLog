@@ -1,5 +1,11 @@
 2010-01-16  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-public.h, cutter/cut-utils.c,
+	test/cutter/test-cut-utils.c,
+	test/fixtures/loader/fixture/all.c,
+	test/fixtures/loader/fixture/without-prefix.c: add
+	cut_utils_equal_sockaddr().
+
 	* configure.ac: generate cutter/cut-config.h for installation.
 
 2009-12-08  Kouhei Sutou  <kou@clear-code.com>
