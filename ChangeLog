@@ -1,3 +1,7 @@
+2010-01-18  Kouhei Sutou  <kou@clear-code.com>
+
+	* apt/: remove apt/{debian,ubuntu}/TARGETS.
+
 2010-01-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-assertions-helper.[ch],
