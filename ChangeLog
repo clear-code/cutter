@@ -1,5 +1,7 @@
 2010-01-19  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-utils.c: use <256 value for unknown family value.
+
 	* test/cutter/test-cut-utils.c: include missing <sys/types.h>.
 
 	* cutter/cut-utils.c: include missing <netinet/in.h>.

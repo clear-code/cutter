@@ -285,9 +285,9 @@ test_equal_sockaddr (void)
     struct sockaddr address_unknown_same;
 
     address_unspec.sa_family = AF_UNSPEC;
-    address_unknown1.sa_family = 1000;
-    address_unknown2.sa_family = 2000;
-    address_unknown_same.sa_family = 1000;
+    address_unknown1.sa_family = 200;
+    address_unknown2.sa_family = 222;
+    address_unknown_same.sa_family = 200;
 
     cut_assert_true(cut_utils_equal_sockaddr(NULL, NULL));
 
@@ -460,7 +460,7 @@ test_inspect_sockaddr (void)
     struct sockaddr address_unknown;
 
     address_unspec.sa_family = AF_UNSPEC;
-    address_unknown.sa_family = 1000;
+    address_unknown.sa_family = 222;
 
     cut_assert_equal_string_with_free(
         "(null)",
@@ -469,7 +469,7 @@ test_inspect_sockaddr (void)
         "unknown",
         cut_utils_inspect_sockaddr(&address_unspec));
     cut_assert_equal_string_with_free(
-        "unexpected:1000",
+        "unexpected:222",
         cut_utils_inspect_sockaddr(&address_unknown));
 #endif
 }
