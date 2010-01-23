@@ -1,3 +1,9 @@
+2010-01-23  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-list.c, gcutter/gcut-test-utils.h,
+	test/gcutter/test-gcut-test-utils.c: add gcut_list_new(),
+	gcut_take_new_list_object() and gcut_list_object_free().
+
 2010-01-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-utils.c: use <256 value for unknown family value.

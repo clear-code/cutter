@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -28,6 +28,22 @@
 #include "gcut-object.h"
 #include "gcut-enum.h"
 #include "gcut-test-utils.h"
+
+GList *
+gcut_list_new (gpointer element, ...)
+{
+    GList *list = NULL;
+    va_list args;
+
+    va_start(args, element);
+    while (element) {
+        list = g_list_prepend(list, element);
+        element = va_arg(args, gpointer);
+    }
+    va_end(args);
+
+    return g_list_reverse(list);
+}
 
 gboolean
 gcut_list_equal (const GList *list1, const GList *list2, GEqualFunc equal_func)
@@ -182,6 +198,20 @@ void
 gcut_list_string_free (GList *list)
 {
     g_list_foreach(list, (GFunc)g_free, NULL);
+    g_list_free(list);
+}
+
+static void
+object_unref_safe (gpointer object, gpointer user_data)
+{
+    if (object)
+        g_object_unref(object);
+}
+
+void
+gcut_list_object_free (GList *list)
+{
+    g_list_foreach(list, object_unref_safe, NULL);
     g_list_free(list);
 }
 

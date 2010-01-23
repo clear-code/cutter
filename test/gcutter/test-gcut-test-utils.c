@@ -1,4 +1,21 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include <gcutter.h>
 
@@ -7,25 +24,32 @@
 
 void test_list_string (void);
 void test_list_string_array (void);
+void test_list_new (void);
 void test_take_new_list_string (void);
 void test_take_new_list_string_array (void);
+void test_take_new_list_object (void);
 void test_data_get (void);
 
-static GList *list;
+static GList *string_list;
+static GList *object_list;
 static GCutDynamicData *data;
 
 void
 cut_setup (void)
 {
-    list = NULL;
+    string_list = NULL;
+    object_list = NULL;
     data = NULL;
 }
 
 void
 cut_teardown (void)
 {
-    if (list)
-        gcut_list_string_free(list);
+    if (string_list)
+        gcut_list_string_free(string_list);
+
+    if (object_list)
+        gcut_list_object_free(object_list);
 
     if (data)
         g_object_unref(data);
@@ -41,8 +65,8 @@ test_list_string (void)
     expected = g_list_append(expected, "zzz");
     expected = g_list_append(expected, "123");
 
-    list = gcut_list_string_new("a", "zzz", "123", NULL);
-    gcut_assert_equal_list_string(gcut_take_list(expected, NULL), list);
+    string_list = gcut_list_string_new("a", "zzz", "123", NULL);
+    gcut_assert_equal_list_string(gcut_take_list(expected, NULL), string_list);
 }
 
 void
@@ -55,8 +79,32 @@ test_list_string_array (void)
     expected = g_list_append(expected, "zzz");
     expected = g_list_append(expected, "123");
 
-    list = gcut_list_string_new_array(strings);
-    gcut_assert_equal_list_string(gcut_take_list(expected, NULL), list);
+    string_list = gcut_list_string_new_array(strings);
+    gcut_assert_equal_list_string(gcut_take_list(expected, NULL), string_list);
+}
+
+void
+test_list_new (void)
+{
+    GList *expected = NULL;
+    GCutDynamicData *string_data, *int_data, *enum_data;
+
+    string_data = gcut_dynamic_data_new("string", G_TYPE_STRING, NULL,
+                                        NULL);
+    int_data = gcut_dynamic_data_new("int", G_TYPE_INT, 0,
+                                     NULL);
+    enum_data = gcut_dynamic_data_new("enum",
+                                      CUT_TYPE_TEST_RESULT_STATUS,
+                                      CUT_TEST_RESULT_SUCCESS,
+                                      NULL);
+
+    expected = g_list_append(expected, string_data);
+    expected = g_list_append(expected, int_data);
+    expected = g_list_append(expected, enum_data);
+
+    object_list = gcut_list_new(string_data, int_data, enum_data, NULL);
+    gcut_assert_equal_list_object(gcut_take_list(expected, NULL),
+                                  object_list);
 }
 
 void
@@ -86,6 +134,31 @@ test_take_new_list_string_array (void)
 
     actual = gcut_take_new_list_string_array(strings);
     gcut_assert_equal_list_string(gcut_take_list(expected, NULL), actual);
+}
+
+void
+test_take_new_list_object (void)
+{
+    GList *expected = NULL;
+    const GList *actual;
+    GCutDynamicData *string_data, *int_data, *enum_data;
+
+    string_data = gcut_dynamic_data_new("string", G_TYPE_STRING, NULL,
+                                        NULL);
+    int_data = gcut_dynamic_data_new("int", G_TYPE_INT, 0,
+                                     NULL);
+    enum_data = gcut_dynamic_data_new("enum",
+                                      CUT_TYPE_TEST_RESULT_STATUS,
+                                      CUT_TEST_RESULT_SUCCESS,
+                                      NULL);
+
+    expected = g_list_append(expected, string_data);
+    expected = g_list_append(expected, int_data);
+    expected = g_list_append(expected, enum_data);
+
+    actual = gcut_take_new_list_object(string_data, int_data, enum_data, NULL);
+    gcut_assert_equal_list_object(gcut_take_list(expected, NULL),
+                                  actual);
 }
 
 void

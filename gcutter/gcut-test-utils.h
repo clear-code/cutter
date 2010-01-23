@@ -105,6 +105,30 @@ G_BEGIN_DECLS
                                        (hash_table))
 
 /**
+ * gcut_list_new:
+ * @element: the first #gpointer.
+ * @...: remaining elements in list. %NULL-terminate.
+ *
+ * Creates a list from passed elements.
+ *
+ * e.g.:
+ * |[
+ * GCutEgg *echo_egg, *cat_egg;
+ *
+ * echo_egg = gcut_egg_new("echo", "Hello", NULL);
+ * cat_egg = gcut_egg_new("cat", "/etc/hosts", NULL);
+ * egg_list = gcut_list_new(echo_egg, cat_egg, NULL);
+ * ]|
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * elements.
+ *
+ * Since: 1.1.1
+ */
+GList  *gcut_list_new         (const gpointer element,
+                               ...) G_GNUC_NULL_TERMINATED;
+
+/**
  * gcut_list_string_new:
  * @value: the first string.
  * @...: remaining strings in list. %NULL-terminate.
@@ -173,6 +197,22 @@ GList  *gcut_list_string_new_array  (const gchar **strings);
     gcut_take_list(gcut_list_string_new_array(strings), g_free)
 
 /**
+ * gcut_take_new_list_object:
+ * @object: the first #GObject.
+ * @...: remaining objects in list. %NULL-terminate.
+ *
+ * Creates a list from passed objects that is owned by
+ * Cutter.
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * objects and is owned by Cutter.
+ *
+ * Since: 1.1.1
+ */
+#define gcut_take_new_list_object(object, ...)                      \
+    gcut_take_list(gcut_list_new(object, __VA_ARGS__), g_object_unref)
+
+/**
  * gcut_list_string_free:
  * @list: the list that contains strings to be freed.
  *
@@ -181,6 +221,17 @@ GList  *gcut_list_string_new_array  (const gchar **strings);
  * Since: 1.0.3
  */
 void    gcut_list_string_free (GList *list);
+
+/**
+ * gcut_list_object_free:
+ * @list: the list that contains #GObject's to be unrefed.
+ *
+ * Frees @list and contained objects. It's safe that @list
+ * contains %NULL.
+ *
+ * Since: 1.1.1
+ */
+void    gcut_list_object_free (GList *list);
 
 /**
  * gcut_hash_table_string_string_new:
