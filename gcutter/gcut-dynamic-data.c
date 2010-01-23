@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -239,7 +239,6 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
         FieldValue *field_value;
 
         field_value = field_value_new(va_arg(args, GType));
-/* TODO: 1.0.7: support G_TYPE_OBJECT and so on */
         switch (field_value->type) {
         case G_TYPE_STRING:
             field_value->value.pointer = g_strdup(va_arg(args, const gchar *));
@@ -264,6 +263,9 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
                 field_value->value.integer = va_arg(args, gint);
             } else if (G_TYPE_IS_BOXED(field_value->type)) {
                 field_value->value.pointer = va_arg(args, gpointer);
+            } else if (G_TYPE_IS_OBJECT(field_value->type)) {
+                field_value->value.pointer = va_arg(args, gpointer);
+                field_value->free_function = g_object_unref;
             } else {
                 g_warning("unsupported type: <%s>",
                           g_type_name(field_value->type));
@@ -425,6 +427,20 @@ gconstpointer
 gcut_dynamic_data_get_boxed (GCutDynamicData  *data,
                              const gchar      *field_name,
                              GError          **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return 0;
+
+    return field_value->value.pointer;
+}
+
+gpointer
+gcut_dynamic_data_get_object (GCutDynamicData  *data,
+                              const gchar      *field_name,
+                              GError          **error)
 {
     FieldValue *field_value;
 

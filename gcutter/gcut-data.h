@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -356,6 +356,24 @@ G_BEGIN_DECLS
     gcut_data_get_boxed_helper(                                         \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_boxed(data, field_name)),     \
+         cut_pop_backtrace))
+
+/**
+ * gcut_data_get_object:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Gets a field value identified by @field_name as
+ * GObject type value.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.1.1
+ */
+#define gcut_data_get_object(data, field_name)                          \
+    gcut_data_get_object_helper(                                        \
+        data, field_name,                                               \
+        (cut_push_backtrace(gcut_data_get_object(data, field_name)),    \
          cut_pop_backtrace))
 
 G_END_DECLS

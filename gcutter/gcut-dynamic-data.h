@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -88,6 +88,9 @@ gconstpointer    gcut_dynamic_data_get_pointer  (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
 gconstpointer    gcut_dynamic_data_get_boxed    (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
+gpointer         gcut_dynamic_data_get_object   (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
 

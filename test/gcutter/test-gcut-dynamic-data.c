@@ -1,4 +1,21 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include <gcutter.h>
 
@@ -13,6 +30,7 @@ void test_flags (void);
 void test_enum (void);
 void test_pointer (void);
 void test_boxed (void);
+void test_object (void);
 
 static GCutDynamicData *data;
 static GError *expected_error;
@@ -180,6 +198,23 @@ test_boxed (void)
     gcut_assert_equal_error(value, actual_value);
 
     assert_nonexistent_field(gcut_dynamic_data_get_boxed);
+}
+
+void
+test_object (void)
+{
+    GError *error = NULL;
+    GCutEgg *value;
+    const GError *actual_value;
+
+    value = gcut_egg_new("echo", "Hello", NULL);
+    data = gcut_dynamic_data_new("object", GCUT_TYPE_EGG, value,
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_object(data, "object", &error);
+    gcut_assert_error(error);
+    gcut_assert_equal_object(value, actual_value);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_object);
 }
 
 /*

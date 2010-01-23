@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -52,6 +52,7 @@ DEFINE_GETTER_HELPER(flags, guint)
 DEFINE_GETTER_HELPER(enum, gint)
 DEFINE_GETTER_HELPER(pointer, gconstpointer)
 DEFINE_GETTER_HELPER(boxed, gconstpointer)
+DEFINE_GETTER_HELPER(object, gpointer)
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

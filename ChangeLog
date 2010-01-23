@@ -1,5 +1,10 @@
 2010-01-23  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-data.h, test/gcutter/test-gcut-dynamic-data.c: add
+	gcut_data_get_object(). GObject as a dynamic data value is supported.
+	* gcutter/gcut-data-helper.[ch] (gcut_data_get_object_helper): add.
+	* gcutter/gcut-dynamic-data.[ch] (gcut_dynamic_data_get_object): add.
+
 	* gcutter/gcut-list.c, gcutter/gcut-test-utils.h,
 	test/gcutter/test-gcut-test-utils.c: add gcut_list_new(),
 	gcut_take_new_list_object() and gcut_list_object_free().
