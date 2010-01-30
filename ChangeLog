@@ -1,3 +1,7 @@
+2010-01-30  Kouhei Sutou  <kou@cozmixng.org>
+
+  	* html/cutter.css: fix menu bar spaces.
+
 2010-01-23  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-data.h, test/gcutter/test-gcut-dynamic-data.c: add
