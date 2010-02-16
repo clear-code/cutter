@@ -1,3 +1,7 @@
+2010-02-16  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/rd2man-lib.rb, misc/rd2refentry-lib.rb: support keybord markup.
+
 2010-01-30  Kouhei Sutou  <kou@cozmixng.org>
 
   	* html/cutter.css: fix menu bar spaces.

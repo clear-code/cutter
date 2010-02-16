@@ -77,6 +77,10 @@ EOT
       "\n.I #{content.join.sub(/\./, '\\.')}\n"
     end
 
+    def apply_to_Keyboard(element, content)
+      "\n.B #{content.join.sub(/\./, '\\.')}\n"
+    end
+
     def apply_to_StringElement(element)
       apply_to_String(remove_newline(element.content))
     end
