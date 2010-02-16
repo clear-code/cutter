@@ -294,7 +294,7 @@ module RD
     end
 
     def term_index_id(term)
-      first_sentence = term.to_s.split(/\s/, 2)[0]
+      first_sentence = term.to_s.split(/[\s\(]/, 2)[0]
       first_sentence.gsub(/[._]/, "-")
     end
 
