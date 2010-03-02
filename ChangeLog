@@ -1,3 +1,8 @@
+2010-03-02  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/rd2refentry-lib.rb: use gettext/tools instead of
+	gettext/poparser directly.
+
 2010-02-17  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/rd2refentry-lib.rb: ignore parameter list from ID.

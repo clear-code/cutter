@@ -10,7 +10,7 @@ require 'rd-visitor-util'
 require "rt/rtparser"
 
 require "gettext"
-require "gettext/poparser"
+require "gettext/tools"
 
 module RD
   class RD2RefEntryVisitor < RDVisitor
@@ -270,7 +270,7 @@ module RD
     end
 
     def make_translate_data
-      data = MOFile.new
+      data = GetText::MOFile.new
       if @@po
         parser = GetText::PoParser.new
         parser.parse(File.read(@@po), data)
