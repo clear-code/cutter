@@ -1,3 +1,7 @@
+2010-03-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: work with Ruby-GetText-Package 1.93.0.
+
 2010-03-02  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/rd2refentry-lib.rb: use gettext/tools instead of

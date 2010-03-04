@@ -10,7 +10,12 @@ require 'rd-visitor-util'
 require "rt/rtparser"
 
 require "gettext"
-require "gettext/tools"
+begin
+  require "gettext/tools"
+rescue LoadError
+  require "gettext/poparser"
+  GetText::MOFile = MOFile
+end
 
 module RD
   class RD2RefEntryVisitor < RDVisitor
