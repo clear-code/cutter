@@ -1,5 +1,7 @@
 2010-03-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/rd2refentry-lib.rb: add missing filename into custom ID.
+
 	* misc/rd2refentry-lib.rb: also treat '=' as term sentence separator.
 
 2010-03-04  Kouhei Sutou  <kou@cozmixng.org>

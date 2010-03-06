@@ -72,8 +72,9 @@ module RD
     def apply_to_Headline(element, title)
       id = nil
       if /\A\s*\[(.+?)\]\s*/ =~ title.first
-        id = $1
+        local_id = $1
         title[0] = $POSTMATCH
+        id = "#{ref_entry_id}.#{local_id}"
       end
       case element.level
       when 1
