@@ -13,6 +13,8 @@
   * Visual C++で生成されたDLLに対応。
   * 検証の追加:
     * ((<cut_assert_equal_sockaddr()|cutter-cutter.html#cut-assert-equal-sockaddr>))
+  * ユーティリティの追加:
+    * ((<cut_make_directory()|cutter-cut-test-utils.html#cut-make-directory>))
 
 ==== 修正
 
