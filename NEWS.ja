@@ -2,6 +2,33 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-1-1] 1.1.1: 2010-03-09
+
+1.1.0のバグ修正とGObject、sockaddr対応強化。
+
+=== Cutter
+
+===== 改良
+
+  * Visual C++で生成されたDLLに対応。
+  * 検証の追加:
+    * ((<cut_assert_equal_sockaddr()|cutter-cutter.html#cut-assert-equal-sockaddr>))
+
+==== 修正
+
+  * stdint.hがあるがinttypes.hがない環境でビルドが失敗する問題の修正
+
+=== GCutter
+
+==== 改良
+
+  * データ駆動テストサポートの強化:
+    * ((<gcut_data_get_object()|cutter-gcut-data.html#gcut-data-get-object>))
+  * ユーティリティの追加:
+    * ((<gcut_list_new()|cutter-gcut-test-utils.html#gcut-list-new>))
+    * ((<gcut_take_new_list_object()|cutter-gcut-test-utils.html#gcut-take-new-list-object>))
+    * ((<gcut_list_object_free()|cutter-gcut-test-utils.html#gcut-list-object-free>))
+
 == [release-1-1-0] 1.1.0: 2009-11-03
 
 注意: APIに非互換があります。
