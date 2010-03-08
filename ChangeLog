@@ -1,3 +1,7 @@
+2010-03-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* TODO: remove: cut_assert_equal_sockaddr().
+
 2010-03-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: add missing filename into custom ID.

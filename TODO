@@ -19,7 +19,6 @@
 * failmalloc like memory test.
 * update option descriptions in README.
 * introduce easy sub process debugging mechanism.
-* cut_assert_equal_sockaddr().
 * GTK+ UI supports test iterator.
 * cut_get_test_name().
 * cut_{get,set}_current_test_context() ->
