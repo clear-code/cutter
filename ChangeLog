@@ -1,5 +1,8 @@
 2010-03-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions.h, cppcutter/cppcut-assertions.h,
+	doc/reference/cutter-overrides.txt: fix parameter documents.
+
 	* NEWS*: add missing cut_make_directory().
 
 	* NEWS*: add a 1.1.1 entry.

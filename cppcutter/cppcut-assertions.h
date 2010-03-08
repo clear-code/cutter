@@ -34,7 +34,7 @@
  * cppcut_assert_equal:
  * @expected: an expected value.
  * @actual: an actual value.
- * @message: an optional message. Use cppcut_message() for this.
+ * @...: an optional message. Use cppcut_message() for this.
  *
  * This assertion is a generic method based on template. You
  * can pass any object's reference as @expected and @actual.

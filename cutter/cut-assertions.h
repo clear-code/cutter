@@ -427,6 +427,7 @@ extern "C" {
  * cut_assert_not_equal_int_least64:
  * @expected: an expected integer value.
  * @actual: an actual integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected != @actual.
  *
@@ -965,6 +966,7 @@ extern "C" {
  * cut_assert_equal_uint_fast8:
  * @expected: an expected unsigned integer value.
  * @actual: an actual unsigned integer value.
+ * @...: optional message. See cut_message() for details.
  *
  * Passes if @expected == @actual.
  *
