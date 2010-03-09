@@ -1,5 +1,7 @@
 2010-03-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: remove garbages.
+
 	* NEWS*: add missing new functions.
 
 	* gcutter/gcut-data.h: markup type.
