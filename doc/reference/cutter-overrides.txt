@@ -696,6 +696,18 @@ const char *string1, const char *string2
 double double1, double double2, double error
 </FUNCTION>
 
+<FUNCTION>
+<NAME>cut_equal_sockaddr</NAME>
+<RETURNS>cut_boolean</RETURNS>
+const struct sockaddr *address1, const struct sockaddr *address2
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_inspect_sockaddr</NAME>
+<RETURNS>char *</RETURNS>
+const struct sockaddr *address
+</FUNCTION>
+
 # cut-multi-process.h
 
 <FUNCTION>
@@ -995,6 +1007,12 @@ gconstpointer data, const gchar *field_name
 <FUNCTION>
 <NAME>gcut_data_get_boxed</NAME>
 <RETURNS>gconstpointer</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_object</NAME>
+<RETURNS>gpointer</RETURNS>
 gconstpointer data, const gchar *field_name
 </FUNCTION>
 
