@@ -364,7 +364,7 @@ G_BEGIN_DECLS
  * @field_name: the field name.
  *
  * Gets a field value identified by @field_name as
- * GObject type value.
+ * #GObject type value.
  *
  * Returns: a field value corresponded to @field_name.
  *

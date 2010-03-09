@@ -1,5 +1,7 @@
 2010-03-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-data.h: markup type.
+
 	* doc/reference/ja.po: update.
 
 2010-03-08  Kouhei Sutou  <kou@cozmixng.org>
