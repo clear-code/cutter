@@ -1,5 +1,7 @@
 2010-03-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/lib/Makefile.am: add missing test/lib/cuttest-event-receiver.h.
+
 	* debian/changelog: add 1.1.1 entry.
 
 	* doc/reference/header*.html, html/index.html*: 1.1.0 -> 1.1.1.

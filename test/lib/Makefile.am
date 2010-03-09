@@ -40,7 +40,8 @@ libcuttest_utils_la_SOURCES =			\
 libcuttest_event_receiver_public_headers =	\
 	cuttest-event-receiver.h
 
-libcuttest_event_receiver_la_SOURCES = 		\
+libcuttest_event_receiver_la_SOURCES = 			\
+	$(libcuttest_event_receiver_public_headers)	\
 	cuttest-event-receiver.c
 
 echo-cuttest-utils-public-headers:
