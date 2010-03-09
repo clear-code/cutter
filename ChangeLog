@@ -1,5 +1,7 @@
 2010-03-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* debian/changelog: add 1.1.1 entry.
+
 	* doc/reference/header*.html, html/index.html*: 1.1.0 -> 1.1.1.
 
 	* doc/reference/cutter-overrides.txt: add entries for defined in 1.1.1.
