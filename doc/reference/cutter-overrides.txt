@@ -1,6 +1,30 @@
 # cutter.h
 
 <FUNCTION>
+<NAME>cut_add_data</NAME>
+<RETURNS>void</RETURNS>
+const char *first_data_name, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_set_attributes</NAME>
+<RETURNS>void</RETURNS>
+const char *first_attribute_name, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_get_current_test_context</NAME>
+<RETURNS>CutTestContext</RETURNS>
+void
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_set_current_test_context</NAME>
+<RETURNS>void</RETURNS>
+CutTestContext *test_context
+</FUNCTION>
+
+<FUNCTION>
 <NAME>cut_set_message</NAME>
 <RETURNS>void</RETURNS>
 const char *format, ...
@@ -507,6 +531,12 @@ const char *expected, const void *path, ...
 </FUNCTION>
 
 <FUNCTION>
+<NAME>cut_assert_equal_sockaddr</NAME>
+<RETURNS>void</RETURNS>
+const struct sockaddr *expected, const struct sockaddr *actual, ...
+</FUNCTION>
+
+<FUNCTION>
 <NAME>cut_error_errno</NAME>
 <RETURNS>void</RETURNS>
 ...
@@ -758,6 +788,12 @@ const gchar *value, ...
 <NAME>gcut_take_new_list_string_array</NAME>
 <RETURNS>const GList *</RETURNS>
 const gchar **strings
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_take_new_list_object</NAME>
+<RETURNS>const GList *</RETURNS>
+const GObject *object, ...
 </FUNCTION>
 
 <FUNCTION>
