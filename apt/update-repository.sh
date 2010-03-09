@@ -2,7 +2,7 @@
 
 script_base_dir=`dirname $0`
 
-if [ $# != 1 ]; then
+if [ $# != 2 ]; then
     echo "Usage: $0 DISTRIBUTIONS ARCHITECTURES"
     echo " e.g.: $0 'debian ubuntu' 'i386 amd64'"
     exit 1

@@ -1,3 +1,7 @@
+2010-03-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* apt/update-repository.sh: fix a wrong number of arguments check.
+
 2010-03-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/install-to-*.rd: 1.1.0 -> 1.1.1.
