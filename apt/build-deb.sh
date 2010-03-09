@@ -1,5 +1,7 @@
 #!/bin/sh
 
+LANG=C
+
 PACKAGE=$(cat /tmp/build-package)
 USER_NAME=$(cat /tmp/build-user)
 VERSION=$(cat /tmp/build-version)
@@ -20,11 +22,6 @@ if [ ! -x /usr/bin/aptitude ]; then
 fi
 run aptitude update -V -D
 run aptitude safe-upgrade -V -D -y
-
-if ! dpkg -l | grep 'ii  locales' > /dev/null 2>&1; then
-    run aptitude install -V -D -y locales
-    run dpkg-reconfigure locales
-fi
 
 if ! aptitude show libgoffice-0-8-dev > /dev/null 2>&1; then
     DEPENDED_PACKAGES=$(echo $DEPENDED_PACKAGES | sed -e 's/libgoffice-0-8/libgoffice-0-6/')
