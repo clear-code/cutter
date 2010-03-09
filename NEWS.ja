@@ -12,7 +12,7 @@
 
   * Visual C++で生成されたDLLに対応。
   * 検証の追加:
-    * ((<cut_assert_equal_sockaddr()|cutter-cutter.html#cut-assert-equal-sockaddr>))
+    * ((<cut_assert_equal_sockaddr()|cutter-cut-assertions.html#cut-assert-equal-sockaddr>))
   * テストユーティリティの追加:
     * ((<cut_equal_sockaddr()|cutter-cut-helper.html#cut-equal-sockaddr>))
     * ((<cut_inspect_sockaddr()|cutter-cut-helper.html#cut-inspect-sockaddr>))
