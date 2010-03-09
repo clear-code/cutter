@@ -54,9 +54,9 @@ make:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
-  % tar xvzf cutter-1.1.0.tar.gz
-  % cd cutter-1.1.0
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.1.tar.gz
+  % tar xvzf cutter-1.1.1.tar.gz
+  % cd cutter-1.1.1
   % ./configure
   % gmake
   % sudo gmake install
