@@ -1,5 +1,7 @@
 2010-03-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* apt/: split to shell scripts.
+
 	* NEWS*: fix typos.
 
 	* doc/reference/cutter-overrides.txt: add missing entries.

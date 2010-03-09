@@ -1,33 +1,60 @@
 #!/bin/sh
 
-VERSION=1.1.0
+PACKAGE=$(cat /tmp/build-package)
+USER_NAME=$(cat /tmp/build-user)
+VERSION=$(cat /tmp/build-version)
+DEPENDED_PACKAGES=$(cat /tmp/depended-packages)
+BUILD_SCRIPT=/tmp/build-deb-in-chroot.sh
 
-sudo aptitude -V -D update && sudo aptitude -V -D -y safe-upgrade
-sudo aptitude install -y subversion devscripts debhelper cdbs autotools-dev \
-    intltool gtk-doc-tools libgtk2.0-dev libgoffice-0-{6,8}-dev \
-    libgstreamer0.10-dev libsoup2.4-dev
+run()
+{
+    "$@"
+    if test $? -ne 0; then
+	echo "Failed $@"
+	exit 1
+    fi
+}
 
-mkdir -p ~/work/c
-if [ -d ~/work/c/cutter ]; then
-    cd ~/work/c/cutter
-    svn up
-else
-    cd ~/work/c
-    svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter
+if [ ! -x /usr/bin/aptitude ]; then
+    run apt-get install -y aptitude
+fi
+run aptitude update -V -D
+run aptitude safe-upgrade -V -D -y
+
+if ! dpkg -l | grep 'ii  locales' > /dev/null 2>&1; then
+    run aptitude install -V -D -y locales
+    run dpkg-reconfigure locales
 fi
 
-cd ~/work/c
-rm -rf cutter-${VERSION}
-tar xfz cutter_${VERSION}.orig.tar.gz
-cd cutter-${VERSION}
+if ! aptitude show libgoffice-0-8-dev > /dev/null 2>&1; then
+    DEPENDED_PACKAGES=$(echo $DEPENDED_PACKAGES | sed -e 's/libgoffice-0-8/libgoffice-0-6/')
+fi
 
-mkdir debian
-cp -rp ../cutter/debian/* debian/
+run aptitude install -V -D -y devscripts ${DEPENDED_PACKAGES}
+run aptitude clean
 
+if ! id $USER_NAME >/dev/null 2>&1; then
+    run useradd -m $USER_NAME
+fi
+
+cat <<EOF > $BUILD_SCRIPT
+#!/bin/sh
+
+rm -rf build
+mkdir -p build
+
+cp /tmp/${PACKAGE}-${VERSION}.tar.gz build/${PACKAGE}_${VERSION}.orig.tar.gz
+cd build
+tar xfz ${PACKAGE}_${VERSION}.orig.tar.gz
+cd ${PACKAGE}-${VERSION}/
+cp -rp /tmp/${PACKAGE}-debian debian
 if dpkg -l libgoffice-0-8-dev > /dev/null 2>&1; then
     :
 else
     sed -i'' -e 's/libgoffice-0-8/libgoffice-0-6/g' debian/control
 fi
-
 debuild -us -uc
+EOF
+
+run chmod +x $BUILD_SCRIPT
+run su - $USER_NAME $BUILD_SCRIPT
