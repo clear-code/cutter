@@ -1,17 +1,32 @@
 #!/bin/sh
 
-PACKAGE=cutter
-USER_NAME=${PACKAGE}-build
-BUILD_SCRIPT=/tmp/build-${PACKAGE}.sh
-VERSION=`cat /tmp/${PACKAGE}-version`
+LANG=C
 
-yum update -y
-yum install -y rpm-build \
-    intltool gettext gtk-doc gcc gcc-c++ make glib2-devel libsoup-devel
-yum clean packages
+PACKAGE=$(cat /tmp/build-package)
+USER_NAME=$(cat /tmp/build-user)
+VERSION=$(cat /tmp/build-version)
+DEPENDED_PACKAGES=$(cat /tmp/depended-packages)
+BUILD_SCRIPT=/tmp/build-${PACKAGE}.sh
+
+run()
+{
+    "$@"
+    if test $? -ne 0; then
+	echo "Failed $@"
+	exit 1
+    fi
+}
+
+if ! rpm -q fedora-release > /dev/null 2>&1; then
+    run rpm -Uvh /var/cache/yum/core/packages/fedora-release*.rpm
+fi
+
+run yum update -y
+run yum install -y rpm-build tar ${DEPENDED_PACKAGES}
+run yum clean packages
 
 if ! id $USER_NAME >/dev/null 2>&1; then
-    useradd -m $USER_NAME
+    run useradd -m $USER_NAME
 fi
 
 cat <<EOF > $BUILD_SCRIPT
@@ -37,5 +52,5 @@ chmod o+rx . rpm rpm/RPMS rpm/SRPMS
 rpmbuild -ba rpm/SPECS/${PACKAGE}.spec
 EOF
 
-chmod +x $BUILD_SCRIPT
-su - $USER_NAME $BUILD_SCRIPT
+run chmod +x $BUILD_SCRIPT
+run su - $USER_NAME $BUILD_SCRIPT

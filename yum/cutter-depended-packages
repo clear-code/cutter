@@ -1,0 +1,8 @@
+intltool
+gettext
+gtk-doc
+gcc
+gcc-c++
+make
+glib2-devel
+libsoup-devel

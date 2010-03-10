@@ -70,7 +70,8 @@ build()
     fi
 
     source_dir=${script_base_dir}/..
-    build_user_dir=${base_dir}/home/${PACKAGE}-build
+    build_user=${PACKAGE}-build
+    build_user_dir=${base_dir}/home/${build_user}
     rpm_base_dir=${build_user_dir}/rpm
     rpm_dir=${rpm_base_dir}/RPMS/${architecture}
     srpm_dir=${rpm_base_dir}/SRPMS
@@ -80,7 +81,11 @@ build()
     run cp $source_dir/${PACKAGE}-${VERSION}.tar.gz \
 	${CHROOT_BASE}/$target/tmp/
     run cp $source_dir/rpm/fedora/${PACKAGE}.spec ${CHROOT_BASE}/$target/tmp/
-    run echo $VERSION > ${CHROOT_BASE}/$target/tmp/${PACKAGE}-version
+    run echo $PACKAGE > ${CHROOT_BASE}/$target/tmp/build-package
+    run echo $VERSION > ${CHROOT_BASE}/$target/tmp/build-version
+    run echo $build_user > ${CHROOT_BASE}/$target/tmp/build-user
+    run cp ${script_base_dir}/${PACKAGE}-depended-packages \
+	${CHROOT_BASE}/$target/tmp/depended-packages
     run cp ${script_base_dir}/build-rpm.sh \
 	${CHROOT_BASE}/$target/tmp/
     run_sudo rm -rf $rpm_dir $srpm_dir

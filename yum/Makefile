@@ -22,5 +22,8 @@ build: build-in-chroot build-repository-rpm
 build-in-chroot:
 	./build-in-chroot.sh $(VERSION) $(CHROOT_BASE) '$(ARCHITECTURES)'
 
-build-repository-rpm:
+build-repository-rpm: RPM-GPG-KEY-cutter
 	./build-repository-rpm.sh
+
+RPM-GPG-KEY-cutter:
+	./gpg-public-key.sh > $@
