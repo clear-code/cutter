@@ -1,5 +1,7 @@
 2010-03-10  Kouhei Sutou  <kou@cozmixng.org>
 
+	* rpm/fedora/cutter.spec.in: add 1.1.1 entry.
+
 	* apt/update-repository.sh: fix a wrong number of arguments check.
 
 2010-03-09  Kouhei Sutou  <kou@cozmixng.org>

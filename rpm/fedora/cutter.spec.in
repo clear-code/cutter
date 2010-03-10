@@ -46,6 +46,10 @@ rm -rf %{buildroot}
 %{_datadir}/locale/
 
 %changelog
+* Thu May 3 2010 Kouhei Sutou <kou@clear-code.com>
+- (1.1.1-0)
+- new upstream release
+
 * Thu Nov 3 2009 Kouhei Sutou <kou@clear-code.com>
 - (1.1.0-0)
 - new upstream release
