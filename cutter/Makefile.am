@@ -99,15 +99,16 @@ enum_sources_h =			\
 	cut-public.h			\
 	$(libcutter_public_headers)
 
+# We can't use $(enum_source_prefix) here. :<
 enum_sources =			\
-	$(enum_source_prefix).c	\
-	$(enum_source_prefix).h
+	cut-enum-types.c	\
+	cut-enum-types.h
 
 MAINTAINERCLEANFILES =			\
 	stamp-$(enum_source_prefix)-c	\
 	stamp-$(enum_source_prefix)-h
 
-BUILT_SOURCES = $(enum_sources)
+BUILT_SOURCES =	$(enum_sources)
 
 bin_PROGRAMS = cutter cut-diff
 
