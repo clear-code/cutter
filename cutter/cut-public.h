@@ -29,19 +29,19 @@ extern "C" {
 #include <stdarg.h>
 #include <stdlib.h>
 #include <setjmp.h>
-#ifdef HAVE_INTTYPES_H
+#ifdef CUT_HAVE_INTTYPES_H
 #  include <inttypes.h>
-#elif defined(HAVE_STDINT_H)
+#elif defined(CUT_HAVE_STDINT_H)
 #  include <stdint.h>
 #endif
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
-#  ifdef HAVE_WINSOCK2_H
+#  ifdef CUT_HAVE_WINSOCK2_H
 #    include <winsock2.h>
 #    include <ws2tcpip.h>
 #  else
 #    include <sys/socket.h>
-#    ifdef HAVE_SYS_UN_H
+#    ifdef CUT_HAVE_SYS_UN_H
 #      include <sys/un.h>
 #    endif
 #  endif
