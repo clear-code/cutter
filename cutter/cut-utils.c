@@ -30,6 +30,7 @@
 #include <glib/gstdio.h>
 #ifdef G_OS_WIN32
 #  include <windows.h>
+#  include <winsock2.h>
 #  include <io.h>
 #  define close _close
 #endif
@@ -314,6 +315,35 @@ cut_utils_equal_sockaddr (const struct sockaddr *address1,
 
     return FALSE;
 }
+
+#ifdef G_OS_WIN32
+static const char *
+inet_ntop (int address_family, const void *source,
+           char *destination, socklen_t destination_length)
+{
+    DWORD socket_address_length;
+    DWORD winsock_destination_length = destination_length;
+
+    switch (address_family) {
+    case AF_INET:
+        socket_address_length = sizeof(struct sockaddr_in);
+        break;
+    case AF_INET6:
+        socket_address_length = sizeof(struct sockaddr_in6);
+        break;
+    default:
+        return NULL;
+        break;
+    }
+
+    if (WSAAddressToString((LPSOCKADDR)source, socket_address_length, NULL,
+                           destination, &winsock_destination_length)) {
+        return NULL;
+    } else {
+        return destination;
+    }
+}
+#endif
 
 gchar *
 cut_utils_inspect_sockaddr (const struct sockaddr *address)
