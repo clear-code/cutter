@@ -155,6 +155,12 @@ mingw*)
 esac
 AM_CONDITIONAL([HAVE_WINDRES], [test x"$WINDRES" != x])
 
+WINDOWS_LIBS=
+if test "$have_winsock2_h" = "yes"; then
+  WINDOWS_LIBS="-lws2_32"
+fi
+AC_SUBST(WINDOWS_LIBS)
+
 dnl **************************************************************
 dnl Check for GLib.
 dnl **************************************************************

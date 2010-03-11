@@ -47,6 +47,10 @@ char **environ = NULL;
 #include "../gcutter/gcut-main.h"
 #include "../gcutter/gcut-error.h"
 
+#ifdef G_OS_WIN32
+#  include <winsock2.h>
+#endif
+
 typedef enum {
     MODE_TEST,
     MODE_ANALYZE
@@ -284,6 +288,13 @@ cut_init (int *argc, char ***argv)
     bfd_init();
 #endif
 
+#ifdef G_OS_WIN32
+    {
+        WSADATA wsa_data;
+        WSAStartup(MAKEWORD(2, 2), &wsa_data);
+    }
+#endif
+
     cut_ui_init();
 
     g_option_context_free(option_context);
@@ -331,6 +342,10 @@ cut_quit (void)
     cut_test_context_current_quit();
 
     cut_quit_environment();
+
+#ifdef G_OS_WIN32
+    WSACleanup();
+#endif
 
     initialized = FALSE;
 }

@@ -60,7 +60,8 @@ LIBS =							\
 	$(top_builddir)/cutter/libcutter.la		\
 	$(top_builddir)/test/lib/libcuttest-utils.la	\
 	$(GLIB_LIBS)					\
-	$(GTK_LIBS)
+	$(GTK_LIBS)					\
+	$(WINDOWS_LIBS)
 
 EVENT_RECEIVER_LIBS = $(top_builddir)/test/lib/libcuttest-event-receiver.la
 

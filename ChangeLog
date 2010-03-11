@@ -1,5 +1,8 @@
 2010-03-11  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c, configure.ac, cutter/Makefile.am,
+	test/cutter/Makefile.am: use Winsock2 on Windows.
+
 	* cutter/cut-run-context.c, cutter/cut-test.c: undef existing
 	ERROR macro for Windows/MinGW.
 

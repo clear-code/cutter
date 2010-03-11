@@ -184,11 +184,9 @@ libcutter_la_LDFLAGS =				\
 
 libcutter_la_LIBADD =				\
 	$(top_builddir)/gcutter/libgcutter.la	\
-	$(GLIB_LIBS)
-
-if HAVE_LIBBFD
-libcutter_la_LIBADD += $(BFD_LIBS)
-endif
+	$(GLIB_LIBS)				\
+	$(BFD_LIBS)				\
+	$(WINDOWS_LIBS)
 
 if OS_WIN32
 libcutter_la_LDFLAGS += -mwindows
