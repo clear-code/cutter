@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,7 +19,7 @@
 
 #include "cppcut-assertions-helper.h"
 
-void
+CPPCUT_DECL void
 cut::assert_equal(int expected, int actual,
                   const char *expression_expected,
                   const char *expression_actual)
@@ -28,7 +28,7 @@ cut::assert_equal(int expected, int actual,
                                 expression_expected, expression_actual);
 }
 
-void
+CPPCUT_DECL void
 cut::assert_equal(unsigned int expected, unsigned int actual,
                   const char *expression_expected,
                   const char *expression_actual)
@@ -37,7 +37,7 @@ cut::assert_equal(unsigned int expected, unsigned int actual,
                                 expression_expected, expression_actual);
 }
 
-void
+CPPCUT_DECL void
 cut::assert_equal(long expected, long actual,
                   const char *expression_expected,
                   const char *expression_actual)
@@ -46,7 +46,7 @@ cut::assert_equal(long expected, long actual,
                                 expression_expected, expression_actual);
 }
 
-void
+CPPCUT_DECL void
 cut::assert_equal(unsigned long expected, unsigned long actual,
                   const char *expression_expected,
                   const char *expression_actual)
@@ -55,7 +55,7 @@ cut::assert_equal(unsigned long expected, unsigned long actual,
                                 expression_expected, expression_actual);
 }
 
-void
+CPPCUT_DECL void
 cut::assert_equal(long long expected, long long actual,
                   const char *expression_expected,
                   const char *expression_actual)
@@ -64,7 +64,7 @@ cut::assert_equal(long long expected, long long actual,
                                 expression_expected, expression_actual);
 }
 
-void
+CPPCUT_DECL void
 cut::assert_equal(unsigned long long expected, unsigned long long actual,
                   const char *expression_expected,
                   const char *expression_actual)
