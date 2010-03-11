@@ -12,7 +12,8 @@ update:
 	./update-repository.sh
 
 upload:
-	rsync -avz --delete --exclude .gitignore fedora/ $(SF_HTDOCS)/fedora
+	rsync -avz --delete --exclude .gitignore --exclude .svn \
+		fedora/ $(SF_HTDOCS)/fedora
 
 download:
 	rsync -avz $(SF_HTDOCS)/fedora/ fedora

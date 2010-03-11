@@ -18,7 +18,8 @@ run()
 }
 
 if ! rpm -q fedora-release > /dev/null 2>&1; then
-    run rpm -Uvh /var/cache/yum/core/packages/fedora-release*.rpm
+    run rpm -Uvh --force /var/cache/yum/core/packages/fedora-release-12-*.rpm
+    run rpm -Uvh --force /var/cache/yum/core/packages/ca-certificates-*.rpm
 fi
 
 run yum update -y

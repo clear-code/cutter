@@ -37,12 +37,14 @@ build_chroot()
 
     if [ $architecture = "x86_64" ]; then
 	rinse_architecture="amd64"
+        fedora_architecture=$architecture
     else
 	rinse_architecture=$architecture
+        fedora_architecture=i686
     fi
 
     run_sudo mkdir -p ${base_dir}/etc/rpm
-    run_sudo sh -c "echo ${architecture}-fedora-linux > ${base_dir}/etc/rpm/platform"
+    run_sudo sh -c "echo ${fedora_architecture}-fedora-linux > ${base_dir}/etc/rpm/platform"
     run_sudo rinse \
 	--arch $rinse_architecture \
 	--distribution $code_name \
@@ -75,7 +77,7 @@ build()
     rpm_base_dir=${build_user_dir}/rpm
     rpm_dir=${rpm_base_dir}/RPMS/${architecture}
     srpm_dir=${rpm_base_dir}/SRPMS
-    pool_base_dir=fedora/12/Fedora
+    pool_base_dir=fedora/12
     binary_pool_dir=$pool_base_dir/$architecture/Packages
     source_pool_dir=$pool_base_dir/source/SRPMS
     run cp $source_dir/${PACKAGE}-${VERSION}.tar.gz \

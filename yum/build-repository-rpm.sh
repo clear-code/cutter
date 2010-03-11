@@ -34,9 +34,8 @@ run rpmbuild -ba $rpm_base_dir/SPECS/${PACKAGE}-repository.spec
 
 top_dir=$script_base_dir/fedora
 
-pool_dir=$top_dir/12
-run mkdir -p $pool_dir
-run cp -p $rpm_base_dir/RPMS/noarch/${PACKAGE}-repository-* $pool_dir
-run cp -p $rpm_base_dir/SRPMS/${PACKAGE}-repository-* $pool_dir
+run mkdir -p $top_dir
+run cp -p $rpm_base_dir/RPMS/noarch/${PACKAGE}-repository-* $top_dir
+run cp -p $rpm_base_dir/SRPMS/${PACKAGE}-repository-* $top_dir
 
 run cp -p ${script_base_dir}/RPM-GPG-KEY-${PACKAGE} $top_dir
