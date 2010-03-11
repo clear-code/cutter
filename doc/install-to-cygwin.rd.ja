@@ -6,14 +6,11 @@
 
 CygwinへのCutterのインストール方法を説明します。
 
-ここでは、Cygwin 1.5を対象とします。Cygwin 1.7にもインストー
-ルできますが、GLibへパッチを当てる必要があります。これについ
-ては、Cygwin 1.7が正式リリースされたら、それにあわせてGLibへ
-パッチを送る予定です。
+Cygwin 1.7を対象とします。
 
 == Cygwinのインストール
 
-まず、Cygwin 1.5のインストーラをダウンロードします。
+まず、Cygwin 1.7のインストーラをダウンロードします。
 
 ((<URL:http://cygwin.com/setup.exe>))
 
@@ -22,6 +19,7 @@ CygwinへのCutterのインストール方法を説明します。
 
    * gcc
    * gdb
+   * glib2-devel（要確認）
    * gettext-devel
    * intltool
    * libiconv
@@ -32,58 +30,15 @@ CygwinへのCutterのインストール方法を説明します。
 
 ここからはCygwinの中で行います。Cygwinを起動してください。
 
-Cygwin 1.5上では新しいGLibはビルドできません。そのため、
-Cutterも使えるけど少し古いバージョンのGLibを使います。
-
-GLibは/usr/local/以下にインストールします。/usr/local/以下に
-はpkg-configのパスなどが通っていないため、Cutterを使ったテス
-トを書くときに環境変数などを設定する必要があります。もし、そ
-れに関する手間やトラブルを回避したい場合は/usr/以下にインス
-トールするとよいでしょう。その場合は、CygwinからGLibをインス
-トールしないように注意してください。上書きされて整合性がとれ
-なくなるかもしれません。
-
-まずは、/usr/local/以下にインストールする方法です。
-
-  % wget http://ftp.gnome.org/pub/gnome/sources/glib/2.16/glib-2.16.6.tar.gz
-  % tar xvzf glib-2.16.6.tar.gz
-  % cd glib-2.16.6
-  % ./configure
-  % make
-  % make install
-
-/usr/以下にインストールする場合はconfigureのとき
-に--prefix=/usrオプションをつけます。
-
-  % wget http://ftp.gnome.org/pub/gnome/sources/glib/2.16/glib-2.16.6.tar.gz
-  % tar xvzf glib-2.16.6.tar.gz
-  % cd glib-2.16.6
-  % ./configure --prefix=/usr
-  % make
-  % make install
-
 == Cutterのインストール
 
 これで下準備は整ったのでCutterをインストールします。
 
-まず、GLibを/usr/local/以下にインストールした場合です。
-
   % cd
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
-  % tar xvzf cutter-1.1.0.tar.gz
-  % cd cutter-1.1.0
-  % ./configure PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
-  % make
-  % make install
-
-GLibを/usr/以下にインストールした場合はこうなります。
-configureのときにPKG_CONFIG_PATHの代わりに--prefixを指定します。
-
-  % cd
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
-  % tar xvzf cutter-1.1.0.tar.gz
-  % cd cutter-1.1.0
-  % ./configure --prefix=/usr
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.1.tar.gz
+  % tar xvzf cutter-1.1.1.tar.gz
+  % cd cutter-1.1.1
+  % ./configure
   % make
   % make install
 

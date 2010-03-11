@@ -6,12 +6,12 @@
 
 This document explains how to install Cutter to Cygwin.
 
-We use Cygwin 1.5. We can install Cutter to Cygwin 1.7 but
-we need to apply a patch to GLib.
+We can install Cutter to Cygwin 1.7 (should be confirmed:
+but we need to apply a patch to GLib).
 
 == Install Cygwin
 
-First, we download Cygwin 1.5 installer:
+First, we download Cygwin 1.7 installer:
 
 ((<URL:http://cygwin.com/setup.exe>))
 
@@ -20,6 +20,7 @@ installer:
 
    * gcc
    * gdb
+   * glib2-devel (should be confirmed)
    * gettext-devel
    * intltool
    * libiconv
@@ -30,18 +31,6 @@ installer:
 
 We enter into Cygwin. We run Cygwin.
 
-The latest GLib can't be built on Cygwin 1.5. We use old
-GLib that is supported by Cutter.
-
-We install GLib into /usr/local/.
-
-  % wget http://ftp.gnome.org/pub/gnome/sources/glib/2.16/glib-2.16.6.tar.gz
-  % tar xvzf glib-2.16.6.tar.gz
-  % cd glib-2.16.6
-  % ./configure
-  % make
-  % make install
-
 == Install Cutter
 
 We install Cutter.
@@ -50,7 +39,7 @@ We install Cutter.
   % wget http://downloads.sourceforge.net/cutter/cutter-1.1.1.tar.gz
   % tar xvzf cutter-1.1.1.tar.gz
   % cd cutter-1.1.1
-  % ./configure PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+  % ./configure
   % make
   % make install
 

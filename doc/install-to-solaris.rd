@@ -39,9 +39,9 @@ use GNU make:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://ftp.acc.umu.se/pub/GNOME/sources/glib/2.20/glib-2.20.2.tar.gz
-  % tar xvzf glib-2.20.2.tar.gz
-  % cd glib-2.20.2
+  % wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.22/glib-2.22.4.tar.gz
+  % tar xvzf glib-2.22.4.tar.gz
+  % cd glib-2.22.4
   % ./configure --with-libiconv=gnu
   % gmake
   % sudo gmake install

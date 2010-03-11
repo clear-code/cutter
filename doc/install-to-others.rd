@@ -22,9 +22,9 @@ Here is an instruction to install GLib into ~/local/:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.20/glib-2.20.1.tar.gz
-  % tar xvfz glib-2.20.1.tar.gz
-  % cd glib-2.20.1
+  % wget http://ftp.gnome.org/pub/GNOME/sources/glib/2.22/glib-2.22.4.tar.gz
+  % tar xvfz glib-2.22.4.tar.gz
+  % cd glib-2.22.4
   % ./configure --prefix=$HOME/local
   % make
   % make install
