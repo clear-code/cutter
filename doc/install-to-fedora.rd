@@ -6,33 +6,17 @@
 
 This document explains how to install Cutter to Fedora.
 
-== Install dependency libraries
+== Install
 
-Here is a dependency library to build Cutter:
+We can use yum because Cutter provides a Yum repository.
 
-  * GLib
+First, we need to register Cutter Yum repository:
 
-Here are dependency libraries needed by development with
-Cutter:
+  % sudo rpm -Uvh http://cutter.sourceforge.net/fedora/cutter-repository-1.0.0-0.noarch.rpm
 
-  * autoconf
-  * automake
-  * libtool
-  * intltool
+Now, we can install Cutter by yum:
 
-Those packages can be installed with yum:
-
-  % sudo yum install -y glib2 automake libtool intltool
-
-== Install Cutter
-
-There is a RPM package for Cutter on Fedora 10 amd64. If you
-need a package for another environment, you can request on
-((<mailing
-list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
-
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0-0.x86_64.rpm
-  % sudo rpm -Uvh cutter-1.1.0-0.x86_64.rpm
+  % sudo yum install -y cutter
 
 == The next step
 
