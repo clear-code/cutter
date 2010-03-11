@@ -401,6 +401,30 @@ test_equal_sockaddr_in (void)
 }
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
+
+#  ifdef G_OS_WIN32
+static int
+inet_pton(int address_family, const char *source, void *destination)
+{
+    int destination_length;
+
+    switch (address_family) {
+    case AF_INET:
+        destination_length = sizeof(struct sockaddr_in);
+        break;
+    case AF_INET6:
+        destination_length = sizeof(struct sockaddr_in6);
+        break;
+    default:
+        return WSAEINVAL;
+        break;
+    }
+
+    return WSAStringToAddress((LPTSTR)source, address_family, NULL,
+                              destination, &destination_length);
+}
+#  endif
+
 static void
 setup_sockaddr_in6 (struct sockaddr_in6 *address,
                     const gchar *host, guint16 port)
