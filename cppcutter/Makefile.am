@@ -4,7 +4,7 @@ INCLUDES = 			\
 	 -I$(top_srcdir)/cutter
 
 AM_CXXFLAGS = 			\
-	-DCPPCUT_DECL		\
+	-DCPPCUT_BUILDING	\
 	$(CUTTER_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
 
