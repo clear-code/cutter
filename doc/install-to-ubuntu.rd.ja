@@ -11,7 +11,7 @@ Ubuntu LinuxへのCutterのインストール方法を説明します。
 CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
-現在は、Ubuntu Linux Hardy Heron/Jaunty Jackalope i386/amd64
+現在は、Ubuntu Linux Hardy Heron/Karmic Koala i386/amd64
 用のパッケージのみ提供しています。他のバージョンが必要な場合
 は((<メーリングリスト
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
@@ -24,12 +24,12 @@ Hardyの場合は以下のapt lineを書いた
   deb http://cutter.sourceforge.net/ubuntu/ hardy main
   deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
 
-Jauntyの場合は以下のapt lineを書いた
+Karmicの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/ubuntu/ jaunty main
-  deb-src http://cutter.sourceforge.net/ubuntu/ jaunty main
+  deb http://cutter.sourceforge.net/ubuntu/ karmic main
+  deb-src http://cutter.sourceforge.net/ubuntu/ karmic main
 
 パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン
 しています。信用する場合は鍵を登録します。
