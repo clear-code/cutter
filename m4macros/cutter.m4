@@ -14,7 +14,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   fi
 
   cutter_has_lcov=no
-  ltp_version_list="1.6 1.7"
+  ltp_version_list="1.6 1.7 1.8"
   AC_CHECK_PROG(LCOV, lcov, lcov)
   AC_CHECK_PROG(GENHTML, genhtml, genhtml)
 
