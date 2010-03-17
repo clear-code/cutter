@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,13 +26,11 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#ifdef HAVE_IO_H
+#ifdef G_OS_WIN32
 #  include <io.h>
 #  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
 #else
-#  ifdef HAVE_UNISTD_H
-#    include <unistd.h>
-#  endif
+#  include <unistd.h>
 #endif
 
 #ifdef HAVE_SYS_WAIT_H
