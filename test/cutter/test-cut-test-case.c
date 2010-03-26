@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,6 +31,7 @@ void test_teardown(void);
 void test_test_case_count(void);
 void test_run(void);
 void test_run_with_setup_error(void);
+void test_run_with_setup_omission(void);
 void test_run_this_function(void);
 void test_run_tests_with_regex(void);
 void test_run_with_name_filter(void);
@@ -64,6 +65,7 @@ static gboolean set_omission_on_startup = FALSE;
 static gboolean set_crash_on_startup = FALSE;
 
 static gboolean set_error_on_setup = FALSE;
+static gboolean set_omission_on_setup = FALSE;
 
 static gint n_startup = 0;
 static gint n_shutdown = 0;
@@ -140,6 +142,8 @@ stub_setup_function (void)
 
     if (set_error_on_setup)
         cut_error("Error in setup");
+    if (set_omission_on_setup)
+        cut_omit("Omission in setup");
 }
 
 static void
@@ -189,6 +193,7 @@ cut_setup (void)
     set_crash_on_startup = FALSE;
 
     set_error_on_setup = FALSE;
+    set_omission_on_setup = FALSE;
 
     n_startup = 0;
     n_shutdown = 0;
@@ -301,9 +306,24 @@ void
 test_run_with_setup_error (void)
 {
     set_error_on_setup = TRUE;
-    cut_assert(!run_the_test());
+    cut_assert_false(run_the_test());
+    cut_assert_equal_int(3, n_setup);
     cut_assert_equal_int(0, n_run_stub_test_function1);
+    cut_assert_equal_int(0, n_run_stub_test_function2);
     cut_assert_equal_int(0, n_run_stub_run_test_function);
+    cut_assert_equal_int(3, n_teardown);
+}
+
+void
+test_run_with_setup_omission (void)
+{
+    set_omission_on_setup = TRUE;
+    cut_assert_true(run_the_test());
+    cut_assert_equal_int(3, n_setup);
+    cut_assert_equal_int(0, n_run_stub_test_function1);
+    cut_assert_equal_int(0, n_run_stub_test_function2);
+    cut_assert_equal_int(0, n_run_stub_run_test_function);
+    cut_assert_equal_int(3, n_teardown);
 }
 
 void

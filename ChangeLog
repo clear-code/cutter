@@ -1,3 +1,11 @@
+2010-03-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-case.c,
+	cutter/cut-test-context.[ch],
+	test/cutter/test-cut-test-case.c: support cut_omit() in setup().
+	#2976775
+	Reported by Romain Tartière. Thanks!!!
+
 2010-03-17  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-pipeline.c, cutter/cut-process.c: use G_OS_WIN32

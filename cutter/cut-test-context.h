@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -106,6 +106,7 @@ guint         cut_test_context_get_n_data     (CutTestContext *context);
 void          cut_test_context_set_failed     (CutTestContext *context,
                                                gboolean        failed);
 gboolean      cut_test_context_is_failed      (CutTestContext *context);
+gboolean      cut_test_context_need_test_run  (CutTestContext *context);
 
 void          cut_test_context_emit_signal    (CutTestContext *context,
                                                CutTestResult  *result);

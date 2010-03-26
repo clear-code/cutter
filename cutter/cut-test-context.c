@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -72,6 +72,7 @@ struct _CutTestContextPrivate
     CutTestIterator *test_iterator;
     CutTest *test;
     gboolean failed;
+    gboolean omitted;
     gboolean is_multi_thread;
     jmp_buf *jump_buffer;
     GList *taken_objects;
@@ -242,6 +243,7 @@ cut_test_context_init (CutTestContext *context)
     priv->test = NULL;
 
     priv->failed = FALSE;
+    priv->omitted = FALSE;
     priv->is_multi_thread = FALSE;
 
     priv->taken_objects = NULL;
@@ -838,8 +840,10 @@ cut_test_context_set_current_result (CutTestContext *context,
 
     priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
     clear_current_result(priv);
-    if (cut_test_result_status_is_critical(status))
+    if (cut_test_result_status_is_critical(status)) {
         priv->failed = TRUE;
+    }
+    priv->omitted = (status == CUT_TEST_RESULT_OMISSION);
 
     if (priv->current_data)
         test_data = priv->current_data->data;
@@ -965,6 +969,13 @@ gboolean
 cut_test_context_is_failed (CutTestContext *context)
 {
     return CUT_TEST_CONTEXT_GET_PRIVATE(context)->failed;
+}
+
+gboolean
+cut_test_context_need_test_run (CutTestContext *context)
+{
+    return !cut_test_context_is_failed(context) &&
+        !CUT_TEST_CONTEXT_GET_PRIVATE(context)->omitted;
 }
 
 const void *
