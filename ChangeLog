@@ -1,5 +1,7 @@
 2010-03-26  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/rd2refentry-lib.rb: escape "!" and "?" in term ID.
+
 	* misc/rd2refentry-lib.rb: don't add filename into custom ID. (revert)
 
 	* cutter/cut-test-case.c,
