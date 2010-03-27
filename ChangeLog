@@ -1,3 +1,7 @@
+2010-03-27  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: accept gettext RubyGem.
+
 2010-03-26  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: escape "!" and "?" in term ID.

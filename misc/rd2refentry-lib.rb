@@ -9,7 +9,12 @@ require 'rd-visitor-util'
 
 require "rt/rtparser"
 
-require "gettext"
+begin
+  require "gettext"
+rescue LoadError
+  require "rubygems"
+  require "gettext"
+end
 begin
   require "gettext/tools"
 rescue LoadError
