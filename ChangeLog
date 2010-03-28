@@ -1,3 +1,7 @@
+2010-03-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: add filename into custom ID. (re-revert)
+
 2010-03-27  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: accept gettext RubyGem.
