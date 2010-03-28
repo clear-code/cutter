@@ -363,9 +363,11 @@ module RD
           title_tag = tag("title", {}, *title)
           sub_section_contents = []
           while section_contents.last[0] > level
-            sub_level, *sub_contents = section_contents.pop
-            sub_section_contents.unshift(tag("refsect#{sub_level}", {},
-                                             *sub_contents.flatten) + "\n")
+            sub_level, sub_contents, sub_id = section_contents.pop
+            attributes = {}
+            attributes["id"] = sub_id if sub_id
+            sub_section_contents.unshift(tag("refsect#{sub_level}", attributes,
+                                             *sub_contents) + "\n")
           end
           section_contents.last[1].concat(sub_section_contents)
           section_contents << [level, [title_tag], id]
