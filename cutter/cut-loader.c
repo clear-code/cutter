@@ -498,8 +498,10 @@ detect_cpp_test_function_symbol_names_vcc (const gchar *name)
             break;
         namespace = name + strlen("@");
 
-        if (namespace[0] == '@')
+        if (namespace[0] == '@') {
+            name = namespace + 1;
             break;
+        }
 
         if (namespace[0] == '?') {
             name = strstr(namespace, "@");
