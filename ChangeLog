@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cut-test-utils.c: consider path separator.
+
 	* test/fixtures/loader/iterator/success-iterated-test.c
 	(data_translate): add missing NULL.
 

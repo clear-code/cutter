@@ -59,9 +59,15 @@ test_remove_path (void)
 void
 test_build_path (void)
 {
+    const gchar *expected;
     cut_assert_equal_string("a",
                             cut_build_path("a", NULL));
-    cut_assert_equal_string("a/b/c",
+#ifdef G_OS_WIN32
+    expected = "a\\b\\c";
+#else
+    expected = "a/b/c";
+#endif
+    cut_assert_equal_string(expected,
                             cut_build_path("a", "b", "c", NULL));
 }
 
