@@ -19,6 +19,7 @@ ARGV.each do |file|
         function = $1
         case function
         when /u?int(max|ptr)/
+        when /u?int_(fast|least)/
         else
           functions << function
         end

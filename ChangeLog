@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/generate-test-defs.rb: ignore /u?int_(fast|least)/ test functions.
+
 	* misc/generate-test-makefile.rb: DLL depends on def.
 
 	* vcc/: sync.
