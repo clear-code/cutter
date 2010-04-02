@@ -456,6 +456,32 @@ void cut_shutdown(void);
         cut_get_current_test_context(),                             \
         cut_take_printf(__VA_ARGS__))
 
+/**
+ * CUT_EXPORT:
+ *
+ * Marks a function as a exported function. This is needed
+ * for just Windows environment. If you want to run your
+ * tests on Windows, you need to use this. Otherwise, you
+ * don't need to use this.
+ *
+ * e.g.:
+ * |[
+ * CUT_EXPORT void
+ * test_add (void)
+ * {
+ *   ...
+ * }
+ * ]|
+ *
+ * Since: 1.1.2
+ */
+#ifdef _WIN32
+#  define CUT_EXPORT __declspec(dllexport)
+#else
+#  define CUT_EXPORT
+#endif
+
+
 #ifdef __cplusplus
 }
 #endif

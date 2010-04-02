@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h: add CUT_EXPORT for Windows.
+
 	* test/cutter/test-cutter.c: fix style.
 
 	* module/report/Makefile.win32: add missing cut-cairo.obj.
