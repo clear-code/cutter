@@ -317,6 +317,7 @@ cut_utils_equal_sockaddr (const struct sockaddr *address1,
 }
 
 #ifdef G_OS_WIN32
+#  if !defined(NTDDI_VERSION) || (NTDDI_VERSION < NTDDI_LONGHORN)
 static const char *
 inet_ntop (int address_family, const void *source,
            char *destination, socklen_t destination_length)
@@ -343,6 +344,7 @@ inet_ntop (int address_family, const void *source,
         return destination;
     }
 }
+#  endif
 #endif
 
 gchar *

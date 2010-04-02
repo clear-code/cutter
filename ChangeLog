@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-utils.c: use native inet_ntop() on Windows Vista or later.
+
 	* cutter/cut-utils.c: fix a typo.
 
 	* cutter/cut-process.c: don't use G_OS_WIN32 before including GLib.
