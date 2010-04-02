@@ -18,7 +18,9 @@ LIBS =						\
 
 OBJS =						\
 	cut-xml-report.obj			\
-	cut-xml-report-factory.obj
+	cut-xml-report-factory.obj		\
+	cut-pdf-report.obj			\
+	cut-pdf-report-factory.obj
 
 libraries =					\
 	xml.dll					\
