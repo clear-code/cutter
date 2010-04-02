@@ -21,6 +21,7 @@ LIBS =						\
 OBJS =						\
 	cut-xml-report.obj			\
 	cut-xml-report-factory.obj		\
+	cut-cairo.obj				\
 	cut-pdf-report.obj			\
 	cut-pdf-report-factory.obj
 
@@ -45,9 +46,9 @@ xml-factory.dll: cut-xml-report-factory.obj
 	  -LD -Fe$@ cut-xml-report-factory.obj \
 	  $(LIBS) $(LDFLAGS)
 
-pdf.dll: cut-pdf-report.obj
+pdf.dll: cut-pdf-report.obj cut-cairo.obj
 	$(CC) $(CFLAGS) \
-	  -LD -Fe$@ cut-pdf-report.obj \
+	  -LD -Fe$@ cut-pdf-report.obj cut-cairo.obj \
 	  $(LIBS) $(CAIRO_LIBS) $(PANGO_CAIRO_LIBS) $(LDFLAGS)
 
 pdf-factory.dll: cut-pdf-report-factory.obj

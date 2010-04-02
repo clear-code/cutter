@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/Makefile.win32: add missing cut-cairo.obj.
+
 	* vcc/Makefile.build, module/report/Makefile.win32: add pango-cairo.
 
 	* vcc/Makefile.build: define CAIRO_CFLAGS and CAIRO_LIBS.
