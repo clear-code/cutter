@@ -35,12 +35,12 @@
 #include <glib/gi18n-lib.h>
 
 #ifdef G_OS_WIN32
+#  ifdef __MINGW32__
+#    define _WIN32_WINDOWS 0x0401 /* to get IsDebuggerPresent */
+#  endif
+#  include <winsock2.h>
 #  include <process.h>		/* For getpid() */
 #  include <io.h>
-#  define STRICT		/* Strict typing, please */
-#  define _WIN32_WINDOWS 0x0401 /* to get IsDebuggerPresent */
-#  include <windows.h>
-#  undef STRICT
 #endif
 
 #include "cut-run-context.h"

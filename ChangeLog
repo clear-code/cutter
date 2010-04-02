@@ -1,5 +1,9 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-test-context.c, cutter/cut-utils.c: use winsock2.h
+	instead of windows.h because windows.h includes winsock.h on
+	Visual C++.
+
 	* cutter/cut-utils.c: use native inet_ntop() on Windows Vista or later.
 
 	* cutter/cut-utils.c: fix a typo.

@@ -29,7 +29,6 @@
 #include <glib.h>
 #include <glib/gstdio.h>
 #ifdef G_OS_WIN32
-#  include <windows.h>
 #  include <winsock2.h>
 #  include <io.h>
 #  define close _close
