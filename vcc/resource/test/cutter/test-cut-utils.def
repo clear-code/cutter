@@ -10,6 +10,12 @@ EXPORTS
 	test_equal_string
 	test_equal_substring
 	test_equal_double
+	test_equal_sockaddr
+	test_equal_sockaddr_un
+	test_equal_sockaddr_in
+	test_inspect_sockaddr
+	test_inspect_sockaddr_un
+	test_inspect_sockaddr_in
 	data_parse_gdb_backtrace
 	test_parse_gdb_backtrace
 	test_compare_string
@@ -27,6 +33,12 @@ EXPORTS
 	test_equal_string
 	test_equal_substring
 	test_equal_double
+	test_equal_sockaddr
+	test_equal_sockaddr_un
+	test_equal_sockaddr_in
+	test_inspect_sockaddr
+	test_inspect_sockaddr_un
+	test_inspect_sockaddr_in
 	data_parse_gdb_backtrace
 	test_parse_gdb_backtrace
 	test_compare_string

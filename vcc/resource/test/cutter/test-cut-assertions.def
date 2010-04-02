@@ -44,6 +44,7 @@ EXPORTS
 	test_equal_fixture_data_string
 	test_equal_fixture_data_string_without_file
 	test_error_errno
+	test_equal_sockaddr
 	cut_setup
 	cut_teardown
 	test_equal_boolean
@@ -91,3 +92,4 @@ EXPORTS
 	test_equal_fixture_data_string
 	test_equal_fixture_data_string_without_file
 	test_error_errno
+	test_equal_sockaddr

@@ -34,6 +34,7 @@ EXPORTS
 	cut_assert_match_helper
 	cut_assert_equal_pointer_helper
 	cut_assert_equal_fixture_data_string_helper
+	cut_assert_equal_sockaddr_helper
 	cut_error_errno_helper
 	cut_pop_backtrace
 	cut_sub_process_run
@@ -102,6 +103,8 @@ EXPORTS
 	cut_utils_equal_string_array
 	cut_utils_inspect_string_array
 	cut_utils_inspect_string
+	cut_utils_equal_sockaddr
+	cut_utils_inspect_sockaddr
 	cut_utils_path_exist
 	cut_utils_build_path
 	cut_utils_build_path_va_list
@@ -418,6 +421,7 @@ EXPORTS
 	cut_test_context_get_n_data
 	cut_test_context_set_failed
 	cut_test_context_is_failed
+	cut_test_context_need_test_run
 	cut_test_context_emit_signal
 	cut_test_context_to_xml
 	cut_test_context_to_xml_string
@@ -636,9 +640,11 @@ EXPORTS
 	cut_test_context_take_g_error
 	cut_test_context_take_g_list
 	cut_test_context_take_g_hash_table
+	gcut_list_new
 	gcut_list_string_new
 	gcut_list_string_new_array
 	gcut_list_string_free
+	gcut_list_object_free
 	gcut_hash_table_string_string_new
 	gcut_hash_table_string_string_new_va_list
 	gcut_value_equal
@@ -724,6 +730,7 @@ EXPORTS
 	gcut_data_get_enum_helper
 	gcut_data_get_pointer_helper
 	gcut_data_get_boxed_helper
+	gcut_data_get_object_helper
 	gcut_dynamic_data_error_quark
 	gcut_dynamic_data_get_type
 	gcut_dynamic_data_new
@@ -738,6 +745,7 @@ EXPORTS
 	gcut_dynamic_data_get_enum
 	gcut_dynamic_data_get_pointer
 	gcut_dynamic_data_get_boxed
+	gcut_dynamic_data_get_object
 	gcut_init
 	gcut_value_equal_init
 	gcut_quit

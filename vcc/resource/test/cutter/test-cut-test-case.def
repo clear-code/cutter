@@ -4,6 +4,7 @@ EXPORTS
 	test_test_case_count
 	test_run
 	test_run_with_setup_error
+	test_run_with_setup_omission
 	test_run_this_function
 	test_run_tests_with_regex
 	test_run_with_name_filter
@@ -32,6 +33,7 @@ EXPORTS
 	test_test_case_count
 	test_run
 	test_run_with_setup_error
+	test_run_with_setup_omission
 	test_run_this_function
 	test_run_tests_with_regex
 	test_run_with_name_filter
