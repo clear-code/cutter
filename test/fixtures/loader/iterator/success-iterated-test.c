@@ -53,7 +53,8 @@ data_translate(void)
                  translate_test_data_free,
                  "complex data",
                  translate_test_data_new("a hundred eleven", 111),
-                 translate_test_data_free);
+                 translate_test_data_free,
+                 NULL);
 }
 
 void

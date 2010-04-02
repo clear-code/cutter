@@ -1,5 +1,8 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/fixtures/loader/iterator/success-iterated-test.c
+	(data_translate): add missing NULL.
+
 	* misc/generate-test-defs.rb: ignore /u?int_(fast|least)/ test functions.
 
 	* misc/generate-test-makefile.rb: DLL depends on def.
