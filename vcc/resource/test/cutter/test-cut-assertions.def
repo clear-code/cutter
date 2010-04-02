@@ -10,14 +10,6 @@ EXPORTS
 	test_equal_fixture_data_string
 	test_equal_fixture_data_string_without_file
 	test_equal_int
-	test_equal_int_fast16
-	test_equal_int_fast32
-	test_equal_int_fast64
-	test_equal_int_fast8
-	test_equal_int_least16
-	test_equal_int_least32
-	test_equal_int_least64
-	test_equal_int_least8
 	test_equal_memory
 	test_equal_pointer
 	test_equal_size
@@ -29,14 +21,6 @@ EXPORTS
 	test_equal_string_with_free
 	test_equal_substring
 	test_equal_uint
-	test_equal_uint_fast16
-	test_equal_uint_fast32
-	test_equal_uint_fast64
-	test_equal_uint_fast8
-	test_equal_uint_least16
-	test_equal_uint_least32
-	test_equal_uint_least64
-	test_equal_uint_least8
 	test_error
 	test_error_equal_string_with_null
 	test_error_errno
@@ -46,27 +30,11 @@ EXPORTS
 	test_not_equal_boolean
 	test_not_equal_double
 	test_not_equal_int
-	test_not_equal_int_fast16
-	test_not_equal_int_fast32
-	test_not_equal_int_fast64
-	test_not_equal_int_fast8
-	test_not_equal_int_least16
-	test_not_equal_int_least32
-	test_not_equal_int_least64
-	test_not_equal_int_least8
 	test_not_equal_memory
 	test_not_equal_size
 	test_not_equal_string
 	test_not_equal_substring
 	test_not_equal_uint
-	test_not_equal_uint_fast16
-	test_not_equal_uint_fast32
-	test_not_equal_uint_fast64
-	test_not_equal_uint_fast8
-	test_not_equal_uint_least16
-	test_not_equal_uint_least32
-	test_not_equal_uint_least64
-	test_not_equal_uint_least8
 	test_notification
 	test_null
 	test_null_string
