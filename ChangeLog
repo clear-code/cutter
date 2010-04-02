@@ -1,5 +1,7 @@
 2010-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/fixtures/loader/cpp/stub-namespace.cpp: use CUT_EXPORT.
+
 	* cutter/cut-loader.c: fix buffer reset bug.
 
 	* test/cutter/test-cut-loader.c: add Visual C++ mangler.
