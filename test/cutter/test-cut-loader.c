@@ -1,4 +1,21 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include <string.h>
 
@@ -348,6 +365,26 @@ test_load_cpp_namespace (void)
     cut_assert_equal_string_array(expected_functions, test_names);
 }
 
+#ifdef _WIN32
+static const gchar *
+mangle (const gchar *component, ...)
+{
+    GString *mangled;
+    va_list args;
+
+    mangled = g_string_new("@YAXXZ");
+    va_start(args, component);
+    while (component) {
+        g_string_prepend(mangled, "@");
+        g_string_prepend(mangled, component);
+        component = va_arg(args, gchar *);
+    }
+    va_end(args);
+    g_string_prepend(mangled, "?");
+
+    return cut_take_string(g_string_free(mangled, FALSE));
+}
+#else
 static const gchar *
 mangle (const gchar *component, ...)
 {
@@ -367,6 +404,7 @@ mangle (const gchar *component, ...)
 
     return cut_take_string(g_string_free(mangled, FALSE));
 }
+#endif
 
 void
 data_cpp_fixture_function (void)
