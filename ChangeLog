@@ -1,5 +1,7 @@
 2010-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c: fix buffer reset bug.
+
 	* test/cutter/test-cut-loader.c: add Visual C++ mangler.
 
 	* cutter/cut-loader.c: go to signature information offset.

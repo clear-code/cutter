@@ -1071,13 +1071,13 @@ mangle_vcc (GString *buffer, const gchar *namespace, const gchar *function)
     if (!namespace)
         return function;
 
+    g_string_assign(buffer, "@YAXXZ");
     components = g_strsplit(namespace, "::", 0);
     for (component = components; *component; component++) {
         g_string_prepend(buffer, "@");
         g_string_prepend(buffer, *component);
     }
     g_strfreev(components);
-    g_string_append(buffer, "@YAXXZ");
 
     g_string_prepend(buffer, "@");
     g_string_prepend(buffer, function);
