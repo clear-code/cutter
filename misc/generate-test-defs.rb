@@ -14,13 +14,17 @@ ARGV.each do |file|
     if File.exist?(c_source)
       content = File.read(c_source)
       def_file.puts("EXPORTS")
-      content.scan(/^void\s+([a-z_]+)\s*\(/) do
+      functions = []
+      content.scan(/^void\s+([a-zA-Z\d_]+)\s*\(/) do
         function = $1
         case function
         when /u?int(max|ptr)/
         else
-          def_file.puts("\t#{function}")
+          functions << function
         end
+      end
+      functions.uniq.sort.each do |function|
+        def_file.puts("\t#{function}")
       end
     end
   end
