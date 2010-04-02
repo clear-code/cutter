@@ -1,13 +1,8 @@
 EXPORTS
-	test_load_module
-	test_collect_names
-	test_collect_registered_types
-	test_load_modules_unique
-	test_fail_to_load_module
-	cut_startup
 	cut_shutdown
-	test_load_module
-	test_fail_to_load_module
+	cut_startup
 	test_collect_names
 	test_collect_registered_types
+	test_fail_to_load_module
+	test_load_module
 	test_load_modules_unique

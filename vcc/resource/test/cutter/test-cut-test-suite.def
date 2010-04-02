@@ -1,25 +1,14 @@
 EXPORTS
-	test_run
-	test_run_test_case
-	test_run_test_case_with_regex
-	test_run_test
-	test_run_test_with_regex
-	test_run_test_in_test_case
-	test_run_test_with_regex_in_test_case
-	test_run_test_in_test_case_with_regex
-	test_run_test_with_regex_in_test_case_with_regex
-	test_run_test_in_test_case_with_null
-	test_run_test_with_filter_with_null
 	cut_setup
 	cut_teardown
 	test_run
+	test_run_test
 	test_run_test_case
 	test_run_test_case_with_regex
-	test_run_test
-	test_run_test_with_regex
 	test_run_test_in_test_case
-	test_run_test_with_regex_in_test_case
-	test_run_test_in_test_case_with_regex
-	test_run_test_with_regex_in_test_case_with_regex
 	test_run_test_in_test_case_with_null
+	test_run_test_in_test_case_with_regex
 	test_run_test_with_filter_with_null
+	test_run_test_with_regex
+	test_run_test_with_regex_in_test_case
+	test_run_test_with_regex_in_test_case_with_regex

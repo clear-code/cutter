@@ -1,11 +1,7 @@
 EXPORTS
-	test_take_replace
-	test_remove_path
-	test_build_path
-	test_make_directory
 	cut_setup
 	cut_teardown
-	test_take_replace
-	test_remove_path
 	test_build_path
 	test_make_directory
+	test_remove_path
+	test_take_replace

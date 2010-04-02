@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* vcc/: sync.
+
 	* misc/generate-test-defs.rb: add missing upper cases and numbers.
 
 	* test/cutter/test-cut-utils.c: use system inet_pton() on Windows

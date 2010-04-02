@@ -1,1 +1,4 @@
 EXPORTS
+	test_stub_function1
+	test_stub_function2
+	test_stub_function3

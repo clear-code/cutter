@@ -1,4 +1,3 @@
 EXPORTS
-	test_get_fixture_data_string
 	cut_setup
 	test_get_fixture_data_string

@@ -1,13 +1,10 @@
 EXPORTS
-	test_nothing
-	startup
-	shutdown
-	cut_startup
-	startup
 	cut_setup
-	setup
-	test_nothing
-	teardown
-	cut_teardown
-	shutdown
 	cut_shutdown
+	cut_startup
+	cut_teardown
+	setup
+	shutdown
+	startup
+	teardown
+	test_nothing

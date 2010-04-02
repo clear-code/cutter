@@ -1,57 +1,30 @@
 EXPORTS
-	test_setup
-	test_teardown
-	test_test_case_count
-	test_run
-	test_run_with_setup_error
-	test_run_with_setup_omission
-	test_run_this_function
-	test_run_tests_with_regex
-	test_run_with_name_filter
-	test_run_with_regex_filter
-	test_run_with_name_and_regex_filter
-	test_get_name
-	test_start_signal
-	test_success_signal
-	test_failure_signal
-	test_error_signal
-	test_pending_signal
-	test_notification_signal
-	test_omission_signal
-	test_crash_signal
-	test_failure_in_signal
-	test_error_in_signal
-	test_pending_in_signal
-	test_notification_in_signal
-	test_omission_in_signal
-	test_crash_in_signal
-	test_complete_signal
 	cut_setup
 	cut_teardown
-	test_setup
-	test_teardown
-	test_test_case_count
+	test_complete_signal
+	test_crash_in_signal
+	test_crash_signal
+	test_error_in_signal
+	test_error_signal
+	test_failure_in_signal
+	test_failure_signal
+	test_get_name
+	test_notification_in_signal
+	test_notification_signal
+	test_omission_in_signal
+	test_omission_signal
+	test_pending_in_signal
+	test_pending_signal
 	test_run
-	test_run_with_setup_error
-	test_run_with_setup_omission
-	test_run_this_function
 	test_run_tests_with_regex
+	test_run_this_function
+	test_run_with_name_and_regex_filter
 	test_run_with_name_filter
 	test_run_with_regex_filter
-	test_run_with_name_and_regex_filter
-	test_get_name
+	test_run_with_setup_error
+	test_run_with_setup_omission
+	test_setup
 	test_start_signal
 	test_success_signal
-	test_failure_signal
-	test_error_signal
-	test_pending_signal
-	test_notification_signal
-	test_omission_signal
-	test_crash_signal
-	test_failure_in_signal
-	test_error_in_signal
-	test_pending_in_signal
-	test_notification_in_signal
-	test_omission_in_signal
-	test_crash_in_signal
-	test_complete_signal
+	test_teardown
+	test_test_case_count

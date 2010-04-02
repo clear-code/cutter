@@ -1,3 +1,6 @@
 EXPORTS
-	text_invalid_prefix_function
+	test_abcdefghijklmnopqratuvwzyz_ABCDEFGHIJKLMNOPQRSTUVWXYZ_0123456789
+	test_stub_function1
+	test_stub_function2
+	test_stub_function3
 	text_invalid_prefix_function

@@ -1,55 +1,29 @@
 EXPORTS
-	test_get_status
-	test_get_message_full
-	test_get_message_only_user
-	test_get_message_only_system
-	test_get_message_none
-	test_get_message_empty
-	test_set_messages
-	test_set_messages_empty
-	test_get_backtrace
-	test_status_to_signal_name
-	test_status_is_critical
-	test_get_test_suite
-	test_get_diff
-	test_set_diff
-	test_to_xml_empty
-	test_to_xml_empty_failure
-	test_new_from_xml
-	test_new_from_xml_with_invalid_top_level_tag_name
-	test_new_from_xml_with_invalid_line
-	test_new_from_xml_with_unexpected_name_tag
-	test_new_from_xml_with_unexpected_value_tag
-	test_new_from_xml_without_option_name
-	test_new_from_xml_without_option_value
-	test_new_from_xml_with_multiple_option_names
-	test_new_from_xml_with_invalid_status
-	test_new_from_xml_with_invalid_elapsed
 	cut_setup
 	cut_teardown
-	test_get_status
-	test_get_message_full
-	test_get_message_only_user
-	test_get_message_only_system
-	test_get_message_none
-	test_get_message_empty
-	test_set_messages
-	test_set_messages_empty
 	test_get_backtrace
-	test_status_to_signal_name
-	test_status_is_critical
-	test_get_test_suite
 	test_get_diff
-	test_set_diff
-	test_to_xml_empty
-	test_to_xml_empty_failure
+	test_get_message_empty
+	test_get_message_full
+	test_get_message_none
+	test_get_message_only_system
+	test_get_message_only_user
+	test_get_status
+	test_get_test_suite
 	test_new_from_xml
-	test_new_from_xml_with_invalid_top_level_tag_name
+	test_new_from_xml_with_invalid_elapsed
 	test_new_from_xml_with_invalid_line
+	test_new_from_xml_with_invalid_status
+	test_new_from_xml_with_invalid_top_level_tag_name
+	test_new_from_xml_with_multiple_option_names
 	test_new_from_xml_with_unexpected_name_tag
 	test_new_from_xml_with_unexpected_value_tag
 	test_new_from_xml_without_option_name
 	test_new_from_xml_without_option_value
-	test_new_from_xml_with_multiple_option_names
-	test_new_from_xml_with_invalid_status
-	test_new_from_xml_with_invalid_elapsed
+	test_set_diff
+	test_set_messages
+	test_set_messages_empty
+	test_status_is_critical
+	test_status_to_signal_name
+	test_to_xml_empty
+	test_to_xml_empty_failure

@@ -1,7 +1,5 @@
 EXPORTS
-	test_message_from_forked_process
-	test_fail_in_forked_process
 	setup
 	teardown
-	test_message_from_forked_process
 	test_fail_in_forked_process
+	test_message_from_forked_process

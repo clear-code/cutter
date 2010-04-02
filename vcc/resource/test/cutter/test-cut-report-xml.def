@@ -1,15 +1,9 @@
 EXPORTS
-	test_report_success
-	test_report_failure
-	test_report_error
-	test_report_pending
-	test_report_notification
-	test_plural_reports
 	cut_setup
 	cut_teardown
-	test_report_success
-	test_report_failure
-	test_report_pending
-	test_report_notification
-	test_report_error
 	test_plural_reports
+	test_report_error
+	test_report_failure
+	test_report_notification
+	test_report_pending
+	test_report_success

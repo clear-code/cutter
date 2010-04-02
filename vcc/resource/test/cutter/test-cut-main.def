@@ -1,6 +1,5 @@
 EXPORTS
 	cut_set_cutter_command_path
-	test_cutter_command_path
 	cut_setup
 	cut_teardown
 	test_cutter_command_path

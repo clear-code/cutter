@@ -1,13 +1,9 @@
 EXPORTS
-	data_signal
-	test_signal
-	data_count
-	test_count
-	cut_startup
-	cut_shutdown
 	cut_setup
+	cut_shutdown
+	cut_startup
 	cut_teardown
-	data_signal
-	test_signal
 	data_count
+	data_signal
 	test_count
+	test_signal

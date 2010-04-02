@@ -1,19 +1,11 @@
 EXPORTS
-	test_help
-	test_help_all
-	test_version
-	test_invalid_option
-	test_invalid_color_option
-	test_invalid_order_option
-	test_invalid_verbose_option
-	test_no_option
 	cut_setup
 	cut_teardown
-	test_version
 	test_help
-	test_no_option
 	test_help_all
-	test_invalid_option
 	test_invalid_color_option
+	test_invalid_option
 	test_invalid_order_option
 	test_invalid_verbose_option
+	test_no_option
+	test_version

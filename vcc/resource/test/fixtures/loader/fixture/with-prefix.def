@@ -1,7 +1,6 @@
 EXPORTS
-	test_nothing
-	cut_startup
 	cut_setup
-	test_nothing
-	cut_teardown
 	cut_shutdown
+	cut_startup
+	cut_teardown
+	test_nothing

@@ -1,1 +1,3 @@
 EXPORTS
+	cuttest_loader_invalid_XXX_cooldown
+	cuttest_loader_invalid_XXX_warmup
