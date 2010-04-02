@@ -1,5 +1,8 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/fixtures/test-context/Makefile.win32: define missing
+	CUT_RELATIVE_PATH.
+
 	* test/cutter/test-cut-test-utils.c: consider path separator.
 
 	* test/fixtures/loader/iterator/success-iterated-test.c

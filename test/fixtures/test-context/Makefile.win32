@@ -5,7 +5,8 @@ top_builddir = ..\..\..
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 
-LOCAL_CFLAGS =					\
+LOCAL_CFLAGS =							\
+	-DCUT_RELATIVE_PATH="\"fixtures\\test-context\""	\
 	$(GCUTTER_CFLAGS)
 
 LOCAL_LDFLAGS =					\
