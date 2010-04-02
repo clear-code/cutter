@@ -61,6 +61,7 @@ struct _SymbolNames
     gchar *attributes_setup_function_name;
     gboolean require_data_setup_function;
     gboolean cpp;
+    gboolean gcc;
 };
 
 typedef struct _CutLoaderPrivate	CutLoaderPrivate;
@@ -94,7 +95,8 @@ symbol_names_new (gchar *namespace,
                   gchar *data_setup_function_name,
                   gchar *attributes_setup_function_name,
                   gboolean require_data_setup_function,
-                  gboolean cpp)
+                  gboolean cpp,
+                  gboolean gcc)
 {
     SymbolNames *names;
 
@@ -106,6 +108,7 @@ symbol_names_new (gchar *namespace,
     names->attributes_setup_function_name = attributes_setup_function_name;
     names->require_data_setup_function = require_data_setup_function;
     names->cpp = cpp;
+    names->gcc = gcc;
 
     return names;
 }
@@ -451,6 +454,7 @@ detect_cpp_test_function_symbol_names_gcc (const gchar *name)
                             data_setup_function_name,
                             attributes_setup_function_name,
                             require_data_setup_function,
+                            TRUE,
                             TRUE);
 }
 
@@ -576,7 +580,8 @@ detect_cpp_test_function_symbol_names_vcc (const gchar *name)
                                 data_setup_function_name,
                                 attributes_setup_function_name,
                                 require_data_setup_function,
-                                TRUE);
+                                TRUE,
+                                FALSE);
     }
 }
 
@@ -621,6 +626,7 @@ detect_test_function_symbol_names (const gchar *name)
                                 g_strdup(name),
                                 data_setup_function_name,
                                 attributes_setup_function_name,
+                                FALSE,
                                 FALSE,
                                 FALSE);
     }
@@ -1034,7 +1040,7 @@ register_valid_test (CutLoader *loader, CutTestCase *test_case,
 }
 
 static const gchar *
-mangle (GString *buffer, const gchar *namespace, const gchar *function)
+mangle_gcc (GString *buffer, const gchar *namespace, const gchar *function)
 {
     gchar **components, **component;
 
@@ -1055,6 +1061,43 @@ mangle (GString *buffer, const gchar *namespace, const gchar *function)
     return buffer->str;
 }
 
+static const gchar *
+mangle_vcc (GString *buffer, const gchar *namespace, const gchar *function)
+{
+    gchar **components, **component;
+
+    if (!namespace)
+        return function;
+
+    components = g_strsplit(namespace, "::", 0);
+    for (component = components; *component; component++) {
+        g_string_prepend(buffer, "@");
+        g_string_prepend(buffer, *component);
+    }
+    g_strfreev(components);
+    g_string_append(buffer, "@YAXXZ");
+
+    g_string_prepend(buffer, "@");
+    g_string_prepend(buffer, function);
+    g_string_prepend(buffer, "?");
+
+    return buffer->str;
+}
+
+static const gchar *
+mangle (GString *buffer, const gchar *namespace, const gchar *function,
+        gboolean gcc)
+{
+    if (!namespace)
+        return function;
+
+    if (gcc) {
+        return mangle_gcc(buffer, namespace, function);
+    } else {
+        return mangle_vcc(buffer, namespace, function);
+    }
+}
+
 static void
 cb_complete (CutTestCase *test_case, CutTestContext *test_context,
              gboolean success, gpointer data)
@@ -1064,7 +1107,7 @@ cb_complete (CutTestCase *test_case, CutTestContext *test_context,
 }
 
 static CutTestCase *
-create_test_case (CutLoader *loader, const gchar *namespace)
+create_test_case (CutLoader *loader, const gchar *namespace, gboolean gcc)
 {
     CutLoaderPrivate *priv;
     CutTestCase *test_case;
@@ -1072,14 +1115,14 @@ create_test_case (CutLoader *loader, const gchar *namespace)
     CutStartupFunction startup = NULL;
     CutShutdownFunction shutdown = NULL;
     CutTeardownFunction teardown = NULL;
-    gchar *test_case_name, *filename;
+    gchar *test_case_name;
     GString *buffer;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
 
     buffer = g_string_new(NULL);
 #define MANGLE(function_name)                   \
-    mangle(buffer, namespace, function_name)
+    mangle(buffer, namespace, function_name, gcc)
 #define GET_HOOK_FUNCTION(name)                                         \
     if (!g_module_symbol(priv->module, MANGLE("cut_" #name), (gpointer)&name)) \
         g_module_symbol(priv->module, MANGLE(#name), (gpointer)&name)
@@ -1097,16 +1140,23 @@ create_test_case (CutLoader *loader, const gchar *namespace)
 #undef MANGLE
     g_string_free(buffer, TRUE);
 
-    filename = g_path_get_basename(priv->so_filename);
-    if (g_str_has_prefix(filename, "lib")) {
-        gchar *string;
-        string = g_strdup(filename + strlen("lib"));
+    if (namespace) {
+        test_case_name = g_strdup(namespace);
+    } else {
+        gchar *filename;
+
+        filename = g_path_get_basename(priv->so_filename);
+        if (g_str_has_prefix(filename, "lib")) {
+            gchar *string;
+            string = g_strdup(filename + strlen("lib"));
+            g_free(filename);
+            filename = string;
+        }
+        test_case_name =
+            g_strndup(filename,
+                      strlen(filename) - strlen(G_MODULE_SUFFIX) -1);
         g_free(filename);
-        filename = string;
     }
-    test_case_name = g_strndup(filename,
-                               strlen(filename) - strlen(G_MODULE_SUFFIX) -1);
-    g_free(filename);
     test_case = cut_test_case_new(test_case_name,
                                   setup, teardown,
                                   startup, shutdown);
@@ -1120,50 +1170,20 @@ create_test_case (CutLoader *loader, const gchar *namespace)
     return test_case;
 }
 
-typedef struct _LoadTestCaseData
+static gint
+find_cpp_test_case (gconstpointer value1, gconstpointer value2)
 {
-    CutLoader *loader;
-    GList *test_cases;
-} LoadTestCaseData;
-
-static gboolean
-load_test_case (gpointer key, gpointer value, gpointer user_data)
-{
-    const gchar *namespace = key;
-    GList *test_names = value;
-    LoadTestCaseData *data = user_data;
-    GList *node;
     CutTestCase *test_case;
+    SymbolNames *names;
 
-    test_case = create_test_case(data->loader, namespace);
-    for (node = test_names; node; node = g_list_next(node)) {
-        SymbolNames *names = node->data;
-        register_valid_test(data->loader, test_case, names);
-    }
-    g_list_free(test_names);
-    data->test_cases = g_list_append(data->test_cases, test_case);
-
-    return TRUE;
-}
-
-static guint
-string_hash_safe (gconstpointer value)
-{
-    if (!value)
+    test_case = CUT_TEST_CASE(value1);
+    names = (SymbolNames *)value2;
+    if (g_str_equal(cut_test_get_name(CUT_TEST(test_case)),
+                    names->namespace)) {
         return 0;
-
-    return g_str_hash(value);
-}
-
-static gboolean
-string_equal_safe (gconstpointer value1, gconstpointer value2)
-{
-    const gchar *string1 = value1;
-    const gchar *string2 = value2;
-
-    if (string1 == string2)
-        return TRUE;
-    return g_str_equal(string1, string2);
+    } else {
+        return 1;
+    }
 }
 
 GList *
@@ -1171,9 +1191,8 @@ cut_loader_load_test_cases (CutLoader *loader)
 {
     CutLoaderPrivate *priv;
     GList *node;
-    GList *test_names;
-    GHashTable *grouped_test_names;
-    LoadTestCaseData data;
+    GList *test_names, *test_cases = NULL;
+    CutTestCase *c_test_case = NULL;
 
     priv = CUT_LOADER_GET_PRIVATE(loader);
     if (!priv->so_filename)
@@ -1213,26 +1232,34 @@ cut_loader_load_test_cases (CutLoader *loader)
     if (!test_names)
         return NULL;
 
-    grouped_test_names = g_hash_table_new(string_hash_safe, string_equal_safe);
     for (node = test_names; node; node = g_list_next(node)) {
         SymbolNames *names = node->data;
-        GList *test_name_list;
+        CutTestCase *test_case = NULL;
 
-        test_name_list = g_hash_table_lookup(grouped_test_names,
-                                             names->namespace);
-        test_name_list = g_list_append(test_name_list, names);
-        g_hash_table_insert(grouped_test_names, names->namespace,
-                            test_name_list);
+        if (names->namespace) {
+            GList *test_case_node;
+            test_case_node = g_list_find_custom(test_cases, names,
+                                                find_cpp_test_case);
+            if (test_case_node)
+                test_case = test_case_node->data;
+            if (!test_case) {
+                test_case = create_test_case(loader, names->namespace,
+                                             names->gcc);
+                test_cases = g_list_prepend(test_cases, test_case);
+            }
+        } else {
+            if (!c_test_case) {
+                c_test_case = create_test_case(loader, NULL, FALSE);
+                test_cases = g_list_prepend(test_cases, c_test_case);
+            }
+            test_case = c_test_case;
+        }
+        register_valid_test(loader, test_case, names);
+        symbol_names_free(names);
     }
-    data.loader = loader;
-    data.test_cases = NULL;
-    g_hash_table_foreach_remove(grouped_test_names, load_test_case, &data);
-    g_hash_table_destroy(grouped_test_names);
-
-    g_list_foreach(test_names, (GFunc)symbol_names_free, NULL);
     g_list_free(test_names);
 
-    return data.test_cases;
+    return test_cases;
 }
 
 CutTestCase *
