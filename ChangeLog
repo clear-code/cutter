@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* vcc/include/cutter/cut-config.h: add.
+
 	* m4macros/cutter.m4: work with --enable-coverage=SOMETHING.
 	Suggested by gunyarakun. Thanks!!!
 
