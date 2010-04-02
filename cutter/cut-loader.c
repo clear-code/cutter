@@ -320,7 +320,7 @@ cut_loader_set_base_directory (CutLoader *loader, const gchar *base_directory)
 }
 
 static inline const gchar *
-skip_cpp_namespace (const gchar *name, GString *namespaces)
+skip_cpp_namespace_gcc (const gchar *name, GString *namespaces)
 {
     if (g_str_has_prefix(name, "_Z")) {
         name += strlen("_Z");
@@ -354,12 +354,12 @@ skip_cpp_namespace (const gchar *name, GString *namespaces)
 }
 
 static inline gboolean
-find_cpp_test_name (const gchar *name, gchar **test_name_start,
-                    guint64 *test_name_length, GString *namespaces)
+find_cpp_test_name_gcc (const gchar *name, gchar **test_name_start,
+                        guint64 *test_name_length, GString *namespaces)
 {
     guint64 length;
 
-    name = skip_cpp_namespace(name, namespaces);
+    name = skip_cpp_namespace_gcc(name, namespaces);
     if (!name)
         return FALSE;
 
@@ -374,7 +374,7 @@ find_cpp_test_name (const gchar *name, gchar **test_name_start,
 }
 
 static inline SymbolNames *
-detect_cpp_test_function_symbol_names (const gchar *name)
+detect_cpp_test_function_symbol_names_gcc (const gchar *name)
 {
     const gchar *original_name = name;
     gchar *test_name_start;
@@ -386,8 +386,8 @@ detect_cpp_test_function_symbol_names (const gchar *name)
     GString *test_name;
 
     test_name = g_string_new(NULL);
-    if (!find_cpp_test_name(name, &test_name_start, &test_name_length,
-                            test_name)) {
+    if (!find_cpp_test_name_gcc(name, &test_name_start, &test_name_length,
+                                test_name)) {
         g_string_free(test_name, TRUE);
         return NULL;
     }
@@ -452,6 +452,150 @@ detect_cpp_test_function_symbol_names (const gchar *name)
                             attributes_setup_function_name,
                             require_data_setup_function,
                             TRUE);
+}
+
+static inline gboolean
+is_gcc_cpp_symbol (const gchar *name)
+{
+    return g_str_has_prefix(name, "_Z");
+}
+
+static inline SymbolNames *
+detect_cpp_test_function_symbol_names_vcc (const gchar *name)
+{
+    const gchar *original_name = name;
+    const gchar *test_name_start;
+    guint test_name_length;
+    gchar *data_setup_function_name = NULL;
+    gchar *attributes_setup_function_name = NULL;
+    gboolean require_data_setup_function = FALSE;
+    GString *test_name;
+
+    test_name_start = name + strlen("?");
+    if (!g_str_has_prefix(test_name_start, TEST_NAME_PREFIX))
+        return NULL;
+    test_name_length = 0;
+    while (test_name_start[test_name_length] &&
+           test_name_start[test_name_length] != '@') {
+        test_name_length++;
+    }
+    if (test_name_start[test_name_length] != '@')
+        return NULL;
+
+    test_name = g_string_new(NULL);
+    g_string_append_len(test_name, test_name_start, test_name_length);
+
+    name = test_name_start + test_name_length;
+    while (name[0]) {
+        const gchar *namespace;
+        guint namespace_length = 0;
+
+        if (name[0] != '@')
+            break;
+        namespace = name + strlen("@");
+
+        if (namespace[0] == '@')
+            break;
+
+        if (namespace[0] == '?') {
+            name = strstr(namespace, "@");
+            g_string_prepend(test_name, "anonymous::");
+            continue;
+        }
+
+        while (namespace[namespace_length] &&
+               namespace[namespace_length] != '@') {
+            namespace_length++;
+        }
+        g_string_prepend(test_name, "::");
+        g_string_prepend_len(test_name, namespace, namespace_length);
+
+        name = namespace + namespace_length;
+    }
+
+    if (g_str_equal(name, "YAXXZ")) {
+    } else if (g_str_equal(name, "YAXPAX@Z") || g_str_equal(name, "YAXPBX@Z")) {
+        GString *data_setup_function_name_string;
+        size_t test_name_prefix_length;
+
+        require_data_setup_function = TRUE;
+
+        test_name_prefix_length = strlen(TEST_NAME_PREFIX);
+
+        data_setup_function_name_string = g_string_new(NULL);
+        g_string_append_len(data_setup_function_name_string,
+                            original_name, original_name - test_name_start);
+        g_string_append(data_setup_function_name_string,
+                        DATA_SETUP_FUNCTION_NAME_PREFIX);
+        g_string_append_len(data_setup_function_name_string,
+                            test_name_start + test_name_prefix_length,
+                            name - test_name_start + test_name_prefix_length);
+        g_string_append(data_setup_function_name_string, "YAXXZ");
+
+        data_setup_function_name = g_string_free(data_setup_function_name_string,
+                                                 FALSE);
+    } else {
+        g_string_free(test_name, TRUE);
+        return NULL;
+    }
+
+    {
+        GString *attributes_setup_function_name_string;
+        size_t test_name_prefix_length;
+
+        test_name_prefix_length = strlen(TEST_NAME_PREFIX);
+
+        attributes_setup_function_name_string = g_string_new(NULL);
+        g_string_append_len(attributes_setup_function_name_string,
+                            original_name, original_name - test_name_start);
+        g_string_append(attributes_setup_function_name_string,
+                        ATTRIBUTES_SETUP_FUNCTION_NAME_PREFIX);
+        g_string_append_len(attributes_setup_function_name_string,
+                            test_name_start + test_name_prefix_length,
+                            name - test_name_start + test_name_prefix_length);
+        g_string_append(attributes_setup_function_name_string, "YAXXZ");
+
+        attributes_setup_function_name =
+            g_string_free(attributes_setup_function_name_string, FALSE);
+    }
+
+    {
+        gchar *last_separator;
+        gchar *test_case_name;
+
+        last_separator = g_strrstr(test_name->str, "::");
+        if (last_separator) {
+            test_case_name = g_strndup(test_name->str,
+                                       last_separator - test_name->str);
+        } else {
+            test_case_name = g_strdup("");
+        }
+        return symbol_names_new(test_case_name,
+                                g_string_free(test_name, FALSE),
+                                g_strdup(original_name),
+                                data_setup_function_name,
+                                attributes_setup_function_name,
+                                require_data_setup_function,
+                                TRUE);
+    }
+}
+
+static inline gboolean
+is_vcc_cpp_symbol (const gchar *name)
+{
+    return g_str_has_prefix(name, "?");
+}
+
+static inline SymbolNames *
+detect_cpp_test_function_symbol_names (const gchar *name)
+{
+    if (is_gcc_cpp_symbol(name)) {
+        return detect_cpp_test_function_symbol_names_gcc(name);
+    } else if (is_vcc_cpp_symbol(name)) {
+        return detect_cpp_test_function_symbol_names_vcc(name);
+    }
+
+    return NULL;
 }
 
 static inline SymbolNames *
@@ -718,15 +862,15 @@ is_including_test_name (const gchar *function_name, SymbolNames *names)
         guint64 function_name_length;
 
         target_namespace = g_string_new(NULL);
-        target_namespace_end = skip_cpp_namespace(function_name,
-                                                  target_namespace);
+        target_namespace_end = skip_cpp_namespace_gcc(function_name,
+                                                      target_namespace);
         if (!target_namespace_end) {
             g_string_free(target_namespace, TRUE);
             return FALSE;
         }
 
         test_namespace = g_string_new(NULL);
-        skip_cpp_namespace(names->test_function_name, test_namespace);
+        skip_cpp_namespace_gcc(names->test_function_name, test_namespace);
         included = g_str_equal(target_namespace->str, test_namespace->str);
         g_string_free(target_namespace, TRUE);
         g_string_free(test_namespace, TRUE);
@@ -760,7 +904,7 @@ is_valid_attribute_function_name (const gchar *function_name, SymbolNames *names
         return FALSE;
 
     if (names->cpp) {
-        if (!find_cpp_test_name(function_name, &base_name, NULL, NULL))
+        if (!find_cpp_test_name_gcc(function_name, &base_name, NULL, NULL))
             return FALSE;
     } else {
         base_name = (gchar *)function_name;
@@ -783,7 +927,7 @@ get_attribute_name (const gchar *attribute_function_name, SymbolNames *names)
     if (names->cpp) {
         const gchar *namespace_end;
 
-        namespace_end = skip_cpp_namespace(attribute_function_name, NULL);
+        namespace_end = skip_cpp_namespace_gcc(attribute_function_name, NULL);
         g_ascii_strtoull(namespace_end, &base_name, 10);
     } else {
         base_name = (gchar *)attribute_function_name;
