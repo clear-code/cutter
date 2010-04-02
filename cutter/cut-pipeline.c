@@ -26,24 +26,22 @@
 #include <fcntl.h>
 #include <errno.h>
 
-#ifdef G_OS_WIN32
-#  include <io.h>
-#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
-#else
-#  include <unistd.h>
-#endif
-
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
 #endif
-
-#include <glib.h>
 
 #include "cut-pipeline.h"
 #include "cut-test-result.h"
 #include "cut-runner.h"
 #include "cut-experimental.h"
 #include "cut-utils.h"
+
+#ifdef G_OS_WIN32
+#  include <io.h>
+#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
+#else
+#  include <unistd.h>
+#endif
 
 #define CUT_PIPELINE_GET_PRIVATE(obj) \
     (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_PIPELINE, CutPipelinePrivate))
