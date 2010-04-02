@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/fixtures/loader/cpp-fixture/*.cpp: use CUT_EXPORT.
+
 	* vcc/include/config.h: define HAVE_GTK_ENABLE_DEBUG on Windows.
 
 	* cutter/cutter.h: add CUT_EXPORT for Windows.

@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,27 +21,27 @@
 
 namespace fixture
 {
-    void
+    CUT_EXPORT void
     startup (void)
     {
     }
 
-    void
+    CUT_EXPORT void
     setup (void)
     {
     }
 
-    void
+    CUT_EXPORT void
     test_nothing (void)
     {
     }
 
-    void
+    CUT_EXPORT void
     teardown (void)
     {
     }
 
-    void
+    CUT_EXPORT void
     shutdown (void)
     {
     }
