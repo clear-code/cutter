@@ -105,10 +105,13 @@ INTL_LDFLAGS =					\
 INTL_LIBS =					\
 	intl.lib
 
+CAIRO_CFLAGS =						\
+	-I $(top_srcdir)/vcc/vendor/include/cairo
+
 GTK_CFLAGS =						\
 	$(GLIB_CFLAGS)					\
+	$(CAIRO_CFLAGS)					\
 	-I $(top_srcdir)/vcc/vendor/include/libpng12	\
-	-I $(top_srcdir)/vcc/vendor/include/cairo	\
 	-I $(top_srcdir)/vcc/vendor/include/pango-1.0	\
 	-I $(top_srcdir)/vcc/vendor/include/atk-1.0	\
 	-I $(top_srcdir)/vcc/vendor/include/gtk-2.0	\
@@ -117,10 +120,13 @@ GTK_CFLAGS =						\
 GTK_LDFLAGS =					\
 	$(INTL_LDFLAGS)
 
+CAIRO_LIBS =					\
+	cairo.lib
+
 GTK_LIBS =					\
 	$(GLIB_LIBS)				\
+	$(CAIRO_LIBS)				\
 	libpng.lib				\
-	cairo.lib				\
 	gio-2.0.lib				\
 	atk-1.0.lib				\
 	gdk_pixbuf-2.0.lib			\

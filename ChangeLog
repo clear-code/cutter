@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: define CAIRO_CFLAGS and CAIRO_LIBS.
+
 	* module/report/Makefile.win32: build PDF report.
 
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
