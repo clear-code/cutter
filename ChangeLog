@@ -1,5 +1,8 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* loader/cpp-fixture/Makefile.win32:
+	LOCAL_CFLAGS -> LOCAL_CPPFLAGS.
+
 	* vcc/: sync.
 
 	* test/cutter/Makefile.win32: link missing ws2_32.lib.

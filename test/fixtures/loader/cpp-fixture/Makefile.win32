@@ -5,7 +5,7 @@ top_builddir = ..\..\..\..
 
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 
-LOCAL_CFLAGS =					\
+LOCAL_CPPFLAGS =				\
 	$(CPPCUTTER_CFLAGS)
 
 LOCAL_LDFLAGS =					\
