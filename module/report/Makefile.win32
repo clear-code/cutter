@@ -7,6 +7,8 @@ top_builddir = ..\..
 
 LOCAL_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
+	$(CAIRO_CFLAGS)				\
+	$(PANGO_CFLAGS)				\
 	$(GCUTTER_CFLAGS)
 
 LOCAL_LDFLAGS =					\
@@ -34,7 +36,7 @@ clean:
 	@del $(OBJS) $(libraries)
 
 xml.dll: cut-xml-report.obj
-	$(CC) $(CFLAGS) $(GLIB_CFLAGS) \
+	$(CC) $(CFLAGS) \
 	  -LD -Fe$@ cut-xml-report.obj \
 	  $(LIBS) $(LDFLAGS)
 
@@ -44,11 +46,11 @@ xml-factory.dll: cut-xml-report-factory.obj
 	  $(LIBS) $(LDFLAGS)
 
 pdf.dll: cut-pdf-report.obj
-	$(CC) $(CFLAGS) $(CAIRO_CFLAGS) \
+	$(CC) $(CFLAGS) \
 	  -LD -Fe$@ cut-pdf-report.obj \
-	  $(LIBS) $(CAIRO_LIBS) $(LDFLAGS)
+	  $(LIBS) $(CAIRO_LIBS) $(PANGO_CAIRO_LIBS) $(LDFLAGS)
 
 pdf-factory.dll: cut-pdf-report-factory.obj
-	$(CC) $(CFLAGS) $(CAIRO_CFLAGS) \
+	$(CC) $(CFLAGS) \
 	  -LD -Fe$@ cut-pdf-report-factory.obj \
-	  $(LIBS) $(LDFLAGS)
+	  $(LIBS) $(PANGO_CAIRO_LIBS) $(LDFLAGS)
