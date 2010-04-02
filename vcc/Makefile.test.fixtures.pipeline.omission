@@ -1,6 +1,6 @@
 tests =  \
 	omission-test.dll
 
-omission-test.dll: omission-test.obj
+omission-test.dll: omission-test.obj $(top_srcdir)\vcc\resource\test\fixtures\pipeline\omission\omission-test.def
 	$(CC) $(CFLAGS) $(omission_test_CFLAGS) -LD -Fe$@ omission-test.obj $(LIBS) $(LDFLAGS) $(omission_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\pipeline\omission\omission-test.def
 

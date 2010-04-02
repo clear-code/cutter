@@ -1,6 +1,6 @@
 tests =  \
 	pending-test.dll
 
-pending-test.dll: pending-test.obj
+pending-test.dll: pending-test.obj $(top_srcdir)\vcc\resource\test\fixtures\pipeline\pending\pending-test.def
 	$(CC) $(CFLAGS) $(pending_test_CFLAGS) -LD -Fe$@ pending-test.obj $(LIBS) $(LDFLAGS) $(pending_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\pipeline\pending\pending-test.def
 

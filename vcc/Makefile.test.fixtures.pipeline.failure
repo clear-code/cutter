@@ -1,6 +1,6 @@
 tests =  \
 	failure-test.dll
 
-failure-test.dll: failure-test.obj
+failure-test.dll: failure-test.obj $(top_srcdir)\vcc\resource\test\fixtures\pipeline\failure\failure-test.def
 	$(CC) $(CFLAGS) $(failure_test_CFLAGS) -LD -Fe$@ failure-test.obj $(LIBS) $(LDFLAGS) $(failure_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\pipeline\failure\failure-test.def
 

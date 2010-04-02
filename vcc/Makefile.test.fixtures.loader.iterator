@@ -1,6 +1,6 @@
 tests =  \
 	success-iterated-test.dll
 
-success-iterated-test.dll: success-iterated-test.obj
+success-iterated-test.dll: success-iterated-test.obj $(top_srcdir)\vcc\resource\test\fixtures\loader\iterator\success-iterated-test.def
 	$(CC) $(CFLAGS) $(success_iterated_test_CFLAGS) -LD -Fe$@ success-iterated-test.obj $(LIBS) $(LDFLAGS) $(success_iterated_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\loader\iterator\success-iterated-test.def
 

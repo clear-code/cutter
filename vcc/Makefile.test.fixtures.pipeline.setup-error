@@ -1,6 +1,6 @@
 tests =  \
 	setup-error-test.dll
 
-setup-error-test.dll: setup-error-test.obj
+setup-error-test.dll: setup-error-test.obj $(top_srcdir)\vcc\resource\test\fixtures\pipeline\setup-error\setup-error-test.def
 	$(CC) $(CFLAGS) $(setup_error_test_CFLAGS) -LD -Fe$@ setup-error-test.obj $(LIBS) $(LDFLAGS) $(setup_error_test_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\pipeline\setup-error\setup-error-test.def
 

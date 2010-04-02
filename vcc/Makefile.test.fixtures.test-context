@@ -1,6 +1,6 @@
 tests =  \
 	test-relative-path.dll
 
-test-relative-path.dll: test-relative-path.obj
+test-relative-path.dll: test-relative-path.obj $(top_srcdir)\vcc\resource\test\fixtures\test-context\test-relative-path.def
 	$(CC) $(CFLAGS) $(test_relative_path_CFLAGS) -LD -Fe$@ test-relative-path.obj $(LIBS) $(LDFLAGS) $(test_relative_path_LDFLAGS) /def:$(top_srcdir)\vcc\resource\test\fixtures\test-context\test-relative-path.def
 
