@@ -6,12 +6,14 @@ top_builddir = ..\..
 !INCLUDE $(top_srcdir)/vcc/Makefile.build
 
 LOCAL_CFLAGS =					\
+	$(GLIB_CFLAGS)				\
 	$(GCUTTER_CFLAGS)
 
 LOCAL_LDFLAGS =					\
 	$(GCUTTER_LDFLAGS)
 
 LIBS =						\
+	$(GLIB_LIBS)				\
 	$(top_builddir)/cutter/cutter.lib
 
 OBJS =						\
@@ -28,7 +30,21 @@ clean:
 	@del $(OBJS) $(libraries)
 
 xml.dll: cut-xml-report.obj
-	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-xml-report.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(GLIB_CFLAGS) \
+	  -LD -Fe$@ cut-xml-report.obj \
+	  $(LIBS) $(LDFLAGS)
 
 xml-factory.dll: cut-xml-report-factory.obj
-	$(CC) $(CFLAGS) $(GLIB_CFLAGS) -LD -Fe$@ cut-xml-report-factory.obj $(LIBS) $(GLIB_LIBS) $(LDFLAGS)
+	$(CC) $(CFLAGS) \
+	  -LD -Fe$@ cut-xml-report-factory.obj \
+	  $(LIBS) $(LDFLAGS)
+
+pdf.dll: cut-pdf-report.obj
+	$(CC) $(CFLAGS) $(CAIRO_CFLAGS) \
+	  -LD -Fe$@ cut-pdf-report.obj \
+	  $(LIBS) $(CAIRO_LIBS) $(LDFLAGS)
+
+pdf-factory.dll: cut-pdf-report-factory.obj
+	$(CC) $(CFLAGS) $(CAIRO_CFLAGS) \
+	  -LD -Fe$@ cut-pdf-report-factory.obj \
+	  $(LIBS) $(LDFLAGS)

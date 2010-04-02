@@ -1,3 +1,7 @@
+2010-04-02  Kouhei Sutou  <kou@cozmixng.org>
+
+	* module/report/Makefile.win32: build PDF report.
+
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/fixtures/test-context/Makefile.win32: define missing
