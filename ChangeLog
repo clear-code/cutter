@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-process.c: don't use G_OS_WIN32 before including GLib.
+
 	* cutter/cut-pipeline.c: don't use G_OS_WIN32 before including GLib.
 
 	* vcc/include/cutter/cut-config.h: add.

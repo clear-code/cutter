@@ -28,13 +28,6 @@
 #include <errno.h>
 #include <sys/types.h>
 
-#ifdef G_OS_WIN32
-#  include <io.h>
-#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
-#else
-#  include <unistd.h>
-#endif
-
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
 #endif
@@ -46,6 +39,13 @@
 #include "cut-process.h"
 #include "cut-experimental.h"
 #include "cut-utils.h"
+
+#ifdef G_OS_WIN32
+#  include <io.h>
+#  define pipe(phandles) _pipe(phandles, 4096, _O_BINARY)
+#else
+#  include <unistd.h>
+#endif
 
 #define CUT_PROCESS_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_PROCESS, CutProcessPrivate))
 
