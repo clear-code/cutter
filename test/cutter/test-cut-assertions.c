@@ -23,12 +23,6 @@
 
 #include <string.h>
 
-#include <glib/gstdio.h>
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#else
-#  include <io.h>
-#endif
 #include <errno.h>
 
 #include <cutter.h>
@@ -38,11 +32,15 @@
 #include <cutter/cut-test-runner.h>
 #include "../lib/cuttest-assertions.h"
 
+#include <glib/gstdio.h>
+
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
-#  ifdef HAVE_WINSOCK2_H
+#  ifdef G_OS_WIN32
 #    include <winsock2.h>
 #    include <ws2tcpip.h>
+#    include <io.h>
 #  else
+#    include <unistd.h>
 #    include <sys/socket.h>
 #    include <netinet/in.h>
 #    include <arpa/inet.h>
@@ -53,7 +51,7 @@ void test_equal_boolean(void);
 void test_not_equal_boolean(void);
 void test_equal_int(void);
 void test_not_equal_int(void);
-#ifdef HAVE_STDINT_H
+#ifdef CUT_HAVE_STDINT_H
 void test_equal_int_least8(void);
 void test_not_equal_int_least8(void);
 void test_equal_int_least16(void);
@@ -77,7 +75,7 @@ void test_not_equal_intmax(void);
 #endif
 void test_equal_uint(void);
 void test_not_equal_uint(void);
-#ifdef HAVE_STDINT_H
+#ifdef CUT_HAVE_STDINT_H
 void test_equal_uint_least8(void);
 void test_not_equal_uint_least8(void);
 void test_equal_uint_least16(void);
@@ -315,7 +313,7 @@ test_not_equal_int (void)
                            NULL);
 }
 
-#ifdef HAVE_STDINT_H
+#ifdef CUT_HAVE_STDINT_H
 static void
 stub_equal_int_least8 (void)
 {
@@ -799,7 +797,7 @@ test_not_equal_uint (void)
                            NULL);
 }
 
-#ifdef HAVE_STDINT_H
+#ifdef CUT_HAVE_STDINT_H
 static void
 stub_equal_uint_least8 (void)
 {

@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cut-assertions.c: use more suitable macros.
+
 	* test/fixtures/loader/cpp/Makefile.win32:
 	LOCAL_CFLAGS -> LOCAL_CPPFLAGS.
 
