@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cutter.c: fix style.
+
 	* module/report/Makefile.win32: add missing cut-cairo.obj.
 
 	* vcc/Makefile.build, module/report/Makefile.win32: add pango-cairo.

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,9 +38,9 @@
 #endif
 
 #ifdef G_OS_WIN32
-#define LINE_FEED_CODE "\r\n"
+#  define LINE_FEED_CODE "\r\n"
 #else
-#define LINE_FEED_CODE "\n"
+#  define LINE_FEED_CODE "\n"
 #endif
 
 void test_help (void);
@@ -80,7 +80,8 @@ cut_setup (void)
     exit_status = 0;
     lang = g_strdup(g_getenv("LANG"));
 
-    format =        "Usage:" LINE_FEED_CODE
+    format =
+        "Usage:" LINE_FEED_CODE
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "" LINE_FEED_CODE
