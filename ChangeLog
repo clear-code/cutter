@@ -1,3 +1,8 @@
+2010-04-02  Kouhei Sutou  <kou@clear-code.com>
+
+	* m4macros/cutter.m4: work with --enable-coverage=SOMETHING.
+	Suggested by gunyarakun. Thanks!!!
+
 2010-03-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: support custom ID in sub section.
