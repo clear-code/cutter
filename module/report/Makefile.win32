@@ -22,7 +22,9 @@ OBJS =						\
 
 libraries =					\
 	xml.dll					\
-	xml-factory.dll
+	xml-factory.dll				\
+	pdf.dll					\
+	pdf-factory.dll
 
 all: $(libraries)
 
