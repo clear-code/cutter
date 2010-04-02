@@ -29,7 +29,7 @@
 #include "../lib/cuttest-utils.h"
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
-#  ifdef HAVE_WINSOCK2_H
+#  ifdef G_OS_WIN32
 #    include <winsock2.h>
 #    include <ws2tcpip.h>
 #  else
