@@ -1,5 +1,8 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cut-utils.c: use system inet_pton() on Windows
+	Vista or later.
+
 	* test/cutter/test-cut-utils.c: use G_OS_WIN32 instead of
 	HAVE_WINSOCK2_H.
 

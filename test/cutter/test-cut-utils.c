@@ -403,6 +403,7 @@ test_equal_sockaddr_in (void)
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 
 #  ifdef G_OS_WIN32
+#    if !defined(NTDDI_VERSION) || (NTDDI_VERSION < NTDDI_LONGHORN)
 static int
 inet_pton(int address_family, const char *source, void *destination)
 {
@@ -423,6 +424,7 @@ inet_pton(int address_family, const char *source, void *destination)
     return WSAStringToAddress((LPTSTR)source, address_family, NULL,
                               destination, &destination_length);
 }
+#    endif
 #  endif
 
 static void
