@@ -15,7 +15,8 @@ LOCAL_LDFLAGS =			\
 	$(USE_MSVCRT_LDFLAGS)
 
 LIBS =				\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)		\
+	ws2_32.lib
 
 OBJS =				\
 	$(LIBCUTTER_OBJECTS)	\
