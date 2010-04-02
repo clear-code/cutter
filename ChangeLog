@@ -1,5 +1,7 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/generate-test-makefile.rb: DLL depends on def.
+
 	* vcc/: sync.
 
 	* misc/generate-test-defs.rb: add missing upper cases and numbers.
