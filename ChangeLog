@@ -1,5 +1,8 @@
 2010-04-02  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/fixtures/loader/cpp/Makefile.win32:
+	LOCAL_CFLAGS -> LOCAL_CPPFLAGS.
+
 	* cutter/Makefile.win32: link missing ws2_32.lib.
 
 	* cutter/cut-test-context.c, cutter/cut-utils.c: use winsock2.h
