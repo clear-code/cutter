@@ -47,7 +47,7 @@
 #define HAVE_GTK 1
 
 /* Define to 1 if you have GTK+ installed and built with debug mode */
-/* #undef HAVE_GTK_ENABLE_DEBUG */
+#define HAVE_GTK_ENABLE_DEBUG 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 /* #define HAVE_INTTYPES_H 1 */
