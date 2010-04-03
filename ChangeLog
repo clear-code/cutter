@@ -1,5 +1,7 @@
 2010-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cppcutter/Makefile.am: add missing link flags.
+
 	* cutter/cut-loader.c: don't normalize anonymous namespace name.
 
 	* test/fixtures/loader/cpp/stub-namespace.cpp: use CUT_EXPORT.

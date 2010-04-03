@@ -33,6 +33,14 @@ libcppcutter_la_SOURCES =		\
 	$(cppcutter_public_headers)	\
 	$(libcppcutter_sources)
 
+libcppcutter_la_LDFLAGS =			\
+	-version-info $(LT_VERSION_INFO)	\
+	-no-undefined
+
+libcppcutter_la_LIBADD =			\
+	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)
+
 echo-public-headers:
 	@for header in $(cppcutter_include_HEADERS); do			\
 	  echo $(abs_srcdir)/$${header};				\
