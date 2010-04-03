@@ -1,5 +1,7 @@
 2010-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: add 1.1.2 entry.
+
 	* po/ja.po, doc/reference/ja.po: update translations.
 
 	* doc/reference/cutter-overrides.txt: add CUT_EXPORT entry. (but

@@ -2,6 +2,39 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-1-2] 1.1.2: 2010-04-03
+
+Improvements Windows support.
+
+=== Cutter
+
+==== Improvements
+
+  * Supported lcov 1.8
+  * Supported --enable-coverage=SOMETHING style.
+    [Reported by gunyara-kun]
+  * #2976775: Supported cut_omit() in cut_setup()
+    [Reported by Romain Tartière]
+  * Supported building and testing with Visual Studio C++ 2008
+
+=== CppCutter
+
+==== Improvements
+
+  * Added ((<CUT_EXPORT|cutter-cutter.html#CUT-EXPORT>))
+    that is a macro to mark test function on Windows
+
+=== Document
+
+==== Improvements
+
+  * Supported Ubuntu Karmic Koara.
+
+=== Thanks
+
+  * Romain Tartière
+  * gunyara-kun
+
 == [release-1-1-1] 1.1.1: 2010-03-11
 
 Bug in 1.1.0 fixes and improvements of GObject and sockaddr support.
