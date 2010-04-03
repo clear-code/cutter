@@ -1,5 +1,8 @@
 2010-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-overrides.txt: add CUT_EXPORT entry. (but
+	it is ignored!)
+
 	* doc/reference/cutter-docs.sgml: add new simples in 1.1.2.
 
 	* Makefile.am, misc/update-latest-release.rb: support Debian

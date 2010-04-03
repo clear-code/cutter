@@ -48,6 +48,15 @@ void
 const char *format, ...
 </FUNCTION>
 
+<MACRO>
+<NAME>CUT_EXPORT</NAME>
+#ifdef _WIN32
+#  define CUT_EXPORT __declspec(dllexport)
+#else
+#  define CUT_EXPORT
+#endif
+</MACRO>
+
 # cut-assertions.h
 
 <FUNCTION>
@@ -848,12 +857,6 @@ GList *expected, GList *actual, ...
 
 <FUNCTION>
 <NAME>gcut_assert_equal_list_uint</NAME>
-<RETURNS>void</RETURNS>
-GList *expected, GList *actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_g_list_uint</NAME>
 <RETURNS>void</RETURNS>
 GList *expected, GList *actual, ...
 </FUNCTION>
