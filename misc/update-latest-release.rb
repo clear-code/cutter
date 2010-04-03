@@ -28,6 +28,18 @@ files.each do |file|
 
       EOC
     end
+  when /debian\/changelog\z/
+    date = Time.parse(new_release_date).rfc2822
+    if content !~ /#{Regexp.escape(new_version)}/
+      replaced_content = content.sub(/\A/, <<-EOC)
+cutter (#{new_version}-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Kouhei Sutou <kou@clear-code.com>  #{date}
+
+      EOC
+    end
   else
     [[old_version, new_version],
      [old_release_date, new_release_date]].each do |old, new|

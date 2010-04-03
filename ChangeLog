@@ -1,5 +1,8 @@
 2010-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
+	* Makefile.am, misc/update-latest-release.rb: support Debian
+	package auto update.
+
 	* cppcutter/Makefile.am: add missing link flags.
 
 	* cutter/cut-loader.c: don't normalize anonymous namespace name.
