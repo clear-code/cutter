@@ -464,6 +464,8 @@ is_gcc_cpp_symbol (const gchar *name)
     return g_str_has_prefix(name, "_Z");
 }
 
+/* FIXME: Symbol detection codes for C++ are too dirty.
+          We should clean it up as soon as possible!!! */
 /*
   format:
     '?FUNCTION_NAME@NAMESPACE_N@NAMESPACE_N-1@...@NAMESPACE_0@@SIGNATURE'
