@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -464,6 +464,14 @@ is_gcc_cpp_symbol (const gchar *name)
     return g_str_has_prefix(name, "_Z");
 }
 
+/*
+  format:
+    '?FUNCTION_NAME@NAMESPACE_N@NAMESPACE_N-1@...@NAMESPACE_0@@SIGNATURE'
+  SIGNATURE_NAME:
+    'YAXXZ': void XXX(void);
+    'YAXPAX@Z': void XXX(void *);
+    'YAXPBX@Z': void XXX(const void *);
+*/
 static inline SymbolNames *
 detect_cpp_test_function_symbol_names_vcc (const gchar *name)
 {
@@ -494,19 +502,15 @@ detect_cpp_test_function_symbol_names_vcc (const gchar *name)
         const gchar *namespace;
         guint namespace_length = 0;
 
-        if (name[0] != '@')
-            break;
+        if (name[0] != '@') {
+            g_string_free(test_name, TRUE);
+            return NULL;
+        }
         namespace = name + strlen("@");
 
         if (namespace[0] == '@') {
             name = namespace + 1;
             break;
-        }
-
-        if (namespace[0] == '?') {
-            name = strstr(namespace, "@");
-            g_string_prepend(test_name, "anonymous::");
-            continue;
         }
 
         while (namespace[namespace_length] &&
