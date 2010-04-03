@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.1.0\n"
-"POT-Creation-Date: 2010-03-11 21:18+0900\n"
-"PO-Revision-Date: 2010-03-11 21:28+0900\n"
+"Project-Id-Version: Cutter 1.1.2\n"
+"POT-Creation-Date: 2010-04-03 12:59+0900\n"
+"PO-Revision-Date: 2010-04-03 13:01+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -125,7 +125,7 @@ msgid "Synopsis"
 msgstr "概要"
 
 #: xml/soupcutter.xml:19(link) xml/soupcutter.xml:64(title)
-#: xml/soupcutter.xml:65(primary) xml/api-index-full.xml:443(link)
+#: xml/soupcutter.xml:65(primary) xml/api-index-full.xml:444(link)
 #: xml/api-index-1.0.8.xml:10(link)
 msgid "SOUPCUTTER_ENABLED"
 msgstr ""
@@ -152,7 +152,7 @@ msgstr ""
 #: xml/gcut-egg.xml:86(title) xml/gcut-dynamic-data.xml:69(title)
 #: xml/gcut-data.xml:45(title) xml/gcut-data-helper.xml:50(title)
 #: xml/gcut-assertions.xml:125(title)
-#: xml/gcut-assertions-helper.xml:130(title) xml/cutter.xml:43(title)
+#: xml/gcut-assertions-helper.xml:130(title) xml/cutter.xml:44(title)
 #: xml/cut-version.xml:28(title) xml/cut-unified-differ.xml:35(title)
 #: xml/cut-types.xml:28(title) xml/cut-test-utils.xml:52(title)
 #: xml/cut-string-diff-writer.xml:26(title)
@@ -245,7 +245,7 @@ msgstr ""
 #: xml/gcut-egg.xml:159(title) xml/gcut-dynamic-data.xml:74(title)
 #: xml/gcut-data.xml:54(title) xml/gcut-data-helper.xml:55(title)
 #: xml/gcut-assertions.xml:129(title)
-#: xml/gcut-assertions-helper.xml:135(title) xml/cutter.xml:145(title)
+#: xml/gcut-assertions-helper.xml:135(title) xml/cutter.xml:146(title)
 #: xml/cut-version.xml:37(title) xml/cut-unified-differ.xml:40(title)
 #: xml/cut-types.xml:34(title) xml/cut-test-utils.xml:64(title)
 #: xml/cut-string-diff-writer.xml:31(title)
@@ -283,7 +283,7 @@ msgstr "1.0.8から"
 
 #: xml/soupcutter.xml:74(title) xml/soupcut-server.xml:84(title)
 #: xml/soupcut-client.xml:189(title) xml/gdkcutter-pixbuf.xml:74(title)
-#: xml/gcutter.xml:72(title) xml/cutter.xml:466(title)
+#: xml/gcutter.xml:72(title) xml/cutter.xml:487(title)
 #: xml/cppcutter.xml:162(title)
 msgid "See Also"
 msgstr "参考"
@@ -310,12 +310,12 @@ msgid "SoupServer"
 msgstr ""
 
 #: xml/soupcut-server.xml:19(link) xml/soupcut-server.xml:36(primary)
-#: xml/api-index-full.xml:462(link) xml/api-index-1.0.8.xml:24(link)
+#: xml/api-index-full.xml:463(link) xml/api-index-1.0.8.xml:24(link)
 msgid "soupcut_server_take"
 msgstr ""
 
 #: xml/soupcut-server.xml:20(link) xml/soupcut-server.xml:50(primary)
-#: xml/api-index-full.xml:463(link) xml/api-index-1.0.8.xml:25(link)
+#: xml/api-index-full.xml:464(link) xml/api-index-1.0.8.xml:25(link)
 msgid "soupcut_server_take_new"
 msgstr ""
 
@@ -488,7 +488,7 @@ msgid "gchar"
 msgstr ""
 
 #: xml/soupcut-server.xml:21(link) xml/soupcut-server.xml:65(primary)
-#: xml/api-index-full.xml:461(link) xml/api-index-1.0.8.xml:23(link)
+#: xml/api-index-full.xml:462(link) xml/api-index-1.0.8.xml:23(link)
 msgid "soupcut_server_build_uri"
 msgstr ""
 
@@ -598,7 +598,7 @@ msgstr ""
 #: xml/gcut-data-helper.xml:113(term) xml/gcut-data-helper.xml:133(term)
 #: xml/gcut-data-helper.xml:153(term) xml/gcut-data-helper.xml:173(term)
 #: xml/gcut-data-helper.xml:193(term) xml/gcut-data-helper.xml:213(term)
-#: xml/gcut-data-helper.xml:233(term) xml/cutter.xml:383(term)
+#: xml/gcut-data-helper.xml:233(term) xml/cutter.xml:384(term)
 #: xml/cut-unified-differ.xml:63(term) xml/cut-unified-differ.xml:89(term)
 #: xml/cut-unified-differ.xml:115(term) xml/cut-unified-differ.xml:141(term)
 #: xml/cut-test-utils.xml:80(term) xml/cut-test-utils.xml:95(term)
@@ -672,7 +672,7 @@ msgstr ""
 
 #: xml/soupcut-server.xml:56(term) xml/gcut-public.xml:45(term)
 #: xml/gcut-public.xml:61(term) xml/gcut-public.xml:78(term)
-#: xml/gcut-public.xml:97(term) xml/cutter.xml:298(term)
+#: xml/gcut-public.xml:97(term) xml/cutter.xml:299(term)
 #: xml/cut-unified-differ.xml:128(term)
 msgid "<parameter>context</parameter> :"
 msgstr ""
@@ -756,12 +756,12 @@ msgstr "HTTPクライアントとして動作するためのAPI。"
 #: xml/soupcut-assertions-helper.xml:30(returnvalue)
 #: xml/soupcut-assertions-helper.xml:34(returnvalue)
 #: xml/soupcut-assertions-helper.xml:39(returnvalue)
-#: xml/api-index-full.xml:441(link)
+#: xml/api-index-full.xml:442(link)
 msgid "SoupCutClient"
 msgstr ""
 
 #: xml/soupcut-client.xml:20(link) xml/soupcut-client.xml:67(primary)
-#: xml/api-index-full.xml:456(link) xml/api-index-1.0.8.xml:19(link)
+#: xml/api-index-full.xml:457(link) xml/api-index-1.0.8.xml:19(link)
 msgid "soupcut_client_new"
 msgstr ""
 
@@ -986,7 +986,7 @@ msgid "void"
 msgstr ""
 
 #: xml/soupcut-client.xml:21(link) xml/soupcut-client.xml:78(primary)
-#: xml/api-index-full.xml:458(link) xml/api-index-1.0.8.xml:21(link)
+#: xml/api-index-full.xml:459(link) xml/api-index-1.0.8.xml:21(link)
 msgid "soupcut_client_set_base"
 msgstr ""
 
@@ -1018,7 +1018,7 @@ msgid "guint"
 msgstr ""
 
 #: xml/soupcut-client.xml:23(link) xml/soupcut-client.xml:93(primary)
-#: xml/api-index-full.xml:457(link) xml/api-index-1.0.8.xml:20(link)
+#: xml/api-index-full.xml:458(link) xml/api-index-1.0.8.xml:20(link)
 msgid "soupcut_client_send_message"
 msgstr ""
 
@@ -1030,22 +1030,22 @@ msgid "SoupMessage"
 msgstr ""
 
 #: xml/soupcut-client.xml:25(link) xml/soupcut-client.xml:111(primary)
-#: xml/api-index-full.xml:452(link) xml/api-index-1.0.8.xml:15(link)
+#: xml/api-index-full.xml:453(link) xml/api-index-1.0.8.xml:15(link)
 msgid "soupcut_client_get"
 msgstr ""
 
 #: xml/soupcut-client.xml:29(link) xml/soupcut-client.xml:138(primary)
-#: xml/api-index-full.xml:455(link) xml/api-index-1.0.8.xml:18(link)
+#: xml/api-index-full.xml:456(link) xml/api-index-1.0.8.xml:18(link)
 msgid "soupcut_client_get_n_messages"
 msgstr ""
 
 #: xml/soupcut-client.xml:30(link) xml/soupcut-client.xml:152(primary)
-#: xml/api-index-full.xml:454(link) xml/api-index-1.0.8.xml:17(link)
+#: xml/api-index-full.xml:455(link) xml/api-index-1.0.8.xml:17(link)
 msgid "soupcut_client_get_latest_message"
 msgstr ""
 
 #: xml/soupcut-client.xml:31(link) xml/soupcut-client.xml:166(primary)
-#: xml/api-index-full.xml:453(link) xml/api-index-1.0.8.xml:16(link)
+#: xml/api-index-full.xml:454(link) xml/api-index-1.0.8.xml:16(link)
 msgid "soupcut_client_get_async_context"
 msgstr ""
 
@@ -1324,9 +1324,9 @@ msgstr "ひとつめのクエリパラメータの名前"
 #: xml/gcut-assertions.xml:684(term) xml/gcut-assertions.xml:726(term)
 #: xml/gcut-assertions.xml:745(term) xml/gcut-assertions.xml:764(term)
 #: xml/gcut-assertions.xml:783(term) xml/gcut-assertions.xml:802(term)
-#: xml/gcut-assertions-helper.xml:483(term) xml/cutter.xml:283(term)
-#: xml/cutter.xml:301(term) xml/cutter.xml:340(term) xml/cutter.xml:412(term)
-#: xml/cutter.xml:459(term) xml/cut-test-utils.xml:181(term)
+#: xml/gcut-assertions-helper.xml:483(term) xml/cutter.xml:284(term)
+#: xml/cutter.xml:302(term) xml/cutter.xml:341(term) xml/cutter.xml:413(term)
+#: xml/cutter.xml:460(term) xml/cut-test-utils.xml:181(term)
 #: xml/cut-test-utils.xml:253(term) xml/cut-test-utils.xml:272(term)
 #: xml/cut-test-utils.xml:295(term) xml/cut-test-utils.xml:316(term)
 #: xml/cut-test-utils.xml:332(term) xml/cut-test-utils.xml:351(term)
@@ -1461,7 +1461,7 @@ msgstr "プロパティ詳細"
 msgid "The <literal>\"async\"</literal> property"
 msgstr "<literal>\"async\"</literal>プロパティ"
 
-#: xml/soupcut-client.xml:183(primary) xml/api-index-full.xml:442(link)
+#: xml/soupcut-client.xml:183(primary) xml/api-index-full.xml:443(link)
 msgid "SoupCutClient:async"
 msgstr ""
 
@@ -1486,27 +1486,27 @@ msgstr ""
 "証します。"
 
 #: xml/soupcut-assertions.xml:20(link) xml/soupcut-assertions.xml:47(primary)
-#: xml/api-index-full.xml:459(link) xml/api-index-1.0.8.xml:22(link)
+#: xml/api-index-full.xml:460(link) xml/api-index-1.0.8.xml:22(link)
 msgid "soupcut_message_assert_equal_content_type"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:24(link) xml/soupcut-assertions.xml:67(primary)
-#: xml/api-index-full.xml:446(link) xml/api-index-1.0.8.xml:12(link)
+#: xml/api-index-full.xml:447(link) xml/api-index-1.0.8.xml:12(link)
 msgid "soupcut_client_assert_equal_content_type"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:28(link) xml/soupcut-assertions.xml:88(primary)
-#: xml/api-index-full.xml:450(link) xml/api-index-1.0.8.xml:14(link)
+#: xml/api-index-full.xml:451(link) xml/api-index-1.0.8.xml:14(link)
 msgid "soupcut_client_assert_response"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:30(link) xml/soupcut-assertions.xml:103(primary)
-#: xml/api-index-full.xml:444(link) xml/api-index-1.0.8.xml:11(link)
+#: xml/api-index-full.xml:445(link) xml/api-index-1.0.8.xml:11(link)
 msgid "soupcut_client_assert_equal_body"
 msgstr ""
 
 #: xml/soupcut-assertions.xml:33(link) xml/soupcut-assertions.xml:122(primary)
-#: xml/api-index-full.xml:448(link) xml/api-index-1.0.8.xml:13(link)
+#: xml/api-index-full.xml:449(link) xml/api-index-1.0.8.xml:13(link)
 msgid "soupcut_client_assert_match_body"
 msgstr ""
 
@@ -1800,31 +1800,31 @@ msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:19(link)
 #: xml/soupcut-assertions-helper.xml:54(primary)
-#: xml/api-index-full.xml:460(link)
+#: xml/api-index-full.xml:461(link)
 msgid "soupcut_message_assert_equal_content_type_helper"
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:24(link)
 #: xml/soupcut-assertions-helper.xml:77(primary)
-#: xml/api-index-full.xml:447(link)
+#: xml/api-index-full.xml:448(link)
 msgid "soupcut_client_assert_equal_content_type_helper"
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:29(link)
 #: xml/soupcut-assertions-helper.xml:100(primary)
-#: xml/api-index-full.xml:451(link)
+#: xml/api-index-full.xml:452(link)
 msgid "soupcut_client_assert_response_helper"
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:32(link)
 #: xml/soupcut-assertions-helper.xml:115(primary)
-#: xml/api-index-full.xml:445(link)
+#: xml/api-index-full.xml:446(link)
 msgid "soupcut_client_assert_equal_body_helper"
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:37(link)
 #: xml/soupcut-assertions-helper.xml:138(primary)
-#: xml/api-index-full.xml:449(link)
+#: xml/api-index-full.xml:450(link)
 msgid "soupcut_client_assert_match_body_helper"
 msgstr ""
 
@@ -1976,7 +1976,7 @@ msgid "Cutter with gdk-pixbuf support."
 msgstr "gdk-pixbufサポート付きのCutter。"
 
 #: xml/gdkcutter-pixbuf.xml:19(link) xml/gdkcutter-pixbuf.xml:64(title)
-#: xml/gdkcutter-pixbuf.xml:65(primary) xml/api-index-full.xml:384(link)
+#: xml/gdkcutter-pixbuf.xml:65(primary) xml/api-index-full.xml:385(link)
 #: xml/api-index-1.0.6.xml:72(link)
 msgid "GDKCUTTER_PIXBUF_ENABLED"
 msgstr ""
@@ -2066,9 +2066,9 @@ msgstr "GdkCutter Pixbufが有効なとき定義されます。"
 #: xml/gcut-data.xml:310(para) xml/gcut-data.xml:329(para)
 #: xml/gcut-data.xml:348(para) xml/gcut-data.xml:367(para)
 #: xml/gcut-assertions.xml:240(para) xml/gcut-assertions.xml:468(para)
-#: xml/gcut-assertions.xml:786(para) xml/cutter.xml:164(para)
-#: xml/cutter.xml:185(para) xml/cutter.xml:194(para) xml/cutter.xml:203(para)
-#: xml/cutter.xml:415(para) xml/cutter.xml:431(para) xml/cutter.xml:440(para)
+#: xml/gcut-assertions.xml:786(para) xml/cutter.xml:165(para)
+#: xml/cutter.xml:186(para) xml/cutter.xml:195(para) xml/cutter.xml:204(para)
+#: xml/cutter.xml:416(para) xml/cutter.xml:432(para) xml/cutter.xml:441(para)
 #: xml/cut-test-utils.xml:240(para) xml/cut-helper.xml:246(para)
 #: xml/cut-helper.xml:262(para) xml/cut-helper.xml:273(para)
 #: xml/cut-assertions.xml:1459(para) xml/cut-assertions.xml:2289(para)
@@ -2086,7 +2086,7 @@ msgid "gdkcut-pixbuf"
 msgstr ""
 
 #: xml/gdkcut-pixbuf.xml:19(link) xml/gdkcut-pixbuf.xml:44(primary)
-#: xml/api-index-full.xml:389(link)
+#: xml/api-index-full.xml:390(link)
 msgid "gdkcut_pixbuf_equal_property"
 msgstr ""
 
@@ -2102,17 +2102,17 @@ msgid "GdkPixbuf"
 msgstr ""
 
 #: xml/gdkcut-pixbuf.xml:21(link) xml/gdkcut-pixbuf.xml:60(primary)
-#: xml/api-index-full.xml:388(link)
+#: xml/api-index-full.xml:389(link)
 msgid "gdkcut_pixbuf_equal_content"
 msgstr ""
 
 #: xml/gdkcut-pixbuf.xml:24(link) xml/gdkcut-pixbuf.xml:80(primary)
-#: xml/api-index-full.xml:387(link)
+#: xml/api-index-full.xml:388(link)
 msgid "gdkcut_pixbuf_diff"
 msgstr ""
 
 #: xml/gdkcut-pixbuf.xml:27(link) xml/gdkcut-pixbuf.xml:100(primary)
-#: xml/api-index-full.xml:390(link)
+#: xml/api-index-full.xml:391(link)
 msgid "gdkcut_pixbuf_save_diff"
 msgstr ""
 
@@ -2257,7 +2257,7 @@ msgstr ""
 
 #: xml/gdkcut-pixbuf-assertions.xml:20(link)
 #: xml/gdkcut-pixbuf-assertions.xml:35(primary)
-#: xml/api-index-full.xml:385(link) xml/api-index-1.0.5.xml:54(link)
+#: xml/api-index-full.xml:386(link) xml/api-index-1.0.5.xml:54(link)
 msgid "gdkcut_pixbuf_assert_equal"
 msgstr ""
 
@@ -2434,7 +2434,7 @@ msgstr ""
 
 #: xml/gdkcut-pixbuf-assertions-helper.xml:19(link)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:37(primary)
-#: xml/api-index-full.xml:386(link)
+#: xml/api-index-full.xml:387(link)
 msgid "gdkcut_pixbuf_assert_equal_helper"
 msgstr ""
 
@@ -2500,7 +2500,7 @@ msgid "Cutter with GLib support."
 msgstr "GLibサポート付きのCutter。"
 
 #: xml/gcutter.xml:19(link) xml/gcutter.xml:62(title)
-#: xml/gcutter.xml:63(primary) xml/api-index-full.xml:196(link)
+#: xml/gcutter.xml:63(primary) xml/api-index-full.xml:197(link)
 #: xml/api-index-1.0.6.xml:17(link)
 msgid "GCUTTER_ENABLED"
 msgstr ""
@@ -2587,12 +2587,12 @@ msgstr ""
 "くためのユーティリティ。"
 
 #: xml/gcut-value-equal.xml:20(link) xml/gcut-value-equal.xml:43(primary)
-#: xml/api-index-full.xml:380(link) xml/api-index-1.0.5.xml:52(link)
+#: xml/api-index-full.xml:381(link) xml/api-index-1.0.5.xml:52(link)
 msgid "gcut_value_equal"
 msgstr ""
 
 #: xml/gcut-value-equal.xml:22(link) xml/gcut-value-equal.xml:64(primary)
-#: xml/api-index-full.xml:383(link) xml/api-index-1.0.5.xml:53(link)
+#: xml/api-index-full.xml:384(link) xml/api-index-1.0.5.xml:53(link)
 msgid "gcut_value_register_equal_func"
 msgstr ""
 
@@ -2746,25 +2746,25 @@ msgstr ""
 #: xml/gcut-data.xml:182(para) xml/gcut-data.xml:196(para)
 #: xml/gcut-data.xml:210(para) xml/gcut-assertions.xml:599(para)
 #: xml/gcut-assertions.xml:631(para) xml/gcut-assertions.xml:669(para)
-#: xml/gcut-assertions.xml:698(para) xml/cutter.xml:212(para)
-#: xml/cutter.xml:313(para) xml/cutter.xml:359(para) xml/cutter.xml:449(para)
-#: xml/cut-multi-process.xml:104(para) xml/cut-multi-process.xml:122(para)
-#: xml/cut-helper.xml:162(para) xml/cut-helper.xml:292(para)
-#: xml/cut-helper.xml:370(para) xml/cut-experimental.xml:41(para)
-#: xml/cut-experimental.xml:67(para) xml/cut-experimental.xml:97(para)
-#: xml/cut-experimental.xml:127(para) xml/cut-assertions.xml:273(para)
-#: xml/cut-assertions.xml:290(para) xml/cut-assertions.xml:353(para)
-#: xml/cut-assertions.xml:382(para) xml/cut-assertions.xml:1535(para)
-#: xml/cut-assertions.xml:1565(para) xml/cut-assertions.xml:1638(para)
-#: xml/cut-assertions.xml:1673(para) xml/cut-assertions.xml:1801(para)
-#: xml/cut-assertions.xml:1827(para) xml/cut-assertions.xml:1853(para)
-#: xml/cut-assertions.xml:1879(para) xml/cut-assertions.xml:1905(para)
-#: xml/cut-assertions.xml:1931(para) xml/cut-assertions.xml:1957(para)
-#: xml/cut-assertions.xml:1977(para) xml/cut-assertions.xml:1999(para)
-#: xml/cut-assertions.xml:2021(para) xml/cut-assertions.xml:2044(para)
-#: xml/cut-assertions.xml:2161(para) xml/cut-assertions.xml:2248(para)
-#: xml/cut-assertions.xml:2269(para) xml/cppcutter.xml:144(para)
-#: xml/cppcut-assertions.xml:45(para)
+#: xml/gcut-assertions.xml:698(para) xml/cutter.xml:213(para)
+#: xml/cutter.xml:314(para) xml/cutter.xml:360(para) xml/cutter.xml:450(para)
+#: xml/cutter.xml:474(para) xml/cut-multi-process.xml:104(para)
+#: xml/cut-multi-process.xml:122(para) xml/cut-helper.xml:162(para)
+#: xml/cut-helper.xml:292(para) xml/cut-helper.xml:370(para)
+#: xml/cut-experimental.xml:41(para) xml/cut-experimental.xml:67(para)
+#: xml/cut-experimental.xml:97(para) xml/cut-experimental.xml:127(para)
+#: xml/cut-assertions.xml:273(para) xml/cut-assertions.xml:290(para)
+#: xml/cut-assertions.xml:353(para) xml/cut-assertions.xml:382(para)
+#: xml/cut-assertions.xml:1535(para) xml/cut-assertions.xml:1565(para)
+#: xml/cut-assertions.xml:1638(para) xml/cut-assertions.xml:1673(para)
+#: xml/cut-assertions.xml:1801(para) xml/cut-assertions.xml:1827(para)
+#: xml/cut-assertions.xml:1853(para) xml/cut-assertions.xml:1879(para)
+#: xml/cut-assertions.xml:1905(para) xml/cut-assertions.xml:1931(para)
+#: xml/cut-assertions.xml:1957(para) xml/cut-assertions.xml:1977(para)
+#: xml/cut-assertions.xml:1999(para) xml/cut-assertions.xml:2021(para)
+#: xml/cut-assertions.xml:2044(para) xml/cut-assertions.xml:2161(para)
+#: xml/cut-assertions.xml:2248(para) xml/cut-assertions.xml:2269(para)
+#: xml/cppcutter.xml:144(para) xml/cppcut-assertions.xml:45(para)
 msgid "e.g.: <placeholder-1/>"
 msgstr "例: <placeholder-1/>"
 
@@ -2873,13 +2873,13 @@ msgid "gpointer"
 msgstr ""
 
 #: xml/gcut-types.xml:22(link) xml/gcut-types.xml:58(title)
-#: xml/gcut-types.xml:59(primary) xml/api-index-full.xml:379(link)
+#: xml/gcut-types.xml:59(primary) xml/api-index-full.xml:380(link)
 #: xml/api-index-1.0.7.xml:25(link)
 msgid "GCUT_TYPE_ERROR"
 msgstr ""
 
 #: xml/gcut-types.xml:23(link) xml/gcut-types.xml:67(primary)
-#: xml/api-index-full.xml:305(link) xml/api-index-1.0.7.xml:24(link)
+#: xml/api-index-full.xml:306(link) xml/api-index-1.0.7.xml:24(link)
 msgid "gcut_error_get_type"
 msgstr ""
 
@@ -2912,7 +2912,7 @@ msgstr ""
 #: xml/gcut-assertions-helper.xml:30(returnvalue)
 #: xml/gcut-assertions-helper.xml:69(returnvalue)
 #: xml/gcut-assertions-helper.xml:70(returnvalue)
-#: xml/api-index-full.xml:195(link) xml/api-index-1.0.6.xml:16(link)
+#: xml/api-index-full.xml:196(link) xml/api-index-1.0.6.xml:16(link)
 msgid "GCutInspectFunction"
 msgstr ""
 
@@ -3053,12 +3053,12 @@ msgid "Utilities to write tests more easily with GLib support."
 msgstr "テストをもっと簡単に書くためのGLibサポート付きユーティリティ。"
 
 #: xml/gcut-test-utils.xml:20(link) xml/gcut-test-utils.xml:65(primary)
-#: xml/api-index-full.xml:378(link) xml/api-index-1.0.3.xml:22(link)
+#: xml/api-index-full.xml:379(link) xml/api-index-1.0.3.xml:22(link)
 msgid "gcut_take_object"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:21(link) xml/gcut-test-utils.xml:79(primary)
-#: xml/api-index-full.xml:370(link) xml/api-index-1.0.3.xml:20(link)
+#: xml/api-index-full.xml:371(link) xml/api-index-1.0.3.xml:20(link)
 msgid "gcut_take_error"
 msgstr ""
 
@@ -3117,7 +3117,7 @@ msgid "GList"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:22(link) xml/gcut-test-utils.xml:95(primary)
-#: xml/api-index-full.xml:372(link) xml/api-index-1.0.3.xml:21(link)
+#: xml/api-index-full.xml:373(link) xml/api-index-1.0.3.xml:21(link)
 msgid "gcut_take_list"
 msgstr ""
 
@@ -3152,62 +3152,62 @@ msgid "GHashTable"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:24(link) xml/gcut-test-utils.xml:116(primary)
-#: xml/api-index-full.xml:371(link) xml/api-index-1.0.4.xml:10(link)
+#: xml/api-index-full.xml:372(link) xml/api-index-1.0.4.xml:10(link)
 msgid "gcut_take_hash_table"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:25(link) xml/gcut-test-utils.xml:132(primary)
-#: xml/api-index-full.xml:345(link) xml/api-index-1.1.1.xml:14(link)
+#: xml/api-index-full.xml:346(link) xml/api-index-1.1.1.xml:14(link)
 msgid "gcut_list_new"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:27(link) xml/gcut-test-utils.xml:161(primary)
-#: xml/api-index-full.xml:351(link) xml/api-index-1.0.3.xml:19(link)
+#: xml/api-index-full.xml:352(link) xml/api-index-1.0.3.xml:19(link)
 msgid "gcut_list_string_new"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:29(link) xml/gcut-test-utils.xml:180(primary)
-#: xml/api-index-full.xml:352(link) xml/api-index-1.0.6.xml:70(link)
+#: xml/api-index-full.xml:353(link) xml/api-index-1.0.6.xml:70(link)
 msgid "gcut_list_string_new_array"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:30(link) xml/gcut-test-utils.xml:195(primary)
-#: xml/api-index-full.xml:375(link) xml/api-index-1.0.5.xml:51(link)
+#: xml/api-index-full.xml:376(link) xml/api-index-1.0.5.xml:51(link)
 msgid "gcut_take_new_list_string"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:32(link) xml/gcut-test-utils.xml:215(primary)
-#: xml/api-index-full.xml:377(link) xml/api-index-deprecated.xml:32(link)
+#: xml/api-index-full.xml:378(link) xml/api-index-deprecated.xml:32(link)
 msgid "gcut_take_new_list_string_backward_compatibility"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:33(link) xml/gcut-test-utils.xml:229(primary)
-#: xml/api-index-full.xml:376(link) xml/api-index-1.0.6.xml:71(link)
+#: xml/api-index-full.xml:377(link) xml/api-index-1.0.6.xml:71(link)
 msgid "gcut_take_new_list_string_array"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:34(link) xml/gcut-test-utils.xml:245(primary)
-#: xml/api-index-full.xml:374(link) xml/api-index-1.1.1.xml:16(link)
+#: xml/api-index-full.xml:375(link) xml/api-index-1.1.1.xml:16(link)
 msgid "gcut_take_new_list_object"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:36(link) xml/gcut-test-utils.xml:265(primary)
-#: xml/api-index-full.xml:349(link) xml/api-index-1.0.3.xml:18(link)
+#: xml/api-index-full.xml:350(link) xml/api-index-1.0.3.xml:18(link)
 msgid "gcut_list_string_free"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:37(link) xml/gcut-test-utils.xml:276(primary)
-#: xml/api-index-full.xml:346(link) xml/api-index-1.1.1.xml:15(link)
+#: xml/api-index-full.xml:347(link) xml/api-index-1.1.1.xml:15(link)
 msgid "gcut_list_object_free"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:38(link) xml/gcut-test-utils.xml:288(primary)
-#: xml/api-index-full.xml:316(link) xml/api-index-1.0.4.xml:9(link)
+#: xml/api-index-full.xml:317(link) xml/api-index-1.0.4.xml:9(link)
 msgid "gcut_hash_table_string_string_new"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:40(link) xml/gcut-test-utils.xml:312(primary)
-#: xml/api-index-full.xml:317(link) xml/api-index-1.0.5.xml:35(link)
+#: xml/api-index-full.xml:318(link) xml/api-index-1.0.5.xml:35(link)
 msgid "gcut_hash_table_string_string_new_va_list"
 msgstr ""
 
@@ -3217,7 +3217,7 @@ msgid "va_list"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:43(link) xml/gcut-test-utils.xml:337(primary)
-#: xml/api-index-full.xml:373(link) xml/api-index-1.0.5.xml:50(link)
+#: xml/api-index-full.xml:374(link) xml/api-index-1.0.5.xml:50(link)
 msgid "gcut_take_new_hash_table_string_string"
 msgstr ""
 
@@ -3310,7 +3310,7 @@ msgstr ""
 #: xml/gcut-assertions.xml:187(para) xml/gcut-assertions.xml:259(para)
 #: xml/gcut-assertions.xml:298(para) xml/gcut-assertions.xml:317(para)
 #: xml/gcut-assertions.xml:503(para) xml/gcut-assertions.xml:553(para)
-#: xml/cutter.xml:290(para) xml/cut-helper.xml:428(para)
+#: xml/cutter.xml:291(para) xml/cut-helper.xml:428(para)
 msgid "Since 1.0.3"
 msgstr "1.0.3から"
 
@@ -3446,7 +3446,7 @@ msgstr ""
 
 #: xml/gcut-test-utils.xml:129(para) xml/gcut-test-utils.xml:309(para)
 #: xml/gcut-assertions.xml:488(para) xml/gcut-assertions.xml:588(para)
-#: xml/cutter.xml:345(para) xml/cutter.xml:386(para) xml/cutter.xml:399(para)
+#: xml/cutter.xml:346(para) xml/cutter.xml:387(para) xml/cutter.xml:400(para)
 #: xml/cut-multi-process.xml:113(para) xml/cut-multi-process.xml:138(para)
 #: xml/cut-multi-process.xml:154(para) xml/cut-multi-process.xml:169(para)
 #: xml/cut-multi-process.xml:181(para) xml/cut-multi-process.xml:197(para)
@@ -3811,7 +3811,7 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-test-utils.xml:323(term) xml/gcut-egg.xml:258(term)
-#: xml/gcut-dynamic-data.xml:144(term) xml/cutter.xml:428(term)
+#: xml/gcut-dynamic-data.xml:144(term) xml/cutter.xml:429(term)
 msgid "<parameter>args</parameter> :"
 msgstr ""
 
@@ -3881,17 +3881,17 @@ msgid "GIOChannel"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:19(link)
-#: xml/gcut-string-io-channel.xml:52(primary) xml/api-index-full.xml:365(link)
+#: xml/gcut-string-io-channel.xml:52(primary) xml/api-index-full.xml:366(link)
 msgid "gcut_string_io_channel_new"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:20(link)
-#: xml/gcut-string-io-channel.xml:64(primary) xml/api-index-full.xml:364(link)
+#: xml/gcut-string-io-channel.xml:64(primary) xml/api-index-full.xml:365(link)
 msgid "gcut_string_io_channel_get_string"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:21(link)
-#: xml/gcut-string-io-channel.xml:76(primary) xml/api-index-full.xml:359(link)
+#: xml/gcut-string-io-channel.xml:76(primary) xml/api-index-full.xml:360(link)
 msgid "gcut_string_io_channel_clear"
 msgstr ""
 
@@ -3904,48 +3904,48 @@ msgid "gsize"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:22(link)
-#: xml/gcut-string-io-channel.xml:86(primary) xml/api-index-full.xml:360(link)
+#: xml/gcut-string-io-channel.xml:86(primary) xml/api-index-full.xml:361(link)
 msgid "gcut_string_io_channel_get_buffer_limit"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:24(link)
-#: xml/gcut-string-io-channel.xml:99(primary) xml/api-index-full.xml:366(link)
+#: xml/gcut-string-io-channel.xml:99(primary) xml/api-index-full.xml:367(link)
 msgid "gcut_string_io_channel_set_buffer_limit"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:27(link)
 #: xml/gcut-string-io-channel.xml:114(primary)
-#: xml/api-index-full.xml:361(link)
+#: xml/api-index-full.xml:362(link)
 msgid "gcut_string_io_channel_get_limit"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:28(link)
 #: xml/gcut-string-io-channel.xml:126(primary)
-#: xml/api-index-full.xml:367(link)
+#: xml/api-index-full.xml:368(link)
 msgid "gcut_string_io_channel_set_limit"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:30(link)
 #: xml/gcut-string-io-channel.xml:140(primary)
-#: xml/api-index-full.xml:363(link)
+#: xml/api-index-full.xml:364(link)
 msgid "gcut_string_io_channel_get_read_fail"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:32(link)
 #: xml/gcut-string-io-channel.xml:153(primary)
-#: xml/api-index-full.xml:369(link)
+#: xml/api-index-full.xml:370(link)
 msgid "gcut_string_io_channel_set_read_fail"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:35(link)
 #: xml/gcut-string-io-channel.xml:168(primary)
-#: xml/api-index-full.xml:362(link)
+#: xml/api-index-full.xml:363(link)
 msgid "gcut_string_io_channel_get_pipe_mode"
 msgstr ""
 
 #: xml/gcut-string-io-channel.xml:37(link)
 #: xml/gcut-string-io-channel.xml:181(primary)
-#: xml/api-index-full.xml:368(link)
+#: xml/api-index-full.xml:369(link)
 msgid "gcut_string_io_channel_set_pipe_mode"
 msgstr ""
 
@@ -4126,7 +4126,7 @@ msgid "gcut-public"
 msgstr ""
 
 #: xml/gcut-public.xml:19(link) xml/gcut-public.xml:40(primary)
-#: xml/api-index-full.xml:527(link)
+#: xml/api-index-full.xml:528(link)
 msgid "cut_test_context_take_g_object"
 msgstr ""
 
@@ -4137,17 +4137,17 @@ msgid "CutTestContext"
 msgstr ""
 
 #: xml/gcut-public.xml:21(link) xml/gcut-public.xml:56(primary)
-#: xml/api-index-full.xml:524(link)
+#: xml/api-index-full.xml:525(link)
 msgid "cut_test_context_take_g_error"
 msgstr ""
 
 #: xml/gcut-public.xml:23(link) xml/gcut-public.xml:72(primary)
-#: xml/api-index-full.xml:526(link)
+#: xml/api-index-full.xml:527(link)
 msgid "cut_test_context_take_g_list"
 msgstr ""
 
 #: xml/gcut-public.xml:26(link) xml/gcut-public.xml:92(primary)
-#: xml/api-index-full.xml:525(link)
+#: xml/api-index-full.xml:526(link)
 msgid "cut_test_context_take_g_hash_table"
 msgstr ""
 
@@ -4227,17 +4227,17 @@ msgstr ""
 "くためのユーティリティ。"
 
 #: xml/gcut-object.xml:20(link) xml/gcut-object.xml:45(primary)
-#: xml/api-index-full.xml:355(link) xml/api-index-1.0.5.xml:47(link)
+#: xml/api-index-full.xml:356(link) xml/api-index-1.0.5.xml:47(link)
 msgid "gcut_object_equal"
 msgstr ""
 
 #: xml/gcut-object.xml:23(link) xml/gcut-object.xml:71(primary)
-#: xml/api-index-full.xml:356(link) xml/api-index-1.0.5.xml:48(link)
+#: xml/api-index-full.xml:357(link) xml/api-index-1.0.5.xml:48(link)
 msgid "gcut_object_inspect"
 msgstr ""
 
 #: xml/gcut-object.xml:24(link) xml/gcut-object.xml:86(primary)
-#: xml/api-index-full.xml:357(link) xml/api-index-1.0.5.xml:49(link)
+#: xml/api-index-full.xml:358(link) xml/api-index-1.0.5.xml:49(link)
 msgid "gcut_object_inspect_custom"
 msgstr ""
 
@@ -4375,22 +4375,22 @@ msgid "gcut-main"
 msgstr ""
 
 #: xml/gcut-main.xml:19(link) xml/gcut-main.xml:35(primary)
-#: xml/api-index-full.xml:318(link)
+#: xml/api-index-full.xml:319(link)
 msgid "gcut_init"
 msgstr ""
 
 #: xml/gcut-main.xml:20(link) xml/gcut-main.xml:41(primary)
-#: xml/api-index-full.xml:381(link)
+#: xml/api-index-full.xml:382(link)
 msgid "gcut_value_equal_init"
 msgstr ""
 
 #: xml/gcut-main.xml:21(link) xml/gcut-main.xml:47(primary)
-#: xml/api-index-full.xml:358(link)
+#: xml/api-index-full.xml:359(link)
 msgid "gcut_quit"
 msgstr ""
 
 #: xml/gcut-main.xml:22(link) xml/gcut-main.xml:53(primary)
-#: xml/api-index-full.xml:382(link)
+#: xml/api-index-full.xml:383(link)
 msgid "gcut_value_equal_quit"
 msgstr ""
 
@@ -4452,110 +4452,110 @@ msgstr ""
 "ためのユーティリティ。"
 
 #: xml/gcut-list.xml:20(link) xml/gcut-list.xml:67(primary)
-#: xml/api-index-full.xml:331(link) xml/api-index-1.0.5.xml:37(link)
+#: xml/api-index-full.xml:332(link) xml/api-index-1.0.5.xml:37(link)
 msgid "gcut_list_equal"
 msgstr ""
 
 #: xml/gcut-list.xml:23(link) xml/gcut-list.xml:97(primary)
-#: xml/api-index-full.xml:336(link) xml/api-index-1.0.5.xml:39(link)
+#: xml/api-index-full.xml:337(link) xml/api-index-1.0.5.xml:39(link)
 msgid "gcut_list_inspect"
 msgstr ""
 
 #: xml/gcut-list.xml:26(link) xml/gcut-list.xml:127(primary)
-#: xml/api-index-full.xml:332(link) xml/api-index-1.0.6.xml:61(link)
+#: xml/api-index-full.xml:333(link) xml/api-index-1.0.6.xml:61(link)
 msgid "gcut_list_equal_int"
 msgstr ""
 
 #: xml/gcut-list.xml:28(link) xml/gcut-list.xml:147(primary)
-#: xml/api-index-full.xml:339(link) xml/api-index-1.0.6.xml:66(link)
+#: xml/api-index-full.xml:340(link) xml/api-index-1.0.6.xml:66(link)
 msgid "gcut_list_inspect_int"
 msgstr ""
 
 #: xml/gcut-list.xml:29(link) xml/gcut-list.xml:162(primary)
-#: xml/api-index-full.xml:334(link) xml/api-index-1.0.6.xml:63(link)
+#: xml/api-index-full.xml:335(link) xml/api-index-1.0.6.xml:63(link)
 msgid "gcut_list_equal_uint"
 msgstr ""
 
 #: xml/gcut-list.xml:31(link) xml/gcut-list.xml:182(primary)
-#: xml/api-index-full.xml:342(link) xml/api-index-1.0.6.xml:69(link)
+#: xml/api-index-full.xml:343(link) xml/api-index-1.0.6.xml:69(link)
 msgid "gcut_list_inspect_uint"
 msgstr ""
 
 #: xml/gcut-list.xml:32(link) xml/gcut-list.xml:197(primary)
-#: xml/api-index-full.xml:333(link) xml/api-index-1.0.6.xml:62(link)
+#: xml/api-index-full.xml:334(link) xml/api-index-1.0.6.xml:62(link)
 msgid "gcut_list_equal_string"
 msgstr ""
 
 #: xml/gcut-list.xml:34(link) xml/gcut-list.xml:217(primary)
-#: xml/api-index-full.xml:341(link) xml/api-index-1.0.6.xml:68(link)
+#: xml/api-index-full.xml:342(link) xml/api-index-1.0.6.xml:68(link)
 msgid "gcut_list_inspect_string"
 msgstr ""
 
 #: xml/gcut-list.xml:35(link) xml/gcut-list.xml:232(primary)
-#: xml/api-index-full.xml:340(link) xml/api-index-1.0.6.xml:67(link)
+#: xml/api-index-full.xml:341(link) xml/api-index-1.0.6.xml:67(link)
 msgid "gcut_list_inspect_object"
 msgstr ""
 
 #: xml/gcut-list.xml:36(link) xml/gcut-list.xml:247(primary)
-#: xml/api-index-full.xml:337(link) xml/api-index-1.0.6.xml:64(link)
+#: xml/api-index-full.xml:338(link) xml/api-index-1.0.6.xml:64(link)
 msgid "gcut_list_inspect_enum"
 msgstr ""
 
 #: xml/gcut-list.xml:38(link) xml/gcut-list.xml:267(primary)
-#: xml/api-index-full.xml:338(link) xml/api-index-1.0.6.xml:65(link)
+#: xml/api-index-full.xml:339(link) xml/api-index-1.0.6.xml:65(link)
 msgid "gcut_list_inspect_flags"
 msgstr ""
 
 #: xml/gcut-list.xml:40(link) xml/gcut-list.xml:287(primary)
-#: xml/api-index-full.xml:343(link) xml/api-index-deprecated.xml:25(link)
+#: xml/api-index-full.xml:344(link) xml/api-index-deprecated.xml:25(link)
 #: xml/api-index-1.0.5.xml:40(link)
 msgid "gcut_list_int_equal"
 msgstr ""
 
 #: xml/gcut-list.xml:41(link) xml/gcut-list.xml:307(primary)
-#: xml/api-index-full.xml:344(link) xml/api-index-deprecated.xml:26(link)
+#: xml/api-index-full.xml:345(link) xml/api-index-deprecated.xml:26(link)
 #: xml/api-index-1.0.5.xml:41(link)
 msgid "gcut_list_int_inspect"
 msgstr ""
 
 #: xml/gcut-list.xml:42(link) xml/gcut-list.xml:323(primary)
-#: xml/api-index-full.xml:353(link) xml/api-index-deprecated.xml:30(link)
+#: xml/api-index-full.xml:354(link) xml/api-index-deprecated.xml:30(link)
 #: xml/api-index-1.0.5.xml:45(link)
 msgid "gcut_list_uint_equal"
 msgstr ""
 
 #: xml/gcut-list.xml:43(link) xml/gcut-list.xml:343(primary)
-#: xml/api-index-full.xml:354(link) xml/api-index-deprecated.xml:31(link)
+#: xml/api-index-full.xml:355(link) xml/api-index-deprecated.xml:31(link)
 #: xml/api-index-1.0.5.xml:46(link)
 msgid "gcut_list_uint_inspect"
 msgstr ""
 
 #: xml/gcut-list.xml:44(link) xml/gcut-list.xml:359(primary)
-#: xml/api-index-full.xml:348(link) xml/api-index-deprecated.xml:28(link)
+#: xml/api-index-full.xml:349(link) xml/api-index-deprecated.xml:28(link)
 #: xml/api-index-1.0.5.xml:43(link)
 msgid "gcut_list_string_equal"
 msgstr ""
 
 #: xml/gcut-list.xml:45(link) xml/gcut-list.xml:379(primary)
-#: xml/api-index-full.xml:350(link) xml/api-index-deprecated.xml:29(link)
+#: xml/api-index-full.xml:351(link) xml/api-index-deprecated.xml:29(link)
 #: xml/api-index-1.0.5.xml:44(link)
 msgid "gcut_list_string_inspect"
 msgstr ""
 
 #: xml/gcut-list.xml:46(link) xml/gcut-list.xml:395(primary)
-#: xml/api-index-full.xml:347(link) xml/api-index-deprecated.xml:27(link)
+#: xml/api-index-full.xml:348(link) xml/api-index-deprecated.xml:27(link)
 #: xml/api-index-1.0.5.xml:42(link)
 msgid "gcut_list_object_inspect"
 msgstr ""
 
 #: xml/gcut-list.xml:47(link) xml/gcut-list.xml:411(primary)
-#: xml/api-index-full.xml:330(link) xml/api-index-deprecated.xml:23(link)
+#: xml/api-index-full.xml:331(link) xml/api-index-deprecated.xml:23(link)
 #: xml/api-index-1.0.5.xml:36(link)
 msgid "gcut_list_enum_inspect"
 msgstr ""
 
 #: xml/gcut-list.xml:48(link) xml/gcut-list.xml:431(primary)
-#: xml/api-index-full.xml:335(link) xml/api-index-deprecated.xml:24(link)
+#: xml/api-index-full.xml:336(link) xml/api-index-deprecated.xml:24(link)
 #: xml/api-index-1.0.5.xml:38(link)
 msgid "gcut_list_flags_inspect"
 msgstr ""
@@ -5222,7 +5222,7 @@ msgid "gint"
 msgstr ""
 
 #: xml/gcut-key-file.xml:19(link) xml/gcut-key-file.xml:41(primary)
-#: xml/api-index-full.xml:328(link)
+#: xml/api-index-full.xml:329(link)
 msgid "gcut_key_file_get_enum"
 msgstr ""
 
@@ -5231,7 +5231,7 @@ msgid "GKeyFile"
 msgstr ""
 
 #: xml/gcut-key-file.xml:24(link) xml/gcut-key-file.xml:69(primary)
-#: xml/api-index-full.xml:329(link)
+#: xml/api-index-full.xml:330(link)
 msgid "gcut_key_file_get_flags"
 msgstr ""
 
@@ -5303,7 +5303,7 @@ msgid "gcut-io"
 msgstr ""
 
 #: xml/gcut-io.xml:19(link) xml/gcut-io.xml:32(primary)
-#: xml/api-index-full.xml:327(link)
+#: xml/api-index-full.xml:328(link)
 msgid "gcut_io_inspect_condition"
 msgstr ""
 
@@ -5338,42 +5338,42 @@ msgid "Functions to inspect an object for debugging."
 msgstr "デバッグ用にオブジェクトの詳細を示す関数です。"
 
 #: xml/gcut-inspect.xml:20(link) xml/gcut-inspect.xml:59(primary)
-#: xml/api-index-full.xml:319(link) xml/api-index-1.0.6.xml:53(link)
+#: xml/api-index-full.xml:320(link) xml/api-index-1.0.6.xml:53(link)
 msgid "gcut_inspect_direct"
 msgstr ""
 
 #: xml/gcut-inspect.xml:23(link) xml/gcut-inspect.xml:84(primary)
-#: xml/api-index-full.xml:322(link) xml/api-index-1.0.6.xml:56(link)
+#: xml/api-index-full.xml:323(link) xml/api-index-1.0.6.xml:56(link)
 msgid "gcut_inspect_int"
 msgstr ""
 
 #: xml/gcut-inspect.xml:26(link) xml/gcut-inspect.xml:109(primary)
-#: xml/api-index-full.xml:326(link) xml/api-index-1.0.6.xml:60(link)
+#: xml/api-index-full.xml:327(link) xml/api-index-1.0.6.xml:60(link)
 msgid "gcut_inspect_uint"
 msgstr ""
 
 #: xml/gcut-inspect.xml:29(link) xml/gcut-inspect.xml:134(primary)
-#: xml/api-index-full.xml:324(link) xml/api-index-1.0.6.xml:58(link)
+#: xml/api-index-full.xml:325(link) xml/api-index-1.0.6.xml:58(link)
 msgid "gcut_inspect_string"
 msgstr ""
 
 #: xml/gcut-inspect.xml:32(link) xml/gcut-inspect.xml:159(primary)
-#: xml/api-index-full.xml:325(link) xml/api-index-1.0.6.xml:59(link)
+#: xml/api-index-full.xml:326(link) xml/api-index-1.0.6.xml:59(link)
 msgid "gcut_inspect_type"
 msgstr ""
 
 #: xml/gcut-inspect.xml:35(link) xml/gcut-inspect.xml:184(primary)
-#: xml/api-index-full.xml:321(link) xml/api-index-1.0.6.xml:55(link)
+#: xml/api-index-full.xml:322(link) xml/api-index-1.0.6.xml:55(link)
 msgid "gcut_inspect_flags"
 msgstr ""
 
 #: xml/gcut-inspect.xml:38(link) xml/gcut-inspect.xml:215(primary)
-#: xml/api-index-full.xml:320(link) xml/api-index-1.0.6.xml:54(link)
+#: xml/api-index-full.xml:321(link) xml/api-index-1.0.6.xml:54(link)
 msgid "gcut_inspect_enum"
 msgstr ""
 
 #: xml/gcut-inspect.xml:41(link) xml/gcut-inspect.xml:246(primary)
-#: xml/api-index-full.xml:323(link) xml/api-index-1.0.6.xml:57(link)
+#: xml/api-index-full.xml:324(link) xml/api-index-1.0.6.xml:57(link)
 msgid "gcut_inspect_pointer"
 msgstr "gcut_inspect_pointer"
 
@@ -5657,17 +5657,17 @@ msgstr ""
 "に書くためのユーティリティ。"
 
 #: xml/gcut-hash-table.xml:20(link) xml/gcut-hash-table.xml:55(primary)
-#: xml/api-index-full.xml:310(link) xml/api-index-1.0.5.xml:31(link)
+#: xml/api-index-full.xml:311(link) xml/api-index-1.0.5.xml:31(link)
 msgid "gcut_hash_table_equal"
 msgstr ""
 
 #: xml/gcut-hash-table.xml:23(link) xml/gcut-hash-table.xml:87(primary)
-#: xml/api-index-full.xml:311(link) xml/api-index-1.0.5.xml:32(link)
+#: xml/api-index-full.xml:312(link) xml/api-index-1.0.5.xml:32(link)
 msgid "gcut_hash_table_inspect"
 msgstr ""
 
 #: xml/gcut-hash-table.xml:27(link) xml/gcut-hash-table.xml:122(primary)
-#: xml/api-index-full.xml:312(link) xml/api-index-1.0.9.xml:13(link)
+#: xml/api-index-full.xml:313(link) xml/api-index-1.0.9.xml:13(link)
 msgid "gcut_hash_table_inspect_sorted"
 msgstr ""
 
@@ -5676,17 +5676,17 @@ msgid "GCompareFunc"
 msgstr ""
 
 #: xml/gcut-hash-table.xml:32(link) xml/gcut-hash-table.xml:166(primary)
-#: xml/api-index-full.xml:313(link) xml/api-index-1.0.5.xml:33(link)
+#: xml/api-index-full.xml:314(link) xml/api-index-1.0.5.xml:33(link)
 msgid "gcut_hash_table_string_equal"
 msgstr ""
 
 #: xml/gcut-hash-table.xml:34(link) xml/gcut-hash-table.xml:187(primary)
-#: xml/api-index-full.xml:315(link) xml/api-index-1.0.5.xml:34(link)
+#: xml/api-index-full.xml:316(link) xml/api-index-1.0.5.xml:34(link)
 msgid "gcut_hash_table_string_string_inspect"
 msgstr ""
 
 #: xml/gcut-hash-table.xml:36(link) xml/gcut-hash-table.xml:204(primary)
-#: xml/api-index-full.xml:314(link) xml/api-index-1.0.8.xml:7(link)
+#: xml/api-index-full.xml:315(link) xml/api-index-1.0.8.xml:7(link)
 msgid "gcut_hash_table_string_string_copy"
 msgstr ""
 
@@ -5990,12 +5990,12 @@ msgstr ""
 "くためのユーティリティ。"
 
 #: xml/gcut-error.xml:20(link) xml/gcut-error.xml:41(primary)
-#: xml/api-index-full.xml:304(link) xml/api-index-1.0.5.xml:28(link)
+#: xml/api-index-full.xml:305(link) xml/api-index-1.0.5.xml:28(link)
 msgid "gcut_error_equal"
 msgstr ""
 
 #: xml/gcut-error.xml:22(link) xml/gcut-error.xml:60(primary)
-#: xml/api-index-full.xml:306(link) xml/api-index-1.0.5.xml:29(link)
+#: xml/api-index-full.xml:307(link) xml/api-index-1.0.5.xml:29(link)
 msgid "gcut_error_inspect"
 msgstr ""
 
@@ -6106,7 +6106,7 @@ msgstr ""
 "ティ。"
 
 #: xml/gcut-enum.xml:20(link) xml/gcut-enum.xml:52(title)
-#: xml/gcut-enum.xml:53(primary) xml/api-index-full.xml:300(link)
+#: xml/gcut-enum.xml:53(primary) xml/api-index-full.xml:301(link)
 #: xml/api-index-1.0.6.xml:49(link)
 msgid "GCUT_ENUM_ERROR"
 msgstr ""
@@ -6117,37 +6117,37 @@ msgid "GQuark"
 msgstr ""
 
 #: xml/gcut-enum.xml:21(link) xml/gcut-enum.xml:62(primary)
-#: xml/api-index-full.xml:301(link)
+#: xml/api-index-full.xml:302(link)
 msgid "gcut_enum_error_quark"
 msgstr ""
 
 #: xml/gcut-enum.xml:22(link) xml/gcut-enum.xml:71(primary)
-#: xml/api-index-full.xml:194(link) xml/api-index-1.0.6.xml:15(link)
+#: xml/api-index-full.xml:195(link) xml/api-index-1.0.6.xml:15(link)
 msgid "GCutEnumError"
 msgstr ""
 
 #: xml/gcut-enum.xml:23(link) xml/gcut-enum.xml:94(primary)
-#: xml/api-index-full.xml:302(link) xml/api-index-1.0.5.xml:27(link)
+#: xml/api-index-full.xml:303(link) xml/api-index-1.0.5.xml:27(link)
 msgid "gcut_enum_inspect"
 msgstr ""
 
 #: xml/gcut-enum.xml:25(link) xml/gcut-enum.xml:113(primary)
-#: xml/api-index-full.xml:303(link) xml/api-index-1.0.6.xml:50(link)
+#: xml/api-index-full.xml:304(link) xml/api-index-1.0.6.xml:50(link)
 msgid "gcut_enum_parse"
 msgstr ""
 
 #: xml/gcut-enum.xml:28(link) xml/gcut-enum.xml:138(primary)
-#: xml/api-index-full.xml:308(link) xml/api-index-1.0.5.xml:30(link)
+#: xml/api-index-full.xml:309(link) xml/api-index-1.0.5.xml:30(link)
 msgid "gcut_flags_inspect"
 msgstr ""
 
 #: xml/gcut-enum.xml:30(link) xml/gcut-enum.xml:157(primary)
-#: xml/api-index-full.xml:309(link) xml/api-index-1.0.6.xml:52(link)
+#: xml/api-index-full.xml:310(link) xml/api-index-1.0.6.xml:52(link)
 msgid "gcut_flags_parse"
 msgstr ""
 
 #: xml/gcut-enum.xml:33(link) xml/gcut-enum.xml:183(primary)
-#: xml/api-index-full.xml:307(link) xml/api-index-1.0.6.xml:51(link)
+#: xml/api-index-full.xml:308(link) xml/api-index-1.0.6.xml:51(link)
 msgid "gcut_flags_get_all"
 msgstr ""
 
@@ -6414,7 +6414,7 @@ msgid "Convenience API for using external command."
 msgstr "外部コマンドを使うための便利API"
 
 #: xml/gcut-egg.xml:20(link) xml/gcut-egg.xml:161(title)
-#: xml/gcut-egg.xml:162(primary) xml/api-index-full.xml:279(link)
+#: xml/gcut-egg.xml:162(primary) xml/api-index-full.xml:280(link)
 msgid "GCUT_EGG_ERROR"
 msgstr ""
 
@@ -6429,42 +6429,42 @@ msgstr ""
 #: xml/gcut-egg.xml:52(returnvalue) xml/gcut-egg.xml:53(returnvalue)
 #: xml/gcut-egg.xml:54(returnvalue) xml/gcut-egg.xml:56(returnvalue)
 #: xml/gcut-egg.xml:58(returnvalue) xml/gcut-egg.xml:168(title)
-#: xml/gcut-egg.xml:169(primary) xml/api-index-full.xml:187(link)
+#: xml/gcut-egg.xml:169(primary) xml/api-index-full.xml:188(link)
 msgid "GCutEgg"
 msgstr ""
 
 #: xml/gcut-egg.xml:22(link) xml/gcut-egg.xml:175(primary)
-#: xml/api-index-full.xml:193(link) xml/api-index-1.0.6.xml:14(link)
+#: xml/api-index-full.xml:194(link) xml/api-index-1.0.6.xml:14(link)
 msgid "GCutEggError"
 msgstr ""
 
 #: xml/gcut-egg.xml:23(link) xml/gcut-egg.xml:222(primary)
-#: xml/api-index-full.xml:280(link)
+#: xml/api-index-full.xml:281(link)
 msgid "gcut_egg_error_quark"
 msgstr ""
 
 #: xml/gcut-egg.xml:24(link) xml/gcut-egg.xml:231(primary)
-#: xml/api-index-full.xml:290(link) xml/api-index-1.0.6.xml:39(link)
+#: xml/api-index-full.xml:291(link) xml/api-index-1.0.6.xml:39(link)
 msgid "gcut_egg_new"
 msgstr ""
 
 #: xml/gcut-egg.xml:26(link) xml/gcut-egg.xml:249(primary)
-#: xml/api-index-full.xml:294(link) xml/api-index-1.0.6.xml:43(link)
+#: xml/api-index-full.xml:295(link) xml/api-index-1.0.6.xml:43(link)
 msgid "gcut_egg_new_va_list"
 msgstr ""
 
 #: xml/gcut-egg.xml:28(link) xml/gcut-egg.xml:267(primary)
-#: xml/api-index-full.xml:291(link) xml/api-index-1.0.6.xml:40(link)
+#: xml/api-index-full.xml:292(link) xml/api-index-1.0.6.xml:40(link)
 msgid "gcut_egg_new_argv"
 msgstr ""
 
 #: xml/gcut-egg.xml:30(link) xml/gcut-egg.xml:286(primary)
-#: xml/api-index-full.xml:293(link) xml/api-index-1.0.6.xml:42(link)
+#: xml/api-index-full.xml:294(link) xml/api-index-1.0.6.xml:42(link)
 msgid "gcut_egg_new_strings"
 msgstr ""
 
 #: xml/gcut-egg.xml:31(link) xml/gcut-egg.xml:301(primary)
-#: xml/api-index-full.xml:292(link) xml/api-index-1.0.6.xml:41(link)
+#: xml/api-index-full.xml:293(link) xml/api-index-1.0.6.xml:41(link)
 msgid "gcut_egg_new_array"
 msgstr ""
 
@@ -6473,7 +6473,7 @@ msgid "GArray"
 msgstr ""
 
 #: xml/gcut-egg.xml:32(link) xml/gcut-egg.xml:316(primary)
-#: xml/api-index-full.xml:296(link) xml/api-index-1.0.6.xml:45(link)
+#: xml/api-index-full.xml:297(link) xml/api-index-1.0.6.xml:45(link)
 msgid "gcut_egg_set_flags"
 msgstr ""
 
@@ -6482,32 +6482,32 @@ msgid "GSpawnFlags"
 msgstr ""
 
 #: xml/gcut-egg.xml:34(link) xml/gcut-egg.xml:331(primary)
-#: xml/api-index-full.xml:283(link) xml/api-index-1.0.6.xml:32(link)
+#: xml/api-index-full.xml:284(link) xml/api-index-1.0.6.xml:32(link)
 msgid "gcut_egg_get_flags"
 msgstr ""
 
 #: xml/gcut-egg.xml:35(link) xml/gcut-egg.xml:345(primary)
-#: xml/api-index-full.xml:295(link) xml/api-index-1.0.6.xml:44(link)
+#: xml/api-index-full.xml:296(link) xml/api-index-1.0.6.xml:44(link)
 msgid "gcut_egg_set_env"
 msgstr ""
 
 #: xml/gcut-egg.xml:38(link) xml/gcut-egg.xml:365(primary)
-#: xml/api-index-full.xml:281(link) xml/api-index-1.0.6.xml:30(link)
+#: xml/api-index-full.xml:282(link) xml/api-index-1.0.6.xml:30(link)
 msgid "gcut_egg_get_env"
 msgstr ""
 
 #: xml/gcut-egg.xml:39(link) xml/gcut-egg.xml:382(primary)
-#: xml/api-index-full.xml:288(link) xml/api-index-1.0.6.xml:37(link)
+#: xml/api-index-full.xml:289(link) xml/api-index-1.0.6.xml:37(link)
 msgid "gcut_egg_hatch"
 msgstr ""
 
 #: xml/gcut-egg.xml:41(link) xml/gcut-egg.xml:400(primary)
-#: xml/api-index-full.xml:278(link) xml/api-index-1.0.6.xml:29(link)
+#: xml/api-index-full.xml:279(link) xml/api-index-1.0.6.xml:29(link)
 msgid "gcut_egg_close"
 msgstr ""
 
 #: xml/gcut-egg.xml:42(link) xml/gcut-egg.xml:412(primary)
-#: xml/api-index-full.xml:299(link) xml/api-index-1.0.6.xml:48(link)
+#: xml/api-index-full.xml:300(link) xml/api-index-1.0.6.xml:48(link)
 msgid "gcut_egg_write"
 msgstr ""
 
@@ -6523,42 +6523,42 @@ msgid "GPid"
 msgstr ""
 
 #: xml/gcut-egg.xml:46(link) xml/gcut-egg.xml:438(primary)
-#: xml/api-index-full.xml:287(link) xml/api-index-1.0.6.xml:36(link)
+#: xml/api-index-full.xml:288(link) xml/api-index-1.0.6.xml:36(link)
 msgid "gcut_egg_get_pid"
 msgstr ""
 
 #: xml/gcut-egg.xml:47(link) xml/gcut-egg.xml:454(primary)
-#: xml/api-index-full.xml:298(link) xml/api-index-1.0.6.xml:47(link)
+#: xml/api-index-full.xml:299(link) xml/api-index-1.0.6.xml:47(link)
 msgid "gcut_egg_wait"
 msgstr ""
 
 #: xml/gcut-egg.xml:50(link) xml/gcut-egg.xml:482(primary)
-#: xml/api-index-full.xml:289(link) xml/api-index-1.0.6.xml:38(link)
+#: xml/api-index-full.xml:290(link) xml/api-index-1.0.6.xml:38(link)
 msgid "gcut_egg_kill"
 msgstr ""
 
 #: xml/gcut-egg.xml:52(link) xml/gcut-egg.xml:497(primary)
-#: xml/api-index-full.xml:285(link) xml/api-index-1.0.6.xml:34(link)
+#: xml/api-index-full.xml:286(link) xml/api-index-1.0.6.xml:34(link)
 msgid "gcut_egg_get_input"
 msgstr ""
 
 #: xml/gcut-egg.xml:53(link) xml/gcut-egg.xml:513(primary)
-#: xml/api-index-full.xml:286(link) xml/api-index-1.0.6.xml:35(link)
+#: xml/api-index-full.xml:287(link) xml/api-index-1.0.6.xml:35(link)
 msgid "gcut_egg_get_output"
 msgstr ""
 
 #: xml/gcut-egg.xml:54(link) xml/gcut-egg.xml:529(primary)
-#: xml/api-index-full.xml:282(link) xml/api-index-1.0.6.xml:31(link)
+#: xml/api-index-full.xml:283(link) xml/api-index-1.0.6.xml:31(link)
 msgid "gcut_egg_get_error"
 msgstr ""
 
 #: xml/gcut-egg.xml:55(link) xml/gcut-egg.xml:545(primary)
-#: xml/api-index-full.xml:284(link) xml/api-index-1.0.6.xml:33(link)
+#: xml/api-index-full.xml:285(link) xml/api-index-1.0.6.xml:33(link)
 msgid "gcut_egg_get_forced_termination_wait_time"
 msgstr ""
 
 #: xml/gcut-egg.xml:57(link) xml/gcut-egg.xml:562(primary)
-#: xml/api-index-full.xml:297(link) xml/api-index-1.0.6.xml:46(link)
+#: xml/api-index-full.xml:298(link) xml/api-index-1.0.6.xml:46(link)
 msgid "gcut_egg_set_forced_termination_wait_time"
 msgstr ""
 
@@ -7384,7 +7384,7 @@ msgstr "タイムアウト時間（ミリ秒）"
 msgid "The <literal>\"command\"</literal> property"
 msgstr "<literal>\"command\"</literal>プロパティ"
 
-#: xml/gcut-egg.xml:583(primary) xml/api-index-full.xml:192(link)
+#: xml/gcut-egg.xml:583(primary) xml/api-index-full.xml:193(link)
 msgid "GCutEgg:command"
 msgstr ""
 
@@ -7405,7 +7405,7 @@ msgstr "シグナル詳細"
 msgid "The <literal>\"error\"</literal> signal"
 msgstr "<literal>\"error\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:590(primary) xml/api-index-full.xml:188(link)
+#: xml/gcut-egg.xml:590(primary) xml/api-index-full.xml:189(link)
 #: xml/api-index-1.0.6.xml:10(link)
 msgid "GCutEgg::error"
 msgstr ""
@@ -7446,7 +7446,7 @@ msgstr "シグナルハンドラが接続された時にユーザが指定した
 msgid "The <literal>\"error-received\"</literal> signal"
 msgstr "<literal>\"error-received\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:607(primary) xml/api-index-full.xml:189(link)
+#: xml/gcut-egg.xml:607(primary) xml/api-index-full.xml:190(link)
 #: xml/api-index-1.0.6.xml:11(link)
 msgid "GCutEgg::error-received"
 msgstr ""
@@ -7496,7 +7496,7 @@ msgstr ""
 msgid "The <literal>\"output-received\"</literal> signal"
 msgstr "<literal>\"output-received\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:636(primary) xml/api-index-full.xml:190(link)
+#: xml/gcut-egg.xml:636(primary) xml/api-index-full.xml:191(link)
 #: xml/api-index-1.0.6.xml:12(link)
 msgid "GCutEgg::output-received"
 msgstr ""
@@ -7515,7 +7515,7 @@ msgstr "外部プロセスの標準出力から読み込んだデータ。"
 msgid "The <literal>\"reaped\"</literal> signal"
 msgstr "<literal>\"reaped\"</literal>シグナル"
 
-#: xml/gcut-egg.xml:664(primary) xml/api-index-full.xml:191(link)
+#: xml/gcut-egg.xml:664(primary) xml/api-index-full.xml:192(link)
 #: xml/api-index-1.0.6.xml:13(link)
 msgid "GCutEgg::reaped"
 msgstr ""
@@ -7569,92 +7569,92 @@ msgstr "外部プロセスの終了ステータス。"
 #: xml/gcut-dynamic-data.xml:52(returnvalue)
 #: xml/gcut-dynamic-data.xml:55(returnvalue)
 #: xml/gcut-dynamic-data.xml:94(title) xml/gcut-dynamic-data.xml:95(primary)
-#: xml/api-index-full.xml:185(link)
+#: xml/api-index-full.xml:186(link)
 msgid "GCutDynamicData"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:19(link) xml/gcut-dynamic-data.xml:76(title)
-#: xml/gcut-dynamic-data.xml:77(primary) xml/api-index-full.xml:264(link)
+#: xml/gcut-dynamic-data.xml:77(primary) xml/api-index-full.xml:265(link)
 msgid "GCUT_DYNAMIC_DATA_ERROR"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:20(link) xml/gcut-dynamic-data.xml:84(primary)
-#: xml/api-index-full.xml:262(link)
+#: xml/api-index-full.xml:263(link)
 msgid "GCUT_DYNAMIC_DATA"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:22(link) xml/gcut-dynamic-data.xml:101(primary)
-#: xml/api-index-full.xml:186(link)
+#: xml/api-index-full.xml:187(link)
 msgid "GCutDynamicDataError"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:23(link) xml/gcut-dynamic-data.xml:111(primary)
-#: xml/api-index-full.xml:265(link)
+#: xml/api-index-full.xml:266(link)
 msgid "gcut_dynamic_data_error_quark"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:24(link) xml/gcut-dynamic-data.xml:120(primary)
-#: xml/api-index-full.xml:276(link)
+#: xml/api-index-full.xml:277(link)
 msgid "gcut_dynamic_data_new"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:26(link) xml/gcut-dynamic-data.xml:136(primary)
-#: xml/api-index-full.xml:277(link)
+#: xml/api-index-full.xml:278(link)
 msgid "gcut_dynamic_data_new_va_list"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:28(link) xml/gcut-dynamic-data.xml:152(primary)
-#: xml/api-index-full.xml:275(link)
+#: xml/api-index-full.xml:276(link)
 msgid "gcut_dynamic_data_inspect"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:29(link) xml/gcut-dynamic-data.xml:164(primary)
-#: xml/api-index-full.xml:263(link)
+#: xml/api-index-full.xml:264(link)
 msgid "gcut_dynamic_data_equal"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:31(link) xml/gcut-dynamic-data.xml:180(primary)
-#: xml/api-index-full.xml:273(link)
+#: xml/api-index-full.xml:274(link)
 msgid "gcut_dynamic_data_get_string"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:34(link) xml/gcut-dynamic-data.xml:200(primary)
-#: xml/api-index-full.xml:270(link)
+#: xml/api-index-full.xml:271(link)
 msgid "gcut_dynamic_data_get_int"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:37(link) xml/gcut-dynamic-data.xml:220(primary)
-#: xml/api-index-full.xml:274(link)
+#: xml/api-index-full.xml:275(link)
 msgid "gcut_dynamic_data_get_uint"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:40(link) xml/gcut-dynamic-data.xml:240(primary)
-#: xml/api-index-full.xml:267(link)
+#: xml/api-index-full.xml:268(link)
 msgid "gcut_dynamic_data_get_data_type"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:43(link) xml/gcut-dynamic-data.xml:260(primary)
-#: xml/api-index-full.xml:269(link)
+#: xml/api-index-full.xml:270(link)
 msgid "gcut_dynamic_data_get_flags"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:46(link) xml/gcut-dynamic-data.xml:280(primary)
-#: xml/api-index-full.xml:268(link)
+#: xml/api-index-full.xml:269(link)
 msgid "gcut_dynamic_data_get_enum"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:49(link) xml/gcut-dynamic-data.xml:300(primary)
-#: xml/api-index-full.xml:272(link)
+#: xml/api-index-full.xml:273(link)
 msgid "gcut_dynamic_data_get_pointer"
 msgstr "gcut_dynamic_data_get_pointer"
 
 #: xml/gcut-dynamic-data.xml:52(link) xml/gcut-dynamic-data.xml:320(primary)
-#: xml/api-index-full.xml:266(link)
+#: xml/api-index-full.xml:267(link)
 msgid "gcut_dynamic_data_get_boxed"
 msgstr ""
 
 #: xml/gcut-dynamic-data.xml:55(link) xml/gcut-dynamic-data.xml:340(primary)
-#: xml/api-index-full.xml:271(link)
+#: xml/api-index-full.xml:272(link)
 msgid "gcut_dynamic_data_get_object"
 msgstr ""
 
@@ -7944,52 +7944,52 @@ msgid "API to create test data without structure definition."
 msgstr "構造体定義なしでテストデータを作成するためのAPI。"
 
 #: xml/gcut-data.xml:20(link) xml/gcut-data.xml:57(primary)
-#: xml/api-index-full.xml:197(link) xml/api-index-1.0.6.xml:18(link)
+#: xml/api-index-full.xml:198(link) xml/api-index-1.0.6.xml:18(link)
 msgid "gcut_add_datum"
 msgstr ""
 
 #: xml/gcut-data.xml:23(link) xml/gcut-data.xml:240(primary)
-#: xml/api-index-full.xml:256(link) xml/api-index-1.0.6.xml:26(link)
+#: xml/api-index-full.xml:257(link) xml/api-index-1.0.6.xml:26(link)
 msgid "gcut_data_get_string"
 msgstr ""
 
 #: xml/gcut-data.xml:25(link) xml/gcut-data.xml:258(primary)
-#: xml/api-index-full.xml:250(link) xml/api-index-1.0.6.xml:24(link)
+#: xml/api-index-full.xml:251(link) xml/api-index-1.0.6.xml:24(link)
 msgid "gcut_data_get_int"
 msgstr ""
 
 #: xml/gcut-data.xml:27(link) xml/gcut-data.xml:276(primary)
-#: xml/api-index-full.xml:260(link) xml/api-index-1.0.6.xml:28(link)
+#: xml/api-index-full.xml:261(link) xml/api-index-1.0.6.xml:28(link)
 msgid "gcut_data_get_uint"
 msgstr ""
 
 #: xml/gcut-data.xml:29(link) xml/gcut-data.xml:295(primary)
-#: xml/api-index-full.xml:258(link) xml/api-index-1.0.6.xml:27(link)
+#: xml/api-index-full.xml:259(link) xml/api-index-1.0.6.xml:27(link)
 msgid "gcut_data_get_type"
 msgstr ""
 
 #: xml/gcut-data.xml:31(link) xml/gcut-data.xml:313(primary)
-#: xml/api-index-full.xml:248(link) xml/api-index-1.0.6.xml:23(link)
+#: xml/api-index-full.xml:249(link) xml/api-index-1.0.6.xml:23(link)
 msgid "gcut_data_get_flags"
 msgstr ""
 
 #: xml/gcut-data.xml:33(link) xml/gcut-data.xml:332(primary)
-#: xml/api-index-full.xml:246(link) xml/api-index-1.0.6.xml:22(link)
+#: xml/api-index-full.xml:247(link) xml/api-index-1.0.6.xml:22(link)
 msgid "gcut_data_get_enum"
 msgstr ""
 
 #: xml/gcut-data.xml:35(link) xml/gcut-data.xml:351(primary)
-#: xml/api-index-full.xml:254(link) xml/api-index-1.0.6.xml:25(link)
+#: xml/api-index-full.xml:255(link) xml/api-index-1.0.6.xml:25(link)
 msgid "gcut_data_get_pointer"
 msgstr ""
 
 #: xml/gcut-data.xml:37(link) xml/gcut-data.xml:370(primary)
-#: xml/api-index-full.xml:244(link) xml/api-index-1.0.7.xml:23(link)
+#: xml/api-index-full.xml:245(link) xml/api-index-1.0.7.xml:23(link)
 msgid "gcut_data_get_boxed"
 msgstr ""
 
 #: xml/gcut-data.xml:39(link) xml/gcut-data.xml:389(primary)
-#: xml/api-index-full.xml:252(link) xml/api-index-1.1.1.xml:13(link)
+#: xml/api-index-full.xml:253(link) xml/api-index-1.1.1.xml:13(link)
 msgid "gcut_data_get_object"
 msgstr ""
 
@@ -8465,7 +8465,7 @@ msgid "gcut-data-helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:19(link) xml/gcut-data-helper.xml:58(primary)
-#: xml/api-index-full.xml:257(link)
+#: xml/api-index-full.xml:258(link)
 msgid "gcut_data_get_string_helper"
 msgstr ""
 
@@ -8483,42 +8483,42 @@ msgid "CutCallbackFunction"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:22(link) xml/gcut-data-helper.xml:78(primary)
-#: xml/api-index-full.xml:251(link)
+#: xml/api-index-full.xml:252(link)
 msgid "gcut_data_get_int_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:25(link) xml/gcut-data-helper.xml:98(primary)
-#: xml/api-index-full.xml:261(link)
+#: xml/api-index-full.xml:262(link)
 msgid "gcut_data_get_uint_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:28(link) xml/gcut-data-helper.xml:118(primary)
-#: xml/api-index-full.xml:259(link)
+#: xml/api-index-full.xml:260(link)
 msgid "gcut_data_get_type_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:31(link) xml/gcut-data-helper.xml:138(primary)
-#: xml/api-index-full.xml:249(link)
+#: xml/api-index-full.xml:250(link)
 msgid "gcut_data_get_flags_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:34(link) xml/gcut-data-helper.xml:158(primary)
-#: xml/api-index-full.xml:247(link)
+#: xml/api-index-full.xml:248(link)
 msgid "gcut_data_get_enum_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:37(link) xml/gcut-data-helper.xml:178(primary)
-#: xml/api-index-full.xml:255(link)
+#: xml/api-index-full.xml:256(link)
 msgid "gcut_data_get_pointer_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:40(link) xml/gcut-data-helper.xml:198(primary)
-#: xml/api-index-full.xml:245(link)
+#: xml/api-index-full.xml:246(link)
 msgid "gcut_data_get_boxed_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:43(link) xml/gcut-data-helper.xml:218(primary)
-#: xml/api-index-full.xml:253(link)
+#: xml/api-index-full.xml:254(link)
 msgid "gcut_data_get_object_helper"
 msgstr ""
 
@@ -8676,7 +8676,7 @@ msgstr ""
 "GLibサポート付きであなたのプログラムが期待通りに動作しているかを検証します。"
 
 #: xml/gcut-assertions.xml:20(link) xml/gcut-assertions.xml:132(primary)
-#: xml/api-index-full.xml:232(link) xml/api-index-1.0.3.xml:14(link)
+#: xml/api-index-full.xml:233(link) xml/api-index-1.0.3.xml:14(link)
 msgid "gcut_assert_equal_type"
 msgstr ""
 
@@ -8686,7 +8686,7 @@ msgid "cut_assert_equal_g_type"
 msgstr ""
 
 #: xml/gcut-assertions.xml:26(link) xml/gcut-assertions.xml:171(primary)
-#: xml/api-index-full.xml:236(link) xml/api-index-1.0.3.xml:15(link)
+#: xml/api-index-full.xml:237(link) xml/api-index-1.0.3.xml:15(link)
 msgid "gcut_assert_equal_value"
 msgstr ""
 
@@ -8696,12 +8696,12 @@ msgid "cut_assert_equal_g_value"
 msgstr ""
 
 #: xml/gcut-assertions.xml:32(link) xml/gcut-assertions.xml:210(primary)
-#: xml/api-index-full.xml:210(link) xml/api-index-1.0.6.xml:20(link)
+#: xml/api-index-full.xml:211(link) xml/api-index-1.0.6.xml:20(link)
 msgid "gcut_assert_equal_list"
 msgstr ""
 
 #: xml/gcut-assertions.xml:38(link) xml/gcut-assertions.xml:243(primary)
-#: xml/api-index-full.xml:216(link) xml/api-index-1.0.3.xml:11(link)
+#: xml/api-index-full.xml:217(link) xml/api-index-1.0.3.xml:11(link)
 msgid "gcut_assert_equal_list_int"
 msgstr ""
 
@@ -8712,12 +8712,12 @@ msgid "cut_assert_equal_g_list_int"
 msgstr ""
 
 #: xml/gcut-assertions.xml:44(link) xml/gcut-assertions.xml:282(primary)
-#: xml/api-index-full.xml:223(link) xml/api-index-1.0.3.xml:13(link)
+#: xml/api-index-full.xml:224(link) xml/api-index-1.0.3.xml:13(link)
 msgid "gcut_assert_equal_list_uint"
 msgstr ""
 
 #: xml/gcut-assertions.xml:47(link) xml/gcut-assertions.xml:301(primary)
-#: xml/api-index-full.xml:221(link) xml/api-index-1.0.3.xml:12(link)
+#: xml/api-index-full.xml:222(link) xml/api-index-1.0.3.xml:12(link)
 msgid "gcut_assert_equal_list_string"
 msgstr ""
 
@@ -8728,37 +8728,37 @@ msgid "cut_assert_equal_g_list_string"
 msgstr ""
 
 #: xml/gcut-assertions.xml:53(link) xml/gcut-assertions.xml:340(primary)
-#: xml/api-index-full.xml:218(link) xml/api-index-1.0.5.xml:22(link)
+#: xml/api-index-full.xml:219(link) xml/api-index-1.0.5.xml:22(link)
 msgid "gcut_assert_equal_list_object"
 msgstr ""
 
 #: xml/gcut-assertions.xml:56(link) xml/gcut-assertions.xml:360(primary)
-#: xml/api-index-full.xml:219(link) xml/api-index-1.0.5.xml:23(link)
+#: xml/api-index-full.xml:220(link) xml/api-index-1.0.5.xml:23(link)
 msgid "gcut_assert_equal_list_object_custom"
 msgstr ""
 
 #: xml/gcut-assertions.xml:61(link) xml/gcut-assertions.xml:385(primary)
-#: xml/api-index-full.xml:211(link) xml/api-index-1.0.5.xml:20(link)
+#: xml/api-index-full.xml:212(link) xml/api-index-1.0.5.xml:20(link)
 msgid "gcut_assert_equal_list_enum"
 msgstr ""
 
 #: xml/gcut-assertions.xml:65(link) xml/gcut-assertions.xml:409(primary)
-#: xml/api-index-full.xml:213(link) xml/api-index-1.0.5.xml:21(link)
+#: xml/api-index-full.xml:214(link) xml/api-index-1.0.5.xml:21(link)
 msgid "gcut_assert_equal_list_flags"
 msgstr ""
 
 #: xml/gcut-assertions.xml:69(link) xml/gcut-assertions.xml:433(primary)
-#: xml/api-index-full.xml:204(link) xml/api-index-1.0.6.xml:19(link)
+#: xml/api-index-full.xml:205(link) xml/api-index-1.0.6.xml:19(link)
 msgid "gcut_assert_equal_hash_table"
 msgstr ""
 
 #: xml/gcut-assertions.xml:76(link) xml/gcut-assertions.xml:471(primary)
-#: xml/api-index-full.xml:206(link) xml/api-index-1.0.4.xml:7(link)
+#: xml/api-index-full.xml:207(link) xml/api-index-1.0.4.xml:7(link)
 msgid "gcut_assert_equal_hash_table_string_string"
 msgstr ""
 
 #: xml/gcut-assertions.xml:80(link) xml/gcut-assertions.xml:491(primary)
-#: xml/api-index-full.xml:238(link) xml/api-index-1.0.3.xml:16(link)
+#: xml/api-index-full.xml:239(link) xml/api-index-1.0.3.xml:16(link)
 msgid "gcut_assert_error"
 msgstr ""
 
@@ -8769,12 +8769,12 @@ msgid "cut_assert_g_error"
 msgstr ""
 
 #: xml/gcut-assertions.xml:84(link) xml/gcut-assertions.xml:522(primary)
-#: xml/api-index-full.xml:200(link) xml/api-index-1.0.5.xml:17(link)
+#: xml/api-index-full.xml:201(link) xml/api-index-1.0.5.xml:17(link)
 msgid "gcut_assert_equal_error"
 msgstr ""
 
 #: xml/gcut-assertions.xml:87(link) xml/gcut-assertions.xml:541(primary)
-#: xml/api-index-full.xml:242(link) xml/api-index-1.0.3.xml:17(link)
+#: xml/api-index-full.xml:243(link) xml/api-index-1.0.3.xml:17(link)
 msgid "gcut_assert_remove_path"
 msgstr ""
 
@@ -8785,7 +8785,7 @@ msgid "cut_assert_remove_path"
 msgstr ""
 
 #: xml/gcut-assertions.xml:91(link) xml/gcut-assertions.xml:572(primary)
-#: xml/api-index-full.xml:230(link) xml/api-index-1.0.4.xml:8(link)
+#: xml/api-index-full.xml:231(link) xml/api-index-1.0.4.xml:8(link)
 msgid "gcut_assert_equal_time_val"
 msgstr ""
 
@@ -8797,27 +8797,27 @@ msgid "GTimeVal"
 msgstr ""
 
 #: xml/gcut-assertions.xml:94(link) xml/gcut-assertions.xml:591(primary)
-#: xml/api-index-full.xml:198(link) xml/api-index-1.0.5.xml:16(link)
+#: xml/api-index-full.xml:199(link) xml/api-index-1.0.5.xml:16(link)
 msgid "gcut_assert_equal_enum"
 msgstr ""
 
 #: xml/gcut-assertions.xml:98(link) xml/gcut-assertions.xml:623(primary)
-#: xml/api-index-full.xml:202(link) xml/api-index-1.0.5.xml:18(link)
+#: xml/api-index-full.xml:203(link) xml/api-index-1.0.5.xml:18(link)
 msgid "gcut_assert_equal_flags"
 msgstr ""
 
 #: xml/gcut-assertions.xml:102(link) xml/gcut-assertions.xml:660(primary)
-#: xml/api-index-full.xml:225(link) xml/api-index-1.0.5.xml:24(link)
+#: xml/api-index-full.xml:226(link) xml/api-index-1.0.5.xml:24(link)
 msgid "gcut_assert_equal_object"
 msgstr ""
 
 #: xml/gcut-assertions.xml:105(link) xml/gcut-assertions.xml:690(primary)
-#: xml/api-index-full.xml:226(link) xml/api-index-1.0.5.xml:25(link)
+#: xml/api-index-full.xml:227(link) xml/api-index-1.0.5.xml:25(link)
 msgid "gcut_assert_equal_object_custom"
 msgstr ""
 
 #: xml/gcut-assertions.xml:109(link) xml/gcut-assertions.xml:732(primary)
-#: xml/api-index-full.xml:208(link) xml/api-index-1.0.5.xml:19(link)
+#: xml/api-index-full.xml:209(link) xml/api-index-1.0.5.xml:19(link)
 msgid "gcut_assert_equal_int64"
 msgstr ""
 
@@ -8829,7 +8829,7 @@ msgid "gint64"
 msgstr ""
 
 #: xml/gcut-assertions.xml:112(link) xml/gcut-assertions.xml:751(primary)
-#: xml/api-index-full.xml:234(link) xml/api-index-1.0.5.xml:26(link)
+#: xml/api-index-full.xml:235(link) xml/api-index-1.0.5.xml:26(link)
 msgid "gcut_assert_equal_uint64"
 msgstr ""
 
@@ -8841,12 +8841,12 @@ msgid "guint64"
 msgstr ""
 
 #: xml/gcut-assertions.xml:115(link) xml/gcut-assertions.xml:770(primary)
-#: xml/api-index-full.xml:228(link) xml/api-index-1.0.6.xml:21(link)
+#: xml/api-index-full.xml:229(link) xml/api-index-1.0.6.xml:21(link)
 msgid "gcut_assert_equal_pid"
 msgstr ""
 
 #: xml/gcut-assertions.xml:118(link) xml/gcut-assertions.xml:789(primary)
-#: xml/api-index-full.xml:240(link) xml/api-index-1.0.7.xml:22(link)
+#: xml/api-index-full.xml:241(link) xml/api-index-1.0.7.xml:22(link)
 msgid "gcut_assert_not_equal_pid"
 msgstr ""
 
@@ -9824,115 +9824,115 @@ msgstr ""
 
 #: xml/gcut-assertions-helper.xml:19(link)
 #: xml/gcut-assertions-helper.xml:138(primary)
-#: xml/api-index-full.xml:233(link)
+#: xml/api-index-full.xml:234(link)
 msgid "gcut_assert_equal_type_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:23(link)
 #: xml/gcut-assertions-helper.xml:160(primary)
-#: xml/api-index-full.xml:237(link)
+#: xml/api-index-full.xml:238(link)
 msgid "gcut_assert_equal_value_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:27(link)
 #: xml/gcut-assertions-helper.xml:182(primary)
-#: xml/api-index-full.xml:215(link)
+#: xml/api-index-full.xml:216(link)
 msgid "gcut_assert_equal_list_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:35(link)
 #: xml/gcut-assertions-helper.xml:220(primary)
-#: xml/api-index-full.xml:217(link)
+#: xml/api-index-full.xml:218(link)
 msgid "gcut_assert_equal_list_int_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:39(link)
 #: xml/gcut-assertions-helper.xml:242(primary)
-#: xml/api-index-full.xml:224(link)
+#: xml/api-index-full.xml:225(link)
 msgid "gcut_assert_equal_list_uint_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:43(link)
 #: xml/gcut-assertions-helper.xml:264(primary)
-#: xml/api-index-full.xml:222(link)
+#: xml/api-index-full.xml:223(link)
 msgid "gcut_assert_equal_list_string_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:48(link)
 #: xml/gcut-assertions-helper.xml:287(primary)
-#: xml/api-index-full.xml:212(link)
+#: xml/api-index-full.xml:213(link)
 msgid "gcut_assert_equal_list_enum_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:54(link)
 #: xml/gcut-assertions-helper.xml:317(primary)
-#: xml/api-index-full.xml:214(link)
+#: xml/api-index-full.xml:215(link)
 msgid "gcut_assert_equal_list_flags_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:60(link)
 #: xml/gcut-assertions-helper.xml:347(primary)
-#: xml/api-index-full.xml:220(link)
+#: xml/api-index-full.xml:221(link)
 msgid "gcut_assert_equal_list_object_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:66(link)
 #: xml/gcut-assertions-helper.xml:374(primary)
-#: xml/api-index-full.xml:205(link)
+#: xml/api-index-full.xml:206(link)
 msgid "gcut_assert_equal_hash_table_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:75(link)
 #: xml/gcut-assertions-helper.xml:416(primary)
-#: xml/api-index-full.xml:207(link)
+#: xml/api-index-full.xml:208(link)
 msgid "gcut_assert_equal_hash_table_string_string_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:80(link)
 #: xml/gcut-assertions-helper.xml:439(primary)
-#: xml/api-index-full.xml:239(link)
+#: xml/api-index-full.xml:240(link)
 msgid "gcut_assert_error_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:82(link)
 #: xml/gcut-assertions-helper.xml:453(primary)
-#: xml/api-index-full.xml:201(link)
+#: xml/api-index-full.xml:202(link)
 msgid "gcut_assert_equal_error_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:86(link)
 #: xml/gcut-assertions-helper.xml:475(primary)
-#: xml/api-index-full.xml:243(link)
+#: xml/api-index-full.xml:244(link)
 msgid "gcut_assert_remove_path_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:88(link)
 #: xml/gcut-assertions-helper.xml:489(primary)
-#: xml/api-index-full.xml:231(link)
+#: xml/api-index-full.xml:232(link)
 msgid "gcut_assert_equal_time_val_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:92(link)
 #: xml/gcut-assertions-helper.xml:511(primary)
-#: xml/api-index-full.xml:199(link)
+#: xml/api-index-full.xml:200(link)
 msgid "gcut_assert_equal_enum_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:98(link)
 #: xml/gcut-assertions-helper.xml:541(primary)
-#: xml/api-index-full.xml:203(link)
+#: xml/api-index-full.xml:204(link)
 msgid "gcut_assert_equal_flags_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:104(link)
 #: xml/gcut-assertions-helper.xml:571(primary)
-#: xml/api-index-full.xml:227(link)
+#: xml/api-index-full.xml:228(link)
 msgid "gcut_assert_equal_object_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:110(link)
 #: xml/gcut-assertions-helper.xml:601(primary)
-#: xml/api-index-full.xml:209(link)
+#: xml/api-index-full.xml:210(link)
 msgid "gcut_assert_equal_int64_helper"
 msgstr ""
 
@@ -10017,19 +10017,19 @@ msgstr ""
 
 #: xml/gcut-assertions-helper.xml:114(link)
 #: xml/gcut-assertions-helper.xml:623(primary)
-#: xml/api-index-full.xml:235(link)
+#: xml/api-index-full.xml:236(link)
 msgid "gcut_assert_equal_uint64_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:118(link)
 #: xml/gcut-assertions-helper.xml:645(primary)
-#: xml/api-index-full.xml:229(link)
+#: xml/api-index-full.xml:230(link)
 msgid "gcut_assert_equal_pid_helper"
 msgstr ""
 
 #: xml/gcut-assertions-helper.xml:122(link)
 #: xml/gcut-assertions-helper.xml:667(primary)
-#: xml/api-index-full.xml:241(link)
+#: xml/api-index-full.xml:242(link)
 msgid "gcut_assert_not_equal_pid_helper"
 msgstr ""
 
@@ -10485,82 +10485,88 @@ msgstr ""
 msgid "A Unit Testing Framework for C and C++."
 msgstr "C言語・C++言語用単体テストフレームワーク"
 
-#: xml/cutter.xml:19(link) xml/cutter.xml:148(primary)
-#: xml/api-index-full.xml:432(link) xml/api-index-deprecated.xml:41(link)
+#: xml/cutter.xml:19(link) xml/cutter.xml:149(primary)
+#: xml/api-index-full.xml:433(link) xml/api-index-deprecated.xml:41(link)
 msgid "setup"
 msgstr ""
 
-#: xml/cutter.xml:20(link) xml/cutter.xml:158(primary)
-#: xml/api-index-full.xml:431(link) xml/api-index-1.0.6.xml:86(link)
+#: xml/cutter.xml:20(link) xml/cutter.xml:159(primary)
+#: xml/api-index-full.xml:432(link) xml/api-index-1.0.6.xml:86(link)
 msgid "cut_setup"
 msgstr ""
 
-#: xml/cutter.xml:21(link) xml/cutter.xml:167(primary)
-#: xml/api-index-full.xml:518(link) xml/api-index-deprecated.xml:46(link)
+#: xml/cutter.xml:21(link) xml/cutter.xml:168(primary)
+#: xml/api-index-full.xml:519(link) xml/api-index-deprecated.xml:46(link)
 msgid "teardown"
 msgstr ""
 
-#: xml/cutter.xml:22(link) xml/cutter.xml:178(primary)
-#: xml/api-index-full.xml:517(link) xml/api-index-1.0.6.xml:94(link)
+#: xml/cutter.xml:22(link) xml/cutter.xml:179(primary)
+#: xml/api-index-full.xml:518(link) xml/api-index-1.0.6.xml:94(link)
 msgid "cut_teardown"
 msgstr ""
 
-#: xml/cutter.xml:23(link) xml/cutter.xml:188(primary)
-#: xml/api-index-full.xml:464(link) xml/api-index-1.0.6.xml:90(link)
+#: xml/cutter.xml:23(link) xml/cutter.xml:189(primary)
+#: xml/api-index-full.xml:465(link) xml/api-index-1.0.6.xml:90(link)
 msgid "cut_startup"
 msgstr ""
 
-#: xml/cutter.xml:24(link) xml/cutter.xml:197(primary)
-#: xml/api-index-full.xml:440(link) xml/api-index-1.0.6.xml:89(link)
+#: xml/cutter.xml:24(link) xml/cutter.xml:198(primary)
+#: xml/api-index-full.xml:441(link) xml/api-index-1.0.6.xml:89(link)
 msgid "cut_shutdown"
 msgstr ""
 
-#: xml/cutter.xml:25(link) xml/cutter.xml:206(primary)
+#: xml/cutter.xml:25(link) xml/cutter.xml:207(primary)
 #: xml/api-index-full.xml:7(link) xml/api-index-1.0.3.xml:7(link)
 msgid "cut_add_data"
 msgstr ""
 
-#: xml/cutter.xml:27(link) xml/cutter.xml:293(primary)
+#: xml/cutter.xml:27(link) xml/cutter.xml:294(primary)
 #: xml/api-index-full.xml:8(link) xml/api-index-deprecated.xml:7(link)
 msgid "cut_add_data_backward_compatibility"
 msgstr ""
 
-#: xml/cutter.xml:28(link) xml/cutter.xml:307(primary)
-#: xml/api-index-full.xml:434(link) xml/api-index-1.0.4.xml:14(link)
+#: xml/cutter.xml:28(link) xml/cutter.xml:308(primary)
+#: xml/api-index-full.xml:435(link) xml/api-index-1.0.4.xml:14(link)
 msgid "cut_set_attributes"
 msgstr ""
 
-#: xml/cutter.xml:30(link) xml/cutter.xml:348(primary)
-#: xml/api-index-full.xml:391(link) xml/api-index-1.0.4.xml:11(link)
+#: xml/cutter.xml:30(link) xml/cutter.xml:349(primary)
+#: xml/api-index-full.xml:392(link) xml/api-index-1.0.4.xml:11(link)
 msgid "cut_get_current_test_context"
 msgstr ""
 
-#: xml/cutter.xml:31(link) xml/cutter.xml:389(primary)
-#: xml/api-index-full.xml:435(link) xml/api-index-1.0.4.xml:15(link)
+#: xml/cutter.xml:31(link) xml/cutter.xml:390(primary)
+#: xml/api-index-full.xml:436(link) xml/api-index-1.0.4.xml:15(link)
 msgid "cut_set_current_test_context"
 msgstr ""
 
-#: xml/cutter.xml:32(link) xml/cutter.xml:402(primary)
-#: xml/api-index-full.xml:438(link) xml/api-index-deprecated.xml:42(link)
+#: xml/cutter.xml:32(link) xml/cutter.xml:403(primary)
+#: xml/api-index-full.xml:439(link) xml/api-index-deprecated.xml:42(link)
 #: xml/api-index-1.0.6.xml:87(link)
 msgid "cut_set_message"
 msgstr ""
 
-#: xml/cutter.xml:34(link) xml/cutter.xml:418(primary)
-#: xml/api-index-full.xml:439(link) xml/api-index-deprecated.xml:43(link)
+#: xml/cutter.xml:34(link) xml/cutter.xml:419(primary)
+#: xml/api-index-full.xml:440(link) xml/api-index-deprecated.xml:43(link)
 #: xml/api-index-1.0.6.xml:88(link)
 msgid "cut_set_message_va_list"
 msgstr ""
 
-#: xml/cutter.xml:36(link) xml/cutter.xml:434(primary)
-#: xml/api-index-full.xml:405(link) xml/api-index-deprecated.xml:35(link)
+#: xml/cutter.xml:36(link) xml/cutter.xml:435(primary)
+#: xml/api-index-full.xml:406(link) xml/api-index-deprecated.xml:35(link)
 #: xml/api-index-1.0.6.xml:75(link)
 msgid "cut_keep_message"
 msgstr ""
 
-#: xml/cutter.xml:37(link) xml/cutter.xml:443(primary)
-#: xml/api-index-full.xml:409(link) xml/api-index-1.1.0.xml:52(link)
+#: xml/cutter.xml:37(link) xml/cutter.xml:444(primary)
+#: xml/api-index-full.xml:410(link) xml/api-index-1.1.0.xml:52(link)
 msgid "cut_message"
+msgstr ""
+
+#: xml/cutter.xml:39(link) xml/cutter.xml:465(title)
+#: xml/cutter.xml:466(primary) xml/api-index-full.xml:176(link)
+#: xml/api-index-1.1.2.xml:7(link)
+msgid "CUT_EXPORT"
 msgstr ""
 
 #: xml/cutter.xml:19(synopsis)
@@ -10586,9 +10592,10 @@ msgid ""
 "<link linkend=\"void\"><placeholder-32/></link>                <placeholder-33/>                    (void);\n"
 "<link linkend=\"void\"><placeholder-34/></link>                <placeholder-35/>                         (const <link linkend=\"char\"><placeholder-36/></link> *format,\n"
 "                                                         ...);\n"
+"#define             <placeholder-37/>\n"
 msgstr ""
 
-#: xml/cutter.xml:54(programlisting)
+#: xml/cutter.xml:55(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -10621,7 +10628,7 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/cutter.xml:48(para)
+#: xml/cutter.xml:49(para)
 msgid ""
 "Easy to use. Cutter doesn't introduce any magic macros like "
 "CUTTER_DEFINE_TEST_START and CUTTER_DEFINE_TEST_END into your test program. "
@@ -10636,7 +10643,7 @@ msgstr ""
 "XXX\"><function>cut_assert_XXX()</function></link>を使う必要があります。"
 "<placeholder-1/>"
 
-#: xml/cutter.xml:88(programlisting)
+#: xml/cutter.xml:89(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -10647,7 +10654,7 @@ msgid ""
 "59 test(s), 246 assertion(s), 0 failure(s), 0 error(s), 0 pending(s), 0 notification(s)\n"
 msgstr ""
 
-#: xml/cutter.xml:84(para)
+#: xml/cutter.xml:85(para)
 msgid ""
 "Simple but useful output. Cutter works quietly if tests are running without "
 "any problems by default. The following is an output of self test: "
@@ -10662,7 +10669,7 @@ msgstr ""
 "かなどの情報は表示しません。これは、テスト成功時にはこれらの情報は必要ないか"
 "らです。"
 
-#: xml/cutter.xml:101(programlisting)
+#: xml/cutter.xml:102(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -10679,14 +10686,14 @@ msgid ""
 "59 test(s), 242 assertion(s), 1 failure(s), 0 error(s), 0 pending(s), 0 notification(s)\n"
 msgstr ""
 
-#: xml/cutter.xml:116(programlisting)
+#: xml/cutter.xml:117(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "cut_assert_equal_string(\"Strange!!!\", cut_test_result_get_test_name(result));\n"
 msgstr ""
 
-#: xml/cutter.xml:99(para)
+#: xml/cutter.xml:100(para)
 msgid ""
 "Cutter outputs many information on failure: <placeholder-1/> The above "
 "result is happened because I add a strange expected staring in Cutter's self "
@@ -10708,7 +10715,7 @@ msgstr ""
 "上記のCutterの出力から得ることができます。これはデバッグの手助けになるでしょ"
 "う。"
 
-#: xml/cutter.xml:127(para)
+#: xml/cutter.xml:128(para)
 msgid ""
 "Cutter's output format is pragmatic. ' but was:' is indented and aligned "
 "with the above 'expected:'. This helps that you find difference between "
@@ -10726,13 +10733,13 @@ msgstr ""
 "「行」へジャンプすることができます。これは問題行を素早く見つける手助けをしま"
 "す。"
 
-#: xml/cutter.xml:137(para)
+#: xml/cutter.xml:138(para)
 msgid "Cutter supports not only easy test writing but also easy debugging."
 msgstr ""
 "Cutterは簡単にテストを書くことを支援するだけではなく、簡単にデバッグをできる"
 "ことも支援します。"
 
-#: xml/cutter.xml:44(para)
+#: xml/cutter.xml:45(para)
 msgid ""
 "Cutter is a Unit Testing Framework for C and C++ and has the following "
 "features: <placeholder-1/>"
@@ -10740,16 +10747,16 @@ msgstr ""
 "Cutterは以下のような特徴をもったC言語・C++言語用の単体テストフレームワークで"
 "す。<placeholder-1/>"
 
-#: xml/cutter.xml:147(title)
+#: xml/cutter.xml:148(title)
 msgid "setup ()"
 msgstr ""
 
-#: xml/cutter.xml:149(programlisting)
+#: xml/cutter.xml:150(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                setup                               (void);"
 msgstr ""
 
-#: xml/cutter.xml:150(para)
+#: xml/cutter.xml:151(para)
 msgid ""
 "<literal>setup</literal> has been deprecated since version 1.0.7 and should "
 "not be used in newly-written code. Use <link linkend=\"cut-setup"
@@ -10759,7 +10766,7 @@ msgstr ""
 "コードでは使わないでください。代わりに<link linkend=\"cut-setup"
 "\"><function>cut_setup()</function></link>を使ってください。"
 
-#: xml/cutter.xml:151(para)
+#: xml/cutter.xml:152(para)
 msgid ""
 "If you define <link linkend=\"setup\"><function>setup()</function></link> in "
 "your test program, cutter will call your <link linkend=\"setup"
@@ -10774,16 +10781,16 @@ msgstr ""
 "場合は、<link linkend=\"setup\"><function>setup()</function></link>は無視され"
 "ます。"
 
-#: xml/cutter.xml:157(title)
+#: xml/cutter.xml:158(title)
 msgid "cut_setup ()"
 msgstr ""
 
-#: xml/cutter.xml:159(programlisting)
+#: xml/cutter.xml:160(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_setup                           (void);"
 msgstr ""
 
-#: xml/cutter.xml:160(para)
+#: xml/cutter.xml:161(para)
 msgid ""
 "If you define <link linkend=\"cut-setup\"><function>cut_setup()</function></"
 "link> in your test program, cutter will call your <link linkend=\"cut-setup"
@@ -10799,16 +10806,16 @@ msgstr ""
 "合は<link linkend=\"cut-setup\"><function>cut_setup()</function></link>だけが"
 "使われます。"
 
-#: xml/cutter.xml:166(title)
+#: xml/cutter.xml:167(title)
 msgid "teardown ()"
 msgstr ""
 
-#: xml/cutter.xml:168(programlisting)
+#: xml/cutter.xml:169(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                teardown                            (void);"
 msgstr ""
 
-#: xml/cutter.xml:169(para)
+#: xml/cutter.xml:170(para)
 msgid ""
 "<literal>teardown</literal> has been deprecated since version 1.0.7 and "
 "should not be used in newly-written code. Use <link linkend=\"cut-teardown"
@@ -10818,7 +10825,7 @@ msgstr ""
 "くコードでは使わないでください。代わりに<link linkend=\"cut-teardown"
 "\"><function>cut_teardown()</function></link>を使ってください。"
 
-#: xml/cutter.xml:170(para)
+#: xml/cutter.xml:171(para)
 msgid ""
 "If you define <link linkend=\"teardown\"><function>teardown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"teardown"
@@ -10834,16 +10841,16 @@ msgstr ""
 "</function></link>が定義されていた場合は、<link linkend=\"teardown"
 "\"><function>teardown()</function></link>は無視されます。"
 
-#: xml/cutter.xml:177(title)
+#: xml/cutter.xml:178(title)
 msgid "cut_teardown ()"
 msgstr ""
 
-#: xml/cutter.xml:179(programlisting)
+#: xml/cutter.xml:180(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_teardown                        (void);"
 msgstr ""
 
-#: xml/cutter.xml:180(para)
+#: xml/cutter.xml:181(para)
 msgid ""
 "If you define <link linkend=\"cut-teardown\"><function>cut_teardown()</"
 "function></link> in your test program, cutter will call your <link linkend="
@@ -10860,16 +10867,16 @@ msgstr ""
 "\"><function>teardown()</function></link>が定義されていた場合は<link linkend="
 "\"cut-teardown\"><function>cut_teardown()</function></link>だけが使われます。"
 
-#: xml/cutter.xml:187(title)
+#: xml/cutter.xml:188(title)
 msgid "cut_startup ()"
 msgstr ""
 
-#: xml/cutter.xml:189(programlisting)
+#: xml/cutter.xml:190(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_startup                         (void);"
 msgstr ""
 
-#: xml/cutter.xml:190(para)
+#: xml/cutter.xml:191(para)
 msgid ""
 "If you define <link linkend=\"cut-startup\"><function>cut_startup()</"
 "function></link> in your test program, cutter will call your <link linkend="
@@ -10886,16 +10893,16 @@ msgstr ""
 "link>が定義されていた場合は<link linkend=\"cut-startup"
 "\"><function>cut_startup()</function></link>だけが使われます。"
 
-#: xml/cutter.xml:196(title)
+#: xml/cutter.xml:197(title)
 msgid "cut_shutdown ()"
 msgstr ""
 
-#: xml/cutter.xml:198(programlisting)
+#: xml/cutter.xml:199(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_shutdown                        (void);"
 msgstr ""
 
-#: xml/cutter.xml:199(para)
+#: xml/cutter.xml:200(para)
 msgid ""
 "If you define <link linkend=\"shutdown\"><function>shutdown()</function></"
 "link> in your test program, cutter will call your <link linkend=\"shutdown"
@@ -10912,22 +10919,22 @@ msgstr ""
 "function></link>が定義されていた場合は<link linkend=\"cut-shutdown"
 "\"><function>cut_shutdown()</function></link>だけが使われます。"
 
-#: xml/cutter.xml:205(title)
+#: xml/cutter.xml:206(title)
 msgid "cut_add_data ()"
 msgstr ""
 
-#: xml/cutter.xml:207(programlisting)
+#: xml/cutter.xml:208(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_add_data                        (const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *first_data_name,\n"
 "                                                         ...);"
 msgstr ""
 
-#: xml/cutter.xml:209(para)
+#: xml/cutter.xml:210(para)
 msgid "Adds data to use data driven test."
 msgstr "データ駆動テストで使うデータを追加します。"
 
-#: xml/cutter.xml:214(programlisting)
+#: xml/cutter.xml:215(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -10996,15 +11003,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/cutter.xml:280(term)
+#: xml/cutter.xml:281(term)
 msgid "<parameter>first_data_name</parameter> :"
 msgstr ""
 
-#: xml/cutter.xml:281(simpara)
+#: xml/cutter.xml:282(simpara)
 msgid "The first data name."
 msgstr "最初のデータ名。"
 
-#: xml/cutter.xml:284(simpara)
+#: xml/cutter.xml:285(simpara)
 msgid ""
 "The data and destroy function of the first data, followed optionally by more "
 "name/data/destroy_function(<link linkend=\"CutDestroyFunction"
@@ -11017,16 +11024,16 @@ msgstr ""
 "link>)」の三つ組を指定します。1.0.6から可変長の引数は<link linkend=\"NULL:"
 "CAPS\"><literal>NULL</literal></link>終端しなければいけなくなりました。"
 
-#: xml/cutter.xml:292(title)
+#: xml/cutter.xml:293(title)
 msgid "cut_add_data_backward_compatibility()"
 msgstr ""
 
-#: xml/cutter.xml:294(programlisting)
+#: xml/cutter.xml:295(programlisting)
 #, no-wrap
 msgid "#define             cut_add_data_backward_compatibility(context, ...)"
 msgstr ""
 
-#: xml/cutter.xml:295(para)
+#: xml/cutter.xml:296(para)
 msgid ""
 "<literal>cut_add_data_backward_compatibility</literal> is deprecated and "
 "should not be used in newly-written code."
@@ -11034,22 +11041,22 @@ msgstr ""
 "<literal>cut_add_data_backward_compatibility</literal>は非推奨です。新しい"
 "コードでは使わないでください。"
 
-#: xml/cutter.xml:306(title)
+#: xml/cutter.xml:307(title)
 msgid "cut_set_attributes ()"
 msgstr ""
 
-#: xml/cutter.xml:308(programlisting)
+#: xml/cutter.xml:309(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_set_attributes                  (const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *first_attribute_name,\n"
 "                                                         ...);"
 msgstr ""
 
-#: xml/cutter.xml:310(para)
+#: xml/cutter.xml:311(para)
 msgid "Sets attributes of the test."
 msgstr "テストの属性を設定します。"
 
-#: xml/cutter.xml:315(programlisting)
+#: xml/cutter.xml:316(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -11074,15 +11081,15 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/cutter.xml:337(term)
+#: xml/cutter.xml:338(term)
 msgid "<parameter>first_attribute_name</parameter> :"
 msgstr ""
 
-#: xml/cutter.xml:338(simpara)
+#: xml/cutter.xml:339(simpara)
 msgid "The first attribute name."
 msgstr "最初の属性名。"
 
-#: xml/cutter.xml:341(simpara)
+#: xml/cutter.xml:342(simpara)
 msgid ""
 "The value of the first attribute, followed optionally by more name/value "
 "pairs. <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>-terminate "
@@ -11091,16 +11098,16 @@ msgstr ""
 "最初の属性値です。その後に任意個数の名前と値のペアが続きます。1.0.7から<link "
 "linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端が必須になりました。"
 
-#: xml/cutter.xml:347(title)
+#: xml/cutter.xml:348(title)
 msgid "cut_get_current_test_context ()"
 msgstr ""
 
-#: xml/cutter.xml:349(programlisting)
+#: xml/cutter.xml:350(programlisting)
 #, no-wrap
 msgid "<link linkend=\"CutTestContext\"><returnvalue>CutTestContext</returnvalue></link>      cut_get_current_test_context        (void);"
 msgstr ""
 
-#: xml/cutter.xml:350(para)
+#: xml/cutter.xml:351(para)
 msgid ""
 "Returns the current test context. The current test context is a thread local "
 "object. It means that you don't need to care this if you don't create a new "
@@ -11114,7 +11121,7 @@ msgstr ""
 "になります。テストのスレッドが持っている「現在のテストコンテキスト」を新しく"
 "作ったスレッドに渡す必要がありません。"
 
-#: xml/cutter.xml:361(programlisting)
+#: xml/cutter.xml:362(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -11139,22 +11146,22 @@ msgid ""
 "}\n"
 msgstr ""
 
-#: xml/cutter.xml:383(simpara)
+#: xml/cutter.xml:384(simpara)
 msgid "a <link linkend=\"CutTestContext\"><type>CutTestContext</type></link>."
 msgstr ""
 "<link linkend=\"CutTestContext\"><type>CutTestContext</type></link>オブジェク"
 "ト。"
 
-#: xml/cutter.xml:388(title)
+#: xml/cutter.xml:389(title)
 msgid "cut_set_current_test_context ()"
 msgstr ""
 
-#: xml/cutter.xml:390(programlisting)
+#: xml/cutter.xml:391(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_set_current_test_context        (<link linkend=\"CutTestContext\"><returnvalue>CutTestContext</returnvalue></link> *test_context);"
 msgstr ""
 
-#: xml/cutter.xml:391(para)
+#: xml/cutter.xml:392(para)
 msgid ""
 "Set <parameter>test_context</parameter> as the current test context. See "
 "<link linkend=\"cut-get-current-test-context"
@@ -11165,11 +11172,11 @@ msgstr ""
 "<link linkend=\"cut-get-current-test-context"
 "\"><function>cut_get_current_test_context()</function></link>を見てください。"
 
-#: xml/cutter.xml:395(term)
+#: xml/cutter.xml:396(term)
 msgid "<parameter>test_context</parameter> :"
 msgstr ""
 
-#: xml/cutter.xml:396(simpara)
+#: xml/cutter.xml:397(simpara)
 msgid ""
 "the <link linkend=\"CutTestContext\"><type>CutTestContext</type></link> to "
 "be the current test context."
@@ -11177,18 +11184,18 @@ msgstr ""
 "現在のテストコンテキストになる<link linkend=\"CutTestContext"
 "\"><type>CutTestContext</type></link>。"
 
-#: xml/cutter.xml:401(title)
+#: xml/cutter.xml:402(title)
 msgid "cut_set_message ()"
 msgstr ""
 
-#: xml/cutter.xml:403(programlisting)
+#: xml/cutter.xml:404(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_set_message                     (const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *format,\n"
 "                                                         ...);"
 msgstr ""
 
-#: xml/cutter.xml:405(para)
+#: xml/cutter.xml:406(para)
 msgid ""
 "<literal>cut_set_message</literal> has been deprecated since version 1.1.0 "
 "and should not be used in newly-written code. Use <link linkend=\"cut-message"
@@ -11198,11 +11205,11 @@ msgstr ""
 "しく書くコードでは使わないでください。代わりに<link linkend=\"cut-message"
 "\"><function>cut_message()</function></link>を使ってください。"
 
-#: xml/cutter.xml:406(para) xml/cutter.xml:422(para)
+#: xml/cutter.xml:407(para) xml/cutter.xml:423(para)
 msgid "Sets a message to be used by the next assertion."
 msgstr "次の検証で使われるメッセージです。"
 
-#: xml/cutter.xml:409(term) xml/cutter.xml:425(term) xml/cutter.xml:456(term)
+#: xml/cutter.xml:410(term) xml/cutter.xml:426(term) xml/cutter.xml:457(term)
 #: xml/cut-test-utils.xml:178(term) xml/cut-assertions.xml:2150(term)
 #: xml/cut-assertions.xml:2185(term) xml/cut-assertions.xml:2201(term)
 #: xml/cut-assertions.xml:2218(term) xml/cut-assertions.xml:2233(term)
@@ -11210,8 +11217,8 @@ msgstr "次の検証で使われるメッセージです。"
 msgid "<parameter>format</parameter> :"
 msgstr ""
 
-#: xml/cutter.xml:410(simpara) xml/cutter.xml:426(simpara)
-#: xml/cutter.xml:457(simpara) xml/cut-test-utils.xml:179(simpara)
+#: xml/cutter.xml:411(simpara) xml/cutter.xml:427(simpara)
+#: xml/cutter.xml:458(simpara) xml/cut-test-utils.xml:179(simpara)
 #: xml/cut-assertions.xml:2151(simpara) xml/cut-assertions.xml:2186(simpara)
 #: xml/cut-assertions.xml:2202(simpara) xml/cut-assertions.xml:2219(simpara)
 #: xml/cut-assertions.xml:2234(simpara) xml/cut-assertions.xml:2256(simpara)
@@ -11222,8 +11229,8 @@ msgstr ""
 "整形文字列。<link linkend=\"printf\"><function>printf()</function></link>のド"
 "キュメントを見てください。"
 
-#: xml/cutter.xml:413(simpara) xml/cutter.xml:429(simpara)
-#: xml/cutter.xml:460(simpara) xml/cut-test-utils.xml:182(simpara)
+#: xml/cutter.xml:414(simpara) xml/cutter.xml:430(simpara)
+#: xml/cutter.xml:461(simpara) xml/cut-test-utils.xml:182(simpara)
 #: xml/cut-assertions.xml:2154(simpara) xml/cut-assertions.xml:2189(simpara)
 #: xml/cut-assertions.xml:2205(simpara) xml/cut-assertions.xml:2222(simpara)
 #: xml/cut-assertions.xml:2237(simpara) xml/cut-assertions.xml:2259(simpara)
@@ -11231,18 +11238,18 @@ msgstr ""
 msgid "the parameters to insert into the format string."
 msgstr "整形文字列に挿入されるパラメータ。"
 
-#: xml/cutter.xml:417(title)
+#: xml/cutter.xml:418(title)
 msgid "cut_set_message_va_list ()"
 msgstr ""
 
-#: xml/cutter.xml:419(programlisting)
+#: xml/cutter.xml:420(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_set_message_va_list             (const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *format,\n"
 "                                                         <link linkend=\"va-list\"><returnvalue>va_list</returnvalue></link> args);"
 msgstr ""
 
-#: xml/cutter.xml:421(para)
+#: xml/cutter.xml:422(para)
 msgid ""
 "<literal>cut_set_message_va_list</literal> has been deprecated since version "
 "1.1.0 and should not be used in newly-written code. Use <link linkend=\"cut-"
@@ -11252,16 +11259,16 @@ msgstr ""
 "した。新しく書くコードでは使わないで下さい。代わりに<link linkend=\"cut-"
 "message\"><function>cut_message()</function></link>を使ってください。"
 
-#: xml/cutter.xml:433(title)
+#: xml/cutter.xml:434(title)
 msgid "cut_keep_message ()"
 msgstr ""
 
-#: xml/cutter.xml:435(programlisting)
+#: xml/cutter.xml:436(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_keep_message                    (void);"
 msgstr ""
 
-#: xml/cutter.xml:436(para)
+#: xml/cutter.xml:437(para)
 msgid ""
 "<literal>cut_keep_message</literal> has been deprecated since version 1.1.0 "
 "and should not be used in newly-written code. Use <link linkend=\"cut-message"
@@ -11271,7 +11278,7 @@ msgstr ""
 "新しく書くコードでは使わないでください。代わりに<link linkend=\"cut-message"
 "\"><function>cut_message()</function></link>を使ってください。"
 
-#: xml/cutter.xml:437(para)
+#: xml/cutter.xml:438(para)
 msgid ""
 "Keeps the current message set by <link linkend=\"cut-set-message"
 "\"><function>cut_set_message()</function></link> or <link linkend=\"cut-set-"
@@ -11283,22 +11290,22 @@ msgstr ""
 "\"><function>cut_set_message_va_list()</function></link>で設定した現在のメッ"
 "セージを次の検証の後でも維持します。"
 
-#: xml/cutter.xml:442(title)
+#: xml/cutter.xml:443(title)
 msgid "cut_message ()"
 msgstr ""
 
-#: xml/cutter.xml:444(programlisting)
+#: xml/cutter.xml:445(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_message                         (const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *format,\n"
 "                                                         ...);"
 msgstr ""
 
-#: xml/cutter.xml:446(para)
+#: xml/cutter.xml:447(para)
 msgid "Specifies optional assertion message."
 msgstr ""
 
-#: xml/cutter.xml:451(programlisting)
+#: xml/cutter.xml:452(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -11306,7 +11313,7 @@ msgid ""
 "                        cut_message(\"should fail!\"));\n"
 msgstr ""
 
-#: xml/cutter.xml:462(para) xml/cut-assertions.xml:505(para)
+#: xml/cutter.xml:463(para) xml/cut-assertions.xml:505(para)
 #: xml/cut-assertions.xml:528(para) xml/cut-assertions.xml:551(para)
 #: xml/cut-assertions.xml:574(para) xml/cut-assertions.xml:597(para)
 #: xml/cut-assertions.xml:620(para) xml/cut-assertions.xml:643(para)
@@ -11330,7 +11337,34 @@ msgstr ""
 msgid "Since 1.1.0"
 msgstr "1.1.0から"
 
-#: xml/cutter.xml:467(link) xml/cut-assertions.xml:7(refentrytitle)
+#: xml/cutter.xml:467(programlisting)
+#, no-wrap
+msgid "#define             CUT_EXPORT"
+msgstr ""
+
+#: xml/cutter.xml:468(para)
+msgid ""
+"Marks a function as a exported function. This is needed for just Windows "
+"environment. If you want to run your tests on Windows, you need to use this. "
+"Otherwise, you don't need to use this."
+msgstr "公開関数であるというしるしをつけます。このしるしはWindows環境上でだけ必要です。Windows上でもテストを実行したい場合はこのマクロを使う必要があります。そうでなければ使う必要はありません。"
+
+#: xml/cutter.xml:476(programlisting)
+#, no-wrap
+msgid ""
+"\n"
+"CUT_EXPORT void\n"
+"test_add (void)\n"
+"{\n"
+"  ...\n"
+"}\n"
+msgstr ""
+
+#: xml/cutter.xml:483(para)
+msgid "Since 1.1.2"
+msgstr "1.1.2から"
+
+#: xml/cutter.xml:488(link) xml/cut-assertions.xml:7(refentrytitle)
 #: xml/cut-assertions.xml:12(refname)
 msgid "Assertions"
 msgstr "検証"
@@ -11344,27 +11378,27 @@ msgid "Variables and macros to check the Cutter version"
 msgstr "Cutterのバージョンをチェックするためのマクロ"
 
 #: xml/cut-version.xml:19(link) xml/cut-version.xml:39(title)
-#: xml/cut-version.xml:40(primary) xml/api-index-full.xml:520(link)
+#: xml/cut-version.xml:40(primary) xml/api-index-full.xml:521(link)
 msgid "CUTTER_VERSION_MAJOR"
 msgstr ""
 
 #: xml/cut-version.xml:20(link) xml/cut-version.xml:47(title)
-#: xml/cut-version.xml:48(primary) xml/api-index-full.xml:522(link)
+#: xml/cut-version.xml:48(primary) xml/api-index-full.xml:523(link)
 msgid "CUTTER_VERSION_MINOR"
 msgstr ""
 
 #: xml/cut-version.xml:21(link) xml/cut-version.xml:55(title)
-#: xml/cut-version.xml:56(primary) xml/api-index-full.xml:521(link)
+#: xml/cut-version.xml:56(primary) xml/api-index-full.xml:522(link)
 msgid "CUTTER_VERSION_MICRO"
 msgstr ""
 
 #: xml/cut-version.xml:22(link) xml/cut-version.xml:63(title)
-#: xml/cut-version.xml:64(primary) xml/api-index-full.xml:523(link)
+#: xml/cut-version.xml:64(primary) xml/api-index-full.xml:524(link)
 msgid "CUTTER_VERSION_STRING"
 msgstr ""
 
 #: xml/cut-version.xml:23(link) xml/cut-version.xml:73(primary)
-#: xml/api-index-full.xml:519(link) xml/api-index-1.0.7.xml:28(link)
+#: xml/api-index-full.xml:520(link) xml/api-index-1.0.7.xml:28(link)
 msgid "CUTTER_CHECK_VERSION"
 msgstr ""
 
@@ -11407,7 +11441,7 @@ msgstr "Cutterのマイナーバージョン。"
 
 #: xml/cut-version.xml:57(programlisting)
 #, no-wrap
-msgid "#define CUTTER_VERSION_MICRO 1\n"
+msgid "#define CUTTER_VERSION_MICRO 2\n"
 msgstr ""
 
 #: xml/cut-version.xml:59(para)
@@ -11416,7 +11450,7 @@ msgstr "Cutterのマイクロバージョン。"
 
 #: xml/cut-version.xml:65(programlisting)
 #, no-wrap
-msgid "#define CUTTER_VERSION_STRING \"1.1.1\"\n"
+msgid "#define CUTTER_VERSION_STRING \"1.1.2\"\n"
 msgstr ""
 
 #: xml/cut-version.xml:67(para)
@@ -11471,7 +11505,7 @@ msgstr "マイクロバージョン番号。"
 #: xml/cut-unified-differ.xml:7(refentrytitle)
 #: xml/cut-unified-differ.xml:12(refname) xml/cut-unified-differ.xml:19(link)
 #: xml/cut-unified-differ.xml:42(title) xml/cut-unified-differ.xml:43(primary)
-#: xml/api-index-full.xml:536(link)
+#: xml/api-index-full.xml:537(link)
 msgid "CutUnifiedDiffer"
 msgstr ""
 
@@ -11495,37 +11529,37 @@ msgid "CutDiffer"
 msgstr ""
 
 #: xml/cut-unified-differ.xml:20(link) xml/cut-unified-differ.xml:52(primary)
-#: xml/api-index-full.xml:540(link)
+#: xml/api-index-full.xml:541(link)
 msgid "cut_unified_differ_new"
 msgstr ""
 
 #: xml/cut-unified-differ.xml:22(link) xml/cut-unified-differ.xml:68(primary)
-#: xml/api-index-full.xml:542(link)
+#: xml/api-index-full.xml:543(link)
 msgid "cut_unified_differ_set_from_label"
 msgstr ""
 
 #: xml/cut-unified-differ.xml:24(link) xml/cut-unified-differ.xml:82(primary)
-#: xml/api-index-full.xml:538(link)
+#: xml/api-index-full.xml:539(link)
 msgid "cut_unified_differ_get_from_label"
 msgstr ""
 
 #: xml/cut-unified-differ.xml:25(link) xml/cut-unified-differ.xml:94(primary)
-#: xml/api-index-full.xml:543(link)
+#: xml/api-index-full.xml:544(link)
 msgid "cut_unified_differ_set_to_label"
 msgstr ""
 
 #: xml/cut-unified-differ.xml:27(link) xml/cut-unified-differ.xml:108(primary)
-#: xml/api-index-full.xml:539(link)
+#: xml/api-index-full.xml:540(link)
 msgid "cut_unified_differ_get_to_label"
 msgstr ""
 
 #: xml/cut-unified-differ.xml:28(link) xml/cut-unified-differ.xml:120(primary)
-#: xml/api-index-full.xml:541(link)
+#: xml/api-index-full.xml:542(link)
 msgid "cut_unified_differ_set_context"
 msgstr ""
 
 #: xml/cut-unified-differ.xml:30(link) xml/cut-unified-differ.xml:134(primary)
-#: xml/api-index-full.xml:537(link)
+#: xml/api-index-full.xml:538(link)
 msgid "cut_unified_differ_get_context"
 msgstr ""
 
@@ -11691,12 +11725,12 @@ msgid "cut_boolean"
 msgstr ""
 
 #: xml/cut-types.xml:22(link) xml/cut-types.xml:65(title)
-#: xml/cut-types.xml:66(primary) xml/api-index-full.xml:533(link)
+#: xml/cut-types.xml:66(primary) xml/api-index-full.xml:534(link)
 msgid "CUT_TRUE"
 msgstr ""
 
 #: xml/cut-types.xml:23(link) xml/cut-types.xml:73(title)
-#: xml/cut-types.xml:74(primary) xml/api-index-full.xml:179(link)
+#: xml/cut-types.xml:74(primary) xml/api-index-full.xml:180(link)
 msgid "CUT_FALSE"
 msgstr ""
 
@@ -11798,27 +11832,27 @@ msgid "Utilities to write tests more easily."
 msgstr "テストをもっと簡単に書くためのユーティリティ。"
 
 #: xml/cut-test-utils.xml:19(link) xml/cut-test-utils.xml:67(primary)
-#: xml/api-index-full.xml:505(link) xml/api-index-1.0.5.xml:61(link)
+#: xml/api-index-full.xml:506(link) xml/api-index-1.0.5.xml:61(link)
 msgid "cut_take"
 msgstr ""
 
 #: xml/cut-test-utils.xml:21(link) xml/cut-test-utils.xml:86(primary)
-#: xml/api-index-full.xml:508(link) xml/api-index-1.0.5.xml:63(link)
+#: xml/api-index-full.xml:509(link) xml/api-index-1.0.5.xml:63(link)
 msgid "cut_take_memory"
 msgstr ""
 
 #: xml/cut-test-utils.xml:22(link) xml/cut-test-utils.xml:101(primary)
-#: xml/api-index-full.xml:514(link)
+#: xml/api-index-full.xml:515(link)
 msgid "cut_take_string"
 msgstr ""
 
 #: xml/cut-test-utils.xml:23(link) xml/cut-test-utils.xml:115(primary)
-#: xml/api-index-full.xml:513(link) xml/api-index-1.0.5.xml:64(link)
+#: xml/api-index-full.xml:514(link) xml/api-index-1.0.5.xml:64(link)
 msgid "cut_take_strdup"
 msgstr ""
 
 #: xml/cut-test-utils.xml:24(link) xml/cut-test-utils.xml:130(primary)
-#: xml/api-index-full.xml:516(link) xml/api-index-1.0.5.xml:65(link)
+#: xml/api-index-full.xml:517(link) xml/api-index-1.0.5.xml:65(link)
 msgid "cut_take_strndup"
 msgstr ""
 
@@ -11838,32 +11872,32 @@ msgid "size_t"
 msgstr ""
 
 #: xml/cut-test-utils.xml:26(link) xml/cut-test-utils.xml:151(primary)
-#: xml/api-index-full.xml:507(link) xml/api-index-1.0.5.xml:62(link)
+#: xml/api-index-full.xml:508(link) xml/api-index-1.0.5.xml:62(link)
 msgid "cut_take_memdup"
 msgstr ""
 
 #: xml/cut-test-utils.xml:28(link) xml/cut-test-utils.xml:171(primary)
-#: xml/api-index-full.xml:511(link)
+#: xml/api-index-full.xml:512(link)
 msgid "cut_take_printf"
 msgstr ""
 
 #: xml/cut-test-utils.xml:30(link) xml/cut-test-utils.xml:189(primary)
-#: xml/api-index-full.xml:515(link)
+#: xml/api-index-full.xml:516(link)
 msgid "cut_take_string_array"
 msgstr ""
 
 #: xml/cut-test-utils.xml:31(link) xml/cut-test-utils.xml:203(primary)
-#: xml/api-index-full.xml:506(link)
+#: xml/api-index-full.xml:507(link)
 msgid "cut_take_diff"
 msgstr ""
 
 #: xml/cut-test-utils.xml:33(link) xml/cut-test-utils.xml:220(primary)
-#: xml/api-index-full.xml:512(link) xml/api-index-1.0.6.xml:93(link)
+#: xml/api-index-full.xml:513(link) xml/api-index-1.0.6.xml:93(link)
 msgid "cut_take_replace"
 msgstr ""
 
 #: xml/cut-test-utils.xml:36(link) xml/cut-test-utils.xml:243(primary)
-#: xml/api-index-full.xml:437(link) xml/api-index-1.0.2.xml:25(link)
+#: xml/api-index-full.xml:438(link) xml/api-index-1.0.2.xml:25(link)
 msgid "cut_set_fixture_data_dir"
 msgstr ""
 
@@ -11873,12 +11907,12 @@ msgid "cut_build_fixture_data_path"
 msgstr ""
 
 #: xml/cut-test-utils.xml:40(link) xml/cut-test-utils.xml:283(primary)
-#: xml/api-index-full.xml:392(link) xml/api-index-1.0.2.xml:19(link)
+#: xml/api-index-full.xml:393(link) xml/api-index-1.0.2.xml:19(link)
 msgid "cut_get_fixture_data_string"
 msgstr ""
 
 #: xml/cut-test-utils.xml:42(link) xml/cut-test-utils.xml:306(primary)
-#: xml/api-index-full.xml:427(link) xml/api-index-1.0.2.xml:22(link)
+#: xml/api-index-full.xml:428(link) xml/api-index-1.0.2.xml:22(link)
 msgid "cut_remove_path"
 msgstr ""
 
@@ -11888,7 +11922,7 @@ msgid "cut_build_path"
 msgstr ""
 
 #: xml/cut-test-utils.xml:46(link) xml/cut-test-utils.xml:341(primary)
-#: xml/api-index-full.xml:408(link) xml/api-index-1.1.1.xml:22(link)
+#: xml/api-index-full.xml:409(link) xml/api-index-1.1.1.xml:22(link)
 msgid "cut_make_directory"
 msgstr ""
 
@@ -12406,7 +12440,7 @@ msgstr "作成するパスの最初の要素。"
 #: xml/cut-string-diff-writer.xml:12(refname)
 #: xml/cut-string-diff-writer.xml:19(link)
 #: xml/cut-string-diff-writer.xml:33(title)
-#: xml/cut-string-diff-writer.xml:34(primary) xml/api-index-full.xml:465(link)
+#: xml/cut-string-diff-writer.xml:34(primary) xml/api-index-full.xml:466(link)
 msgid "CutStringDiffWriter"
 msgstr ""
 
@@ -12442,12 +12476,12 @@ msgid "CutDiffWriter"
 msgstr ""
 
 #: xml/cut-string-diff-writer.xml:20(link)
-#: xml/cut-string-diff-writer.xml:43(primary) xml/api-index-full.xml:467(link)
+#: xml/cut-string-diff-writer.xml:43(primary) xml/api-index-full.xml:468(link)
 msgid "cut_string_diff_writer_new"
 msgstr ""
 
 #: xml/cut-string-diff-writer.xml:21(link)
-#: xml/cut-string-diff-writer.xml:52(primary) xml/api-index-full.xml:466(link)
+#: xml/cut-string-diff-writer.xml:52(primary) xml/api-index-full.xml:467(link)
 msgid "cut_string_diff_writer_get_result"
 msgstr ""
 
@@ -12508,12 +12542,12 @@ msgstr ""
 #: xml/cut-readable-differ.xml:7(refentrytitle)
 #: xml/cut-readable-differ.xml:12(refname)
 #: xml/cut-readable-differ.xml:19(link) xml/cut-readable-differ.xml:35(title)
-#: xml/cut-readable-differ.xml:36(primary) xml/api-index-full.xml:424(link)
+#: xml/cut-readable-differ.xml:36(primary) xml/api-index-full.xml:425(link)
 msgid "CutReadableDiffer"
 msgstr ""
 
 #: xml/cut-readable-differ.xml:20(link)
-#: xml/cut-readable-differ.xml:45(primary) xml/api-index-full.xml:425(link)
+#: xml/cut-readable-differ.xml:45(primary) xml/api-index-full.xml:426(link)
 msgid "cut_readable_differ_new"
 msgstr ""
 
@@ -12617,7 +12651,7 @@ msgstr "マルチプロセスでテストを走らせるためのユーティリ
 #: xml/cut-multi-process.xml:64(returnvalue)
 #: xml/cut-multi-process.xml:68(returnvalue)
 #: xml/cut-multi-process.xml:96(title) xml/cut-multi-process.xml:97(primary)
-#: xml/api-index-full.xml:468(link) xml/api-index-1.0.4.xml:16(link)
+#: xml/api-index-full.xml:469(link) xml/api-index-1.0.4.xml:16(link)
 msgid "CutSubProcess"
 msgstr ""
 
@@ -12628,67 +12662,67 @@ msgstr ""
 #: xml/cut-multi-process.xml:70(returnvalue)
 #: xml/cut-multi-process.xml:71(returnvalue)
 #: xml/cut-multi-process.xml:115(title) xml/cut-multi-process.xml:116(primary)
-#: xml/api-index-full.xml:469(link) xml/api-index-1.0.4.xml:17(link)
+#: xml/api-index-full.xml:470(link) xml/api-index-1.0.4.xml:17(link)
 msgid "CutSubProcessGroup"
 msgstr ""
 
 #: xml/cut-multi-process.xml:22(link) xml/cut-multi-process.xml:141(primary)
-#: xml/api-index-full.xml:509(link) xml/api-index-1.0.4.xml:48(link)
+#: xml/api-index-full.xml:510(link) xml/api-index-1.0.4.xml:48(link)
 msgid "cut_take_new_sub_process"
 msgstr ""
 
 #: xml/cut-multi-process.xml:23(link) xml/cut-multi-process.xml:157(primary)
-#: xml/api-index-full.xml:488(link) xml/api-index-1.0.4.xml:35(link)
+#: xml/api-index-full.xml:489(link) xml/api-index-1.0.4.xml:35(link)
 msgid "cut_sub_process_run"
 msgstr ""
 
 #: xml/cut-multi-process.xml:24(link) xml/cut-multi-process.xml:172(primary)
-#: xml/api-index-full.xml:489(link) xml/api-index-1.0.4.xml:36(link)
+#: xml/api-index-full.xml:490(link) xml/api-index-1.0.4.xml:36(link)
 msgid "cut_sub_process_run_async"
 msgstr ""
 
 #: xml/cut-multi-process.xml:25(link) xml/cut-multi-process.xml:184(primary)
-#: xml/api-index-full.xml:499(link) xml/api-index-1.0.4.xml:45(link)
+#: xml/api-index-full.xml:500(link) xml/api-index-1.0.4.xml:45(link)
 msgid "cut_sub_process_wait"
 msgstr ""
 
 #: xml/cut-multi-process.xml:26(link) xml/cut-multi-process.xml:200(primary)
-#: xml/api-index-full.xml:487(link) xml/api-index-1.0.4.xml:34(link)
+#: xml/api-index-full.xml:488(link) xml/api-index-1.0.4.xml:34(link)
 msgid "cut_sub_process_is_success"
 msgstr ""
 
 #: xml/cut-multi-process.xml:27(link) xml/cut-multi-process.xml:216(primary)
-#: xml/api-index-full.xml:486(link) xml/api-index-1.0.4.xml:33(link)
+#: xml/api-index-full.xml:487(link) xml/api-index-1.0.4.xml:33(link)
 msgid "cut_sub_process_is_running"
 msgstr ""
 
 #: xml/cut-multi-process.xml:28(link) xml/cut-multi-process.xml:231(primary)
-#: xml/api-index-full.xml:479(link) xml/api-index-1.0.4.xml:26(link)
+#: xml/api-index-full.xml:480(link) xml/api-index-1.0.4.xml:26(link)
 msgid "cut_sub_process_get_test_directory"
 msgstr ""
 
 #: xml/cut-multi-process.xml:29(link) xml/cut-multi-process.xml:245(primary)
-#: xml/api-index-full.xml:498(link) xml/api-index-1.0.4.xml:44(link)
+#: xml/api-index-full.xml:499(link) xml/api-index-1.0.4.xml:44(link)
 msgid "cut_sub_process_set_test_directory"
 msgstr ""
 
 #: xml/cut-multi-process.xml:31(link) xml/cut-multi-process.xml:262(primary)
-#: xml/api-index-full.xml:476(link) xml/api-index-1.0.4.xml:23(link)
+#: xml/api-index-full.xml:477(link) xml/api-index-1.0.4.xml:23(link)
 msgid "cut_sub_process_get_source_directory"
 msgstr ""
 
 #: xml/cut-multi-process.xml:33(link) xml/cut-multi-process.xml:277(primary)
-#: xml/api-index-full.xml:495(link) xml/api-index-1.0.4.xml:41(link)
+#: xml/api-index-full.xml:496(link) xml/api-index-1.0.4.xml:41(link)
 msgid "cut_sub_process_set_source_directory"
 msgstr ""
 
 #: xml/cut-multi-process.xml:36(link) xml/cut-multi-process.xml:295(primary)
-#: xml/api-index-full.xml:475(link) xml/api-index-1.0.4.xml:22(link)
+#: xml/api-index-full.xml:476(link) xml/api-index-1.0.4.xml:22(link)
 msgid "cut_sub_process_get_multi_thread"
 msgstr ""
 
 #: xml/cut-multi-process.xml:37(link) xml/cut-multi-process.xml:310(primary)
-#: xml/api-index-full.xml:494(link) xml/api-index-1.0.4.xml:40(link)
+#: xml/api-index-full.xml:495(link) xml/api-index-1.0.4.xml:40(link)
 msgid "cut_sub_process_set_multi_thread"
 msgstr ""
 
@@ -12706,52 +12740,52 @@ msgid "int"
 msgstr ""
 
 #: xml/cut-multi-process.xml:39(link) xml/cut-multi-process.xml:326(primary)
-#: xml/api-index-full.xml:474(link) xml/api-index-1.0.5.xml:57(link)
+#: xml/api-index-full.xml:475(link) xml/api-index-1.0.5.xml:57(link)
 msgid "cut_sub_process_get_max_threads"
 msgstr ""
 
 #: xml/cut-multi-process.xml:40(link) xml/cut-multi-process.xml:342(primary)
-#: xml/api-index-full.xml:493(link) xml/api-index-1.0.5.xml:58(link)
+#: xml/api-index-full.xml:494(link) xml/api-index-1.0.5.xml:58(link)
 msgid "cut_sub_process_set_max_threads"
 msgstr ""
 
 #: xml/cut-multi-process.xml:42(link) xml/cut-multi-process.xml:360(primary)
-#: xml/api-index-full.xml:472(link) xml/api-index-1.0.4.xml:20(link)
+#: xml/api-index-full.xml:473(link) xml/api-index-1.0.4.xml:20(link)
 msgid "cut_sub_process_get_exclude_files"
 msgstr ""
 
 #: xml/cut-multi-process.xml:43(link) xml/cut-multi-process.xml:375(primary)
-#: xml/api-index-full.xml:491(link) xml/api-index-1.0.4.xml:38(link)
+#: xml/api-index-full.xml:492(link) xml/api-index-1.0.4.xml:38(link)
 msgid "cut_sub_process_set_exclude_files"
 msgstr ""
 
 #: xml/cut-multi-process.xml:45(link) xml/cut-multi-process.xml:392(primary)
-#: xml/api-index-full.xml:471(link) xml/api-index-1.0.4.xml:19(link)
+#: xml/api-index-full.xml:472(link) xml/api-index-1.0.4.xml:19(link)
 msgid "cut_sub_process_get_exclude_directories"
 msgstr ""
 
 #: xml/cut-multi-process.xml:47(link) xml/cut-multi-process.xml:409(primary)
-#: xml/api-index-full.xml:490(link) xml/api-index-1.0.4.xml:37(link)
+#: xml/api-index-full.xml:491(link) xml/api-index-1.0.4.xml:37(link)
 msgid "cut_sub_process_set_exclude_directories"
 msgstr ""
 
 #: xml/cut-multi-process.xml:50(link) xml/cut-multi-process.xml:428(primary)
-#: xml/api-index-full.xml:477(link) xml/api-index-1.0.4.xml:24(link)
+#: xml/api-index-full.xml:478(link) xml/api-index-1.0.4.xml:24(link)
 msgid "cut_sub_process_get_target_test_case_names"
 msgstr ""
 
 #: xml/cut-multi-process.xml:52(link) xml/cut-multi-process.xml:443(primary)
-#: xml/api-index-full.xml:496(link) xml/api-index-1.0.4.xml:42(link)
+#: xml/api-index-full.xml:497(link) xml/api-index-1.0.4.xml:42(link)
 msgid "cut_sub_process_set_target_test_case_names"
 msgstr ""
 
 #: xml/cut-multi-process.xml:55(link) xml/cut-multi-process.xml:460(primary)
-#: xml/api-index-full.xml:478(link) xml/api-index-1.0.4.xml:25(link)
+#: xml/api-index-full.xml:479(link) xml/api-index-1.0.4.xml:25(link)
 msgid "cut_sub_process_get_target_test_names"
 msgstr ""
 
 #: xml/cut-multi-process.xml:57(link) xml/cut-multi-process.xml:475(primary)
-#: xml/api-index-full.xml:497(link) xml/api-index-1.0.4.xml:43(link)
+#: xml/api-index-full.xml:498(link) xml/api-index-1.0.4.xml:43(link)
 msgid "cut_sub_process_set_target_test_names"
 msgstr ""
 
@@ -12768,52 +12802,52 @@ msgid "double"
 msgstr ""
 
 #: xml/cut-multi-process.xml:60(link) xml/cut-multi-process.xml:492(primary)
-#: xml/api-index-full.xml:470(link) xml/api-index-1.0.4.xml:18(link)
+#: xml/api-index-full.xml:471(link) xml/api-index-1.0.4.xml:18(link)
 msgid "cut_sub_process_get_elapsed"
 msgstr ""
 
 #: xml/cut-multi-process.xml:61(link) xml/cut-multi-process.xml:506(primary)
-#: xml/api-index-full.xml:480(link) xml/api-index-1.0.4.xml:27(link)
+#: xml/api-index-full.xml:481(link) xml/api-index-1.0.4.xml:27(link)
 msgid "cut_sub_process_get_total_elapsed"
 msgstr ""
 
 #: xml/cut-multi-process.xml:62(link) xml/cut-multi-process.xml:520(primary)
-#: xml/api-index-full.xml:485(link) xml/api-index-1.0.4.xml:32(link)
+#: xml/api-index-full.xml:486(link) xml/api-index-1.0.4.xml:32(link)
 msgid "cut_sub_process_is_crashed"
 msgstr ""
 
 #: xml/cut-multi-process.xml:63(link) xml/cut-multi-process.xml:535(primary)
-#: xml/api-index-full.xml:473(link) xml/api-index-1.0.4.xml:21(link)
+#: xml/api-index-full.xml:474(link) xml/api-index-1.0.4.xml:21(link)
 msgid "cut_sub_process_get_fatal_failures"
 msgstr ""
 
 #: xml/cut-multi-process.xml:64(link) xml/cut-multi-process.xml:552(primary)
-#: xml/api-index-full.xml:492(link) xml/api-index-1.0.4.xml:39(link)
+#: xml/api-index-full.xml:493(link) xml/api-index-1.0.4.xml:39(link)
 msgid "cut_sub_process_set_fatal_failures"
 msgstr ""
 
 #: xml/cut-multi-process.xml:66(link) xml/cut-multi-process.xml:573(primary)
-#: xml/api-index-full.xml:510(link) xml/api-index-1.0.4.xml:49(link)
+#: xml/api-index-full.xml:511(link) xml/api-index-1.0.4.xml:49(link)
 msgid "cut_take_new_sub_process_group"
 msgstr ""
 
 #: xml/cut-multi-process.xml:67(link) xml/cut-multi-process.xml:585(primary)
-#: xml/api-index-full.xml:481(link) xml/api-index-1.0.4.xml:28(link)
+#: xml/api-index-full.xml:482(link) xml/api-index-1.0.4.xml:28(link)
 msgid "cut_sub_process_group_add"
 msgstr ""
 
 #: xml/cut-multi-process.xml:69(link) xml/cut-multi-process.xml:600(primary)
-#: xml/api-index-full.xml:482(link) xml/api-index-1.0.4.xml:29(link)
+#: xml/api-index-full.xml:483(link) xml/api-index-1.0.4.xml:29(link)
 msgid "cut_sub_process_group_run"
 msgstr ""
 
 #: xml/cut-multi-process.xml:70(link) xml/cut-multi-process.xml:616(primary)
-#: xml/api-index-full.xml:483(link) xml/api-index-1.0.4.xml:30(link)
+#: xml/api-index-full.xml:484(link) xml/api-index-1.0.4.xml:30(link)
 msgid "cut_sub_process_group_run_async"
 msgstr ""
 
 #: xml/cut-multi-process.xml:71(link) xml/cut-multi-process.xml:629(primary)
-#: xml/api-index-full.xml:484(link) xml/api-index-1.0.4.xml:31(link)
+#: xml/api-index-full.xml:485(link) xml/api-index-1.0.4.xml:31(link)
 msgid "cut_sub_process_group_wait"
 msgstr ""
 
@@ -13748,44 +13782,44 @@ msgid "Symbols in this section help you writing your own assertions."
 msgstr "このセクションにあるシンボルは独自検証を作成することを補助します。"
 
 #: xml/cut-helper.xml:20(link) xml/cut-helper.xml:126(primary)
-#: xml/api-index-full.xml:530(link) xml/api-index-1.0.5.xml:68(link)
+#: xml/api-index-full.xml:531(link) xml/api-index-1.0.5.xml:68(link)
 msgid "cut_test_pass"
 msgstr ""
 
 #: xml/cut-helper.xml:21(link) xml/cut-helper.xml:134(primary)
-#: xml/api-index-full.xml:528(link) xml/api-index-1.0.5.xml:66(link)
+#: xml/api-index-full.xml:529(link) xml/api-index-1.0.5.xml:66(link)
 msgid "cut_test_fail"
 msgstr ""
 
 #: xml/cut-helper.xml:23(link) xml/cut-helper.xml:153(primary)
-#: xml/api-index-full.xml:529(link) xml/api-index-deprecated.xml:47(link)
+#: xml/api-index-full.xml:530(link) xml/api-index-deprecated.xml:47(link)
 #: xml/api-index-1.0.5.xml:67(link)
 msgid "cut_test_fail_va_list"
 msgstr ""
 
 #: xml/cut-helper.xml:25(link) xml/cut-helper.xml:187(title)
-#: xml/cut-helper.xml:188(primary) xml/api-index-full.xml:426(link)
+#: xml/cut-helper.xml:188(primary) xml/api-index-full.xml:427(link)
 #: xml/api-index-1.0.6.xml:82(link)
 msgid "CUT_RELATIVE_PATH"
 msgstr ""
 
 #: xml/cut-helper.xml:26(link) xml/cut-helper.xml:249(primary)
-#: xml/api-index-full.xml:421(link) xml/api-index-1.0.6.xml:79(link)
+#: xml/api-index-full.xml:422(link) xml/api-index-1.0.6.xml:79(link)
 msgid "cut_push_backtrace"
 msgstr ""
 
 #: xml/cut-helper.xml:27(link) xml/cut-helper.xml:265(primary)
-#: xml/api-index-full.xml:420(link) xml/api-index-1.0.6.xml:78(link)
+#: xml/api-index-full.xml:421(link) xml/api-index-1.0.6.xml:78(link)
 msgid "cut_pop_backtrace"
 msgstr ""
 
 #: xml/cut-helper.xml:28(link) xml/cut-helper.xml:276(primary)
-#: xml/api-index-full.xml:531(link) xml/api-index-1.0.5.xml:69(link)
+#: xml/api-index-full.xml:532(link) xml/api-index-1.0.5.xml:69(link)
 msgid "cut_trace"
 msgstr ""
 
 #: xml/cut-helper.xml:29(link) xml/cut-helper.xml:343(primary)
-#: xml/api-index-full.xml:532(link) xml/api-index-1.0.5.xml:70(link)
+#: xml/api-index-full.xml:533(link) xml/api-index-1.0.5.xml:70(link)
 msgid "cut_trace_with_info_expression"
 msgstr ""
 
@@ -13796,17 +13830,17 @@ msgid "cut_append_diff"
 msgstr ""
 
 #: xml/cut-helper.xml:33(link) xml/cut-helper.xml:431(primary)
-#: xml/api-index-full.xml:436(link) xml/api-index-1.0.9.xml:17(link)
+#: xml/api-index-full.xml:437(link) xml/api-index-1.0.9.xml:17(link)
 msgid "cut_set_expected"
 msgstr ""
 
 #: xml/cut-helper.xml:34(link) xml/cut-helper.xml:450(primary)
-#: xml/api-index-full.xml:433(link) xml/api-index-1.0.9.xml:16(link)
+#: xml/api-index-full.xml:434(link) xml/api-index-1.0.9.xml:16(link)
 msgid "cut_set_actual"
 msgstr ""
 
 #: xml/cut-helper.xml:35(link) xml/cut-helper.xml:469(primary)
-#: xml/api-index-full.xml:402(link)
+#: xml/api-index-full.xml:403(link)
 msgid "cut_inspect_string_array"
 msgstr ""
 
@@ -13832,7 +13866,7 @@ msgid "struct sockaddr"
 msgstr ""
 
 #: xml/cut-helper.xml:43(link) xml/cut-helper.xml:547(primary)
-#: xml/api-index-full.xml:401(link) xml/api-index-1.1.1.xml:19(link)
+#: xml/api-index-full.xml:402(link) xml/api-index-1.1.1.xml:19(link)
 msgid "cut_inspect_sockaddr"
 msgstr ""
 
@@ -14725,17 +14759,17 @@ msgid "cut-features"
 msgstr ""
 
 #: xml/cut-features.xml:19(link) xml/cut-features.xml:33(title)
-#: xml/cut-features.xml:34(primary) xml/api-index-full.xml:502(link)
+#: xml/cut-features.xml:34(primary) xml/api-index-full.xml:503(link)
 msgid "CUT_SUPPORT_GLIB"
 msgstr ""
 
 #: xml/cut-features.xml:20(link) xml/cut-features.xml:40(title)
-#: xml/cut-features.xml:41(primary) xml/api-index-full.xml:501(link)
+#: xml/cut-features.xml:41(primary) xml/api-index-full.xml:502(link)
 msgid "CUT_SUPPORT_GDK_PIXBUF"
 msgstr ""
 
 #: xml/cut-features.xml:21(link) xml/cut-features.xml:47(title)
-#: xml/cut-features.xml:48(primary) xml/api-index-full.xml:500(link)
+#: xml/cut-features.xml:48(primary) xml/api-index-full.xml:501(link)
 msgid "CUT_SUPPORT_C99_STDINT_TYPES"
 msgstr ""
 
@@ -14772,22 +14806,22 @@ msgid "Experimental API."
 msgstr "実験的なAPI"
 
 #: xml/cut-experimental.xml:19(link) xml/cut-experimental.xml:36(primary)
-#: xml/api-index-full.xml:180(link) xml/api-index-0.8.xml:12(link)
+#: xml/api-index-full.xml:181(link) xml/api-index-0.8.xml:12(link)
 msgid "cut_fork"
 msgstr ""
 
 #: xml/cut-experimental.xml:20(link) xml/cut-experimental.xml:62(primary)
-#: xml/api-index-full.xml:546(link) xml/api-index-0.8.xml:20(link)
+#: xml/api-index-full.xml:547(link) xml/api-index-0.8.xml:20(link)
 msgid "cut_wait_process"
 msgstr ""
 
 #: xml/cut-experimental.xml:21(link) xml/cut-experimental.xml:92(primary)
-#: xml/api-index-full.xml:182(link) xml/api-index-0.8.xml:14(link)
+#: xml/api-index-full.xml:183(link) xml/api-index-0.8.xml:14(link)
 msgid "cut_fork_get_stdout_message"
 msgstr ""
 
 #: xml/cut-experimental.xml:22(link) xml/cut-experimental.xml:122(primary)
-#: xml/api-index-full.xml:181(link) xml/api-index-0.8.xml:13(link)
+#: xml/api-index-full.xml:182(link) xml/api-index-0.8.xml:13(link)
 msgid "cut_fork_get_stderr_message"
 msgstr ""
 
@@ -15925,22 +15959,22 @@ msgid "cut-config"
 msgstr ""
 
 #: xml/cut-config.xml:19(link) xml/cut-config.xml:34(title)
-#: xml/cut-config.xml:35(primary) xml/api-index-full.xml:396(link)
+#: xml/cut-config.xml:35(primary) xml/api-index-full.xml:397(link)
 msgid "CUT_HAVE_STDINT_H"
 msgstr ""
 
 #: xml/cut-config.xml:20(link) xml/cut-config.xml:41(title)
-#: xml/cut-config.xml:42(primary) xml/api-index-full.xml:395(link)
+#: xml/cut-config.xml:42(primary) xml/api-index-full.xml:396(link)
 msgid "CUT_HAVE_INTTYPES_H"
 msgstr ""
 
 #: xml/cut-config.xml:21(link) xml/cut-config.xml:48(title)
-#: xml/cut-config.xml:49(primary) xml/api-index-full.xml:397(link)
+#: xml/cut-config.xml:49(primary) xml/api-index-full.xml:398(link)
 msgid "CUT_HAVE_SYS_SOCKET_H"
 msgstr ""
 
 #: xml/cut-config.xml:22(link) xml/cut-config.xml:55(title)
-#: xml/cut-config.xml:56(primary) xml/api-index-full.xml:398(link)
+#: xml/cut-config.xml:56(primary) xml/api-index-full.xml:399(link)
 msgid "CUT_HAVE_SYS_UN_H"
 msgstr ""
 
@@ -16573,32 +16607,32 @@ msgid "cut_error_errno"
 msgstr ""
 
 #: xml/cut-assertions.xml:252(link) xml/cut-assertions.xml:2179(primary)
-#: xml/api-index-full.xml:178(link)
+#: xml/api-index-full.xml:179(link)
 msgid "cut_fail"
 msgstr ""
 
 #: xml/cut-assertions.xml:254(link) xml/cut-assertions.xml:2194(primary)
-#: xml/api-index-full.xml:418(link)
+#: xml/api-index-full.xml:419(link)
 msgid "cut_pend"
 msgstr ""
 
 #: xml/cut-assertions.xml:256(link) xml/cut-assertions.xml:2210(primary)
-#: xml/api-index-full.xml:419(link) xml/api-index-deprecated.xml:38(link)
+#: xml/api-index-full.xml:420(link) xml/api-index-deprecated.xml:38(link)
 msgid "cut_pending"
 msgstr ""
 
 #: xml/cut-assertions.xml:258(link) xml/cut-assertions.xml:2227(primary)
-#: xml/api-index-full.xml:412(link)
+#: xml/api-index-full.xml:413(link)
 msgid "cut_notify"
 msgstr ""
 
 #: xml/cut-assertions.xml:260(link) xml/cut-assertions.xml:2242(primary)
-#: xml/api-index-full.xml:415(link) xml/api-index-0.8.xml:17(link)
+#: xml/api-index-full.xml:416(link) xml/api-index-0.8.xml:17(link)
 msgid "cut_omit"
 msgstr ""
 
 #: xml/cut-assertions.xml:262(link) xml/cut-assertions.xml:2264(primary)
-#: xml/api-index-full.xml:428(link) xml/api-index-1.0.6.xml:83(link)
+#: xml/api-index-full.xml:429(link) xml/api-index-1.0.6.xml:83(link)
 msgid "cut_return"
 msgstr ""
 
@@ -19132,16 +19166,17 @@ msgstr ""
 msgid "D"
 msgstr ""
 
-#: xml/api-index-full.xml:170(title) xml/api-index-1.1.1.xml:9(title)
-#: xml/api-index-1.0.5.xml:11(title) xml/api-index-1.0.2.xml:15(title)
+#: xml/api-index-full.xml:170(title) xml/api-index-1.1.2.xml:6(title)
+#: xml/api-index-1.1.1.xml:9(title) xml/api-index-1.0.5.xml:11(title)
+#: xml/api-index-1.0.2.xml:15(title)
 msgid "E"
 msgstr ""
 
-#: xml/api-index-full.xml:177(title) xml/api-index-0.8.xml:11(title)
+#: xml/api-index-full.xml:178(title) xml/api-index-0.8.xml:11(title)
 msgid "F"
 msgstr ""
 
-#: xml/api-index-full.xml:184(title) xml/api-index-deprecated.xml:22(title)
+#: xml/api-index-full.xml:185(title) xml/api-index-deprecated.xml:22(title)
 #: xml/api-index-1.1.1.xml:12(title) xml/api-index-1.0.9.xml:12(title)
 #: xml/api-index-1.0.8.xml:6(title) xml/api-index-1.0.7.xml:21(title)
 #: xml/api-index-1.0.6.xml:9(title) xml/api-index-1.0.5.xml:15(title)
@@ -19150,60 +19185,60 @@ msgstr ""
 msgid "G"
 msgstr ""
 
-#: xml/api-index-full.xml:394(title)
+#: xml/api-index-full.xml:395(title)
 msgid "H"
 msgstr ""
 
-#: xml/api-index-full.xml:400(title) xml/api-index-1.1.1.xml:18(title)
+#: xml/api-index-full.xml:401(title) xml/api-index-1.1.1.xml:18(title)
 msgid "I"
 msgstr ""
 
-#: xml/api-index-full.xml:404(title) xml/api-index-deprecated.xml:34(title)
+#: xml/api-index-full.xml:405(title) xml/api-index-deprecated.xml:34(title)
 #: xml/api-index-1.0.6.xml:74(title)
 msgid "K"
 msgstr ""
 
-#: xml/api-index-full.xml:407(title) xml/api-index-1.1.1.xml:21(title)
+#: xml/api-index-full.xml:408(title) xml/api-index-1.1.1.xml:21(title)
 #: xml/api-index-1.1.0.xml:51(title)
 msgid "M"
 msgstr ""
 
-#: xml/api-index-full.xml:411(title)
+#: xml/api-index-full.xml:412(title)
 msgid "N"
 msgstr ""
 
-#: xml/api-index-full.xml:414(title) xml/api-index-0.8.xml:16(title)
+#: xml/api-index-full.xml:415(title) xml/api-index-0.8.xml:16(title)
 msgid "O"
 msgstr ""
 
-#: xml/api-index-full.xml:417(title) xml/api-index-deprecated.xml:37(title)
+#: xml/api-index-full.xml:418(title) xml/api-index-deprecated.xml:37(title)
 #: xml/api-index-1.0.6.xml:77(title)
 msgid "P"
 msgstr ""
 
-#: xml/api-index-full.xml:423(title) xml/api-index-1.0.6.xml:81(title)
+#: xml/api-index-full.xml:424(title) xml/api-index-1.0.6.xml:81(title)
 #: xml/api-index-1.0.2.xml:21(title)
 msgid "R"
 msgstr ""
 
-#: xml/api-index-full.xml:430(title) xml/api-index-deprecated.xml:40(title)
+#: xml/api-index-full.xml:431(title) xml/api-index-deprecated.xml:40(title)
 #: xml/api-index-1.0.9.xml:15(title) xml/api-index-1.0.8.xml:9(title)
 #: xml/api-index-1.0.6.xml:85(title) xml/api-index-1.0.5.xml:56(title)
 #: xml/api-index-1.0.4.xml:13(title) xml/api-index-1.0.2.xml:24(title)
 msgid "S"
 msgstr ""
 
-#: xml/api-index-full.xml:504(title) xml/api-index-deprecated.xml:45(title)
+#: xml/api-index-full.xml:505(title) xml/api-index-deprecated.xml:45(title)
 #: xml/api-index-1.0.7.xml:27(title) xml/api-index-1.0.6.xml:92(title)
 #: xml/api-index-1.0.5.xml:60(title) xml/api-index-1.0.4.xml:47(title)
 msgid "T"
 msgstr ""
 
-#: xml/api-index-full.xml:535(title)
+#: xml/api-index-full.xml:536(title)
 msgid "U"
 msgstr ""
 
-#: xml/api-index-full.xml:545(title) xml/api-index-0.8.xml:19(title)
+#: xml/api-index-full.xml:546(title) xml/api-index-0.8.xml:19(title)
 msgid "W"
 msgstr ""
 
@@ -19255,79 +19290,79 @@ msgstr "すべてのシンボル一覧"
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:119(title)
+#: cutter-docs.sgml:119(title) cutter-docs.sgml:122(title)
 msgid "Index of new symbols in 1.1.1"
 msgstr "1.1.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:122(title)
+#: cutter-docs.sgml:125(title)
 msgid "Index of new symbols in 1.1.0"
 msgstr "1.1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:125(title)
+#: cutter-docs.sgml:128(title)
 msgid "Index of new symbols in 1.0.9"
 msgstr "1.0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:128(title)
+#: cutter-docs.sgml:131(title)
 msgid "Index of new symbols in 1.0.8"
 msgstr "1.0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:131(title)
+#: cutter-docs.sgml:134(title)
 msgid "Index of new symbols in 1.0.7"
 msgstr "1.0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:134(title)
+#: cutter-docs.sgml:137(title)
 msgid "Index of new symbols in 1.0.6"
 msgstr "1.0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:137(title)
+#: cutter-docs.sgml:140(title)
 msgid "Index of new symbols in 1.0.5"
 msgstr "1.0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:140(title)
+#: cutter-docs.sgml:143(title)
 msgid "Index of new symbols in 1.0.4"
 msgstr "1.0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:143(title)
+#: cutter-docs.sgml:146(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:146(title)
+#: cutter-docs.sgml:149(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:149(title)
+#: cutter-docs.sgml:152(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:152(title)
+#: cutter-docs.sgml:155(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:155(title)
+#: cutter-docs.sgml:158(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:158(title)
+#: cutter-docs.sgml:161(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:161(title)
+#: cutter-docs.sgml:164(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:164(title)
+#: cutter-docs.sgml:167(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:167(title)
+#: cutter-docs.sgml:170(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:170(title)
+#: cutter-docs.sgml:173(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:173(title)
+#: cutter-docs.sgml:176(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 

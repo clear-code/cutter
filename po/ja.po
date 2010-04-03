@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-03-08 23:21+0900\n"
+"POT-Creation-Date: 2010-04-03 12:22+0900\n"
 "PO-Revision-Date: 2010-03-08 23:40+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: ../cutter/cut-diff.c:57 ../cutter/cut-main.c:130
+#: ../cutter/cut-diff.c:57 ../cutter/cut-main.c:134
 msgid "Show version"
 msgstr "バージョンを表示"
 
@@ -37,37 +37,37 @@ msgstr "unified diff形式を使用"
 msgid "FILE_FROM FILE_TO"
 msgstr "変更前ファイル 変更後ファイル"
 
-#: ../cutter/cut-main.c:99
+#: ../cutter/cut-main.c:103
 #, c-format
 msgid "Invalid run mode: %s"
 msgstr "不正な実行モードです: %s"
 
-#: ../cutter/cut-main.c:120
+#: ../cutter/cut-main.c:124
 #, c-format
 msgid "Invalid test case order value: %s"
 msgstr "不正なテストケース順序指定です: %s"
 
-#: ../cutter/cut-main.c:132
+#: ../cutter/cut-main.c:136
 msgid "Set run mode (default: test)"
 msgstr "実行モードを設定（既定値: test）"
 
-#: ../cutter/cut-main.c:134
+#: ../cutter/cut-main.c:138
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: ../cutter/cut-main.c:136
+#: ../cutter/cut-main.c:140
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: ../cutter/cut-main.c:138
+#: ../cutter/cut-main.c:142
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: ../cutter/cut-main.c:140
+#: ../cutter/cut-main.c:144
 msgid "Run test cases and iterated tests with multi-thread"
 msgstr "マルチスレッドでテストケースと繰り返しテストを実行"
 
-#: ../cutter/cut-main.c:142
+#: ../cutter/cut-main.c:146
 msgid ""
 "Run test cases and iterated tests with MAX_THREADS threads concurrently at a "
 "maximum (default: 10; -1 is no limit)"
@@ -75,32 +75,32 @@ msgstr ""
 "最大MAX_THREADSスレッドを同時に動かしてテストケースと繰り返しテストを実行しま"
 "す（既定値: 10; -1は制限なし）"
 
-#: ../cutter/cut-main.c:148
+#: ../cutter/cut-main.c:152
 msgid "Disable signal handling"
 msgstr "シグナルを処理しない"
 
-#: ../cutter/cut-main.c:150
+#: ../cutter/cut-main.c:154
 msgid "Sort test case by. Default is 'none'."
 msgstr "テストケースを並び替える。既定値は'none'（並び替えない）"
 
-#: ../cutter/cut-main.c:152
+#: ../cutter/cut-main.c:156
 msgid "Skip files"
 msgstr "ファイルをスキップ"
 
-#: ../cutter/cut-main.c:154
+#: ../cutter/cut-main.c:158
 msgid "Skip directories"
 msgstr "ディレクトリをスキップ"
 
-#: ../cutter/cut-main.c:156
+#: ../cutter/cut-main.c:160
 msgid "Treat failures as fatal problem"
 msgstr "失敗を致命的な問題として扱う"
 
-#: ../cutter/cut-main.c:158
+#: ../cutter/cut-main.c:162
 msgid "Keep opening loaded modules to resolve symbols for debugging"
 msgstr ""
 "デバッグ時にシンボルを解決できるようにロードしたモジュールを開いたままにする"
 
-#: ../cutter/cut-main.c:161
+#: ../cutter/cut-main.c:165
 msgid ""
 "Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' "
 "PREFIX}' attribute set function"
@@ -108,7 +108,7 @@ msgstr ""
 "便利だが危険な'#{属性名}_#{テスト名 - 'test_'プリフィックス}'属性設定関数を有"
 "効にする"
 
-#: ../cutter/cut-main.c:166
+#: ../cutter/cut-main.c:170
 msgid ""
 "Set breakpoints at each line which invokes test. You can step into a test "
 "function with your debugger easily."
@@ -116,7 +116,7 @@ msgstr ""
 "テストを実行する前の行にブレークポイントを設定する。デバッガでステップイン実"
 "行すれば簡単にテスト関数に入れます。"
 
-#: ../cutter/cut-main.c:226
+#: ../cutter/cut-main.c:230
 #, c-format
 msgid ""
 "TEST_DIRECTORY\n"
@@ -125,7 +125,7 @@ msgstr ""
 "テストディレクトリ\n"
 "  %s --mode=analyze %s ログディレクトリ"
 
-#: ../cutter/cut-main.c:228
+#: ../cutter/cut-main.c:232
 msgid "[OPTION...]"
 msgstr "[オプション...]"
 
@@ -166,7 +166,7 @@ msgstr "ストリームのオプション"
 msgid "Show stream options"
 msgstr "ストリームのオプションを表示"
 
-#: ../cutter/cut-test-context.c:914
+#: ../cutter/cut-test-context.c:918
 msgid "Treat a failure as a fatal problem, aborting."
 msgstr "失敗を致命的な問題として扱い、異常終了しています。"
 
