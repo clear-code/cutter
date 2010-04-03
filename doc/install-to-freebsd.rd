@@ -31,9 +31,9 @@ Cutter uses GNU build tools:
 
   % mkdir -p ~/src
   % cd ~/src
-  % fetch http://downloads.sourceforge.net/cutter/cutter-1.1.1.tar.gz
-  % tar xvzf cutter-1.1.1.tar.gz
-  % cd cutter-1.1.1
+  % fetch http://downloads.sourceforge.net/cutter/cutter-1.1.2.tar.gz
+  % tar xvzf cutter-1.1.2.tar.gz
+  % cd cutter-1.1.2
   % ./configure CPPFLAGS="-I/usr/local/include"
   % gmake
   % sudo gmake install
