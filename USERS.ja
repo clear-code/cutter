@@ -18,6 +18,12 @@
   * ((<GtkIEEmbed|URL:http://live.gnome.org/GtkIEEmbed>)):
     インターネットエクスプローラのHTMLレンダリングエンジンを
     使うためのGTK+用のウィジェットライブラリ
+  * ((<GPointingDeviceSettings|URL:http://live.gnome.org/GPointingDeviceSettings>)):
+    ポインティングデバイスを設定するためのGUIツール
+  * ((<nfc-tools|URL:http://code.google.com/p/nfc-tools/>)):
+    オープンソース近距離無線通信（NFC）ライブラリ
+    ((<libnfc|URL:http://www.libnfc.org/>))を用いた、POSIX準
+    拠OS用の便利なツールを提供するプロジェクト。
 #  * ((<Poppler|URL:http://poppler.freedesktop.org/>)): PDF
 #    レンダリングライブラリ
   * ((<海野さん|URL:http://uhideyuki.sakura.ne.jp/uDiary/?category=Cutter>))

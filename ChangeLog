@@ -1,3 +1,7 @@
+2010-04-04  Kouhei Sutou  <kou@cozmixng.org>
+
+	* USERS*: add nfc-tools.
+
 2010-04-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* Makefile.am, yum/makefile: update.

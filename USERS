@@ -20,6 +20,11 @@
     Internet Explorer.
   * ((<GPointingDeviceSettings|URL:http://live.gnome.org/GPointingDeviceSettings>)):
     a GUI tool for setting various pointing devices.
+  * ((<nfc-tools|URL:http://code.google.com/p/nfc-tools/>)):
+    Based on ((<libnfc|URL:http://www.libnfc.org/>)), Open
+    Source Near Field Communication (NFC) Library, this
+    project intent to provide useful tools for POSIX
+    compliant operating systems.
 #  * ((<Poppler|URL:http://poppler.freedesktop.org/>)):
 #    PDF rendering library.
 #
