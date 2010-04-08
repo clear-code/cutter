@@ -442,7 +442,7 @@ cut_utils_get_fixture_data_string (CutTestContext *context,
     va_start(args, path);
     data = cut_utils_get_fixture_data_string_va_list(context, fixture_data_path,
                                                      path, args);
-    va_end(args); /* FIXME: should be freed */
+    va_end(args);
 
     return data;
 }
@@ -462,8 +462,6 @@ cut_utils_get_fixture_data_string_va_list (CutTestContext *context,
                                                          path, args);
     if (error) {
         gchar *inspected, *message;
-
-        g_free(*fixture_data_path);
 
         inspected = gcut_error_inspect(error);
         message = g_strdup_printf("can't get fixture data: %s", inspected);
