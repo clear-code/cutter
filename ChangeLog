@@ -1,5 +1,9 @@
 2010-04-08  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcuttter/gcut-list.c: don't pass enum/flags type to iterator
+	function by GUINT_TO_POINTER because GType may be guint64 not
+	guint. (e.g. MacOSX)
+
 	* TUTORIAL*, sample/stack/test/run-test.sh:
 	- add missing top_dir variable.
 	- add DYLD_LIBRARY_PATH for MacOSX and LD_LIBRARY_PATH for *BSD.

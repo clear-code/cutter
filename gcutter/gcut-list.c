@@ -235,9 +235,9 @@ static void
 inspect_enum (GString *string, gconstpointer data, gpointer user_data)
 {
     gchar *inspected_enum;
-    GType type = GPOINTER_TO_UINT(user_data);
+    GType *type = user_data;
 
-    inspected_enum = gcut_enum_inspect(type, GPOINTER_TO_INT(data));
+    inspected_enum = gcut_enum_inspect(*type, GPOINTER_TO_INT(data));
     g_string_append(string, inspected_enum);
     g_free(inspected_enum);
 }
@@ -245,16 +245,16 @@ inspect_enum (GString *string, gconstpointer data, gpointer user_data)
 gchar *
 gcut_list_inspect_enum (GType type, const GList *list)
 {
-    return gcut_list_inspect(list, inspect_enum, GUINT_TO_POINTER(type));
+    return gcut_list_inspect(list, inspect_enum, &type);
 }
 
 static void
 inspect_flags (GString *string, gconstpointer data, gpointer user_data)
 {
     gchar *inspected_flags;
-    GType type = GPOINTER_TO_UINT(user_data);
+    GType *type = user_data;
 
-    inspected_flags = gcut_flags_inspect(type, GPOINTER_TO_UINT(data));
+    inspected_flags = gcut_flags_inspect(*type, GPOINTER_TO_UINT(data));
     g_string_append(string, inspected_flags);
     g_free(inspected_flags);
 }
@@ -262,7 +262,7 @@ inspect_flags (GString *string, gconstpointer data, gpointer user_data)
 gchar *
 gcut_list_inspect_flags (GType type, const GList *list)
 {
-    return gcut_list_inspect(list, inspect_flags, GUINT_TO_POINTER(type));
+    return gcut_list_inspect(list, inspect_flags, &type);
 }
 
 
