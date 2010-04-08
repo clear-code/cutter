@@ -1,5 +1,7 @@
 2010-04-08  Kouhei Sutou  <kou@clear-code.com>
 
+	* m4macros/cutter.m4: split coverage report generation target.
+
 	* README*: add Zed Shaw to Thanks list. Thanks!!!
 
 	* cutter/cut-utils.c (cut_utils_get_fixture_data_string_va_list):

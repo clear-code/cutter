@@ -79,7 +79,7 @@ coverage-clean:
         \$(LCOV) --compat-libtool --zerocounters --directory . \\
           --output-file \$(COVERAGE_INFO_FILE)
 
-coverage: coverage-clean check
+coverage-report:
         \$(LCOV) --compat-libtool --directory . \\
           --capture --output-file \$(COVERAGE_INFO_FILE)
         \$(LCOV) --compat-libtool --directory . \\
@@ -89,6 +89,8 @@ coverage: coverage-clean check
           --output-directory \$(COVERAGE_REPORT_DIR) \\
           --prefix "\`(cd '\$(top_srcdir)'; pwd)\`" \\
           \$(GENHTML_OPTIONS) \$(COVERAGE_INFO_FILE)
+
+coverage: coverage-clean check coverage-report
 EOS
       fi
     ])
