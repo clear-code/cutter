@@ -73,7 +73,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
       if grep '^coverage:' Makefile > /dev/null; then
         : # do nothing
       else
-        cat >>Makefile <<EOS
+        cat | sed -e 's/^        /	/g' >>Makefile <<EOS
 
 coverage-clean:
 	\$(LCOV) --compat-libtool --zerocounters --directory . \\

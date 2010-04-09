@@ -1,5 +1,7 @@
 2010-04-09  Kouhei Sutou  <kou@clear-code.com>
 
+	* m4macros/cutter.m4: ensure using TAB.
+
 	* m4macros/cutter.m4: use TAB for indent not 8 spaces.
 
 	* gcutter/gcut-data.h, gcutter/gcut-data-helper.[ch]: add
