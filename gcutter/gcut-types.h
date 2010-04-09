@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -59,16 +59,16 @@ typedef void    (*GCutInspectFunction) (GString *string,
 #define	GCUT_TYPE_ERROR (gcut_error_get_type())
 
 /**
- * gcut_error_get_type:
+ * GCUT_TYPE_SIZE:
  *
- * Use %GCUT_TYPE_ERROR macro to get #GType for #GError
- * instead of this function.
+ * The #GType for #gsize type.
  *
- * Returns: The #GType for a boxed type holding a #GError reference.
- *
- * Since: 1.0.7
+ * Since: 1.1.3
  */
+#define	GCUT_TYPE_SIZE (gcut_size_get_type())
+
 GType   gcut_error_get_type (void) G_GNUC_CONST;
+GType   gcut_size_get_type  (void) G_GNUC_CONST;
 
 G_END_DECLS
 
