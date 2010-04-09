@@ -75,6 +75,9 @@ gint             gcut_dynamic_data_get_int      (GCutDynamicData  *data,
 guint            gcut_dynamic_data_get_uint     (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
+gsize            gcut_dynamic_data_get_size     (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
 GType            gcut_dynamic_data_get_data_type(GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);

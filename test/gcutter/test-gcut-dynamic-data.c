@@ -25,6 +25,7 @@
 void test_string (void);
 void test_int (void);
 void test_uint (void);
+void test_size (void);
 void test_data_type (void);
 void test_flags (void);
 void test_enum (void);
@@ -117,6 +118,21 @@ test_uint (void)
     cut_assert_equal_uint(29, actual_value);
 
     assert_nonexistent_field(gcut_dynamic_data_get_uint);
+}
+
+void
+test_size (void)
+{
+    GError *error = NULL;
+    gsize actual_value;
+
+    data = gcut_dynamic_data_new("size", GCUT_TYPE_SIZE, 29,
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_size(data, "size", &error);
+    gcut_assert_error(error);
+    cut_assert_equal_size(29, actual_value);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_size);
 }
 
 void

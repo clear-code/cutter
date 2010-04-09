@@ -37,6 +37,7 @@ typedef struct _FieldValue
         GType type;
         gint integer;
         guint unsigned_integer;
+        gsize size;
     } value;
     GDestroyNotify free_function;
 } FieldValue;
@@ -92,7 +93,9 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
         gcut_inspect_pointer(string, field_value->value.pointer, user_data);
         break;
     default:
-        if (field_value->type == G_TYPE_GTYPE) {
+        if (field_value->type == GCUT_TYPE_SIZE) {
+            gcut_inspect_size(string, &(field_value->value.size), user_data);
+        } else if (field_value->type == G_TYPE_GTYPE) {
             gcut_inspect_type(string, &(field_value->value.type), user_data);
         } else if (G_TYPE_IS_FLAGS(field_value->type)) {
             GType flags_type = field_value->type;
@@ -146,9 +149,10 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
         result = (field_value1->value.pointer == field_value2->value.pointer);
         break;
     default:
-        if (field_value1->type == G_TYPE_GTYPE) {
-            result = (field_value1->value.type ==
-                      field_value2->value.type);
+        if (field_value1->type == GCUT_TYPE_SIZE) {
+            result = (field_value1->value.size == field_value2->value.size);
+        } else if (field_value1->type == G_TYPE_GTYPE) {
+            result = (field_value1->value.type == field_value2->value.type);
         } else if (G_TYPE_IS_FLAGS(field_value1->type)) {
             result = (field_value1->value.unsigned_integer ==
                       field_value2->value.unsigned_integer);
@@ -255,7 +259,9 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
             field_value->free_function = va_arg(args, GDestroyNotify);
             break;
         default:
-            if (field_value->type == G_TYPE_GTYPE) {
+            if (field_value->type == GCUT_TYPE_SIZE) {
+                field_value->value.size = va_arg(args, gsize);
+            } else if (field_value->type == G_TYPE_GTYPE) {
                 field_value->value.type = va_arg(args, GType);
             } else if (G_TYPE_IS_FLAGS(field_value->type)) {
                 field_value->value.unsigned_integer = va_arg(args, guint);
@@ -381,6 +387,19 @@ gcut_dynamic_data_get_uint (GCutDynamicData *data, const gchar *field_name,
         return 0;
 
     return field_value->value.unsigned_integer;
+}
+
+gsize
+gcut_dynamic_data_get_size (GCutDynamicData *data, const gchar *field_name,
+                            GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return 0;
+
+    return field_value->value.size;
 }
 
 guint
