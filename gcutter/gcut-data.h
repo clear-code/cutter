@@ -270,6 +270,23 @@ G_BEGIN_DECLS
          cut_pop_backtrace))
 
 /**
+ * gcut_data_get_size:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Gets a field value identified by @field_name as size_t.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.1.3
+ */
+#define gcut_data_get_size(data, field_name)                            \
+    gcut_data_get_size_helper(                                          \
+        data, field_name,                                               \
+        (cut_push_backtrace(gcut_data_get_size(data, field_name)),      \
+         cut_pop_backtrace))
+
+/**
  * gcut_data_get_type:
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.

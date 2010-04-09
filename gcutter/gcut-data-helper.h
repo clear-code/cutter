@@ -33,6 +33,9 @@ gint             gcut_data_get_int_helper       (gconstpointer data,
 guint            gcut_data_get_uint_helper      (gconstpointer data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
+gsize            gcut_data_get_size_helper      (gconstpointer  data,
+                                                 const gchar   *field_name,
+                                                 CutCallbackFunction callback);
 GType            gcut_data_get_type_helper      (gconstpointer data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
