@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,6 +44,14 @@ gcut_inspect_uint (GString *string, gconstpointer data, gpointer user_data)
     const guint *uint_value = data;
 
     g_string_append_printf(string, "%u", *uint_value);
+}
+
+void
+gcut_inspect_size (GString *string, gconstpointer data, gpointer user_data)
+{
+    const gsize *size_value = data;
+
+    g_string_append_printf(string, "%" G_GSIZE_FORMAT, *size_value);
 }
 
 void

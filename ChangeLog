@@ -1,5 +1,8 @@
 2010-04-09  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
+	gcut_inspect_size().
+
 	* gcutter/gcut-types.[ch], test/gcutter/test-gcut-types.c: add
 	GCUT_TYPE_SIZE.
 

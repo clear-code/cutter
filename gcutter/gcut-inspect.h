@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -67,7 +67,8 @@ void        gcut_inspect_direct       (GString       *string,
  *
  * e.g.:
  * |[
- * gcut_inspect_int(string, GINT_TO_POINTER(100), NULL) -> "100"
+ * gint int_value = 100;
+ * gcut_inspect_int(string, &int_value, NULL) -> "100"
  * ]|
  *
  * Since: 1.0.6
@@ -86,12 +87,33 @@ void        gcut_inspect_int          (GString       *string,
  *
  * e.g.:
  * |[
- * gcut_inspect_uint(string, GUINT_TO_POINTER(100), NULL) -> "100"
+ * guint uint_value = 100;
+ * gcut_inspect_uint(string, &uint_value, NULL) -> "100"
  * ]|
  *
  * Since: 1.0.6
  */
 void        gcut_inspect_uint         (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
+
+/**
+ * gcut_inspect_size:
+ * @string: the output string.
+ * @data: the interested target.
+ * @user_data: the data passed by user. (ignored)
+ *
+ * Shows @data as unsigned integer.
+ *
+ * e.g.:
+ * |[
+ * gsize size_value = 100;
+ * gcut_inspect_size(string, &size_value, NULL) -> "100"
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+void        gcut_inspect_size         (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
 
