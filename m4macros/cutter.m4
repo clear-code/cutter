@@ -76,19 +76,19 @@ AC_DEFUN([AC_CHECK_COVERAGE],
         cat >>Makefile <<EOS
 
 coverage-clean:
-        \$(LCOV) --compat-libtool --zerocounters --directory . \\
-          --output-file \$(COVERAGE_INFO_FILE)
+	\$(LCOV) --compat-libtool --zerocounters --directory . \\
+	  --output-file \$(COVERAGE_INFO_FILE)
 
 coverage-report:
-        \$(LCOV) --compat-libtool --directory . \\
-          --capture --output-file \$(COVERAGE_INFO_FILE)
-        \$(LCOV) --compat-libtool --directory . \\
-          --extract \$(COVERAGE_INFO_FILE) "\`(cd '\$(top_srcdir)'; pwd)\`/*" \\
-          --output-file \$(COVERAGE_INFO_FILE)
-        \$(GENHTML) --highlight --legend \\
-          --output-directory \$(COVERAGE_REPORT_DIR) \\
-          --prefix "\`(cd '\$(top_srcdir)'; pwd)\`" \\
-          \$(GENHTML_OPTIONS) \$(COVERAGE_INFO_FILE)
+	\$(LCOV) --compat-libtool --directory . \\
+	  --capture --output-file \$(COVERAGE_INFO_FILE)
+	\$(LCOV) --compat-libtool --directory . \\
+	  --extract \$(COVERAGE_INFO_FILE) "\`(cd '\$(top_srcdir)'; pwd)\`/*" \\
+	  --output-file \$(COVERAGE_INFO_FILE)
+	\$(GENHTML) --highlight --legend \\
+	  --output-directory \$(COVERAGE_REPORT_DIR) \\
+	  --prefix "\`(cd '\$(top_srcdir)'; pwd)\`" \\
+	  \$(GENHTML_OPTIONS) \$(COVERAGE_INFO_FILE)
 
 coverage: coverage-clean check coverage-report
 EOS
