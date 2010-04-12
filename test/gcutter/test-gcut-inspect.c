@@ -36,8 +36,8 @@ void test_type (void);
 void test_flags (void);
 void test_enum (void);
 void test_pointer (void);
-void test_boolean_true (void);
-void test_boolean_false (void);
+void data_boolean (void);
+void test_boolean (gconstpointer data);
 
 static GString *string;
 
@@ -192,22 +192,34 @@ test_pointer (void)
                             string->str);
 }
 
-void
-test_boolean_true (void)
-{
-    gboolean value = TRUE;
 
-    gcut_inspect_boolean(string, &value, NULL);
-    cut_assert_equal_string("TRUE", string->str);
+void
+data_boolean (void)
+{
+#define ADD_DATUM(label, expected, boolean)             \
+    gcut_add_datum(label,                               \
+                   "expected", G_TYPE_STRING, expected, \
+                   "value", G_TYPE_BOOLEAN, boolean,    \
+                   NULL)
+
+    ADD_DATUM("true", "TRUE", TRUE);
+    ADD_DATUM("false", "FALSE", FALSE);
+    ADD_DATUM("not false", "TRUE", 100);
+
+#undef ADD_DATUM
 }
 
 void
-test_boolean_false (void)
+test_boolean (gconstpointer data)
 {
-    gboolean value = FALSE;
+    gboolean value;
+    const gchar *expected;
+
+    expected = gcut_data_get_string(data, "expected");
+    value = gcut_data_get_boolean(data, "value");
 
     gcut_inspect_boolean(string, &value, NULL);
-    cut_assert_equal_string("FALSE", string->str);
+    cut_assert_equal_string(expected, string->str);
 }
 
 /*
