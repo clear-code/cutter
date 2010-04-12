@@ -161,6 +161,14 @@ gcut_inspect_boolean (GString *string, gconstpointer data, gpointer user_data)
     }
 }
 
+void
+gcut_inspect_double (GString *string, gconstpointer data, gpointer user_data)
+{
+    const gdouble *double_value = data;
+
+    g_string_append_printf(string, "%g", *double_value);
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */

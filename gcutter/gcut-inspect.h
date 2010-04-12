@@ -251,7 +251,7 @@ void        gcut_inspect_pointer      (GString       *string,
  * @data: the interested target.
  * @user_data: the data passed by user. (ignored)
  *
- * Shows @data as boolea.
+ * Shows @data as boolean.
  *
  * e.g.:
  * |[
@@ -266,6 +266,26 @@ void        gcut_inspect_pointer      (GString       *string,
  * Since: 1.1.3
  */
 void        gcut_inspect_boolean      (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
+
+/**
+ * gcut_inspect_double:
+ * @string: the output string.
+ * @data: the interested target.
+ * @user_data: the data passed by user. (ignored)
+ *
+ * Shows @data as double floating point number.
+ *
+ * e.g.:
+ * |[
+ * gdouble double_value = 2.9;
+ * gcut_inspect_double(string, &double_value, NULL) -> "2.9"
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+void        gcut_inspect_double       (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
 

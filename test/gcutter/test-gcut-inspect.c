@@ -39,6 +39,7 @@ void test_enum (void);
 void test_pointer (void);
 void data_boolean (void);
 void test_boolean (gconstpointer data);
+void test_double (void);
 
 static GString *string;
 
@@ -207,6 +208,15 @@ test_boolean (gconstpointer data)
 
     gcut_inspect_boolean(string, &value, NULL);
     cut_assert_equal_string(expected, string->str);
+}
+
+void
+test_double (void)
+{
+    gdouble value = 2.9;
+
+    gcut_inspect_double(string, &value, NULL);
+    cut_assert_equal_string("2.9", string->str);
 }
 
 /*
