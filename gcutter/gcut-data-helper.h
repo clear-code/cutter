@@ -57,6 +57,9 @@ gconstpointer    gcut_data_get_boxed_helper     (gconstpointer data,
 gpointer         gcut_data_get_object_helper    (gconstpointer  data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
+gboolean         gcut_data_get_boolean_helper   (gconstpointer data,
+                                                 const gchar   *field_name,
+                                                 CutCallbackFunction callback);
 
 G_END_DECLS
 

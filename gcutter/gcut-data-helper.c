@@ -55,6 +55,7 @@ DEFINE_GETTER_HELPER(enum, gint)
 DEFINE_GETTER_HELPER(pointer, gconstpointer)
 DEFINE_GETTER_HELPER(boxed, gconstpointer)
 DEFINE_GETTER_HELPER(object, gpointer)
+DEFINE_GETTER_HELPER(boolean, gboolean)
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
