@@ -1,5 +1,8 @@
 2010-04-12  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
+	test/cutter/test-cut-assertions.c: add cut_assert_equal_char().
+
 	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
 	gcut_inspect_char().
 

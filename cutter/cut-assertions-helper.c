@@ -1056,6 +1056,54 @@ cut_assert_not_equal_double_helper (double          expected,
     }
 }
 
+static const gchar *
+taken_inspect_char (char value)
+{
+    const gchar *inspected;
+    GString *inspected_buffer;
+
+    inspected_buffer = g_string_new(NULL);
+    gcut_inspect_char(inspected_buffer, &value, NULL);
+    inspected = cut_take_strdup(inspected_buffer->str);
+    g_string_free(inspected_buffer, TRUE);
+
+    return inspected;
+}
+
+void
+cut_assert_equal_char_helper (char            expected,
+                              char            actual,
+                              const char     *expression_expected,
+                              const char     *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(taken_inspect_char(expected));
+        cut_set_actual(taken_inspect_char(actual));
+        cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+cut_assert_not_equal_char_helper (const char      expected,
+                                  const char      actual,
+                                  const char     *expression_expected,
+                                  const char     *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(taken_inspect_char(expected));
+        cut_set_actual(taken_inspect_char(actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
 void
 cut_assert_equal_string_helper (const char     *expected,
                                 const char     *actual,

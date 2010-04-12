@@ -1330,6 +1330,58 @@ extern "C" {
 } while (0)
 
 /**
+ * cut_assert_equal_char:
+ * @expected: an expected char value.
+ * @actual: an actual char value.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @expected ==  @actual.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_equal_char('a', 'a'); -> Pass
+ * cut_assert_equal_char('a', 'b'); -> Fail
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+#define cut_assert_equal_char(expected, actual, ...) do                 \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_equal_char_helper(expected, actual,              \
+                                         #expected, #actual),           \
+            __VA_ARGS__),                                               \
+        cut_assert_equal_char(expected, actual, __VA_ARGS__));          \
+} while (0)
+
+/**
+ * cut_assert_not_equal_char:
+ * @expected: an expected char value.
+ * @actual: an actual char value.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @expected != @actual.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_not_equal_char('a', 'b'); -> Pass
+ * cut_assert_not_equal_char('a', 'a'); -> Fail
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+#define cut_assert_not_equal_char(expected, actual, ...) do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut_assert_not_equal_char_helper(expected, actual,          \
+                                             #expected, #actual),       \
+            __VA_ARGS__),                                               \
+        cut_assert_not_equal_char(expected, actual));                   \
+} while (0)
+
+/**
  * cut_assert_equal_string:
  * @expected: an expected string value.
  * @actual: an actual string value.
@@ -1368,11 +1420,11 @@ extern "C" {
  *
  * e.g.:
  * |[
- * cut_assert_equal_string("abc", "ABC"); -> Pass
- * cut_assert_equal_string("abc", NULL);  -> Pass
- * cut_assert_equal_string(NULL, "abc");  -> Pass
- * cut_assert_equal_string("abc", "abc"); -> Fail
- * cut_assert_equal_string(NULL, NULL);   -> Fail
+ * cut_assert_not_equal_string("abc", NULL);  -> Pass
+ * cut_assert_not_equal_string(NULL, "abc");  -> Pass
+ * cut_assert_not_equal_string("abc", "ABC"); -> Pass
+ * cut_assert_not_equal_string("abc", "abc"); -> Fail
+ * cut_assert_not_equal_string(NULL, NULL);   -> Fail
  * ]|
  *
  * Since: 1.0.7

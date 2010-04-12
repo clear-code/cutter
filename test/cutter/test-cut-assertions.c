@@ -99,6 +99,8 @@ void test_not_equal_uintmax(void);
 #endif
 void test_equal_size(void);
 void test_not_equal_size(void);
+void test_equal_char(void);
+void test_not_equal_char(void);
 void test_equal_string(void);
 void test_equal_string_with_diff(void);
 void test_equal_string_with_folded_diff(void);
@@ -1278,6 +1280,48 @@ test_not_equal_size (void)
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
                            FAIL_LOCATION, "stub_not_equal_size",
+                           NULL);
+}
+
+static void
+stub_equal_char (void)
+{
+    cut_assert_equal_char('a', 'a');
+    MARK_FAIL(cut_assert_equal_char('a', 'b'));
+}
+
+void
+test_equal_char (void)
+{
+    test = cut_test_new("assert-equal-char", stub_equal_char);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "assert-equal-char", NULL,
+                           "<'a' == 'b'>",
+                           "'a'", "'b'",
+                           FAIL_LOCATION, "stub_equal_char",
+                           NULL);
+}
+
+static void
+stub_not_equal_char (void)
+{
+    cut_assert_not_equal_char('a', 'b');
+    MARK_FAIL(cut_assert_not_equal_char('a', 'a'));
+}
+
+void
+test_not_equal_char (void)
+{
+    test = cut_test_new("assert-not-equal-char", stub_not_equal_char);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "assert-not-equal-char", NULL,
+                           "<'a' != 'a'>",
+                           "'a'", "'a'",
+                           FAIL_LOCATION, "stub_not_equal_char",
                            NULL);
 }
 
