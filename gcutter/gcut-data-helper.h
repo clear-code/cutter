@@ -24,6 +24,9 @@
 
 G_BEGIN_DECLS
 
+gchar            gcut_data_get_char_helper      (gconstpointer data,
+                                                 const gchar   *field_name,
+                                                 CutCallbackFunction callback);
 const gchar     *gcut_data_get_string_helper    (gconstpointer data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
