@@ -1,5 +1,8 @@
 2010-04-12  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
+	gcut_inspect_boolean().
+
 	* gcutter/gcut-data.h, gcutter/gcut-data-helper.[ch]: add
 	gcut_data_get_char().
 

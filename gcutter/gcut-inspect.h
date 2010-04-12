@@ -245,6 +245,30 @@ void        gcut_inspect_pointer      (GString       *string,
                                        gconstpointer  data,
                                        gpointer       user_data);
 
+/**
+ * gcut_inspect_boolean:
+ * @string: the output string.
+ * @data: the interested target.
+ * @user_data: the data passed by user. (ignored)
+ *
+ * Shows @data as boolea.
+ *
+ * e.g.:
+ * |[
+ * gboolean boolean_value;
+
+ * boolean_value = TRUE;
+ * gcut_inspect_boolean(string, &boolean_value, NULL) -> "TRUE"
+ * boolean_value = FALSE;
+ * gcut_inspect_boolean(string, &boolean_value, NULL) -> "FALSE"
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+void        gcut_inspect_boolean      (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
+
 G_END_DECLS
 
 #endif /* __GCUT_INSPECT_H__ */

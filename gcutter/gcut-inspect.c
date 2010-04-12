@@ -149,6 +149,18 @@ gcut_inspect_pointer (GString *string, gconstpointer data, gpointer user_data)
     g_string_append_printf(string, "#<%p>", data);
 }
 
+void
+gcut_inspect_boolean (GString *string, gconstpointer data, gpointer user_data)
+{
+    const gboolean *boolean_value = data;
+
+    if (*boolean_value) {
+        g_string_append(string, "TRUE");
+    } else {
+        g_string_append(string, "FALSE");
+    }
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */

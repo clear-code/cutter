@@ -36,6 +36,8 @@ void test_type (void);
 void test_flags (void);
 void test_enum (void);
 void test_pointer (void);
+void test_boolean_true (void);
+void test_boolean_false (void);
 
 static GString *string;
 
@@ -188,6 +190,24 @@ test_pointer (void)
     gcut_inspect_pointer(string, value, NULL);
     cut_assert_equal_string(cut_take_printf("#<%p>", value),
                             string->str);
+}
+
+void
+test_boolean_true (void)
+{
+    gboolean value = TRUE;
+
+    gcut_inspect_boolean(string, &value, NULL);
+    cut_assert_equal_string("TRUE", string->str);
+}
+
+void
+test_boolean_false (void)
+{
+    gboolean value = FALSE;
+
+    gcut_inspect_boolean(string, &value, NULL);
+    cut_assert_equal_string("FALSE", string->str);
 }
 
 /*
