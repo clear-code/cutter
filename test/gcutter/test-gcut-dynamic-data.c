@@ -272,7 +272,7 @@ test_double (void)
     GError *error = NULL;
     gdouble actual_value;
 
-    data = gcut_dynamic_data_new("double", G_TYPE_BOOLEAN, 2.9,
+    data = gcut_dynamic_data_new("double", G_TYPE_DOUBLE, 2.9,
                                  NULL);
     actual_value = gcut_dynamic_data_get_double(data, "double", &error);
     gcut_assert_error(error);
