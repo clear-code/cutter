@@ -26,7 +26,8 @@ void test_direct (void);
 void test_int (void);
 void test_uint (void);
 void test_size (void);
-void test_char (void);
+void data_char (void);
+void test_char (gconstpointer data);
 void test_char_null (void);
 void test_char_escaped (void);
 void test_char_backslash (void);
@@ -89,48 +90,34 @@ test_size (void)
 }
 
 void
-test_char (void)
+data_char (void)
 {
-    gchar value = 'X';
+#define ADD_DATUM(label, expected, character)             \
+    gcut_add_datum(label,                                 \
+                   "expected", G_TYPE_STRING, expected,   \
+                   "value", G_TYPE_CHAR, character,       \
+                   NULL)
 
-    gcut_inspect_char(string, &value, NULL);
-    cut_assert_equal_string("'X'", string->str);
+    ADD_DATUM("normal", "'X'", 'X');
+    ADD_DATUM("NULL", "'\\0'", '\0');
+    ADD_DATUM("escaped", "'\\n'", '\n');
+    ADD_DATUM("backslash", "'\\\\'", '\\');
+    ADD_DATUM("quote", "'\\''", '\'');
+
+#undef ADD_DATUM
 }
 
 void
-test_char_null (void)
+test_char (gconstpointer data)
 {
-    gchar value = '\0';
+    gchar value;
+    const gchar *expected;
 
+
+    expected = gcut_data_get_string(data, "expected");
+    value = gcut_data_get_char(data, "value");
     gcut_inspect_char(string, &value, NULL);
-    cut_assert_equal_string("'\\0'", string->str);
-}
-
-void
-test_char_escaped (void)
-{
-    gchar value = '\n';
-
-    gcut_inspect_char(string, &value, NULL);
-    cut_assert_equal_string("'\\n'", string->str);
-}
-
-void
-test_char_backslash (void)
-{
-    gchar value = '\\';
-
-    gcut_inspect_char(string, &value, NULL);
-    cut_assert_equal_string("'\\\\'", string->str);
-}
-
-void
-test_char_single_quote (void)
-{
-    gchar value = '\'';
-
-    gcut_inspect_char(string, &value, NULL);
-    cut_assert_equal_string("'\\\''", string->str);
+    cut_assert_equal_string(expected, string->str);
 }
 
 void
