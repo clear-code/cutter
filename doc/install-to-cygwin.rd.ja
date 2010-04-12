@@ -17,9 +17,9 @@ Cygwin 1.7を対象とします。
 次に、インストーラを使って以下のパッケージをインストールしま
 す。
 
-   * gcc
+   * gcc4
    * gdb
-   * glib2-devel（要確認）
+   * libglib2.0-devel
    * gettext-devel
    * intltool
    * libiconv

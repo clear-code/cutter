@@ -18,9 +18,9 @@ First, we download Cygwin 1.7 installer:
 Next, we install the following packages with the downloaded
 installer:
 
-   * gcc
+   * gcc4
    * gdb
-   * glib2-devel (should be confirmed)
+   * libglib2.0-devel
    * gettext-devel
    * intltool
    * libiconv

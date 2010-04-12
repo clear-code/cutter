@@ -1,3 +1,8 @@
+2010-04-12  Kouhei Sutou  <kou@clear-code.com>
+
+	* doc/install-to-cygwin.rd*: update dependencies packages for
+	Cygwin 1.7.
+
 2010-04-09  Kouhei Sutou  <kou@clear-code.com>
 
 	* m4macros/cutter.m4: ensure using TAB.
