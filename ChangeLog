@@ -1,5 +1,9 @@
 2010-04-12  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-dynamic-data.[ch],
+	test/gcutter/test-gcut-dynamic-data.c: GCutDyminicData supports
+	gboolean.
+
 	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
 	gcut_inspect_boolean().
 

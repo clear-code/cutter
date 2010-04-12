@@ -39,6 +39,7 @@ typedef struct _FieldValue
         gint integer;
         guint unsigned_integer;
         gsize size;
+        gboolean boolean;
     } value;
     GDestroyNotify free_function;
 } FieldValue;
@@ -95,6 +96,9 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
         break;
     case G_TYPE_POINTER:
         gcut_inspect_pointer(string, field_value->value.pointer, user_data);
+        break;
+    case G_TYPE_BOOLEAN:
+        gcut_inspect_boolean(string, &(field_value->value.boolean), user_data);
         break;
     default:
         if (field_value->type == GCUT_TYPE_SIZE) {
@@ -155,6 +159,12 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
         break;
     case G_TYPE_POINTER:
         result = (field_value1->value.pointer == field_value2->value.pointer);
+        break;
+    case G_TYPE_BOOLEAN:
+        result = ((field_value1->value.boolean &&
+                   field_value2->value.boolean) ||
+                  (!field_value1->value.boolean &&
+                   !field_value2->value.boolean));
         break;
     default:
         if (field_value1->type == GCUT_TYPE_SIZE) {
@@ -268,6 +278,9 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
         case G_TYPE_POINTER:
             field_value->value.pointer = va_arg(args, gpointer);
             field_value->free_function = va_arg(args, GDestroyNotify);
+            break;
+        case G_TYPE_BOOLEAN:
+            field_value->value.boolean = va_arg(args, gboolean);
             break;
         default:
             if (field_value->type == GCUT_TYPE_SIZE) {
@@ -492,6 +505,19 @@ gcut_dynamic_data_get_object (GCutDynamicData  *data,
         return 0;
 
     return field_value->value.pointer;
+}
+
+gboolean
+gcut_dynamic_data_get_boolean (GCutDynamicData *data, const gchar *field_name,
+                               GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return 0;
+
+    return field_value->value.boolean;
 }
 
 /*

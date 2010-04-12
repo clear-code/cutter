@@ -33,6 +33,7 @@ void test_enum (void);
 void test_pointer (void);
 void test_boxed (void);
 void test_object (void);
+void test_boolean (void);
 
 static GCutDynamicData *data;
 static GError *expected_error;
@@ -114,9 +115,9 @@ test_int (void)
 
     data = gcut_dynamic_data_new("int", G_TYPE_INT, -29,
                                  NULL);
-    actual_value = gcut_dynamic_data_get_uint(data, "int", &error);
+    actual_value = gcut_dynamic_data_get_int(data, "int", &error);
     gcut_assert_error(error);
-    cut_assert_equal_uint(-29, actual_value);
+    cut_assert_equal_int(-29, actual_value);
 
     assert_nonexistent_field(gcut_dynamic_data_get_int);
 }
@@ -247,6 +248,21 @@ test_object (void)
     gcut_assert_equal_object(value, actual_value);
 
     assert_nonexistent_field(gcut_dynamic_data_get_object);
+}
+
+void
+test_boolean (void)
+{
+    GError *error = NULL;
+    gboolean actual_value;
+
+    data = gcut_dynamic_data_new("boolean", G_TYPE_BOOLEAN, TRUE,
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_boolean(data, "boolean", &error);
+    gcut_assert_error(error);
+    cut_assert_true(actual_value);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_boolean);
 }
 
 /*

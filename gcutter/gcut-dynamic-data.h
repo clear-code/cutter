@@ -99,6 +99,9 @@ gconstpointer    gcut_dynamic_data_get_boxed    (GCutDynamicData  *data,
 gpointer         gcut_dynamic_data_get_object   (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
+gboolean         gcut_dynamic_data_get_boolean  (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
 
 G_END_DECLS
 
