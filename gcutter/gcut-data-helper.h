@@ -60,6 +60,9 @@ gpointer         gcut_data_get_object_helper    (gconstpointer  data,
 gboolean         gcut_data_get_boolean_helper   (gconstpointer data,
                                                  const gchar   *field_name,
                                                  CutCallbackFunction callback);
+gdouble          gcut_data_get_double_helper    (gconstpointer data,
+                                                 const gchar   *field_name,
+                                                 CutCallbackFunction callback);
 
 G_END_DECLS
 
