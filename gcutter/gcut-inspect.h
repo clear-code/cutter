@@ -118,6 +118,26 @@ void        gcut_inspect_size         (GString       *string,
                                        gpointer       user_data);
 
 /**
+ * gcut_inspect_char:
+ * @string: the output string.
+ * @data: the interested target.
+ * @user_data: the data passed by user. (ignored)
+ *
+ * Shows @data as character.
+ *
+ * e.g.:
+ * |[
+ * gcut_inspect_char(string, 'C', NULL) -> "'C'"
+ * gcut_inspect_char(string, '\0', NULL) -> "'\0'"
+ * gcut_inspect_char(string, '\n', NULL) -> "'\n'"
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+void        gcut_inspect_char         (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
+/**
  * gcut_inspect_string:
  * @string: the output string.
  * @data: the interested target.

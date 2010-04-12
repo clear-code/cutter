@@ -55,6 +55,52 @@ gcut_inspect_size (GString *string, gconstpointer data, gpointer user_data)
 }
 
 void
+gcut_inspect_char (GString *string, gconstpointer data, gpointer user_data)
+{
+    const gchar *value = data;
+
+    switch (value[0]) {
+    case '\a':
+        g_string_append(string, "'\\a'");
+        break;
+    case '\b':
+        g_string_append(string, "'\\b'");
+        break;
+    case '\t':
+        g_string_append(string, "'\\t'");
+        break;
+    case '\n':
+        g_string_append(string, "'\\n'");
+        break;
+    case '\v':
+        g_string_append(string, "'\\v'");
+        break;
+    case '\f':
+        g_string_append(string, "'\\f'");
+        break;
+    case '\r':
+        g_string_append(string, "'\\r'");
+        break;
+    case '\e':
+        g_string_append(string, "'\\e'");
+        break;
+    case '\'':
+        g_string_append(string, "'\\''");
+        break;
+    case '\\':
+        g_string_append(string, "'\\\\'");
+        break;
+    default:
+        if (0x20 <= value[0] && value[0] <= 0x7e) {
+            g_string_append_printf(string, "\'%c\'", value[0]);
+        } else {
+            g_string_append_printf(string, "'\\%d'", value[0]);
+        }
+        break;
+    }
+}
+
+void
 gcut_inspect_string (GString *string, gconstpointer data, gpointer user_data)
 {
     const gchar *value = data;

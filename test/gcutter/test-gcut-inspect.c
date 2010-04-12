@@ -26,6 +26,11 @@ void test_direct (void);
 void test_int (void);
 void test_uint (void);
 void test_size (void);
+void test_char (void);
+void test_char_null (void);
+void test_char_escaped (void);
+void test_char_backslash (void);
+void test_char_single_quote (void);
 void test_string (void);
 void test_type (void);
 void test_flags (void);
@@ -79,6 +84,51 @@ test_size (void)
 
     gcut_inspect_size(string, &value, NULL);
     cut_assert_equal_string("29", string->str);
+}
+
+void
+test_char (void)
+{
+    gchar value = 'X';
+
+    gcut_inspect_char(string, &value, NULL);
+    cut_assert_equal_string("'X'", string->str);
+}
+
+void
+test_char_null (void)
+{
+    gchar value = '\0';
+
+    gcut_inspect_char(string, &value, NULL);
+    cut_assert_equal_string("'\\0'", string->str);
+}
+
+void
+test_char_escaped (void)
+{
+    gchar value = '\n';
+
+    gcut_inspect_char(string, &value, NULL);
+    cut_assert_equal_string("'\\n'", string->str);
+}
+
+void
+test_char_backslash (void)
+{
+    gchar value = '\\';
+
+    gcut_inspect_char(string, &value, NULL);
+    cut_assert_equal_string("'\\\\'", string->str);
+}
+
+void
+test_char_single_quote (void)
+{
+    gchar value = '\'';
+
+    gcut_inspect_char(string, &value, NULL);
+    cut_assert_equal_string("'\\\''", string->str);
 }
 
 void
