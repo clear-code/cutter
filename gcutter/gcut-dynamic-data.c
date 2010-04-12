@@ -35,6 +35,7 @@ typedef struct _FieldValue
     union {
         gpointer pointer;
         GType type;
+        gchar character;
         gint integer;
         guint unsigned_integer;
         gsize size;
@@ -79,6 +80,9 @@ field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
     const FieldValue *field_value = data;
 
     switch (field_value->type) {
+    case G_TYPE_CHAR:
+        gcut_inspect_char(string, &(field_value->value.character), user_data);
+        break;
     case G_TYPE_STRING:
         gcut_inspect_string(string, field_value->value.pointer, user_data);
         break;
@@ -133,6 +137,10 @@ field_value_equal (gconstpointer data1, gconstpointer data2)
         return FALSE;
 
     switch (field_value1->type) {
+    case G_TYPE_CHAR:
+        result = (field_value1->value.character ==
+                  field_value2->value.character);
+        break;
     case G_TYPE_STRING:
         result = g_str_equal(field_value1->value.pointer,
                              field_value2->value.pointer);
@@ -244,6 +252,9 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
 
         field_value = field_value_new(va_arg(args, GType));
         switch (field_value->type) {
+        case G_TYPE_CHAR:
+            field_value->value.character = va_arg(args, gint);
+            break;
         case G_TYPE_STRING:
             field_value->value.pointer = g_strdup(va_arg(args, const gchar *));
             field_value->free_function = g_free;
@@ -348,6 +359,19 @@ lookup (GCutDynamicData *data, const gchar *field_name, GError **error)
     }
 
     return field_value;
+}
+
+gchar
+gcut_dynamic_data_get_char (GCutDynamicData *data, const gchar *field_name,
+                            GError **error)
+{
+    FieldValue *field_value;
+
+    field_value = lookup(data, field_name, error);
+    if (!field_value)
+        return '\0';
+
+    return field_value->value.character;
 }
 
 const gchar *

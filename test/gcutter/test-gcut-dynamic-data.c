@@ -22,6 +22,7 @@
 #include <cutter/cut-enum-types.h>
 #include <cuttest-enum.h>
 
+void test_char (void);
 void test_string (void);
 void test_int (void);
 void test_uint (void);
@@ -73,6 +74,21 @@ assert_nonexistent_field_helper (GetValueFunc get_value_func)
                                  "nonexistent");
     get_value_func(data, "nonexistent", &actual_error);
     gcut_assert_equal_error(expected_error, actual_error);
+}
+
+void
+test_char (void)
+{
+    GError *error = NULL;
+    gchar actual_value;
+
+    data = gcut_dynamic_data_new("char", G_TYPE_CHAR, 'X',
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_char(data, "char", &error);
+    gcut_assert_error(error);
+    cut_assert_equal_char('X', actual_value);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_char);
 }
 
 void

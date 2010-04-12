@@ -66,6 +66,9 @@ gboolean         gcut_dynamic_data_equal        (GCutDynamicData  *data1,
                                                  GCutDynamicData  *data2);
 
 
+gchar            gcut_dynamic_data_get_char     (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
 const gchar     *gcut_dynamic_data_get_string   (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);

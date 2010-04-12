@@ -1,5 +1,9 @@
 2010-04-12  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-dynamic-data.[ch],
+	test/gcutter/test-gcut-dynamic-data.c: GCutDyminicData supports
+	gchar.
+
 	* cutter/cut-assertions.h, cutter/cut-assertions-helper.[ch],
 	test/cutter/test-cut-assertions.c: add cut_assert_equal_char().
 
