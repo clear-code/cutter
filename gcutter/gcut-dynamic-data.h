@@ -102,6 +102,9 @@ gpointer         gcut_dynamic_data_get_object   (GCutDynamicData  *data,
 gboolean         gcut_dynamic_data_get_boolean  (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
+gdouble          gcut_dynamic_data_get_double   (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
 
 G_END_DECLS
 

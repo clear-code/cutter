@@ -34,6 +34,7 @@ void test_pointer (void);
 void test_boxed (void);
 void test_object (void);
 void test_boolean (void);
+void test_double (void);
 
 static GCutDynamicData *data;
 static GError *expected_error;
@@ -263,6 +264,21 @@ test_boolean (void)
     cut_assert_true(actual_value);
 
     assert_nonexistent_field(gcut_dynamic_data_get_boolean);
+}
+
+void
+test_double (void)
+{
+    GError *error = NULL;
+    gdouble actual_value;
+
+    data = gcut_dynamic_data_new("double", G_TYPE_BOOLEAN, 2.9,
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_double(data, "double", &error);
+    gcut_assert_error(error);
+    cut_assert_equal_double(2.9, actual_value, 0.1);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_double);
 }
 
 /*

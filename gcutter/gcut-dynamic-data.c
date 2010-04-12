@@ -29,8 +29,10 @@
                                  GCUT_TYPE_DYNAMIC_DATA,                \
                                  GCutDynamicDataPrivate))
 
-typedef struct _FieldValue
+typedef struct _Field
 {
+    GCutDynamicData *data;
+    gchar *name;
     GType type;
     union {
         gpointer pointer;
@@ -40,9 +42,10 @@ typedef struct _FieldValue
         guint unsigned_integer;
         gsize size;
         gboolean boolean;
+        gdouble double_value;
     } value;
     GDestroyNotify free_function;
-} FieldValue;
+} Field;
 
 typedef struct _GCutDynamicDataPrivate	GCutDynamicDataPrivate;
 struct _GCutDynamicDataPrivate
@@ -50,136 +53,147 @@ struct _GCutDynamicDataPrivate
     GHashTable *fields;
 };
 
-static FieldValue *
-field_value_new (GType type)
+static Field *
+field_new (GCutDynamicData *data, const gchar *name, GType type)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = g_slice_new0(FieldValue);
-    field_value->type = type;
+    field = g_slice_new0(Field);
+    field->data = data;
+    field->name = g_strdup(name);
+    field->type = type;
 
-    return field_value;
+    return field;
 }
 
 static void
-field_value_free (FieldValue *field_value)
+field_free (Field *field)
 {
-    if (field_value->value.pointer) {
-        if (field_value->free_function) {
-            field_value->free_function(field_value->value.pointer);
-        } else if (G_TYPE_IS_BOXED(field_value->type)) {
-            g_boxed_free(field_value->type, field_value->value.pointer);
+    if (field->value.pointer) {
+        if (field->free_function) {
+            field->free_function(field->value.pointer);
+        } else if (G_TYPE_IS_BOXED(field->type)) {
+            g_boxed_free(field->type, field->value.pointer);
         }
     }
 
-    g_slice_free(FieldValue, field_value);
+    g_free(field->name);
+    g_slice_free(Field, field);
 }
 
 static void
-field_value_inspect (GString *string, gconstpointer data, gpointer user_data)
+field_inspect (GString *string, gconstpointer data, gpointer user_data)
 {
-    const FieldValue *field_value = data;
+    const Field *field = data;
 
-    switch (field_value->type) {
+    switch (field->type) {
     case G_TYPE_CHAR:
-        gcut_inspect_char(string, &(field_value->value.character), user_data);
+        gcut_inspect_char(string, &(field->value.character), user_data);
         break;
     case G_TYPE_STRING:
-        gcut_inspect_string(string, field_value->value.pointer, user_data);
+        gcut_inspect_string(string, field->value.pointer, user_data);
         break;
     case G_TYPE_INT:
-        gcut_inspect_int(string, &(field_value->value.integer), user_data);
+        gcut_inspect_int(string, &(field->value.integer), user_data);
         break;
     case G_TYPE_UINT:
-        gcut_inspect_uint(string, &(field_value->value.unsigned_integer),
-                          user_data);
+        gcut_inspect_uint(string, &(field->value.unsigned_integer), user_data);
         break;
     case G_TYPE_POINTER:
-        gcut_inspect_pointer(string, field_value->value.pointer, user_data);
+        gcut_inspect_pointer(string, field->value.pointer, user_data);
         break;
     case G_TYPE_BOOLEAN:
-        gcut_inspect_boolean(string, &(field_value->value.boolean), user_data);
+        gcut_inspect_boolean(string, &(field->value.boolean), user_data);
+        break;
+    case G_TYPE_DOUBLE:
+        gcut_inspect_double(string, &(field->value.double_value), user_data);
         break;
     default:
-        if (field_value->type == GCUT_TYPE_SIZE) {
-            gcut_inspect_size(string, &(field_value->value.size), user_data);
-        } else if (field_value->type == G_TYPE_GTYPE) {
-            gcut_inspect_type(string, &(field_value->value.type), user_data);
-        } else if (G_TYPE_IS_FLAGS(field_value->type)) {
-            GType flags_type = field_value->type;
+        if (field->type == GCUT_TYPE_SIZE) {
+            gcut_inspect_size(string, &(field->value.size), user_data);
+        } else if (field->type == G_TYPE_GTYPE) {
+            gcut_inspect_type(string, &(field->value.type), user_data);
+        } else if (G_TYPE_IS_FLAGS(field->type)) {
+            GType flags_type = field->type;
             gcut_inspect_flags(string,
-                               &(field_value->value.unsigned_integer),
+                               &(field->value.unsigned_integer),
                                &flags_type);
-        } else if (G_TYPE_IS_ENUM(field_value->type)) {
-            GType enum_type = field_value->type;
+        } else if (G_TYPE_IS_ENUM(field->type)) {
+            GType enum_type = field->type;
             gcut_inspect_enum(string,
-                              &(field_value->value.integer),
+                              &(field->value.integer),
                               &enum_type);
         } else {
             g_string_append_printf(string,
                                    "[unsupported type: <%s>]",
-                                   g_type_name(field_value->type));
+                                   g_type_name(field->type));
         }
         break;
     }
 }
 
 static gboolean
-field_value_equal (gconstpointer data1, gconstpointer data2)
+field_equal (gconstpointer data1, gconstpointer data2)
 {
-    const FieldValue *field_value1 = data1;
-    const FieldValue *field_value2 = data2;
+    const Field *field1 = data1;
+    const Field *field2 = data2;
     gboolean result = FALSE;
+    gchar *error_field_name;
+    gdouble error;
 
-    if (field_value1 == field_value2)
+    if (field1 == field2)
         return TRUE;
 
-    if (field_value1 == NULL || field_value2 == NULL)
+    if (field1 == NULL || field2 == NULL)
         return FALSE;
 
-    if (field_value1->type != field_value2->type)
+    if (field1->type != field2->type)
         return FALSE;
 
-    switch (field_value1->type) {
+    switch (field1->type) {
     case G_TYPE_CHAR:
-        result = (field_value1->value.character ==
-                  field_value2->value.character);
+        result = (field1->value.character == field2->value.character);
         break;
     case G_TYPE_STRING:
-        result = g_str_equal(field_value1->value.pointer,
-                             field_value2->value.pointer);
+        result = g_str_equal(field1->value.pointer, field2->value.pointer);
         break;
     case G_TYPE_INT:
-        result = (field_value1->value.integer ==
-                  field_value2->value.integer);
+        result = (field1->value.integer == field2->value.integer);
         break;
     case G_TYPE_UINT:
-        result = (field_value1->value.unsigned_integer ==
-                  field_value2->value.unsigned_integer);
+        result = (field1->value.unsigned_integer ==
+                  field2->value.unsigned_integer);
         break;
     case G_TYPE_POINTER:
-        result = (field_value1->value.pointer == field_value2->value.pointer);
+        result = (field1->value.pointer == field2->value.pointer);
         break;
     case G_TYPE_BOOLEAN:
-        result = ((field_value1->value.boolean &&
-                   field_value2->value.boolean) ||
-                  (!field_value1->value.boolean &&
-                   !field_value2->value.boolean));
+        result = ((field1->value.boolean && field2->value.boolean) ||
+                  (!field1->value.boolean && !field2->value.boolean));
+        break;
+    case G_TYPE_DOUBLE:
+        error_field_name = g_strdup_printf("%s-error", field1->name);
+        error = gcut_dynamic_data_get_double(field1->data, error_field_name,
+                                             NULL);
+        g_free(error_field_name);
+        result = cut_utils_equal_double(field1->value.double_value,
+                                        field2->value.double_value,
+                                        error);
         break;
     default:
-        if (field_value1->type == GCUT_TYPE_SIZE) {
-            result = (field_value1->value.size == field_value2->value.size);
-        } else if (field_value1->type == G_TYPE_GTYPE) {
-            result = (field_value1->value.type == field_value2->value.type);
-        } else if (G_TYPE_IS_FLAGS(field_value1->type)) {
-            result = (field_value1->value.unsigned_integer ==
-                      field_value2->value.unsigned_integer);
-        } else if (G_TYPE_IS_ENUM(field_value1->type)) {
-            result = (field_value1->value.integer ==
-                      field_value2->value.integer);
+        if (field1->type == GCUT_TYPE_SIZE) {
+            result = (field1->value.size == field2->value.size);
+        } else if (field1->type == G_TYPE_GTYPE) {
+            result = (field1->value.type == field2->value.type);
+        } else if (G_TYPE_IS_FLAGS(field1->type)) {
+            result = (field1->value.unsigned_integer ==
+                      field2->value.unsigned_integer);
+        } else if (G_TYPE_IS_ENUM(field1->type)) {
+            result = (field1->value.integer ==
+                      field2->value.integer);
         } else {
             g_warning("[unsupported type: <%s>]",
-                      g_type_name(field_value1->type));
+                      g_type_name(field1->type));
             result = FALSE;
         }
         break;
@@ -211,7 +225,7 @@ gcut_dynamic_data_init (GCutDynamicData *data)
 
     priv->fields = g_hash_table_new_full(g_str_hash, g_str_equal,
                                          g_free,
-                                         (GDestroyNotify)field_value_free);
+                                         (GDestroyNotify)field_free);
 }
 
 static void
@@ -258,56 +272,59 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
     priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(data);
     name = first_field_name;
     while (name) {
-        FieldValue *field_value;
+        Field *field;
 
-        field_value = field_value_new(va_arg(args, GType));
-        switch (field_value->type) {
+        field = field_new(data, name, va_arg(args, GType));
+        switch (field->type) {
         case G_TYPE_CHAR:
-            field_value->value.character = va_arg(args, gint);
+            field->value.character = va_arg(args, gint);
             break;
         case G_TYPE_STRING:
-            field_value->value.pointer = g_strdup(va_arg(args, const gchar *));
-            field_value->free_function = g_free;
+            field->value.pointer = g_strdup(va_arg(args, const gchar *));
+            field->free_function = g_free;
             break;
         case G_TYPE_INT:
-            field_value->value.integer = va_arg(args, gint);
+            field->value.integer = va_arg(args, gint);
             break;
         case G_TYPE_UINT:
-            field_value->value.unsigned_integer = va_arg(args, guint);
+            field->value.unsigned_integer = va_arg(args, guint);
             break;
         case G_TYPE_POINTER:
-            field_value->value.pointer = va_arg(args, gpointer);
-            field_value->free_function = va_arg(args, GDestroyNotify);
+            field->value.pointer = va_arg(args, gpointer);
+            field->free_function = va_arg(args, GDestroyNotify);
             break;
         case G_TYPE_BOOLEAN:
-            field_value->value.boolean = va_arg(args, gboolean);
+            field->value.boolean = va_arg(args, gboolean);
+            break;
+        case G_TYPE_DOUBLE:
+            field->value.double_value = va_arg(args, gdouble);
             break;
         default:
-            if (field_value->type == GCUT_TYPE_SIZE) {
-                field_value->value.size = va_arg(args, gsize);
-            } else if (field_value->type == G_TYPE_GTYPE) {
-                field_value->value.type = va_arg(args, GType);
-            } else if (G_TYPE_IS_FLAGS(field_value->type)) {
-                field_value->value.unsigned_integer = va_arg(args, guint);
-            } else if (G_TYPE_IS_ENUM(field_value->type)) {
-                field_value->value.integer = va_arg(args, gint);
-            } else if (G_TYPE_IS_BOXED(field_value->type)) {
-                field_value->value.pointer = va_arg(args, gpointer);
-            } else if (G_TYPE_IS_OBJECT(field_value->type)) {
-                field_value->value.pointer = va_arg(args, gpointer);
-                field_value->free_function = g_object_unref;
+            if (field->type == GCUT_TYPE_SIZE) {
+                field->value.size = va_arg(args, gsize);
+            } else if (field->type == G_TYPE_GTYPE) {
+                field->value.type = va_arg(args, GType);
+            } else if (G_TYPE_IS_FLAGS(field->type)) {
+                field->value.unsigned_integer = va_arg(args, guint);
+            } else if (G_TYPE_IS_ENUM(field->type)) {
+                field->value.integer = va_arg(args, gint);
+            } else if (G_TYPE_IS_BOXED(field->type)) {
+                field->value.pointer = va_arg(args, gpointer);
+            } else if (G_TYPE_IS_OBJECT(field->type)) {
+                field->value.pointer = va_arg(args, gpointer);
+                field->free_function = g_object_unref;
             } else {
                 g_warning("unsupported type: <%s>",
-                          g_type_name(field_value->type));
-                field_value_free(field_value);
-                field_value = NULL;
+                          g_type_name(field->type));
+                field_free(field);
+                field = NULL;
             }
             break;
         }
-        if (!field_value)
+        if (!field)
             break;
 
-        g_hash_table_insert(priv->fields, g_strdup(name), field_value);
+        g_hash_table_insert(priv->fields, g_strdup(name), field);
 
         name = va_arg(args, const gchar *);
     }
@@ -327,7 +344,7 @@ gcut_dynamic_data_inspect (GCutDynamicData *data)
     g_string_append_printf(string, "#<GCutDynamicData:0x%p ", data);
     inspected_fields = gcut_hash_table_inspect(priv->fields,
                                                gcut_inspect_string,
-                                               field_value_inspect,
+                                               field_inspect,
                                                NULL);
     g_string_append(string, inspected_fields);
     g_free(inspected_fields);
@@ -352,18 +369,18 @@ gcut_dynamic_data_equal (GCutDynamicData *data1, GCutDynamicData *data2)
     priv2 = GCUT_DYNAMIC_DATA_GET_PRIVATE(data2);
     return gcut_hash_table_equal(priv1->fields,
                                  priv2->fields,
-                                 field_value_equal);
+                                 field_equal);
 }
 
-static FieldValue *
+static Field *
 lookup (GCutDynamicData *data, const gchar *field_name, GError **error)
 {
     GCutDynamicDataPrivate *priv;
-    FieldValue *field_value;
+    Field *field;
 
     priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(data);
-    field_value = g_hash_table_lookup(priv->fields, field_name);
-    if (!field_value) {
+    field = g_hash_table_lookup(priv->fields, field_name);
+    if (!field) {
         g_set_error(error,
                     GCUT_DYNAMIC_DATA_ERROR,
                     GCUT_DYNAMIC_DATA_ERROR_NOT_EXIST,
@@ -371,72 +388,72 @@ lookup (GCutDynamicData *data, const gchar *field_name, GError **error)
         return NULL;
     }
 
-    return field_value;
+    return field;
 }
 
 gchar
 gcut_dynamic_data_get_char (GCutDynamicData *data, const gchar *field_name,
                             GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return '\0';
 
-    return field_value->value.character;
+    return field->value.character;
 }
 
 const gchar *
 gcut_dynamic_data_get_string (GCutDynamicData *data, const gchar *field_name,
                               GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return NULL;
 
-    return field_value->value.pointer;
+    return field->value.pointer;
 }
 
 GType
 gcut_dynamic_data_get_data_type (GCutDynamicData *data, const gchar *field_name,
                                  GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return G_TYPE_INVALID;
 
-    return field_value->value.type;
+    return field->value.type;
 }
 
 guint
 gcut_dynamic_data_get_uint (GCutDynamicData *data, const gchar *field_name,
                             GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return 0;
 
-    return field_value->value.unsigned_integer;
+    return field->value.unsigned_integer;
 }
 
 gsize
 gcut_dynamic_data_get_size (GCutDynamicData *data, const gchar *field_name,
                             GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return 0;
 
-    return field_value->value.size;
+    return field->value.size;
 }
 
 guint
@@ -450,13 +467,13 @@ gint
 gcut_dynamic_data_get_int (GCutDynamicData *data, const gchar *field_name,
                            GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return 0;
 
-    return field_value->value.integer;
+    return field->value.integer;
 }
 
 gint
@@ -470,13 +487,13 @@ gconstpointer
 gcut_dynamic_data_get_pointer (GCutDynamicData *data, const gchar *field_name,
                                GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return 0;
 
-    return field_value->value.pointer;
+    return field->value.pointer;
 }
 
 gconstpointer
@@ -484,13 +501,13 @@ gcut_dynamic_data_get_boxed (GCutDynamicData  *data,
                              const gchar      *field_name,
                              GError          **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return 0;
 
-    return field_value->value.pointer;
+    return field->value.pointer;
 }
 
 gpointer
@@ -498,26 +515,39 @@ gcut_dynamic_data_get_object (GCutDynamicData  *data,
                               const gchar      *field_name,
                               GError          **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return 0;
 
-    return field_value->value.pointer;
+    return field->value.pointer;
 }
 
 gboolean
 gcut_dynamic_data_get_boolean (GCutDynamicData *data, const gchar *field_name,
                                GError **error)
 {
-    FieldValue *field_value;
+    Field *field;
 
-    field_value = lookup(data, field_name, error);
-    if (!field_value)
+    field = lookup(data, field_name, error);
+    if (!field)
         return 0;
 
-    return field_value->value.boolean;
+    return field->value.boolean;
+}
+
+gdouble
+gcut_dynamic_data_get_double (GCutDynamicData *data, const gchar *field_name,
+                              GError **error)
+{
+    Field *field;
+
+    field = lookup(data, field_name, error);
+    if (!field)
+        return 0.0;
+
+    return field->value.double_value;
 }
 
 /*
