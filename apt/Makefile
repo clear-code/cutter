@@ -1,4 +1,4 @@
-VERSION = 1.1.2
+VERSION = 1.1.3
 SERVER_PATH = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot

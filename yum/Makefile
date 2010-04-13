@@ -1,4 +1,4 @@
-VERSION = 1.1.2
+VERSION = 1.1.3
 SF_HTDOCS = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
 ARCHITECTURES = i386 x86_64
 CHROOT_BASE = /var/lib/chroot
