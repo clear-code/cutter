@@ -2,6 +2,57 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-1-3] 1.1.3: 2010-04-13
+
+データ駆動テストサポートの強化。
+
+=== Cutter
+
+==== 改良
+
+  * AC_CHECK_ENABLE_COVERAGE: 'make check'に失敗してもカバレッ
+    ジを出力するcoverage-forceターゲットを追加
+
+==== バグ修正
+
+  * 不要なメモリ解放を削除 [Reported by Zed Shaw]
+  * AC_CHECK_ENABLE_COVERAGEがタブではなく空白を出力する問題
+    の修正
+
+=== GCutter
+
+==== 改良
+
+  * データ駆動テストサポートの強化
+    * ((<gcut_data_get_size()|cutter-gcut-data.html#gcut-data-get-size>))
+    * ((<gcut_data_get_char()|cutter-gcut-data.html#gcut-data-get-char>))
+    * ((<gcut_data_get_boolean()|cutter-gcut-data.html#gcut-data-get-boolean>))
+    * ((<gcut_data_get_double()|cutter-gcut-data.html#gcut-data-get-double>))
+    * ((<gcut_data_get_int64()|cutter-gcut-data.html#gcut-data-get-int64>))
+    * ((<gcut_data_get_uint64()|cutter-gcut-data.html#gcut-data-get-uint64>))
+  * ユーティリティの追加:
+    * ((<gcut_inspect_size()|cutter-gcut-inspect.html#gcut-inspect-size>))
+    * ((<gcut_inspect_char()|cutter-gcut-inspect.html#gcut-inspect-char>))
+    * ((<gcut_inspect_boolean()|cutter-gcut-inspect.html#gcut-inspect-boolean>))
+    * ((<gcut_inspect_double()|cutter-gcut-inspect.html#gcut-inspect-double>))
+    * ((<gcut_inspect_int64()|cutter-gcut-inspect.html#gcut-inspect-int64>))
+    * ((<gcut_inspect_uint64()|cutter-gcut-inspect.html#gcut-inspect-uint64>))
+
+==== バグ修正
+
+  * Mac OS Xでgcut_list_inspect_enum()と
+    gcut_list_inspect_flags()がクラッシュする問題の修正。
+
+=== ドキュメント
+
+==== バグ修正
+
+  * Cygwin 1.7での依存パッケージを修正
+
+=== 感謝
+
+  * Zed Shaw
+
 == [release-1-1-2] 1.1.2: 2010-04-03
 
 Windows対応強化。
