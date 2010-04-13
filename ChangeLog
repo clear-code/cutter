@@ -1,5 +1,8 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/cutter-docs.sgml: add an index page for new
+	symbols in 1.1.3.
+
 	* doc/reference/cutter-overrides.txt: add newly added macros.
 
 	* cutter/cut-test-utils.h, cutter/cut-test-utils-helper.[ch],
