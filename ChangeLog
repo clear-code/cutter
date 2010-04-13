@@ -1,5 +1,7 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/cutter-overrides.txt: add newly added macros.
+
 	* cutter/cut-test-utils.h, cutter/cut-test-utils-helper.[ch],
 	test/cutter/test-cut-test-utils.c: add cut_take_convert().
 
