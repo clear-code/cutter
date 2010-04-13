@@ -1,5 +1,7 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* rpm/fedora/cutter.spec.in: fix a typo.
+
 	* apt/build-deb.sh: use libgoffice-0.8-dev instead of
 	libgoffice-0-8-dev if it's available.
 
