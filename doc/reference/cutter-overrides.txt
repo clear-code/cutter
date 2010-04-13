@@ -646,7 +646,7 @@ const char *target, const char *pattern, const char *replacement
 <FUNCTION>
 <NAME>cut_take_convert</NAME>
 <RETURNS>const char *</RETURNS>
-const char *string, const char *to_code_st, const char *from_code_set
+const char *string, const char *to_code_set, const char *from_code_set
 </FUNCTION>
 
 <FUNCTION>
