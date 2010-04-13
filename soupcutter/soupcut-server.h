@@ -30,8 +30,8 @@ G_BEGIN_DECLS
  * @title: Convenience HTTP server API
  * @short_description: API to work as HTTP server.
  * @see_also: <link
- *            linkend="cutter-soupcut-assertions">Assertions
- *            for HTTP client/server based on libsoup</link>
+ *            linkend="cutter-Assertions-for-HTTP-client-and-server-based-on-libsoup">
+ *            Assertions for HTTP client/server based on libsoup</link>
  *
  * Useful wrappers for #SoupServer are provided.
  *

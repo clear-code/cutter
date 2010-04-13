@@ -28,8 +28,8 @@
  * @title: GCutter
  * @short_description: Cutter with GLib support.
  * @see_also: <link
- *            linkend="cutter-gcut-assertions">Assertions
- *            with GLib support</link>
+ *            linkend="cutter-Assertions-with-GLib-support">
+ *            Assertions with GLib support</link>
  *
  * GCutter adds many useful features based on GLib to
  * Cutter. If you want to write tests with more easily,

@@ -1,5 +1,8 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* */*.h: follow gtk-doc link change: use title for linkend target
+	instead of ID.
+
 	* doc/reference/ja.po: update.
 
 	* soupcutter/soupcut-assertions.h: use 'and' instead of '/'.

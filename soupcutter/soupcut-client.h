@@ -30,8 +30,8 @@ G_BEGIN_DECLS
  * @title: Convenience HTTP client API
  * @short_description: API to work as HTTP client.
  * @see_also: <link
- *            linkend="cutter-soupcut-assertions">Assertions
- *            for HTTP client/server based on libsoup</link>
+ *            linkend="cutter-Assertions-for-HTTP-client-and-server-based-on-libsoup">
+ *            Assertions for HTTP client/server based on libsoup</link>
  *
  * #SoupCutClient works as a HTTP client. It accepts
  * multiple requests and responses are managed by

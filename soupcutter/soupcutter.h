@@ -32,8 +32,8 @@
  * @title: SoupCutter
  * @short_description: HTTP supported Cutter with libsoup.
  * @see_also: <link
- *            linkend="cutter-soupcut-assertions">Assertions
- *            for HTTP client/server based on libsoup</link>
+ *            linkend="cutter-Assertions-for-HTTP-client-and-server-based-on-libsoup">
+ *            Assertions for HTTP client/server based on libsoup</link>
  *
  * SoupCutter adds many useful HTTP related features based
  * on libsoup to Cutter. If you want to write tests for

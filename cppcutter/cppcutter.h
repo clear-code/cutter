@@ -30,8 +30,8 @@
  * @title: CppCutter
  * @short_description: Cutter with C++ support.
  * @see_also: <link
- *            linkend="cutter-cppcut-assertions">Assertions
- *            with C++ support</link>
+ *            linkend="cutter-Assertions-with-C++-support">
+ *            Assertions with C++ support</link>
  *
  * CppCutter provides C++ friendly interface of Cutter. If
  * you want to write tests with C++, it's good idea that you

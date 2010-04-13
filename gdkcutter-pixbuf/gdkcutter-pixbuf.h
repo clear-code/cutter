@@ -28,8 +28,8 @@
  * @title: GdkCutter Pixbuf
  * @short_description: Cutter with gdk-pixbuf support.
  * @see_also: <link
- *            linkend="cutter-gdkcut-pixbuf-assertions">Assertions
- *            with gdk-pixbuf support</link>
+ *            linkend="cutter-Assertions-with-gdk-pixbuf-support">
+ *            Assertions with gdk-pixbuf support</link>
  *
  * GdkCutter Pixbuf adds many useful features based on
  * gdk-pixbuf to Cutter. If you want to write tests for
