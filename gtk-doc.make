@@ -233,19 +233,19 @@ dist-hook: dist-check-gtkdoc dist-hook-local
 	mkdir $(distdir)/tmpl
 	mkdir $(distdir)/xml
 	mkdir $(distdir)/html
-	-cp tmpl/*.sgml $(distdir)/tmpl
-	-cp xml/*.xml $(distdir)/xml
-	cp html/* $(distdir)/html
+	-cp -rp tmpl/*.sgml $(distdir)/tmpl
+	-cp -rp xml/*.xml $(distdir)/xml
+	-cp -rp html/* $(distdir)/html
 	for catalog in $(CATALOGS); do					\
 	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
 	  mkdir -p $(distdir)/$$lang/html;				\
 	  mkdir -p $(distdir)/$$lang/xml;				\
-	  cp $$lang/html/* $(distdir)/$$lang/html;			\
-	  cp $$lang/xml/* $(distdir)/$$lang/html;			\
-	  cp $$lang/$(DOC_MAIN_SGML_FILE) $(distdir)/$$lang/;		\
+	  cp -rp $$lang/html/* $(distdir)/$$lang/html;			\
+	  cp -rp $$lang/xml/* $(distdir)/$$lang/html;			\
+	  cp -rp $$lang/$(DOC_MAIN_SGML_FILE) $(distdir)/$$lang/;	\
 	done
-	cp $(DOC_MODULE).types $(distdir)/
-	cp $(DOC_MODULE)-sections.txt $(distdir)/
+	cp -rp $(DOC_MODULE).types $(distdir)/
+	cp -rp $(DOC_MODULE)-sections.txt $(distdir)/
 	cd $(distdir) && rm -f $(DISTCLEANFILES)
 	-gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
 
