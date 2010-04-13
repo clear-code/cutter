@@ -154,29 +154,33 @@ module RD
       end
       url = element.label.element_label
       label = contents.join("").chomp
-      label = url if label.empty?
+      if label.empty?
+        label = remove_suffix(remove_lang_suffix(remove_hash_suffix(url)))
+      end
       case url
-      when /\.html$/
-        if /\(\)$/ =~ label
-          anchor = $PREMATCH.gsub(/_/, "-")
-          url = "#{url}\##{anchor}"
+      when /\.html\z/
+        if @@name and /\A#{Regexp.escape(@@name.downcase)}-/ =~ url
+          return tag("link",
+                     {:linkend => remove_suffix(remove_lang_suffix(url))},
+                     label)
         end
       when /\.html#[a-zA-Z\-_]+$/
-      when /\.svg$/, /\.png$/
-        url = url.sub(/svg$/, "png")
+      when /\.svg\z/, /\.png\z/
+        url = url.sub(/svg\z/, "png")
         return tag("inlinemediaobject",
                    {},
                    [
                     tag("imageobject", {},
                         tag("imagedata",
                             {
-                              :fileref => url.sub(/svg$/, "png"),
+                              :fileref => url.sub(/svg\z/, "png"),
                               :format => "PNG"
                             })),
                     tag("textobject", {}, tag("phrase", {}, label)),
                    ])
       else
-        if url =~ /#/
+        case url
+        when /#/
           target, hash = $PREMATCH, $POSTMATCH
           if target.empty?
             linkend = term_index_id(hash)
@@ -184,14 +188,15 @@ module RD
             target = nil if target == "."
             linkend = "#{ref_entry_id(target)}.#{term_index_id(hash)}"
           end
+        when /\(\)\z/
+          linkend = term_index_id(url)
+        when /\A[A-Z][A-Z]*_[A-Z_]+\z/
+          linkend = "#{url.gsub(/_/, '-')}:CAPS"
         else
           linkend = ref_entry_id(url)
         end
-        return tag("link",
-                   {:linkend => linkend},
-                   remove_suffix(remove_lang_suffix(remove_hash_suffix(label))))
+        return tag("link", {:linkend => linkend}, label)
       end
-      label = remove_suffix(remove_lang_suffix(label))
       tag("ulink", {:url => url}, label)
     end
 
