@@ -47,6 +47,22 @@ gcut_inspect_uint (GString *string, gconstpointer data, gpointer user_data)
 }
 
 void
+gcut_inspect_int64 (GString *string, gconstpointer data, gpointer user_data)
+{
+    const gint64 *int64_value = data;
+
+    g_string_append_printf(string, "%" G_GINT64_FORMAT, *int64_value);
+}
+
+void
+gcut_inspect_uint64 (GString *string, gconstpointer data, gpointer user_data)
+{
+    const guint64 *uint64_value = data;
+
+    g_string_append_printf(string, "%" G_GUINT64_FORMAT, *uint64_value);
+}
+
+void
 gcut_inspect_size (GString *string, gconstpointer data, gpointer user_data)
 {
     const gsize *size_value = data;

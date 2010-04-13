@@ -25,13 +25,11 @@
 void test_direct (void);
 void test_int (void);
 void test_uint (void);
+void test_int64 (void);
+void test_uint64 (void);
 void test_size (void);
 void data_char (void);
 void test_char (gconstpointer data);
-void test_char_null (void);
-void test_char_escaped (void);
-void test_char_backslash (void);
-void test_char_single_quote (void);
 void test_string (void);
 void test_type (void);
 void test_flags (void);
@@ -79,6 +77,24 @@ test_uint (void)
 
     gcut_inspect_uint(string, &value, NULL);
     cut_assert_equal_string("99", string->str);
+}
+
+void
+test_int64 (void)
+{
+    gint64 value = G_MAXINT64;
+
+    gcut_inspect_int64(string, &value, NULL);
+    cut_assert_equal_string("9223372036854775807", string->str);
+}
+
+void
+test_uint64 (void)
+{
+    guint64 value = G_MAXUINT64;
+
+    gcut_inspect_uint64(string, &value, NULL);
+    cut_assert_equal_string("18446744073709551615", string->str);
 }
 
 void

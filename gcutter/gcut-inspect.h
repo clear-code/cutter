@@ -98,6 +98,46 @@ void        gcut_inspect_uint         (GString       *string,
                                        gpointer       user_data);
 
 /**
+ * gcut_inspect_int64:
+ * @string: the output string.
+ * @data: the interested target.
+ * @user_data: the data passed by user. (ignored)
+ *
+ * Shows @data as 64-bit integer.
+ *
+ * e.g.:
+ * |[
+ * gint64 int64_value = 100;
+ * gcut_inspect_int64(string, &int64_value, NULL) -> "100"
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+void        gcut_inspect_int64        (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
+
+/**
+ * gcut_inspect_uint64:
+ * @string: the output string.
+ * @data: the interested target.
+ * @user_data: the data passed by user. (ignored)
+ *
+ * Shows @data as 64-bit unsigned integer.
+ *
+ * e.g.:
+ * |[
+ * guint64 uint64_value = 100;
+ * gcut_inspect_uint64(string, &uint64_value, NULL) -> "100"
+ * ]|
+ *
+ * Since: 1.1.3
+ */
+void        gcut_inspect_uint64       (GString       *string,
+                                       gconstpointer  data,
+                                       gpointer       user_data);
+
+/**
  * gcut_inspect_size:
  * @string: the output string.
  * @data: the interested target.

@@ -1,3 +1,8 @@
+2010-04-13  Kouhei Sutou  <kou@clear-code.com>
+
+	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
+	gcut_inspect_int64() and gcut_inspect_uint64().
+
 2010-04-12  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/gcutter/test-gcut-dynamic-data.c: fix a typo.
