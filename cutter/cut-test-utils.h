@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -191,6 +191,27 @@ extern "C" {
         (cut_push_backtrace(cut_take_replace(target,                    \
                                              pattern,                   \
                                              replacement)),             \
+         cut_pop_backtrace))
+
+/**
+ * cut_take_convert:
+ * @string: the convert target string. It should be %NULL-terminated.
+ * @to_code_set: the code set name which to convert @string.
+ * @from_code_set: the code set name of @string.
+ *
+ * Converts @string code set to @to_code_set from
+ * @from_code_set.
+ *
+ * Returns: a converted string owned by Cutter. Don't free it.
+ *
+ * Since: 1.1.3
+ */
+#define cut_take_convert(string, to_code_set, from_code_set)            \
+    cut_take_convert_helper(                                            \
+        string, to_code_set, from_code_set,                             \
+        (cut_push_backtrace(cut_take_code_set(string,                   \
+                                              to_code_set,              \
+                                              from_code_set)),          \
          cut_pop_backtrace))
 
 /**

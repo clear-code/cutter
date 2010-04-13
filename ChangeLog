@@ -1,5 +1,8 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-test-utils.h, cutter/cut-test-utils-helper.[ch],
+	test/cutter/test-cut-test-utils.c: add cut_take_convert().
+
 	* gcutter/gcut-data.h, gcutter/gcut-data-helper.[ch]: add
 	gcut_data_get_int64() and gcut_data_get_uint64().
 

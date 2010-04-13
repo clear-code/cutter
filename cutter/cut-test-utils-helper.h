@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,6 +29,11 @@ extern "C" {
 const char *cut_take_replace_helper (const char          *target,
                                      const char          *pattern,
                                      const char          *replacement,
+                                     CutCallbackFunction  callback);
+
+const char *cut_take_convert_helper (const char          *string,
+                                     const char          *to_code_set,
+                                     const char          *from_code_set,
                                      CutCallbackFunction  callback);
 
 

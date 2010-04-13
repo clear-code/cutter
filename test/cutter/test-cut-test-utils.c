@@ -1,10 +1,28 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include <gcutter.h>
 #include <cutter/cut-utils.h>
 #include "../lib/cuttest-utils.h"
 
 void test_take_replace (void);
+void test_take_convert (void);
 void test_remove_path (void);
 void test_build_path (void);
 void test_make_directory (void);
@@ -37,6 +55,16 @@ test_take_replace (void)
                             cut_take_replace("aaa bbb ccc", "bbb", "BBB"));
     cut_assert_equal_string("Xaa\nXbb\nXcc",
                             cut_take_replace("aaa\nbbb\nccc", "^.", "X"));
+}
+
+void
+test_take_convert (void)
+{
+    const gchar *nihongo_in_eucjp = "\306\374\313\334\270\354";
+    const gchar *nihongo_in_utf8 = "\346\227\245\346\234\254\350\252\236";
+
+    cut_assert_equal_string(nihongo_in_eucjp,
+                            cut_take_convert(nihongo_in_utf8, "eucJP", "UTF-8"));
 }
 
 void

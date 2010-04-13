@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -40,6 +40,22 @@ cut_take_replace_helper (const gchar *target, const gchar *pattern,
     return cut_take_string(replaced);
 }
 
+const gchar *
+cut_take_convert_helper (const gchar *string,
+                         const gchar *to_code_set,
+                         const gchar *from_code_set,
+                         CutCallbackFunction callback)
+{
+    gchar *converted;
+    GError *error = NULL;
+
+    converted = g_convert(string, -1, to_code_set, from_code_set,
+                          NULL, NULL, &error);
+    gcut_assert_error_helper(error, "error");
+    if (callback)
+        callback();
+    return cut_take_string(converted);
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
