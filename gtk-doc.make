@@ -197,15 +197,26 @@ install-data-local:
 	  else								\
 	    $(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	    for i in $$installfiles; do					\
-	      echo "-- Installing $$i";					\
-	      $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
+	      if [ -d $$i ]; then					\
+	        $(mkinstalldirs)					\
+	          $(DESTDIR)$(TARGET_DIR)$$target_dir/$$i;		\
+	        for f in $$i/*; do					\
+	          echo "-- Installing $$f";				\
+	          $(INSTALL_DATA) $$f					\
+	            $(DESTDIR)$(TARGET_DIR)$$target_dir/$$i;		\
+	        done							\
+	      else							\
+	        echo "-- Installing $$i";				\
+	        $(INSTALL_DATA) $$i					\
+	          $(DESTDIR)$(TARGET_DIR)$$target_dir;			\
+	      fi							\
 	    done;							\
 	    echo "-- Installing $$dir/index.sgml";			\
 	    $(INSTALL_DATA) $$dir/index.sgml				\
 	      $(DESTDIR)$(TARGET_DIR)$$target_dir || :;			\
 	    if test `which gtkdoc-rebase` != ""; then			\
 	      if test "$(DESTDIR)" = ""; then				\
-	        gtkdoc-rebase --relative 				\
+	        gtkdoc-rebase --relative				\
 	          --html-dir=$(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	      else							\
 	        gtkdoc-rebase --relative --dest-dir=$(DESTDIR)		\

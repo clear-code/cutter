@@ -1,5 +1,8 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* gtk-doc.make (install-data-local): support one-level deep
+	directory installation.
+
 	* rpm/fedora/cutter.spec.in: fix a typo.
 
 	* apt/build-deb.sh: use libgoffice-0.8-dev instead of
