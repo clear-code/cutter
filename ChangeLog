@@ -1,5 +1,7 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* m4macros/cutter.m4: add 'coverage-force' target.
+
 	* NEWS*: add 1.1.3 entry.
 
 	* doc/reference/ja.po: update.

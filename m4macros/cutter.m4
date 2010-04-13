@@ -74,6 +74,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
         : # do nothing
       else
         cat | sed -e 's/^        /	/g' >>Makefile <<EOS
+.PHONY: coverage-clean coverage-report coverage coverage-force
 
 coverage-clean:
 	\$(LCOV) --compat-libtool --zerocounters --directory . \\
@@ -91,6 +92,11 @@ coverage-report:
 	  \$(GENHTML_OPTIONS) \$(COVERAGE_INFO_FILE)
 
 coverage: coverage-clean check coverage-report
+
+coverage-force:
+	\$(MAKE) \$(AM_MAKEFLAGS) coverage-clean
+	\$(MAKE) \$(AM_MAKEFLAGS) check || :
+	\$(MAKE) \$(AM_MAKEFLAGS) coverage-report
 EOS
       fi
     ])
