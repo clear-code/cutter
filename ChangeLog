@@ -1,5 +1,8 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/gcutter/test-gcut-inspect.c: use border value for int
+	related tests.
+
 	* gcutter/gcut-dynamic-data.[ch],
 	test/gcutter/test-gcut-dynamic-data.c: GCutDyminicData supports
 	gint64 and guint64.

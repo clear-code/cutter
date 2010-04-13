@@ -64,28 +64,28 @@ test_direct (void)
 void
 test_int (void)
 {
-    gint value = 99;
+    gint value = G_MININT;
 
     gcut_inspect_int(string, &value, NULL);
-    cut_assert_equal_string("99", string->str);
+    cut_assert_equal_string("-2147483648", string->str);
 }
 
 void
 test_uint (void)
 {
-    guint value = 99;
+    guint value = G_MAXUINT;
 
     gcut_inspect_uint(string, &value, NULL);
-    cut_assert_equal_string("99", string->str);
+    cut_assert_equal_string("4294967295", string->str);
 }
 
 void
 test_int64 (void)
 {
-    gint64 value = G_MAXINT64;
+    gint64 value = G_MININT64;
 
     gcut_inspect_int64(string, &value, NULL);
-    cut_assert_equal_string("9223372036854775807", string->str);
+    cut_assert_equal_string("-9223372036854775808", string->str);
 }
 
 void
