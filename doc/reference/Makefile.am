@@ -69,6 +69,12 @@ IGNORE_HFILES=					\
 	cut-contractor.h			\
 	cut-crash-backtrace.h			\
 	cut-diff.h				\
+	cut-diff-writer.h			\
+	cut-differ.h				\
+	cut-colorize-differ.h			\
+	cut-readable-differ.h			\
+	cut-unified-differ.h			\
+	cut-string-differ.h			\
 	cut-elf-loader.h			\
 	cut-enum-types.h			\
 	cut-factory-builder.h			\
@@ -120,6 +126,7 @@ IGNORE_HFILES=					\
 	cut-ui.h				\
 	cut-utils.h				\
 	cut-verbose-level.h			\
+	gcut-dynamic-data.h			\
 	cppcut-assertions-helper.h		\
 	cppcut-message.h			\
 	gbsearcharray.h

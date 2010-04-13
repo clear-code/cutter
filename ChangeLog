@@ -1,5 +1,7 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/Makefile.am (IGNORE_HFILES): update.
+
 	* doc/reference/ja.po: update.
 
 	* doc/reference/cutter-docs.sgml: add an index page for new
