@@ -1,5 +1,9 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-dynamic-data.[ch],
+	test/gcutter/test-gcut-dynamic-data.c: GCutDyminicData supports
+	gint64 and guint64.
+
 	* gcutter/gcut-inspect.[ch], test/gcutter/test-gcut-inspect.c: add
 	gcut_inspect_int64() and gcut_inspect_uint64().
 

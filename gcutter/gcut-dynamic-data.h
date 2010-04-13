@@ -78,6 +78,12 @@ gint             gcut_dynamic_data_get_int      (GCutDynamicData  *data,
 guint            gcut_dynamic_data_get_uint     (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);
+gint64           gcut_dynamic_data_get_int64    (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
+guint64          gcut_dynamic_data_get_uint64   (GCutDynamicData  *data,
+                                                 const gchar      *field_name,
+                                                 GError          **error);
 gsize            gcut_dynamic_data_get_size     (GCutDynamicData  *data,
                                                  const gchar      *field_name,
                                                  GError          **error);

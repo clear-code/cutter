@@ -40,6 +40,8 @@ typedef struct _Field
         gchar character;
         gint integer;
         guint unsigned_integer;
+        gint64 integer64;
+        guint64 unsigned_integer64;
         gsize size;
         gboolean boolean;
         gdouble double_value;
@@ -98,6 +100,14 @@ field_inspect (GString *string, gconstpointer data, gpointer user_data)
         break;
     case G_TYPE_UINT:
         gcut_inspect_uint(string, &(field->value.unsigned_integer), user_data);
+        break;
+    case G_TYPE_INT64:
+        gcut_inspect_int64(string, &(field->value.integer64), user_data);
+        break;
+    case G_TYPE_UINT64:
+        gcut_inspect_uint64(string,
+                            &(field->value.unsigned_integer64),
+                            user_data);
         break;
     case G_TYPE_POINTER:
         gcut_inspect_pointer(string, field->value.pointer, user_data);
@@ -163,6 +173,13 @@ field_equal (gconstpointer data1, gconstpointer data2)
     case G_TYPE_UINT:
         result = (field1->value.unsigned_integer ==
                   field2->value.unsigned_integer);
+        break;
+    case G_TYPE_INT64:
+        result = (field1->value.integer64 == field2->value.integer64);
+        break;
+    case G_TYPE_UINT64:
+        result = (field1->value.unsigned_integer64 ==
+                  field2->value.unsigned_integer64);
         break;
     case G_TYPE_POINTER:
         result = (field1->value.pointer == field2->value.pointer);
@@ -288,6 +305,12 @@ gcut_dynamic_data_new_va_list (const gchar *first_field_name, va_list args)
             break;
         case G_TYPE_UINT:
             field->value.unsigned_integer = va_arg(args, guint);
+            break;
+        case G_TYPE_INT64:
+            field->value.integer64 = va_arg(args, gint64);
+            break;
+        case G_TYPE_UINT64:
+            field->value.unsigned_integer64 = va_arg(args, guint64);
             break;
         case G_TYPE_POINTER:
             field->value.pointer = va_arg(args, gpointer);
@@ -430,6 +453,19 @@ gcut_dynamic_data_get_data_type (GCutDynamicData *data, const gchar *field_name,
     return field->value.type;
 }
 
+gint
+gcut_dynamic_data_get_int (GCutDynamicData *data, const gchar *field_name,
+                           GError **error)
+{
+    Field *field;
+
+    field = lookup(data, field_name, error);
+    if (!field)
+        return 0;
+
+    return field->value.integer;
+}
+
 guint
 gcut_dynamic_data_get_uint (GCutDynamicData *data, const gchar *field_name,
                             GError **error)
@@ -441,6 +477,32 @@ gcut_dynamic_data_get_uint (GCutDynamicData *data, const gchar *field_name,
         return 0;
 
     return field->value.unsigned_integer;
+}
+
+gint64
+gcut_dynamic_data_get_int64 (GCutDynamicData *data, const gchar *field_name,
+                             GError **error)
+{
+    Field *field;
+
+    field = lookup(data, field_name, error);
+    if (!field)
+        return 0;
+
+    return field->value.integer64;
+}
+
+guint64
+gcut_dynamic_data_get_uint64 (GCutDynamicData *data, const gchar *field_name,
+                              GError **error)
+{
+    Field *field;
+
+    field = lookup(data, field_name, error);
+    if (!field)
+        return 0;
+
+    return field->value.unsigned_integer64;
 }
 
 gsize
@@ -461,19 +523,6 @@ gcut_dynamic_data_get_flags (GCutDynamicData *data, const gchar *field_name,
                              GError **error)
 {
     return gcut_dynamic_data_get_uint(data, field_name, error);
-}
-
-gint
-gcut_dynamic_data_get_int (GCutDynamicData *data, const gchar *field_name,
-                           GError **error)
-{
-    Field *field;
-
-    field = lookup(data, field_name, error);
-    if (!field)
-        return 0;
-
-    return field->value.integer;
 }
 
 gint

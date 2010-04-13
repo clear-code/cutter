@@ -26,6 +26,8 @@ void test_char (void);
 void test_string (void);
 void test_int (void);
 void test_uint (void);
+void test_int64 (void);
+void test_uint64 (void);
 void test_size (void);
 void test_data_type (void);
 void test_flags (void);
@@ -136,6 +138,36 @@ test_uint (void)
     cut_assert_equal_uint(29, actual_value);
 
     assert_nonexistent_field(gcut_dynamic_data_get_uint);
+}
+
+void
+test_int64 (void)
+{
+    GError *error = NULL;
+    gint64 actual_value;
+
+    data = gcut_dynamic_data_new("int64", G_TYPE_INT64, G_GINT64_CONSTANT(-29),
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_int64(data, "int64", &error);
+    gcut_assert_error(error);
+    gcut_assert_equal_int64(-29, actual_value);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_int64);
+}
+
+void
+test_uint64 (void)
+{
+    GError *error = NULL;
+    guint64 actual_value;
+
+    data = gcut_dynamic_data_new("uint64", G_TYPE_UINT64, G_GUINT64_CONSTANT(29),
+                                 NULL);
+    actual_value = gcut_dynamic_data_get_uint64(data, "uint64", &error);
+    gcut_assert_error(error);
+    gcut_assert_equal_uint64(29, actual_value);
+
+    assert_nonexistent_field(gcut_dynamic_data_get_uint64);
 }
 
 void
