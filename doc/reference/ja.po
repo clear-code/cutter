@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.3\n"
-"POT-Creation-Date: 2010-04-13 12:35+0900\n"
-"PO-Revision-Date: 2010-04-13 15:03+0900\n"
+"POT-Creation-Date: 2010-04-13 15:10+0900\n"
+"PO-Revision-Date: 2010-04-13 15:14+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -1505,7 +1505,9 @@ msgstr ""
 #: xml/soupcut-assertions.xml:116(simpara)
 #: xml/soupcut-assertions.xml:136(simpara)
 msgid "a <link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>."
-msgstr "<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェクト。"
+msgstr ""
+"<link linkend=\"SoupCutClient\"><type>SoupCutClient</type></link>オブジェク"
+"ト。"
 
 #: xml/soupcut-client.xml:99(term) xml/soupcut-client.xml:135(term)
 msgid "<parameter>uri</parameter> :"
@@ -3632,7 +3634,9 @@ msgstr ""
 msgid ""
 "The <link linkend=\"GType\"><type>GType</type></link> for <link linkend="
 "\"gsize\"><type>gsize</type></link> type."
-msgstr "<link linkend=\"gsize\"><type>gsize</type></link>のための<link linkend=\"GType\"><type>GType</type></link>。"
+msgstr ""
+"<link linkend=\"gsize\"><type>gsize</type></link>のための<link linkend="
+"\"GType\"><type>GType</type></link>。"
 
 #: xml/gcut-types.xml:76(para) xml/gcut-inspect.xml:179(para)
 #: xml/gcut-inspect.xml:205(para) xml/gcut-inspect.xml:231(para)
@@ -4319,7 +4323,9 @@ msgstr ""
 msgid ""
 "<literal>gcut_take_new_list_string_backward_compatibility</literal> is "
 "deprecated and should not be used in newly-written code."
-msgstr "<literal>gcut_take_new_list_string_backward_compatibility</literal>は非推奨です。新しいコードでは使わないでください。"
+msgstr ""
+"<literal>gcut_take_new_list_string_backward_compatibility</literal>は非推奨で"
+"す。新しいコードでは使わないでください。"
 
 #: xml/gcut-test-utils.xml:231(title)
 msgid "gcut_take_new_list_string_array ()"
@@ -9895,7 +9901,8 @@ msgstr ""
 #: xml/gcut-data.xml:309(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as char."
-msgstr "<parameter>field_name</parameter>フィールドの値を文字として取得します。"
+msgstr ""
+"<parameter>field_name</parameter>フィールドの値を文字として取得します。"
 
 #: xml/gcut-data.xml:313(simpara) xml/gcut-data.xml:331(simpara)
 #: xml/gcut-data.xml:349(simpara) xml/gcut-data.xml:368(simpara)
@@ -10001,7 +10008,8 @@ msgstr ""
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as 64-bit "
 "integer."
-msgstr "<parameter>field_name</parameter>フィールドの値を64bit整数として取得します。"
+msgstr ""
+"<parameter>field_name</parameter>フィールドの値を64bit整数として取得します。"
 
 #: xml/gcut-data.xml:397(title)
 msgid "gcut_data_get_uint64 ()"
@@ -10018,7 +10026,8 @@ msgstr ""
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as 64-bit "
 "unsigned integer."
-msgstr "<parameter>field_name</parameter>の値を64bit符号なし整数として取得します。"
+msgstr ""
+"<parameter>field_name</parameter>の値を64bit符号なし整数として取得します。"
 
 #: xml/gcut-data.xml:416(title)
 msgid "gcut_data_get_size ()"
@@ -10034,7 +10043,8 @@ msgstr ""
 #: xml/gcut-data.xml:420(para)
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as size_t."
-msgstr "<parameter>field_name</parameter>フィールドの値をsize_tとして取得します。"
+msgstr ""
+"<parameter>field_name</parameter>フィールドの値をsize_tとして取得します。"
 
 #: xml/gcut-data.xml:434(title)
 msgid "gcut_data_get_type ()"
@@ -10180,7 +10190,8 @@ msgstr ""
 msgid ""
 "Gets a field value identified by <parameter>field_name</parameter> as double "
 "floating point number."
-msgstr "<parameter>field_name</parameter>の値を倍精度浮動小数点数として取得します。"
+msgstr ""
+"<parameter>field_name</parameter>の値を倍精度浮動小数点数として取得します。"
 
 #: xml/gcut-data-helper.xml:7(refentrytitle)
 #: xml/gcut-data-helper.xml:14(refname) xml/api-index-full.xml:254(link)
@@ -10227,7 +10238,9 @@ msgstr ""
 #: xml/gcut-data-helper.xml:62(parameter)
 #: xml/gcut-data-helper.xml:65(parameter)
 msgid "<link linkend=\"CutCallbackFunction\"><placeholder-1/></link> callback"
-msgstr "<link linkend=\"CutCallbackFunction\">CutCallbackFunction<type></type></link>コールバック。"
+msgstr ""
+"<link linkend=\"CutCallbackFunction\">CutCallbackFunction<type></type></link>"
+"コールバック。"
 
 #: xml/gcut-data-helper.xml:24(link) xml/gcut-data-helper.xml:98(primary)
 #: xml/api-index-full.xml:276(link)
@@ -14284,7 +14297,7 @@ msgid "cut_take_convert"
 msgstr ""
 
 #: xml/cut-test-utils.xml:39(parameter)
-msgid "const <link linkend=\"char\"><placeholder-1/></link> *to_code_st"
+msgid "const <link linkend=\"char\"><placeholder-1/></link> *to_code_set"
 msgstr ""
 
 #: xml/cut-test-utils.xml:40(parameter)
@@ -14675,7 +14688,7 @@ msgstr ""
 #, no-wrap
 msgid ""
 "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_convert                    (<parameter>const <link linkend=\"char\"><type>char</type></link> *string</parameter>,\n"
-"                                                         <parameter>const <link linkend=\"char\"><type>char</type></link> *to_code_st</parameter>,\n"
+"                                                         <parameter>const <link linkend=\"char\"><type>char</type></link> *to_code_set</parameter>,\n"
 "                                                         <parameter>const <link linkend=\"char\"><type>char</type></link> *from_code_set</parameter>);"
 msgstr ""
 
@@ -14683,17 +14696,25 @@ msgstr ""
 msgid ""
 "Converts <parameter>string</parameter> code set to <parameter>to_code_set</"
 "parameter> from <parameter>from_code_set</parameter>."
-msgstr "<parameter>string</parameter>のコードセットを<parameter>from_code_set</parameter>から<parameter>to_code_set</parameter>へ変換します。"
+msgstr ""
+"<parameter>string</parameter>のコードセットを<parameter>from_code_set</"
+"parameter>から<parameter>to_code_set</parameter>へ変換します。"
 
 #: xml/cut-test-utils.xml:257(simpara)
 msgid ""
 "the convert target string. It should be <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>-terminated."
-msgstr "変換対象の文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端。"
+msgstr ""
+"変換対象の文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
+"終端。"
 
 #: xml/cut-test-utils.xml:259(term)
-msgid "<parameter>to_code_st</parameter> :"
+msgid "<parameter>to_code_set</parameter> :"
 msgstr ""
+
+#: xml/cut-test-utils.xml:260(simpara)
+msgid "the code set name which to convert <parameter>string</parameter>."
+msgstr "変換先のコードセット名。"
 
 #: xml/cut-test-utils.xml:262(term)
 msgid "<parameter>from_code_set</parameter> :"
