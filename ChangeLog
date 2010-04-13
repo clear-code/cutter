@@ -1,5 +1,7 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* NEWS*: adapt to GTK-Doc 1.14 behavior.
+
 	* misc/rd2refentry-lib.rb: adapt to GTK-Doc 1.14 behavior.
 
 	* */*.h: follow gtk-doc link change: use title for linkend target

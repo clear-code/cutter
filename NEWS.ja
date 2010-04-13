@@ -24,19 +24,18 @@
 ==== 改良
 
   * データ駆動テストサポートの強化
-    * ((<gcut_data_get_size()|cutter-gcut-data.html#gcut-data-get-size>))
-    * ((<gcut_data_get_char()|cutter-gcut-data.html#gcut-data-get-char>))
-    * ((<gcut_data_get_boolean()|cutter-gcut-data.html#gcut-data-get-boolean>))
-    * ((<gcut_data_get_double()|cutter-gcut-data.html#gcut-data-get-double>))
-    * ((<gcut_data_get_int64()|cutter-gcut-data.html#gcut-data-get-int64>))
-    * ((<gcut_data_get_uint64()|cutter-gcut-data.html#gcut-data-get-uint64>))
+    * ((<gcut_data_get_size()>))
+    * ((<gcut_data_get_char()>))
+    * ((<gcut_data_get_boolean()>))
+    * ((<gcut_data_get_int64()>))
+    * ((<gcut_data_get_uint64()>))
   * ユーティリティの追加:
-    * ((<gcut_inspect_size()|cutter-gcut-inspect.html#gcut-inspect-size>))
-    * ((<gcut_inspect_char()|cutter-gcut-inspect.html#gcut-inspect-char>))
-    * ((<gcut_inspect_boolean()|cutter-gcut-inspect.html#gcut-inspect-boolean>))
-    * ((<gcut_inspect_double()|cutter-gcut-inspect.html#gcut-inspect-double>))
-    * ((<gcut_inspect_int64()|cutter-gcut-inspect.html#gcut-inspect-int64>))
-    * ((<gcut_inspect_uint64()|cutter-gcut-inspect.html#gcut-inspect-uint64>))
+    * ((<gcut_inspect_size()>))
+    * ((<gcut_inspect_char()>))
+    * ((<gcut_inspect_boolean()>))
+    * ((<gcut_inspect_double()>))
+    * ((<gcut_inspect_int64()>))
+    * ((<gcut_inspect_uint64()>))
 
 ==== バグ修正
 
@@ -73,7 +72,7 @@ Windows対応強化。
 ==== 改良
 
   * Windows用でのテスト定義用マクロ
-    ((<CUT_EXPORT|cutter-cutter.html#CUT-EXPORT>))を追加
+    ((<CUT_EXPORT|#CUT-EXPORT:CAPS>))を追加
 
 === ドキュメント
 
@@ -96,11 +95,11 @@ Windows対応強化。
 
   * Visual C++で生成されたDLLに対応。
   * 検証の追加:
-    * ((<cut_assert_equal_sockaddr()|cutter-cut-assertions.html#cut-assert-equal-sockaddr>))
+    * ((<cut_assert_equal_sockaddr()>))
   * テストユーティリティの追加:
-    * ((<cut_equal_sockaddr()|cutter-cut-helper.html#cut-equal-sockaddr>))
-    * ((<cut_inspect_sockaddr()|cutter-cut-helper.html#cut-inspect-sockaddr>))
-    * ((<cut_make_directory()|cutter-cut-test-utils.html#cut-make-directory>))
+    * ((<cut_equal_sockaddr()>))
+    * ((<cut_inspect_sockaddr()>))
+    * ((<cut_make_directory()>))
 
 ==== 修正
 
@@ -111,11 +110,11 @@ Windows対応強化。
 ==== 改良
 
   * データ駆動テストサポートの強化:
-    * ((<gcut_data_get_object()|cutter-gcut-data.html#gcut-data-get-object>))
+    * ((<gcut_data_get_object()>))
   * ユーティリティの追加:
-    * ((<gcut_list_new()|cutter-gcut-test-utils.html#gcut-list-new>))
-    * ((<gcut_take_new_list_object()|cutter-gcut-test-utils.html#gcut-take-new-list-object>))
-    * ((<gcut_list_object_free()|cutter-gcut-test-utils.html#gcut-list-object-free>))
+    * ((<gcut_list_new()>))
+    * ((<gcut_take_new_list_object()>))
+    * ((<gcut_list_object_free()>))
 
 == [release-1-1-0] 1.1.0: 2009-11-03
 
@@ -134,27 +133,27 @@ Windows対応強化。
     変更後:
       cut_assert_equal_string("a", "b", cut_message("message"));
 
-    * ((<cut_message()|cutter-cutter.html#cut-message>))の追加
-    * ((<cut_set_message()|cutter-cutter.html#cut-set-message>))
+    * ((<cut_message()>))の追加
+    * ((<cut_set_message()>))
       を非推奨に変更
-    * ((<cut_set_message_va_list()|cutter-cutter.html#cut-set-message-va-list>))
+    * ((<cut_set_message_va_list()>))
       を非推奨に変更
-    * ((<cut_keep_message()|cutter-cutter.html#cut-keep-message>))
+    * ((<cut_keep_message()>))
       を非推奨に変更
 
 === CppCutter
 
 ==== 改良
 
-  * ((<cppcut_assert_equal()|cutter-cppcut-assertions.html#cppcut-assert-equal>))
+  * ((<cppcut_assert_equal()>))
     が対応する型を追加
   * namespace内でのテスト定義検出に対応
-    * ((<CPPCUT_BEGIN_TEST_DECLS|cutter-cppcutter.html#CPPCUT-BEGIN-TEST-DECLS--CAPS>))
+    * ((<CPPCUT_BEGIN_TEST_DECLS|#CPPCUT-BEGIN-TEST-DECLS:CAPS>))
       を非推奨に変更
-    * ((<CPPCUT_END_TEST_DECLS|cutter-cppcutter.html#CPPCUT-END-TEST-DECLS--CAPS>))
+    * ((<CPPCUT_END_TEST_DECLS|#CPPCUT-END-TEST-DECLS:CAPS>))
       を非推奨に変更
   * 省略可能な検証メッセージに対応
-    * ((<cppcut_message()|cutter-cppcutter.html#cppcut-message>))
+    * ((<cppcut_message()>))
       の追加
 
 === 感謝
@@ -165,15 +164,15 @@ Windows対応強化。
 
 === 改良
 
-  * ((<GHashTable用の検証ユーティリティ|cutter-gcut-hash-table.html>))に関数を追加:
-    * ((<gcut_hash_table_inspect_sorted()|cutter-gcut-hash-table.html#gcut-hash-table-inspect-sorted>))
+  * ((<GHashTable用の検証ユーティリティ|cutter-Assertion-Utilities-for-GHashTable.html>))に関数を追加:
+    * ((<gcut_hash_table_inspect_sorted()>))
   * ハッシュの詳細表示時に内容をキーでソート
   * 色付き差分表示対応: ((<colorized-diff.png>))
   * テスト実行直前にブレークポイントを設定する
     --stop-before-testオプションの追加 [奥地さんによる提案]
   * ((<cut-diff>))コマンドの追加
   * unified diff対応
-  * C++サポートの追加: ((<CppCutter|cppcutter>))
+  * C++サポートの追加: ((<CppCutter|cutter-CppCutter.html>))
 
 === バグ修正
 
@@ -187,25 +186,25 @@ Windows対応強化。
 
   * libsoupサポートの追加:
     * HTTPクライアント機能:
-      * ((<soupcut_client_new()|SoupCutClient.html#soupcut-client-new>))
-      * ((<soupcut_client_set_base()|SoupCutClient.html#soupcut-client-set-base>))
-      * ((<soupcut_client_send_message()|SoupCutClient.html#soupcut-client-send-message>))
-      * ((<soupcut_client_get()|SoupCutClient.html#soupcut-client-get>))
-      * ((<soupcut_client_get_n_messages()|SoupCutClient.html#soupcut-client-get-n-messages>))
-      * ((<soupcut_client_get_latest_message()|SoupCutClient.html#soupcut-client-get-latest-message>))
-      * ((<soupcut_client_get_async_context()|SoupCutClient.html#soupcut-client-get-async-context>))
+      * ((<soupcut_client_new()>))
+      * ((<soupcut_client_set_base()>))
+      * ((<soupcut_client_send_message()>))
+      * ((<soupcut_client_get()>))
+      * ((<soupcut_client_get_n_messages()>))
+      * ((<soupcut_client_get_latest_message()>))
+      * ((<soupcut_client_get_async_context()>))
     * HTTPサーバー機能:
-      * ((<soupcut_server_take()|cutter-soupcut-server.html#soupcut-server-take>))
-      * ((<soupcut_server_take_new()|cutter-soupcut-server.html#soupcut-server-take-new>))
-      * ((<soupcut_server_build_uri()|cutter-soupcut-server.html#soupcut-server-build-uri>))
+      * ((<soupcut_server_take()>))
+      * ((<soupcut_server_take_new()>))
+      * ((<soupcut_server_build_uri()>))
     * 検証:
-      * ((<soupcut_message_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-message-assert-equal-content-type>))
-      * ((<soupcut_client_assert_equal_content_type()|cutter-soupcut-assertions.html#soupcut-client-assert-equal-content-type>))
-      * ((<soupcut_client_assert_response()|cutter-soupcut-assertions.html#soupcut-client-assert-response>))
-      * ((<soupcut_client_assert_equal_body()|cutter-soupcut-assertions.html#soupcut-client-assert-equal-body>))
-      * ((<soupcut_client_assert_match_body()|cutter-soupcut-assertions.html#soupcut-client-assert-match-body>))
-  * ((<GHashTable用の検証ユーティリティ|cutter-gcut-hash-table.html>))に関数を追加:
-    * ((<gcut_hash_table_string_string_copy()|cutter-gcut-hash-table.html#gcut-hash-table-string-string-copy>))
+      * ((<soupcut_message_assert_equal_content_type()>))
+      * ((<soupcut_client_assert_equal_content_type()>))
+      * ((<soupcut_client_assert_response()>))
+      * ((<soupcut_client_assert_equal_body()>))
+      * ((<soupcut_client_assert_match_body()>))
+  * ((<GHashTable用の検証ユーティリティ|cutter-Assertion-Utilities-for-GHashTable.html>))に関数を追加:
+    * ((<gcut_hash_table_string_string_copy()>))
   * ((<Cutter利用プロジェクトリスト|USERS.ja>))にmroongaを追加
   * Fedora用rpmパッケージをサポート
   * Debian用debパッケージをサポート
@@ -219,9 +218,8 @@ Windows対応強化。
 
 == 1.0.7: 2009-05-20
 
-  * ((<バージョン情報|cutter-cut-version.html>))を提供
-  * ((<GBoxed型のテストデータ|cutter-gcut-data.html#gcut-data-get-boxed>))
-    をサポート
+  * ((<バージョン情報|cutter-Version-Information.html>))を提供
+  * ((<GBoxed型のテストデータ|gcut_data_get_boxed()>))をサポート
   * クラッシュ時のテスト名表示（可能なら）
   * 共有ライブラリ解析処理の追加
     * ELF（Linux/*BSD）、PE（Windows）、Mach-O（Mac OS X）に対応
@@ -233,30 +231,26 @@ Windows対応強化。
     * ((<チュートリアル|tutorial.html>))にCygwin関連の注意書きを追加
       [山川さん]
   * テストユーティリティの追加:
-    * ((<cut_build_path()|cutter-cut-test-utils.html#cut-build-path>))
+    * ((<cut_build_path()>))
   * 検証の追加:
-    * ((<cut_assert_equal_boolean()|cutter-cut-assertions.html#cut-assert-equal-boolean>))
-    * ((<cut_assert_not_equal_boolean()|cutter-cut-assertions.html#cut-assert-not-equal-boolean>))
-    * ((<cut_assert_equal_substring()|cutter-cut-assertions.html#cut-assert-equal-substring>))
-    * ((<cut_assert_not_equal_substring()|cutter-cut-assertions.html#cut-assert-not-equal-substring>))
-    * ((<cut_assert_not_equal_double()|cutter-cut-assertions.html#cut-assert-not-equal-double>)) [グニャラくん]
-    * ((<cut_assert_not_equal_int()|cutter-cut-assertions.html#cut-assert-not-equal-int>)) [グニャラくん]
-    * ((<cut_assert_not_equal_uint()|cutter-cut-assertions.html#cut-assert-not-equal-int>)) [グニャラくん]
-    * ((<cut_assert_not_equal_memory()|cutter-cut-assertions.html#cut-assert-not-equal-memory>)) [グニャラくん]
-    * ((<cut_assert_not_equal_size()|cutter-cut-assertions.html#cut-assert-not-equal-size>)) [グニャラくん]
-    * ((<cut_assert_not_equal_string()|cutter-cut-assertions.html#cut-assert-not-equal-string>)) [グニャラくん]
-    * ((<gcut_assert_not_equal_pid()|cutter-gcut-assertions.html#gcut-assert-not-equal-pid>)) [グニャラくん]
+    * ((<cut_assert_equal_boolean()>))
+    * ((<cut_assert_not_equal_boolean()>))
+    * ((<cut_assert_equal_substring()>))
+    * ((<cut_assert_not_equal_substring()>))
+    * ((<cut_assert_not_equal_double()>)) [グニャラくん]
+    * ((<cut_assert_not_equal_int()>)) [グニャラくん]
+    * ((<cut_assert_not_equal_uint()>)) [グニャラくん]
+    * ((<cut_assert_not_equal_memory()>)) [グニャラくん]
+    * ((<cut_assert_not_equal_size()>)) [グニャラくん]
+    * ((<cut_assert_not_equal_string()>)) [グニャラくん]
+    * ((<gcut_assert_not_equal_pid()>)) [グニャラくん]
   * 互換性:
     * これまでの"cut_"プリフィックスなしのフィクスチャ用関数
       を非推奨に変更。[グニャラくん]
-      * ((<setup()|cutter-cutter.html#setup>)) ->
-        ((<cut_setup()|cutter-cutter.html#cut_setup>))
-      * ((<teardown()|cutter-cutter.html#teardown>)) ->
-        ((<cut_teardown()|cutter-cutter.html#cut_teardown>))
-      * ((<startup()|cutter-cutter.html#startup>)) ->
-        ((<cut_startup()|cutter-cutter.html#cut_startup>))
-      * ((<shutdown()|cutter-cutter.html#shutdown>)) ->
-        ((<cut_shutdown()|cutter-cutter.html#cut_shutdown>))
+      * ((<setup()>)) -> ((<cut_setup()>))
+      * ((<teardown()>)) -> ((<cut_teardown()>))
+      * ((<startup()>)) -> ((<cut_startup()>))
+      * ((<shutdown()>)) -> ((<cut_shutdown()>))
   * バグ修正:
     * チュートリアルのtypoを修正: [海野さん]
     * ファイルディスクリプタのリダイレクト方法の修正: [海野さん]
@@ -267,54 +261,54 @@ Windows対応強化。
   * ((<Cutter利用プロジェクトリスト|USERS.ja>))を追加
   * ((<外部コマンドを便利に利用するためのAPI|GCutEgg.html>))を追加
   * バックトレース検出機能の改良:
-    * ((<CUT_RELATIVE_PATH|cutter-cut-helper.html#CUT_RELATIVE_PATH>))
+    * ((<CUT_RELATIVE_PATH>))
   * 検証のユーザ指定のメッセージ関連APIを改良:
     * 省略可能なメッセージを非推奨に変更
       * GCC以外のコンパイラをサポートするため
     * 検証とは別にユーザ指定のメッセージを指定するAPIの追加:
-      * ((<cut_set_message()|cutter-cutter.html#cut-set-message>))
-      * ((<cut_set_message_va_list()|cutter-cutter.html#cut-set-message-va-list>))
+      * ((<cut_set_message()>))
+      * ((<cut_set_message_va_list()>))
     * 複数の検証で同じメッセージを利用できるAPIの追加:
-      * ((<cut_keep_message()|cutter-cutter.html#cut-keep-message>))
+      * ((<cut_keep_message()>))
   * データ駆動テスト作成支援の強化:
-    * ((<便利なテストデータ用API|cutter-gcut-data.html>))
+    * ((<便利なテストデータ用API|cutter-Convenience-test-data-API.html>))
   * フィクスチャ関数へ"cut_"プレフィックスの追加:
-    * ((<cut_setup()|cutter-cutter.html#cut-setup>))
-    * ((<cut_teardown()|cutter-cutter.html#cut-teardown>))
-    * ((<cut_startup()|cutter-cutter.html#cut-startup>))
-    * ((<cut_shutdown()|cutter-cutter.html#cut-shutdown>))
+    * ((<cut_setup()>))
+    * ((<cut_teardown()>))
+    * ((<cut_startup()>))
+    * ((<cut_shutdown()>))
   * テストユーティリティの追加:
-    * ((<オブジェクト調査関数|cutter-gcut-inspect.html>))
-    * ((<cut_push_backtrace()|cutter-cut-helper.html#cut-push-backtrace>))
-    * ((<cut_pop_backtrace()|cutter-cut-helper.html#cut-pop-backtrace>))
-    * ((<cut_take_replace()|cutter-cut-test-utils.html#cut-take-replace>))
-    * ((<gcut_enum_parse()|cutter-gcut-enum.html#gcut-enum-parse>))
-    * ((<gcut_flags_get_all()|cutter-gcut-enum.html#gcut-flags-get-all>))
-    * ((<gcut_flags_parse()|cutter-gcut-enum.html#gcut-flags-parse>))
-    * ((<gcut_list_equal_int()|cutter-gcut-list.html#gcut-list-equal-int>))
-    * ((<gcut_list_equal_uint()|cutter-gcut-list.html#gcut-list-equal-uint>))
-    * ((<gcut_list_equal_string()|cutter-gcut-list.html#gcut-list-equal-string>))
-    * ((<gcut_list_inspect_enum()|cutter-gcut-list.html#gcut-list-inspect-enum>))
-    * ((<gcut_list_inspect_flags()|cutter-gcut-list.html#gcut-list-inspect-flags>))
-    * ((<gcut_list_inspect_int()|cutter-gcut-list.html#gcut-list-inspect-int>))
-    * ((<gcut_list_inspect_object()|cutter-gcut-list.html#gcut-list-inspect-object>))
-    * ((<gcut_list_inspect_string()|cutter-gcut-list.html#gcut-list-inspect-string>))
-    * ((<gcut_list_inspect_uint()|cutter-gcut-list.html#gcut-list-inspect-uint>))
-    * ((<gcut_list_string_new_array()|cutter-gcut-test-utils.html#gcut-list-string-new-array>))
-    * ((<gcut_take_new_list_string_array()|cutter-gcut-test-utils.html#gcut-take-new-list-string-array>))
+    * ((<オブジェクト調査関数|cutter-Object-inspection-functions.html>))
+    * ((<cut_push_backtrace()>))
+    * ((<cut_pop_backtrace()>))
+    * ((<cut_take_replace()>))
+    * ((<gcut_enum_parse()>))
+    * ((<gcut_flags_get_all()>))
+    * ((<gcut_flags_parse()>))
+    * ((<gcut_list_equal_int()>))
+    * ((<gcut_list_equal_uint()>))
+    * ((<gcut_list_equal_string()>))
+    * ((<gcut_list_inspect_enum()>))
+    * ((<gcut_list_inspect_flags()>))
+    * ((<gcut_list_inspect_int()>))
+    * ((<gcut_list_inspect_object()>))
+    * ((<gcut_list_inspect_string()>))
+    * ((<gcut_list_inspect_uint()>))
+    * ((<gcut_list_string_new_array()>))
+    * ((<gcut_take_new_list_string_array()>))
   * 検証の追加:
-    * ((<cut_assert_equal_size()|cutter-cut-assertions.html#cut-assert-equal-size>))
-    * ((<cut_return()|cutter-cut-assertions.html#cut-return>))
-    * ((<gcut_assert_equal_list()|cutter-gcut-assertions.html#gcut-assert-equal-list>))
-    * ((<gcut_assert_equal_pid()|cutter-gcut-assertions.html#gcut-assert-equal-pid>))
+    * ((<cut_assert_equal_size()>))
+    * ((<cut_return()>))
+    * ((<gcut_assert_equal_list()>))
+    * ((<gcut_assert_equal_pid()>))
 
 == 1.0.5: 2008-10-15
 
   * 最大同時スレッド数指定のサポート
     * --max-threadsオプション
     * サブプロセスに指定する場合:
-      * ((<cut_sub_process_get_max_threads()|cutter-cut-multi-process.html>))
-      * ((<cut_sub_process_set_max_threads()|cutter-cut-multi-process.html>))
+      * ((<cut_sub_process_get_max_threads()>))
+      * ((<cut_sub_process_set_max_threads()>))
   * GdkPixbufのサポート:
     * 画像比較
     * 画像差分
@@ -329,42 +323,42 @@ Windows対応強化。
   * --nameオプションによる繰り返しテストの指定をサポート
   * 'but was:' -> 'actual:'
   * テストユーティリティの追加:
-    * ((<cut_take()|cutter-cut-test-utils.html>))
-    * ((<cut_take_memdup()|cutter-cut-test-utils.html>))
-    * ((<cut_take_memory()|cutter-cut-test-utils.html>))
-    * ((<cut_take_strdup()|cutter-cut-test-utils.html>))
-    * ((<cut_take_strndup()|cutter-cut-test-utils.html>))
-    * ((<gcut_take_new_hash_table_string_string()|cutter-gcut-test-utils.html>))
-    * ((<gcut_take_new_list_string()|cutter-gcut-test-utils.html>))
-    * ((<gcut_hash_table_string_string_new()|cutter-gcut-test-utils.html>))
-    * ((<gcut_hash_table_string_string_new_va_list()|cutter-gcut-test-utils.html>))
+    * ((<cut_take()>))
+    * ((<cut_take_memdup()>))
+    * ((<cut_take_memory()>))
+    * ((<cut_take_strdup()>))
+    * ((<cut_take_strndup()>))
+    * ((<gcut_take_new_hash_table_string_string()>))
+    * ((<gcut_take_new_list_string()>))
+    * ((<gcut_hash_table_string_string_new()>))
+    * ((<gcut_hash_table_string_string_new_va_list()>))
   * 検証の追加:
-    * ((<cut_assert_operator_double()|cutter-cut-assertions.html>))
-    * ((<cut_assert_operator_uint()|cutter-cut-assertions.html>))
-    * ((<gcut_assert_equal_enum()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_error()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_flags()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_int64()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_list_enum()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_list_flags()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_list_object()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_list_object_custom()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_object()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_object_custom()|cutter-gcut-assertions.html>))
+    * ((<cut_assert_operator_double()>))
+    * ((<cut_assert_operator_uint()>))
+    * ((<gcut_assert_equal_enum()>))
+    * ((<gcut_assert_equal_error()>))
+    * ((<gcut_assert_equal_flags()>))
+    * ((<gcut_assert_equal_int64()>))
+    * ((<gcut_assert_equal_list_enum()>))
+    * ((<gcut_assert_equal_list_flags()>))
+    * ((<gcut_assert_equal_list_object()>))
+    * ((<gcut_assert_equal_list_object_custom()>))
+    * ((<gcut_assert_equal_object()>))
+    * ((<gcut_assert_equal_object_custom()>))
   * ユーザ独自検証作成サポートの強化:
     * バックトレース対応
-      * ((<cut_trace()|cutter-cut-helper.html>))
-      * ((<cut_trace_with_info_expression()|cutter-cut-helper.html>))
+      * ((<cut_trace()>))
+      * ((<cut_trace_with_info_expression()>))
     * ((<検証作成|writing-assertion.html>))
-      * ((<検証作成の補助|cutter-cut-helper.html>))
-      * ((<GEnumとGFlags用の検証ユーティリティ|cutter-gcut-enum.html>))
-      * ((<GError用の検証ユーティリティ|cutter-gcut-error.html>))
-      * ((<GHashTable用の検証ユーティリティ|cutter-gcut-hash-table.html>))
-      * ((<GList用の検証ユーティリティ|cutter-gcut-list.html>))
-      * ((<GObject用の検証ユーティリティ|cutter-gcut-object.html>))
-      * ((<GValue用の検証ユーティリティ|cutter-gcut-value-equal.html>))
-    * ((<cut_equal_double()|cutter-cut-test-utils.html>))
-    * ((<cut_equal_string()|cutter-cut-test-utils.html>))
+      * ((<検証作成の補助|cutter-Assertion-writing-helper.html>))
+      * ((<GEnumとGFlags用の検証ユーティリティ|cutter-Assertion-Utilities-for-GEnum-and-GFlags.html>))
+      * ((<GError用の検証ユーティリティ|cutter-Assertion-Utilities-for-GError.html>))
+      * ((<GHashTable用の検証ユーティリティ|cutter-Assertion-Utilities-for-GHashTable.html>))
+      * ((<GList用の検証ユーティリティ|cutter-Assertion-Utilities-for-GList.html>))
+      * ((<GObject用の検証ユーティリティ|cutter-Assertion-Utilities-for-GObject.html>))
+      * ((<GValue用の検証ユーティリティ|cutter-Assertion-Utilities-for-GValue.html>))
+    * ((<cut_equal_double()>))
+    * ((<cut_equal_string()>))
   * バグ修正:
     * メモリリークの修正（森さん）
     * setup()/teardown()内での検証・エラーなどの結果がでない
@@ -381,15 +375,15 @@ Windows対応強化。
     * 行が長い場合は折りたたんでdiffした結果も表示
     * 実行中を示す印（「.」や「F」）を適度に改行しながら出力
   * 属性を設定する
-    ((<cut_set_attributes()|cutter-cutter.html>))の追加
-  * ((<マルチプロセスでのテスト|cutter-cut-multi-process.html>))をサポート
+    ((<cut_set_attributes()>))の追加
+  * ((<マルチプロセスでのテスト|cutter-Multi-Process.html>))をサポート
   * データ駆動テストのマルチスレッド実行のサポート
   * 検証の追加:
-    * ((<gcut_assert_equal_hash_table_string_string()|cutter-gcut-assertions.html>))
-    * ((<gcut_assert_equal_time_val()|cutter-gcut-assertions.html>))
+    * ((<gcut_assert_equal_hash_table_string_string()>))
+    * ((<gcut_assert_equal_time_val()>))
   * 便利機能の追加:
-    * ((<gcut_hash_table_string_string_new()|cutter-gcut-test-utils.html>))
-    * ((<gcut_take_hash_table()|cutter-gcut-test-utils.html>))
+    * ((<gcut_hash_table_string_string_new()>))
+    * ((<gcut_take_hash_table()>))
   * 修正:
     * GOfficeがない環境でビルドが失敗する問題の修正
       （Kazumasa Matsunagaさんによる報告）
@@ -399,25 +393,24 @@ Windows対応強化。
 == 1.0.3: 2008-07-15
 
   * データ駆動テストのサポート:
-    * ((<cut_add_data()|cutter-cutter.html>))
+    * ((<cut_add_data()>))
   * 検証の追加:
-    * ((<gcut_assert_equal_list_uint()|cutter-gcut-assertions.html>))
+    * ((<gcut_assert_equal_list_uint()>))
   * 検証の名前変更:
     * GLibサポートが必要な機能はcut_ではなくgcut_からはじま
       る名前に変更。以前からあるcut_はじまりの名前も使えるが
       非推奨。詳細は((<GLibサポート付きの検証
-      |cutter-gcut-assertions.html>))を参照。
+      |cutter-Assertions-with-GLib-support.html>))を参照。
   * 便利機能の追加:
-    * ((<cut_append_diff()|cutter-cut-test-utils.html>)):
+    * ((<cut_append_diff()>)):
       文字列にdiffを追加
-    * ((<gcut_list_string_new()|cutter-gcut-test-utils.html>))/
-      ((<gcut_list_string_free()|cutter-gcut-test-utils.html>)):
+    * ((<gcut_list_string_new()>))/((<gcut_list_string_free()>)):
       文字列のリストの作成を支援。
-    * ((<gcut_take_error()|cutter-gcut-test-utils.html>)):
+    * ((<gcut_take_error()>)):
       GError *の所有権をCutterに移譲
-    * ((<gcut_take_list()|cutter-gcut-test-utils.html>)):
+    * ((<gcut_take_list()>)):
       GList *の所有権をCutterに移譲
-    * ((<gcut_take_object()|cutter-gcut-test-utils.html>)):
+    * ((<gcut_take_object()>)):
       GObject *の所有権をCutterに移譲
 
 == 1.0.2: 2008-06-27
