@@ -197,19 +197,8 @@ install-data-local:
 	  else								\
 	    $(mkinstalldirs) $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	    for i in $$installfiles; do					\
-	      if [ -d $$i ]; then					\
-	        $(mkinstalldirs)					\
-	          $(DESTDIR)$(TARGET_DIR)$$target_dir/$$i;		\
-	        for f in $$i/*; do					\
-	          echo "-- Installing $$f";				\
-	          $(INSTALL_DATA) $$f					\
-	            $(DESTDIR)$(TARGET_DIR)$$target_dir/$$i;		\
-	        done							\
-	      else							\
-	        echo "-- Installing $$i";				\
-	        $(INSTALL_DATA) $$i					\
-	          $(DESTDIR)$(TARGET_DIR)$$target_dir;			\
-	      fi							\
+	      echo "-- Installing $$i";					\
+	      $(INSTALL_DATA) $$i $(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	    done;							\
 	    echo "-- Installing $$dir/index.sgml";			\
 	    $(INSTALL_DATA) $$dir/index.sgml				\
