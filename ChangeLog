@@ -1,5 +1,8 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/build-deb.sh: use libgoffice-0.8-dev instead of
+	libgoffice-0-8-dev if it's available.
+
 	* gtk-doc.make (dist-hook): add -rp to cp for directory.
 
 	* ./: 1.1.2 -> 1.1.3.
