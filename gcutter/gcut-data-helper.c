@@ -44,8 +44,10 @@ gcut_data_get_ ## type_name ## _helper (gconstpointer data,             \
 
 DEFINE_GETTER_HELPER(char, gchar)
 DEFINE_GETTER_HELPER(string, const gchar *)
-DEFINE_GETTER_HELPER(uint, guint)
 DEFINE_GETTER_HELPER(int, gint)
+DEFINE_GETTER_HELPER(uint, guint)
+DEFINE_GETTER_HELPER(int64, gint64)
+DEFINE_GETTER_HELPER(uint64, guint64)
 DEFINE_GETTER_HELPER(size, gsize)
 #define gcut_data_get_data_type_helper gcut_data_get_type_helper
 DEFINE_GETTER_HELPER(data_type, GType)

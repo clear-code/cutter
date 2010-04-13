@@ -134,6 +134,32 @@ G_BEGIN_DECLS
  *     </listitem>
  *   </varlistentry>
  *   <varlistentry>
+ *     <term>#G_TYPE_INT64</term>
+ *     <listitem>
+ *       <para>#gint64 value</para>
+ *       <para>e.g.:
+ * |[
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_INT64, G_GINT64_CONSTANT(100),
+ *                NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>#G_TYPE_UINT64</term>
+ *     <listitem>
+ *       <para>#guint64 value</para>
+ *       <para>e.g.:
+ * |[
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_UINT64, G_GUINT64_CONSTANT(100),
+ *                NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
  *     <term>#G_TYPE_GTYPE</term>
  *     <listitem>
  *       <para>#GType value</para>
@@ -202,6 +228,32 @@ G_BEGIN_DECLS
  * ]|
  *       </para>
  *       <para>NOTE: value's ownership is passed to Cutter. Don't free it.</para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>#G_TYPE_BOOLEAN</term>
+ *     <listitem>
+ *       <para>#gboolean value</para>
+ *       <para>e.g.:
+ * |[
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_BOOLEAN, TRUE,
+ *                NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
+ *     <term>#G_TYPE_DOUBLE</term>
+ *     <listitem>
+ *       <para>#gdouble value</para>
+ *       <para>e.g.:
+ * |[
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_DOUBLE, 2.9,
+ *                NULL);
+ * ]|
+ *       </para>
  *     </listitem>
  *   </varlistentry>
  * </variablelist>
@@ -284,6 +336,42 @@ G_BEGIN_DECLS
     gcut_data_get_uint_helper(                                          \
         data, field_name,                                               \
         (cut_push_backtrace(gcut_data_get_uint(data, field_name)),      \
+         cut_pop_backtrace))
+
+/**
+ * gcut_data_get_int64:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Gets a field value identified by @field_name as 64-bit
+ * integer.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.1.3
+ */
+#define gcut_data_get_int64(data, field_name)                           \
+    gcut_data_get_int64_helper(                                         \
+        data, field_name,                                               \
+        (cut_push_backtrace(gcut_data_get_int64(data, field_name)),     \
+         cut_pop_backtrace))
+
+/**
+ * gcut_data_get_uint64:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Gets a field value identified by @field_name as
+ * 64-bit unsigned integer.
+ *
+ * Returns: a field value corresponded to @field_name.
+ *
+ * Since: 1.1.3
+ */
+#define gcut_data_get_uint64(data, field_name)                          \
+    gcut_data_get_uint64_helper(                                        \
+        data, field_name,                                               \
+        (cut_push_backtrace(gcut_data_get_uint64(data, field_name)),    \
          cut_pop_backtrace))
 
 /**

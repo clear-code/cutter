@@ -1,5 +1,8 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-data.h, gcutter/gcut-data-helper.[ch]: add
+	gcut_data_get_int64() and gcut_data_get_uint64().
+
 	* test/gcutter/test-gcut-inspect.c: use border value for int
 	related tests.
 
