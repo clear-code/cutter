@@ -1,5 +1,7 @@
 2010-04-13  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/ja.po: update.
+
 	* soupcutter/soupcut-assertions.h: use 'and' instead of '/'.
 
 	* gtk-doc.make (install-data-local): support one-level deep
