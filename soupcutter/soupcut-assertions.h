@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 
 /**
  * SECTION: soupcut-assertions
- * @title: Assertions for HTTP client and server based on libsoup
+ * @title: Assertions for HTTP client and server
  * @short_description: Checks that your HTTP client/server
  * works as you expect with libsoup support.
  *

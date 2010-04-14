@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.3\n"
-"POT-Creation-Date: 2010-04-13 16:31+0900\n"
-"PO-Revision-Date: 2010-04-13 16:31+0900\n"
+"POT-Creation-Date: 2010-04-14 09:15+0900\n"
+"PO-Revision-Date: 2010-04-14 09:16+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -1695,8 +1695,8 @@ msgstr "デフォルト値: FALSE"
 #: xml/api-index-1.0.8.xml:11(link) xml/api-index-1.0.8.xml:12(link)
 #: xml/api-index-1.0.8.xml:13(link) xml/api-index-1.0.8.xml:14(link)
 #: xml/api-index-1.0.8.xml:22(link)
-msgid "Assertions for HTTP client and server based on libsoup"
-msgstr "libsoupを使ったHTTPクライアント・サーバ用の検証"
+msgid "Assertions for HTTP client and server"
+msgstr "HTTPクライアント・サーバ用の検証"
 
 #: xml/soupcut-assertions.xml:15(refpurpose)
 msgid ""
