@@ -35,7 +35,7 @@ def login(agent, user_name, password=nil)
 
   begin
     page = agent.submit(login_form, login_form.buttons.first)
-  rescue WWW::Mechanize::ResponseCodeError
+  rescue Mechanize::ResponseCodeError
   end
   raise "login failed" unless /Log Out|Log&nbsp;out/ =~ page.body
   page = agent.get("https://sourceforge.net/users/#{user_name}")
@@ -128,7 +128,7 @@ end
 
 def main(sf_user_name, project_id, project_name,
          package_name, release_name, readme, news, files)
-  agent = WWW::Mechanize.new do |_agent|
+  agent = Mechanize.new do |_agent|
     # _agent.log = Logger.new(STDOUT)
   end
   password = read_password("SF.net password for [#{sf_user_name}]: ")
