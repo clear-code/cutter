@@ -1,7 +1,8 @@
 Source: cutter
 Priority: extra
 Maintainer: Kouhei Sutou <kou@clear-code.com>
-Build-Depends: debhelper (>= 5), cdbs, autotools-dev, intltool, gtk-doc-tools, libgtk2.0-dev, libgoffice-0-8-dev, libgstreamer0.10-dev, libsoup2.4-dev
+Build-Depends: debhelper (>= 5), cdbs, autotools-dev, intltool, gtk-doc-tools,
+ libgtk2.0-dev, libgoffice-0-8-dev, libgstreamer0.10-dev, libsoup2.4-dev
 Standards-Version: 3.7.3
 Section: libs
 Homepage: http://cutter.sourceforge.net/
@@ -9,7 +10,15 @@ Homepage: http://cutter.sourceforge.net/
 Package: cutter-testing-framework
 Section: libdevel
 Architecture: any
-Depends: cutter-bin, libcutter-dev, libcutter-glib-dev, libcutter-cpp-dev, libcutter-gtk-dev, libcutter-soup-dev, libcutter-report, libcutter-gst, cutter-doc
+Depends: cutter-bin (= ${binary:Version}),
+         libcutter-dev (= ${binary:Version}),
+         libcutter-glib-dev (= ${binary:Version}),
+         libcutter-cpp-dev (= ${binary:Version}),
+         libcutter-gtk-dev (= ${binary:Version}),
+         libcutter-soup-dev (= ${binary:Version}),
+         libcutter-report (= ${binary:Version}),
+         libcutter-gst (= ${binary:Version}),
+         cutter-doc (= ${binary:Version})
 Description: Cutter testing framework suite (meta-package)
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
