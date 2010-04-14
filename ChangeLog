@@ -1,5 +1,7 @@
 2010-04-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* autogen.sh: use suitable default value for each environment.
+
 	* apt/Makefile, yum/Makefile: don't remove svn related files.
 
 	* apt/Makefile (remove-existing-packages): remove all files in pool/.
