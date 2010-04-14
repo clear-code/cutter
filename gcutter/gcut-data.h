@@ -95,6 +95,19 @@ G_BEGIN_DECLS
  *
  * <variablelist>
  *   <varlistentry>
+ *     <term>#G_TYPE_CHAR</term>
+ *     <listitem>
+ *       <para>#gchar value</para>
+ *       <para>e.g.:
+ * |[
+ * gcut_add_datum("data name",
+ *                "field-name", G_TYPE_CHAR, 'X',
+ *                NULL);
+ * ]|
+ *       </para>
+ *     </listitem>
+ *   </varlistentry>
+ *   <varlistentry>
  *     <term>#G_TYPE_STRING</term>
  *     <listitem>
  *       <para>const #gchar *value</para>

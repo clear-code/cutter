@@ -1,3 +1,7 @@
+2010-04-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-data.h: add G_TYPE_CHAR example.
+
 2010-04-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* autogen.sh: use suitable default value for each environment.
