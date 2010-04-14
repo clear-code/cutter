@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.3\n"
 "POT-Creation-Date: 2010-04-14 09:15+0900\n"
-"PO-Revision-Date: 2010-04-14 09:16+0900\n"
+"PO-Revision-Date: 2010-04-14 10:39+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "MIME-Version: 1.0\n"
@@ -13215,10 +13215,7 @@ msgid ""
 "A standard boolean type. Variables of this type should only contain the "
 "value <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link> or "
 "<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>."
-msgstr ""
-"標準的な真偽値型。この型の値は<link linkend=\"CUT-TRUE:CAPS"
-"\"><literal>CUT_TRUE</literal></link>と<link linkend=\"CUT-FALSE:CAPS"
-"\"><literal>CUT_FALSE</literal></link>だけです。"
+msgstr "標準的な真偽値型。この型の値は<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>と<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>だけです。"
 
 #: xml/cut-types.xml:69(programlisting)
 #, no-wrap
@@ -13230,10 +13227,7 @@ msgid ""
 "Defines the <link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></"
 "link> value for the <link linkend=\"cut-boolean\"><type>cut_boolean</type></"
 "link> type."
-msgstr ""
-"<link linkend=\\\"cut-boolean\\\"><type>cut_boolean</type></link>型のために"
-"<link linkend=\\\"CUT-TRUE:CAPS\\\"><literal>CUT_TRUE</literal></link>を定義"
-"します。"
+msgstr "<link linkend=\"cut-boolean\"><type>cut_boolean</type></link>型のために<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>を定義します。"
 
 #: xml/cut-types.xml:77(programlisting)
 #, no-wrap
