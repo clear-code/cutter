@@ -6,7 +6,7 @@ CHROOT_BASE = /var/lib/chroot
 all: remove-existing-packages build sign update upload
 
 remove-existing-packages:
-	find fedora -name "*.rpm" -delete
+	find fedora -not -path '*/.svn/*' -name "*.rpm" -delete
 
 sign:
 	./sign-rpm.sh

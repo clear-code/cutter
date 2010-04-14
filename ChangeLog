@@ -1,5 +1,7 @@
 2010-04-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/Makefile, yum/Makefile: don't remove svn related files.
+
 	* apt/Makefile (remove-existing-packages): remove all files in pool/.
 
 	* doc/reference/ja.po: update.

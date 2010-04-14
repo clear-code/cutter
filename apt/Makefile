@@ -8,8 +8,9 @@ CODES = lenny unstable hardy karmic
 all: remove-existing-packages build update sign upload
 
 remove-existing-packages:
-	for distribution in $(DISTRIBUTIONS); do		\
-	  find $${distribution}/pool -type f -delete;		\
+	for distribution in $(DISTRIBUTIONS); do	\
+	  find $${distribution}/pool -not		\
+	    -path '*/.svn/*' \-type f -delete;		\
 	done
 
 update:
