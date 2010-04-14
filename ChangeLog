@@ -1,5 +1,7 @@
 2010-04-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/Makefile, yum/Makefile: remove existing packages before all tasks.
+
 	* apt/build-deb.sh: libgoffice-0.8 -> libgoffice-0.8-8.
 
 	* debian/control: specify the same version to dependencies.

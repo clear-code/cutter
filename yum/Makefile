@@ -3,7 +3,10 @@ SF_HTDOCS = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
 ARCHITECTURES = i386 x86_64
 CHROOT_BASE = /var/lib/chroot
 
-all: build sign update upload
+all: remove-existing-packages build sign update upload
+
+remove-existing-packages:
+	find fedora -name "*.rpm" -delete
 
 sign:
 	./sign-rpm.sh

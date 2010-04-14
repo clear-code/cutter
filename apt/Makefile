@@ -5,7 +5,12 @@ CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
 CODES = lenny unstable hardy karmic
 
-all: build update sign upload
+all: remove-existing-packages build update sign upload
+
+remove-existing-packages:
+	for distribution in $(DISTRIBUTIONS); do		\
+	  find $${distribution}/pool -name "*.deb" -delete;	\
+	done
 
 update:
 	./update-repository.sh '$(DISTRIBUTIONS)' '$(ARCHITECTURES)'
