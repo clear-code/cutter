@@ -1,5 +1,7 @@
 2010-04-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/Makefile (remove-existing-packages): remove all files in pool/.
+
 	* doc/reference/ja.po: update.
 
 	* apt/Makefile, yum/Makefile: remove existing packages before all tasks.

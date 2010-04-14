@@ -9,7 +9,7 @@ all: remove-existing-packages build update sign upload
 
 remove-existing-packages:
 	for distribution in $(DISTRIBUTIONS); do		\
-	  find $${distribution}/pool -name "*.deb" -delete;	\
+	  find $${distribution}/pool -type f -delete;		\
 	done
 
 update:
