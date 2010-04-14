@@ -50,7 +50,8 @@ tar xfz ${PACKAGE}_${VERSION}.orig.tar.gz
 cd ${PACKAGE}-${VERSION}/
 cp -rp /tmp/${PACKAGE}-debian debian
 if dpkg -l libgoffice-0.8-dev > /dev/null 2>&1; then
-    sed -i'' -e 's/libgoffice-0-8/libgoffice-0.8/g' debian/control
+    sed -i'' -e 's/libgoffice-0-8-dev/libgoffice-0.8-dev/g' debian/control
+    sed -i'' -e 's/libgoffice-0-8/libgoffice-0.8-8/g' debian/control
 else
     if ! dpkg -l libgoffice-0-8-dev > /dev/null 2>&1; then
         sed -i'' -e 's/libgoffice-0-8/libgoffice-0-6/g' debian/control
