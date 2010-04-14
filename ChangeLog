@@ -1,5 +1,7 @@
 2010-04-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* cppcutter/cppcut-message.h: add missing CUT_EXPORT for Windows.
+
 	* soupcutter/soupcut-*.h, doc/reference/ja.po: remove 'based of
 	libsoup' to shorten generated document's file name.
 

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -40,10 +40,10 @@ namespace cut
     class Message
     {
     public:
-        Message();
-        Message(const char *format, ...);
-        Message(const char *format, va_list args);
-        ~Message();
+        CUT_EXPORT Message();
+        CUT_EXPORT Message(const char *format, ...);
+        CUT_EXPORT Message(const char *format, va_list args);
+        CUT_EXPORT ~Message();
 
         template <typename Type> inline Message&
         operator <<(const Type& value)
@@ -63,15 +63,15 @@ namespace cut
             return *this;
         }
 
-        inline Message&
+        CUT_EXPORT inline Message&
         operator <<(bool value)
         {
             return *this << (value ? "true" : "false");
         }
 
-        void printf(const char *format=NULL, ...);
+        CUT_EXPORT void printf(const char *format=NULL, ...);
 
-        const char *
+        CUT_EXPORT inline const char *
         string() const
         {
             return buffer_.str().c_str();
