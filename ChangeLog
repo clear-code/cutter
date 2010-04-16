@@ -1,3 +1,10 @@
+2010-04-16  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-crash-backtrace.[ch],
+	test/cutter/test-cut-test-case.c,
+	test/cutter/test-cut-test.c: reduce memory allocation and lock
+	conditions on crash.
+
 2010-04-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-data.h: add G_TYPE_CHAR example.

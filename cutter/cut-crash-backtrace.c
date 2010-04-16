@@ -38,6 +38,7 @@
 #include "cut-crash-backtrace.h"
 
 static gboolean cut_crash_backtrace_show_on_the_moment = TRUE;
+static gboolean cut_crash_backtrace_signal_received = FALSE;
 
 
 void
@@ -50,6 +51,12 @@ gboolean
 cut_crash_backtrace_get_show_on_the_moment (void)
 {
     return cut_crash_backtrace_show_on_the_moment;
+}
+
+void
+cut_crash_backtrace_reset_signal_received (void)
+{
+    cut_crash_backtrace_signal_received = FALSE;
 }
 
 #ifdef G_OS_WIN32
@@ -78,7 +85,7 @@ cut_crash_backtrace_emit (CutTestSuite    *test_suite,
 #else
 
 static CutCrashBacktrace *current_crash_backtrace = NULL;
-static gchar *crash_backtrace = NULL;
+static gchar crash_backtrace[40960];
 static gchar crash_backtrace_read_buffer[4096];
 
 struct _CutCrashBacktrace
@@ -99,32 +106,33 @@ struct _CutCrashBacktrace
 static void
 read_backtrace (int in_fd)
 {
-    GString *buffer = NULL;
-    gssize size;
+    gssize i, read_size;
     gchar *internal_backtrace;
 
-    while ((size = read(in_fd,
-                        crash_backtrace_read_buffer,
-                        sizeof(crash_backtrace_read_buffer))) > 0) {
+    crash_backtrace[0] = '\0';
+    i = 0;
+    while ((read_size = read(in_fd,
+                             crash_backtrace_read_buffer,
+                             sizeof(crash_backtrace_read_buffer))) > 0) {
         if (cut_crash_backtrace_show_on_the_moment)
-            write(STDERR_FILENO, crash_backtrace_read_buffer, size);
+            write(STDERR_FILENO, crash_backtrace_read_buffer, read_size);
 
-        if (!buffer)
-            buffer = g_string_new("");
-        g_string_append_len(buffer, crash_backtrace_read_buffer, size);
+        if (i + read_size > sizeof(crash_backtrace))
+            break;
+        memcpy(crash_backtrace + i, crash_backtrace_read_buffer, read_size);
+        i += read_size;
     }
-
-    if (!buffer)
+    crash_backtrace[i] = '\0';
+    if (i == 0)
         return;
 
 #define INTERNAL_BACKTRACE_MARK "<signal handler called>\n"
-    internal_backtrace = strstr(buffer->str, INTERNAL_BACKTRACE_MARK);
+    internal_backtrace = strstr(crash_backtrace, INTERNAL_BACKTRACE_MARK);
     if (internal_backtrace) {
         internal_backtrace += strlen(INTERNAL_BACKTRACE_MARK);
-        g_string_erase(buffer, 0, internal_backtrace - buffer->str);
+        crash_backtrace[internal_backtrace - crash_backtrace] = '\0';
     }
 #undef INTERNAL_BACKTRACE_MARK
-    crash_backtrace = g_string_free(buffer, FALSE);
 }
 
 static void
@@ -154,13 +162,18 @@ static void
 i_will_be_back_handler (int signum)
 {
     jmp_buf *jump_buffer;
+
+    if (cut_crash_backtrace_signal_received) {
+        g_print("signal received on crash\n");
+        exit(EXIT_FAILURE);
+    }
+    cut_crash_backtrace_signal_received = TRUE;
+
     jump_buffer = current_crash_backtrace->jump_buffer;
 
     cut_crash_backtrace_free(current_crash_backtrace);
 
     if (signum != SIGINT) {
-        g_free(crash_backtrace);
-        crash_backtrace = NULL;
         collect_backtrace();
     }
     longjmp(*jump_buffer, signum);
@@ -239,8 +252,7 @@ cut_crash_backtrace_emit (CutTestSuite    *test_suite,
     CutTest *target;
 
     parsed_backtrace = cut_utils_parse_gdb_backtrace(crash_backtrace);
-    g_free(crash_backtrace);
-    crash_backtrace = NULL;
+    crash_backtrace[0] = '\0';
 
     result = cut_test_result_new(CUT_TEST_RESULT_CRASH,
                                  test, test_iterator, test_case, test_suite,

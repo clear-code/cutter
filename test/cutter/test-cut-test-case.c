@@ -220,6 +220,7 @@ void
 cut_teardown (void)
 {
     cut_crash_backtrace_set_show_on_the_moment(TRUE);
+    cut_crash_backtrace_reset_signal_received();
 
     g_object_unref(test_object);
     g_object_unref(run_context);

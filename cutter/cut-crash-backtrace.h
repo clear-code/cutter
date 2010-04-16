@@ -34,6 +34,7 @@ typedef struct _CutCrashBacktrace CutCrashBacktrace;
 
 void               cut_crash_backtrace_set_show_on_the_moment (gboolean show_on_the_moment);
 gboolean           cut_crash_backtrace_get_show_on_the_moment (void);
+void               cut_crash_backtrace_reset_signal_received  (void);
 
 
 CutCrashBacktrace *cut_crash_backtrace_new      (jmp_buf *jump_buffer);
