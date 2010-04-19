@@ -1,3 +1,8 @@
+2010-04-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: add a syntax to disable term index by
+	': [] term'.
+
 2010-04-16  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-crash-backtrace.[ch],

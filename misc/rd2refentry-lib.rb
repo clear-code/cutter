@@ -229,10 +229,15 @@ module RD
 
     def apply_to_DescListItem(element, term, contents)
       term_attributes = {}
-      id = term_index_id(term)
-      unless @term_indexes[id]
-        @term_indexes[id] = term
-        term_attributes["id"] = "#{ref_entry_id}.#{id}"
+      term = term.join("")
+      if /\A\s*\[\]\s*/ =~ term
+        term = $POSTMATCH
+      else
+        id = term_index_id(term)
+        unless @term_indexes[id]
+          @term_indexes[id] = term
+          term_attributes["id"] = "#{ref_entry_id}.#{id}"
+        end
       end
       tag("varlistentry", {},
           tag("term", term_attributes, term),
