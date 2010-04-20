@@ -67,11 +67,15 @@ def upload_files(sf_user_name, project_id, package_name, release_name,
   end
 end
 
-def go_development_page(agent, project_page)
+def go_development_page(agent, project_page, project_id)
   development_page_link = project_page.links.find do |link|
     /\bprojects\b/ =~ link.href and /\bDevelop\b/ =~ link.text
   end
-  agent.click(development_page_link)
+  if development_page_link.nil?
+    agent.get("https://sourceforge.net/projects/#{project_id}/develop")
+  else
+    agent.click(development_page_link)
+  end
 end
 
 def extract_sections(file)
@@ -135,7 +139,7 @@ def main(sf_user_name, project_id, project_name,
   my_page = login(agent, sf_user_name, password)
 
   project_page = go_project_page(agent, my_page, project_name)
-  development_page = go_development_page(agent, project_page)
+  development_page = go_development_page(agent, project_page, project_id)
   upload_files(sf_user_name, project_id, package_name,
                release_name, news, files)
 

@@ -1,3 +1,7 @@
+2010-04-20  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/release.rb: follow the recent SF.net HTML changes. :<
+
 2010-04-19  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/rd2refentry-lib.rb: add a syntax to disable term index by
