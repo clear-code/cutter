@@ -17,16 +17,16 @@ you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
 Here are apt lines for for lenny. We put them into
-/etc/apt/sources.list/cutter.list.
+/etc/apt/sources.list.d/cutter.list.
 
-/etc/apt/sources.list/cutter.list:
+/etc/apt/sources.list.d/cutter.list:
   deb http://cutter.sourceforge.net/debian/ lenny main
   deb-src http://cutter.sourceforge.net/debian/ lenny main
 
 Here are apt lines for for sid. We put them into
-/etc/apt/sources.list/cutter.list.
+/etc/apt/sources.list.d/cutter.list.
 
-/etc/apt/sources.list/cutter.list:
+/etc/apt/sources.list.d/cutter.list:
   deb http://cutter.sourceforge.net/debian/ unstable main
   deb-src http://cutter.sourceforge.net/debian/ unstable main
 

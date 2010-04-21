@@ -17,16 +17,16 @@ environment, you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
 Here are apt lines for for Hardy. We put them into
-/etc/apt/sources.list/cutter.list.
+/etc/apt/sources.list.d/cutter.list.
 
-/etc/apt/sources.list/cutter.list:
+/etc/apt/sources.list.d/cutter.list:
   deb http://cutter.sourceforge.net/ubuntu/ hardy main
   deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
 
 Here are apt lines for for Karmic. We put them into
-/etc/apt/sources.list/cutter.list.
+/etc/apt/sources.list.d/cutter.list.
 
-/etc/apt/sources.list/cutter.list:
+/etc/apt/sources.list.d/cutter.list:
   deb http://cutter.sourceforge.net/ubuntu/ karmic main
   deb-src http://cutter.sourceforge.net/ubuntu/ karmic main
 
