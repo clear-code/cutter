@@ -205,10 +205,10 @@ install-data-local:
 	      $(DESTDIR)$(TARGET_DIR)$$target_dir || :;			\
 	    if test `which gtkdoc-rebase` != ""; then			\
 	      if test "$(DESTDIR)" = ""; then				\
-	        gtkdoc-rebase --relative				\
+	        $(GTKDOC_REBASE) --relative				\
 	          --html-dir=$(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	      else							\
-	        gtkdoc-rebase --relative --dest-dir=$(DESTDIR)		\
+	        $(GTKDOC_REBASE) --relative --dest-dir=$(DESTDIR)		\
 	          --html-dir=$(DESTDIR)$(TARGET_DIR)$$target_dir;	\
 	      fi;							\
 	    fi;								\
@@ -247,6 +247,6 @@ dist-hook: dist-check-gtkdoc dist-hook-local
 	cp -rp $(DOC_MODULE).types $(distdir)/
 	cp -rp $(DOC_MODULE)-sections.txt $(distdir)/
 	cd $(distdir) && rm -f $(DISTCLEANFILES)
-	-gtkdoc-rebase --online --relative --html-dir=$(distdir)/html
+	-$(GTKDOC_REBASE) --online --relative --html-dir=$(distdir)/html
 
 .PHONY : dist-hook-local docs
