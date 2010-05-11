@@ -1,3 +1,9 @@
+2010-05-11  Kouhei Sutou  <kou@clear-code.com>
+
+	* README*, TUTORIAL*, license/:
+	- mention licenses.
+	- make document LGPL/GFDL/CC-BY-SA triple license.
+
 2010-04-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gtk-doc.make: work 'make install' on no gtkdoc-rebase environment.

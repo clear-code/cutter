@@ -14,7 +14,24 @@ Cutter
 
 == License
 
-LGPLv3 or later. See license/lgpl.txt for more details.
+  * Source: LGPLv3 or later. (detail:
+    ((<license/lgpl-3.txt|URL:http://www.gnu.org/licenses/lgpl.html>)))
+  * Document: Triple license: LGPL, GFDL and/or CC.
+    * LGPL: v3 or later. (detail:
+      ((<license/lgpl-3.txt|URL:http://www.gnu.org/licenses/lgpl.html>)))
+    * GFDL: v1.3 or later. (detail:
+      ((<license/gfdl-1.3.txt|URL:http://www.gnu.org/licenses/fdl.html>)))
+    * CC: ((<BY-SA|URL:http://creativecommons.org/licenses/by-sa/3.0/us/>))
+  * Exceptions:
+    * html/blog.*, html/download.*, html/heading-mark.*
+      html/install.*, html/readme.*, html/reference.*,
+      html/tango-logo.png, html/tutorial.*, html/mini-*.svg:
+      Public domain. They are deliverables by ((<Tango Desktop
+      Project|URL:http://tango.freedesktop.org/>)). (Some of
+      them are modified.)
+    * html/ja.png, html/us.png, html/famfamfam-logo.png:
+      Public domain. They are distributed by
+      ((<famfamfam.com|URL:http://famfamfam.com/>)).
 
 == What's this?
 

@@ -2,6 +2,14 @@
 
 = チュートリアル --- Cutterの使い方
 
+Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+
+: ライセンス
+   ((<LGPLv3+|URL:URL:http://www.gnu.org/licenses/lgpl.html>))と
+   ((<GFDLv1.3+|URL:http://www.gnu.org/licenses/fdl.html>))と
+   ((<CC-BY-SA|URL:http://creativecommons.org/licenses/by-sa/2.1/jp/>))
+   のトリプルライセンス。
+
 == はじめに
 
 スタックを実現するプログラム（ライブラリ）をC言語で作成する。
