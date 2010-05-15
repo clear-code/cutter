@@ -21,7 +21,7 @@ Cutter
       ((<license/lgpl-3.txt|URL:http://www.gnu.org/licenses/lgpl.html>)))
     * GFDL: v1.3 or later. (detail:
       ((<license/gfdl-1.3.txt|URL:http://www.gnu.org/licenses/fdl.html>)))
-    * CC: ((<BY-SA|URL:http://creativecommons.org/licenses/by-sa/3.0/us/>))
+    * CC: ((<BY-SA|URL:http://creativecommons.org/licenses/by-sa/3.0/>))
   * Exceptions:
     * html/blog.*, html/download.*, html/heading-mark.*
       html/install.*, html/readme.*, html/reference.*,
