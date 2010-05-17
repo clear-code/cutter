@@ -16,10 +16,10 @@ fi
 
 case `uname -s` in
     Darwin)
-	: ${LIBTOOLIZE:-glibtoolize}
+	: ${LIBTOOLIZE=glibtoolize}
 	;;
     FreeBSD)
-	: ${ACLOCAL_OPTIONS:"$ACLOCAL_OPTIONS -I /usr/local/share/aclocal/"}
+	: ${ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I /usr/local/share/aclocal/"}
 	;;
 esac
 
