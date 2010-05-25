@@ -1,3 +1,16 @@
+2010-05-25  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-assertions-helper.c,
+	soupcutter/soupcut-assertions-helper.c,
+	test/cutter/test-cut-assertions.c,
+	test/soupcutter/test-soupcut-assertions.c: use cut_take_inspect_string().
+
+	* cutter/cut-test-utils.h (cut_take_inspect_string): add.
+
+	* cutter/cut-utils.c, cutter/cut-public.h,
+	test/cutter/test-cut-utils.c: cut_utils_inspect_string() really
+	inspects string and const is removed from return value type.
+
 2010-05-18  Nobuyoshi Nakada  <nobu@ruby-lang.org>
 
 	* autogen.sh: fix of setting default values.

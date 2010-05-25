@@ -148,7 +148,7 @@ cut_boolean  cut_utils_equal_double         (double double1,
 cut_boolean  cut_utils_equal_string_array   (char **strings1,
                                              char **strings2);
 char        *cut_utils_inspect_string_array (char **strings);
-const char  *cut_utils_inspect_string       (const char *string);
+char        *cut_utils_inspect_string       (const char *string);
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 cut_boolean  cut_utils_equal_sockaddr       (const struct sockaddr *address1,

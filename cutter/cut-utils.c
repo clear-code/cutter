@@ -220,6 +220,31 @@ cut_utils_equal_string_array (gchar **strings1, gchar **strings2)
     return TRUE;
 }
 
+static void
+cut_utils_inspect_string_to_gstring (GString *inspected, const gchar *string)
+{
+    if (!string) {
+        g_string_append(inspected, "(null)");
+        return;
+    }
+
+    g_string_append_c(inspected, '"');
+    for (; string[0]; string++) {
+        switch (string[0]) {
+        case '"':
+            g_string_append(inspected, "\\\"");
+            break;
+        case '\\':
+            g_string_append(inspected, "\\\\");
+            break;
+        default:
+            g_string_append_c(inspected, string[0]);
+            break;
+        }
+    }
+    g_string_append_c(inspected, '"');
+}
+
 gchar *
 cut_utils_inspect_string_array (gchar **strings)
 {
@@ -232,7 +257,7 @@ cut_utils_inspect_string_array (gchar **strings)
     inspected = g_string_new("[");
     string = strings;
     while (*string) {
-        g_string_append_printf(inspected, "\"%s\"", *string);
+        cut_utils_inspect_string_to_gstring(inspected, *string);
         next_string = string + 1;
         if (*next_string)
             g_string_append(inspected, ", ");
@@ -243,13 +268,14 @@ cut_utils_inspect_string_array (gchar **strings)
     return g_string_free(inspected, FALSE);
 }
 
-const gchar *
+gchar *
 cut_utils_inspect_string (const gchar *string)
 {
-    if (string)
-        return string;
-    else
-        return "(null)";
+    GString *inspected;
+
+    inspected = g_string_new(NULL);
+    cut_utils_inspect_string_to_gstring(inspected, string);
+    return g_string_free(inspected, FALSE);
 }
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT

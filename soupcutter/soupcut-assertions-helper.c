@@ -81,20 +81,11 @@ soupcut_message_assert_equal_content_type_helper (const gchar *expected,
     if (cut_utils_equal_string(expected, content_type)) {
         cut_test_pass();
     } else {
-        const gchar *fail_message;
-        const gchar *inspected_expected;
-        const gchar *inspected_actual;
-
-        inspected_expected = cut_utils_inspect_string(expected);
-        inspected_actual = cut_utils_inspect_string(content_type);
-        fail_message = cut_take_printf("<%s == %s[response][content-type]>\n"
-                                       "  expected: <%s>\n"
-                                       "    actual: <%s>",
+        cut_set_expected(cut_take_inspect_string(expected));
+        cut_set_actual(cut_take_inspect_string(content_type));
+        cut_test_fail(cut_take_printf("<%s == %s[response][content-type]>",
                                        expression_expected,
-                                       expression_message,
-                                       inspected_expected,
-                                       inspected_actual);
-        cut_test_fail(fail_message);
+                                       expression_message));
     }
 }
 
@@ -117,22 +108,12 @@ soupcut_client_assert_equal_content_type_helper (const gchar *expected,
     if (cut_utils_equal_string(expected, content_type)) {
         cut_test_pass();
     } else {
-        const gchar *fail_message;
-        const gchar *inspected_expected;
-        const gchar *inspected_actual;
-
-        inspected_expected = cut_utils_inspect_string(expected);
-        inspected_actual = cut_utils_inspect_string(content_type);
-        fail_message =
-            cut_take_printf(
-                "<%s == latest_message(%s)[response][content-type]>\n"
-                "  expected: <%s>\n"
-                "    actual: <%s>",
-                expression_expected,
-                expression_client,
-                inspected_expected,
-                inspected_actual);
-        cut_test_fail(fail_message);
+        cut_set_expected(cut_take_inspect_string(expected));
+        cut_set_actual(cut_take_inspect_string(content_type));
+        cut_test_fail(
+            cut_take_printf("<%s == latest_message(%s)[response][content-type]>",
+                            expression_expected,
+                            expression_client));
     }
 }
 
@@ -149,16 +130,13 @@ void soupcut_client_assert_response_helper (SoupCutClient *client,
     if (200 <= message->status_code && message->status_code < 300) {
         cut_test_pass();
     } else {
-        const gchar *fail_message;
-
-        fail_message =
-            cut_take_printf("<latest_message(%s)[response][status] == 2XX>\n"
-                            "  expected: <2XX>\n"
-                            "    actual: <%u>(%s)",
-                            expression_client,
-                            message->status_code,
-                            message->reason_phrase);
-        cut_test_fail(fail_message);
+        cut_set_expected("2XX");
+        cut_set_actual(cut_take_printf("%u(%s)",
+                                       message->status_code,
+                                       message->reason_phrase));
+        cut_test_fail(
+            cut_take_printf("<latest_message(%s)[response][status] == 2XX>",
+                            expression_client));
     }
 }
 
@@ -180,21 +158,12 @@ soupcut_client_assert_equal_body_helper (const gchar   *expected,
     if (cut_utils_equal_string(expected, body)) {
         cut_test_pass();
     } else {
-        const gchar *fail_message;
-        const gchar *inspected_expected;
-        const gchar *inspected_actual;
-
-        inspected_expected = cut_utils_inspect_string(expected);
-        inspected_actual = cut_utils_inspect_string(body);
-        fail_message =
-            cut_take_printf("<%s == latest_message(%s)[response][body]>\n"
-                            "  expected: <%s>\n"
-                            "    actual: <%s>",
+        cut_set_expected(cut_take_inspect_string(expected));
+        cut_set_actual(cut_take_inspect_string(body));
+        cut_test_fail(
+            cut_take_printf("<%s == latest_message(%s)[response][body]>",
                             expression_expected,
-                            expression_client,
-                            inspected_expected,
-                            inspected_actual);
-        cut_test_fail(fail_message);
+                            expression_client));
     }
 }
 
@@ -216,21 +185,13 @@ soupcut_client_assert_match_body_helper (const gchar   *pattern,
     if (cut_utils_regex_match(pattern, body)) {
         cut_test_pass();
     } else {
-        const gchar *fail_message;
-        const gchar *inspected_pattern;
-        const gchar *inspected_actual;
-
-        inspected_pattern = cut_utils_inspect_string(pattern);
-        inspected_actual = cut_utils_inspect_string(body);
-        fail_message =
+        cut_set_actual(cut_take_inspect_string(body));
+        cut_test_fail(
             cut_take_printf("<%s> =~ <latest_message(%s)[response][body]>\n"
-                            " pattern: <%s>\n"
-                            "  actual: <%s>",
+                            " pattern: <%s>",
                             expression_pattern,
                             expression_client,
-                            inspected_pattern,
-                            inspected_actual);
-        cut_test_fail(fail_message);
+                            cut_take_inspect_string(pattern)));
     }
 }
 

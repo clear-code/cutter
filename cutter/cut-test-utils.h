@@ -209,10 +209,24 @@ extern "C" {
 #define cut_take_convert(string, to_code_set, from_code_set)            \
     cut_take_convert_helper(                                            \
         string, to_code_set, from_code_set,                             \
-        (cut_push_backtrace(cut_take_code_set(string,                   \
-                                              to_code_set,              \
-                                              from_code_set)),          \
+        (cut_push_backtrace(cut_take_convert(string,                    \
+                                             to_code_set,               \
+                                             from_code_set)),           \
          cut_pop_backtrace))
+
+/**
+ * cut_take_inspect_string:
+ * @string: the inspect target string. It should be %NULL or
+ *          %NULL-terminated.
+ *
+ * Inspects @string.
+ *
+ * Returns: a inspected string owned by Cutter. Don't free it.
+ *
+ * Since: 1.1.4
+ */
+#define cut_take_inspect_string(string)                                 \
+    cut_take_string(cut_utils_inspect_string(string))
 
 /**
  * cut_set_fixture_data_dir:

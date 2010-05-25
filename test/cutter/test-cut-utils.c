@@ -46,6 +46,7 @@ void test_inspect_memory_with_printable (void);
 void test_inspect_memory_huge_data (void);
 void test_compare_string_array (void);
 void test_inspect_string_array (void);
+void test_inspect_string (void);
 void test_strv_concat (void);
 void test_remove_path_recursive (void);
 void test_fold (void);
@@ -174,6 +175,19 @@ test_inspect_string_array (void)
                                       cut_utils_inspect_string_array(NULL));
     cut_assert_equal_string_with_free("[\"a\", \"b\", \"c\"]",
                                       cut_utils_inspect_string_array(strings));
+}
+
+void
+test_inspect_string (void)
+{
+    cut_assert_equal_string_with_free("(null)",
+                                      cut_utils_inspect_string(NULL));
+    cut_assert_equal_string_with_free("\"a\"",
+                                      cut_utils_inspect_string("a"));
+    cut_assert_equal_string_with_free("\"a\\\"b\"",
+                                      cut_utils_inspect_string("a\"b"));
+    cut_assert_equal_string_with_free("\"a\\\\b\"",
+                                      cut_utils_inspect_string("a\\b"));
 }
 
 void

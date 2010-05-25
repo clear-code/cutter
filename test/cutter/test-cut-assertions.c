@@ -1342,7 +1342,7 @@ test_equal_string (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "assert-equal-string", NULL,
                            "<\"abc\" == \"ABC\">",
-                           "abc", "ABC",
+                           "\"abc\"", "\"ABC\"",
                            FAIL_LOCATION, "stub_equal_string",
                            NULL);
 }
@@ -1365,7 +1365,7 @@ test_not_equal_string (void)
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "assert-not-equal-string", NULL,
                            "<\"abc\" != \"abc\">",
-                           "abc", "abc",
+                           "\"abc\"", "\"abc\"",
                            FAIL_LOCATION, "stub_not_equal_string",
                            NULL);
 }
@@ -1389,14 +1389,14 @@ test_equal_string_with_diff (void)
     cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">",
                             cut_test_result_get_system_message(test_result));
     cut_assert_equal_string("<\"abc def ghi jkl\" == \"abc DEF ghi jkl\">\n"
-                            "expected: <abc def ghi jkl>\n"
-                            "  actual: <abc DEF ghi jkl>\n"
+                            "expected: <\"abc def ghi jkl\">\n"
+                            "  actual: <\"abc DEF ghi jkl\">\n"
                             "\n"
                             "diff:\n"
-                            "- abc def ghi jkl\n"
-                            "?     ^^^\n"
-                            "+ abc DEF ghi jkl\n"
-                            "?     ^^^",
+                            "- \"abc def ghi jkl\"\n"
+                            "?      ^^^\n"
+                            "+ \"abc DEF ghi jkl\"\n"
+                            "?      ^^^",
                             cut_test_result_get_message(test_result));
 }
 
@@ -1477,7 +1477,7 @@ test_equal_string_with_folded_diff (void)
                             "\"7123456789\" "
                             "\"8123456789\""
                             ">\n"
-                            "expected: <"
+                            "expected: <\""
                             "0123456789"
                             "1123456789"
                             "2123456789"
@@ -1487,8 +1487,8 @@ test_equal_string_with_folded_diff (void)
                             "6123456789"
                             "7123456789"
                             "8123456789"
-                            ">\n"
-                            "  actual: <"
+                            "\">\n"
+                            "  actual: <\""
                             "0000000000"
                             "1123456789"
                             "2123456789"
@@ -1498,10 +1498,10 @@ test_equal_string_with_folded_diff (void)
                             "6123456789"
                             "7123456789"
                             "8123456789"
-                            ">\n"
+                            "\">\n"
                             "\n"
                             "diff:\n"
-                            "- 0123456789"
+                            "- \"0123456789"
                             "1123456789"
                             "2123456789"
                             "3123456789"
@@ -1509,9 +1509,9 @@ test_equal_string_with_folded_diff (void)
                             "5123456789"
                             "6123456789"
                             "7123456789"
-                            "8123456789\n"
-                            "?  ^^^^^^^^^\n"
-                            "+ 0000000000"
+                            "8123456789\"\n"
+                            "?   ^^^^^^^^^\n"
+                            "+ \"0000000000"
                             "1123456789"
                             "2123456789"
                             "3123456789"
@@ -1519,30 +1519,30 @@ test_equal_string_with_folded_diff (void)
                             "5123456789"
                             "6123456789"
                             "7123456789"
-                            "8123456789\n"
-                            "?  ^^^^^^^^^\n"
+                            "8123456789\"\n"
+                            "?   ^^^^^^^^^\n"
                             "\n"
                             "folded diff:\n"
-                            "- 0123456789"
+                            "- \"0123456789"
                             "1123456789"
                             "2123456789"
                             "3123456789"
                             "4123456789"
                             "5123456789"
                             "6123456789"
-                            "71234567\n"
-                            "?  ^^^^^^^^^\n"
-                            "+ 0000000000"
+                            "7123456\n"
+                            "?   ^^^^^^^^^\n"
+                            "+ \"0000000000"
                             "1123456789"
                             "2123456789"
                             "3123456789"
                             "4123456789"
                             "5123456789"
                             "6123456789"
-                            "71234567\n"
-                            "?  ^^^^^^^^^\n"
-                            "  89"
-                            "8123456789",
+                            "7123456\n"
+                            "?   ^^^^^^^^^\n"
+                            "  789"
+                            "8123456789\"",
                             cut_test_result_get_message(test_result));
 }
 
@@ -1573,8 +1573,8 @@ test_equal_substring (void)
                            "<\"0123456789\" == "
                            "(actual_string + strlen(\"0000\") + 1)"
                            "[0..strlen(\"0123456789\")]>",
-                           "0123456789",
-                           "1234567899",
+                           "\"0123456789\"",
+                           "\"1234567899\"",
                            FAIL_LOCATION, "stub_equal_substring",
                            NULL);
 }
@@ -1608,8 +1608,8 @@ test_not_equal_substring (void)
                            "<\"0123456789\" != "
                            "(actual_string + strlen(\"0000\"))"
                            "[0..strlen(\"0123456789\")]>",
-                           "0123456789",
-                           "0123456789",
+                           "\"0123456789\"",
+                           "\"0123456789\"",
                            FAIL_LOCATION, "stub_not_equal_substring",
                            NULL);
 }
@@ -2064,7 +2064,7 @@ test_assert_message_with_format_string (void)
                            "stub-assert-message-with-string",
                            "expected and actual have format string",
                            "<\"%s\" == \"%d\">",
-                           "%s", "%d",
+                           "\"%s\"", "\"%d\"",
                            FAIL_LOCATION,
                            "stub_assert_message_with_format_string",
                            NULL);

@@ -1114,23 +1114,20 @@ cut_assert_equal_string_helper (const char     *expected,
         if (actual == NULL) {
             cut_test_pass();
         } else {
-            cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
-                                          "  actual: <%s>",
-                                          expression_actual,
-                                          actual));
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual));
+            cut_test_fail(cut_take_printf("<%s == NULL>",
+                                          expression_actual));
         }
     } else {
         if (cut_utils_equal_string(expected, actual)) {
             cut_test_pass();
         } else {
-            const char *message;
-
-            message = cut_take_printf("<%s == %s>",
-                                      expression_expected,
-                                      expression_actual);
-            cut_set_expected(expected);
-            cut_set_actual(actual);
-            cut_test_fail(message);
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual));
+            cut_test_fail(cut_take_printf("<%s == %s>",
+                                          expression_expected,
+                                          expression_actual));
         }
     }
 }
@@ -1145,23 +1142,20 @@ cut_assert_not_equal_string_helper (const char     *expected,
         if (actual) {
             cut_test_pass();
         } else {
-            cut_test_fail(cut_take_printf("expected: <%s> is not NULL\n"
-                                          "  actual: <%s>",
-                                          expression_actual,
-                                          actual));
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual));
+            cut_test_fail(cut_take_printf("<%s != NULL>",
+                                          expression_actual));
         }
     } else {
         if (!cut_utils_equal_string(expected, actual)) {
             cut_test_pass();
         } else {
-            const char *message;
-
-            message = cut_take_printf("<%s != %s>",
-                                      expression_expected,
-                                      expression_actual);
-            cut_set_expected(expected);
-            cut_set_actual(actual);
-            cut_test_fail(message);
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual));
+            cut_test_fail(cut_take_printf("<%s != %s>",
+                                          expression_expected,
+                                          expression_actual));
         }
     }
 }
@@ -1181,27 +1175,24 @@ cut_assert_equal_substring_helper (const char     *expected,
             const gchar *actual_substring;
 
             actual_substring = cut_take_string(g_strndup(actual, length));
-            cut_test_fail(cut_take_printf("expected: <%s> is NULL\n"
-                                          "  actual: <%s>",
-                                          expression_actual,
-                                          actual_substring));
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual_substring));
+            cut_test_fail(cut_take_printf("<%s == NULL>",
+                                          expression_actual));
         }
     } else {
         if (cut_utils_equal_substring(expected, actual, length)) {
             cut_test_pass();
         } else {
-            const gchar *actual_substring;
-            const char *message;
+            const gchar *actual_substring = NULL;
 
             actual_substring = cut_take_string(g_strndup(actual, length));
-            message =
-                cut_take_printf("<%s == (%s)[0..%s]>",
-                                expression_expected,
-                                expression_actual,
-                                expression_length);
-            cut_set_expected(expected);
-            cut_set_actual(actual_substring);
-            cut_test_fail(message);
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual_substring));
+            cut_test_fail(cut_take_printf("<%s == (%s)[0..%s]>",
+                                          expression_expected,
+                                          expression_actual,
+                                          expression_length));
         }
     }
 }
@@ -1221,28 +1212,24 @@ cut_assert_not_equal_substring_helper (const char     *expected,
             const gchar *actual_substring;
 
             actual_substring = cut_take_string(g_strndup(actual, length));
-            cut_test_fail(cut_take_printf("expected: <%s> is not NULL\n"
-                                          "  actual: <%s>",
-                                          expression_actual,
-                                          actual_substring));
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual_substring));
+            cut_test_fail(cut_take_printf("<%s != NULL>",
+                                          expression_actual));
         }
     } else {
         if (!cut_utils_equal_substring(expected, actual, length)) {
             cut_test_pass();
         } else {
-            const gchar *actual_substring = NULL;
-            const char *message;
+            const gchar *actual_substring;
 
-            if (actual)
-                actual_substring = cut_take_string(g_strndup(actual, length));
-            message =
-                cut_take_printf("<%s != (%s)[0..%s]>",
-                                expression_expected,
-                                expression_actual,
-                                expression_length);
-            cut_set_expected(expected);
-            cut_set_actual(actual_substring);
-            cut_test_fail(message);
+            actual_substring = cut_take_string(g_strndup(actual, length));
+            cut_set_expected(cut_take_inspect_string(expected));
+            cut_set_actual(cut_take_inspect_string(actual_substring));
+            cut_test_fail(cut_take_printf("<%s != (%s)[0..%s]>",
+                                          expression_expected,
+                                          expression_actual,
+                                          expression_length));
         }
     }
 }

@@ -108,8 +108,6 @@ stub_message_equal_content_type (void)
 void
 test_message_equal_content_type (void)
 {
-    const gchar *message;
-
     test = cut_test_new("message equal content-type test",
                         stub_message_equal_content_type);
     cut_assert_not_null(test);
@@ -117,16 +115,12 @@ test_message_equal_content_type (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
-    message =
-        cut_take_printf("<\"text/plain\" == message[response][content-type]>\n"
-                        "  expected: <%s>\n"
-                        "    actual: <%s>",
-                        "text/plain", "text/html");
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "message equal content-type test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<\"text/plain\" == message[response][content-type]>",
+                           "\"text/plain\"",
+                           "\"text/html\"",
                            FAIL_LOCATION, "stub_message_equal_content_type",
                            NULL);
 }
@@ -177,8 +171,6 @@ stub_client_equal_content_type (void)
 void
 test_client_equal_content_type (void)
 {
-    const gchar *message;
-
     test = cut_test_new("client equal content-type test",
                         stub_client_equal_content_type);
     cut_assert_not_null(test);
@@ -186,17 +178,13 @@ test_client_equal_content_type (void)
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
-    message =
-        cut_take_printf("<\"text/html\" == "
-                        "latest_message(client)[response][content-type]>\n"
-                        "  expected: <%s>\n"
-                        "    actual: <%s>",
-                        "text/html", "text/plain");
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client equal content-type test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<\"text/html\" == "
+                           "latest_message(client)[response][content-type]>",
+                           "\"text/html\"",
+                           "\"text/plain\"",
                            FAIL_LOCATION, "stub_client_equal_content_type",
                            NULL);
 }
@@ -256,23 +244,18 @@ stub_client_response (void)
 void
 test_client_response (void)
 {
-    const gchar *message;
-
     test = cut_test_new("client response test", stub_client_response);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
-    message =
-        "<latest_message(client)[response][status] == 2XX>\n"
-        "  expected: <2XX>\n"
-        "    actual: <404>(Blog Not Found)";
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client response test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<latest_message(client)[response][status] == 2XX>",
+                           "2XX",
+                           "404(Blog Not Found)",
                            FAIL_LOCATION, "stub_client_response",
                            NULL);
 }
@@ -326,23 +309,18 @@ stub_client_equal_body (void)
 void
 test_client_equal_body (void)
 {
-    const gchar *message;
-
     test = cut_test_new("client equal body test", stub_client_equal_body);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
-
-    message =
-        "<\"Goodbye\" == latest_message(client)[response][body]>\n"
-        "  expected: <Goodbye>\n"
-        "    actual: <Hello>";
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client equal body test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<\"Goodbye\" == "
+                           "latest_message(client)[response][body]>",
+                           "\"Goodbye\"",
+                           "\"Hello\"",
                            FAIL_LOCATION, "stub_client_equal_body",
                            NULL);
 }
@@ -395,23 +373,20 @@ stub_client_match_body (void)
 void
 test_client_match_body (void)
 {
-    const gchar *message;
-
     test = cut_test_new("client match body test", stub_client_match_body);
     cut_assert_not_null(test);
 
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
 
-    message =
-        "<\"\\\\d+\"> =~ <latest_message(client)[response][body]>\n"
-        " pattern: <\\d+>\n"
-        "  actual: <Hello>";
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "client match body test",
                            NULL,
-                           message,
-                           NULL, NULL,
+                           "<\"\\\\d+\"> =~ "
+                           "<latest_message(client)[response][body]>\n"
+                           " pattern: <\"\\\\d+\">",
+                           NULL,
+                           "\"Hello\"",
                            FAIL_LOCATION, "stub_client_match_body",
                            NULL);
 }
