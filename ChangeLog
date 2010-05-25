@@ -1,5 +1,8 @@
 2010-05-25  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cut-assertions.c: add a test for
+	cut_assert_equal_string("XXX", NULL) case.
+
 	* cutter/cut-assertions-helper.c,
 	soupcutter/soupcut-assertions-helper.c,
 	test/cutter/test-cut-assertions.c,

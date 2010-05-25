@@ -102,6 +102,7 @@ void test_not_equal_size(void);
 void test_equal_char(void);
 void test_not_equal_char(void);
 void test_equal_string(void);
+void test_equal_string_with_null(void);
 void test_equal_string_with_diff(void);
 void test_equal_string_with_folded_diff(void);
 void test_not_equal_string(void);
@@ -1344,6 +1345,27 @@ test_equal_string (void)
                            "<\"abc\" == \"ABC\">",
                            "\"abc\"", "\"ABC\"",
                            FAIL_LOCATION, "stub_equal_string",
+                           NULL);
+}
+
+static void
+stub_equal_string_with_null (void)
+{
+    MARK_FAIL(cut_assert_equal_string("abc", NULL));
+}
+
+void
+test_equal_string_with_null (void)
+{
+    test = cut_test_new("assert-equal-string-with-null",
+                        stub_equal_string_with_null);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "assert-equal-string-with-null", NULL,
+                           "<\"abc\" == NULL>",
+                           "\"abc\"", "(null)",
+                           FAIL_LOCATION, "stub_equal_string_with_null",
                            NULL);
 }
 
