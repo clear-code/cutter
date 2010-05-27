@@ -29,33 +29,30 @@ extern "C" {
 
 #define cut_test_with_user_message(assertion, set_user_message) do      \
 {                                                                       \
-    if (cut_test_context_get_have_user_message_jump(cut_get_current_test_context())) { \
+    jmp_buf *cut_previous_jump_buffer;                                  \
+    jmp_buf cut_jump_buffer;                                            \
+                                                                        \
+    cut_test_context_start_user_message_jump(cut_get_current_test_context()); \
+    cut_previous_jump_buffer =                                          \
+        cut_test_context_get_jump(cut_get_current_test_context());      \
+    cut_test_context_set_jump(cut_get_current_test_context(),           \
+                              &cut_jump_buffer);                        \
+    if (setjmp(cut_jump_buffer) == 0) {                                 \
         assertion;                                                      \
-    } else {                                                            \
-        jmp_buf *cut_previous_jump_buffer;                              \
-        jmp_buf cut_jump_buffer;                                        \
+    }                                                                   \
+    cut_test_context_set_jump(cut_get_current_test_context(),           \
+                              cut_previous_jump_buffer);                \
+    cut_test_context_finish_user_message_jump(cut_get_current_test_context()); \
                                                                         \
-        cut_test_context_set_have_user_message_jump(cut_get_current_test_context(), \
-                                                    CUT_TRUE);          \
-        cut_previous_jump_buffer =                                      \
-            cut_test_context_get_jump(cut_get_current_test_context());  \
-        cut_test_context_set_jump(cut_get_current_test_context(),       \
-                                  &cut_jump_buffer);                    \
-        if (setjmp(cut_jump_buffer) == 0) {                             \
-            assertion;                                                  \
-        }                                                               \
-        cut_test_context_set_jump(cut_get_current_test_context(),       \
-                                  cut_previous_jump_buffer);            \
-        cut_test_context_set_have_user_message_jump(cut_get_current_test_context(), \
-                                                    CUT_FALSE);         \
+    do {                                                                \
+        set_user_message;                                               \
+    } while (0);                                                        \
                                                                         \
-        if (cut_test_context_get_have_current_result(cut_get_current_test_context())) { \
-            do {                                                        \
-                set_user_message;                                       \
-            } while (0);                                                \
+    if (cut_test_context_get_have_current_result(cut_get_current_test_context())) { \
+        if (!cut_test_context_in_user_message_jump(cut_get_current_test_context())) { \
             cut_test_context_process_current_result(cut_get_current_test_context()); \
-            cut_return();                                               \
         }                                                               \
+        cut_return();                                                   \
     }                                                                   \
 } while (0)
 
@@ -75,10 +72,10 @@ extern "C" {
     cut_test_context_set_current_result(cut_get_current_test_context(), \
                                         CUT_TEST_RESULT_ ## status,     \
                                         system_message);                \
-    if (!cut_test_context_get_have_user_message_jump(cut_get_current_test_context())) { \
-        do {                                                            \
-            __VA_ARGS__;                                                \
-        } while (0);                                                    \
+    do {                                                                \
+        __VA_ARGS__;                                                    \
+    } while (0);                                                        \
+    if (!cut_test_context_in_user_message_jump(cut_get_current_test_context())) { \
         cut_test_context_process_current_result(cut_get_current_test_context()); \
     }                                                                   \
     cut_return();                                                       \

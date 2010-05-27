@@ -93,7 +93,7 @@ struct _CutTestContextPrivate
     gchar *expected;
     gchar *actual;
     CutTestResult *current_result;
-    gboolean have_user_message_jump;
+    guint user_message_jump_nest;
 };
 
 enum
@@ -269,7 +269,7 @@ cut_test_context_init (CutTestContext *context)
 
     priv->current_result = NULL;
 
-    priv->have_user_message_jump = FALSE;
+    priv->user_message_jump_nest = 0;
 }
 
 static void
@@ -947,16 +947,21 @@ cut_test_context_register_result (CutTestContext *context,
 }
 
 void
-cut_test_context_set_have_user_message_jump (CutTestContext *context,
-                                             gboolean have)
+cut_test_context_start_user_message_jump (CutTestContext *context)
 {
-    CUT_TEST_CONTEXT_GET_PRIVATE(context)->have_user_message_jump = have;
+    CUT_TEST_CONTEXT_GET_PRIVATE(context)->user_message_jump_nest++;
+}
+
+void
+cut_test_context_finish_user_message_jump (CutTestContext *context)
+{
+    CUT_TEST_CONTEXT_GET_PRIVATE(context)->user_message_jump_nest--;
 }
 
 gboolean
-cut_test_context_get_have_user_message_jump (CutTestContext *context)
+cut_test_context_in_user_message_jump (CutTestContext *context)
 {
-    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->have_user_message_jump;
+    return CUT_TEST_CONTEXT_GET_PRIVATE(context)->user_message_jump_nest > 0;
 }
 
 void

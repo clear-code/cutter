@@ -102,10 +102,11 @@ cut_boolean
 void  cut_test_context_register_result      (CutTestContext *context,
                                              CutTestResultStatus status,
                                              const char *system_message);
-void         cut_test_context_set_have_user_message_jump
-                                            (CutTestContext *context,
-                                             cut_boolean     have);
-cut_boolean  cut_test_context_get_have_user_message_jump
+void         cut_test_context_start_user_message_jump
+                                            (CutTestContext *context);
+void         cut_test_context_finish_user_message_jump
+                                            (CutTestContext *context);
+cut_boolean  cut_test_context_in_user_message_jump
                                             (CutTestContext *context);
 void         cut_test_context_set_jump      (CutTestContext *context,
                                              jmp_buf        *buffer);

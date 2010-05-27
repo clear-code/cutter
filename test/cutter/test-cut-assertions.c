@@ -2341,22 +2341,23 @@ error_errno (void)
     cut_error_errno(cut_message("Not error"));
 
     errno = EACCES;
-    cut_error_errno(cut_message("Should error"));
+    MARK_FAIL(cut_error_errno(cut_message("Should error")));
 }
 
 void
 test_error_errno (void)
 {
-    /* FIXME: use cut_assert_test_result_summary() */
-    CutTestResult *result;
-
     test = cut_test_new("error-errno", error_errno);
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 0, 0, 0, 1, 0, 0, 0);
-
-    result = cut_run_context_get_results(run_context)->data;
-    cut_assert_equal_string("Should error",
-                            cut_test_result_get_user_message(result));
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR,
+                           "error-errno",
+                           "Should error",
+                           cut_take_printf("<%d> (%s)",
+                                           EACCES, g_strerror(EACCES)),
+                           NULL, NULL,
+                           FAIL_LOCATION, "error_errno",
+                           NULL);
 }
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT

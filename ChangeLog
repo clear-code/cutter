@@ -1,3 +1,9 @@
+2010-05-27  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-assertions-helper.h, cutter/cut-public.h,
+	cutter/cut-test-context.c, test/cutter/test-cut-assertions.c: fix
+	nested user message is ignored.
+
 2010-05-25  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/cutter/test-cut-assertions.c: add a test for
