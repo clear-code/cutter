@@ -1,6 +1,9 @@
 2010-05-28  Kouhei Sutou  <kou@clear-code.com>
 
 	* gcutter/gcut-assertions-helper.[ch], gcutter/gcut-assertions.h,
+	test/gcutter/test-gcut-assertions.c: add gcut_assert_not_equal_int64().
+
+	* gcutter/gcut-assertions-helper.[ch], gcutter/gcut-assertions.h,
 	test/gcutter/test-gcut-assertions.c: add gcut_assert_not_equal_uint64().
 
 2010-05-28  Kouhei Sutou  <kou@clear-code.com>

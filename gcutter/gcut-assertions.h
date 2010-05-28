@@ -689,6 +689,26 @@ G_BEGIN_DECLS
 } while (0)
 
 /**
+ * gcut_assert_equal_int64:
+ * @expected: an expected value.
+ * @actual: an actual value.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @expected != @actual.
+ *
+ * Since: 1.1.4
+ */
+#define gcut_assert_not_equal_int64(expected, actual, ...) do           \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            gcut_assert_not_equal_int64_helper((expected), (actual),    \
+                                               #expected, #actual),     \
+            __VA_ARGS__),                                               \
+        gcut_assert_not_equal_int64(expected, actual, __VA_ARGS__));    \
+} while (0)
+
+/**
  * gcut_assert_equal_uint64:
  * @expected: an expected value.
  * @actual: an actual value.

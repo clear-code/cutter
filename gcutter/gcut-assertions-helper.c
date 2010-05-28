@@ -491,16 +491,16 @@ gcut_assert_equal_int64_helper (gint64          expected,
 }
 
 void
-gcut_assert_not_equal_uint64_helper (guint64         expected,
-                                     guint64         actual,
-                                     const char     *expression_expected,
-                                     const char     *expression_actual)
+gcut_assert_not_equal_int64_helper (gint64         expected,
+                                    gint64         actual,
+                                    const char     *expression_expected,
+                                    const char     *expression_actual)
 {
     if (expected != actual) {
         cut_test_pass();
     } else {
-        cut_set_expected(cut_take_printf("%" G_GUINT64_FORMAT, expected));
-        cut_set_actual(cut_take_printf("%" G_GUINT64_FORMAT, actual));
+        cut_set_expected(cut_take_printf("%" G_GINT64_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" G_GINT64_FORMAT, actual));
         cut_test_fail(cut_take_printf("<%s != %s>",
                                       expression_expected,
                                       expression_actual));
@@ -519,6 +519,23 @@ gcut_assert_equal_uint64_helper (guint64         expected,
         cut_set_expected(cut_take_printf("%" G_GUINT64_FORMAT, expected));
         cut_set_actual(cut_take_printf("%" G_GUINT64_FORMAT, actual));
         cut_test_fail(cut_take_printf("<%s == %s>",
+                                      expression_expected,
+                                      expression_actual));
+    }
+}
+
+void
+gcut_assert_not_equal_uint64_helper (guint64         expected,
+                                     guint64         actual,
+                                     const char     *expression_expected,
+                                     const char     *expression_actual)
+{
+    if (expected != actual) {
+        cut_test_pass();
+    } else {
+        cut_set_expected(cut_take_printf("%" G_GUINT64_FORMAT, expected));
+        cut_set_actual(cut_take_printf("%" G_GUINT64_FORMAT, actual));
+        cut_test_fail(cut_take_printf("<%s != %s>",
                                       expression_expected,
                                       expression_actual));
     }

@@ -138,12 +138,16 @@ void      gcut_assert_equal_int64_helper    (gint64          expected,
                                              gint64          actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
-void      gcut_assert_not_equal_uint64_helper
-                                            (guint64         expected,
-                                             guint64         actual,
+void      gcut_assert_not_equal_int64_helper(gint64          expected,
+                                             gint64          actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
 void      gcut_assert_equal_uint64_helper   (guint64         expected,
+                                             guint64         actual,
+                                             const char     *expression_expected,
+                                             const char     *expression_actual);
+void      gcut_assert_not_equal_uint64_helper
+                                            (guint64         expected,
                                              guint64         actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
