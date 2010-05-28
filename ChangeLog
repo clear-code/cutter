@@ -1,3 +1,7 @@
+2010-05-28  Kouhei Sutou  <kou@clear-code.com>
+
+	* README*: fix markup.
+
 2010-05-27  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-assertions-helper.h, cutter/cut-public.h,
