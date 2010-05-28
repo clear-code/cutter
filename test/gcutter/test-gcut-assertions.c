@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -51,6 +51,7 @@ void test_equal_pid(void);
 void test_not_equal_pid(void);
 void test_equal_int64(void);
 void test_equal_uint64(void);
+void test_not_equal_uint64(void);
 
 static CutTest *test;
 static CutRunContext *run_context;
@@ -1024,6 +1025,29 @@ test_equal_uint64 (void)
                            "<G_MAXUINT32 == G_MAXUINT64>",
                            "4294967295", "18446744073709551615",
                            FAIL_LOCATION, "stub_equal_uint64",
+                           NULL);
+}
+
+static void
+stub_not_equal_uint64 (void)
+{
+    gcut_assert_not_equal_uint64(0, 1);
+    gcut_assert_not_equal_uint64((guint64)G_MAXUINT32,
+                                 (guint64)G_MAXUINT32 + 1);
+    MARK_FAIL(gcut_assert_not_equal_uint64(G_MAXUINT64, G_MAXUINT64));
+}
+
+void
+test_not_equal_uint64 (void)
+{
+    test = cut_test_new("cut_assert_not_equal_uint64()", stub_not_equal_uint64);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 2, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "cut_assert_not_equal_uint64()", NULL,
+                           "<G_MAXUINT64 != G_MAXUINT64>",
+                           "18446744073709551615", "18446744073709551615",
+                           FAIL_LOCATION, "stub_not_equal_uint64",
                            NULL);
 }
 

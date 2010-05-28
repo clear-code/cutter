@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -706,6 +706,26 @@ G_BEGIN_DECLS
                                             #expected, #actual),        \
             __VA_ARGS__),                                               \
         gcut_assert_equal_uint64(expected, actual, __VA_ARGS__));       \
+} while (0)
+
+/**
+ * gcut_assert_equal_uint64:
+ * @expected: an expected value.
+ * @actual: an actual value.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @expected != @actual.
+ *
+ * Since: 1.1.4
+ */
+#define gcut_assert_not_equal_uint64(expected, actual, ...) do          \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            gcut_assert_not_equal_uint64_helper((expected), (actual),   \
+                                                #expected, #actual),    \
+            __VA_ARGS__),                                               \
+        gcut_assert_not_equal_uint64(expected, actual, __VA_ARGS__));   \
 } while (0)
 
 /**

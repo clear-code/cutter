@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -136,6 +136,11 @@ void      gcut_assert_equal_object_helper   (GObject        *expected,
                                              const gchar    *expression_equal_function);
 void      gcut_assert_equal_int64_helper    (gint64          expected,
                                              gint64          actual,
+                                             const char     *expression_expected,
+                                             const char     *expression_actual);
+void      gcut_assert_not_equal_uint64_helper
+                                            (guint64         expected,
+                                             guint64         actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
 void      gcut_assert_equal_uint64_helper   (guint64         expected,
