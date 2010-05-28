@@ -1,5 +1,7 @@
 2010-05-28  Kouhei Sutou  <kou@clear-code.com>
 
+	* misc/rd2refentry-lib.rb: support '# note'.
+
 	* README*: fix markup.
 
 2010-05-27  Kouhei Sutou  <kou@clear-code.com>

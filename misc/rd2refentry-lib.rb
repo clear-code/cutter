@@ -109,6 +109,9 @@ module RD
       case lines.first.strip
       when "# RT"
         apply_to_RT(lines.join)
+      when "# note"
+        contents = lines[1..-1].collect {|line| apply_to_String(line)}
+        tag("note", {}, contents.join("").chomp)
       else
         contents = lines.collect {|line| apply_to_String(line)}
         tag("programlisting", {}, contents.join("").chomp)
