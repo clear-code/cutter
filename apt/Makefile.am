@@ -1,11 +1,10 @@
-VERSION = 1.1.3
-SERVER_PATH = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
+SERVER_PATH = $(SF_USER),cutter@$(SF_HTDOCS)
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
-CODES = lenny unstable hardy karmic
+CODE_NAMES = lenny unstable hardy lucid
 
-all: remove-existing-packages build update sign upload
+release: remove-existing-packages build update sign upload
 
 remove-existing-packages:
 	for distribution in $(DISTRIBUTIONS); do	\
@@ -37,4 +36,4 @@ download:
 build:
 	./build-in-chroot.sh \
 	  $(VERSION) $(CHROOT_BASE) \
-	  '$(ARCHITECTURES)' '$(CODES)'
+	  '$(ARCHITECTURES)' '$(CODE_NAMES)'

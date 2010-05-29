@@ -762,6 +762,8 @@ AC_CONFIG_FILES([Makefile
 		 doc/reference/version.xml
 		 doc/reference/Makefile
 		 html/Makefile
-		 vcc/Makefile])
+		 vcc/Makefile
+		 apt/Makefile
+		 yum/Makefile])
 
 AC_OUTPUT

@@ -1,9 +1,8 @@
-VERSION = 1.1.3
-SF_HTDOCS = ktou,cutter@web.sourceforge.net:/home/groups/c/cu/cutter/htdocs
+SERVER_PATH = $(SF_USER),cutter@$(SF_HTDOCS)
 ARCHITECTURES = i386 x86_64
 CHROOT_BASE = /var/lib/chroot
 
-all: remove-existing-packages build sign update upload
+release: remove-existing-packages build sign update upload
 
 remove-existing-packages:
 	find fedora -not -path '*/.svn/*' -name "*.rpm" -delete
@@ -16,10 +15,10 @@ update:
 
 upload:
 	rsync -avz --delete --exclude .gitignore --exclude .svn \
-		fedora/ $(SF_HTDOCS)/fedora
+		fedora/ $(SERVER_PATH)/fedora
 
 download:
-	rsync -avz $(SF_HTDOCS)/fedora/ fedora
+	rsync -avz $(SERVER_PATH)/fedora/ fedora
 
 build: build-in-chroot build-repository-rpm
 
