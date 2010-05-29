@@ -650,6 +650,21 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-start],
 #ifndef __CUT_FEATURES_H__
 #define __CUT_FEATURES_H__
 
+/**
+ * SECTION: cut-features
+ * @title: Available features
+ * @short_description: Available features in the installed Cutter.
+ *
+ * There are some macros to check a feature is available in the
+ * installed Cutter.
+ */
+
+/**
+ * CUT_SUPPORT_GLIB:
+ *
+ * Shows GLib support is available. That is, we can use <gcutter.h>.
+ * It is always defined.
+ */
 #define CUT_SUPPORT_GLIB 1
 _______EOF
 ])

@@ -35,6 +35,7 @@ HFILE_GLOB =								\
 	$(top_srcdir)/cutter/cut-multi-process.h			\
 	$(top_srcdir)/cutter/cut-test-utils.h				\
 	$(top_srcdir)/cutter/cut-types.h				\
+	$(top_srcdir)/cutter/cut-features.h				\
 	$(top_srcdir)/cutter/cutter.h					\
 	$(top_srcdir)/gcutter/gcut-assertions.h				\
 	$(top_srcdir)/gcutter/gcut-data.h				\

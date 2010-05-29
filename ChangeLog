@@ -1,3 +1,7 @@
+2010-05-29  Kouhei Sutou  <kou@clear-code.com>
+
+	* configure.ac, doc/reference/Makefile.am: add cut-features.
+
 2010-05-29  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, Makefile.am, apt/Makefile.am, yum/Makefile.am:
