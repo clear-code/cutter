@@ -1,3 +1,9 @@
+2010-06-03  Kouhei Sutou  <kou@clear-code.com>
+
+	* Makefile.am: release archive as
+	cutter-testing-framework-X.X.X.tar.gz into
+	http://cutter.sourceforge.net/archives/debian/.
+
 2010-05-29  Kouhei Sutou  <kou@clear-code.com>
 
 	* configure.ac, doc/reference/Makefile.am: add cut-features.

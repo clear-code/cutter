@@ -50,12 +50,28 @@ EXTRA_DIST =		\
 
 upload: upload-doc
 
-release: dist
+release: dist release-official release-debian
+
+release-official:
 	$(srcdir)/misc/release.rb				\
 	  $(SF_USER) $(SF_PROJECT_ID) $(SF_PROJECT_NAME)	\
 	  $(PACKAGE_NAME) $(VERSION) README NEWS		\
 	  $(PACKAGE)-$(VERSION).tar.gz				\
 	  $(PACKAGE)-$(VERSION).zip
+
+release-debian:
+	rm -rf tmp
+	mkdir -p tmp
+	tar xfz $(PACKAGE)-$(VERSION).tar.gz -C tmp
+	mv tmp/$(PACKAGE)-$(VERSION) tmp/$(PACKAGE)-testing-framework-$(VERSION)
+	tar cfz tmp/$(PACKAGE)-testing-framework-$(VERSION).tar.gz \
+	  -C tmp \
+	  $(PACKAGE)-testing-framework-$(VERSION)
+	mkdir -p tmp/archives/debian/
+	echo "Options +Indexes" > tmp/archives/.htaccess
+	mv tmp/$(PACKAGE)-testing-framework-$(VERSION).tar.gz \
+	  tmp/archives/debian/
+	rsync -avz tmp/archives $(SF_HTDOCS)/
 
 upload-doc:
 	cd html && $(MAKE) $(AM_MAKEFLAGS) upload
