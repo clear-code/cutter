@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -104,10 +104,11 @@ write_deleted_segment (CutDiffWriter *writer, const gchar *line,
 }
 
 static void
-write_difference_spaces (CutDiffWriter *writer, guint n)
+write_difference_spaces (CutDiffWriter *writer,
+                         const gchar *line, guint begin, guint end)
 {
-    cut_diff_writer_write_character_n_times(
-        writer, ' ', n, CUT_DIFF_WRITER_TAG_DIFFERENCE_SEGMENT);
+    cut_diff_writer_write_spaces(writer, line, begin, end,
+                                 CUT_DIFF_WRITER_TAG_DIFFERENCE_SEGMENT);
 }
 
 static void
@@ -128,43 +129,18 @@ typedef enum
 typedef struct _WriteOperation
 {
     WriteType type;
-    guint width;
     const gchar *line;
     guint begin;
     guint end;
 } WriteOperation;
 
 static WriteOperation *
-equal_spaces_write_operation_new (const gchar *line, guint begin, guint end)
+write_operation_new (WriteType type, const gchar *line, guint begin, guint end)
 {
     WriteOperation *operation;
 
     operation = g_new0(WriteOperation, 1);
-    operation->type = WRITE_EQUAL_SPACES;
-    operation->line = line;
-    operation->begin = begin;
-    operation->end = end;
-    return operation;
-}
-
-static WriteOperation *
-difference_spaces_write_operation_new (guint width)
-{
-    WriteOperation *operation;
-
-    operation = g_new0(WriteOperation, 1);
-    operation->type = WRITE_DIFFERENCE_SPACES;
-    operation->width = width;
-    return operation;
-}
-
-static WriteOperation *
-inserted_segment_write_operation_new (const gchar *line, guint begin, guint end)
-{
-    WriteOperation *operation;
-
-    operation = g_new0(WriteOperation, 1);
-    operation->type = WRITE_INSERTED_SEGMENT;
+    operation->type = type;
     operation->line = line;
     operation->begin = begin;
     operation->end = end;
@@ -219,9 +195,10 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
                                 operation->from_end);
             if (!no_replace)
                 APPEND_WRITE_OPERATION(
-                    equal_spaces_write_operation_new(from_line,
-                                                     operation->from_begin,
-                                                     operation->from_end));
+                    write_operation_new(WRITE_EQUAL_SPACES,
+                                        from_line,
+                                        operation->from_begin,
+                                        operation->from_end));
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
             if (no_replace) {
@@ -229,11 +206,14 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
                                        operation->to_begin,
                                        operation->to_end);
             } else {
-                write_difference_spaces(writer, to_width);
+                write_difference_spaces(writer, to_line,
+                                        operation->to_begin,
+                                        operation->to_end);
                 APPEND_WRITE_OPERATION(
-                    inserted_segment_write_operation_new(to_line,
-                                                         operation->to_begin,
-                                                         operation->to_end));
+                    write_operation_new(WRITE_INSERTED_SEGMENT,
+                                        to_line,
+                                        operation->to_begin,
+                                        operation->to_end));
             }
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_DELETE:
@@ -242,22 +222,31 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
                                   operation->from_end);
             if (!no_replace)
                 APPEND_WRITE_OPERATION(
-                    difference_spaces_write_operation_new(from_width));
+                    write_operation_new(WRITE_DIFFERENCE_SPACES,
+                                        from_line,
+                                        operation->from_begin,
+                                        operation->from_end));
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_REPLACE:
             write_deleted_segment(writer, from_line,
                                   operation->from_begin,
                                   operation->from_end);
             if (from_width < to_width)
-                write_difference_spaces(writer, to_width - from_width);
+                write_difference_spaces(writer, to_line,
+                                        operation->to_begin + from_width,
+                                        operation->to_end);
 
             APPEND_WRITE_OPERATION(
-                inserted_segment_write_operation_new(to_line,
-                                                     operation->to_begin,
-                                                     operation->to_end));
+                write_operation_new(WRITE_INSERTED_SEGMENT,
+                                    to_line,
+                                    operation->to_begin,
+                                    operation->to_end));
             if (to_width < from_width)
                 APPEND_WRITE_OPERATION(
-                    difference_spaces_write_operation_new(from_width - to_width));
+                    write_operation_new(WRITE_DIFFERENCE_SPACES,
+                                        from_line,
+                                        operation->from_begin + to_width,
+                                        operation->from_end));
             break;
         default:
             g_error("unknown operation type: %d", operation->type);
@@ -281,7 +270,10 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
                                    operation->begin, operation->end);
                 break;
             case WRITE_DIFFERENCE_SPACES:
-                write_difference_spaces(writer, operation->width);
+                write_difference_spaces(writer,
+                                        operation->line,
+                                        operation->begin,
+                                        operation->end);
                 break;
             case WRITE_INSERTED_SEGMENT:
                 write_inserted_segment(writer,

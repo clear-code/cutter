@@ -1,5 +1,7 @@
 2010-06-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-colorize-differ.c: use tab instead of 8 spaces.
+
 	* cutter/cut-diff-writer.[ch], cutter/cut-colorize-differ.c: use
 	tab instead of 8 spaces.
 
