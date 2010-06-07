@@ -119,12 +119,31 @@ format_diff_point (CutDiffWriter *writer,
 }
 
 static void
-append_character_n_times (GString *string, gchar character, guint n)
+append_spaces (GString *buffer, const gchar *string, guint begin, guint end)
+{
+    const gchar *last;
+
+    last = g_utf8_offset_to_pointer(string, end);
+    for (string = g_utf8_offset_to_pointer(string, begin);
+         string < last;
+         string = g_utf8_next_char(string)) {
+        if (g_unichar_iswide_cjk(g_utf8_get_char(string))) {
+            g_string_append(buffer, "  ");
+        } else if (string[0] == '\t') {
+            g_string_append_c(buffer, '\t');
+        } else {
+            g_string_append_c(buffer, ' ');
+        }
+    }
+}
+
+static void
+append_character_n_times (GString *buffer, gchar character, guint n)
 {
     guint i;
 
     for (i = 0; i < n; i++)
-        g_string_append_c(string, character);
+        g_string_append_c(buffer, character);
 }
 
 static void
@@ -155,8 +174,10 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
                                                  operation->to_end);
         switch (operation->type) {
         case CUT_SEQUENCE_MATCH_OPERATION_EQUAL:
-            append_character_n_times(from_tags, ' ', from_width);
-            append_character_n_times(to_tags, ' ', to_width);
+            append_spaces(from_tags, from_line,
+                          operation->from_begin, operation->from_end);
+            append_spaces(to_tags, to_line,
+                          operation->to_begin, operation->to_end);
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
             append_character_n_times(to_tags, '+', to_width);

@@ -11,6 +11,7 @@ void test_difference_readable_diff(void);
 void test_complex_readable_diff(void);
 void test_double_width_readable_diff(void);
 void test_empty_readable_diff(void);
+void test_tab_readable_diff(void);
 void test_is_interested (void);
 void test_need_fold (void);
 
@@ -179,6 +180,26 @@ void
 test_empty_readable_diff (void)
 {
     cut_assert_readable_diff("", "", "");
+}
+
+void
+test_tab_readable_diff (void)
+{
+    cut_assert_readable_diff(
+        "- 		  GNU LESSER GENERAL PUBLIC LICENSE\n"
+        "? 	^^^^^^^^     -------\n"
+        "+ 		    GNU GENERAL PUBLIC LICENSE\n"
+        "? 	^^^^^^^^^^\n"
+        "- 		       Version 2.1, February 1999\n"
+        "? 		                --  ^ ------    ^\n"
+        "+ 		       Version 2, June 1991\n"
+        "? 		                  ^^^     ^",
+
+        "		  GNU LESSER GENERAL PUBLIC LICENSE\n"
+        "		       Version 2.1, February 1999",
+
+        "		    GNU GENERAL PUBLIC LICENSE\n"
+        "		       Version 2, June 1991");
 }
 
 #define cut_assert_readable_diff_is_interested(diff)    \

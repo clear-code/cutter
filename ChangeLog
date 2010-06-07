@@ -1,5 +1,9 @@
 2010-06-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-readable-differ.c,
+	test/cutter/test-cut-readable-differ.c: use tab instead of 8
+	spaces.
+
 	* cutter/cut-differ.c (cut_differ_util_compute_width): use 8 width
 	for tab.
 
