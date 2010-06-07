@@ -1,3 +1,8 @@
+2010-06-07  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-differ.c (cut_differ_util_compute_width): use 8 width
+	for tab.
+
 2010-06-03  Kouhei Sutou  <kou@clear-code.com>
 
 	* Makefile.am: release archive as

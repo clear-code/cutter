@@ -293,6 +293,8 @@ cut_differ_util_compute_width (const gchar *string, guint begin, guint end)
          string = g_utf8_next_char(string)) {
         if (g_unichar_iswide_cjk(g_utf8_get_char(string))) {
             width += 2;
+        } else if (string[0] == '\t') {
+            width += 8;
         } else {
             width++;
         }
