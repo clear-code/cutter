@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -157,6 +157,31 @@ cut_diff_writer_write_character_n_times (CutDiffWriter    *writer,
 
     cut_diff_writer_write(writer, string->str, tag);
     g_string_free(string, TRUE);
+}
+
+void
+cut_diff_writer_write_spaces (CutDiffWriter *writer,
+                              const gchar *string, guint begin, guint end,
+                              CutDiffWriterTag tag)
+{
+    GString *buffer;
+    const gchar *last;
+
+    buffer = g_string_new(NULL);
+    last = g_utf8_offset_to_pointer(string, end);
+    for (string = g_utf8_offset_to_pointer(string, begin);
+         string < last;
+         string = g_utf8_next_char(string)) {
+        if (g_unichar_iswide_cjk(g_utf8_get_char(string))) {
+            g_string_append(buffer, "  ");
+        } else if (string[0] == '\t') {
+            g_string_append_c(buffer, '\t');
+        } else {
+            g_string_append_c(buffer, ' ');
+        }
+    }
+    cut_diff_writer_write(writer, buffer->str, tag);
+    g_string_free(buffer, TRUE);
 }
 
 void

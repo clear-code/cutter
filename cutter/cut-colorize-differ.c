@@ -111,10 +111,11 @@ write_difference_spaces (CutDiffWriter *writer, guint n)
 }
 
 static void
-write_equal_spaces (CutDiffWriter *writer, guint n)
+write_equal_spaces (CutDiffWriter *writer,
+                    const gchar *line, guint begin, guint end)
 {
-    cut_diff_writer_write_character_n_times(writer, ' ', n,
-                                            CUT_DIFF_WRITER_TAG_EQUAL_SEGMENT);
+    cut_diff_writer_write_spaces(writer, line, begin, end,
+                                 CUT_DIFF_WRITER_TAG_EQUAL_SEGMENT);
 }
 
 typedef enum
@@ -134,13 +135,15 @@ typedef struct _WriteOperation
 } WriteOperation;
 
 static WriteOperation *
-equal_spaces_write_operation_new (guint width)
+equal_spaces_write_operation_new (const gchar *line, guint begin, guint end)
 {
     WriteOperation *operation;
 
     operation = g_new0(WriteOperation, 1);
     operation->type = WRITE_EQUAL_SPACES;
-    operation->width = width;
+    operation->line = line;
+    operation->begin = begin;
+    operation->end = end;
     return operation;
 }
 
@@ -216,7 +219,9 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
                                 operation->from_end);
             if (!no_replace)
                 APPEND_WRITE_OPERATION(
-                    equal_spaces_write_operation_new(to_width));
+                    equal_spaces_write_operation_new(from_line,
+                                                     operation->from_begin,
+                                                     operation->from_end));
             break;
         case CUT_SEQUENCE_MATCH_OPERATION_INSERT:
             if (no_replace) {
@@ -272,7 +277,8 @@ diff_line (CutDiffer *differ, CutDiffWriter *writer,
 
             switch (operation->type) {
             case WRITE_EQUAL_SPACES:
-                write_equal_spaces(writer, operation->width);
+                write_equal_spaces(writer, operation->line,
+                                   operation->begin, operation->end);
                 break;
             case WRITE_DIFFERENCE_SPACES:
                 write_difference_spaces(writer, operation->width);
