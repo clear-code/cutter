@@ -1,5 +1,7 @@
 2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-*.c: use GLib compatibility layer.
+
 	* cutter/cut-stream-parser.c: don't use
 	g_markup_parse_context_get_element_stack().
 
