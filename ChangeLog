@@ -1,5 +1,7 @@
 2010-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-run-context.c: use GLib compatibility layer.
+
 	* cutter/cut-main.c, cutter/cut-diff.c: don't use
 	g_option_context_get_help().
 
