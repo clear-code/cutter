@@ -1,5 +1,7 @@
 2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-string-io-channel.c: use GLib compatibility layer.
+
 	* glib-compatible/gstring.[ch]: add GString compatibility layer.
 
 	* glib-compatible/: make compatibility GSequence buildable.
