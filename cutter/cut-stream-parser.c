@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -225,6 +225,8 @@ struct _CutStreamParserPrivate
     gchar *option_value;
     gboolean complete_success;
     gboolean stream_success;
+
+    GQueue *element_stack;
 };
 
 #define PUSH_STATE(priv, state)                                 \
@@ -415,6 +417,8 @@ cut_stream_parser_init (CutStreamParser *stream_parser)
     priv->option_value = NULL;
     priv->complete_success = TRUE;
     priv->stream_success = TRUE;
+
+    priv->element_stack = g_queue_new();
 }
 
 static ReadyTestSuite *
@@ -727,6 +731,12 @@ dispose (GObject *object)
         priv->option_value = NULL;
     }
 
+    if (priv->element_stack) {
+        g_queue_foreach(priv->element_stack, (GFunc)g_free, NULL);
+        g_queue_free(priv->element_stack);
+        priv->element_stack = NULL;
+    }
+
     G_OBJECT_CLASS(cut_stream_parser_parent_class)->dispose(object);
 }
 
@@ -812,26 +822,25 @@ cut_stream_parser_end_parse (CutStreamParser *stream_parser, GError **error)
 }
 
 static gchar *
-element_path (GMarkupParseContext *context)
+element_path (const GList *elements)
 {
     GString *string;
-    const GSList *node;
+    const GList *node;
 
     string = g_string_new(NULL);
-    for (node = g_markup_parse_context_get_element_stack(context);
-         node;
-         node = g_slist_next(node)) {
-        g_string_prepend(string, node->data);
-        g_string_prepend(string, "/");
+    for (node = elements; node; node = g_list_next(node)) {
+        g_string_append(string, "/");
+        g_string_append(string, node->data);
     }
 
     return g_string_free(string, FALSE);
 }
 
 static void
-set_parse_error (GMarkupParseContext *context,
-                 GError             **error,
-                 const gchar         *format, ...)
+set_parse_error (CutStreamParserPrivate *priv,
+                 GMarkupParseContext *context,
+                 GError **error,
+                 const gchar *format, ...)
 {
     gint line = 0, chr = 0;
     gchar *message, *path;
@@ -842,7 +851,7 @@ set_parse_error (GMarkupParseContext *context,
     va_end(var_args);
 
     g_markup_parse_context_get_position(context, &line, &chr);
-    path = element_path(context);
+    path = element_path(priv->element_stack->head);
     g_set_error(error, G_MARKUP_ERROR, G_MARKUP_ERROR_PARSE,
                 "Error on line %d char %d: %s: %s",
                 line, chr, path, message);
@@ -851,21 +860,26 @@ set_parse_error (GMarkupParseContext *context,
 }
 
 static void
-invalid_element (GMarkupParseContext *context, GError **error)
+invalid_element (CutStreamParserPrivate *priv,
+                 GMarkupParseContext *context, GError **error)
 {
-    set_parse_error(context, error, "invalid element");
+    set_parse_error(priv, context, error, "invalid element");
 }
 
 static const gchar *
-get_parent_element (GMarkupParseContext *context)
+get_parent_element (CutStreamParserPrivate *priv,
+                    GMarkupParseContext *context)
 {
-    const GSList *elements, *node;
+    GList *tail;
 
-    elements = g_markup_parse_context_get_element_stack(context);
+    tail = priv->element_stack->tail;
+    if (!tail)
+        return NULL;
 
-    node = g_slist_next(elements);
+    if (!g_list_previous(tail))
+        return NULL;
 
-    return node ? node->data : NULL;
+    return g_list_previous(tail)->data;
 }
 
 static void
@@ -877,7 +891,7 @@ start_top_level (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         if (priv->run_context)
             g_signal_emit_by_name(priv->run_context, "start-run");
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -937,7 +951,7 @@ start_stream (CutStreamParserPrivate *priv,
     } else if (g_str_equal("success", element_name)) {
         PUSH_STATE(priv, IN_STREAM_SUCCESS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -955,7 +969,7 @@ start_ready_test_suite (CutStreamParserPrivate *priv,
     } else if (g_str_equal("n-tests", element_name)) {
         PUSH_STATE(priv, IN_READY_TEST_SUITE_N_TESTS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -968,7 +982,7 @@ start_start_test_suite (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_TEST_SUITE);
         PUSH_TEST_SUITE(priv, cut_test_suite_new_empty());
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -984,7 +998,7 @@ start_ready_test_case (CutStreamParserPrivate *priv,
     } else if (g_str_equal("n-tests", element_name)) {
         PUSH_STATE(priv, IN_READY_TEST_CASE_N_TESTS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -997,7 +1011,7 @@ start_start_test_case (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_TEST_CASE);
         PUSH_TEST_CASE(priv, cut_test_case_new_empty());
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1013,7 +1027,7 @@ start_ready_test_iterator (CutStreamParserPrivate *priv,
     } else if (g_str_equal("n-tests", element_name)) {
         PUSH_STATE(priv, IN_READY_TEST_ITERATOR_N_TESTS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1026,7 +1040,7 @@ start_start_test_iterator (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_TEST_ITERATOR);
         PUSH_TEST_ITERATOR(priv, cut_test_iterator_new_empty());
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1044,7 +1058,7 @@ start_start_test (CutStreamParserPrivate *priv,
         priv->start_test->test_context = cut_test_context_new_empty();
         PUSH_TEST_CONTEXT(priv,  priv->start_test->test_context);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1062,7 +1076,7 @@ start_start_iterated_test (CutStreamParserPrivate *priv,
         priv->start_iterated_test->test_context = cut_test_context_new_empty();
         PUSH_TEST_CONTEXT(priv,  priv->start_iterated_test->test_context);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1084,7 +1098,7 @@ start_pass_assertion (CutStreamParserPrivate *priv,
         priv->pass_assertion->test_context = cut_test_context_new_empty();
         PUSH_TEST_CONTEXT(priv,  priv->pass_assertion->test_context);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1110,7 +1124,7 @@ start_test_result (CutStreamParserPrivate *priv,
         priv->test_result->result = cut_test_result_new_empty();
         priv->result = g_object_ref(priv->test_result->result);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1123,7 +1137,7 @@ start_top_level_result (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_RESULT);
         priv->result = cut_test_result_new_empty();
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1178,7 +1192,7 @@ start_result (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     } else if (g_str_equal("elapsed", element_name)) {
         PUSH_STATE(priv, IN_RESULT_ELAPSED);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1200,7 +1214,7 @@ start_complete_iterated_test (CutStreamParserPrivate *priv,
     } else if (g_str_equal("success", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1219,7 +1233,7 @@ start_complete_test (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     } else if (g_str_equal("success", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1238,7 +1252,7 @@ start_test_iterator_result (CutStreamParserPrivate *priv,
         priv->test_iterator_result->result = cut_test_result_new_empty();
         priv->result = g_object_ref(priv->test_iterator_result->result);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1253,7 +1267,7 @@ start_complete_test_iterator (CutStreamParserPrivate *priv,
     } else if (g_str_equal("success", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1271,7 +1285,7 @@ start_test_case_result (CutStreamParserPrivate *priv,
         priv->test_case_result->result = cut_test_result_new_empty();
         priv->result = g_object_ref(priv->test_case_result->result);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1286,7 +1300,7 @@ start_complete_test_case (CutStreamParserPrivate *priv,
     } else if (g_str_equal("success", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1301,7 +1315,7 @@ start_complete_test_suite (CutStreamParserPrivate *priv,
     } else if (g_str_equal("success", element_name)) {
         PUSH_STATE(priv, IN_COMPLETE_SUCCESS);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1320,7 +1334,7 @@ start_test_object (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     } else if (g_str_equal("elapsed", element_name)) {
         PUSH_STATE(priv, IN_TEST_ELAPSED);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1333,7 +1347,7 @@ start_test_option (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     } else if (g_str_equal("value", element_name)) {
         PUSH_STATE(priv, IN_TEST_OPTION_VALUE);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1346,7 +1360,7 @@ start_result_backtrace (CutStreamParserPrivate *priv,
         PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY);
         priv->backtrace_entry = cut_backtrace_entry_new_empty();
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1362,7 +1376,7 @@ start_result_backtrace_entry (CutStreamParserPrivate *priv,
     } else if (g_str_equal("info", element_name)) {
         PUSH_STATE(priv, IN_RESULT_BACKTRACE_ENTRY_INFO);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1423,7 +1437,7 @@ start_test_context (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     } else if (g_str_equal("failed", element_name)) {
         PUSH_STATE(priv, IN_TEST_CONTEXT_FAILED);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1434,7 +1448,7 @@ start_test_data (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     if (g_str_equal("name", element_name)) {
         PUSH_STATE(priv, IN_TEST_DATA_NAME);
     } else {
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
     }
 }
 
@@ -1451,6 +1465,7 @@ start_element_handler (GMarkupParseContext *context,
     ParseState state;
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
+    g_queue_push_tail(priv->element_stack, g_strdup(element_name));
 
     state = PEEK_STATE(priv);
     switch (state) {
@@ -1540,7 +1555,7 @@ start_element_handler (GMarkupParseContext *context,
         start_test_data(priv, context, element_name, error);
         break;
       default:
-        invalid_element(context, error);
+        invalid_element(priv, context, error);
         break;
     }
 }
@@ -1602,9 +1617,9 @@ end_test_option (CutStreamParser *parser, CutStreamParserPrivate *priv,
                  const gchar *element_name, GError **error)
 {
     if (!priv->option_name) {
-        set_parse_error(context, error, "option name is not set");
+        set_parse_error(priv, context, error, "option name is not set");
     } else if (!priv->option_value) {
-        set_parse_error(context, error, "option value is not set");
+        set_parse_error(priv, context, error, "option value is not set");
     } else {
         cut_test_set_attribute(PEEK_TEST(priv),
                                priv->option_name,
@@ -2045,7 +2060,7 @@ end_element_handler (GMarkupParseContext *context,
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
 
-    parent_name = get_parent_element(context);
+    parent_name = get_parent_element(priv, context);
     state = POP_STATE(priv);
     switch (state) {
       case IN_TOP_LEVEL_RESULT:
@@ -2123,6 +2138,8 @@ end_element_handler (GMarkupParseContext *context,
       default:
         break;
     }
+
+    g_free(g_queue_pop_tail(priv->element_stack));
 }
 
 static CutTestResultStatus
@@ -2214,7 +2231,7 @@ text_test_name (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     if (target) {
         cut_test_set_name(target, text);
     } else {
-        set_parse_error(context, error, "can't find test name target");
+        set_parse_error(priv, context, error, "can't find test name target");
     }
 }
 
@@ -2229,7 +2246,8 @@ text_test_description (CutStreamParserPrivate *priv,
     if (target) {
         cut_test_set_attribute(target, "description", text);
     } else {
-        set_parse_error(context, error, "can't find test description target");
+        set_parse_error(priv, context, error,
+                        "can't find test description target");
     }
 }
 
@@ -2239,7 +2257,7 @@ text_test_option_name (CutStreamParserPrivate *priv,
                        const gchar *text, gsize text_len, GError **error)
 {
     if (priv->option_name) {
-        set_parse_error(context, error, "multiple option name: %s", text);
+        set_parse_error(priv, context, error, "multiple option name: %s", text);
     } else {
         priv->option_name = g_strdup(text);
     }
@@ -2251,7 +2269,7 @@ text_test_option_value (CutStreamParserPrivate *priv,
                         const gchar *text, gsize text_len, GError **error)
 {
     if (priv->option_value) {
-        set_parse_error(context, error, "multiple option value: %s", text);
+        set_parse_error(priv, context, error, "multiple option value: %s", text);
     } else {
         priv->option_value = g_strdup(text);
     }
@@ -2271,12 +2289,13 @@ text_test_start_time (CutStreamParserPrivate *priv,
         if (g_time_val_from_iso8601(text, &start_time)) {
             cut_test_set_start_time(target, &start_time);
         } else {
-            set_parse_error(context, error,
+            set_parse_error(priv, context, error,
                             "invalid start-time value (not ISO 8601 format): %s",
                             text);
         }
     } else {
-        set_parse_error(context, error, "can't find test start time target");
+        set_parse_error(priv, context, error,
+                        "can't find test start time target");
     }
 }
 
@@ -2296,10 +2315,11 @@ text_test_elapsed (CutStreamParserPrivate *priv,
         if (text != end_position && end_position[0] == '\0') {
             cut_test_set_elapsed(target, elapsed);
         } else {
-            set_parse_error(context, error, "invalid elapsed value: %s", text);
+            set_parse_error(priv, context, error,
+                            "invalid elapsed value: %s", text);
         }
     } else {
-        set_parse_error(context, error, "can't find test elapsed target");
+        set_parse_error(priv, context, error, "can't find test elapsed target");
     }
 }
 
@@ -2311,7 +2331,7 @@ text_result_status (CutStreamParserPrivate *priv, GMarkupParseContext *context,
 
     status = result_name_to_status(text);
     if (status == CUT_TEST_RESULT_INVALID) {
-        set_parse_error(context, error, "invalid status: %s", text);
+        set_parse_error(priv, context, error, "invalid status: %s", text);
     } else {
         cut_test_result_set_status(priv->result, status);
     }
@@ -2342,7 +2362,7 @@ text_result_backtrace_entry_line (CutStreamParserPrivate *priv,
     if (is_integer(text)) {
         cut_backtrace_entry_set_line(priv->backtrace_entry, atoi(text));
     } else {
-        set_parse_error(context, error, "invalid line number: %s", text);
+        set_parse_error(priv, context, error, "invalid line number: %s", text);
     }
 }
 
@@ -2387,7 +2407,7 @@ text_result_start_time (CutStreamParserPrivate *priv,
     if (g_time_val_from_iso8601(text, &start_time)) {
         cut_test_result_set_start_time(priv->result, &start_time);
     } else {
-        set_parse_error(context, error,
+        set_parse_error(priv, context, error,
                         "invalid start-time value (not ISO 8601 format): %s",
                         text);
     }
@@ -2404,7 +2424,7 @@ text_result_elapsed (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     if (text != end_position && end_position[0] == '\0') {
         cut_test_result_set_elapsed(priv->result, elapsed);
     } else {
-        set_parse_error(context, error, "invalid elapsed value: %s", text);
+        set_parse_error(priv, context, error, "invalid elapsed value: %s", text);
     }
 }
 
@@ -2417,7 +2437,8 @@ text_ready_test_suite_n_test_cases (CutStreamParserPrivate *priv,
     if (is_integer(text)) {
         priv->ready_test_suite->n_test_cases = atoi(text);
     } else {
-        set_parse_error(context, error, "invalid # of test cases: %s", text);
+        set_parse_error(priv, context, error,
+                        "invalid # of test cases: %s", text);
     }
 }
 
@@ -2430,7 +2451,7 @@ text_ready_test_suite_n_tests (CutStreamParserPrivate *priv,
     if (is_integer(text)) {
         priv->ready_test_suite->n_tests = atoi(text);
     } else {
-        set_parse_error(context, error, "invalid # of tests: %s", text);
+        set_parse_error(priv, context, error, "invalid # of tests: %s", text);
     }
 }
 
@@ -2442,7 +2463,7 @@ text_ready_test_case_n_tests (CutStreamParserPrivate *priv,
     if (is_integer(text)) {
         priv->ready_test_case->n_tests = atoi(text);
     } else {
-        set_parse_error(context, error, "invalid # of tests: %s", text);
+        set_parse_error(priv, context, error, "invalid # of tests: %s", text);
     }
 }
 
@@ -2455,7 +2476,7 @@ text_ready_test_iterator_n_tests (CutStreamParserPrivate *priv,
     if (is_integer(text)) {
         priv->ready_test_iterator->n_tests = atoi(text);
     } else {
-        set_parse_error(context, error, "invalid # of tests: %s", text);
+        set_parse_error(priv, context, error, "invalid # of tests: %s", text);
     }
 }
 
@@ -2479,7 +2500,7 @@ text_test_context_failed (CutStreamParserPrivate *priv,
         cut_test_context_set_failed(PEEK_TEST_CONTEXT(priv),
                                     string_to_boolean(text));
     } else {
-        set_parse_error(context, error, "invalid boolean value: %s", text);
+        set_parse_error(priv, context, error, "invalid boolean value: %s", text);
     }
 }
 
@@ -2491,7 +2512,7 @@ text_complete_success (CutStreamParserPrivate *priv,
     if (is_boolean(text)) {
         priv->complete_success = string_to_boolean(text);
     } else {
-        set_parse_error(context, error, "invalid boolean value: %s", text);
+        set_parse_error(priv, context, error, "invalid boolean value: %s", text);
     }
 }
 
@@ -2502,7 +2523,7 @@ text_stream_success (CutStreamParserPrivate *priv, GMarkupParseContext *context,
     if (is_boolean(text)) {
         priv->stream_success = string_to_boolean(text);
     } else {
-        set_parse_error(context, error, "invalid boolean value: %s", text);
+        set_parse_error(priv, context, error, "invalid boolean value: %s", text);
     }
 }
 

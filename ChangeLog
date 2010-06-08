@@ -1,5 +1,8 @@
 2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c: don't use
+	g_markup_parse_context_get_element_stack().
+
 	* cutter/cut-sequence-matcher.[ch]: don't use GHashTableIter.
 
 	* gcutter/gcut-string-io-channel.c: use GLib compatibility layer.
