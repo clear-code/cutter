@@ -1,3 +1,8 @@
+2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: accept GLib >= 2.12.3 and intltool >= 0.35.0 for
+	CentOS 5.
+
 2010-06-07  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-colorize-differ.c: use tab instead of 8 spaces.
