@@ -1,5 +1,7 @@
 2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* glib-compatible/: make compatibility gsequence buildable.
+
 	* configure.ac, glib-compatible/: make compatibility gregex buildable.
 
 	* configure.ac, Makefile.am, glib-compatible/,
