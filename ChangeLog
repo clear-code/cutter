@@ -1,5 +1,7 @@
 2010-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-xml-stream.c: use cut_take_replace().
+
 	* cutter/cut-run-context.c: use GLib compatibility layer.
 
 	* cutter/cut-main.c, cutter/cut-diff.c: don't use

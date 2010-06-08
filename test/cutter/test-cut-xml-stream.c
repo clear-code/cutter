@@ -1,3 +1,22 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 #include <cutter.h>
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-listener.h>
@@ -88,37 +107,22 @@ cut_teardown (void)
         g_string_free(xml, TRUE);
 }
 
-static gchar *
-replace (const gchar *pattern, const gchar *string, const gchar *replacement)
-{
-    gchar *result;
-    GRegex *regex;
-
-    regex = g_regex_new(pattern, 0, 0, NULL);
-    result = g_regex_replace(regex, string, -1, 0, replacement, 0, NULL);
-    g_regex_unref(regex);
-    return result;
-}
-
 static const gchar *
 normalize_xml (const gchar *xml)
 {
-    gchar *elapsed_normalized_xml, *start_time_normalized_xml;
-    const gchar *normalized_xml;
+    const gchar *elapsed_normalized_xml, *start_time_normalized_xml;
 
-    elapsed_normalized_xml = replace("<elapsed>(.*?)</elapsed>",
-                                     xml,
-                                     "<elapsed>0.000001</elapsed>");
+    elapsed_normalized_xml = cut_take_replace("<elapsed>(.*?)</elapsed>",
+                                              xml,
+                                              "<elapsed>0.000001</elapsed>");
     start_time_normalized_xml =
-        replace("<start-time>"
-                  "20\\d{2}-" ISO8601_PATTERN_WITHOUT_YEAR
-                "</start-time>",
-                elapsed_normalized_xml,
-                "<start-time>2008-07-30T04:55:42Z</start-time>");
-    g_free(elapsed_normalized_xml);
-    normalized_xml = cut_take_string(start_time_normalized_xml);
+        cut_take_replace("<start-time>"
+                         "20\\d{2}-" ISO8601_PATTERN_WITHOUT_YEAR
+                         "</start-time>",
+                         elapsed_normalized_xml,
+                         "<start-time>2008-07-30T04:55:42Z</start-time>");
 
-    return normalized_xml;
+    return start_time_normalized_xml;
 }
 
 static gboolean
