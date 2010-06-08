@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -308,24 +308,38 @@ get_property (GObject    *object,
     }
 }
 
+typedef struct {
+    GHashTable *junks;
+    CutJunkFilterFunc junk_filter_func;
+    gpointer junk_filter_func_user_data;
+} RemoveJunkData;
+
+static gboolean
+remove_junk (gpointer key, gpointer value, gpointer user_data)
+{
+    RemoveJunkData *data = user_data;
+    gboolean is_junk;
+
+    is_junk = data->junk_filter_func(key, data->junk_filter_func_user_data);
+    if (is_junk) {
+        g_hash_table_insert(data->junks, key, GINT_TO_POINTER(TRUE));
+    }
+    return is_junk;
+}
+
 static void
 remove_junks_from_to_indices (CutSequenceMatcher *matcher,
                               CutJunkFilterFunc junk_filter_func,
                               gpointer junk_filter_func_user_data)
 {
     CutSequenceMatcherPrivate *priv;
-    GHashTableIter iter;
-    gpointer key, value;
+    RemoveJunkData data;
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
-
-    g_hash_table_iter_init(&iter, priv->to_indices);
-    while (g_hash_table_iter_next(&iter, &key, &value)) {
-        if (junk_filter_func(key, junk_filter_func_user_data)) {
-            g_hash_table_insert(priv->junks, key, GINT_TO_POINTER(TRUE));
-            g_hash_table_iter_remove(&iter);
-        }
-    }
+    data.junk_filter_func = junk_filter_func;
+    data.junk_filter_func_user_data = junk_filter_func_user_data;
+    data.junks = priv->junks;
+    g_hash_table_foreach_steal(priv->to_indices, remove_junk, &data);
 }
 
 static void

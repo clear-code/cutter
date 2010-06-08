@@ -51,7 +51,6 @@ libcutter_public_headers = 		\
 	cut-report.h			\
 	cut-run-context.h		\
 	cut-runner.h			\
-	cut-sequence-matcher.h		\
 	cut-stream-factory-builder.h	\
 	cut-stream-parser.h		\
 	cut-stream-reader.h		\
@@ -82,6 +81,7 @@ noinst_headers = 		\
 	cut-module.h		\
 	cut-pe-loader.h		\
 	cut-repository.h	\
+	cut-sequence-matcher.h	\
 	cut-utils.h
 
 pkginclude_HEADERS = 		\
