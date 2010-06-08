@@ -1,5 +1,8 @@
 2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, Makefile.am, glib-compatible/,
+	gcutter/guct-hash-table.c: add GLib 2.12 compatibility layer.
+
 	* gcutter/gcut-hash-table.c: add g_hash_table_get_keys() for GLib 2.12.
 
 	* configure.ac: accept GLib >= 2.12.3 and intltool >= 0.35.0 for

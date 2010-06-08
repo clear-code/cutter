@@ -22,6 +22,7 @@
 #endif /* HAVE_CONFIG_H */
 
 #include <glib.h>
+#include <glib-compatible/glib-compatible.h>
 #include <string.h>
 
 #include <cutter/cut-utils.h>
@@ -108,25 +109,6 @@ gcut_hash_table_inspect (GHashTable *hash,
                                           key_inspect_func, value_inspect_func,
                                           NULL, user_data);
 }
-
-#if !GLIB_CHECK_VERSION(2, 14, 0)
-static void
-collect_hash_key (gpointer key, gpointer value, gpointer user_data)
-{
-    GList **keys = user_data;
-
-    *keys = g_list_append(*keys, key);
-}
-
-static GList *
-g_hash_table_get_keys (GHashTable *hash_table)
-{
-    GList *keys = NULL;
-
-    g_hash_table_foreach(hash_table, collect_hash_key, &keys);
-    return keys;
-}
-#endif
 
 gchar *
 gcut_hash_table_inspect_sorted (GHashTable *hash,

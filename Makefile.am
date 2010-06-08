@@ -2,6 +2,7 @@ ACLOCAL_AMFLAGS = -I acmacros -I m4macros $$ACLOCAL_OPTIONS
 
 SUBDIRS = 			\
 	m4macros		\
+	glib-compatible		\
 	gcutter			\
 	cutter			\
 	cppcutter		\

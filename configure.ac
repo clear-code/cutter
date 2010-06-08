@@ -710,6 +710,7 @@ AC_CONFIG_FILES([Makefile
 		 soupcutter.pc
 		 rpm/fedora/cutter.spec
 		 m4macros/Makefile
+		 glib-compatible/Makefile
 		 gcutter/Makefile
 		 gdkcutter-pixbuf/Makefile
 		 soupcutter/Makefile
