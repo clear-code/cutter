@@ -33,13 +33,6 @@ G_BEGIN_DECLS
 #  define g_hash_table_get_keys(hash_table) \
     gcompatible_hash_table_get_keys(hash_table)
 GList         *gcompatible_hash_table_get_keys  (GHashTable *hash_table);
-
-#  define g_string_overwrite_len(string, position, value, length) \
-    gcompatible_string_overwrite_len(string, position, value, length)
-GString       *gcompatible_string_overwrite_len (GString     *string,
-                                                 gsize        position,
-                                                 const gchar *value,
-                                                 gssize       length);
 #endif
 
 G_END_DECLS
