@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -151,10 +151,13 @@ main (int argc, char *argv[])
     }
 
     if (argc != 3) {
-        gchar *help_string;
-        help_string = g_option_context_get_help(option_context, TRUE, NULL);
-        g_print("%s", help_string);
-        g_free(help_string);
+        gint help_argc = 2;
+        gchar *help_argv[2];
+        gchar **help_argv_p;
+        help_argv[0] = argv[0];
+        help_argv[1] = "--help";
+        help_argv_p = help_argv;
+        g_option_context_parse(option_context, &help_argc, &help_argv_p, NULL);
         g_option_context_free(option_context);
         exit(EXIT_FAILURE);
     }
