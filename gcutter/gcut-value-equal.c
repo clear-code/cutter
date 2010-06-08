@@ -26,6 +26,7 @@
 
 #include "gcut-main.h"
 #include "gcut-value-equal.h"
+#include <cutter/cut-helper.h>
 
 typedef struct {
     GType type1;
@@ -163,8 +164,8 @@ value_equal_string_string (gconstpointer val1, gconstpointer val2)
     const GValue *value1 = val1;
     const GValue *value2 = val2;
 
-    return (g_strcmp0(g_value_get_string(value1),
-                      g_value_get_string(value2)) == 0);
+    return cut_equal_string(g_value_get_string(value1),
+                            g_value_get_string(value2));
 }
 
 void
