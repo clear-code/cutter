@@ -170,6 +170,15 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED,
                  [],
                  [AC_MSG_ERROR([GLib >= $GLIB_REQUIRED required.])],
                  [gmodule gobject gthread])
+if test "$glib_config_major_version.$glib_config_minor_version" = "2.12"; then
+  glib_2_12=yes
+  PKG_CHECK_MODULES(PCRE, libpcre,
+                    [],
+                    [AC_MSG_ERROR(PCRE required for building with GLib 2.12.x.)])
+else
+  glib_2_12=no
+fi
+AM_CONDITIONAL([GLIB_2_12], [test "$glib_2_12" = "yes"])
 
 dnl **************************************************************
 dnl Check for GdkPixbuf
