@@ -188,6 +188,11 @@ libcutter_la_LIBADD =				\
 	$(BFD_LIBS)				\
 	$(WINDOWS_LIBS)
 
+if GLIB_2_12
+libcutter_la_LIBADD +=						\
+	$(top_builddir)/glib-compatible/libglib-compatible.la
+endif
+
 if OS_WIN32
 libcutter_la_LDFLAGS += -mwindows
 endif
