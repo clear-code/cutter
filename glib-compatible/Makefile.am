@@ -26,5 +26,7 @@ libglib_compatible_la_SOURCES +=		\
 	gregex.h				\
 	glibintl.h				\
 	gsequence.c				\
-	gsequence.h
+	gsequence.h				\
+	gstring.c				\
+	gstring.h
 endif

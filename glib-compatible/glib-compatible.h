@@ -24,6 +24,7 @@
 #if !GLIB_CHECK_VERSION(2, 14, 0)
 #  include "gsequence.h"
 #  include "gregex.h"
+#  include "gstring.h"
 #endif
 
 G_BEGIN_DECLS
@@ -31,7 +32,14 @@ G_BEGIN_DECLS
 #if !GLIB_CHECK_VERSION(2, 14, 0)
 #  define g_hash_table_get_keys(hash_table) \
     gcompatible_hash_table_get_keys(hash_table)
-GList         *gcompatible_hash_table_get_keys (GHashTable *hash_table);
+GList         *gcompatible_hash_table_get_keys  (GHashTable *hash_table);
+
+#  define g_string_overwrite_len(string, position, value, length) \
+    gcompatible_string_overwrite_len(string, position, value, length)
+GString       *gcompatible_string_overwrite_len (GString     *string,
+                                                 gsize        position,
+                                                 const gchar *value,
+                                                 gssize       length);
 #endif
 
 G_END_DECLS
