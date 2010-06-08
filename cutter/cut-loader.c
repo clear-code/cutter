@@ -24,6 +24,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <glib.h>
+#include <glib-compatible/glib-compatible.h>
 #include <gmodule.h>
 
 #ifdef HAVE_LIBBFD

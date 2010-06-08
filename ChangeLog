@@ -1,5 +1,7 @@
 2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-loader.c: use GLib compatibility layer.
+
 	* cutter/cut-*.c: use GLib compatibility layer.
 
 	* cutter/cut-stream-parser.c: don't use
