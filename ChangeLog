@@ -1,5 +1,7 @@
 2010-06-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* glib-compatible/gstring.c: backport g_string_append_vasprintf().
+
 	* gcutter/gcut-value-equal.c: don't use g_strcmp0().
 
 	* cutter/Makefile.am: link to Glib compatibility layer.

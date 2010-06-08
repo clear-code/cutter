@@ -24,6 +24,8 @@
  * GLib at ftp://ftp.gtk.org/pub/gtk/. 
  */
 
+#define _GNU_SOURCE
+#include <stdio.h>
 #include <string.h>
 
 #include <glib.h>
@@ -128,4 +130,39 @@ g_string_overwrite_len (GString     *string,
     }
 
   return string;
+}
+
+/**
+ * g_string_append_vprintf:
+ * @string: a #GString
+ * @format: the string format. See the printf() documentation
+ * @args: the list of arguments to insert in the output
+ *
+ * Appends a formatted string onto the end of a #GString.
+ * This function is is similar to g_string_append_printf()
+ * except that the arguments to the format string are passed
+ * as a va_list.
+ *
+ * Since: 2.14
+ */
+void
+g_string_append_vprintf (GString     *string,
+			 const gchar *format,
+			 va_list      args)
+{
+  gchar *buf;
+  gint len;
+  
+  g_return_if_fail (string != NULL);
+  g_return_if_fail (format != NULL);
+
+  len = vasprintf (&buf, format, args);
+
+  if (len >= 0)
+    {
+      g_string_maybe_expand (string, len);
+      memcpy (string->str + string->len, buf, len + 1);
+      string->len += len;
+      g_free (buf);
+    }
 }

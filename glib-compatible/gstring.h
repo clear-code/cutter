@@ -35,5 +35,8 @@ GString*     g_string_overwrite_len     (GString	 *string,
 					 gsize		  pos,    
 					 const gchar	 *val,
 					 gssize           len);
+void         g_string_append_vprintf    (GString	 *string,
+					 const gchar	 *format,
+					 va_list          args);
 
 G_END_DECLS
