@@ -18,10 +18,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include "glib.h"
-#include "galias.h"
+#include <glib.h>
+#include "gsequence.h"
 
 typedef struct _GSequenceNode GSequenceNode;
 
@@ -1734,7 +1732,3 @@ node_insert_sorted (GSequenceNode            *node,
   
   node_insert_before (closest, new);
 }
-
-
-#define __G_SEQUENCE_C__
-#include "galiasdef.c"

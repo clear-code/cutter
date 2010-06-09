@@ -19,8 +19,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  */
 
-#include "config.h"
-
 #include <string.h>
 
 #include "glib.h"
@@ -37,8 +35,6 @@
 #ifndef PCRE_ERROR_NULLWSLIMIT
 #define PCRE_ERROR_NULLWSLIMIT (-22)
 #endif
-
-#include "galias.h"
 
 /* Mask of all the possible values for GRegexCompileFlags. */
 #define G_REGEX_COMPILE_MASK (G_REGEX_CASELESS		| \
@@ -2602,6 +2598,3 @@ g_regex_escape_string (const gchar *string,
 
   return g_string_free (escaped, FALSE);
 }
-
-#define __G_REGEX_C__
-#include "galiasdef.c"

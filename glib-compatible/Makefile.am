@@ -1,7 +1,7 @@
 SUBDIRS =					\
 	pcre
 
-INCLUDES = 			\
+INCLUDES =					\
 	 -I$(top_srcdir)
 
 AM_CFLAGS = 					\
@@ -17,6 +17,9 @@ libglib_compatible_la_SOURCES =			\
 	glib-compatible.h
 
 if GLIB_2_12
+AM_CFLAGS +=					\
+	-DSIZEOF_CHAR=1
+
 libglib_compatible_la_SOURCES +=		\
 	gregex.c				\
 	gregex.h				\
