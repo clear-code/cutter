@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* configure.ac: add missing CentOS spec file generation.
+
 	* rpm/centos/, yum/: start supporting RPM package and Yum
 	repository for CentOS.
 
