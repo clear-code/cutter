@@ -27,7 +27,7 @@ noinst_LTLIBRARIES = 			\
 		test_utf8_validate.la	\
 		test_uri.la
 
-if GLIB_2_12
+if !GLIB_2_12
 noinst_LTLIBRARIES +=			\
 	test_regex.la
 endif
