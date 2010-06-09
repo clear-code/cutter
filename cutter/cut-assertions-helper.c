@@ -1581,8 +1581,55 @@ cut_assert_equal_file_raw_helper (const char     *expected,
     gsize expected_size;
     gsize actual_size;
 
-    cut_assert_path_exist(expected);
-    cut_assert_path_exist(actual);
+    g_file_get_contents(expected, &expected_data, &expected_size, &error);
+    gcut_assert_error_helper(error, expression_expected);
+    cut_take_string(expected_data);
+
+    g_file_get_contents(actual, &actual_data, &actual_size, &error);
+    gcut_assert_error_helper(error, expression_actual);
+    cut_take_string(actual_data);
+
+    if ((expected_size == actual_size) &&
+        memcmp(expected_data, actual_data, expected_size) == 0) {
+        cut_test_pass();
+    } else {
+        const char *message;
+        const char *inspected_expected;
+        const char *inspected_actual;
+
+        inspected_expected =
+            cut_take_string(cut_utils_inspect_memory(expected_data,
+                                                     expected_size));
+        inspected_actual =
+            cut_take_string(cut_utils_inspect_memory(actual_data, actual_size));
+        message = cut_take_printf("<content(%s) == content(%s)>",
+                                  expression_expected,
+                                  expression_actual);
+        cut_set_expected(cut_take_printf("path: <%s>\n"
+                                         "%s (size: %" G_GSIZE_FORMAT ")",
+                                         expected,
+                                         inspected_expected,
+                                         expected_size));
+        cut_set_actual(cut_take_printf("path: <%s>\n"
+                                       "%s (size: %" G_GSIZE_FORMAT ")",
+                                       actual,
+                                       inspected_actual,
+                                       actual_size));
+        cut_test_fail(message);
+    }
+}
+
+void
+cut_assert_not_equal_file_raw_helper (const char     *expected,
+                                      const char     *actual,
+                                      const char     *expression_expected,
+                                      const char     *expression_actual)
+{
+    GError *error = NULL;
+    gchar *expected_data = NULL;
+    gchar *actual_data = NULL;
+    gsize expected_size;
+    gsize actual_size;
 
     g_file_get_contents(expected, &expected_data, &expected_size, &error);
     gcut_assert_error_helper(error, expression_expected);
@@ -1592,14 +1639,34 @@ cut_assert_equal_file_raw_helper (const char     *expected,
     gcut_assert_error_helper(error, expression_actual);
     cut_take_string(actual_data);
 
-    cut_assert_equal_memory_helper(expected_data, expected_size,
-                                   actual_data, actual_size,
-                                   expression_expected,
-                                   cut_take_printf("%" G_GSIZE_FORMAT,
-                                                   expected_size),
-                                   expression_actual,
-                                   cut_take_printf("%" G_GSIZE_FORMAT,
-                                                   actual_size));
+    if ((expected_size != actual_size) ||
+        memcmp(expected_data, actual_data, expected_size) != 0) {
+        cut_test_pass();
+    } else {
+        const char *message;
+        const char *inspected_expected;
+        const char *inspected_actual;
+
+        inspected_expected =
+            cut_take_string(cut_utils_inspect_memory(expected_data,
+                                                     expected_size));
+        inspected_actual =
+            cut_take_string(cut_utils_inspect_memory(actual_data, actual_size));
+        message = cut_take_printf("<content(%s) != content(%s)>",
+                                  expression_expected,
+                                  expression_actual);
+        cut_set_expected(cut_take_printf("path: <%s>\n"
+                                         "%s (size: %" G_GSIZE_FORMAT ")",
+                                         expected,
+                                         inspected_expected,
+                                         expected_size));
+        cut_set_actual(cut_take_printf("path: <%s>\n"
+                                       "%s (size: %" G_GSIZE_FORMAT ")",
+                                       actual,
+                                       inspected_actual,
+                                       actual_size));
+        cut_test_fail(message);
+    }
 }
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT

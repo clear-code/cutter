@@ -2418,49 +2418,95 @@ test_equal_sockaddr (void)
 static void
 equal_file_raw (void)
 {
-    const gchar *expected, *actual;
+    const gchar *data, *sub_data;
 
-    expected = cut_build_path(cuttest_get_base_dir(),
-                              "fixtures", "assertions", "data.txt", NULL);
-    actual = cut_build_path(cuttest_get_base_dir(),
-                            "fixtures", "assertions", "data.txt", NULL);
-    cut_assert_equal_file_raw(expected, actual);
+    data = cut_build_path(cuttest_get_base_dir(),
+                          "fixtures", "assertions", "data.txt", NULL);
+    sub_data = cut_build_path(cuttest_get_base_dir(),
+                              "fixtures", "assertions", "sub", "data.txt", NULL);
+    cut_assert_equal_file_raw(data, data);
+    MARK_FAIL(cut_assert_equal_file_raw(data, sub_data));
 }
 
 void
 test_equal_file_raw (void)
 {
+    const gchar *data, *sub_data;
+
+    data = cut_build_path(cuttest_get_base_dir(),
+                          "fixtures", "assertions", "data.txt", NULL);
+    sub_data = cut_build_path(cuttest_get_base_dir(),
+                              "fixtures", "assertions", "sub", "data.txt", NULL);
+
     test = cut_test_new("equal-file-raw", equal_file_raw);
 
-    cut_assert_true(run());
-    cut_assert_test_result_summary(run_context, 1, 5, 1, 0, 0, 0, 0, 0);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 5, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "equal-file-raw", NULL,
+                           "<content(data) == content(sub_data)>",
+                           cut_take_printf("path: <%s>\n"
+                                           "0x74 0x6f 0x70 0x20 "
+                                           "0x6c 0x65 0x76 0x65 0x6c 0x20 "
+                                           "0x64 0x61 0x74 0x61 0x0a: "
+                                           "top level data. "
+                                           "(size: 15)",
+                                           data),
+                           cut_take_printf("path: <%s>\n"
+                                           "0x73 0x75 0x62 0x20 "
+                                           "0x6c 0x65 0x76 0x65 0x6c 0x20 "
+                                           "0x64 0x61 0x74 0x61 0x0a: "
+                                           "sub level data. "
+                                           "(size: 15)",
+                                           sub_data),
+                           FAIL_LOCATION, "equal_file_raw",
+                           NULL);
 }
 
 static void
 not_equal_file_raw (void)
 {
-    const gchar *expected, *actual;
+    const gchar *data, *sub_data;
 
-    expected = cut_build_path(cuttest_get_base_dir(),
+    data = cut_build_path(cuttest_get_base_dir(),
                               "fixtures", "assertions", "data.txt", NULL);
-    actual = cut_build_path(cuttest_get_base_dir(),
-                            "fixtures", "assertions", "sub", "data.txt", NULL);
-    MARK_FAIL(cut_assert_equal_file_raw(expected, actual));
+    sub_data = cut_build_path(cuttest_get_base_dir(),
+                              "fixtures", "assertions", "sub", "data.txt", NULL);
+    cut_assert_not_equal_file_raw(data, sub_data);
+    MARK_FAIL(cut_assert_not_equal_file_raw(data, data));
 }
 
 void
 test_not_equal_file_raw (void)
 {
+    const gchar *data, *sub_data;
+
+    data = cut_build_path(cuttest_get_base_dir(),
+                          "fixtures", "assertions", "data.txt", NULL);
+    sub_data = cut_build_path(cuttest_get_base_dir(),
+                              "fixtures", "assertions", "sub", "data.txt", NULL);
+
     test = cut_test_new("not-equal-file-raw", not_equal_file_raw);
 
     cut_assert_false(run());
-    cut_assert_test_result_summary(run_context, 1, 4, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result_summary(run_context, 1, 5, 0, 1, 0, 0, 0, 0);
     cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                            "not-equal-file-raw", NULL,
-                           "<the content of ./fixtures/assertions/data.txt(size: 15) "
-                           "== the content of ./fixtures/assertions/sub/data.txt(size: 15)>",
-                           "0x74 0x6f 0x70 0x20 0x6c 0x65 0x76 0x65 0x6c 0x20 0x64 0x61 0x74 0x61 0x0a: top level data. (size: 15)",
-                           "0x73 0x75 0x62 0x20 0x6c 0x65 0x76 0x65 0x6c 0x20 0x64 0x61 0x74 0x61 0x0a: sub level data. (size: 15)",
+                           "<content(data) != content(data)>",
+                           cut_take_printf("path: <%s>\n"
+                                           "0x74 0x6f 0x70 0x20 "
+                                           "0x6c 0x65 0x76 0x65 0x6c 0x20 "
+                                           "0x64 0x61 0x74 0x61 0x0a: "
+                                           "top level data. "
+                                           "(size: 15)",
+                                           data),
+                           cut_take_printf("path: <%s>\n"
+                                           "0x74 0x6f 0x70 0x20 "
+                                           "0x6c 0x65 0x76 0x65 0x6c 0x20 "
+                                           "0x64 0x61 0x74 0x61 0x0a: "
+                                           "top level data. "
+                                           "(size: 15)",
+                                           data),
                            FAIL_LOCATION, "not_equal_file_raw",
                            NULL);
 }

@@ -454,6 +454,11 @@ void        cut_assert_equal_file_raw_helper
                                      const char     *actual,
                                      const char     *expression_expected,
                                      const char     *expression_actual);
+void        cut_assert_not_equal_file_raw_helper
+                                    (const char     *expected,
+                                     const char     *actual,
+                                     const char     *expression_expected,
+                                     const char     *expression_actual);
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 void        cut_assert_equal_sockaddr_helper
                                     (const struct sockaddr *expected,
