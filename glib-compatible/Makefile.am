@@ -1,3 +1,6 @@
+SUBDIRS =					\
+	pcre
+
 INCLUDES = 			\
 	 -I$(top_srcdir)
 
@@ -15,7 +18,6 @@ libglib_compatible_la_SOURCES =			\
 
 if GLIB_2_12
 AM_CFLAGS +=					\
-	-DUSE_SYSTEM_PCRE			\
 	$(PCRE_CFLAGS)
 
 LIBS +=						\

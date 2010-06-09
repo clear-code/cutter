@@ -172,9 +172,6 @@ AM_PATH_GLIB_2_0($GLIB_REQUIRED,
                  [gmodule gobject gthread])
 if test "$glib_config_major_version.$glib_config_minor_version" = "2.12"; then
   glib_2_12=yes
-  PKG_CHECK_MODULES(PCRE, libpcre,
-                    [],
-                    [AC_MSG_ERROR(PCRE required for building with GLib 2.12.x.)])
 else
   glib_2_12=no
 fi
@@ -720,6 +717,7 @@ AC_CONFIG_FILES([Makefile
 		 rpm/fedora/cutter.spec
 		 m4macros/Makefile
 		 glib-compatible/Makefile
+		 glib-compatible/pcre/Makefile
 		 gcutter/Makefile
 		 gdkcutter-pixbuf/Makefile
 		 soupcutter/Makefile
