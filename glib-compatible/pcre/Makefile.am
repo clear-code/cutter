@@ -11,23 +11,11 @@ INCLUDES = \
 	-DLINK_SIZE=2 \
 	-DPOSIX_MALLOC_THRESHOLD=10 \
 	-DPCRE_STATIC \
-	-I$(top_srcdir) \
-	-I$(srcdir) \
-	-I$(top_srcdir)/glib \
-	-I$(top_builddir)/glib \
-	@GLIB_DEBUG_FLAGS@ \
-	-DG_DISABLE_DEPRECATED \
-	-DGLIB_COMPILATION \
-	$(DEPRECATED_FLAGS)\
-	$(WARN_CFLAGS) \
-	$(PCRE_WARN_CFLAGS) \
-	$(DEP_CFLAGS)
+	$(GLIB_CFLAGS)
 
 if GLIB_2_12
 noinst_LTLIBRARIES = libpcre.la
 endif
-
-libpcre_headers =
 
 libpcre_la_SOURCES = \
 	pcre_compile.c \
@@ -53,12 +41,7 @@ libpcre_la_SOURCES = \
 	pcre.h \
 	pcre_internal.h \
 	ucp.h \
-	ucpinternal.h \
-	$(libpcre_headers)
-
-libpcre_la_LIBADD = $(DEP_LIBS)
-
-libpcre_la_LDFLAGS = -no-undefined
+	ucpinternal.h
 
 EXTRA_DIST =				\
 		COPYING

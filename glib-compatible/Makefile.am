@@ -17,12 +17,6 @@ libglib_compatible_la_SOURCES =			\
 	glib-compatible.h
 
 if GLIB_2_12
-AM_CFLAGS +=					\
-	$(PCRE_CFLAGS)
-
-LIBS +=						\
-	$(PCRE_LIBS)
-
 libglib_compatible_la_SOURCES +=		\
 	gregex.c				\
 	gregex.h				\
@@ -30,5 +24,11 @@ libglib_compatible_la_SOURCES +=		\
 	gsequence.c				\
 	gsequence.h				\
 	gstring.c				\
-	gstring.h
+	gstring.h				\
+	guniprop.c				\
+	gunicode.h				\
+	gscripttable.h
+
+libglib_compatible_la_LIBADD =				\
+	$(top_builddir)/glib-compatible/pcre/libpcre.la
 endif
