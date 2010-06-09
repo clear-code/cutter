@@ -22,11 +22,15 @@ noinst_LTLIBRARIES = 			\
 		test_iochannel.la	\
 		test_keyfile.la		\
 		test_option.la		\
-		test_regex.la		\
 		test_thread.la		\
 		test_utf8_pointer.la	\
 		test_utf8_validate.la	\
 		test_uri.la
+
+if GLIB_2_12
+noinst_LTLIBRARIES +=			\
+	test_regex.la
+endif
 
 AM_LDFLAGS =			\
 	-rpath `pwd`/.libs	\
