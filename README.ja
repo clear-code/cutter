@@ -33,6 +33,15 @@ Cutter
       BY-SA）|URL:http://creativecommons.org/licenses/by-sa/3.0/>))
       です。
   * 例外:
+    * glib-compatible/glibintl.h, glib-compatible/gregex.*,
+      glib-compatible/gscripttable.h, glib-compatible/gsequence.*,
+      glib-compatible/gstring.*, glib-compatible/gunicode.h,
+      glib-compatible/guniprop.c: LGPLバージョン2.0またはそれ
+      以降のバージョン（詳細:
+      ((<"glib-compatible/COPYING"|URL:http://www.gnu.org/licenses/old-licenses/lgpl-2.0.html>))）
+    * glib-compatible/pcre/: PCREライセンス
+      （詳細:
+      ((<"glib-compatible/pcre/COPYING"|URL:http://www.pcre.org/licence.txt>))）
     * html/blog.*, html/download.*, html/heading-mark.*
       html/install.*, html/readme.*, html/reference.*,
       html/tango-logo.png, html/tutorial.*, html/mini-*.svg:

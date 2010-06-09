@@ -23,6 +23,15 @@ Cutter
       ((<"license/gfdl-1.3.txt"|URL:http://www.gnu.org/licenses/fdl.html>)))
     * CC: ((<BY-SA|URL:http://creativecommons.org/licenses/by-sa/3.0/>))
   * Exceptions:
+    * glib-compatible/glibintl.h, glib-compatible/gregex.*,
+      glib-compatible/gscripttable.h, glib-compatible/gsequence.*,
+      glib-compatible/gstring.*, glib-compatible/gunicode.h,
+      glib-compatible/guniprop.c: LGPL v2.0 or later.
+      (detail:
+      ((<"glib-compatible/COPYING"|URL:http://www.gnu.org/licenses/old-licenses/lgpl-2.0.html>)))
+    * glib-compatible/pcre/: PCRE LICENSE.
+      (detail:
+      ((<"glib-compatible/pcre/COPYING"|URL:http://www.pcre.org/licence.txt>)))
     * html/blog.*, html/download.*, html/heading-mark.*
       html/install.*, html/readme.*, html/reference.*,
       html/tango-logo.png, html/tutorial.*, html/mini-*.svg:

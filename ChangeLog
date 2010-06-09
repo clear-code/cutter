@@ -1,3 +1,7 @@
+2010-06-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* README*: add bundled GLib and PCRE licenses.
+
 2010-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* glib-compatible/pcre/Makefile.am: use bcopy().
