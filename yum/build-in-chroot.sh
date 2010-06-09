@@ -1,16 +1,16 @@
 #!/bin/sh
 
-if [ $# != 3 ]; then
-    echo "Usage: $0 VERSION CHROOT_BASE ARCHITECTURES"
-    echo " e.g.: $0 1.1.1 /var/lib/chroot 'i386 x86_64'"
+if [ $# != 5 ]; then
+    echo "Usage: $0 PACKAGE VERSION CHROOT_BASE ARCHITECTURES DISTRIBUTIONS"
+    echo " e.g.: $0 cutter 1.1.1 /var/lib/chroot 'i386 x86_64' 'fedora centos'"
     exit 1
 fi
 
-VERSION=$1
-CHROOT_BASE=$2
-ARCHITECTURES=$3
-CODES=fedora-12
-PACKAGE=cutter
+PACKAGE=$1
+VERSION=$2
+CHROOT_BASE=$3
+ARCHITECTURES=$4
+DISTRIBUTIONS=$5
 
 PATH=/usr/local/sbin:/usr/sbin:$PATH
 
@@ -33,21 +33,30 @@ run_sudo()
 build_chroot()
 {
     architecture=$1
-    code_name=$2
+    distribution_name=$2
+    distribution_version=$3
 
     if [ $architecture = "x86_64" ]; then
 	rinse_architecture="amd64"
-        fedora_architecture=$architecture
+        distribution_architecture=$architecture
     else
 	rinse_architecture=$architecture
-        fedora_architecture=i686
+	case $distribution_name in
+	    fedora)
+		distribution_architecture=i686
+		;;
+	    *)
+		distribution_architecture=$architecture
+		;;
+	esac
     fi
 
     run_sudo mkdir -p ${base_dir}/etc/rpm
-    run_sudo sh -c "echo ${fedora_architecture}-fedora-linux > ${base_dir}/etc/rpm/platform"
+    rpm_platform=${distribution_architecture}-${distribution}-linux
+    run_sudo sh -c "echo ${rpm_platform} > ${base_dir}/etc/rpm/platform"
     run_sudo rinse \
 	--arch $rinse_architecture \
-	--distribution $code_name \
+	--distribution $distribution_name-$distribution_version \
 	--directory $base_dir
     run_sudo rinse --arch $rinse_architecture --clean-cache
 
@@ -63,12 +72,20 @@ build_chroot()
 build()
 {
     architecture=$1
-    code_name=$2
+    distribution=$2
 
-    target=${code_name}-${architecture}
+    case $distribution in
+	fedora)
+	    distribution_version=13
+	    ;;
+	centos)
+	    distribution_version=5
+	    ;;
+    esac
+    target=${distribution_name}-${distribution_version}-${architecture}
     base_dir=${CHROOT_BASE}/${target}
     if [ ! -d $base_dir ]; then
-	run build_chroot $architecture $code_name
+	run build_chroot $architecture $distribution_name $distribution_version
     fi
 
     source_dir=${script_base_dir}/..
@@ -77,12 +94,13 @@ build()
     rpm_base_dir=${build_user_dir}/rpm
     rpm_dir=${rpm_base_dir}/RPMS/${architecture}
     srpm_dir=${rpm_base_dir}/SRPMS
-    pool_base_dir=fedora/12
+    pool_base_dir=${distribution_name}/${distribution_version}
     binary_pool_dir=$pool_base_dir/$architecture/Packages
     source_pool_dir=$pool_base_dir/source/SRPMS
     run cp $source_dir/${PACKAGE}-${VERSION}.tar.gz \
 	${CHROOT_BASE}/$target/tmp/
-    run cp $source_dir/rpm/fedora/${PACKAGE}.spec ${CHROOT_BASE}/$target/tmp/
+    run cp $source_dir/rpm/${distribution}/${PACKAGE}.spec \
+	${CHROOT_BASE}/$target/tmp/
     run echo $PACKAGE > ${CHROOT_BASE}/$target/tmp/build-package
     run echo $VERSION > ${CHROOT_BASE}/$target/tmp/build-version
     run echo $build_user > ${CHROOT_BASE}/$target/tmp/build-user
@@ -99,7 +117,7 @@ build()
 }
 
 for architecture in $ARCHITECTURES; do
-    for code_name in $CODES; do
-	build $architecture $code_name
+    for distribution in $DISTRIBUTIONS; do
+	build $architecture $distribution
     done;
 done

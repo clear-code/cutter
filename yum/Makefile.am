@@ -1,11 +1,15 @@
-SERVER_PATH = $(SF_USER),cutter@$(SF_HTDOCS)
+SERVER_PATH = $(SF_USER),$(SF_PROJECT_ID)@$(SF_HTDOCS)
+DISTRIBUTIONS = fedora centos
 ARCHITECTURES = i386 x86_64
 CHROOT_BASE = /var/lib/chroot
 
 release: remove-existing-packages build sign update upload
 
 remove-existing-packages:
-	find fedora -not -path '*/.svn/*' -name "*.rpm" -delete
+	for distribution in $(DISTRIBUTIONS); do	\
+	  find $${distribution} -not -path '*/.svn/*'	\
+	     -name "*.rpm" -delete; \
+	done
 
 sign:
 	./sign-rpm.sh
@@ -14,16 +18,24 @@ update:
 	./update-repository.sh
 
 upload:
-	rsync -avz --delete --exclude .gitignore --exclude .svn \
-		fedora/ $(SERVER_PATH)/fedora
+	for distribution in $(DISTRIBUTIONS); do		\
+	  rsync -avz --delete					\
+	    --exclude .gitignore --exclude .svn			\
+	    $${distribution}/ $(SERVER_PATH)/$${distribution};	\
+	done
 
 download:
-	rsync -avz $(SERVER_PATH)/fedora/ fedora
+	for distribution in $(DISTRIBUTIONS); do		\
+	  rsync -avz						\
+	    $(SERVER_PATH)/$${distribution}/ $${distribution};	\
+	done
 
 build: build-in-chroot build-repository-rpm
 
 build-in-chroot:
-	./build-in-chroot.sh $(VERSION) $(CHROOT_BASE) '$(ARCHITECTURES)'
+	./build-in-chroot.sh \
+	  $(PACKAGE) $(VERSION) $(CHROOT_BASE) \
+	  '$(ARCHITECTURES)' '$(DISTRIBUTIONS)'
 
 build-repository-rpm: RPM-GPG-KEY-cutter
 	./build-repository-rpm.sh
