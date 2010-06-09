@@ -1,5 +1,7 @@
 2010-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* glib-compatible/pcre/Makefile.am: use bcopy().
+
 	* glib-compatible/: remove needless files.
 
 	* sample/glib/Makefile.am: don't test GRegex on GLib 2.12 because
