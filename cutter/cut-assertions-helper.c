@@ -1571,29 +1571,35 @@ cut_assert_equal_fixture_data_string_helper (const char     *expected,
 
 void
 cut_assert_equal_file_raw_helper (const char     *expected,
-                                  const char     *actual)
+                                  const char     *actual,
+                                  const char     *expression_expected,
+                                  const char     *expression_actual)
 {
     GError *error = NULL;
     gchar *expected_data = NULL;
     gchar *actual_data = NULL;
     gsize expected_size;
     gsize actual_size;
-    
+
     cut_assert_path_exist(expected);
     cut_assert_path_exist(actual);
 
     g_file_get_contents(expected, &expected_data, &expected_size, &error);
-    gcut_assert_error_helper(error, expected);
+    gcut_assert_error_helper(error, expression_expected);
+    cut_take_string(expected_data);
 
     g_file_get_contents(actual, &actual_data, &actual_size, &error);
-    gcut_assert_error_helper(error, actual);
+    gcut_assert_error_helper(error, expression_actual);
+    cut_take_string(actual_data);
 
     cut_assert_equal_memory_helper(expected_data, expected_size,
                                    actual_data, actual_size,
-                                   cut_take_printf("the content of %s", expected),
-                                   cut_take_printf("%" G_GSIZE_FORMAT, expected_size),
-                                   cut_take_printf("the content of %s", actual),
-                                   cut_take_printf("%" G_GSIZE_FORMAT, actual_size));
+                                   expression_expected,
+                                   cut_take_printf("%" G_GSIZE_FORMAT,
+                                                   expected_size),
+                                   expression_actual,
+                                   cut_take_printf("%" G_GSIZE_FORMAT,
+                                                   actual_size));
 }
 
 #ifndef CUT_DISABLE_SOCKET_SUPPORT

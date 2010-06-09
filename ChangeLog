@@ -1,5 +1,8 @@
 2010-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.[ch], cutter/cut-assertions.h:
+	cut_assert_equal_file_raw() reports correct expression.
+
 	* test/cutter/test-cut-assertions.c: use cut_build_path().
 
 2010-06-09  Kouhei Sutou  <kou@clear-code.com>
