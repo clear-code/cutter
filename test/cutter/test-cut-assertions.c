@@ -140,6 +140,8 @@ void test_equal_fixture_data_string (void);
 void test_equal_fixture_data_string_without_file (void);
 void test_error_errno (void);
 void test_equal_sockaddr (void);
+void test_equal_file_raw (void);
+void test_not_equal_file_raw (void);
 
 static gboolean compare_function_is_called;
 static gchar *tmp_file_name;
@@ -2411,6 +2413,58 @@ test_equal_sockaddr (void)
                            FAIL_LOCATION, "stub_equal_sockaddr",
                            NULL);
 #endif
+}
+
+static void
+equal_file_raw (void)
+{
+    gchar *expected, *actual;
+    expected = cut_utils_build_path(cuttest_get_base_dir(),
+                                    "fixtures", "assertions", "data.txt", NULL);
+    actual = cut_utils_build_path(cuttest_get_base_dir(),
+                                  "fixtures", "assertions", "data.txt", NULL);
+    cut_take_string(expected);
+    cut_take_string(actual);
+    cut_assert_equal_file_raw(expected, actual);
+}
+
+void
+test_equal_file_raw (void)
+{
+    test = cut_test_new("equal-file-raw", equal_file_raw);
+
+    cut_assert_true(run());
+    cut_assert_test_result_summary(run_context, 1, 5, 1, 0, 0, 0, 0, 0);
+}
+
+static void
+not_equal_file_raw (void)
+{
+    gchar *expected, *actual;
+    expected = cut_utils_build_path(cuttest_get_base_dir(),
+                                    "fixtures", "assertions", "data.txt", NULL);
+    actual = cut_utils_build_path(cuttest_get_base_dir(),
+                                  "fixtures", "assertions", "sub", "data.txt", NULL);
+    cut_take_string(expected);
+    cut_take_string(actual);
+    MARK_FAIL(cut_assert_equal_file_raw(expected, actual));
+}
+
+void
+test_not_equal_file_raw (void)
+{
+    test = cut_test_new("not-equal-file-raw", not_equal_file_raw);
+
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 4, 0, 1, 0, 0, 0, 0);
+    cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                           "not-equal-file-raw", NULL,
+                           "<the content of ./fixtures/assertions/data.txt(size: 15) "
+                           "== the content of ./fixtures/assertions/sub/data.txt(size: 15)>",
+                           "0x74 0x6f 0x70 0x20 0x6c 0x65 0x76 0x65 0x6c 0x20 0x64 0x61 0x74 0x61 0x0a: top level data. (size: 15)",
+                           "0x73 0x75 0x62 0x20 0x6c 0x65 0x76 0x65 0x6c 0x20 0x64 0x61 0x74 0x61 0x0a: sub level data. (size: 15)",
+                           FAIL_LOCATION, "not_equal_file_raw",
+                           NULL);
 }
 
 /*

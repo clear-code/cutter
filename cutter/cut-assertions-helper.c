@@ -1569,6 +1569,33 @@ cut_assert_equal_fixture_data_string_helper (const char     *expected,
                                    cut_take_string(full_path));
 }
 
+void
+cut_assert_equal_file_raw_helper (const char     *expected,
+                                  const char     *actual)
+{
+    GError *error = NULL;
+    gchar *expected_data = NULL;
+    gchar *actual_data = NULL;
+    gsize expected_size;
+    gsize actual_size;
+    
+    cut_assert_path_exist(expected);
+    cut_assert_path_exist(actual);
+
+    g_file_get_contents(expected, &expected_data, &expected_size, &error);
+    gcut_assert_error_helper(error, expected);
+
+    g_file_get_contents(actual, &actual_data, &actual_size, &error);
+    gcut_assert_error_helper(error, actual);
+
+    cut_assert_equal_memory_helper(expected_data, expected_size,
+                                   actual_data, actual_size,
+                                   cut_take_printf("the content of %s", expected),
+                                   cut_take_printf("%" G_GSIZE_FORMAT, expected_size),
+                                   cut_take_printf("the content of %s", actual),
+                                   cut_take_printf("%" G_GSIZE_FORMAT, actual_size));
+}
+
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 void
 cut_assert_equal_sockaddr_helper (const struct sockaddr *expected,

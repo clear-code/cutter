@@ -2027,6 +2027,23 @@ extern "C" {
 #endif
 
 /**
+ * cut_assert_equal_file_raw:
+ * @expected: a path.
+ * @actual: a path.
+ *
+ * Passes if the content of @expected == the content of @actual.
+ *
+ * Since: 1.1.4
+ */
+#define cut_assert_equal_file_raw(expected, actual, ...) do             \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+                cut_assert_equal_file_raw_helper(expected, actual),     \
+                __VA_ARGS__),                                           \
+        cut_assert_equal_file_raw(expected, actual, __VA_ARGS__));      \
+} while (0)
+/**
  * cut_error:
  * @format: the message format. See the printf() documentation.
  * @...: the parameters to insert into the format string.

@@ -449,6 +449,9 @@ void        cut_assert_equal_fixture_data_string_helper
                                      const char     *expression_expected,
                                      const char     *path,
                                      ...) CUT_GNUC_NULL_TERMINATED;
+void        cut_assert_equal_file_raw_helper
+                                    (const char     *expected,
+                                     const char     *actual);
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 void        cut_assert_equal_sockaddr_helper
                                     (const struct sockaddr *expected,
