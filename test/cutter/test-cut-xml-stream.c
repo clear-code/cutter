@@ -112,14 +112,14 @@ normalize_xml (const gchar *xml)
 {
     const gchar *elapsed_normalized_xml, *start_time_normalized_xml;
 
-    elapsed_normalized_xml = cut_take_replace("<elapsed>(.*?)</elapsed>",
-                                              xml,
+    elapsed_normalized_xml = cut_take_replace(xml,
+                                              "<elapsed>(.*?)</elapsed>",
                                               "<elapsed>0.000001</elapsed>");
     start_time_normalized_xml =
-        cut_take_replace("<start-time>"
+        cut_take_replace(elapsed_normalized_xml,
+                         "<start-time>"
                          "20\\d{2}-" ISO8601_PATTERN_WITHOUT_YEAR
                          "</start-time>",
-                         elapsed_normalized_xml,
                          "<start-time>2008-07-30T04:55:42Z</start-time>");
 
     return start_time_normalized_xml;

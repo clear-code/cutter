@@ -1,3 +1,7 @@
+2010-06-09  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/cutter/test-cut-xml-stream.c: fix argument order.
+
 2010-06-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-xml-stream.c: use cut_take_replace().
