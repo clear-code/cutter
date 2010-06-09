@@ -2418,13 +2418,12 @@ test_equal_sockaddr (void)
 static void
 equal_file_raw (void)
 {
-    gchar *expected, *actual;
-    expected = cut_utils_build_path(cuttest_get_base_dir(),
-                                    "fixtures", "assertions", "data.txt", NULL);
-    actual = cut_utils_build_path(cuttest_get_base_dir(),
-                                  "fixtures", "assertions", "data.txt", NULL);
-    cut_take_string(expected);
-    cut_take_string(actual);
+    const gchar *expected, *actual;
+
+    expected = cut_build_path(cuttest_get_base_dir(),
+                              "fixtures", "assertions", "data.txt", NULL);
+    actual = cut_build_path(cuttest_get_base_dir(),
+                            "fixtures", "assertions", "data.txt", NULL);
     cut_assert_equal_file_raw(expected, actual);
 }
 
@@ -2440,13 +2439,12 @@ test_equal_file_raw (void)
 static void
 not_equal_file_raw (void)
 {
-    gchar *expected, *actual;
-    expected = cut_utils_build_path(cuttest_get_base_dir(),
-                                    "fixtures", "assertions", "data.txt", NULL);
-    actual = cut_utils_build_path(cuttest_get_base_dir(),
-                                  "fixtures", "assertions", "sub", "data.txt", NULL);
-    cut_take_string(expected);
-    cut_take_string(actual);
+    const gchar *expected, *actual;
+
+    expected = cut_build_path(cuttest_get_base_dir(),
+                              "fixtures", "assertions", "data.txt", NULL);
+    actual = cut_build_path(cuttest_get_base_dir(),
+                            "fixtures", "assertions", "sub", "data.txt", NULL);
     MARK_FAIL(cut_assert_equal_file_raw(expected, actual));
 }
 
