@@ -82,10 +82,10 @@ build()
 	    distribution_version=5
 	    ;;
     esac
-    target=${distribution_name}-${distribution_version}-${architecture}
+    target=${distribution}-${distribution_version}-${architecture}
     base_dir=${CHROOT_BASE}/${target}
     if [ ! -d $base_dir ]; then
-	run build_chroot $architecture $distribution_name $distribution_version
+	run build_chroot $architecture $distribution $distribution_version
     fi
 
     source_dir=${script_base_dir}/..
