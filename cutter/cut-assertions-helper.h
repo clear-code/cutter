@@ -447,7 +447,7 @@ void        cut_assert_equal_pointer_helper
 void        cut_assert_equal_fixture_data_string_helper
                                     (const void     *expected,
                                      const char     *expression_expected,
-                                     const void     *path,
+                                     const char     *path,
                                      ...) CUT_GNUC_NULL_TERMINATED;
 #ifndef CUT_DISABLE_SOCKET_SUPPORT
 void        cut_assert_equal_sockaddr_helper
