@@ -445,7 +445,7 @@ void        cut_assert_equal_pointer_helper
                                      const char     *expression_expected,
                                      const char     *expression_actual);
 void        cut_assert_equal_fixture_data_string_helper
-                                    (const void     *expected,
+                                    (const char     *expected,
                                      const char     *expression_expected,
                                      const char     *path,
                                      ...) CUT_GNUC_NULL_TERMINATED;

@@ -1549,7 +1549,7 @@ cut_assert_equal_pointer_helper (const void     *expected,
 }
 
 void
-cut_assert_equal_fixture_data_string_helper (const void     *expected,
+cut_assert_equal_fixture_data_string_helper (const char     *expected,
                                              const gchar    *expression_expected,
                                              const char     *path,
                                              ...)
