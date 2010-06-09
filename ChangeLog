@@ -1,5 +1,7 @@
 2010-06-09  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-main.c: use g_option_context_get_help() if available.
+
 	* test/cutter/test-cut-xml-stream.c: fix argument order.
 
 2010-06-09  Kouhei Sutou  <kou@cozmixng.org>

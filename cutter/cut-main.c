@@ -271,6 +271,13 @@ cut_init (int *argc, char ***argv)
     }
 
     if (*argc == 1) {
+#if GLIB_CHECK_VERSION(2, 14, 0)
+        gchar *help_string;
+        help_string = g_option_context_get_help(option_context, TRUE, NULL);
+        g_print("%s", help_string);
+        g_free(help_string);
+        g_option_context_free(option_context);
+#else
         gint help_argc = 2;
         gchar *help_argv[2];
         gchar **help_argv_p;
@@ -279,6 +286,7 @@ cut_init (int *argc, char ***argv)
         help_argv_p = help_argv;
         g_option_context_parse(option_context, &help_argc, &help_argv_p, NULL);
         g_option_context_free(option_context);
+#endif
         exit(EXIT_FAILURE);
     }
 
