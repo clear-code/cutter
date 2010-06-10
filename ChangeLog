@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/build-in-chroot.sh: remove .svn directory.
+
 	* doc/reference/ja.po: update translations.
 
 	* NEWS*: add 1.1.4 entry.
