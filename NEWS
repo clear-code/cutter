@@ -8,7 +8,7 @@ Supported CentOS.
 
 === Cutter
 
-==== 改良
+==== Improvements
 
   * Added assertions:
     * ((<cut_assert_equal_file_raw()>))
