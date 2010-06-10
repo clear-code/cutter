@@ -17,9 +17,13 @@ run()
     fi
 }
 
-if ! rpm -q fedora-release > /dev/null 2>&1; then
-    run rpm -Uvh --force /var/cache/yum/core/packages/fedora-release-12-*.rpm
-    run rpm -Uvh --force /var/cache/yum/core/packages/ca-certificates-*.rpm
+distribution=$(cut -d ' ' -f 1 /etc/redhat-release | tr 'A-Z' 'a-z')
+distribution_version=$(cut -d ' ' -f 3 /etc/redhat-release)
+if ! rpm -q ${distribution}-release > /dev/null 2>&1; then
+    packages_dir=/var/cache/yum/core/packages
+    release_rpm=${distribution}-release-${distribution_version}-*.rpm
+    run rpm -Uvh --force ${packages_dir}/${release_rpm}
+    run rpm -Uvh --force ${packages_dir}/ca-certificates-*.rpm
 fi
 
 run yum update -y
