@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.3\n"
-"POT-Creation-Date: 2010-06-10 14:55+0900\n"
-"PO-Revision-Date: 2010-06-10 15:00+0900\n"
+"POT-Creation-Date: 2010-06-10 15:06+0900\n"
+"PO-Revision-Date: 2010-06-10 15:06+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -945,7 +945,9 @@ msgstr ""
 #: xml/gcut-assertions.xml:104(returnvalue)
 #: xml/gcut-assertions.xml:107(returnvalue)
 #: xml/gcut-assertions.xml:111(returnvalue)
+#: xml/gcut-assertions.xml:114(returnvalue)
 #: xml/gcut-assertions.xml:117(returnvalue)
+#: xml/gcut-assertions.xml:120(returnvalue)
 #: xml/gcut-assertions.xml:123(returnvalue)
 #: xml/gcut-assertions.xml:126(returnvalue)
 #: xml/gcut-assertions-helper.xml:21(returnvalue)
@@ -1151,7 +1153,9 @@ msgstr ""
 #: xml/gcut-assertions.xml:106(parameter)
 #: xml/gcut-assertions.xml:110(parameter)
 #: xml/gcut-assertions.xml:113(parameter)
+#: xml/gcut-assertions.xml:116(parameter)
 #: xml/gcut-assertions.xml:119(parameter)
+#: xml/gcut-assertions.xml:122(parameter)
 #: xml/gcut-assertions.xml:125(parameter)
 #: xml/gcut-assertions.xml:128(parameter)
 #: xml/gcut-assertions-helper.xml:89(parameter) xml/cutter.xml:36(parameter)
@@ -1472,9 +1476,9 @@ msgstr "ひとつめのクエリパラメータの名前"
 #: xml/gcut-assertions.xml:593(term) xml/gcut-assertions.xml:625(term)
 #: xml/gcut-assertions.xml:662(term) xml/gcut-assertions.xml:692(term)
 #: xml/gcut-assertions.xml:734(term) xml/gcut-assertions.xml:753(term)
-#: xml/gcut-assertions.xml:770(term) xml/gcut-assertions.xml:789(term)
-#: xml/gcut-assertions.xml:806(term) xml/gcut-assertions.xml:825(term)
-#: xml/gcut-assertions.xml:844(term) xml/gcut-assertions-helper.xml:493(term)
+#: xml/gcut-assertions.xml:772(term) xml/gcut-assertions.xml:791(term)
+#: xml/gcut-assertions.xml:810(term) xml/gcut-assertions.xml:829(term)
+#: xml/gcut-assertions.xml:848(term) xml/gcut-assertions-helper.xml:493(term)
 #: xml/cutter.xml:286(term) xml/cutter.xml:304(term) xml/cutter.xml:342(term)
 #: xml/cutter.xml:414(term) xml/cutter.xml:461(term)
 #: xml/cut-test-utils.xml:187(term) xml/cut-test-utils.xml:295(term)
@@ -1736,9 +1740,9 @@ msgstr ""
 #: xml/gcut-assertions.xml:537(term) xml/gcut-assertions.xml:587(term)
 #: xml/gcut-assertions.xml:619(term) xml/gcut-assertions.xml:656(term)
 #: xml/gcut-assertions.xml:686(term) xml/gcut-assertions.xml:725(term)
-#: xml/gcut-assertions.xml:747(term) xml/gcut-assertions.xml:764(term)
-#: xml/gcut-assertions.xml:783(term) xml/gcut-assertions.xml:800(term)
-#: xml/gcut-assertions.xml:819(term) xml/gcut-assertions.xml:838(term)
+#: xml/gcut-assertions.xml:747(term) xml/gcut-assertions.xml:766(term)
+#: xml/gcut-assertions.xml:785(term) xml/gcut-assertions.xml:804(term)
+#: xml/gcut-assertions.xml:823(term) xml/gcut-assertions.xml:842(term)
 #: xml/gcut-assertions-helper.xml:155(term)
 #: xml/gcut-assertions-helper.xml:177(term)
 #: xml/gcut-assertions-helper.xml:203(term)
@@ -1822,9 +1826,9 @@ msgstr "期待するContent-Type。"
 #: xml/gcut-assertions.xml:544(simpara) xml/gcut-assertions.xml:594(simpara)
 #: xml/gcut-assertions.xml:626(simpara) xml/gcut-assertions.xml:663(simpara)
 #: xml/gcut-assertions.xml:693(simpara) xml/gcut-assertions.xml:735(simpara)
-#: xml/gcut-assertions.xml:754(simpara) xml/gcut-assertions.xml:771(simpara)
-#: xml/gcut-assertions.xml:790(simpara) xml/gcut-assertions.xml:807(simpara)
-#: xml/gcut-assertions.xml:826(simpara) xml/gcut-assertions.xml:845(simpara)
+#: xml/gcut-assertions.xml:754(simpara) xml/gcut-assertions.xml:773(simpara)
+#: xml/gcut-assertions.xml:792(simpara) xml/gcut-assertions.xml:811(simpara)
+#: xml/gcut-assertions.xml:830(simpara) xml/gcut-assertions.xml:849(simpara)
 #: xml/cut-assertions.xml:341(simpara) xml/cut-assertions.xml:356(simpara)
 #: xml/cut-assertions.xml:371(simpara) xml/cut-assertions.xml:400(simpara)
 #: xml/cut-assertions.xml:429(simpara) xml/cut-assertions.xml:444(simpara)
@@ -2303,7 +2307,7 @@ msgstr "GdkCutter Pixbufが有効なとき定義されます。"
 #: xml/gcut-data.xml:459(para) xml/gcut-data.xml:478(para)
 #: xml/gcut-data.xml:497(para) xml/gcut-data.xml:516(para)
 #: xml/gcut-assertions.xml:248(para) xml/gcut-assertions.xml:476(para)
-#: xml/gcut-assertions.xml:828(para) xml/cutter.xml:168(para)
+#: xml/gcut-assertions.xml:832(para) xml/cutter.xml:168(para)
 #: xml/cutter.xml:189(para) xml/cutter.xml:198(para) xml/cutter.xml:207(para)
 #: xml/cutter.xml:417(para) xml/cutter.xml:433(para) xml/cutter.xml:442(para)
 #: xml/cut-test-utils.xml:246(para) xml/cut-helper.xml:250(para)
@@ -2592,9 +2596,9 @@ msgstr "期待する<link linkend=\"GdkPixbuf\"><type>GdkPixbuf</type></link>。
 #: xml/gcut-assertions.xml:540(term) xml/gcut-assertions.xml:590(term)
 #: xml/gcut-assertions.xml:622(term) xml/gcut-assertions.xml:659(term)
 #: xml/gcut-assertions.xml:689(term) xml/gcut-assertions.xml:728(term)
-#: xml/gcut-assertions.xml:750(term) xml/gcut-assertions.xml:767(term)
-#: xml/gcut-assertions.xml:786(term) xml/gcut-assertions.xml:803(term)
-#: xml/gcut-assertions.xml:822(term) xml/gcut-assertions.xml:841(term)
+#: xml/gcut-assertions.xml:750(term) xml/gcut-assertions.xml:769(term)
+#: xml/gcut-assertions.xml:788(term) xml/gcut-assertions.xml:807(term)
+#: xml/gcut-assertions.xml:826(term) xml/gcut-assertions.xml:845(term)
 #: xml/gcut-assertions-helper.xml:158(term)
 #: xml/gcut-assertions-helper.xml:180(term)
 #: xml/gcut-assertions-helper.xml:206(term)
@@ -2682,7 +2686,7 @@ msgstr "ピクセルの違いを検出するために使われるしきい値。
 #: xml/gcut-assertions.xml:546(para) xml/gcut-assertions.xml:628(para)
 #: xml/gcut-assertions.xml:665(para) xml/gcut-assertions.xml:695(para)
 #: xml/gcut-assertions.xml:737(para) xml/gcut-assertions.xml:756(para)
-#: xml/gcut-assertions.xml:792(para) xml/cut-test-utils.xml:89(para)
+#: xml/gcut-assertions.xml:794(para) xml/cut-test-utils.xml:89(para)
 #: xml/cut-test-utils.xml:104(para) xml/cut-test-utils.xml:133(para)
 #: xml/cut-test-utils.xml:154(para) xml/cut-test-utils.xml:174(para)
 #: xml/cut-multi-process.xml:341(para) xml/cut-multi-process.xml:359(para)
@@ -3440,7 +3444,7 @@ msgstr ""
 "の<link linkend=\"GType\"><type>GType</type></link>。"
 
 #: xml/gcut-types.xml:68(para) xml/gcut-data.xml:535(para)
-#: xml/gcut-assertions.xml:847(para) xml/cut-version.xml:93(para)
+#: xml/gcut-assertions.xml:851(para) xml/cut-version.xml:93(para)
 #: xml/cut-test-utils.xml:380(para) xml/cut-assertions.xml:402(para)
 #: xml/cut-assertions.xml:431(para) xml/cut-assertions.xml:514(para)
 #: xml/cut-assertions.xml:972(para) xml/cut-assertions.xml:1430(para)
@@ -9502,7 +9506,8 @@ msgid "gcut_data_get_uint_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:33(returnvalue) xml/gcut-assertions.xml:111(type)
-#: xml/gcut-assertions.xml:112(type) xml/gcut-assertions-helper.xml:112(type)
+#: xml/gcut-assertions.xml:112(type) xml/gcut-assertions.xml:114(type)
+#: xml/gcut-assertions.xml:115(type) xml/gcut-assertions-helper.xml:112(type)
 #: xml/gcut-assertions-helper.xml:113(type)
 #: xml/gcut-assertions-helper.xml:116(type)
 #: xml/gcut-assertions-helper.xml:117(type)
@@ -9515,7 +9520,8 @@ msgid "gcut_data_get_int64_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:36(returnvalue) xml/gcut-assertions.xml:117(type)
-#: xml/gcut-assertions.xml:118(type) xml/gcut-assertions-helper.xml:120(type)
+#: xml/gcut-assertions.xml:118(type) xml/gcut-assertions.xml:120(type)
+#: xml/gcut-assertions.xml:121(type) xml/gcut-assertions-helper.xml:120(type)
 #: xml/gcut-assertions-helper.xml:121(type)
 #: xml/gcut-assertions-helper.xml:124(type)
 #: xml/gcut-assertions-helper.xml:125(type)
@@ -10101,12 +10107,14 @@ msgid "gcut_assert_equal_int64"
 msgstr ""
 
 #: xml/gcut-assertions.xml:111(parameter)
+#: xml/gcut-assertions.xml:114(parameter)
 #: xml/gcut-assertions-helper.xml:112(parameter)
 #: xml/gcut-assertions-helper.xml:116(parameter)
 msgid "<link linkend=\"gint64\"><placeholder-1/></link> expected"
 msgstr ""
 
 #: xml/gcut-assertions.xml:112(parameter)
+#: xml/gcut-assertions.xml:115(parameter)
 #: xml/gcut-assertions-helper.xml:113(parameter)
 #: xml/gcut-assertions-helper.xml:117(parameter)
 msgid "<link linkend=\"gint64\"><placeholder-1/></link> actual"
@@ -10117,29 +10125,31 @@ msgstr ""
 msgid "gcut_assert_not_equal_int64"
 msgstr ""
 
-#: xml/gcut-assertions.xml:117(link) xml/gcut-assertions.xml:776(primary)
+#: xml/gcut-assertions.xml:117(link) xml/gcut-assertions.xml:778(primary)
 #: xml/api-index-full.xml:214(link) xml/api-index-1.0.5.xml:26(link)
 msgid "gcut_assert_equal_uint64"
 msgstr ""
 
 #: xml/gcut-assertions.xml:117(parameter)
+#: xml/gcut-assertions.xml:120(parameter)
 #: xml/gcut-assertions-helper.xml:120(parameter)
 #: xml/gcut-assertions-helper.xml:124(parameter)
 msgid "<link linkend=\"guint64\"><placeholder-1/></link> expected"
 msgstr ""
 
 #: xml/gcut-assertions.xml:118(parameter)
+#: xml/gcut-assertions.xml:121(parameter)
 #: xml/gcut-assertions-helper.xml:121(parameter)
 #: xml/gcut-assertions-helper.xml:125(parameter)
 msgid "<link linkend=\"guint64\"><placeholder-1/></link> actual"
 msgstr ""
 
-#: xml/gcut-assertions.xml:120(link) xml/gcut-assertions.xml:795(primary)
+#: xml/gcut-assertions.xml:120(link) xml/gcut-assertions.xml:797(primary)
 #: xml/api-index-full.xml:224(link) xml/api-index-1.1.4.xml:12(link)
 msgid "gcut_assert_not_equal_uint64"
 msgstr ""
 
-#: xml/gcut-assertions.xml:123(link) xml/gcut-assertions.xml:812(primary)
+#: xml/gcut-assertions.xml:123(link) xml/gcut-assertions.xml:816(primary)
 #: xml/api-index-full.xml:208(link) xml/api-index-1.0.6.xml:21(link)
 msgid "gcut_assert_equal_pid"
 msgstr ""
@@ -10158,7 +10168,7 @@ msgstr ""
 msgid "<link linkend=\"GPid\"><placeholder-1/></link> actual"
 msgstr ""
 
-#: xml/gcut-assertions.xml:126(link) xml/gcut-assertions.xml:831(primary)
+#: xml/gcut-assertions.xml:126(link) xml/gcut-assertions.xml:835(primary)
 #: xml/api-index-full.xml:222(link) xml/api-index-1.0.7.xml:22(link)
 msgid "gcut_assert_not_equal_pid"
 msgstr ""
@@ -10258,21 +10268,21 @@ msgid ""
 "<link linkend=\"void\"><placeholder-140/></link>                <placeholder-141/>             (<placeholder-142/>,\n"
 "                                                         <placeholder-143/>,\n"
 "                                                         <placeholder-144/>);\n"
-"#define             <placeholder-145/>         (expected,\n"
-"                                                         actual,\n"
-"                                                         ...)\n"
-"<link linkend=\"void\"><placeholder-146/></link>                <placeholder-147/>            (<placeholder-148/>,\n"
-"                                                         <placeholder-149/>,\n"
-"                                                         <placeholder-150/>);\n"
-"#define             <placeholder-151/>        (expected,\n"
-"                                                         actual,\n"
-"                                                         ...)\n"
-"<link linkend=\"void\"><placeholder-152/></link>                <placeholder-153/>               (<placeholder-154/>,\n"
-"                                                         <placeholder-155/>,\n"
-"                                                         <placeholder-156/>);\n"
-"<link linkend=\"void\"><placeholder-157/></link>                <placeholder-158/>           (<placeholder-159/>,\n"
-"                                                         <placeholder-160/>,\n"
-"                                                         <placeholder-161/>);\n"
+"<link linkend=\"void\"><placeholder-145/></link>                <placeholder-146/>         (<placeholder-147/>,\n"
+"                                                         <placeholder-148/>,\n"
+"                                                         <placeholder-149/>);\n"
+"<link linkend=\"void\"><placeholder-150/></link>                <placeholder-151/>            (<placeholder-152/>,\n"
+"                                                         <placeholder-153/>,\n"
+"                                                         <placeholder-154/>);\n"
+"<link linkend=\"void\"><placeholder-155/></link>                <placeholder-156/>        (<placeholder-157/>,\n"
+"                                                         <placeholder-158/>,\n"
+"                                                         <placeholder-159/>);\n"
+"<link linkend=\"void\"><placeholder-160/></link>                <placeholder-161/>               (<placeholder-162/>,\n"
+"                                                         <placeholder-163/>,\n"
+"                                                         <placeholder-164/>);\n"
+"<link linkend=\"void\"><placeholder-165/></link>                <placeholder-166/>           (<placeholder-167/>,\n"
+"                                                         <placeholder-168/>,\n"
+"                                                         <placeholder-169/>);\n"
 msgstr ""
 
 #: xml/gcut-assertions.xml:139(title)
@@ -10295,7 +10305,7 @@ msgstr ""
 #: xml/gcut-assertions.xml:484(para) xml/gcut-assertions.xml:534(para)
 #: xml/gcut-assertions.xml:584(para) xml/gcut-assertions.xml:604(para)
 #: xml/gcut-assertions.xml:636(para) xml/gcut-assertions.xml:744(para)
-#: xml/gcut-assertions.xml:780(para) xml/gcut-assertions.xml:816(para)
+#: xml/gcut-assertions.xml:782(para) xml/gcut-assertions.xml:820(para)
 #: xml/cut-assertions.xml:483(para) xml/cut-assertions.xml:519(para)
 #: xml/cut-assertions.xml:561(para) xml/cut-assertions.xml:603(para)
 #: xml/cut-assertions.xml:645(para) xml/cut-assertions.xml:687(para)
@@ -10321,9 +10331,9 @@ msgstr ""
 #: xml/gcut-assertions.xml:538(simpara) xml/gcut-assertions.xml:588(simpara)
 #: xml/gcut-assertions.xml:620(simpara) xml/gcut-assertions.xml:657(simpara)
 #: xml/gcut-assertions.xml:687(simpara) xml/gcut-assertions.xml:726(simpara)
-#: xml/gcut-assertions.xml:748(simpara) xml/gcut-assertions.xml:765(simpara)
-#: xml/gcut-assertions.xml:784(simpara) xml/gcut-assertions.xml:801(simpara)
-#: xml/gcut-assertions.xml:820(simpara) xml/gcut-assertions.xml:839(simpara)
+#: xml/gcut-assertions.xml:748(simpara) xml/gcut-assertions.xml:767(simpara)
+#: xml/gcut-assertions.xml:786(simpara) xml/gcut-assertions.xml:805(simpara)
+#: xml/gcut-assertions.xml:824(simpara) xml/gcut-assertions.xml:843(simpara)
 #: xml/cut-assertions.xml:1941(simpara) xml/cppcut-assertions.xml:54(simpara)
 msgid "an expected value."
 msgstr "期待値。"
@@ -10333,9 +10343,9 @@ msgstr "期待値。"
 #: xml/gcut-assertions.xml:541(simpara) xml/gcut-assertions.xml:591(simpara)
 #: xml/gcut-assertions.xml:623(simpara) xml/gcut-assertions.xml:660(simpara)
 #: xml/gcut-assertions.xml:690(simpara) xml/gcut-assertions.xml:729(simpara)
-#: xml/gcut-assertions.xml:751(simpara) xml/gcut-assertions.xml:768(simpara)
-#: xml/gcut-assertions.xml:787(simpara) xml/gcut-assertions.xml:804(simpara)
-#: xml/gcut-assertions.xml:823(simpara) xml/gcut-assertions.xml:842(simpara)
+#: xml/gcut-assertions.xml:751(simpara) xml/gcut-assertions.xml:770(simpara)
+#: xml/gcut-assertions.xml:789(simpara) xml/gcut-assertions.xml:808(simpara)
+#: xml/gcut-assertions.xml:827(simpara) xml/gcut-assertions.xml:846(simpara)
 #: xml/cut-assertions.xml:1944(simpara) xml/cppcut-assertions.xml:57(simpara)
 msgid "an actual value."
 msgstr "実測値。"
@@ -11086,16 +11096,19 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-assertions.xml:758(title)
-msgid "gcut_assert_not_equal_int64()"
+msgid "gcut_assert_not_equal_int64 ()"
 msgstr ""
 
 #: xml/gcut-assertions.xml:760(programlisting)
 #, no-wrap
-msgid "#define             gcut_assert_not_equal_int64(expected, actual, ...)"
+msgid ""
+"<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_not_equal_int64         (<parameter><link linkend=\"gint64\"><type>gint64</type></link> expected</parameter>,\n"
+"                                                         <parameter><link linkend=\"gint64\"><type>gint64</type></link> actual</parameter>,\n"
+"                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:761(para) xml/gcut-assertions.xml:797(para)
-#: xml/gcut-assertions.xml:835(para) xml/cut-assertions.xml:502(para)
+#: xml/gcut-assertions.xml:763(para) xml/gcut-assertions.xml:801(para)
+#: xml/gcut-assertions.xml:839(para) xml/cut-assertions.xml:502(para)
 #: xml/cut-assertions.xml:540(para) xml/cut-assertions.xml:582(para)
 #: xml/cut-assertions.xml:624(para) xml/cut-assertions.xml:666(para)
 #: xml/cut-assertions.xml:708(para) xml/cut-assertions.xml:750(para)
@@ -11114,17 +11127,17 @@ msgstr ""
 "<parameter>expected</parameter> != <parameter>actual</parameter>が成り立つと"
 "きパスします。"
 
-#: xml/gcut-assertions.xml:773(para) xml/gcut-assertions.xml:809(para)
+#: xml/gcut-assertions.xml:775(para) xml/gcut-assertions.xml:813(para)
 #: xml/cut-test-utils.xml:282(para) xml/cut-helper.xml:576(para)
 #: xml/cut-assertions.xml:2156(para) xml/cut-assertions.xml:2173(para)
 msgid "Since 1.1.4"
 msgstr "1.1.4から"
 
-#: xml/gcut-assertions.xml:775(title)
+#: xml/gcut-assertions.xml:777(title)
 msgid "gcut_assert_equal_uint64 ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:777(programlisting)
+#: xml/gcut-assertions.xml:779(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_equal_uint64            (<parameter><link linkend=\"guint64\"><type>guint64</type></link> expected</parameter>,\n"
@@ -11132,20 +11145,23 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:794(title)
-msgid "gcut_assert_not_equal_uint64()"
+#: xml/gcut-assertions.xml:796(title)
+msgid "gcut_assert_not_equal_uint64 ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:796(programlisting)
+#: xml/gcut-assertions.xml:798(programlisting)
 #, no-wrap
-msgid "#define             gcut_assert_not_equal_uint64(expected, actual, ...)"
+msgid ""
+"<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_not_equal_uint64        (<parameter><link linkend=\"guint64\"><type>guint64</type></link> expected</parameter>,\n"
+"                                                         <parameter><link linkend=\"guint64\"><type>guint64</type></link> actual</parameter>,\n"
+"                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:811(title)
+#: xml/gcut-assertions.xml:815(title)
 msgid "gcut_assert_equal_pid ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:813(programlisting)
+#: xml/gcut-assertions.xml:817(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_equal_pid               (<parameter><link linkend=\"GPid\"><type>GPid</type></link> expected</parameter>,\n"
@@ -11153,11 +11169,11 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:830(title)
+#: xml/gcut-assertions.xml:834(title)
 msgid "gcut_assert_not_equal_pid ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:832(programlisting)
+#: xml/gcut-assertions.xml:836(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_not_equal_pid           (<parameter><link linkend=\"GPid\"><type>GPid</type></link> expected</parameter>,\n"
@@ -16554,8 +16570,8 @@ msgid "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *    
 msgstr ""
 
 #: xml/cut-helper.xml:570(para)
-msgid "Gets the directory name which is specified."
-msgstr "指定されたディレクトリ名を取得する。"
+msgid "Gets the test directory name which is specified by command line."
+msgstr "コマンドラインで指定されたテストディレクトリ名を返します。"
 
 #: xml/cut-helper.xml:573(simpara)
 msgid "a string owned by Cutter that must not be modified or freed."
@@ -19903,7 +19919,7 @@ msgstr "テストするパス。"
 
 #: xml/cut-assertions.xml:1992(title)
 msgid "cut_assert_path_exist ()"
-msgstr "cut_assert_path_exist ()"
+msgstr ""
 
 #: xml/cut-assertions.xml:1994(programlisting)
 #, no-wrap
@@ -20645,7 +20661,6 @@ msgstr ""
 #: xml/api-index-full.xml:156(primaryie) xml/api-index-full.xml:160(primaryie)
 #: xml/api-index-full.xml:161(primaryie) xml/api-index-full.xml:162(primaryie)
 #: xml/api-index-full.xml:163(primaryie) xml/api-index-full.xml:176(primaryie)
-#: xml/api-index-full.xml:220(primaryie) xml/api-index-full.xml:224(primaryie)
 #: xml/api-index-full.xml:228(primaryie) xml/api-index-full.xml:232(primaryie)
 #: xml/api-index-full.xml:234(primaryie) xml/api-index-full.xml:241(primaryie)
 #: xml/api-index-full.xml:244(primaryie) xml/api-index-full.xml:248(primaryie)
@@ -20684,7 +20699,6 @@ msgstr ""
 #: xml/api-index-deprecated.xml:31(primaryie)
 #: xml/api-index-deprecated.xml:32(primaryie)
 #: xml/api-index-1.1.4.xml:7(primaryie) xml/api-index-1.1.4.xml:8(primaryie)
-#: xml/api-index-1.1.4.xml:11(primaryie) xml/api-index-1.1.4.xml:12(primaryie)
 #: xml/api-index-1.1.3.xml:7(primaryie) xml/api-index-1.1.3.xml:8(primaryie)
 #: xml/api-index-1.1.3.xml:11(primaryie) xml/api-index-1.1.3.xml:12(primaryie)
 #: xml/api-index-1.1.3.xml:13(primaryie) xml/api-index-1.1.3.xml:14(primaryie)
@@ -20787,8 +20801,9 @@ msgstr ""
 #: xml/api-index-full.xml:214(primaryie) xml/api-index-full.xml:215(primaryie)
 #: xml/api-index-full.xml:216(primaryie) xml/api-index-full.xml:217(primaryie)
 #: xml/api-index-full.xml:218(primaryie) xml/api-index-full.xml:219(primaryie)
-#: xml/api-index-full.xml:221(primaryie) xml/api-index-full.xml:222(primaryie)
-#: xml/api-index-full.xml:223(primaryie) xml/api-index-full.xml:225(primaryie)
+#: xml/api-index-full.xml:220(primaryie) xml/api-index-full.xml:221(primaryie)
+#: xml/api-index-full.xml:222(primaryie) xml/api-index-full.xml:223(primaryie)
+#: xml/api-index-full.xml:224(primaryie) xml/api-index-full.xml:225(primaryie)
 #: xml/api-index-full.xml:226(primaryie) xml/api-index-full.xml:227(primaryie)
 #: xml/api-index-full.xml:229(primaryie) xml/api-index-full.xml:230(primaryie)
 #: xml/api-index-full.xml:231(primaryie) xml/api-index-full.xml:233(primaryie)
@@ -20918,6 +20933,7 @@ msgstr ""
 #: xml/api-index-deprecated.xml:43(primaryie)
 #: xml/api-index-deprecated.xml:46(primaryie)
 #: xml/api-index-deprecated.xml:47(primaryie)
+#: xml/api-index-1.1.4.xml:11(primaryie) xml/api-index-1.1.4.xml:12(primaryie)
 #: xml/api-index-1.1.4.xml:13(primaryie) xml/api-index-1.1.4.xml:16(primaryie)
 #: xml/api-index-1.1.3.xml:17(primaryie) xml/api-index-1.1.3.xml:18(primaryie)
 #: xml/api-index-1.1.3.xml:19(primaryie) xml/api-index-1.1.3.xml:20(primaryie)

@@ -543,7 +543,7 @@ void cut_pop_backtrace(void);
 /**
  * cut_get_test_directory:
  *
- * Gets the directory name which is specified.
+ * Gets the test directory name which is specified by command line.
  *
  * Returns: a string owned by Cutter that must not be modified or freed.
  *
