@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* license/Makefile.am (dist_license_DATA): add missing fdl-1.3.txt.
+
 	* apt/Makefile.am, apt/sign-repository.sh: remove needless release
 	status support.
 
