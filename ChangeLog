@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* NEWS*: add cut_get_test_directory().
+
 	* apt/build-in-chroot.sh: remove .svn directory.
 
 	* doc/reference/ja.po: update translations.
