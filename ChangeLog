@@ -1,5 +1,8 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* yum/Makefile.am, yum/build-repository-rpm.sh, yum/cutter.repo:
+	create repository RPM for each distribution.
+
 	* yum/: support multi distribution packaging.
 
 	* yum/build-rpm.sh: support multi distributions.
