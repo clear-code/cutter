@@ -2052,7 +2052,7 @@ extern "C" {
  * @actual: a path.
  * @...: optional message. See cut_message() for details.
  *
- * Passes if the content of @expected == the content of @actual.
+ * Passes if the content of @expected != the content of @actual.
  *
  * Since: 1.1.4
  */

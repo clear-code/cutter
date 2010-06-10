@@ -689,7 +689,7 @@ G_BEGIN_DECLS
 } while (0)
 
 /**
- * gcut_assert_equal_int64:
+ * gcut_assert_not_equal_int64:
  * @expected: an expected value.
  * @actual: an actual value.
  * @...: optional message. See cut_message() for details.
@@ -729,7 +729,7 @@ G_BEGIN_DECLS
 } while (0)
 
 /**
- * gcut_assert_equal_uint64:
+ * gcut_assert_not_equal_uint64:
  * @expected: an expected value.
  * @actual: an actual value.
  * @...: optional message. See cut_message() for details.

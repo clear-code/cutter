@@ -1,5 +1,8 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-assertions.h, gcutter/gcut-assertions.h, doc/: fix
+	typos.
+
 	* configure.ac, doc/reference/cutter-docs.sgml: document cut-features.
 
 	* NEWS*: add cut_get_test_directory().

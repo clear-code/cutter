@@ -359,6 +359,12 @@ const char **strings
 </FUNCTION>
 
 <FUNCTION>
+<NAME>cut_take_inspect_string</NAME>
+<RETURNS>const char *</RETURNS>
+const char *string
+</FUNCTION>
+
+<FUNCTION>
 <NAME>cut_set_fixture_data_dir</NAME>
 <RETURNS>void</RETURNS>
 const char *path, ...

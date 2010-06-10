@@ -1,30 +1,6 @@
 # cutter.h
 
 <FUNCTION>
-<NAME>cut_add_data</NAME>
-<RETURNS>void</RETURNS>
-const char *first_data_name, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_set_attributes</NAME>
-<RETURNS>void</RETURNS>
-const char *first_attribute_name, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_get_current_test_context</NAME>
-<RETURNS>CutTestContext</RETURNS>
-void
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_set_current_test_context</NAME>
-<RETURNS>void</RETURNS>
-CutTestContext *test_context
-</FUNCTION>
-
-<FUNCTION>
 <NAME>cut_set_message</NAME>
 <RETURNS>void</RETURNS>
 const char *format, ...
@@ -42,22 +18,7 @@ const char *format, va_list args
 void
 </FUNCTION>
 
-<FUNCTION>
-<NAME>cut_message</NAME>
-<RETURNS>void</RETURNS>
-const char *format, ...
-</FUNCTION>
-
-<MACRO>
-<NAME>CUT_EXPORT</NAME>
-#ifdef _WIN32
-#  define CUT_EXPORT __declspec(dllexport)
-#else
-#  define CUT_EXPORT
-#endif
-</MACRO>
-
-# cut-assertions.h
+# cut-assertion.h
 
 <FUNCTION>
 <NAME>cut_error</NAME>
@@ -116,13 +77,13 @@ cut_boolean expression, ...
 <FUNCTION>
 <NAME>cut_assert_equal_boolean</NAME>
 <RETURNS>void</RETURNS>
-cut_boolean expected, cut_boolean actual, ...
+cut_boolean expected, cut_boolean actual
 </FUNCTION>
 
 <FUNCTION>
 <NAME>cut_assert_not_equal_boolean</NAME>
 <RETURNS>void</RETURNS>
-cut_boolean expected, cut_boolean actual, ...
+cut_boolean expected, cut_boolean actual
 </FUNCTION>
 
 <FUNCTION>
@@ -152,127 +113,7 @@ int expected, int actual, ...
 <FUNCTION>
 <NAME>cut_assert_not_equal_int</NAME>
 <RETURNS>void</RETURNS>
-int expected, int actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_least8</NAME>
-<RETURNS>void</RETURNS>
-int_least8 expected, int_least8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_least8</NAME>
-<RETURNS>void</RETURNS>
-int_least8 expected, int_least8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_least16</NAME>
-<RETURNS>void</RETURNS>
-int_least16 expected, int_least16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_least16</NAME>
-<RETURNS>void</RETURNS>
-int_least16 expected, int_least16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_least32</NAME>
-<RETURNS>void</RETURNS>
-int_least32 expected, int_least32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_least32</NAME>
-<RETURNS>void</RETURNS>
-int_least32 expected, int_least32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_least64</NAME>
-<RETURNS>void</RETURNS>
-int_least64 expected, int_least64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_least64</NAME>
-<RETURNS>void</RETURNS>
-int_least64 expected, int_least64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_fast8</NAME>
-<RETURNS>void</RETURNS>
-int_fast8 expected, int_fast8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_fast8</NAME>
-<RETURNS>void</RETURNS>
-int_fast8 expected, int_fast8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_fast16</NAME>
-<RETURNS>void</RETURNS>
-int_fast16 expected, int_fast16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_fast16</NAME>
-<RETURNS>void</RETURNS>
-int_fast16 expected, int_fast16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_fast32</NAME>
-<RETURNS>void</RETURNS>
-int_fast32 expected, int_fast32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_fast32</NAME>
-<RETURNS>void</RETURNS>
-int_fast32 expected, int_fast32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_int_fast64</NAME>
-<RETURNS>void</RETURNS>
-int_fast64 expected, int_fast64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_int_fast64</NAME>
-<RETURNS>void</RETURNS>
-int_fast64 expected, int_fast64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_intptr</NAME>
-<RETURNS>void</RETURNS>
-intptr expected, intptr actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_intptr</NAME>
-<RETURNS>void</RETURNS>
-intptr expected, intptr actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_intmax</NAME>
-<RETURNS>void</RETURNS>
-intmax expected, intmax actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_intmax</NAME>
-<RETURNS>void</RETURNS>
-intmax expected, intmax actual, ...
+int expected, int actual
 </FUNCTION>
 
 <FUNCTION>
@@ -284,127 +125,7 @@ unsigned int expected, unsigned int actual, ...
 <FUNCTION>
 <NAME>cut_assert_not_equal_uint</NAME>
 <RETURNS>void</RETURNS>
-unsigned int expected, unsigned int actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_least8</NAME>
-<RETURNS>void</RETURNS>
-uint_least8 expected, uint_least8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_least8</NAME>
-<RETURNS>void</RETURNS>
-uint_least8 expected, uint_least8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_least16</NAME>
-<RETURNS>void</RETURNS>
-uint_least16 expected, uint_least16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_least16</NAME>
-<RETURNS>void</RETURNS>
-uint_least16 expected, uint_least16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_least32</NAME>
-<RETURNS>void</RETURNS>
-uint_least32 expected, uint_least32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_least32</NAME>
-<RETURNS>void</RETURNS>
-uint_least32 expected, uint_least32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_least64</NAME>
-<RETURNS>void</RETURNS>
-uint_least64 expected, uint_least64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_least64</NAME>
-<RETURNS>void</RETURNS>
-uint_least64 expected, uint_least64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_fast8</NAME>
-<RETURNS>void</RETURNS>
-uint_fast8 expected, uint_fast8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_fast8</NAME>
-<RETURNS>void</RETURNS>
-uint_fast8 expected, uint_fast8 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_fast16</NAME>
-<RETURNS>void</RETURNS>
-uint_fast16 expected, uint_fast16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_fast16</NAME>
-<RETURNS>void</RETURNS>
-uint_fast16 expected, uint_fast16 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_fast32</NAME>
-<RETURNS>void</RETURNS>
-uint_fast32 expected, uint_fast32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_fast32</NAME>
-<RETURNS>void</RETURNS>
-uint_fast32 expected, uint_fast32 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uint_fast64</NAME>
-<RETURNS>void</RETURNS>
-uint_fast64 expected, uint_fast64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uint_fast64</NAME>
-<RETURNS>void</RETURNS>
-uint_fast64 expected, uint_fast64 actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uintptr</NAME>
-<RETURNS>void</RETURNS>
-uintptr expected, uintptr actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uintptr</NAME>
-<RETURNS>void</RETURNS>
-uintptr expected, uintptr actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_uintmax</NAME>
-<RETURNS>void</RETURNS>
-uintmax expected, uintmax actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_uintmax</NAME>
-<RETURNS>void</RETURNS>
-uintmax expected, uintmax actual, ...
+unsigned int expected, unsigned int actual
 </FUNCTION>
 
 <FUNCTION>
@@ -416,7 +137,7 @@ size_t expected, size_t actual, ...
 <FUNCTION>
 <NAME>cut_assert_not_equal_size</NAME>
 <RETURNS>void</RETURNS>
-size_t expected, size_t actual, ...
+size_t expected, size_t actual
 </FUNCTION>
 
 <FUNCTION>
@@ -428,19 +149,7 @@ double expected, double error, double actual, ...
 <FUNCTION>
 <NAME>cut_assert_not_equal_double</NAME>
 <RETURNS>void</RETURNS>
-double expected, double error, double actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_char</NAME>
-<RETURNS>void</RETURNS>
-char expected, char actual, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_not_equal_char</NAME>
-<RETURNS>void</RETURNS>
-char expected, char actual, ...
+double expected, double error, double actual
 </FUNCTION>
 
 <FUNCTION>
@@ -452,7 +161,7 @@ const char *expected, const char *actual, ...
 <FUNCTION>
 <NAME>cut_assert_not_equal_string</NAME>
 <RETURNS>void</RETURNS>
-const char *expected, const char *actual, ...
+const char *expected, const char *actual
 </FUNCTION>
 
 <FUNCTION>
@@ -470,13 +179,13 @@ const char *expected, const char *actual, ...
 <FUNCTION>
 <NAME>cut_assert_equal_substring</NAME>
 <RETURNS>void</RETURNS>
-const char *expected, const char *actual, size_t length, ...
+const char *expected, const char *actual, size_t length
 </FUNCTION>
 
 <FUNCTION>
 <NAME>cut_assert_not_equal_substring</NAME>
 <RETURNS>void</RETURNS>
-const char *expected, const char *actual, size_t length, ...
+const char *expected, const char *actual, size_t length
 </FUNCTION>
 
 <FUNCTION>
@@ -488,7 +197,7 @@ const void *expected, size_t expected_size, const void *actual, size_t actual_si
 <FUNCTION>
 <NAME>cut_assert_not_equal_memory</NAME>
 <RETURNS>void</RETURNS>
-const void *expected, size_t expected_size, const void *actual, size_t actual_size, ...
+const void *expected, size_t expected_size, const void *actual, size_t actual_size
 </FUNCTION>
 
 <FUNCTION>
@@ -549,12 +258,6 @@ const void *expected, const void *actual, ...
 <NAME>cut_assert_equal_fixture_data_string</NAME>
 <RETURNS>void</RETURNS>
 const char *expected, const void *path, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_assert_equal_sockaddr</NAME>
-<RETURNS>void</RETURNS>
-const struct sockaddr *expected, const struct sockaddr *actual, ...
 </FUNCTION>
 
 <FUNCTION>
@@ -644,9 +347,21 @@ const char *target, const char *pattern, const char *replacement
 </FUNCTION>
 
 <FUNCTION>
-<NAME>cut_take_convert</NAME>
+<NAME>cut_append_diff</NAME>
 <RETURNS>const char *</RETURNS>
-const char *string, const char *to_code_set, const char *from_code_set
+const char *message, const char *from, const char *to
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_inspect_string_array</NAME>
+<RETURNS>const char *</RETURNS>
+const char **strings
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_take_inspect_string</NAME>
+<RETURNS>const char *</RETURNS>
+const char *string
 </FUNCTION>
 
 <FUNCTION>
@@ -680,9 +395,15 @@ const char *path, ...
 </FUNCTION>
 
 <FUNCTION>
-<NAME>cut_make_directory</NAME>
-<RETURNS>void</RETURNS>
-const char *path, ...
+<NAME>cut_equal_string</NAME>
+<RETURNS>cut_boolean</RETURNS>
+const char *string1, const char *string2
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_equal_double</NAME>
+<RETURNS>cut_boolean</RETURNS>
+double double1, double double2, double error
 </FUNCTION>
 
 # cut-helper.h
@@ -715,54 +436,6 @@ const char *expression
 <NAME>cut_pop_backtrace</NAME>
 <RETURNS>void</RETURNS>
 void
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_set_expected</NAME>
-<RETURNS>void</RETURNS>
-const char *expected
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_set_actual</NAME>
-<RETURNS>void</RETURNS>
-const char *actual
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_append_diff</NAME>
-<RETURNS>const char *</RETURNS>
-const char *message, const char *from, const char *to
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_inspect_string_array</NAME>
-<RETURNS>const char *</RETURNS>
-const char **strings
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_equal_string</NAME>
-<RETURNS>cut_boolean</RETURNS>
-const char *string1, const char *string2
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_equal_double</NAME>
-<RETURNS>cut_boolean</RETURNS>
-double double1, double double2, double error
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_equal_sockaddr</NAME>
-<RETURNS>cut_boolean</RETURNS>
-const struct sockaddr *address1, const struct sockaddr *address2
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_inspect_sockaddr</NAME>
-<RETURNS>char *</RETURNS>
-const struct sockaddr *address
 </FUNCTION>
 
 # cut-multi-process.h
@@ -818,12 +491,6 @@ const gchar **strings
 </FUNCTION>
 
 <FUNCTION>
-<NAME>gcut_take_new_list_object</NAME>
-<RETURNS>const GList *</RETURNS>
-const GObject *object, ...
-</FUNCTION>
-
-<FUNCTION>
 <NAME>gcut_take_new_hash_table_string_string</NAME>
 <RETURNS>GHashTable *</RETURNS>
 const gchar *key, ...
@@ -858,7 +525,7 @@ GValue *expected, GValue *actual, ...
 <FUNCTION>
 <NAME>gcut_assert_equal_list</NAME>
 <RETURNS>void</RETURNS>
-GList *expected, GList *actual, GEqualFunc equal_function, GCutInspectFunction inspect_function, gpointer inspect_user_data, ...
+GList *expected, GList *actual, GEqualFunc equal_function, GCutInspectFunction inspect_function, gpointer inspect_user_data
 </FUNCTION>
 
 <FUNCTION>
@@ -875,6 +542,12 @@ GList *expected, GList *actual, ...
 
 <FUNCTION>
 <NAME>gcut_assert_equal_list_uint</NAME>
+<RETURNS>void</RETURNS>
+GList *expected, GList *actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_assert_equal_g_list_uint</NAME>
 <RETURNS>void</RETURNS>
 GList *expected, GList *actual, ...
 </FUNCTION>
@@ -918,7 +591,7 @@ GType type, GList *expected, GList *actual, ...
 <FUNCTION>
 <NAME>gcut_assert_equal_hash_table</NAME>
 <RETURNS>void</RETURNS>
-GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspectFunction key_inspect_function, GCutInspectFunction value_inspect_function, gpointer inspect_user_data, ...
+GHashTable *expected, GHashTable *actual, GEqualFunc equal_function, GCutInspectFunction key_inspect_function, GCutInspectFunction value_inspect_function, gpointer inspect_user_data
 </FUNCTION>
 
 <FUNCTION>
@@ -1002,13 +675,13 @@ guint64 expected, guint64 actual, ...
 <FUNCTION>
 <NAME>gcut_assert_equal_pid</NAME>
 <RETURNS>void</RETURNS>
-GPid expected, GPid actual, ...
+GPid expected, GPid actual
 </FUNCTION>
 
 <FUNCTION>
 <NAME>gcut_assert_not_equal_pid</NAME>
 <RETURNS>void</RETURNS>
-GPid expected, GPid actual, ...
+GPid expected, GPid actual
 </FUNCTION>
 
 # gcut-data.h
@@ -1017,12 +690,6 @@ GPid expected, GPid actual, ...
 <NAME>gcut_add_datum</NAME>
 <RETURNS>void</RETURNS>
 const gchar *name, const gchar *first_field_name, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_char</NAME>
-<RETURNS>gchar</RETURNS>
-gconstpointer data, const gchar *field_name
 </FUNCTION>
 
 <FUNCTION>
@@ -1040,24 +707,6 @@ gconstpointer data, const gchar *field_name
 <FUNCTION>
 <NAME>gcut_data_get_uint</NAME>
 <RETURNS>guint</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_int64</NAME>
-<RETURNS>gint64</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_uint64</NAME>
-<RETURNS>guint64</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_size</NAME>
-<RETURNS>gsize</RETURNS>
 gconstpointer data, const gchar *field_name
 </FUNCTION>
 
@@ -1091,46 +740,12 @@ gconstpointer data, const gchar *field_name
 gconstpointer data, const gchar *field_name
 </FUNCTION>
 
-<FUNCTION>
-<NAME>gcut_data_get_object</NAME>
-<RETURNS>gpointer</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_boolean</NAME>
-<RETURNS>gboolean</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_double</NAME>
-<RETURNS>gdouble</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-# cppcutter.h
-
-#<FUNCTION>
-#<NAME>cppcut_message</NAME>
-#<RETURNS>cut::Message</RETURNS>
-#void
-#</FUNCTION>
-
-# cppcut-assertion.h
-
-<FUNCTION>
-<NAME>cppcut_assert_equal</NAME>
-<RETURNS>void</RETURNS>
-const Type *expected, const Type *actual, ...
-</FUNCTION>
-
 # gdkcut-pixbuf-assertions.h
 
 <FUNCTION>
 <NAME>gdkcut_pixbuf_assert_equal</NAME>
 <RETURNS>void</RETURNS>
-const GdkPixbuf *expected, const GdkPixbuf *actual, guint threshold, ...
+const GdkPixbuf *expected, const GdkPixbuf *actual, guint threshold
 </FUNCTION>
 
 # soupcut-assertions.h
@@ -1138,29 +753,29 @@ const GdkPixbuf *expected, const GdkPixbuf *actual, guint threshold, ...
 <FUNCTION>
 <NAME>soupcut_message_assert_equal_content_type</NAME>
 <RETURNS>void</RETURNS>
-const gchar *expected, SoupMessage *message, ...
+const gchar *expected, SoupMessage *message
 </FUNCTION>
 
 <FUNCTION>
 <NAME>soupcut_client_assert_equal_content_type</NAME>
 <RETURNS>void</RETURNS>
-const gchar *expected, SoupCutClient *client, ...
+const gchar *expected, SoupCutClient *client
 </FUNCTION>
 
 <FUNCTION>
 <NAME>soupcut_client_assert_response</NAME>
 <RETURNS>void</RETURNS>
-SoupCutClient *client, ...
+SoupCutClient *client
 </FUNCTION>
 
 <FUNCTION>
 <NAME>soupcut_client_assert_equal_body</NAME>
 <RETURNS>void</RETURNS>
-const gchar *expected, SoupCutClient *client, ...
+const gchar *expected, SoupCutClient *client
 </FUNCTION>
 
 <FUNCTION>
 <NAME>soupcut_client_assert_match_body</NAME>
 <RETURNS>void</RETURNS>
-const gchar *pattern, SoupCutClient *client, ...
+const gchar *pattern, SoupCutClient *client
 </FUNCTION>
