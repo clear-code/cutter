@@ -22,11 +22,22 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "cut-helper.h"
+#include "cut-run-context.h"
 
 void
 cut_pop_backtrace (void)
 {
     cut_test_context_pop_backtrace(cut_get_current_test_context());
+}
+
+const char *
+cut_get_test_directory (void)
+{
+    CutRunContext *run_context;
+
+    run_context = cut_test_context_get_run_context(cut_get_current_test_context());
+
+    return cut_run_context_get_test_directory(run_context);
 }
 
 /*

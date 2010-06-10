@@ -540,6 +540,17 @@ void cut_pop_backtrace(void);
     cut_take_string(cut_utils_inspect_sockaddr(address))
 #endif
 
+/**
+ * cut_get_test_directory:
+ *
+ * Gets the directory name which is specified.
+ *
+ * Returns: a string owned by Cutter that must not be modified or freed.
+ *
+ * Since: 1.1.4
+ */
+const char *cut_get_test_directory(void);
+
 #ifdef __cplusplus
 }
 #endif

@@ -11,4 +11,5 @@ SUBDIRS =			\
 	file-stream-reader	\
 	pixbuf			\
 	path			\
-	test-context
+	test-context		\
+	test-directory

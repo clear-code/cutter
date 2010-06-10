@@ -43,6 +43,8 @@
 #  define LINE_FEED_CODE "\n"
 #endif
 
+#include "../lib/cuttest-utils.h"
+
 void test_help (void);
 void test_help_all (void);
 void test_version (void);
@@ -51,6 +53,7 @@ void test_invalid_color_option (void);
 void test_invalid_order_option (void);
 void test_invalid_verbose_option (void);
 void test_no_option (void);
+void test_get_test_directory (void);
 
 static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
@@ -332,6 +335,19 @@ test_invalid_verbose_option (void)
     cut_assert_equal_string("Invalid verbose level name: XXX" LINE_FEED_CODE,
                             stdout_string);
 }
+
+void
+test_get_test_directory (void)
+{
+    const gchar *test_dir;
+    test_dir = cut_build_path(cuttest_get_base_dir(),
+                              "fixtures",
+                              "test-directory",
+                              NULL);
+    cut_assert(run_cutter(test_dir));
+    cut_assert_exit_success();
+}
+
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

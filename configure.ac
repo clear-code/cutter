@@ -773,6 +773,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/path/parent/Makefile
 		 test/fixtures/path/parent/sub/Makefile
 		 test/fixtures/test-context/Makefile
+		 test/fixtures/test-directory/Makefile
 		 test/lib/Makefile
 		 test/cutter/Makefile
 		 test/gcutter/Makefile
