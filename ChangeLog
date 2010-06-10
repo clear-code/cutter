@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* debian/changelog: add a new entry.
+
 	* apt/: remove auto-generatable files.
 
 	* doc/install-to-centos.rd*, doc/reference/, html/index.html*: add
