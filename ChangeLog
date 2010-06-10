@@ -1,5 +1,8 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/Makefile.am, apt/sign-repository.sh: remove needless release
+	status support.
+
 	* apt/update-repository.sh: work.
 
 	* ./: update the latest release date.

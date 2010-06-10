@@ -28,9 +28,7 @@ for code_name in ${CODE_NAMES}; do
 	    distribution=ubuntu
 	    ;;
     esac
-    for status in stable development; do
-	release=${distribution}/${status}/dists/${code_name}/Release
-	rm -f ${release}.gpg
-	gpg --sign -ba -o ${release}.gpg ${release}
-    done;
+    release=${distribution}/dists/${code_name}/Release
+    rm -f ${release}.gpg
+    gpg --sign -ba -o ${release}.gpg ${release}
 done
