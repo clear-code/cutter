@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* yum/: support multi distribution packaging.
+
 	* yum/build-rpm.sh: support multi distributions.
 
 	* cutter/Makefile.am: cutter and cut-diff links to GLib related

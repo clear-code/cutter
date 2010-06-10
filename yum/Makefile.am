@@ -8,14 +8,14 @@ release: remove-existing-packages build sign update upload
 remove-existing-packages:
 	for distribution in $(DISTRIBUTIONS); do	\
 	  find $${distribution} -not -path '*/.svn/*'	\
-	     -name "*.rpm" -delete; \
+	     -name "*.rpm" -delete;			\
 	done
 
 sign:
-	./sign-rpm.sh
+	./sign-rpm.sh '$(DISTRIBUTIONS)'
 
 update:
-	./update-repository.sh
+	./update-repository.sh '$(DISTRIBUTIONS)'
 
 upload:
 	for distribution in $(DISTRIBUTIONS); do		\
