@@ -36,9 +36,9 @@ We enter into Cygwin. We run Cygwin.
 We install Cutter.
 
   % cd
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.3.tar.gz
-  % tar xvzf cutter-1.1.3.tar.gz
-  % cd cutter-1.1.3
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.4.tar.gz
+  % tar xvzf cutter-1.1.4.tar.gz
+  % cd cutter-1.1.4
   % ./configure
   % make
   % make install

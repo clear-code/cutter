@@ -109,6 +109,7 @@ update-latest-release:
 	  $(OLD_RELEASE) $(OLD_RELEASE_DATE)			\
 	  $(VERSION) $(NEW_RELEASE_DATE)			\
 	  rpm/fedora/cutter.spec.in				\
+	  rpm/centos/cutter.spec.in				\
 	  debian/changelog					\
 	  html/index.html					\
 	  html/index.html.ja					\
@@ -116,8 +117,6 @@ update-latest-release:
 	  doc/reference/header-ja.html				\
 	  doc/install-to-cygwin.rd				\
 	  doc/install-to-cygwin.rd.ja				\
-	  doc/install-to-fedora.rd				\
-	  doc/install-to-fedora.rd.ja				\
 	  doc/install-to-freebsd.rd				\
 	  doc/install-to-freebsd.rd.ja				\
 	  doc/install-to-others.rd				\
