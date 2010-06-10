@@ -197,8 +197,13 @@ if OS_WIN32
 libcutter_la_LDFLAGS += -mwindows
 endif
 
-cutter_LDADD = libcutter.la
-cut_diff_LDADD = libcutter.la
+cutter_LDADD =					\
+	$(builddir)/libcutter.la		\
+	$(GLIB_LIBS)
+
+cut_diff_LDADD =				\
+	$(builddir)/libcutter.la		\
+	$(GLIB_LIBS)
 
 $(enum_source_prefix).c: stamp-$(enum_source_prefix)-c $(enum_source_prefix).h
 	@true

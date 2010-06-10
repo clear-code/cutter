@@ -1,5 +1,8 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/Makefile.am: cutter and cut-diff links to GLib related
+	libraries.
+
 	* yum/centos/: add a directory for CentOS.
 
 	* configure.ac: add missing CentOS spec file generation.
