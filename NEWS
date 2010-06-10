@@ -2,9 +2,25 @@
 
 = NEWS --- The history of Cutter
 
-== [release-1-1-4] 1.1.4: 2010-XX-XX
+== [release-1-1-4] 1.1.4: 2010-06-10
 
-WRITE ME
+Supported CentOS.
+
+=== Cutter
+
+==== 改良
+
+  * Added assertions:
+    * ((<cut_assert_equal_file_raw()>))
+    * ((<cut_assert_not_equal_file_raw()>))
+    * ((<gcut_assert_not_equal_int64()>))
+    * ((<gcut_assert_not_equal_uint64()>))
+  * Changed to use tabs in diff if they are needed.
+  * Supported CentOS.
+
+==== Fixes
+
+  * Fixed a bug that assertion message is ignored.
 
 === Document
 

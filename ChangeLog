@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* NEWS*: add 1.1.4 entry.
+
 	* debian/changelog: add a new entry.
 
 	* apt/: remove auto-generatable files.
