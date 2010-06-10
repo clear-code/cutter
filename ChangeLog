@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/: add missing variable arguments.
+
 	* cutter/cut-assertions.h, gcutter/gcut-assertions.h, doc/: fix
 	typos.
 
