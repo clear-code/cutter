@@ -9,6 +9,18 @@ EXTRA_DIST =					\
 	install-to-debian.rd.ja			\
 	install-to-cygwin.rd			\
 	install-to-cygwin.rd.ja			\
+	install-to-fedora.rd			\
+	install-to-fedora.rd.ja			\
+	install-to-centos.rd			\
+	install-to-centos.rd.ja			\
+	install-to-freebsd.rd			\
+	install-to-freebsd.rd.ja		\
+	install-to-mac-os-x.rd			\
+	install-to-mac-os-x.rd.ja		\
+	install-to-solaris.rd			\
+	install-to-solaris.rd.ja		\
+	install-to-ubuntu.rd			\
+	install-to-ubuntu.rd.ja			\
 	install-to-others.rd			\
 	install-to-others.rd.ja			\
 	$(svg_images)

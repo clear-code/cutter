@@ -182,6 +182,7 @@ content_files =					\
 	install-to-debian.xml			\
 	install-to-ubuntu.xml			\
 	install-to-fedora.xml			\
+	install-to-centos.xml			\
 	install-to-freebsd.xml			\
 	install-to-solaris.xml			\
 	install-to-mac-os-x.xml			\
@@ -215,6 +216,8 @@ generated_xml_files =				\
 	install-to-ubuntu.xml.ja		\
 	install-to-fedora.xml			\
 	install-to-fedora.xml.ja		\
+	install-to-centos.xml			\
+	install-to-centos.xml.ja		\
 	install-to-freebsd.xml			\
 	install-to-freebsd.xml.ja		\
 	install-to-solaris.xml			\
@@ -320,6 +323,12 @@ install-to-fedora.xml: $(top_srcdir)/doc/install-to-fedora.rd $(RD2REFENTRY_LIB)
 
 install-to-fedora.xml.ja: $(top_srcdir)/doc/install-to-fedora.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-fedora.rd.ja > install-to-fedora.xml.ja
+
+install-to-centos.xml: $(top_srcdir)/doc/install-to-centos.rd $(RD2REFENTRY_LIB) install-to-centos.xml.ja
+	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-centos.rd > install-to-centos.xml
+
+install-to-centos.xml.ja: $(top_srcdir)/doc/install-to-centos.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-centos.rd.ja > install-to-centos.xml.ja
 
 install-to-freebsd.xml: $(top_srcdir)/doc/install-to-freebsd.rd $(RD2REFENTRY_LIB) install-to-freebsd.xml.ja
 	$(RD2DOCBOOK) $(top_srcdir)/doc/install-to-freebsd.rd > install-to-freebsd.xml

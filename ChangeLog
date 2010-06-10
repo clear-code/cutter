@@ -1,5 +1,8 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/install-to-centos.rd*, doc/reference/, html/index.html*: add
+	an install document for CentOS.
+
 	* yum/Makefile.am, yum/build-repository-rpm.sh, yum/cutter.repo:
 	create repository RPM for each distribution.
 
