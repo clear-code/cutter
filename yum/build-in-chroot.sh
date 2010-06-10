@@ -94,7 +94,7 @@ build()
     rpm_base_dir=${build_user_dir}/rpm
     rpm_dir=${rpm_base_dir}/RPMS/${architecture}
     srpm_dir=${rpm_base_dir}/SRPMS
-    pool_base_dir=${distribution_name}/${distribution_version}
+    pool_base_dir=${distribution}/${distribution_version}
     binary_pool_dir=$pool_base_dir/$architecture/Packages
     source_pool_dir=$pool_base_dir/source/SRPMS
     run cp $source_dir/${PACKAGE}-${VERSION}.tar.gz \
