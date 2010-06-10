@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.3\n"
 "POT-Creation-Date: 2010-06-10 14:55+0900\n"
-"PO-Revision-Date: 2010-06-10 14:45+0900\n"
+"PO-Revision-Date: 2010-06-10 14:57+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -12807,9 +12807,8 @@ msgstr ""
 "セージを次の検証の後でも維持します。"
 
 #: xml/cutter.xml:444(title)
-#, fuzzy
 msgid "cut_message ()"
-msgstr "cut_assert ()"
+msgstr ""
 
 #: xml/cutter.xml:446(programlisting)
 #, no-wrap
@@ -18395,7 +18394,7 @@ msgstr ""
 
 #: xml/cut-assertions.xml:315(title)
 msgid "cut_assert ()"
-msgstr "cut_assert ()"
+msgstr ""
 
 #: xml/cut-assertions.xml:317(programlisting)
 #, no-wrap
