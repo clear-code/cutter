@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* apt/update-repository.sh: work.
+
 	* ./: update the latest release date.
 
 	* doc/reference/: add missing variable arguments.

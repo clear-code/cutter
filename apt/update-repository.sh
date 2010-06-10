@@ -2,7 +2,7 @@
 
 script_base_dir=`dirname $0`
 
-if [ $# != 2 ]; then
+if [ $# != 3 ]; then
     echo "Usage: $0 PROJECT_NAME PACKAGE_NAME CODE_NAMES"
     echo " e.g.: $0 'Cutter' 'Cutter' 'lenny unstable hardy lucid'"
     exit 1
@@ -24,19 +24,18 @@ run()
 update_repository()
 {
     distribution=$1
-    status=$2
-    code_name=$3
-    component=$4
+    code_name=$2
+    component=$3
 
     mkdir -p dists/${code_name}/${component}/binary-i386/
     mkdir -p dists/${code_name}/${component}/binary-amd64/
     mkdir -p dists/${code_name}/${component}/source/
 
-    cat <<EOF dists/.htaccess
+    cat <<EOF > dists/.htaccess
 Options +Indexes
 EOF
 
-    cat <<EOF dists/${code_name}/${component}/binary-i386/Release
+    cat <<EOF > dists/${code_name}/${component}/binary-i386/Release
 Archive: ${code_name}
 Component: ${component}
 Origin: The ${PROJECT_NAME} project
@@ -44,7 +43,7 @@ Label: The ${PROJECT_NAME} project
 Architecture: i386
 EOF
 
-    cat <<EOF dists/${code_name}/${component}/binary-amd64/Release
+    cat <<EOF > dists/${code_name}/${component}/binary-amd64/Release
 Archive: ${code_name}
 Component: ${component}
 Origin: The ${PROJECT_NAME} project
@@ -52,7 +51,7 @@ Label: The ${PROJECT_NAME} project
 Architecture: amd64
 EOF
 
-    cat <<EOF dists/${code_name}/${component}/source/Release
+    cat <<EOF > dists/${code_name}/${component}/source/Release
 Archive: ${code_name}
 Component: ${component}
 Origin: The ${PROJECT_NAME} project
@@ -60,7 +59,7 @@ Label: The ${PROJECT_NAME} project
 Architecture: source
 EOF
 
-    cat <<EOF > ../generate-${code_name}.conf
+    cat <<EOF > generate-${code_name}.conf
 Dir::ArchiveDir ".";
 Dir::CacheDir ".";
 TreeDefault::Directory "pool/${code_name}/${component}";
@@ -87,11 +86,11 @@ Tree "dists/${code_name}" {
   Architectures "i386 amd64 source";
 };
 EOF
-    apt-ftparchive generate ../generate-${code_name}.conf
+    apt-ftparchive generate generate-${code_name}.conf
     rm -f dists/${code_name}/Release*
     rm -f *.db
 
-    cat <<EOF > ../release-${code_name}.conf
+    cat <<EOF > release-${code_name}.conf
 APT::FTPArchive::Release::Origin "The ${PROJECT_NAME} project";
 APT::FTPArchive::Release::Label "The ${PROJECT_NAME} project";
 APT::FTPArchive::Release::Architectures "i386 amd64";
@@ -100,7 +99,7 @@ APT::FTPArchive::Release::Suite "${code_name}";
 APT::FTPArchive::Release::Components "${component}";
 APT::FTPArchive::Release::Description "${PACKAGE_NAME} packages";
 EOF
-    apt-ftparchive -c ../release-${code_name}.conf \
+    apt-ftparchive -c release-${code_name}.conf \
 	release dists/${code_name} > /tmp/Release
     mv /tmp/Release dists/${code_name}
 }
@@ -113,11 +112,10 @@ for code_name in ${CODE_NAMES}; do
 	    ;;
 	*)
 	    distribution=ubuntu
-	    component=universe
+	    component=main
 	    ;;
     esac
-    for status in stable development; do
-	(cd ${distribution}/${status}
-	    update_repository $distribution $status $code_name $component);
-    done;
+    mkdir -p ${distribution}
+    (cd ${distribution}
+	update_repository $distribution $code_name $component)
 done
