@@ -1,4 +1,4 @@
-SERVER_PATH = $(SF_USER),cutter@$(SF_HTDOCS)
+SERVER_PATH = $(SF_USER),$(SF_PROJECT_ID)@$(SF_HTDOCS)
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
@@ -13,7 +13,8 @@ remove-existing-packages:
 	done
 
 update:
-	./update-repository.sh '$(DISTRIBUTIONS)' '$(ARCHITECTURES)'
+	./update-repository.sh \
+	  '$(SF_PROJECT_NAME)' '$(PACKAGE_TITLE)' '$(CODE_NAMES)'
 
 sign:
 	./sign-repository.sh '$(DISTRIBUTIONS)'
@@ -35,5 +36,5 @@ download:
 
 build:
 	./build-in-chroot.sh \
-	  $(VERSION) $(CHROOT_BASE) \
+	  $(PACKAGE) $(VERSION) $(CHROOT_BASE) \
 	  '$(ARCHITECTURES)' '$(CODE_NAMES)'

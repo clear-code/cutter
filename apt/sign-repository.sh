@@ -3,12 +3,12 @@
 script_base_dir=`dirname $0`
 
 if [ $# != 1 ]; then
-    echo "Usage: $0 DISTRIBUTIONS"
-    echo " e.g.: $0 'debian ubuntu'"
+    echo "Usage: $0 CODE_NAMES"
+    echo " e.g.: $0 'lenny unstable hardy lucid'"
     exit 1
 fi
 
-DISTRIBUTIONS=$1
+CODE_NAMES=$1
 
 run()
 {
@@ -19,9 +19,17 @@ run()
     fi
 }
 
-for distribution in ${DISTRIBUTIONS}; do
-    for target in $(cat ${distribution}/TARGETS); do
-	release=${distribution}/dists/${target}/Release
+for code_name in ${CODE_NAMES}; do
+    case ${code_name} in
+	lenny|unstable)
+	    distribution=debian
+	    ;;
+	*)
+	    distribution=ubuntu
+	    ;;
+    esac
+    for status in stable development; do
+	release=${distribution}/${status}/dists/${code_name}/Release
 	rm -f ${release}.gpg
 	gpg --sign -ba -o ${release}.gpg ${release}
     done;

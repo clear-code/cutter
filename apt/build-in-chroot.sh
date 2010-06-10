@@ -1,16 +1,16 @@
 #!/bin/sh
 
-if [ $# != 4 ]; then
-    echo "Usage: $0 VERSION CHROOT_BASE ARCHITECTURES CODES"
-    echo " e.g.: $0 1.1.1 /var/lib/chroot 'i386 amd64' 'lenny unstable hardy karmic'"
+if [ $# != 5 ]; then
+    echo "Usage: $0 PACKAGE VERSION CHROOT_BASE ARCHITECTURES CODES"
+    echo " e.g.: $0 cutter 1.1.1 /var/lib/chroot 'i386 amd64' 'lenny unstable hardy karmic'"
     exit 1
 fi
 
-PACKAGE=cutter
-VERSION=$1
-CHROOT_BASE=$2
-ARCHITECTURES=$3
-CODES=$4
+PACKAGE=$1
+VERSION=$2
+CHROOT_BASE=$3
+ARCHITECTURES=$4
+CODES=$5
 
 PATH=/usr/local/sbin:/usr/sbin:$PATH
 
