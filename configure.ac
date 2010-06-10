@@ -668,13 +668,25 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-start],
 /**
  * CUT_SUPPORT_GLIB:
  *
- * Shows GLib support is available. That is, we can use <gcutter.h>.
+ * Shows GLib support is available. That is, we can use &lt;gcutter.h&gt;.
  * It is always defined.
  */
 #define CUT_SUPPORT_GLIB 1
 _______EOF
 ])
 
+AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-header],
+[
+  cat <<\_______EOF >> cutter/cut-features.h
+
+/**
+ * CUT_SUPPORT_GDK_PIXBUF:
+ *
+ * Shows GdkPixbuf support is available.
+ * That is, we can use &lt;gdkcutter-pixbuf.h&gt;.
+ */
+_______EOF
+])
   if test "$gdk_pixbuf_exists" = "yes"; then
 AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-enable],
 [
@@ -687,6 +699,19 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-disable],
 ])
   fi
 
+AC_CONFIG_COMMANDS([cutter/cut-features.h-have-c99-stdint-types-header],
+[
+  cat <<\_______EOF >> cutter/cut-features.h
+
+/**
+ * CUT_SUPPORT_C99_STDINT_TYPES:
+ *
+ * Shows C99 stdint types support is available.
+ * That is, we can use assertions that use C99 stdint types.
+ * e.g. cut_assert_equal_int_least8().
+ */
+_______EOF
+])
   if test "$have_c99_stdint_types" = "yes"; then
 AC_CONFIG_COMMANDS([cutter/cut-features.h-have-c99-stdint-types],
 [

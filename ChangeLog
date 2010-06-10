@@ -1,5 +1,7 @@
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* configure.ac, doc/reference/cutter-docs.sgml: document cut-features.
+
 	* NEWS*: add cut_get_test_directory().
 
 	* apt/build-in-chroot.sh: remove .svn directory.

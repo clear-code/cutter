@@ -46,6 +46,7 @@
       <title>Writing test</title>
       <xi:include href="xml/cutter.xml"/>
       <xi:include href="xml/cut-version.xml"/>
+      <xi:include href="xml/cut-features.xml"/>
       <xi:include href="xml/cut-assertions.xml"/>
       <xi:include href="xml/cut-test-utils.xml"/>
       <xi:include href="xml/cut-types.xml"/>

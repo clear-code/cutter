@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.3\n"
-"POT-Creation-Date: 2010-06-10 13:31+0900\n"
-"PO-Revision-Date: 2010-06-10 13:39+0900\n"
+"POT-Creation-Date: 2010-06-10 14:25+0900\n"
+"PO-Revision-Date: 2010-06-10 14:29+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -13995,7 +13995,10 @@ msgid ""
 "the inspect target string. It should be <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link> or <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>-terminated."
-msgstr "詳細な情報を取得したい文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>または<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端でなければいけません。"
+msgstr ""
+"詳細な情報を取得したい文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</"
+"literal></link>または<link linkend=\"NULL:CAPS\"><literal>NULL</literal></"
+"link>終端でなければいけません。"
 
 #: xml/cut-test-utils.xml:281(simpara) xml/cut-helper.xml:481(simpara)
 msgid "a inspected string owned by Cutter. Don't free it."
@@ -16740,7 +16743,7 @@ msgstr ""
 #: xml/api-index-full.xml:489(link) xml/api-index-full.xml:490(link)
 #: xml/api-index-full.xml:491(link)
 msgid "Available features"
-msgstr "利用可能な機能一覧。"
+msgstr "利用可能な機能一覧"
 
 #: xml/cut-features.xml:15(refpurpose)
 msgid "Available features in the installed Cutter."
@@ -16751,11 +16754,13 @@ msgstr "インストールされているCutterで利用可能な機能一覧。
 msgid "CUT_SUPPORT_GLIB"
 msgstr ""
 
-#: xml/cut-features.xml:22(link) xml/api-index-full.xml:490(link)
+#: xml/cut-features.xml:22(link) xml/cut-features.xml:46(title)
+#: xml/cut-features.xml:47(primary) xml/api-index-full.xml:490(link)
 msgid "CUT_SUPPORT_GDK_PIXBUF"
 msgstr ""
 
-#: xml/cut-features.xml:23(link) xml/api-index-full.xml:489(link)
+#: xml/cut-features.xml:23(link) xml/cut-features.xml:55(title)
+#: xml/cut-features.xml:56(primary) xml/api-index-full.xml:489(link)
 msgid "CUT_SUPPORT_C99_STDINT_TYPES"
 msgstr ""
 
@@ -16771,7 +16776,9 @@ msgstr ""
 msgid ""
 "There are some macros to check a feature is available in the installed "
 "Cutter."
-msgstr "インストールされているCutterで利用可能な機能かどうかを確認するマクロがあります。"
+msgstr ""
+"インストールされているCutterで利用可能な機能かどうかを確認するマクロがありま"
+"す。"
 
 #: xml/cut-features.xml:39(programlisting)
 #, no-wrap
@@ -16780,12 +16787,32 @@ msgstr ""
 
 #: xml/cut-features.xml:41(para)
 msgid ""
-"Shows GLib support is available. That is, we can use <gcutter.h>. It is "
-"always defined. CUT_SUPPORT_GDK_PIXBUF CUT_SUPPORT_GDK_PIXBUF #define "
-"CUT_SUPPORT_GDK_PIXBUF 1 CUT_SUPPORT_C99_STDINT_TYPES "
-"CUT_SUPPORT_C99_STDINT_TYPES #define CUT_SUPPORT_C99_STDINT_TYPES 1 </"
-"gcutter.h>"
+"Shows GLib support is available. That is, we can use &lt;gcutter.h&gt;. It "
+"is always defined."
+msgstr "GLibサポートが利用可能であることを示します。つまり、&lt;gcutter.h&gt;を使えるということです。このマクロは常に定義されます。"
+
+#: xml/cut-features.xml:48(programlisting)
+#, no-wrap
+msgid "#define CUT_SUPPORT_GDK_PIXBUF 1\n"
 msgstr ""
+
+#: xml/cut-features.xml:50(para)
+msgid ""
+"Shows GdkPixbuf support is available. That is, we can use &lt;gdkcutter-"
+"pixbuf.h&gt;."
+msgstr "GdkPixbufサポートが利用可能であることを示します。つまり、&lt;gdkcutter-pixbuf.h&gt;を使えるということです。"
+
+#: xml/cut-features.xml:57(programlisting)
+#, no-wrap
+msgid "#define CUT_SUPPORT_C99_STDINT_TYPES 1\n"
+msgstr ""
+
+#: xml/cut-features.xml:59(para)
+msgid ""
+"Shows C99 stdint types support is available. That is, we can use assertions "
+"that use C99 stdint types. e.g. <link linkend=\"cut-assert-equal-int-"
+"least8\"><function>cut_assert_equal_int_least8()</function></link>."
+msgstr "C99の整数型のサポートが利用可能であることを示します。つまり、C99の整数型を利用した検証を利用できるということです。例えば、<link linkend=\"cut-assert-equal-int-least8\"><function>cut_assert_equal_int_least8()</function></link>がC99の整数型を利用した検証です。"
 
 #: xml/cut-factory-builder.xml:7(refentrytitle)
 #: xml/cut-factory-builder.xml:14(refname)
@@ -20622,7 +20649,9 @@ msgstr ""
 msgid ""
 "Passes if the content of <parameter>expected</parameter> == the content of "
 "<parameter>actual</parameter>."
-msgstr "<parameter>expected</parameter>の内容と<parameter>actual</parameter>内容が等しいときパスします。"
+msgstr ""
+"<parameter>expected</parameter>の内容と<parameter>actual</parameter>内容が等"
+"しいときパスします。"
 
 #: xml/cut-assertions.xml:2244(title)
 msgid "cut_assert_not_equal_file_raw()"
@@ -21722,103 +21751,103 @@ msgstr "コマンド"
 msgid "Writing test"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:72(title)
+#: cutter-docs.sgml:73(title)
 msgid "Writing assertion"
 msgstr "検証作成"
 
-#: cutter-docs.sgml:114(title)
+#: cutter-docs.sgml:115(title)
 msgid "Index of all symbols"
 msgstr "すべてのシンボル一覧"
 
-#: cutter-docs.sgml:117(title)
+#: cutter-docs.sgml:118(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:120(title)
+#: cutter-docs.sgml:121(title)
 msgid "Index of new symbols in 1.1.4"
 msgstr "1.1.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:123(title)
+#: cutter-docs.sgml:124(title)
 msgid "Index of new symbols in 1.1.3"
 msgstr "1.1.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:126(title)
+#: cutter-docs.sgml:127(title)
 msgid "Index of new symbols in 1.1.2"
 msgstr "1.1.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:129(title)
+#: cutter-docs.sgml:130(title)
 msgid "Index of new symbols in 1.1.1"
 msgstr "1.1.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:132(title)
+#: cutter-docs.sgml:133(title)
 msgid "Index of new symbols in 1.1.0"
 msgstr "1.1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:135(title)
+#: cutter-docs.sgml:136(title)
 msgid "Index of new symbols in 1.0.9"
 msgstr "1.0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:138(title)
+#: cutter-docs.sgml:139(title)
 msgid "Index of new symbols in 1.0.8"
 msgstr "1.0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:141(title)
+#: cutter-docs.sgml:142(title)
 msgid "Index of new symbols in 1.0.7"
 msgstr "1.0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:144(title)
+#: cutter-docs.sgml:145(title)
 msgid "Index of new symbols in 1.0.6"
 msgstr "1.0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:147(title)
+#: cutter-docs.sgml:148(title)
 msgid "Index of new symbols in 1.0.5"
 msgstr "1.0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:150(title)
+#: cutter-docs.sgml:151(title)
 msgid "Index of new symbols in 1.0.4"
 msgstr "1.0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:153(title)
+#: cutter-docs.sgml:154(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:156(title)
+#: cutter-docs.sgml:157(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:159(title)
+#: cutter-docs.sgml:160(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:162(title)
+#: cutter-docs.sgml:163(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:165(title)
+#: cutter-docs.sgml:166(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:168(title)
+#: cutter-docs.sgml:169(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:171(title)
+#: cutter-docs.sgml:172(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:174(title)
+#: cutter-docs.sgml:175(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:177(title)
+#: cutter-docs.sgml:178(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:180(title)
+#: cutter-docs.sgml:181(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:183(title)
+#: cutter-docs.sgml:184(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
