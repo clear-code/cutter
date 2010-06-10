@@ -1,3 +1,7 @@
+2010-06-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.am, po/POTFILES.in: update po.
+
 2010-06-10  Kouhei Sutou  <kou@clear-code.com>
 
 	* NEWS: translate Japanese.

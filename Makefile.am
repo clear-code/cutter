@@ -85,7 +85,8 @@ update-po:
 	   find cppcutter -name '*.c';		\
 	   find gdkcutter-pixbuf -name '*.c';	\
 	   find soupcutter -name '*.c';		\
-	   find module -name '*.c') |		\
+	   find module -name '*.c';		\
+	   find glib-compatible -name '*.c') |	\
 	  grep -v cut-marshalers.c |		\
 	  sort > po/POTFILES.in
 	cd po && $(MAKE) $(AM_MAKEFLAGS) update-po
