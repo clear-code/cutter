@@ -1,3 +1,7 @@
+2010-06-11  Kouhei Sutou  <kou@clear-code.com>
+
+	* TODO: report errors in data setup function.
+
 2010-06-10  Kouhei Sutou  <kou@cozmixng.org>
 
 	* Makefile.am, po/POTFILES.in: update po.

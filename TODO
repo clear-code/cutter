@@ -1,3 +1,4 @@
+* report errors in data setup function.
 * add CUTTER_DEBUG technique in test/run-test.sh to tutorial
   as a debugging technique.
 * use real data instead of dummy data (e.g. a, b, c, ...)
