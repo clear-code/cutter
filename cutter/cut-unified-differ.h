@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -57,10 +57,6 @@ const gchar *cut_unified_differ_get_from_label (CutDiffer   *differ);
 void         cut_unified_differ_set_to_label   (CutDiffer   *differ,
                                                 const gchar *label);
 const gchar *cut_unified_differ_get_to_label   (CutDiffer   *differ);
-
-void         cut_unified_differ_set_context    (CutDiffer   *differ,
-                                                gint         context);
-gint         cut_unified_differ_get_context    (CutDiffer   *differ);
 
 G_END_DECLS
 

@@ -200,14 +200,40 @@ cut_differ_get_sequence_matcher (CutDiffer *differ)
 
     priv = CUT_DIFFER_GET_PRIVATE(differ);
     if (!priv->matcher) {
+        CutDifferClass *klass;
         gchar **from, **to;
 
         from = cut_differ_get_from(differ);
         to = cut_differ_get_to(differ);
         priv->matcher = cut_sequence_matcher_string_new(from, to);
+
+        klass = CUT_DIFFER_GET_CLASS(differ);
+        if (klass->get_initial_context_size) {
+            guint context_size;
+            context_size = klass->get_initial_context_size(differ);
+            cut_sequence_matcher_set_context_size(priv->matcher, context_size);
+        }
     }
 
     return priv->matcher;
+}
+
+void
+cut_differ_set_context_size (CutDiffer *differ, guint context_size)
+{
+    CutSequenceMatcher *matcher;
+
+    matcher = cut_differ_get_sequence_matcher(differ);
+    return cut_sequence_matcher_set_context_size(matcher, context_size);
+}
+
+guint
+cut_differ_get_context_size (CutDiffer *differ)
+{
+    CutSequenceMatcher *matcher;
+
+    matcher = cut_differ_get_sequence_matcher(differ);
+    return cut_sequence_matcher_get_context_size(matcher);
 }
 
 gboolean

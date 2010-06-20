@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -36,7 +36,6 @@ struct _CutUnifiedDifferPrivate
 {
     gchar *from_label;
     gchar *to_label;
-    gint context;
 };
 
 G_DEFINE_TYPE(CutUnifiedDiffer, cut_unified_differ, CUT_TYPE_DIFFER)
@@ -70,7 +69,6 @@ cut_unified_differ_init (CutUnifiedDiffer *differ)
     priv = CUT_UNIFIED_DIFFER_GET_PRIVATE(differ);
     priv->from_label = NULL;
     priv->to_label = NULL;
-    priv->context = 3;
 }
 
 static void
@@ -132,21 +130,6 @@ const gchar *
 cut_unified_differ_get_to_label (CutDiffer *differ)
 {
     return CUT_UNIFIED_DIFFER_GET_PRIVATE(differ)->to_label;
-}
-
-void
-cut_unified_differ_set_context (CutDiffer *differ, gint context)
-{
-    CutUnifiedDifferPrivate *priv;
-
-    priv = CUT_UNIFIED_DIFFER_GET_PRIVATE(differ);
-    priv->context = context;
-}
-
-gint
-cut_unified_differ_get_context (CutDiffer *differ)
-{
-    return CUT_UNIFIED_DIFFER_GET_PRIVATE(differ)->context;
 }
 
 static void

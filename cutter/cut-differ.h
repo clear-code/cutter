@@ -49,6 +49,8 @@ struct _CutDifferClass
     void    (*diff)              (CutDiffer *differ, CutDiffWriter *writer);
     gdouble (*get_best_ratio)    (CutDiffer *differ);
     gdouble (*get_cut_off_ratio) (CutDiffer *differ);
+    guint   (*get_initial_context_size)
+                                 (CutDiffer *differ);
 };
 
 GType         cut_differ_get_type         (void) G_GNUC_CONST;
@@ -63,6 +65,10 @@ gchar       **cut_differ_get_to           (CutDiffer   *differ);
 CutSequenceMatcher *
               cut_differ_get_sequence_matcher
                                           (CutDiffer   *differ);
+void          cut_differ_set_context_size (CutDiffer   *differ,
+                                           guint        context);
+guint         cut_differ_get_context_size (CutDiffer   *differ);
+
 gboolean      cut_differ_need_diff        (CutDiffer   *differ);
 
 gboolean      cut_differ_util_is_space_character

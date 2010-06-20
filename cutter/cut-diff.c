@@ -32,7 +32,7 @@
 
 static gboolean use_color = FALSE;
 static gboolean unified_diff = FALSE;
-static gint unified_diff_context = 3; /* FIXME: support option */
+static gint context_lines = -1;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -60,6 +60,8 @@ static const GOptionEntry option_entries[] =
      "[yes|true|no|false|auto]"},
     {"unified", 'u', 0, G_OPTION_ARG_NONE, &unified_diff,
      N_("Use unified diff format"), NULL},
+    {"context-lines", '\0', 0, G_OPTION_ARG_INT, &context_lines,
+     N_("Use LINES as diff context lines"), "LINES"},
     {NULL}
 };
 
@@ -107,7 +109,6 @@ print_diff (const gchar *from, const gchar *to)
         differ = cut_unified_differ_new(from_contents, to_contents);
         cut_unified_differ_set_from_label(differ, from);
         cut_unified_differ_set_to_label(differ, to);
-        cut_unified_differ_set_context(differ, unified_diff_context);
     } else {
         if (use_color) {
             differ = cut_colorize_differ_new(from_contents, to_contents);
@@ -116,6 +117,8 @@ print_diff (const gchar *from, const gchar *to)
         }
         print_diff_header(writer, from, to);
     }
+    if (context_lines > 0)
+        cut_differ_set_context_size(differ, context_lines);
     cut_differ_diff(differ, writer);
     g_object_unref(writer);
     g_object_unref(differ);

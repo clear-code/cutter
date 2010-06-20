@@ -1,5 +1,10 @@
 2010-06-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-diff.c: make context lines customizable.
+
+	* cutter/cut-differ.[ch], cutter/cut-unified-differ.[ch],
+	cutter/cut-readable-differ.c: share context size accessor.
+
 	* cutter/cut-unified-differ.c: move no difference check utility to ...
 	* cutter/cut-differ.[ch]: ... here.
 

@@ -37,6 +37,8 @@ static void diff_line   (CutDiffer     *differ,
                          CutDiffWriter *writer,
                          gchar         *from_line,
                          gchar         *to_line);
+static guint get_initial_context_size
+                        (CutDiffer     *differ);
 
 static void
 cut_readable_differ_class_init (CutReadableDifferClass *klass)
@@ -45,6 +47,7 @@ cut_readable_differ_class_init (CutReadableDifferClass *klass)
 
     differ_class = CUT_DIFFER_CLASS(klass);
     differ_class->diff = diff;
+    differ_class->get_initial_context_size = get_initial_context_size;
 
     klass->diff_line = diff_line;
 }
@@ -336,6 +339,12 @@ diff (CutDiffer *differ, CutDiffWriter *writer)
         }
     }
     cut_diff_writer_finish(writer);
+}
+
+static guint
+get_initial_context_size (CutDiffer *differ)
+{
+    return 0;
 }
 
 gchar *
