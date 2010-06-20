@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -72,6 +72,8 @@ guint         cut_differ_util_compute_width
                                           (const gchar *string,
                                            guint         begin,
                                            guint         end);
+gboolean      cut_differ_util_is_same_content
+                                          (const GList  *groups);
 
 G_END_DECLS
 

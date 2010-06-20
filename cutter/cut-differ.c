@@ -304,6 +304,25 @@ cut_differ_util_compute_width (const gchar *string, guint begin, guint end)
     return width;
 }
 
+gboolean
+cut_differ_util_is_same_content (const GList  *groups)
+{
+    const GList *group;
+    CutSequenceMatchOperation *operation;
+
+    if (g_list_next(groups))
+        return FALSE;
+
+    group = groups->data;
+    if (group && g_list_next(group))
+        return FALSE;
+
+    operation = group->data;
+    return operation->type == CUT_SEQUENCE_MATCH_OPERATION_EQUAL &&
+        operation->from_begin == operation->to_begin &&
+        operation->from_end == operation->to_end;
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

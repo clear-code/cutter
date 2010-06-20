@@ -1,5 +1,8 @@
 2010-06-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-unified-differ.c: move no difference check utility to ...
+	* cutter/cut-differ.[ch]: ... here.
+
 	* cutter/cut-sequence-matcher.[ch],
 	test/cutter/test-cut-sequence-matcher.c: make context size
 	customizable.
