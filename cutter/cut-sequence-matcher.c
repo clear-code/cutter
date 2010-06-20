@@ -44,6 +44,7 @@ struct _CutSequenceMatcherPrivate
     GList *operations;
     GList *grouped_operations;
     gdouble ratio;
+    guint context_size;
 };
 
 enum
@@ -70,7 +71,7 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 CutSequenceMatchInfo *
-cut_sequence_match_info_new (gint from_index, gint to_index, gint size)
+cut_sequence_match_info_new (guint from_index, guint to_index, guint size)
 {
     CutSequenceMatchInfo *info;
 
@@ -89,8 +90,8 @@ cut_sequence_match_info_free (CutSequenceMatchInfo *info)
 
 CutSequenceMatchOperation *
 cut_sequence_match_operation_new (CutSequenceMatchOperationType type,
-                                  gint from_begin, gint from_end,
-                                  gint to_begin, gint to_end)
+                                  guint from_begin, guint from_end,
+                                  guint to_begin, guint to_end)
 {
     CutSequenceMatchOperation *operation;
 
@@ -176,6 +177,25 @@ cut_sequence_matcher_init (CutSequenceMatcher *sequence_matcher)
     priv->operations = NULL;
     priv->grouped_operations = NULL;
     priv->ratio = -1.0;
+    priv->context_size = 3;
+}
+
+static void
+dispose_goruped_operations (CutSequenceMatcherPrivate *priv)
+{
+    GList *node;
+
+    if (!priv->grouped_operations)
+        return;
+
+    for (node = priv->grouped_operations; node; node = g_list_next(node)) {
+        GList *operations = node->data;
+        g_list_foreach(operations,
+                       (GFunc)cut_sequence_match_operation_free, NULL);
+        g_list_free(operations);
+    }
+    g_list_free(priv->grouped_operations);
+    priv->grouped_operations = NULL;
 }
 
 static void
@@ -225,17 +245,7 @@ dispose (GObject *object)
         priv->operations = NULL;
     }
 
-    if (priv->grouped_operations) {
-        GList *node;
-        for (node = priv->grouped_operations; node; node = g_list_next(node)) {
-            GList *operations = node->data;
-            g_list_foreach(operations,
-                           (GFunc)cut_sequence_match_operation_free, NULL);
-            g_list_free(operations);
-        }
-        g_list_free(priv->grouped_operations);
-        priv->grouped_operations = NULL;
-    }
+    dispose_goruped_operations(priv);
 
     G_OBJECT_CLASS(cut_sequence_matcher_parent_class)->dispose(object);
 }
@@ -348,7 +358,7 @@ update_to_indices (CutSequenceMatcher *matcher,
                    gpointer junk_filter_func_user_data)
 {
     CutSequenceMatcherPrivate *priv;
-    int i;
+    gint i;
     GSequenceIter *iter, *begin, *end;
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
@@ -530,8 +540,8 @@ cut_sequence_matcher_get_to_index (CutSequenceMatcher *matcher,
 
 static CutSequenceMatchInfo *
 find_best_match_position (CutSequenceMatcher *matcher,
-                          gint from_begin, gint from_end,
-                          gint to_begin, gint to_end)
+                          guint from_begin, guint from_end,
+                          guint to_begin, guint to_end)
 {
     CutSequenceMatcherPrivate *priv;
     CutSequenceMatchInfo *info;
@@ -547,7 +557,7 @@ find_best_match_position (CutSequenceMatcher *matcher,
     begin = g_sequence_get_iter_at_pos(priv->from, from_begin);
     end = g_sequence_get_iter_at_pos(priv->from, from_end + 1);
     for (iter = begin; iter != end; iter = g_sequence_iter_next(iter)) {
-        gint from_index;
+        guint from_index;
         const GList *node;
 
         from_index = g_sequence_iter_get_position(iter);
@@ -556,7 +566,7 @@ find_best_match_position (CutSequenceMatcher *matcher,
                                                       g_sequence_get(iter));
              node;
              node = g_list_next(node)) {
-            gint size, to_index;
+            guint size, to_index;
             gpointer size_as_pointer;
 
             to_index = GPOINTER_TO_INT(node->data);
@@ -565,13 +575,13 @@ find_best_match_position (CutSequenceMatcher *matcher,
             if (to_index > to_end)
                 break;
 
-            size_as_pointer = g_hash_table_lookup(sizes,
-                                                  GINT_TO_POINTER(to_index - 1));
+            size_as_pointer =
+                g_hash_table_lookup(sizes, GUINT_TO_POINTER(to_index - 1));
             size = GPOINTER_TO_INT(size_as_pointer);
             size++;
-            size_as_pointer = GINT_TO_POINTER(size);
+            size_as_pointer = GUINT_TO_POINTER(size);
             g_hash_table_insert(current_sizes,
-                                GINT_TO_POINTER(to_index),
+                                GUINT_TO_POINTER(to_index),
                                 size_as_pointer);
             if (size > info->size) {
                 info->from_index = from_index - size + 1;
@@ -588,7 +598,7 @@ find_best_match_position (CutSequenceMatcher *matcher,
 }
 
 static gboolean
-check_junk (CutSequenceMatcherPrivate *priv, gboolean should_junk, gint index)
+check_junk (CutSequenceMatcherPrivate *priv, gboolean should_junk, guint index)
 {
     gpointer key;
     gboolean is_junk;
@@ -599,7 +609,7 @@ check_junk (CutSequenceMatcherPrivate *priv, gboolean should_junk, gint index)
 }
 
 static gboolean
-equal_content (CutSequenceMatcherPrivate *priv, gint from_index, gint to_index)
+equal_content (CutSequenceMatcherPrivate *priv, guint from_index, guint to_index)
 {
     GSequenceIter *from_iter, *to_iter;
 
@@ -614,8 +624,8 @@ static void
 adjust_best_info_with_junk_predicate (CutSequenceMatcher *matcher,
                                       gboolean should_junk,
                                       CutSequenceMatchInfo *best_info,
-                                      gint from_begin, gint from_end,
-                                      gint to_begin, gint to_end)
+                                      guint from_begin, guint from_end,
+                                      guint to_begin, guint to_end)
 {
     CutSequenceMatcherPrivate *priv;
 
@@ -646,8 +656,8 @@ adjust_best_info_with_junk_predicate (CutSequenceMatcher *matcher,
 
 CutSequenceMatchInfo *
 cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
-                                        gint from_begin, gint from_end,
-                                        gint to_begin, gint to_end)
+                                        guint from_begin, guint from_end,
+                                        guint to_begin, guint to_end)
 {
     CutSequenceMatcherPrivate *priv;
     CutSequenceMatchInfo *info;
@@ -671,16 +681,16 @@ cut_sequence_matcher_get_longest_match (CutSequenceMatcher *matcher,
 
 typedef struct _MatchingInfo MatchingInfo;
 struct _MatchingInfo {
-    gint from_begin;
-    gint from_end;
-    gint to_begin;
-    gint to_end;
+    guint from_begin;
+    guint from_end;
+    guint to_begin;
+    guint to_end;
 };
 
 static void
 push_matching_info (GQueue *queue,
-                    gint from_begin, gint from_end,
-                    gint to_begin, gint to_end)
+                    guint from_begin, guint from_end,
+                    guint to_begin, guint to_end)
 {
     MatchingInfo *info;
 
@@ -773,7 +783,7 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
 }
 
 static GList *
-prepend_match_info (GList *list, gint begin, gint end, gint size)
+prepend_match_info (GList *list, guint begin, guint end, guint size)
 {
     return g_list_prepend(list, cut_sequence_match_info_new(begin, end, size));
 }
@@ -782,7 +792,7 @@ const GList *
 cut_sequence_matcher_get_blocks (CutSequenceMatcher *matcher)
 {
     CutSequenceMatcherPrivate *priv;
-    gint from_index, to_index, size;
+    guint from_index, to_index, size;
     const GList *node;
     GList *blocks = NULL;
 
@@ -821,7 +831,7 @@ cut_sequence_matcher_get_blocks (CutSequenceMatcher *matcher)
 }
 
 static CutSequenceMatchOperationType
-determine_operation_type (gint from_index, gint to_index,
+determine_operation_type (guint from_index, guint to_index,
                           CutSequenceMatchInfo *info)
 {
     if (from_index < info->from_index && to_index < info->to_index) {
@@ -837,7 +847,8 @@ determine_operation_type (gint from_index, gint to_index,
 
 static GList *
 prepend_operation (GList *list, CutSequenceMatchOperationType type,
-                   gint from_begin, gint from_end, gint to_begin, gint to_end)
+                   guint from_begin, guint from_end,
+                   guint to_begin, guint to_end)
 {
     return g_list_prepend(list,
                           cut_sequence_match_operation_new(type,
@@ -853,8 +864,8 @@ cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher)
     CutSequenceMatcherPrivate *priv;
     const GList *node;
     GList *operations = NULL;
-    gint from_index = 0;
-    gint to_index = 0;
+    guint from_index = 0;
+    guint to_index = 0;
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
     if (priv->operations)
@@ -887,7 +898,7 @@ cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher)
 
 static GList *
 get_edge_expanded_copied_operations (CutSequenceMatcher *matcher,
-                                     gint context_size)
+                                     guint context_size)
 {
     const GList *original_operations = NULL;
     GList *operations = NULL;
@@ -896,7 +907,7 @@ get_edge_expanded_copied_operations (CutSequenceMatcher *matcher,
     if (original_operations) {
         CutSequenceMatchOperation *operation = original_operations->data;
         const GList *node;
-        gint from_begin, from_end, to_begin, to_end;
+        guint from_begin, from_end, to_begin, to_end;
 
         from_begin = operation->from_begin;
         from_end = operation->from_end;
@@ -904,12 +915,17 @@ get_edge_expanded_copied_operations (CutSequenceMatcher *matcher,
         to_end = operation->to_end;
         node = original_operations;
         if (operation->type == CUT_SEQUENCE_MATCH_OPERATION_EQUAL) {
+            guint from_context_begin = 0, to_context_begin = 0;
+
+            if (from_end > context_size)
+                from_context_begin = from_end - context_size;
+            if (to_end > context_size)
+                to_context_begin = to_end - context_size;
             operations = prepend_operation(operations,
                                            CUT_SEQUENCE_MATCH_OPERATION_EQUAL,
-                                           MAX(from_begin,
-                                               from_end - context_size),
+                                           MAX(from_begin, from_context_begin),
                                            from_end,
-                                           MAX(to_begin, to_end - context_size),
+                                           MAX(to_begin, to_context_begin),
                                            to_end);
             node = g_list_next(node);
         }
@@ -953,13 +969,14 @@ cut_sequence_matcher_get_grouped_operations (CutSequenceMatcher *matcher)
     GList *operations = NULL;
     GList *groups = NULL;
     GList *group = NULL;
-    gint context_size = 3;
-    gint group_window;
+    guint context_size;
+    guint group_window;
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
     if (priv->grouped_operations)
         return priv->grouped_operations;
 
+    context_size = priv->context_size;
     operations = get_edge_expanded_copied_operations(matcher, context_size);
     group_window = context_size * 2;
 
@@ -979,8 +996,10 @@ cut_sequence_matcher_get_grouped_operations (CutSequenceMatcher *matcher)
             groups = g_list_prepend(groups, g_list_reverse(group));
             group = NULL;
 
-            from_begin = MAX(from_begin, from_end - context_size);
-            to_begin = MAX(to_begin, to_end - context_size);
+            if (from_end > context_size)
+                from_begin = MAX(from_begin, from_end - context_size);
+            if (to_end > context_size)
+                to_begin = MAX(to_begin, to_end - context_size);
             group = prepend_operation(group, operation->type,
                                       from_begin, from_end,
                                       to_begin, to_end);
@@ -1003,7 +1022,7 @@ cut_sequence_matcher_get_ratio (CutSequenceMatcher *matcher)
 {
     CutSequenceMatcherPrivate *priv;
     const GList *node;
-    gint length;
+    guint length;
 
     priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
     if (priv->ratio >= 0.0)
@@ -1013,7 +1032,7 @@ cut_sequence_matcher_get_ratio (CutSequenceMatcher *matcher)
     if (length == 0) {
         priv->ratio = 1.0;
     } else {
-        gint matches = 0;
+        guint matches = 0;
 
         for (node = cut_sequence_matcher_get_blocks(matcher);
              node;
@@ -1026,6 +1045,25 @@ cut_sequence_matcher_get_ratio (CutSequenceMatcher *matcher)
     }
 
     return priv->ratio;
+}
+
+guint
+cut_sequence_matcher_get_context_size (CutSequenceMatcher *matcher)
+{
+    return CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher)->context_size;
+}
+
+void
+cut_sequence_matcher_set_context_size (CutSequenceMatcher *matcher,
+                                       guint               context_size)
+{
+    CutSequenceMatcherPrivate *priv;
+
+    priv = CUT_SEQUENCE_MATCHER_GET_PRIVATE(matcher);
+    if (priv->context_size != context_size) {
+        priv->context_size = context_size;
+        dispose_goruped_operations(priv);
+    }
 }
 
 /*

@@ -59,32 +59,32 @@ struct _CutSequenceMatcherClass
 
 struct _CutSequenceMatchInfo
 {
-    gint from_index;
-    gint to_index;
-    gint size;
+    guint from_index;
+    guint to_index;
+    guint size;
 };
 
 struct _CutSequenceMatchOperation
 {
     CutSequenceMatchOperationType type;
-    gint from_begin;
-    gint from_end;
-    gint to_begin;
-    gint to_end;
+    guint from_begin;
+    guint from_end;
+    guint to_begin;
+    guint to_end;
 };
 
-CutSequenceMatchInfo *cut_sequence_match_info_new(gint begin,
-                                                  gint end,
-                                                  gint size);
+CutSequenceMatchInfo *cut_sequence_match_info_new(guint begin,
+                                                  guint end,
+                                                  guint size);
 void                  cut_sequence_match_info_free
                                                  (CutSequenceMatchInfo *info);
 
 CutSequenceMatchOperation *cut_sequence_match_operation_new
                                                  (CutSequenceMatchOperationType type,
-                                                  gint from_begin,
-                                                  gint from_end,
-                                                  gint to_begin,
-                                                  gint to_end);
+                                                  guint from_begin,
+                                                  guint from_end,
+                                                  guint to_begin,
+                                                  guint to_end);
 void                  cut_sequence_match_operation_free
                                                  (CutSequenceMatchOperation *operation);
 
@@ -119,16 +119,21 @@ const GList *cut_sequence_matcher_get_to_index   (CutSequenceMatcher *matcher,
                                                   gpointer to_content);
 CutSequenceMatchInfo *cut_sequence_matcher_get_longest_match
                                                  (CutSequenceMatcher *matcher,
-                                                  gint from_begin,
-                                                  gint from_end,
-                                                  gint to_begin,
-                                                  gint to_end);
+                                                  guint from_begin,
+                                                  guint from_end,
+                                                  guint to_begin,
+                                                  guint to_end);
 const GList *cut_sequence_matcher_get_matches    (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_blocks     (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_operations (CutSequenceMatcher *matcher);
 const GList *cut_sequence_matcher_get_grouped_operations
                                                  (CutSequenceMatcher *matcher);
 gdouble      cut_sequence_matcher_get_ratio      (CutSequenceMatcher *matcher);
+guint        cut_sequence_matcher_get_context_size
+                                                 (CutSequenceMatcher *matcher);
+void         cut_sequence_matcher_set_context_size
+                                                 (CutSequenceMatcher *matcher,
+                                                  guint               context_size);
 
 G_END_DECLS
 
