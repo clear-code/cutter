@@ -416,11 +416,11 @@ test_get_longest_match_for_string_sequence (void)
     gchar *qabxcd[] = {"q", "a", "b", "x", "c", "d", NULL};
     gchar *abycdf[] = {"a", "b", "y", "c", "d", "f", NULL};
 
-    cut_assert_longest_match_string(0, 1, 3, bcd, abcdxyz, 0, 2, 0, 7);
-    cut_assert_longest_match_string(1, 2, 2, bcd, abcdxyz, 1, 2, 0, 6);
-    cut_assert_longest_match_string(0, 0, 0, ab, c, 0, 1, 0, 0);
-    cut_assert_longest_match_string(1, 0, 2, qabxcd, abycdf, 0, 5, 0, 5);
-    cut_assert_longest_match_string(4, 3, 2, qabxcd, abycdf, 3, 5, 2, 5);
+    cut_assert_longest_match_string(0, 1, 3, bcd, abcdxyz, 0, 3, 0, 8);
+    cut_assert_longest_match_string(1, 2, 2, bcd, abcdxyz, 1, 3, 0, 7);
+    cut_assert_longest_match_string(0, 0, 0, ab, c, 0, 2, 0, 1);
+    cut_assert_longest_match_string(1, 0, 2, qabxcd, abycdf, 0, 6, 0, 6);
+    cut_assert_longest_match_string(4, 3, 2, qabxcd, abycdf, 3, 6, 2, 6);
 }
 
 #define cut_assert_longest_match_char(expected_begin,                   \
@@ -438,14 +438,14 @@ test_get_longest_match_for_string_sequence (void)
 void
 test_get_longest_match_for_char_sequence (void)
 {
-    cut_assert_longest_match_char(0, 1, 3, "bcd", "abcdxyz", 0, 2, 0, 7);
-    cut_assert_longest_match_char(1, 2, 2, "bcd", "abcdxyz", 1, 2, 0, 6);
-    cut_assert_longest_match_char(0, 0, 0, "ab", "c", 0, 1, 0, 0);
-    cut_assert_longest_match_char(1, 0, 2, "qabxcd", "abycdf", 0, 5, 0, 5);
-    cut_assert_longest_match_char(4, 3, 2, "qabxcd", "abycdf", 3, 5, 2, 5);
+    cut_assert_longest_match_char(0, 1, 3, "bcd", "abcdxyz", 0, 3, 0, 8);
+    cut_assert_longest_match_char(1, 2, 2, "bcd", "abcdxyz", 1, 3, 0, 7);
+    cut_assert_longest_match_char(0, 0, 0, "ab", "c", 0, 2, 0, 1);
+    cut_assert_longest_match_char(1, 0, 2, "qabxcd", "abycdf", 0, 6, 0, 6);
+    cut_assert_longest_match_char(4, 3, 2, "qabxcd", "abycdf", 3, 6, 2, 6);
 
-    cut_assert_longest_match_char(0, 0, 1, "efg", "eg", 0, 2, 0, 1);
-    cut_assert_longest_match_char(2, 1, 1, "efg", "eg", 1, 2, 1, 1);
+    cut_assert_longest_match_char(0, 0, 1, "efg", "eg", 0, 3, 0, 2);
+    cut_assert_longest_match_char(2, 1, 1, "efg", "eg", 1, 3, 1, 2);
 }
 
 void
@@ -454,17 +454,17 @@ test_get_longest_match_with_junk_filter_for_string_sequence (void)
     gchar *_abcd[] = {" ", "a", "b", "c", "d", NULL};
     gchar *abcd_abcd[] = {"a", "b", "c", "d", " ", "a", "b", "c", "d", NULL};
 
-    cut_assert_longest_match_string(0, 4, 5, _abcd, abcd_abcd, 0, 4, 0, 8);
+    cut_assert_longest_match_string(0, 4, 5, _abcd, abcd_abcd, 0, 5, 0, 9);
     junk_filter_func = space_string_is_junk;
-    cut_assert_longest_match_string(1, 0, 4, _abcd, abcd_abcd, 0, 4, 0, 8);
+    cut_assert_longest_match_string(1, 0, 4, _abcd, abcd_abcd, 0, 5, 0, 9);
 }
 
 void
 test_get_longest_match_with_junk_filter_for_char_sequence (void)
 {
-    cut_assert_longest_match_char(0, 4, 5, " abcd", "abcd abcd", 0, 4, 0, 8);
+    cut_assert_longest_match_char(0, 4, 5, " abcd", "abcd abcd", 0, 5, 0, 9);
     junk_filter_func = space_char_is_junk;
-    cut_assert_longest_match_char(1, 0, 4, " abcd", "abcd abcd", 0, 4, 0, 8);
+    cut_assert_longest_match_char(1, 0, 4, " abcd", "abcd abcd", 0, 5, 0, 9);
 }
 
 static GList *

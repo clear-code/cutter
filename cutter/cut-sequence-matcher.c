@@ -555,7 +555,7 @@ find_best_match_position (CutSequenceMatcher *matcher,
     sizes = g_hash_table_new(g_direct_hash, g_direct_equal);
 
     begin = g_sequence_get_iter_at_pos(priv->from, from_begin);
-    end = g_sequence_get_iter_at_pos(priv->from, from_end + 1);
+    end = g_sequence_get_iter_at_pos(priv->from, from_end);
     for (iter = begin; iter != end; iter = g_sequence_iter_next(iter)) {
         guint from_index;
         const GList *node;
@@ -569,10 +569,10 @@ find_best_match_position (CutSequenceMatcher *matcher,
             guint size, to_index;
             gpointer size_as_pointer;
 
-            to_index = GPOINTER_TO_INT(node->data);
+            to_index = GPOINTER_TO_UINT(node->data);
             if (to_index < to_begin)
                 continue;
-            if (to_index > to_end)
+            if (to_index + 1 > to_end)
                 break;
 
             size_as_pointer =
@@ -642,8 +642,8 @@ adjust_best_info_with_junk_predicate (CutSequenceMatcher *matcher,
         best_info->size++;
     }
 
-    while (best_info->from_index + best_info->size < from_end &&
-           best_info->to_index + best_info->size < to_end &&
+    while (best_info->from_index + best_info->size + 1 < from_end &&
+           best_info->to_index + best_info->size + 1 < to_end &&
            check_junk(priv,
                       should_junk,
                       best_info->to_index + best_info->size) &&
@@ -753,9 +753,9 @@ cut_sequence_matcher_get_matches (CutSequenceMatcher *matcher)
         pop_matching_info(queue, &info);
         match_info = cut_sequence_matcher_get_longest_match(matcher,
                                                             info.from_begin,
-                                                            info.from_end - 1,
+                                                            info.from_end,
                                                             info.to_begin,
-                                                            info.to_end - 1);
+                                                            info.to_end);
         if (match_info->size == 0) {
             cut_sequence_match_info_free(match_info);
             continue;
