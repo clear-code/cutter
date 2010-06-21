@@ -1,5 +1,9 @@
 2010-06-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-assertions.h: make cut_assert_path_exist() and
+	cut_assert_path_not_exist() deprecated. Use
+	cut_assert_exist_path() and cut_assert_not_exist_path() instead.
+
 	* doc/install-to-ubuntu.rd*: karmic -> lucid.
 
 	* cutter/cut-differ.[ch], cutter/cut-readable-differ.c,

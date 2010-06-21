@@ -1864,7 +1864,6 @@ extern "C" {
             __VA_ARGS__),                                       \
         cut_assert_file_exist(path, __VA_ARGS__));              \
 } while (0)
-#endif
 
 /**
  * cut_assert_path_exist:
@@ -1890,6 +1889,7 @@ extern "C" {
             __VA_ARGS__),                                       \
         cut_assert_exist_path(path, __VA_ARGS__));              \
 } while (0)
+#endif
 
 /**
  * cut_assert_exist_path:
@@ -1915,6 +1915,7 @@ extern "C" {
         cut_assert_exist_path(path, __VA_ARGS__));              \
 } while (0)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_assert_path_not_exist:
  * @path: the path to test.
@@ -1939,6 +1940,7 @@ extern "C" {
             __VA_ARGS__),                                       \
         cut_assert_not_exist_path(path, __VA_ARGS__));          \
 } while (0)
+#endif
 
 /**
  * cut_assert_not_exist_path:
