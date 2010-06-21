@@ -11,8 +11,8 @@ Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Ubuntu Linux Hardy Heron/Karmic
-Koala i386/amd64. If you need a package for another
+There are packages for Ubuntu Linux Hardy Heron/Lucid
+Lynx i386/amd64. If you need a package for another
 environment, you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
@@ -23,12 +23,12 @@ Here are apt lines for for Hardy. We put them into
   deb http://cutter.sourceforge.net/ubuntu/ hardy main
   deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
 
-Here are apt lines for for Karmic. We put them into
+Here are apt lines for for Lucid. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/ubuntu/ karmic main
-  deb-src http://cutter.sourceforge.net/ubuntu/ karmic main
+  deb http://cutter.sourceforge.net/ubuntu/ lucid main
+  deb-src http://cutter.sourceforge.net/ubuntu/ lucid main
 
 Cutter packages are signed by key of
 kou@cozmixng.org/kou@clear-code.com. If we trust the key, we

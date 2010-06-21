@@ -1,5 +1,7 @@
 2010-06-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/install-to-ubuntu.rd*: karmic -> lucid.
+
 	* cutter/cut-differ.[ch], cutter/cut-readable-differ.c,
 	cutter/cut-unified-differ.c: start supporting context size in
 	readable differ.
