@@ -1,5 +1,9 @@
 2010-06-21  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-differ.[ch], cutter/cut-readable-differ.c,
+	cutter/cut-unified-differ.c: start supporting context size in
+	readable differ.
+
 	* cutter/cut-sequence-matcher.c,
 	test/cutter/test-cut-sequence-matcher.c: avoid overflow.
 

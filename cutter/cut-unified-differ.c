@@ -178,35 +178,6 @@ write_header (CutUnifiedDifferPrivate *priv, CutDiffWriter *writer)
 }
 
 static void
-write_summary (CutUnifiedDifferPrivate *priv, CutDiffWriter *writer,
-               const GList *operations)
-{
-    GString *format;
-    CutSequenceMatchOperation *first_operation, *last_operation;
-    gint deleted_lines, inserted_lines;
-
-    first_operation = operations->data;
-    while (g_list_next(operations)) {
-        operations = g_list_next(operations);
-    }
-    last_operation = operations->data;
-
-    format = g_string_new("@@ ");
-    g_string_append_printf(format, "-%d", first_operation->from_begin + 1);
-    deleted_lines = last_operation->from_end - first_operation->from_begin;
-    if (deleted_lines > 1)
-        g_string_append_printf(format, ",%d", deleted_lines);
-    g_string_append_printf(format, " +%d", first_operation->to_begin + 1);
-    inserted_lines = last_operation->to_end - first_operation->to_begin;
-    if (inserted_lines > 1)
-        g_string_append_printf(format, ",%d", inserted_lines);
-    g_string_append(format, " @@");
-    cut_diff_writer_write_line(writer, format->str,
-                               CUT_DIFF_WRITER_TAG_SUMMARY);
-    g_string_free(format, TRUE);
-}
-
-static void
 diff (CutDiffer *differ, CutDiffWriter *writer)
 {
     CutUnifiedDifferPrivate *priv;
@@ -218,8 +189,6 @@ diff (CutDiffer *differ, CutDiffWriter *writer)
     to = cut_differ_get_to(differ);
     matcher = cut_differ_get_sequence_matcher(differ);
     groups = cut_sequence_matcher_get_grouped_operations(matcher);
-    if (!groups)
-        return;
     if (cut_differ_util_is_same_content(groups))
         return;
 
@@ -228,7 +197,7 @@ diff (CutDiffer *differ, CutDiffWriter *writer)
     for (; groups; groups = g_list_next(groups)) {
         const GList *operations = groups->data;
 
-        write_summary(priv, writer, operations);
+        cut_differ_write_summary(differ, writer, operations);
         for (; operations; operations = g_list_next(operations)) {
             CutSequenceMatchOperation *operation = operations->data;
 

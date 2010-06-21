@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -301,18 +301,10 @@ diff_lines (CutDiffer *differ, CutDiffWriter *writer,
 }
 
 static void
-diff (CutDiffer *differ, CutDiffWriter *writer)
+diff_operations (CutDiffer *differ, CutDiffWriter *writer,
+                 const GList *operations, gchar **from, gchar **to)
 {
-    CutSequenceMatcher *matcher;
-    const GList *operations;
-    gchar **from, **to;
-
-    from = cut_differ_get_from(differ);
-    to = cut_differ_get_to(differ);
-    matcher = cut_differ_get_sequence_matcher(differ);
-    for (operations = cut_sequence_matcher_get_operations(matcher);
-         operations;
-         operations = g_list_next(operations)) {
+    for (; operations; operations = g_list_next(operations)) {
         CutSequenceMatchOperation *operation = operations->data;
 
         switch (operation->type) {
@@ -336,6 +328,36 @@ diff (CutDiffer *differ, CutDiffWriter *writer)
         default:
             g_error("unknown operation type: %d", operation->type);
             break;
+        }
+    }
+}
+
+static void
+diff (CutDiffer *differ, CutDiffWriter *writer)
+{
+    CutSequenceMatcher *matcher;
+    gchar **from, **to;
+
+    from = cut_differ_get_from(differ);
+    to = cut_differ_get_to(differ);
+    matcher = cut_differ_get_sequence_matcher(differ);
+    if (cut_differ_get_context_size(differ) == 0) {
+        const GList *operations;
+        operations = cut_sequence_matcher_get_operations(matcher);
+        diff_operations(differ, writer, operations, from, to);
+    } else {
+        const GList *groups;
+
+        groups = cut_sequence_matcher_get_grouped_operations(matcher);
+        if (cut_differ_util_is_same_content(groups))
+            return;
+
+        /* write_header(priv, writer); */
+        for (; groups; groups = g_list_next(groups)) {
+            const GList *operations = groups->data;
+
+            cut_differ_write_summary(differ, writer, operations);
+            diff_operations(differ, writer, operations, from, to);
         }
     }
     cut_diff_writer_finish(writer);

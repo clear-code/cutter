@@ -57,6 +57,9 @@ GType         cut_differ_get_type         (void) G_GNUC_CONST;
 
 void          cut_differ_diff             (CutDiffer   *differ,
                                            CutDiffWriter *writer);
+void          cut_differ_write_summary    (CutDiffer   *differ,
+                                           CutDiffWriter *writer,
+                                           const GList *operations);
 gdouble       cut_differ_get_best_ratio   (CutDiffer   *differ);
 gdouble       cut_differ_get_cut_off_ratio(CutDiffer   *differ);
 
@@ -76,8 +79,8 @@ gboolean      cut_differ_util_is_space_character
                                            gpointer     user_data);
 guint         cut_differ_util_compute_width
                                           (const gchar *string,
-                                           guint         begin,
-                                           guint         end);
+                                           guint        begin,
+                                           guint        end);
 gboolean      cut_differ_util_is_same_content
                                           (const GList  *groups);
 

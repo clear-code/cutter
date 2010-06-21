@@ -169,6 +169,35 @@ cut_differ_diff (CutDiffer *differ, CutDiffWriter *writer)
     CUT_DIFFER_GET_CLASS(differ)->diff(differ, writer);
 }
 
+void
+cut_differ_write_summary (CutDiffer *differ, CutDiffWriter *writer,
+                          const GList *operations)
+{
+    GString *format;
+    CutSequenceMatchOperation *first_operation, *last_operation;
+    gint deleted_lines, inserted_lines;
+
+    first_operation = operations->data;
+    while (g_list_next(operations)) {
+        operations = g_list_next(operations);
+    }
+    last_operation = operations->data;
+
+    format = g_string_new("@@ ");
+    g_string_append_printf(format, "-%d", first_operation->from_begin + 1);
+    deleted_lines = last_operation->from_end - first_operation->from_begin;
+    if (deleted_lines > 1)
+        g_string_append_printf(format, ",%d", deleted_lines);
+    g_string_append_printf(format, " +%d", first_operation->to_begin + 1);
+    inserted_lines = last_operation->to_end - first_operation->to_begin;
+    if (inserted_lines > 1)
+        g_string_append_printf(format, ",%d", inserted_lines);
+    g_string_append(format, " @@");
+    cut_diff_writer_write_line(writer, format->str,
+                               CUT_DIFF_WRITER_TAG_SUMMARY);
+    g_string_free(format, TRUE);
+}
+
 gdouble
 cut_differ_get_best_ratio (CutDiffer *differ)
 {
