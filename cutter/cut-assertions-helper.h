@@ -429,10 +429,10 @@ void        cut_assert_equal_helper (cut_boolean     result,
                                      const char     *expression_expected,
                                      const char     *expression_actual);
 void        cut_assert_errno_helper (void);
-void        cut_assert_path_exist_helper
+void        cut_assert_exist_path_helper
                                     (const char     *path,
                                      const char     *expression_path);
-void        cut_assert_path_not_exist_helper
+void        cut_assert_not_exist_path_helper
                                     (const char     *path,
                                      const char     *expression_path);
 void        cut_assert_match_helper (const char     *pattern,

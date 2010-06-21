@@ -1472,7 +1472,7 @@ cut_assert_errno_helper (void)
 }
 
 void
-cut_assert_path_exist_helper (const char     *path,
+cut_assert_exist_path_helper (const char     *path,
                               const char     *expression_path)
 {
     if (!path) {
@@ -1492,7 +1492,7 @@ cut_assert_path_exist_helper (const char     *path,
 }
 
 void
-cut_assert_path_not_exist_helper (const char     *path,
+cut_assert_not_exist_path_helper (const char     *path,
                                   const char     *expression_path)
 {
     if (!path) {

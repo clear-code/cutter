@@ -1860,7 +1860,7 @@ extern "C" {
 {                                                               \
     cut_trace_with_info_expression(                             \
         cut_test_with_user_message(                             \
-            cut_assert_path_exist(path),                        \
+            cut_assert_exist_path(path),                        \
             __VA_ARGS__),                                       \
         cut_assert_file_exist(path, __VA_ARGS__));              \
 } while (0)
@@ -1880,14 +1880,39 @@ extern "C" {
  * ]|
  *
  * Since: 1.0.2
+ * Deprecated: 1.1.5: Use cut_assert_exist_path() instead.
  */
 #define cut_assert_path_exist(path, ...) do                     \
 {                                                               \
     cut_trace_with_info_expression(                             \
         cut_test_with_user_message(                             \
-            cut_assert_path_exist_helper(path, #path),          \
+            cut_assert_exist_path_helper(path, #path),          \
             __VA_ARGS__),                                       \
-        cut_assert_path_exist(path, __VA_ARGS__));              \
+        cut_assert_exist_path(path, __VA_ARGS__));              \
+} while (0)
+
+/**
+ * cut_assert_exist_path:
+ * @path: the path to test.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @path exists. It may or may not be a regular file.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_exist_path("/tmp");             -> Pass on many environment
+ * cut_assert_exist_path("/non-existent");    -> Fail
+ * ]|
+ *
+ * Since: 1.1.5
+ */
+#define cut_assert_exist_path(path, ...) do                     \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_test_with_user_message(                             \
+            cut_assert_exist_path_helper(path, #path),          \
+            __VA_ARGS__),                                       \
+        cut_assert_exist_path(path, __VA_ARGS__));              \
 } while (0)
 
 /**
@@ -1904,14 +1929,39 @@ extern "C" {
  * ]|
  *
  * Since: 1.0.2
+ * Deprecated: 1.1.5: Use cut_assert_not_exist_path() instead.
  */
 #define cut_assert_path_not_exist(path, ...) do                 \
 {                                                               \
     cut_trace_with_info_expression(                             \
         cut_test_with_user_message(                             \
-            cut_assert_path_not_exist_helper(path, #path),      \
+            cut_assert_not_exist_path_helper(path, #path),      \
             __VA_ARGS__),                                       \
-        cut_assert_path_not_exist(path, __VA_ARGS__));          \
+        cut_assert_not_exist_path(path, __VA_ARGS__));          \
+} while (0)
+
+/**
+ * cut_assert_not_exist_path:
+ * @path: the path to test.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @path doesn't exist.
+ *
+ * e.g.:
+ * |[
+ * cut_assert_not_exist_path("/non-existent");    -> Pass on many environment
+ * cut_assert_not_exist_path("/tmp");             -> Fail
+ * ]|
+ *
+ * Since: 1.1.5
+ */
+#define cut_assert_not_exist_path(path, ...) do                 \
+{                                                               \
+    cut_trace_with_info_expression(                             \
+        cut_test_with_user_message(                             \
+            cut_assert_not_exist_path_helper(path, #path),      \
+            __VA_ARGS__),                                       \
+        cut_assert_not_exist_path(path, __VA_ARGS__));          \
 } while (0)
 
 /**

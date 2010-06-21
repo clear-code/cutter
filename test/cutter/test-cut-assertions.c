@@ -134,6 +134,8 @@ void test_assert_errno (void);
 void test_omit (void);
 void test_path_exist (void);
 void test_path_not_exist (void);
+void test_exist_path (void);
+void test_not_exist_path (void);
 void test_match (void);
 void test_equal_pointer (void);
 void test_equal_fixture_data_string (void);
@@ -2265,6 +2267,60 @@ void
 test_path_not_exist (void)
 {
     test = cut_test_new("path-not-exist-test", path_not_exist_test);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
+}
+
+static void
+exist_path_test (void)
+{
+    gint fd;
+    GError *error = NULL;
+
+    fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
+    if (fd == -1) {
+        const gchar *message;
+        message = cut_take_string(gcut_error_inspect(error));
+        g_error_free(error);
+        cut_error("can't create temporary file: %s", message);
+    }
+    close(fd);
+
+    cut_assert_exist_path(tmp_file_name);
+    g_remove(tmp_file_name);
+    cut_assert_exist_path(tmp_file_name);
+}
+
+void
+test_exist_path (void)
+{
+    test = cut_test_new("exist-path-test", exist_path_test);
+    cut_assert_false(run());
+    cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+}
+
+static void
+not_exist_path_test (void)
+{
+    gint fd;
+    GError *error = NULL;
+
+    fd = g_file_open_tmp(NULL, &tmp_file_name, &error);
+    gcut_assert_error(error);
+    close(fd);
+
+    g_remove(tmp_file_name);
+    cut_assert_not_exist_path(tmp_file_name);
+
+    g_file_set_contents(tmp_file_name, "XXX", -1, &error);
+    gcut_assert_error(error);
+    cut_assert_not_exist_path(tmp_file_name);
+}
+
+void
+test_not_exist_path (void)
+{
+    test = cut_test_new("not-exist-path-test", not_exist_path_test);
     cut_assert_false(run());
     cut_assert_test_result_summary(run_context, 1, 3, 0, 1, 0, 0, 0, 0);
 }
