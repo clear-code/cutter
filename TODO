@@ -1,3 +1,5 @@
+* support filter tests by attribute value.
+  e.g. cutter --filter-by-attribute 'target_version <= 1.0.0'.
 * report errors in data setup function.
 * add CUTTER_DEBUG technique in test/run-test.sh to tutorial
   as a debugging technique.

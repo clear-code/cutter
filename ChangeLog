@@ -1,5 +1,8 @@
 2010-06-24  Kouhei Sutou  <kou@clear-code.com>
 
+	* TODO: support filter tests by attribute value.
+	e.g. cutter --filter-by-attribute 'target_version <= 1.0.0'.
+
 	* gcutter/gcut-data.h (gcut_data_has_field): add.
 
 	* gcutter/gcut-dynamic-data.[ch],
