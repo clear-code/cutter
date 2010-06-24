@@ -395,6 +395,17 @@ gcut_dynamic_data_equal (GCutDynamicData *data1, GCutDynamicData *data2)
                                  field_equal);
 }
 
+gboolean
+gcut_dynamic_data_has_field (GCutDynamicData *data, const gchar *field_name)
+{
+    GCutDynamicDataPrivate *priv;
+    Field *field;
+
+    priv = GCUT_DYNAMIC_DATA_GET_PRIVATE(data);
+    field = g_hash_table_lookup(priv->fields, field_name);
+    return field ? TRUE : FALSE;
+}
+
 static Field *
 lookup (GCutDynamicData *data, const gchar *field_name, GError **error)
 {

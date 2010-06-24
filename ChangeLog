@@ -1,3 +1,11 @@
+2010-06-24  Kouhei Sutou  <kou@clear-code.com>
+
+	* gcutter/gcut-data.h (gcut_data_has_field): add.
+
+	* gcutter/gcut-dynamic-data.[ch],
+	test/gcutter/test-gcut-dynamic-data.c: add
+	gcut_dynamic_data_has_field().
+
 2010-06-21  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-assertions.h: make cut_assert_path_exist() and

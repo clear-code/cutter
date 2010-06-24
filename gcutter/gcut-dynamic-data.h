@@ -65,6 +65,8 @@ gchar           *gcut_dynamic_data_inspect      (GCutDynamicData  *data);
 gboolean         gcut_dynamic_data_equal        (GCutDynamicData  *data1,
                                                  GCutDynamicData  *data2);
 
+gboolean         gcut_dynamic_data_has_field    (GCutDynamicData  *data,
+                                                 const gchar      *field_name);
 
 gchar            gcut_dynamic_data_get_char     (GCutDynamicData  *data,
                                                  const gchar      *field_name,

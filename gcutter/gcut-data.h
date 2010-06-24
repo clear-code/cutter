@@ -281,6 +281,20 @@ G_BEGIN_DECLS
         g_object_unref,                                         \
         NULL)
 
+/**
+ * gcut_data_has_field:
+ * @data: the data added by gcut_add_datum().
+ * @field_name: the field name.
+ *
+ * Returns %TRUE is @data has a field named by @field_name.
+ *
+ * Returns: %TRUE if @data has a @field_name field is
+ *          available, %FALSE otherwise.
+ *
+ * Since: 1.1.5
+ */
+#define gcut_data_has_field(data, field_name)                          \
+    gcut_dynamic_data_has_field(data, field_name)
 
 /**
  * gcut_data_get_char:
