@@ -1,3 +1,9 @@
+2010-06-25  Kouhei Sutou  <kou@clear-code.com>
+
+	* TODO:
+	- add gcut_egg_incubate() that returns GCutProcess.
+	- rename cut_process_* to cut_child_cutter_*.
+
 2010-06-24  Kouhei Sutou  <kou@clear-code.com>
 
 	* TODO: support filter tests by attribute value.
