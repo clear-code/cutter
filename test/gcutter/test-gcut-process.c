@@ -147,7 +147,7 @@ test_run (void)
 {
     GError *error = NULL;
 
-    process = gcut_process_new("echo", "XXX", NULL);
+    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
     setup_process(process);
 
     gcut_assert_equal_pid(0, gcut_process_get_pid(process));
@@ -193,9 +193,8 @@ void
 test_flags (void)
 {
     GError *error = NULL;
-    const gchar command[] = "echo";
 
-    process = gcut_process_new(command, "XXX", NULL);
+    process = gcut_process_new("echo", "XXX", NULL);
     setup_process(process);
 
     gcut_process_set_flags(process, 0);
@@ -204,7 +203,7 @@ test_flags (void)
     expected_error =
         g_error_new(G_SPAWN_ERROR, G_SPAWN_ERROR_NOENT,
                     "Failed to execute child process \"%s\" (%s)",
-                    command, g_strerror(ENOENT));
+                    "echo", g_strerror(ENOENT));
     gcut_assert_equal_error(expected_error, actual_error);
 
     gcut_process_set_flags(process, G_SPAWN_SEARCH_PATH);
@@ -271,12 +270,13 @@ test_kill (void)
 void
 test_wait_before_run (void)
 {
-    process = gcut_process_new("echo", "XXX", NULL);
+    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
 
     cut_assert_equal_int(-1, gcut_process_wait(process, 0, &actual_error));
     expected_error = g_error_new(GCUT_PROCESS_ERROR,
                                  GCUT_PROCESS_ERROR_NOT_RUNNING,
-                                 "not running: <echo XXX>");
+                                 "not running: <%s XXX>",
+                                 cut_test_echo_path);
     gcut_assert_equal_error(expected_error, actual_error);
 }
 
@@ -285,7 +285,7 @@ test_wait_after_reaped (void)
 {
     GError *error = NULL;
 
-    process = gcut_process_new("echo", "XXX", NULL);
+    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
@@ -295,7 +295,8 @@ test_wait_after_reaped (void)
     cut_assert_equal_int(-1, gcut_process_wait(process, 0, &actual_error));
     expected_error = g_error_new(GCUT_PROCESS_ERROR,
                                  GCUT_PROCESS_ERROR_NOT_RUNNING,
-                                 "not running: <echo XXX>");
+                                 "not running: <%s XXX>",
+                                 cut_test_echo_path);
     gcut_assert_equal_error(expected_error, actual_error);
 }
 
