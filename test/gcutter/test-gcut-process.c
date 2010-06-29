@@ -25,6 +25,8 @@ void test_kill (void);
 void test_wait_before_run (void);
 void test_wait_after_reaped (void);
 void test_wait_timeout (void);
+void test_output_string (void);
+void test_error_string (void);
 #ifdef CUT_SUPPORT_GIO
 void test_output_stream (void);
 void test_error_stream (void);
@@ -312,6 +314,23 @@ test_wait_timeout (void)
                                  GCUT_PROCESS_ERROR_TIMEOUT,
                                  "timeout while waiting reaped: <sleep 1>");
     gcut_assert_equal_error(expected_error, actual_error);
+}
+
+void
+test_output_string (void)
+{
+    GError *error = NULL;
+    GString expected = { "XXX\n", 4, 0 };
+    GString *actual;
+
+    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+
+    gcut_process_run(process, &error);
+    gcut_assert_error(error);
+    wait_reaped();
+
+    actual = gcut_process_get_output_string(process);
+    gcut_assert_equal_string(&expected, actual);
 }
 
 #ifdef CUT_SUPPORT_GIO
