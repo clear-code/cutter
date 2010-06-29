@@ -825,6 +825,7 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/Makefile
 		 test/fixtures/assertions/Makefile
 		 test/fixtures/assertions/sub/Makefile
+		 test/fixtures/cut-test-echo/Makefile
 		 test/fixtures/data/Makefile
 		 test/fixtures/factory/Makefile
 		 test/fixtures/factory/type1/Makefile
