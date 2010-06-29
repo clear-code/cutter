@@ -73,6 +73,155 @@ GType        gcut_process_get_type    (void) G_GNUC_CONST;
 GCutProcess *gcut_process_new         (void);
 
 /**
+ * gcut_process_new:
+ * @command: the external command name to be ran
+ * @...: the arguments for @command
+ *
+ * Creates a new #GCutProcess object that runs @command.
+ *
+ * Returns: a new #GCutProcess.
+ *
+ * Since: 1.1.6
+ */
+GCutProcess *gcut_process_new        (const gchar  *command,
+                                      ...) G_GNUC_NULL_TERMINATED;
+
+/**
+ * gcut_process_new_command_line:
+ * @command: a command line
+ *
+ * Creates a new #GCutProcess object that runs @command.
+ *
+ * Returns: a new #GCutProcess.
+ *
+ * Since: 1.1.6
+ */
+GCutProcess      *gcut_process_new_command_line (const gchar  *command);
+
+/**
+ * gcut_process_new_va_list:
+ * @command: the external command name to be ran
+ * @args: arguments for @command
+ *
+ * Creates a new #GCutProcess object that runs @command.
+ *
+ * Returns: a new #GCutProcess.
+ *
+ * Since: 1.1.6
+ */
+GCutProcess      *gcut_process_new_va_list   (const gchar  *command,
+                                              va_list       args);
+
+/**
+ * gcut_process_new_argv:
+ * @argc: the number of elements of @argv
+ * @argv: the external command name to be ran and arguments
+ * of it.
+ *
+ * Creates a new #GCutProcess object that runs @command.
+ *
+ * Returns: a new #GCutProcess.
+ *
+ * Since: 1.1.6
+ */
+GCutProcess      *gcut_process_new_argv  (gint          argc,
+                                          gchar       **argv);
+
+/**
+ * gcut_process_new_strings:
+ * @command: the external command name to be ran and
+ * arguments of it. %NULL-terminated.
+ *
+ * Creates a new #GCutProcess object that runs @command.
+ *
+ * Returns: a new #GCutProcess.
+ *
+ * Since: 1.1.6
+ */
+GCutProcess      *gcut_process_new_strings   (const gchar **command);
+
+/**
+ * gcut_process_new_array:
+ * @command: the external command name to be ran and
+ * arguments of it. The #GArray should be zero-terminated.
+ *
+ * Creates a new #GCutProcess object that runs @command.
+ *
+ * Returns: a new #GCutProcess.
+ *
+ * Since: 1.1.6
+ */
+GCutProcess      *gcut_process_new_array     (GArray       *command);
+
+/**
+ * gcut_process_set_flags:
+ * @process: a #GCutProcess
+ * @flags: the flags to be passed to g_spawn_async_with_pipes().
+ *
+ * Sets @flags for spawning.
+ *
+ * Since: 1.1.6
+ */
+void          gcut_process_set_flags (GCutProcess  *process,
+                                      GSpawnFlags   flags);
+
+/**
+ * gcut_process_get_flags:
+ * @process: a #GCutProcess
+ *
+ * Gets @flags for spawning.
+ *
+ * Returns: the flags for spawning.
+ *
+ * Since: 1.1.6
+ */
+GSpawnFlags   gcut_process_get_flags (GCutProcess      *process);
+
+/**
+ * gcut_process_set_env:
+ * @process: a #GCutProcess
+ * @name: the first environment name.
+ * @...: the value of @name, followed by name and value
+ * pairs. %NULL-terminated.
+ *
+ * Sets environment variable for external command.
+ *
+ * Since: 1.1.6
+ */
+void          gcut_process_set_env   (GCutProcess  *process,
+                                      const gchar  *name,
+                                      ...) G_GNUC_NULL_TERMINATED;
+
+/**
+ * gcut_process_get_env:
+ * @process: a #GCutProcess
+ *
+ * Gets environment variable for external command.
+ *
+ * Returns: a newly-allocated %NULL-terminated environment
+ * variables. ("NAME1=VALUE1", "NAME2=VALUE2",
+ * ..., %NULL) It should be freed by g_strfreev() when no longer
+ * needed.
+ *
+ * Since: 1.1.6
+ */
+gchar       **gcut_process_get_env  (GCutProcess  *process);
+
+/**
+ * gcut_process_run:
+ * @process: a #GCutProcess
+ * @error: return location for an error, or %NULL
+ *
+ * Hatches a new external process.
+ *
+ * Returns: %TRUE on success, otherwise %FALSE
+ *
+ * Since: 1.1.6
+ */
+gboolean     gcut_process_run (GCutProcess *process,
+                               GError     **error);
+
+/**
  * gcut_process_get_pid:
  * @process: a #GCutProcess
  *
@@ -117,7 +266,7 @@ gint         gcut_process_wait    (GCutProcess *porcess,
  *
  * Since: 1.1.6
  */
-void         gcut_process_kill    (GCutProcess *process,
+gboolean     gcut_process_kill    (GCutProcess *process,
                                    gint         signal_number,
                                    GError     **error);
 
@@ -139,7 +288,7 @@ gboolean      gcut_process_write          (GCutProcess  *process,
                                            gsize         size,
                                            GError      **error);
 /**
- * gcut_process_get_stdout:
+ * gcut_process_get_output_string:
  * @process: a #GCutProcess
  *
  * Since: 1.1.6
@@ -147,14 +296,58 @@ gboolean      gcut_process_write          (GCutProcess  *process,
 GString     *gcut_process_get_output_string
                                   (GCutProcess *process);
 
+#if GLIB_CHECK_VERSION(2,16,0)
 /**
- * gcut_process_get_stderr:
+ * gcut_process_get_error_string:
  * @process: a #GCutProcess
  *
  * Since: 1.1.6
  */
 GString     *gcut_process_get_error_string
                                   (GCutProcess *process);
+
+/**
+ * gcut_process_get_input_stream:
+ * @process: a #GCutProcess
+ *
+ * Gets a #GInputStream connected with standard input of
+ * external process.
+ *
+ * Returns: a #GInputStream if external process is running,
+ * otherwise %NULL.
+ *
+ * Since: 1.1.6
+ */
+GInputStream *gcut_process_get_input_stream (GCutProcess *process);
+
+/**
+ * gcut_process_get_output_stream:
+ * @process: a #GCutProcess
+ *
+ * Gets a #GOutputStream connected with standard output of
+ * external process.
+ *
+ * Returns: a #GOutputStream if external process is running,
+ * otherwise %NULL.
+ *
+ * Since: 1.1.6
+ */
+GOutputStream *gcut_process_get_output_stream (GCutProcess *process);
+
+/**
+ * gcut_process_get_error_stream:
+ * @process: a #GCutProcess
+ *
+ * Gets a #GOutputStream connected with standard error output
+ * of external process.
+ *
+ * Returns: a #GOutputStream if external process is running,
+ * otherwise %NULL.
+ *
+ * Since: 1.1.6
+ */
+GOutputStream   *gcut_process_get_error_stream (GCutProcess *process);
+#endif /* GLIB_CHECK_VERSION(2,16,0) */
 
 G_END_DECLS
 
