@@ -70,8 +70,6 @@ GQuark       gcut_process_error_quark (void);
 
 GType        gcut_process_get_type    (void) G_GNUC_CONST;
 
-GCutProcess *gcut_process_new         (void);
-
 /**
  * gcut_process_new:
  * @command: the external command name to be ran
