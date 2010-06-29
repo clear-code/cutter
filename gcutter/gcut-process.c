@@ -136,7 +136,7 @@ gcut_process_class_init (GCutProcessClass *klass)
      * on for detecting an external process's output is
      * readable.
      *
-     * Since: 1.0.6
+     * Since: 1.1.5
      */
     signals[OUTPUT_RECEIVED]
         = g_signal_new("output-received",
@@ -169,7 +169,7 @@ gcut_process_class_init (GCutProcessClass *klass)
      * on for detecting an external process's output is
      * readable.
      *
-     * Since: 1.0.6
+     * Since: 1.0.5
      */
     signals[ERROR_RECEIVED]
         = g_signal_new("error-received",
@@ -197,7 +197,7 @@ gcut_process_class_init (GCutProcessClass *klass)
      * g_main_loop_run(), g_main_context_iteration() and so
      * on for detecting an external process is exited.
      *
-     * Since: 1.0.6
+     * Since: 1.0.5
      */
     signals[REAPED]
         = g_signal_new("reaped",
@@ -216,7 +216,7 @@ gcut_process_class_init (GCutProcessClass *klass)
      * It is emitted each time an external process causes an
      * error. (e.g. IO error)
      *
-     * Since: 1.0.6
+     * Since: 1.0.5
      */
     signals[ERROR]
         = g_signal_new("error",
