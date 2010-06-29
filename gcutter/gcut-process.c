@@ -62,6 +62,12 @@ struct _GCutProcessPrivate
     GIOChannel *output;
     GIOChannel *error;
 
+#ifdef CUT_SUPPORT_GIO
+    GOutputStream *input_stream;
+    GInputStream *output_stream;
+    GInputStream *error_stream;
+#endif
+
     guint output_watch_id;
     guint error_watch_id;
 
@@ -103,6 +109,13 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
+static void output_received (GCutProcess *process,
+                             const gchar *chunk,
+                             gsize        size);
+static void error_received  (GCutProcess *process,
+                             const gchar *chunk,
+                             gsize        size);
+
 static void
 gcut_process_class_init (GCutProcessClass *klass)
 {
@@ -114,6 +127,9 @@ gcut_process_class_init (GCutProcessClass *klass)
     gobject_class->dispose      = dispose;
     gobject_class->set_property = set_property;
     gobject_class->get_property = get_property;
+
+    klass->output_received = output_received;
+    klass->error_received = error_received;
 
     spec = g_param_spec_pointer("command",
                                 "Command",
@@ -248,6 +264,12 @@ gcut_process_init (GCutProcess *process)
     priv->output = NULL;
     priv->error = NULL;
 
+#ifdef CUT_SUPPORT_GIO
+    priv->input_stream = g_memory_output_stream_new(NULL, 0, g_realloc, g_free);
+    priv->output_stream = g_memory_input_stream_new();
+    priv->error_stream = g_memory_input_stream_new();
+#endif
+
     priv->output_watch_id = 0;
     priv->error_watch_id = 0;
 
@@ -321,6 +343,25 @@ dispose_io_channel (GCutProcessPrivate *priv)
     }
 }
 
+#ifdef CUT_SUPPORT_GIO
+static void
+dispose_streams (GCutProcessPrivate *priv)
+{
+    if (priv->input_stream) {
+        g_object_unref(priv->input_stream);
+        priv->input_stream = NULL;
+    }
+    if (priv->output_stream) {
+        g_object_unref(priv->output_stream);
+        priv->output_stream = NULL;
+    }
+    if (priv->error_stream) {
+        g_object_unref(priv->error_stream);
+        priv->error_stream = NULL;
+    }
+}
+#endif
+
 static void
 gcut_process_close (GCutProcess *process)
 {
@@ -367,6 +408,9 @@ dispose (GObject *object)
         gcut_process_close(GCUT_PROCESS(object));
     }
 
+#ifdef CUT_SUPPORT_GIO
+    dispose_streams(priv);
+#endif
     dispose_io_channel(priv);
 
     G_OBJECT_CLASS(gcut_process_parent_class)->dispose(object);
@@ -631,6 +675,36 @@ create_input_channel (gint fd, guint *watch_id,
     return channel;
 }
 
+static void
+output_received (GCutProcess *process,
+                 const gchar *chunk,
+                 gsize        size)
+{
+    GCutProcessPrivate *priv;
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+
+    g_memory_input_stream_add_data(G_MEMORY_INPUT_STREAM(priv->output_stream),
+                                   g_strndup(chunk, size),
+                                   size,
+                                   g_free);
+}
+
+static void
+error_received (GCutProcess *process,
+                const gchar *chunk,
+                gsize        size)
+{
+    GCutProcessPrivate *priv;
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+
+    g_memory_input_stream_add_data(G_MEMORY_INPUT_STREAM(priv->error_stream),
+                                   g_strndup(chunk, size),
+                                   size,
+                                   g_free);
+}
+
 #define BUFFER_SIZE 4096
 static gboolean
 read_from_io_channel (GIOChannel *channel, GCutProcess *process, guint signal)
@@ -774,7 +848,7 @@ gcut_process_run (GCutProcess *process, GError **error)
 
 gboolean
 gcut_process_write (GCutProcess *process, const gchar *chunk, gsize size,
-                  GError **error)
+                    GError **error)
 {
     GCutProcessPrivate *priv;
     gsize rest_size = size;
@@ -914,10 +988,10 @@ gcut_process_kill (GCutProcess *process, int signal_number, GError **error)
                     "Error killing process: ");
         return FALSE;
     };
+    return TRUE;
 #else
     return cut_win32_kill_process(priv->pid, 0);
 #endif
-    return FALSE;
 }
 
 GIOChannel *
@@ -949,6 +1023,47 @@ gcut_process_set_forced_termination_wait_time (GCutProcess *process, guint timeo
 {
     GCUT_PROCESS_GET_PRIVATE(process)->forced_termination_wait_time = timeout;
 }
+
+#ifdef CUT_SUPPORT_GIO
+GOutputStream *
+gcut_process_get_input_stream (GCutProcess *process)
+{
+    GCutProcessPrivate *priv;
+
+    g_return_val_if_fail(GCUT_IS_PROCESS(process), NULL);
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+    g_return_val_if_fail(priv, NULL);
+
+    return priv->input_stream;
+}
+
+GInputStream *
+gcut_process_get_output_stream (GCutProcess *process)
+{
+    GCutProcessPrivate *priv;
+
+    g_return_val_if_fail(GCUT_IS_PROCESS(process), NULL);
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+    g_return_val_if_fail(priv, NULL);
+
+    return priv->output_stream;
+}
+
+GInputStream *
+gcut_process_get_error_stream (GCutProcess *process)
+{
+    GCutProcessPrivate *priv;
+
+    g_return_val_if_fail(GCUT_IS_PROCESS(process), NULL);
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+    g_return_val_if_fail(priv, NULL);
+
+    return priv->error_stream;
+}
+#endif
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

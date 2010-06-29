@@ -25,6 +25,10 @@ void test_kill (void);
 void test_wait_before_run (void);
 void test_wait_after_reaped (void);
 void test_wait_timeout (void);
+#ifdef CUT_SUPPORT_GIO
+void test_output_stream (void);
+void test_error_stream (void);
+#endif
 
 static GCutProcess *process;
 static GError *expected_error;
@@ -34,6 +38,7 @@ static GString *error_string;
 static gint exit_status;
 static gboolean reaped;
 static gchar *current_locale;
+static const gchar *cut_test_echo_path;
 
 void
 cut_setup (void)
@@ -48,6 +53,12 @@ cut_setup (void)
 
     current_locale = g_strdup(setlocale(LC_ALL, NULL));
     setlocale(LC_ALL, "C");
+
+    cut_test_echo_path = cut_build_path(cut_get_test_directory(),
+                                        "..",
+                                        "fixtures",
+                                        "cut-test-echo",
+                                        "cut-test-echo", NULL);
 }
 
 void
@@ -302,6 +313,60 @@ test_wait_timeout (void)
                                  "timeout while waiting reaped: <sleep 1>");
     gcut_assert_equal_error(expected_error, actual_error);
 }
+
+#ifdef CUT_SUPPORT_GIO
+void
+test_output_stream (void)
+{
+    GError *error = NULL;
+    GInputStream *stream;
+    char buffer[4096];
+    gsize bytes_read;
+
+    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+
+    stream = gcut_process_get_output_stream(process);
+    cut_assert_not_null(stream);
+
+    gcut_process_run(process, &error);
+    gcut_assert_error(error);
+    wait_reaped();
+
+    g_input_stream_read_all(stream,
+                            buffer, sizeof(buffer),
+                            &bytes_read,
+                            NULL,
+                            &error);
+    gcut_assert_error(error);
+    cut_assert_equal_memory("XXX\n", 4, buffer, bytes_read);
+}
+
+void
+test_error_stream (void)
+{
+    GError *error = NULL;
+    GInputStream *stream;
+    char buffer[4096];
+    gsize bytes_read;
+
+    process = gcut_process_new(cut_test_echo_path, "-e", "XXX", NULL);
+
+    stream = gcut_process_get_error_stream(process);
+    cut_assert_not_null(stream);
+
+    gcut_process_run(process, &error);
+    gcut_assert_error(error);
+    wait_reaped();
+
+    g_input_stream_read_all(stream,
+                            buffer, sizeof(buffer),
+                            &bytes_read,
+                            NULL,
+                            &error);
+    gcut_assert_error(error);
+    cut_assert_equal_memory("XXX\n", 4, buffer, bytes_read);
+}
+#endif
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
