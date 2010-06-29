@@ -307,6 +307,48 @@ GString     *gcut_process_get_output_string
 GString     *gcut_process_get_error_string
                                   (GCutProcess *process);
 
+/**
+ * gcut_process_get_input_channel:
+ * @process: a #GCutProcess
+ *
+ * Gets a #GIOChannel connected with standard input of
+ * external process.
+ *
+ * Returns: a #GIOChannel if external process is running,
+ * otherwise %NULL.
+ *
+ * Since: 1.1.6
+ */
+GIOChannel *gcut_process_get_input_channel (GCutProcess  *process);
+
+/**
+ * gcut_process_get_output_channel:
+ * @process: a #GCutProcess
+ *
+ * Gets a #GIOChannel connected with standard output of
+ * external process.
+ *
+ * Returns: a #GIOChannel if external process is running,
+ * otherwise %NULL.
+ *
+ * Since: 1.1.6
+ */
+GIOChannel *gcut_process_get_output_channel (GCutProcess *process);
+
+/**
+ * gcut_process_get_error:
+ * @process: a #GCutProcess
+ *
+ * Gets a #GIOChannel connected with standard error output
+ * of external process.
+ *
+ * Returns: a #GIOChannel if external process is running,
+ * otherwise %NULL.
+ *
+ * Since: 1.1.6
+ */
+GIOChannel *gcut_process_get_error_channel (GCutProcess *process);
+
 #if GLIB_CHECK_VERSION(2,16,0)
 #include <gio/gio.h>
 /**
