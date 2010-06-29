@@ -352,19 +352,6 @@ GIOChannel *gcut_process_get_error_channel (GCutProcess *process);
 
 #ifdef CUT_SUPPORT_GIO
 #include <gio/gio.h>
-/**
- * gcut_process_get_input_stream:
- * @process: a #GCutProcess
- *
- * Gets a #GInputStream connected with standard input of
- * external process.
- *
- * Returns: a #GInputStream if external process is running,
- * otherwise %NULL.
- *
- * Since: 1.1.5
- */
-GOutputStream *gcut_process_get_input_stream (GCutProcess *process);
 
 /**
  * gcut_process_get_output_stream:

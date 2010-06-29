@@ -63,7 +63,6 @@ struct _GCutProcessPrivate
     GIOChannel *error;
 
 #ifdef CUT_SUPPORT_GIO
-    GOutputStream *input_stream;
     GInputStream *output_stream;
     GInputStream *error_stream;
 #endif
@@ -265,7 +264,6 @@ gcut_process_init (GCutProcess *process)
     priv->error = NULL;
 
 #ifdef CUT_SUPPORT_GIO
-    priv->input_stream = g_memory_output_stream_new(NULL, 0, g_realloc, g_free);
     priv->output_stream = g_memory_input_stream_new();
     priv->error_stream = g_memory_input_stream_new();
 #endif
@@ -347,10 +345,6 @@ dispose_io_channel (GCutProcessPrivate *priv)
 static void
 dispose_streams (GCutProcessPrivate *priv)
 {
-    if (priv->input_stream) {
-        g_object_unref(priv->input_stream);
-        priv->input_stream = NULL;
-    }
     if (priv->output_stream) {
         g_object_unref(priv->output_stream);
         priv->output_stream = NULL;
@@ -1025,19 +1019,6 @@ gcut_process_set_forced_termination_wait_time (GCutProcess *process, guint timeo
 }
 
 #ifdef CUT_SUPPORT_GIO
-GOutputStream *
-gcut_process_get_input_stream (GCutProcess *process)
-{
-    GCutProcessPrivate *priv;
-
-    g_return_val_if_fail(GCUT_IS_PROCESS(process), NULL);
-
-    priv = GCUT_PROCESS_GET_PRIVATE(process);
-    g_return_val_if_fail(priv, NULL);
-
-    return priv->input_stream;
-}
-
 GInputStream *
 gcut_process_get_output_stream (GCutProcess *process)
 {
