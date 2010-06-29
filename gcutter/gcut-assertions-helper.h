@@ -32,6 +32,7 @@
 #include <gcutter/gcut-enum.h>
 #include <gcutter/gcut-object.h>
 #include <gcutter/gcut-egg.h>
+#include <gcutter/gcut-process.h>
 #include <gcutter/gcut-io.h>
 #include <gcutter/gcut-key-file.h>
 #include <gcutter/gcut-inspect.h>

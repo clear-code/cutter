@@ -41,6 +41,7 @@ gcutter_public_headers =		\
 	gcut-data.h			\
 	gcut-data-helper.h		\
 	gcut-dynamic-data.h		\
+	gcut-process.h			\
 	gcut-main.h
 
 noinst_headers = 	\
@@ -69,6 +70,7 @@ libgcutter_sources =			\
 	gcut-object.c			\
 	gcut-string-io-channel.c	\
 	gcut-types.c			\
+	gcut-process.c			\
 	gcut-value-equal.c
 
 libgcutter_la_SOURCES =			\
