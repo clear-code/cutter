@@ -729,6 +729,29 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-gio-disable],
 ])
   fi
 
+AC_CONFIG_COMMANDS([cutter/cut-features.h-libsoup-header],
+[
+  cat <<\_______EOF >> cutter/cut-features.h
+
+/**
+ * CUT_SUPPORT_LIBSOUP:
+ *
+ * Shows LibSoup support is available.
+ */
+_______EOF
+])
+  if test "$libsoup_exists" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-features.h-libsoup-enable],
+[
+    echo "#define CUT_SUPPORT_LIBSOUP 1" >> cutter/cut-features.h
+])
+  else
+AC_CONFIG_COMMANDS([cutter/cut-features.h-libsoup-disable],
+[
+    echo "/* #undef CUT_SUPPORT_LIBSOUP */" >> cutter/cut-features.h
+])
+  fi
+
 AC_CONFIG_COMMANDS([cutter/cut-features.h-have-c99-stdint-types-header],
 [
   cat <<\_______EOF >> cutter/cut-features.h
