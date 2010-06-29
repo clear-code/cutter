@@ -363,7 +363,7 @@ GIOChannel *gcut_process_get_error_channel (GCutProcess *process);
  *
  * Since: 1.1.5
  */
-GInputStream *gcut_process_get_input_stream (GCutProcess *process);
+GOutputStream *gcut_process_get_input_stream (GCutProcess *process);
 
 /**
  * gcut_process_get_output_stream:
@@ -377,7 +377,7 @@ GInputStream *gcut_process_get_input_stream (GCutProcess *process);
  *
  * Since: 1.1.5
  */
-GOutputStream *gcut_process_get_output_stream (GCutProcess *process);
+GInputStream *gcut_process_get_output_stream (GCutProcess *process);
 
 /**
  * gcut_process_get_error_stream:
@@ -391,7 +391,8 @@ GOutputStream *gcut_process_get_output_stream (GCutProcess *process);
  *
  * Since: 1.1.5
  */
-GOutputStream   *gcut_process_get_error_stream (GCutProcess *process);
+GInputStream   *gcut_process_get_error_stream (GCutProcess *process);
+
 #endif /* GLIB_CHECK_VERSION(2,16,0) */
 
 G_END_DECLS
