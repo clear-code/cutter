@@ -114,8 +114,12 @@ read_backtrace (int in_fd)
     while ((read_size = read(in_fd,
                              crash_backtrace_read_buffer,
                              sizeof(crash_backtrace_read_buffer))) > 0) {
-        if (cut_crash_backtrace_show_on_the_moment)
-            write(STDERR_FILENO, crash_backtrace_read_buffer, read_size);
+        if (cut_crash_backtrace_show_on_the_moment) {
+            ssize_t written_bytes;
+            written_bytes = write(STDERR_FILENO, crash_backtrace_read_buffer, read_size);
+            if (read_size == written_bytes)
+                break;
+        }
 
         if (i + read_size > sizeof(crash_backtrace))
             break;
