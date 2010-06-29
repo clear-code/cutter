@@ -32,6 +32,8 @@ G_BEGIN_DECLS
 #define GCUT_IS_PROCESS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GCUT_TYPE_PROCESS))
 #define GCUT_PROCESS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GCUT_TYPE_PROCESS, GCutProcessClass))
 
+#define GCUT_PROCESS_ERROR           (gcut_process_error_quark())
+
 typedef struct _GCutProcess      GCutProcess;
 typedef struct _GCutProcessClass GCutProcessClass;
 
