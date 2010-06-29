@@ -83,7 +83,7 @@ GType        gcut_process_get_type    (void) G_GNUC_CONST;
  *
  * Returns: a new #GCutProcess.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GCutProcess *gcut_process_new        (const gchar  *command,
                                       ...) G_GNUC_NULL_TERMINATED;
@@ -96,7 +96,7 @@ GCutProcess *gcut_process_new        (const gchar  *command,
  *
  * Returns: a new #GCutProcess.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GCutProcess      *gcut_process_new_command_line (const gchar  *command);
 
@@ -109,7 +109,7 @@ GCutProcess      *gcut_process_new_command_line (const gchar  *command);
  *
  * Returns: a new #GCutProcess.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GCutProcess      *gcut_process_new_va_list   (const gchar  *command,
                                               va_list       args);
@@ -124,7 +124,7 @@ GCutProcess      *gcut_process_new_va_list   (const gchar  *command,
  *
  * Returns: a new #GCutProcess.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GCutProcess      *gcut_process_new_argv  (gint          argc,
                                           gchar       **argv);
@@ -138,7 +138,7 @@ GCutProcess      *gcut_process_new_argv  (gint          argc,
  *
  * Returns: a new #GCutProcess.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GCutProcess      *gcut_process_new_strings   (const gchar **command);
 
@@ -151,7 +151,7 @@ GCutProcess      *gcut_process_new_strings   (const gchar **command);
  *
  * Returns: a new #GCutProcess.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GCutProcess      *gcut_process_new_array     (GArray       *command);
 
@@ -162,7 +162,7 @@ GCutProcess      *gcut_process_new_array     (GArray       *command);
  *
  * Sets @flags for spawning.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 void          gcut_process_set_flags (GCutProcess  *process,
                                       GSpawnFlags   flags);
@@ -175,7 +175,7 @@ void          gcut_process_set_flags (GCutProcess  *process,
  *
  * Returns: the flags for spawning.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GSpawnFlags   gcut_process_get_flags (GCutProcess      *process);
 
@@ -188,7 +188,7 @@ GSpawnFlags   gcut_process_get_flags (GCutProcess      *process);
  *
  * Sets environment variable for external command.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 void          gcut_process_set_env   (GCutProcess  *process,
                                       const gchar  *name,
@@ -205,7 +205,7 @@ void          gcut_process_set_env   (GCutProcess  *process,
  * ..., %NULL) It should be freed by g_strfreev() when no longer
  * needed.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 gchar       **gcut_process_get_env  (GCutProcess  *process);
 
@@ -218,7 +218,7 @@ gchar       **gcut_process_get_env  (GCutProcess  *process);
  *
  * Returns: %TRUE on success, otherwise %FALSE
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 gboolean     gcut_process_run (GCutProcess *process,
                                GError     **error);
@@ -233,7 +233,7 @@ gboolean     gcut_process_run (GCutProcess *process,
  * Returns: the process ID of running external process if
  * external process is running, otherwise 0.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GPid         gcut_process_get_pid (GCutProcess *process);
 
@@ -253,7 +253,7 @@ GPid         gcut_process_get_pid (GCutProcess *process);
  * Returns: an exit status of external process on success,
  * otherwise -1.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 gint         gcut_process_wait    (GCutProcess *porcess,
                                    guint        timeout,
@@ -266,7 +266,7 @@ gint         gcut_process_wait    (GCutProcess *porcess,
  *
  * Sends @signal_number signal to external process.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 gboolean     gcut_process_kill    (GCutProcess *process,
                                    gint         signal_number,
@@ -283,7 +283,7 @@ gboolean     gcut_process_kill    (GCutProcess *process,
  *
  * Returns: %TRUE on success, otherwise %FALSE
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 gboolean      gcut_process_write          (GCutProcess  *process,
                                            const gchar  *chunk,
@@ -293,7 +293,7 @@ gboolean      gcut_process_write          (GCutProcess  *process,
  * gcut_process_get_output_string:
  * @process: a #GCutProcess
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GString     *gcut_process_get_output_string
                                   (GCutProcess *process);
@@ -302,7 +302,7 @@ GString     *gcut_process_get_output_string
  * gcut_process_get_error_string:
  * @process: a #GCutProcess
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GString     *gcut_process_get_error_string
                                   (GCutProcess *process);
@@ -317,7 +317,7 @@ GString     *gcut_process_get_error_string
  * Returns: a #GIOChannel if external process is running,
  * otherwise %NULL.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GIOChannel *gcut_process_get_input_channel (GCutProcess  *process);
 
@@ -331,7 +331,7 @@ GIOChannel *gcut_process_get_input_channel (GCutProcess  *process);
  * Returns: a #GIOChannel if external process is running,
  * otherwise %NULL.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GIOChannel *gcut_process_get_output_channel (GCutProcess *process);
 
@@ -345,7 +345,7 @@ GIOChannel *gcut_process_get_output_channel (GCutProcess *process);
  * Returns: a #GIOChannel if external process is running,
  * otherwise %NULL.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GIOChannel *gcut_process_get_error_channel (GCutProcess *process);
 
@@ -361,7 +361,7 @@ GIOChannel *gcut_process_get_error_channel (GCutProcess *process);
  * Returns: a #GInputStream if external process is running,
  * otherwise %NULL.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GInputStream *gcut_process_get_input_stream (GCutProcess *process);
 
@@ -375,7 +375,7 @@ GInputStream *gcut_process_get_input_stream (GCutProcess *process);
  * Returns: a #GOutputStream if external process is running,
  * otherwise %NULL.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GOutputStream *gcut_process_get_output_stream (GCutProcess *process);
 
@@ -389,7 +389,7 @@ GOutputStream *gcut_process_get_output_stream (GCutProcess *process);
  * Returns: a #GOutputStream if external process is running,
  * otherwise %NULL.
  *
- * Since: 1.1.6
+ * Since: 1.1.5
  */
 GOutputStream   *gcut_process_get_error_stream (GCutProcess *process);
 #endif /* GLIB_CHECK_VERSION(2,16,0) */
