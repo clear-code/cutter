@@ -333,6 +333,23 @@ test_output_string (void)
     gcut_assert_equal_string(&expected, actual);
 }
 
+void
+test_error_string (void)
+{
+    GError *error = NULL;
+    GString expected = { "EEE\n", 4, 0 };
+    GString *actual;
+
+    process = gcut_process_new(cut_test_echo_path, "-e", "EEE", NULL);
+
+    gcut_process_run(process, &error);
+    gcut_assert_error(error);
+    wait_reaped();
+
+    actual = gcut_process_get_error_string(process);
+    gcut_assert_equal_string(&expected, actual);
+}
+
 #ifdef CUT_SUPPORT_GIO
 void
 test_output_stream (void)
