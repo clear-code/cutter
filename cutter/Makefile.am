@@ -197,6 +197,10 @@ if OS_WIN32
 libcutter_la_LDFLAGS += -mwindows
 endif
 
+if HAVE_GIO
+libcutter_la_LIBADD += $(GIO_LIBS)
+endif
+
 cutter_LDADD =					\
 	$(builddir)/libcutter.la		\
 	$(GLIB_LIBS)

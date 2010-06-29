@@ -181,8 +181,15 @@ dnl **************************************************************
 dnl Check for GIO
 dnl **************************************************************
 GIO_REQUIRED=2.16.0
-PKG_CHECK_MODULES(GIO, gio-2.0 >= $GIO_REQUIRED,
+if test "$os_win32" = "no"; then
+  GIO_PACKAGE=gio-unix-2.0
+else
+  GIO_PACKAGE=gio-2.0
+fi
+
+PKG_CHECK_MODULES(GIO, $GIO_PACKAGE >= $GIO_REQUIRED,
                   [gio_exists=yes], [gio_exists=no])
+AM_CONDITIONAL([HAVE_GIO], [test "$gio_exists" = "yes"])
 
 dnl **************************************************************
 dnl Check for GdkPixbuf
@@ -554,6 +561,7 @@ CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
 AC_SUBST(CUTTER)
 
 CUTTER_CFLAGS="$GLIB_CFLAGS -DG_DISABLE_DEPRECATED -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS $GIO_CFLAGS"
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULEDIR=\\\"\"\$(report_factory_moduledir)\"\\\""
