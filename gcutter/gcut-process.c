@@ -70,6 +70,9 @@ struct _GCutProcessPrivate
     guint output_watch_id;
     guint error_watch_id;
 
+    GString *output_string;
+    GString *error_string;
+
     WatchOutputData *watch_output_data;
     WatchOutputData *watch_error_data;
 
@@ -268,6 +271,9 @@ gcut_process_init (GCutProcess *process)
     priv->error_stream = g_memory_input_stream_new();
 #endif
 
+    priv->output_string = g_string_new(NULL);
+    priv->error_string = g_string_new(NULL);
+
     priv->output_watch_id = 0;
     priv->error_watch_id = 0;
 
@@ -402,6 +408,14 @@ dispose (GObject *object)
         gcut_process_close(GCUT_PROCESS(object));
     }
 
+    if (priv->output_string) {
+        g_string_free(priv->output_string, TRUE);
+        priv->output_string = NULL;
+    }
+    if (priv->error_string) {
+        g_string_free(priv->error_string, TRUE);
+        priv->error_string = NULL;
+    }
 #ifdef CUT_SUPPORT_GIO
     dispose_streams(priv);
 #endif
@@ -682,6 +696,7 @@ output_received (GCutProcess *process,
                                    g_strndup(chunk, size),
                                    size,
                                    g_free);
+    g_string_append_len(priv->output_string, chunk, size);
 }
 
 static void
@@ -697,6 +712,7 @@ error_received (GCutProcess *process,
                                    g_strndup(chunk, size),
                                    size,
                                    g_free);
+    g_string_append_len(priv->error_string, chunk, size);
 }
 
 #define BUFFER_SIZE 4096
@@ -1016,6 +1032,18 @@ void
 gcut_process_set_forced_termination_wait_time (GCutProcess *process, guint timeout)
 {
     GCUT_PROCESS_GET_PRIVATE(process)->forced_termination_wait_time = timeout;
+}
+
+GString *
+gcut_process_get_output_string (GCutProcess *process)
+{
+    return GCUT_PROCESS_GET_PRIVATE(process)->output_string;
+}
+
+GString *
+gcut_process_get_error_string (GCutProcess *process)
+{
+    return GCUT_PROCESS_GET_PRIVATE(process)->error_string;
 }
 
 #ifdef CUT_SUPPORT_GIO
