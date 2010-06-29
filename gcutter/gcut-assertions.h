@@ -788,6 +788,26 @@ G_BEGIN_DECLS
         gcut_assert_not_equal_pid(expected, actual));                   \
 } while (0)
 
+/**
+ * gcut_assert_equal_string:
+ * @expected: an expected value.
+ * @actual: an actual value.
+ * @...: optional message. See cut_message() for details.
+ *
+ * Passes if @expected == @actual.
+ *
+ * Since: 1.1.5
+ */
+#define gcut_assert_equal_string(expected, actual, ...) do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            gcut_assert_equal_string_helper((expected), (actual),       \
+                                            #expected, #actual),        \
+            __VA_ARGS__),                                               \
+        gcut_assert_equal_string(expected, actual, __VA_ARGS__));       \
+} while (0)
+
 G_END_DECLS
 
 #endif /* __GCUT_ASSERTIONS_H__ */

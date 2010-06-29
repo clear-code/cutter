@@ -580,6 +580,29 @@ gcut_assert_not_equal_pid_helper (GPid            expected,
     }
 }
 
+void
+gcut_assert_equal_string_helper (const GString  *expected,
+                                 const GString  *actual,
+                                 const gchar    *expression_expected,
+                                 const gchar    *expression_actual)
+{
+    if (gcut_string_equal(expected, actual)) {
+        cut_test_pass();
+    } else {
+        const gchar *message;
+        const gchar *inspected_expected, *inspected_actual;
+
+        inspected_expected = cut_take_string(gcut_string_inspect(expected));
+        inspected_actual = cut_take_string(gcut_string_inspect(actual));
+
+        message = cut_take_printf("<%s == %s>",
+                                  expression_expected, expression_actual);
+        cut_set_expected(inspected_expected);
+        cut_set_actual(inspected_actual);
+        cut_test_fail(message);
+    }
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

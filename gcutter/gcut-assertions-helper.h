@@ -33,6 +33,7 @@
 #include <gcutter/gcut-object.h>
 #include <gcutter/gcut-egg.h>
 #include <gcutter/gcut-process.h>
+#include <gcutter/gcut-string.h>
 #include <gcutter/gcut-io.h>
 #include <gcutter/gcut-key-file.h>
 #include <gcutter/gcut-inspect.h>
@@ -160,6 +161,11 @@ void      gcut_assert_not_equal_pid_helper  (GPid            expected,
                                              GPid            actual,
                                              const char     *expression_expected,
                                              const char     *expression_actual);
+void      gcut_assert_equal_string_helper
+                                            (const GString  *expected,
+                                             const GString  *actual,
+                                             const gchar    *expression_expected,
+                                             const gchar    *expression_actual);
 
 G_END_DECLS
 
