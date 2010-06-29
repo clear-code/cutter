@@ -298,8 +298,6 @@ gboolean      gcut_process_write          (GCutProcess  *process,
 GString     *gcut_process_get_output_string
                                   (GCutProcess *process);
 
-#if GLIB_CHECK_VERSION(2,16,0)
-#include <gio/gio.h>
 /**
  * gcut_process_get_error_string:
  * @process: a #GCutProcess
@@ -309,6 +307,8 @@ GString     *gcut_process_get_output_string
 GString     *gcut_process_get_error_string
                                   (GCutProcess *process);
 
+#if GLIB_CHECK_VERSION(2,16,0)
+#include <gio/gio.h>
 /**
  * gcut_process_get_input_stream:
  * @process: a #GCutProcess
