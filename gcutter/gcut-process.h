@@ -26,11 +26,11 @@
 G_BEGIN_DECLS
 
 #define GCUT_TYPE_PROCESS            (gcut_process_get_type ())
-#define GCUT_PROCESS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_PROCESS, GCutProcess))
-#define GCUT_PROCESS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_PROCESS, GCutProcessClass))
-#define GCUT_IS_PROCESS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), CUT_TYPE_PROCESS))
-#define GCUT_IS_PROCESS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), CUT_TYPE_PROCESS))
-#define GCUT_PROCESS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), CUT_TYPE_PROCESS, GCutProcessClass))
+#define GCUT_PROCESS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GCUT_TYPE_PROCESS, GCutProcess))
+#define GCUT_PROCESS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GCUT_TYPE_PROCESS, GCutProcessClass))
+#define GCUT_IS_PROCESS(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GCUT_TYPE_PROCESS))
+#define GCUT_IS_PROCESS_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GCUT_TYPE_PROCESS))
+#define GCUT_PROCESS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS((obj), GCUT_TYPE_PROCESS, GCutProcessClass))
 
 typedef struct _GCutProcess      GCutProcess;
 typedef struct _GCutProcessClass GCutProcessClass;
