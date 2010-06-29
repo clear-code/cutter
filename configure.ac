@@ -178,6 +178,13 @@ fi
 AM_CONDITIONAL([GLIB_2_12], [test "$glib_2_12" = "yes"])
 
 dnl **************************************************************
+dnl Check for GIO
+dnl **************************************************************
+GIO_REQUIRED=2.16.0
+PKG_CHECK_MODULES(GIO, gio-2.0 >= $GIO_REQUIRED,
+                  [gio_exists=yes], [gio_exists=no])
+
+dnl **************************************************************
 dnl Check for GdkPixbuf
 dnl **************************************************************
 PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0,
@@ -696,6 +703,29 @@ AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-enable],
 AC_CONFIG_COMMANDS([cutter/cut-features.h-gdk-pixbuf-disable],
 [
     echo "/* #undef CUT_SUPPORT_GDK_PIXBUF */" >> cutter/cut-features.h
+])
+  fi
+
+AC_CONFIG_COMMANDS([cutter/cut-features.h-gio-header],
+[
+  cat <<\_______EOF >> cutter/cut-features.h
+
+/**
+ * CUT_SUPPORT_GIO:
+ *
+ * Shows GIO support is available.
+ */
+_______EOF
+])
+  if test "$gio_exists" = "yes"; then
+AC_CONFIG_COMMANDS([cutter/cut-features.h-gio-enable],
+[
+    echo "#define CUT_SUPPORT_GIO 1" >> cutter/cut-features.h
+])
+  else
+AC_CONFIG_COMMANDS([cutter/cut-features.h-gio-disable],
+[
+    echo "/* #undef CUT_SUPPORT_GIO */" >> cutter/cut-features.h
 ])
   fi
 

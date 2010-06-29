@@ -21,6 +21,7 @@
 #define __GCUT_PROCESS_H__
 
 #include <glib-object.h>
+#include <cutter/cut-features.h>
 #include <cutter/cut-test-result.h>
 
 G_BEGIN_DECLS
@@ -349,7 +350,7 @@ GIOChannel *gcut_process_get_output_channel (GCutProcess *process);
  */
 GIOChannel *gcut_process_get_error_channel (GCutProcess *process);
 
-#if GLIB_CHECK_VERSION(2,16,0)
+#ifdef CUT_SUPPORT_GIO
 #include <gio/gio.h>
 /**
  * gcut_process_get_input_stream:
@@ -393,7 +394,7 @@ GInputStream *gcut_process_get_output_stream (GCutProcess *process);
  */
 GInputStream   *gcut_process_get_error_stream (GCutProcess *process);
 
-#endif /* GLIB_CHECK_VERSION(2,16,0) */
+#endif /* CUT_SUPPORT_GIO */
 
 G_END_DECLS
 
