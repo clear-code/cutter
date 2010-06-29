@@ -1,4 +1,3 @@
-* add gcut_egg_incubate() that returns GCutProcess.
 * rename cut_process_* to cut_child_cutter_*.
 * support filter tests by attribute value.
   e.g. cutter --filter-by-attribute 'target_version <= 1.0.0'.
