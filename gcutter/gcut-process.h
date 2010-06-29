@@ -383,6 +383,36 @@ GInputStream   *gcut_process_get_error_stream (GCutProcess *process);
 
 #endif /* CUT_SUPPORT_GIO */
 
+/**
+ * gcut_process_get_forced_termination_wait_time:
+ * @process: a #GCutProcess
+ *
+ * Gets a wait time in milliseconds for forced termination
+ * on dispose.
+ *
+ * Returns: a timeout value for waiting forced terminated
+ * external command on dispose.
+ *
+ * Since: 1.1.5
+ */
+guint         gcut_process_get_forced_termination_wait_time
+                                     (GCutProcess      *process);
+
+/**
+ * gcut_process_set_forced_termination_wait_time:
+ * @process: a #GCutProcess
+ * @timeout: the timeout value in milliseconds
+ *
+ * Sets a wait time in milliseconds for forced termination
+ * on dispose. If @timeout is 0, it doesn't wait
+ * termination of external process. The default value is 10.
+ *
+ * Since: 1.1.5
+ */
+void          gcut_process_set_forced_termination_wait_time
+                                     (GCutProcess      *process,
+                                      guint         timeout);
+
 G_END_DECLS
 
 #endif /* __GCUT_PROCESS_H__ */
