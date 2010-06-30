@@ -482,6 +482,24 @@ gcut_process_new (const gchar *command, ...)
 }
 
 GCutProcess *
+gcut_process_new_command_line (const gchar *command_line)
+{
+    GCutProcess *process;
+    gchar **argv = NULL;
+
+    if (!g_shell_parse_argv(command_line,
+                            NULL, &argv,
+                            NULL)) {
+        return FALSE;
+    }
+      
+    process = gcut_process_new_strings((const gchar**)argv);
+    g_strfreev (argv);
+
+    return process;
+}
+
+GCutProcess *
 gcut_process_new_va_list (const gchar *command, va_list args)
 {
     GCutProcess *process;

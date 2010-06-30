@@ -99,7 +99,7 @@ GCutProcess *gcut_process_new        (const gchar  *command,
  *
  * Since: 1.1.5
  */
-GCutProcess      *gcut_process_new_command_line (const gchar  *command);
+GCutProcess      *gcut_process_new_command_line (const gchar *command_line);
 
 /**
  * gcut_process_new_va_list:

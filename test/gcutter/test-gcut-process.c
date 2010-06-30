@@ -22,6 +22,7 @@ void test_io (void);
 void test_flags (void);
 void test_env (void);
 void test_kill (void);
+void test_command_line (void);
 void test_wait_before_run (void);
 void test_wait_after_reaped (void);
 void test_wait_timeout (void);
@@ -265,6 +266,26 @@ test_kill (void)
     gcut_process_kill(process, SIGKILL, &error);
     gcut_assert_error(error);
     wait_reaped();
+}
+
+void
+test_command_line (void)
+{
+    GError *error = NULL;
+    const gchar *command_line;
+    GString expected = { "command_line_arg\n", 17, 0 };
+    GString *actual;
+
+    command_line = cut_take_printf("%s command_line_arg", cut_test_echo_path);
+
+    process = gcut_process_new_command_line(command_line);
+
+    gcut_process_run(process, &error);
+    gcut_assert_error(error);
+    wait_reaped();
+
+    actual = gcut_process_get_output_string(process);
+    gcut_assert_equal_string(&expected, actual);
 }
 
 void
