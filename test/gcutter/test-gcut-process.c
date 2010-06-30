@@ -426,6 +426,22 @@ test_error_stream (void)
 }
 #endif
 
+void
+test_impossible_write (void)
+{
+    GError *error = NULL;
+
+    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+
+    gcut_process_run(process, &error);
+    gcut_assert_error(error);
+
+    cut_assert_false(gcut_process_write(process, "XXX", 3, &error));
+    gcut_assert_error(error);
+
+    wait_reaped();
+}
+
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4
 */
