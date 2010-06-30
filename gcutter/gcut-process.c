@@ -659,7 +659,7 @@ child_watch_func (GPid pid, gint status, gpointer data)
 }
 
 static GIOChannel *
-create_output_channel (gint fd)
+create_channel (gint fd)
 {
     GIOChannel *channel;
 
@@ -677,20 +677,21 @@ create_output_channel (gint fd)
 }
 
 static GIOChannel *
+create_output_channel (gint fd)
+{
+    return create_channel(fd);
+}
+
+static GIOChannel *
 create_input_channel (gint fd, guint *watch_id,
                       GIOFunc watch_func, gpointer user_data)
 {
     GIOChannel *channel;
 
-#ifndef G_OS_WIN32
-    channel = g_io_channel_unix_new(fd);
-#else
-    channel = g_io_channel_win32_new_fd(fd);
-#endif
+    channel = create_channel(fd);
     if (!channel)
         return NULL;
 
-    g_io_channel_set_close_on_unref(channel, TRUE);
     g_io_channel_set_flags(channel, G_IO_FLAG_NONBLOCK, NULL);
 
     *watch_id = g_io_add_watch(channel,
