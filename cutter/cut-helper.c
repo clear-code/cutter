@@ -34,10 +34,22 @@ const char *
 cut_get_test_directory (void)
 {
     CutRunContext *run_context;
+    CutTestContext *test_context;
+    CutTestCase *test_case;
 
-    run_context = cut_test_context_get_run_context(cut_get_current_test_context());
+    test_context = cut_get_current_test_context();
+    if (!test_context)
+        return NULL;
 
-    return cut_run_context_get_test_directory(run_context);
+    test_case = cut_test_context_get_test_case(test_context);
+    if (!test_case)
+        return NULL;
+
+    run_context = cut_test_context_get_run_context(test_context);
+
+    return cut_build_path(cut_run_context_get_test_directory(run_context),
+                          cut_test_get_base_directory(CUT_TEST(test_case)),
+                          NULL);
 }
 
 /*
