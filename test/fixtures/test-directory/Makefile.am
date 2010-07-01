@@ -9,7 +9,7 @@ INCLUDES =			\
 AM_CFLAGS =						\
 	$(CUTTER_CFLAGS)
 
-noinst_LTLIBRARIES = 		\
+check_LTLIBRARIES = 		\
 	test-directory.la
 
 AM_LDFLAGS =			\

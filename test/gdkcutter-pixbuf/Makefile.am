@@ -11,7 +11,7 @@ AM_CFLAGS += $(GDK_PIXBUF_CFLAGS)
 CLEANFILES = *.gcno *.gcda
 
 if HAVE_GDK_PIXBUF
-noinst_LTLIBRARIES = 				\
+check_LTLIBRARIES = 				\
 	test-gdkcut-pixbuf-assertions.la	\
 	test-gdkcut-pixbuf.la
 endif

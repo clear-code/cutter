@@ -13,7 +13,7 @@ endif
 
 EXTRA_DIST = cuttest-assertions.h
 
-noinst_LTLIBRARIES = 			\
+check_LTLIBRARIES = 			\
 	libcuttest-utils.la		\
 	libcuttest-event-receiver.la
 

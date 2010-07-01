@@ -11,7 +11,7 @@ AM_CFLAGS += $(LIBSOUP_CFLAGS)
 CLEANFILES = *.gcno *.gcda
 
 if HAVE_LIBSOUP
-noinst_LTLIBRARIES =				\
+check_LTLIBRARIES =				\
 	suite-soupcut-test.la			\
 	test-soupcut-assertions.la		\
 	test-soupcut-client.la			\

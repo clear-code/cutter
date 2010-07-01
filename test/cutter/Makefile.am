@@ -10,7 +10,7 @@ AM_CFLAGS =			\
 
 CLEANFILES = *.gcno *.gcda
 
-noinst_LTLIBRARIES = 			\
+check_LTLIBRARIES = 			\
 	test-cutter.la			\
 	test-cut-assertions.la		\
 	test-cut-test-attribute.la	\

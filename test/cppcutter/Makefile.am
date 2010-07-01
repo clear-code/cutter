@@ -10,7 +10,7 @@ AM_CXXFLAGS = $(CUTTER_CFLAGS)
 
 CLEANFILES = *.gcno *.gcda
 
-noinst_LTLIBRARIES = 			\
+check_LTLIBRARIES = 			\
 	test-cppcut-assertions.la
 
 AM_LDFLAGS =			\

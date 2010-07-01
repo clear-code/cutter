@@ -8,7 +8,7 @@ AM_CFLAGS =						\
 	-DCUT_RELATIVE_PATH="\"fixtures/test-context\""	\
 	$(CUTTER_CFLAGS)
 
-noinst_LTLIBRARIES = 		\
+check_LTLIBRARIES = 		\
 	test-relative-path.la
 
 AM_LDFLAGS =			\

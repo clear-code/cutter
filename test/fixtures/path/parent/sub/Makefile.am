@@ -3,7 +3,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter
 
-noinst_LTLIBRARIES = 		\
+check_LTLIBRARIES = 		\
 	test-deep.la
 
 AM_LDFLAGS =			\

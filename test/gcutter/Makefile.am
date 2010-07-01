@@ -9,7 +9,7 @@ AM_CFLAGS = $(CUTTER_CFLAGS)
 
 CLEANFILES = *.gcno *.gcda
 
-noinst_LTLIBRARIES = 			\
+check_LTLIBRARIES = 			\
 	test-gcut-assertions.la		\
 	test-gcut-assertions-helper.la	\
 	test-gcut-test-utils.la		\
