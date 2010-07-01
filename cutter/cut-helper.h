@@ -551,6 +551,17 @@ void cut_pop_backtrace(void);
  */
 const char *cut_get_test_directory(void);
 
+/**
+ * cut_get_source_directory:
+ *
+ * Gets the source directory name which is specified by command line.
+ *
+ * Returns: a string owned by Cutter that must not be modified or freed.
+ *
+ * Since: 1.1.5
+ */
+const char *cut_get_source_directory(void);
+
 #ifdef __cplusplus
 }
 #endif

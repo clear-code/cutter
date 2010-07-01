@@ -52,6 +52,21 @@ cut_get_test_directory (void)
                           NULL);
 }
 
+const char *
+cut_get_source_directory (void)
+{
+    CutRunContext *run_context;
+    CutTestContext *test_context;
+
+    test_context = cut_get_current_test_context();
+    if (!test_context)
+        return NULL;
+
+    run_context = cut_test_context_get_run_context(test_context);
+
+    return cut_run_context_get_source_directory(run_context);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
