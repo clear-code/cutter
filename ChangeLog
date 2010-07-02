@@ -1,3 +1,7 @@
+2010-07-02  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/gcutter/Makefile.am: fix a typo.
+
 2010-06-25  Kouhei Sutou  <kou@clear-code.com>
 
 	* TODO:
