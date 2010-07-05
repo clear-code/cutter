@@ -129,7 +129,7 @@ setup_process (GCutProcess *process)
 }
 
 static void
-wait_reaped_helper (void)
+wait_reaped_helper (gint expected_signal)
 {
     GError *error = NULL;
     gint returned_exit_status;
@@ -137,11 +137,21 @@ wait_reaped_helper (void)
     returned_exit_status = gcut_process_wait(process, 1000, &error);
     gcut_assert_error(error);
     cut_assert_equal_int(returned_exit_status, exit_status);
-    cut_assert_equal_int(EXIT_SUCCESS, WEXITSTATUS(exit_status));
+
+    if (expected_signal) {
+        cut_assert_true(WIFSIGNALED(exit_status));
+        cut_assert_equal_int(expected_signal, WTERMSIG(exit_status));
+    } else {
+        cut_assert_true(WIFEXITED(exit_status));
+        cut_assert_equal_int(EXIT_SUCCESS, WEXITSTATUS(exit_status));
+    }
 }
 
-#define wait_reaped()                           \
-    cut_trace(wait_reaped_helper())
+#define wait_exited()                           \
+    cut_trace(wait_reaped_helper(0))
+
+#define wait_termed_by_signal(signal)           \
+    cut_trace(wait_reaped_helper(signal))
 
 void
 test_run (void)
@@ -156,7 +166,7 @@ test_run (void)
     gcut_assert_error(error);
     gcut_assert_not_equal_pid(0, gcut_process_get_pid(process));
 
-    wait_reaped();
+    wait_exited();
     cut_assert_equal_string("XXX\n", output_string->str);
     cut_assert_equal_string("", error_string->str);
 }
@@ -185,7 +195,7 @@ test_io (void)
     g_io_channel_shutdown(gcut_process_get_input_channel(process), TRUE, &error);
     gcut_assert_error(error);
 
-    wait_reaped();
+    wait_exited();
     cut_assert_equal_string("XXX\n", output_string->str);
     cut_assert_equal_string("", error_string->str);
 }
@@ -211,7 +221,7 @@ test_flags (void)
     gcut_process_run(process, &error);
     gcut_assert_error(error);
 
-    wait_reaped();
+    wait_exited();
     cut_assert_equal_string("XXX\n", output_string->str);
     cut_assert_equal_string("", error_string->str);
 }
@@ -239,7 +249,7 @@ test_env (void)
     gcut_process_run(process, &error);
     gcut_assert_error(error);
 
-    wait_reaped();
+    wait_exited();
     cut_assert_equal_string("name1=value1\n"
                             "name2=value2\n",
                             output_string->str);
@@ -265,7 +275,7 @@ test_kill (void)
 
     gcut_process_kill(process, SIGKILL, &error);
     gcut_assert_error(error);
-    wait_reaped();
+    wait_termed_by_signal(SIGKILL);
 }
 
 void
@@ -282,7 +292,7 @@ test_command_line (void)
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
-    wait_reaped();
+    wait_exited();
 
     actual = gcut_process_get_output_string(process);
     gcut_assert_equal_string(&expected, actual);
@@ -311,7 +321,7 @@ test_wait_after_reaped (void)
     gcut_process_run(process, &error);
     gcut_assert_error(error);
 
-    wait_reaped();
+    wait_exited();
 
     cut_assert_equal_int(-1, gcut_process_wait(process, 0, &actual_error));
     expected_error = g_error_new(GCUT_PROCESS_ERROR,
@@ -349,7 +359,7 @@ test_output_string (void)
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
-    wait_reaped();
+    wait_exited();
 
     actual = gcut_process_get_output_string(process);
     gcut_assert_equal_string(&expected, actual);
@@ -366,7 +376,7 @@ test_error_string (void)
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
-    wait_reaped();
+    wait_exited();
 
     actual = gcut_process_get_error_string(process);
     gcut_assert_equal_string(&expected, actual);
@@ -388,7 +398,7 @@ test_output_stream (void)
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
-    wait_reaped();
+    wait_exited();
 
     g_input_stream_read_all(stream,
                             buffer, sizeof(buffer),
@@ -414,7 +424,7 @@ test_error_stream (void)
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
-    wait_reaped();
+    wait_exited();
 
     g_input_stream_read_all(stream,
                             buffer, sizeof(buffer),
@@ -439,7 +449,7 @@ test_impossible_write (void)
     cut_assert_false(gcut_process_write(process, "XXX", 3, &error));
     gcut_assert_error(error);
 
-    wait_reaped();
+    wait_exited();
 }
 
 /*
