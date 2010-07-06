@@ -1,3 +1,7 @@
+2010-07-06  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-assertions.h: fix typos.
+
 2010-07-02  Kouhei Sutou  <kou@clear-code.com>
 
 	* test/gcutter/Makefile.am: fix a typo.

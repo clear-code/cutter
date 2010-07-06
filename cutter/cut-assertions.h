@@ -1887,7 +1887,7 @@ extern "C" {
         cut_test_with_user_message(                             \
             cut_assert_exist_path_helper(path, #path),          \
             __VA_ARGS__),                                       \
-        cut_assert_exist_path(path, __VA_ARGS__));              \
+        cut_assert_path_exist(path, __VA_ARGS__));              \
 } while (0)
 #endif
 
@@ -1938,7 +1938,7 @@ extern "C" {
         cut_test_with_user_message(                             \
             cut_assert_not_exist_path_helper(path, #path),      \
             __VA_ARGS__),                                       \
-        cut_assert_not_exist_path(path, __VA_ARGS__));          \
+        cut_assert_path_not_exist(path, __VA_ARGS__));          \
 } while (0)
 #endif
 
