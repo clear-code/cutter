@@ -1,3 +1,9 @@
+2010-07-07  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/run-test.sh, sample/cairo/run-test.sh,
+	sample/glib/run-test.sh, sample/gtk+/run-test.sh: use 'make check'
+	for implicit test programs building.
+
 2010-07-06  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-assertions.h: fix typos.

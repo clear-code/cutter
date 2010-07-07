@@ -2,8 +2,14 @@
 
 export BASE_DIR="`dirname $0`"
 
+if test x"$RUNNING_TEST" = x"yes"; then
+    exit 0
+fi
+
 if test x"$NO_MAKE" != x"yes"; then
-    make -C $BASE_DIR/../../ > /dev/null || exit 1
+    RUNNING_TEST=yes
+    export RUNNING_TEST
+    make -C $BASE_DIR/../../ check > /dev/null || exit 1
 fi
 
 export CUT_UI_MODULE_DIR=$BASE_DIR/../../module/ui/.libs

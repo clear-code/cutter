@@ -4,6 +4,10 @@ BASE_DIR="`dirname $0`"
 export BASE_DIR
 top_dir="$BASE_DIR/.."
 
+if test x"$RUNNING_TEST" = x"yes"; then
+    exit 0
+fi
+
 if test x"$NO_MAKE" != x"yes"; then
     if test -z "$MAKE"; then
 	if which gmake 2>&1 > /dev/null; then
@@ -12,7 +16,9 @@ if test x"$NO_MAKE" != x"yes"; then
 	    MAKE=make
 	fi
     fi
-    $MAKE -C $top_dir/ > /dev/null || exit 1
+    RUNNING_TEST=yes
+    export RUNNING_TEST
+    $MAKE -C $top_dir/ check INTLTOOL_UPDATE=: > /dev/null || exit 1
 fi
 
 if test -z "$CUTTER"; then
