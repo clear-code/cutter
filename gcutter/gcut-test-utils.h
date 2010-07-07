@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -129,6 +129,47 @@ GList  *gcut_list_new         (const gpointer element,
                                ...) G_GNUC_NULL_TERMINATED;
 
 /**
+ * gcut_list_int_new:
+ * @n: the number of integer values.
+ * @value: the first integer value.
+ * @...: remaining integer values in list.
+ *
+ * Creates a list from passed integer values.
+ *
+ * e.g.:
+ * |[
+ * gcut_list_int_new(3, -10, 1, 29); -> (-10, 1, 29)
+ * ]|
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * integer values and must be freed with g_list_free().
+ *
+ * Since: 1.1.5
+ */
+GList  *gcut_list_int_new  (guint n, gint value, ...);
+
+/**
+ * gcut_list_uint_new:
+ * @n: the number of unsigned integer values.
+ * @value: the first unsigned integer value.
+ * @...: remaining unsigned integer values in list.
+ *
+ * Creates a list from passed unsigned integer values.
+ *
+ * e.g.:
+ * |[
+ * gcut_list_uint_new(3, 0, 1, 2); -> (0, 1, 2)
+ * ]|
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * unsigned integer values and must be freed with
+ * g_list_free().
+ *
+ * Since: 1.1.5
+ */
+GList  *gcut_list_uint_new  (guint n, guint value, ...);
+
+/**
  * gcut_list_string_new:
  * @value: the first string.
  * @...: remaining strings in list. %NULL-terminate.
@@ -154,6 +195,50 @@ GList  *gcut_list_string_new  (const gchar *value, ...) G_GNUC_NULL_TERMINATED;
  * Since: 1.0.6
  */
 GList  *gcut_list_string_new_array  (const gchar **strings);
+
+/**
+ * gcut_take_new_list_int:
+ * @n: the number of integer values.
+ * @value: the first integer value.
+ * @...: remaining strings in list.
+ *
+ * Creates a list from passed integer values that is owned
+ * by Cutter.
+ *
+ * e.g.:
+ * |[
+ * gcut_take_new_list_int(3, -10, 1, 29); -> (-10, 1, 29)
+ * ]|
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * integer values and is owned by Cutter.
+ *
+ * Since: 1.1.5
+ */
+#define gcut_take_new_list_int(n, value, ...)                           \
+    gcut_take_list(gcut_list_int_new(n, value, __VA_ARGS__), NULL)
+
+/**
+ * gcut_take_new_list_uint:
+ * @n: the number of unsigned integer values.
+ * @value: the first unsigned integer value.
+ * @...: remaining strings in list.
+ *
+ * Creates a list from passed unsigned integer values that
+ * is owned by Cutter.
+ *
+ * e.g.:
+ * |[
+ * gcut_take_new_list_uint(3, 0, 1, 2); -> (0, 1, 2)
+ * ]|
+ *
+ * Returns: a newly-allocated #GList that contains passed
+ * unsigned integer values and is owned by Cutter.
+ *
+ * Since: 1.1.5
+ */
+#define gcut_take_new_list_uint(n, value, ...)                          \
+    gcut_take_list(gcut_list_uint_new(n, value, __VA_ARGS__), NULL)
 
 /**
  * gcut_take_new_list_string:

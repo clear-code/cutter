@@ -1,5 +1,10 @@
 2010-07-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-list.c, gcutter/gcut-test-utils.h,
+	test/gcutter/test-gcut-list.c: add gcut_list_int_new(),
+	gcut_list_uint_new(), gcut_take_new_list_int() and
+	gcut_take_new_list_uint().
+
 	* test/run-test.sh, sample/cairo/run-test.sh,
 	sample/glib/run-test.sh, sample/gtk+/run-test.sh: use 'make check'
 	for implicit test programs building.

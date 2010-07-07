@@ -1,4 +1,21 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
 #include <gcutter.h>
 #include <cutter/cut-enum-types.h>
@@ -8,21 +25,17 @@ void test_inspect_string_including_null(void);
 void test_inspect_enum(void);
 void test_inspect_flags(void);
 
-static GList *list;
 static gchar *inspected;
 
 void
 cut_setup (void)
 {
-    list = NULL;
     inspected = NULL;
 }
 
 void
 cut_teardown (void)
 {
-    if (list)
-        g_list_free(list);
     if (inspected)
         g_free(inspected);
 }
@@ -65,8 +78,11 @@ test_inspect_string_including_null (void)
 void
 test_inspect_enum (void)
 {
-    list = g_list_append(list, GINT_TO_POINTER(CUT_TEST_RESULT_PENDING));
-    list = g_list_append(list, GINT_TO_POINTER(CUT_TEST_RESULT_NOTIFICATION));
+    const GList *list;
+
+    list = gcut_take_new_list_int(2,
+                                  CUT_TEST_RESULT_PENDING,
+                                  CUT_TEST_RESULT_NOTIFICATION);
     inspected = gcut_list_inspect_enum(CUT_TYPE_TEST_RESULT_STATUS, list);
     cut_assert_equal_string("(#<CutTestResultStatus: "
                             "pending(CUT_TEST_RESULT_PENDING:3)>, "
@@ -78,6 +94,7 @@ test_inspect_enum (void)
 void
 test_inspect_flags (void)
 {
+    const GList *list;
     static GType type = 0;
     if (type == 0) {
         static const GFlagsValue values[] = {
@@ -89,8 +106,9 @@ test_inspect_flags (void)
         type = g_flags_register_static("CuttestListStubFlags", values);
     }
 
-    list = g_list_append(list, GUINT_TO_POINTER(1 << 0 | 1 << 1));
-    list = g_list_append(list, GUINT_TO_POINTER(1 << 2));
+    list = gcut_take_new_list_uint(2,
+                                   1 << 0 | 1 << 1,
+                                   1 << 2);
     inspected = gcut_list_inspect_flags(type, list);
     cut_assert_equal_string("(#<CuttestListStubFlags: "
                             "first|second "

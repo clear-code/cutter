@@ -104,6 +104,23 @@ gcut_list_inspect_int (const GList *list)
     return gcut_list_inspect(list, inspect_int, NULL);
 }
 
+GList *
+gcut_list_int_new (guint n, gint value, ...)
+{
+    GList *list = NULL;
+    va_list args;
+    guint i;
+
+    va_start(args, value);
+    for (i = 0; i < n; i++) {
+        list = g_list_prepend(list, GINT_TO_POINTER(value));
+        value = va_arg(args, gint);
+    }
+    va_end(args);
+
+    return g_list_reverse(list);
+}
+
 static gboolean
 equal_uint (gconstpointer data1, gconstpointer data2)
 {
@@ -126,6 +143,23 @@ gchar *
 gcut_list_inspect_uint (const GList *list)
 {
     return gcut_list_inspect(list, inspect_uint, NULL);
+}
+
+GList *
+gcut_list_uint_new (guint n, guint value, ...)
+{
+    GList *list = NULL;
+    va_list args;
+    guint i;
+
+    va_start(args, value);
+    for (i = 0; i < n; i++) {
+        list = g_list_prepend(list, GUINT_TO_POINTER(value));
+        value = va_arg(args, guint);
+    }
+    va_end(args);
+
+    return g_list_reverse(list);
 }
 
 static gboolean
