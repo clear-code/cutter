@@ -638,6 +638,12 @@ cut_utils_build_path_va_list (const gchar *path, va_list args)
 }
 
 gchar *
+cut_utils_build_pathv (const gchar **args)
+{
+    return g_build_filenamev((gchar**)args);
+}
+
+gchar *
 cut_utils_expand_path (const gchar *path)
 {
     if (!path)

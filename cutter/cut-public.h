@@ -162,6 +162,7 @@ char        *cut_utils_build_path           (const char *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 char        *cut_utils_build_path_va_list   (const char *path,
                                              va_list args);
+char        *cut_utils_build_pathv          (const char **args);
 void         cut_utils_remove_path_recursive_force
                                             (const char *path);
 void         cut_utils_make_directory_recursive_force
