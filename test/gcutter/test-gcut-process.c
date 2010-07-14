@@ -136,7 +136,7 @@ wait_reaped_helper (gint expected_signal)
 
     returned_exit_status = gcut_process_wait(process, 1000, &error);
     gcut_assert_error(error);
-    cut_assert_equal_int(returned_exit_status, exit_status);
+    cut_assert_equal_int(exit_status, returned_exit_status);
 
     if (expected_signal) {
         cut_assert_true(WIFSIGNALED(exit_status));
@@ -435,22 +435,6 @@ test_error_stream (void)
     cut_assert_equal_memory("XXX\n", 4, buffer, bytes_read);
 }
 #endif
-
-void
-test_impossible_write (void)
-{
-    GError *error = NULL;
-
-    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
-
-    gcut_process_run(process, &error);
-    gcut_assert_error(error);
-
-    cut_assert_false(gcut_process_write(process, "XXX", 3, &error));
-    gcut_assert_error(error);
-
-    wait_exited();
-}
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

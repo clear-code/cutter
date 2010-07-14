@@ -1,5 +1,8 @@
 2010-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/gcutter/test-gcut-process.c: remove unsupported operation
+	operation test.
+
 	* gcutter/gcut-process.[ch]: add gcut_process_flush().
 
 	* cutter/cut-test-utils.h, cutter/cut-public.h,
