@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -187,7 +187,7 @@ gcut_process_class_init (GCutProcessClass *klass)
      * on for detecting an external process's output is
      * readable.
      *
-     * Since: 1.0.5
+     * Since: 1.1.5
      */
     signals[ERROR_RECEIVED]
         = g_signal_new("error-received",
@@ -215,7 +215,7 @@ gcut_process_class_init (GCutProcessClass *klass)
      * g_main_loop_run(), g_main_context_iteration() and so
      * on for detecting an external process is exited.
      *
-     * Since: 1.0.5
+     * Since: 1.1.5
      */
     signals[REAPED]
         = g_signal_new("reaped",
@@ -234,7 +234,7 @@ gcut_process_class_init (GCutProcessClass *klass)
      * It is emitted each time an external process causes an
      * error. (e.g. IO error)
      *
-     * Since: 1.0.5
+     * Since: 1.1.5
      */
     signals[ERROR]
         = g_signal_new("error",
@@ -819,7 +819,8 @@ gcut_process_run (GCutProcess *process, GError **error)
         gchar *command;
 
         command = g_strjoinv(" ", priv->command);
-        g_set_error(error, GCUT_PROCESS_ERROR, GCUT_PROCESS_ERROR_ALREADY_RUNNING,
+        g_set_error(error, GCUT_PROCESS_ERROR,
+                    GCUT_PROCESS_ERROR_ALREADY_RUNNING,
                     "already running: %s", command);
         g_free(command);
 
@@ -902,6 +903,27 @@ gcut_process_write (GCutProcess *process, const gchar *chunk, gsize size,
     }
 
     return TRUE;
+}
+
+GIOStatus
+gcut_process_flush (GCutProcess *process, GError **error)
+{
+    GCutProcessPrivate *priv;
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+    if (priv->input) {
+        return g_io_channel_flush(priv->input, error);
+    } else {
+        gchar *command;
+
+        command = g_strjoinv(" ", priv->command);
+        g_set_error(error, GCUT_PROCESS_ERROR,
+                    GCUT_PROCESS_ERROR_NOT_RUNNING,
+                    "can't flush input for not running process: <%s>", command);
+        g_free(command);
+
+        return G_IO_STATUS_ERROR;
+    }
 }
 
 GPid

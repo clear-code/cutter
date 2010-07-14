@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -290,6 +290,23 @@ gboolean      gcut_process_write          (GCutProcess  *process,
                                            const gchar  *chunk,
                                            gsize         size,
                                            GError      **error);
+
+/**
+ * gcut_process_flush:
+ * @process: a #GCutProcess
+ * @error: return location for an error, or %NULL
+ *
+ * Flush buffered external process's standard input.
+ *
+ * Returns: the status of the operation: One of
+ *          %G_IO_STATUS_NORMAL, %G_IO_STATUS_AGAIN, or
+ *          %G_IO_STATUS_ERROR.
+ *
+ * Since: 1.1.5
+ */
+GIOStatus     gcut_process_flush          (GCutProcess  *process,
+                                           GError      **error);
+
 /**
  * gcut_process_get_output_string:
  * @process: a #GCutProcess

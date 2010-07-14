@@ -1,5 +1,7 @@
 2010-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-process.[ch]: add gcut_process_flush().
+
 	* cutter/cut-test-utils.h, cutter/cut-public.h,
 	cutter/cut-utils.c: cut_build_pathv -> cut_build_path_array.
 
