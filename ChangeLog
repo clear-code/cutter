@@ -1,5 +1,8 @@
 2010-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, test/fixtures/, test/lib/,
+	test/gcutter/test-gcut-process.c: cut-test-echo -> cuttest-echo.
+
 	* test/gcutter/test-gcut-process.c: remove unsupported operation
 	operation test.
 

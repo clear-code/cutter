@@ -5,7 +5,7 @@ INCLUDES = $(CUTTER_CFLAGS)	\
 
 AM_CFLAGS = $(CUTTER_CFLAGS)
 
-noinst_PROGRAMS = cut-test-echo
+noinst_PROGRAMS = cuttest-echo
 
-cut_test_echo_LDADD = $(GLIB_LIBS)
-cut_test_echo_SOURCES = cut-test-echo.c
+cuttest_echo_LDADD = $(GLIB_LIBS)
+cuttest_echo_SOURCES = cuttest-echo.c

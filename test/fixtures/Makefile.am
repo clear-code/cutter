@@ -1,6 +1,5 @@
 SUBDIRS =			\
 	assertions		\
-	cut-test-echo		\
 	data			\
 	factory			\
 	loader			\

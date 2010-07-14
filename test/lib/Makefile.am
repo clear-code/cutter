@@ -1,3 +1,6 @@
+SUBDIRS =			\
+	cuttest-echo
+
 INCLUDES = 			\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\

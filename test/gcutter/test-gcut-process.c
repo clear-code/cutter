@@ -41,7 +41,7 @@ static GString *error_string;
 static gint exit_status;
 static gboolean reaped;
 static gchar *current_locale;
-static const gchar *cut_test_echo_path;
+static const gchar *cuttest_echo_path;
 
 void
 cut_setup (void)
@@ -57,11 +57,12 @@ cut_setup (void)
     current_locale = g_strdup(setlocale(LC_ALL, NULL));
     setlocale(LC_ALL, "C");
 
-    cut_test_echo_path = cut_build_path(cut_get_test_directory(),
-                                        "..",
-                                        "fixtures",
-                                        "cut-test-echo",
-                                        "cut-test-echo", NULL);
+    cuttest_echo_path = cut_build_path(cut_get_test_directory(),
+                                       "..",
+                                       "lib",
+                                       "cuttest-echo",
+                                       "cuttest-echo",
+                                       NULL);
 }
 
 void
@@ -158,7 +159,7 @@ test_run (void)
 {
     GError *error = NULL;
 
-    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+    process = gcut_process_new(cuttest_echo_path, "XXX", NULL);
     setup_process(process);
 
     gcut_assert_equal_pid(0, gcut_process_get_pid(process));
@@ -286,7 +287,7 @@ test_command_line (void)
     GString expected = { "command_line_arg\n", 17, 0 };
     GString *actual;
 
-    command_line = cut_take_printf("%s command_line_arg", cut_test_echo_path);
+    command_line = cut_take_printf("%s command_line_arg", cuttest_echo_path);
 
     process = gcut_process_new_command_line(command_line);
 
@@ -301,13 +302,13 @@ test_command_line (void)
 void
 test_wait_before_run (void)
 {
-    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+    process = gcut_process_new(cuttest_echo_path, "XXX", NULL);
 
     cut_assert_equal_int(-1, gcut_process_wait(process, 0, &actual_error));
     expected_error = g_error_new(GCUT_PROCESS_ERROR,
                                  GCUT_PROCESS_ERROR_NOT_RUNNING,
                                  "not running: <%s XXX>",
-                                 cut_test_echo_path);
+                                 cuttest_echo_path);
     gcut_assert_equal_error(expected_error, actual_error);
 }
 
@@ -316,7 +317,7 @@ test_wait_after_reaped (void)
 {
     GError *error = NULL;
 
-    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+    process = gcut_process_new(cuttest_echo_path, "XXX", NULL);
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
@@ -327,7 +328,7 @@ test_wait_after_reaped (void)
     expected_error = g_error_new(GCUT_PROCESS_ERROR,
                                  GCUT_PROCESS_ERROR_NOT_RUNNING,
                                  "not running: <%s XXX>",
-                                 cut_test_echo_path);
+                                 cuttest_echo_path);
     gcut_assert_equal_error(expected_error, actual_error);
 }
 
@@ -355,7 +356,7 @@ test_output_string (void)
     GString expected = { "XXX\n", 4, 0 };
     GString *actual;
 
-    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+    process = gcut_process_new(cuttest_echo_path, "XXX", NULL);
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
@@ -372,7 +373,7 @@ test_error_string (void)
     GString expected = { "EEE\n", 4, 0 };
     GString *actual;
 
-    process = gcut_process_new(cut_test_echo_path, "-e", "EEE", NULL);
+    process = gcut_process_new(cuttest_echo_path, "-e", "EEE", NULL);
 
     gcut_process_run(process, &error);
     gcut_assert_error(error);
@@ -391,7 +392,7 @@ test_output_stream (void)
     char buffer[4096];
     gsize bytes_read;
 
-    process = gcut_process_new(cut_test_echo_path, "XXX", NULL);
+    process = gcut_process_new(cuttest_echo_path, "XXX", NULL);
 
     stream = gcut_process_get_output_stream(process);
     cut_assert_not_null(stream);
@@ -417,7 +418,7 @@ test_error_stream (void)
     char buffer[4096];
     gsize bytes_read;
 
-    process = gcut_process_new(cut_test_echo_path, "-e", "XXX", NULL);
+    process = gcut_process_new(cuttest_echo_path, "-e", "XXX", NULL);
 
     stream = gcut_process_get_error_stream(process);
     cut_assert_not_null(stream);
