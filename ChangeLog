@@ -1,3 +1,8 @@
+2010-07-14  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-utils.h, cutter/cut-public.h,
+	cutter/cut-utils.c: cut_build_pathv -> cut_build_path_array.
+
 2010-07-07  Kouhei Sutou  <kou@clear-code.com>
 
 	* gcutter/gcut-list.c, gcutter/gcut-test-utils.h,

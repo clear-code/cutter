@@ -312,17 +312,17 @@ extern "C" {
     cut_take_string(cut_utils_build_path(__VA_ARGS__))
 
 /**
- * cut_build_pathv:
- * @args: NULL-terminated array of strings containing the path elements.
+ * cut_build_path_array:
+ * @paths: NULL-terminated array of strings containing the path elements.
  *
- * Builds path from @args.
+ * Builds path from @paths.
  *
  * Returns: built path owned by Cutter. Don't free it.
  *
  * Since: 1.1.5
  */
-#define cut_build_pathv(args)                                         \
-    cut_take_string(cut_utils_build_pathv(args))
+#define cut_build_path_array(paths)                     \
+    cut_take_string(cut_utils_build_path_array(paths))
 
 /**
  * cut_make_directory:

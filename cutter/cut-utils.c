@@ -631,16 +631,17 @@ cut_utils_build_path_va_list (const gchar *path, va_list args)
     while ((element = va_arg(args, gchar *))) {
         g_array_append_val(elements, element);
     }
-    concatenated_path = g_build_filenamev((gchar **)(elements->data));
+    concatenated_path =
+        cut_utils_build_path_array((const gchar **)(elements->data));
     g_array_free(elements, TRUE);
 
     return concatenated_path;
 }
 
 gchar *
-cut_utils_build_pathv (const gchar **args)
+cut_utils_build_path_array (const gchar **paths)
 {
-    return g_build_filenamev((gchar**)args);
+    return g_build_filenamev((gchar **)paths);
 }
 
 gchar *
