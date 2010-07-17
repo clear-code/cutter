@@ -271,6 +271,13 @@ moduledir="\${libdir}/\$(PACKAGE)/module"
 AC_SUBST(moduledir)
 
 dnl **************************************************************
+dnl Configure for factory modules.
+dnl **************************************************************
+
+factory_moduledir="\${moduledir}/factory"
+AC_SUBST(factory_moduledir)
+
+dnl **************************************************************
 dnl Configure for UI modules.
 dnl **************************************************************
 
@@ -281,7 +288,7 @@ dnl **************************************************************
 dnl Configure for ui factory modules.
 dnl **************************************************************
 
-ui_factory_moduledir="\${moduledir}/factory/ui"
+ui_factory_moduledir="\${factory_moduledir}/ui"
 AC_SUBST(ui_factory_moduledir)
 
 dnl **************************************************************
@@ -291,7 +298,7 @@ dnl **************************************************************
 report_moduledir="\${moduledir}/report"
 AC_SUBST(report_moduledir)
 
-report_factory_moduledir="\${moduledir}/factory/report"
+report_factory_moduledir="\${factory_moduledir}/report"
 AC_SUBST(report_factory_moduledir)
 
 dnl **************************************************************
@@ -301,24 +308,17 @@ dnl **************************************************************
 stream_moduledir="\${moduledir}/stream"
 AC_SUBST(stream_moduledir)
 
-stream_factory_moduledir="\${moduledir}/factory/stream"
+stream_factory_moduledir="\${factory_moduledir}/stream"
 AC_SUBST(stream_factory_moduledir)
-
-dnl **************************************************************
-dnl Configure for factory modules.
-dnl **************************************************************
-
-factory_moduledir="\${moduledir}/factory"
-AC_SUBST(factory_moduledir)
 
 dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
 m4_ifdef([AM_PATH_GTK_2_0],
-         [AM_PATH_GTK_2_0(2.12.0, [], [], [])],
-         [no_gtk="yes"])
+         [AM_PATH_GTK_2_0(2.12.0, [gtk_exists="yes"], [gtk_exists="no"], [])],
+         [gtk_exists="no"])
 
-if test -z "$no_gtk"; then
+if test "$gtk_exists" != "no"; then
   AC_DEFINE(HAVE_GTK, 1, [Define to 1 if you have GTK+ installed])
 
   AC_MSG_CHECKING(for GTK+ is built with debug mode)
@@ -358,7 +358,7 @@ main (int argc, char **argv)
   CFLAGS="$ac_save_CFLAGS"
   LIBS="$ac_save_LIBS"
 fi
-AM_CONDITIONAL([HAVE_GTK], [test -z "$no_gtk"])
+AM_CONDITIONAL([HAVE_GTK], [test "$gtk_exists" = "yes"])
 
 dnl **************************************************************
 dnl Check for GOffice
@@ -879,3 +879,37 @@ AC_CONFIG_FILES([Makefile
 		 yum/Makefile])
 
 AC_OUTPUT
+
+echo
+echo "Configure Result:"
+echo
+echo " Libraries:"
+echo "  GLib <= 2.12                     : $glib_2_12"
+echo "  GIO                              : $gio_exists"
+echo "  GdkPixbuf                        : $gdk_pixbuf_exists"
+echo "  GTK+                             : $gtk_exists"
+echo "  GOffice                          : $goffice_exists"
+echo "  GStreamer                        : $gstreamer_exists"
+echo "  libsoup                          : $libsoup_exists"
+echo "  cairo                            : $cairo_exists"
+echo "  cairo-pdf                        : $cairo_pdf_exists"
+echo "  pango-cairo                      : $pango_cairo_exists"
+echo "  BFD                              : $bfd_available"
+echo
+echo " Paths:"
+echo "  modules directory                : $moduledir"
+echo "  UI modules directory             : $ui_moduledir"
+echo "  UI factory modules directory     : $ui_factory_moduledir"
+echo "  report modules directory         : $report_moduledir"
+echo "  report factory modules directory : $report_factory_moduledir"
+echo "  stream modules directory         : $stream_moduledir"
+echo "  stream factory modules directory : $stream_factory_moduledir"
+echo
+echo "  GStreamer plugins directory      : $gst_pluginsdir"
+echo
+echo " Tools:"
+echo "  GTK-Doc                          : $enable_gtk_doc"
+echo "  Ruby                             : $RUBY"
+echo "  rd2                              : $RD2"
+echo "  lcov                             : $LCOV"
+echo "  genhtml                          : $GENHTML"
