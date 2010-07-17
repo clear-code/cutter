@@ -1,5 +1,7 @@
 2010-07-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/gtk+/builder.c (test_domain): follow GTK+'s behavior changes.
+
 	* sample/gtk+/builder.c (test_widget): remove behavior changed test.
 
 	* sample/glib/regex.c (test_partial_match): follow GLib's behavior

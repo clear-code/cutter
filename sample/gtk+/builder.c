@@ -425,15 +425,7 @@ test_domain (void)
   
   builder = builder_new_from_string (buffer2, -1, NULL);
   domain = gtk_builder_get_translation_domain (builder);
-  cut_assert (domain);
-  cut_assert_equal_string ("domain", domain);
-  g_object_unref (builder);
-  builder = NULL;
-  
-  builder = builder_new_from_string (buffer2, -1, "domain-1");
-  domain = gtk_builder_get_translation_domain (builder);
-  cut_assert (domain);
-  cut_assert_equal_string ("domain-1", domain);
+  cut_assert_equal_string (NULL, domain);
   g_object_unref (builder);
   builder = NULL;
 }
