@@ -1,3 +1,11 @@
+2010-07-17  Kouhei Sutou  <kou@cozmixng.org>
+
+	* README*: add Romain Tartière to thanks list. Thanks!!!
+
+	* test/run-test.sh: clear LC_ALL for avoiding locale independent
+	test failures.
+	Suggested by Romain Tartière. Thanks!!!
+
 2010-07-14  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, test/fixtures/, test/lib/,

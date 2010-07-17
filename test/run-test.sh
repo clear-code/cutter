@@ -88,4 +88,6 @@ case `uname` in
 	;;
 esac
 
+LC_ALL=C
+export LC_ALL
 $CUTTER_WRAPPER $CUTTER $CUTTER_ARGS "$@" $BASE_DIR
