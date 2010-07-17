@@ -1,5 +1,8 @@
 2010-07-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* sample/glib/regex.c (test_partial_match): follow GLib's behavior
+	changes.
+
 	* cutter/cut-pipeline.c: work sub-cutter without full-path.
 	Patch by Romain Tartière. Thanks!!!
 

@@ -628,11 +628,11 @@ test_partial_match (void)
 {
   cut_assert_partial_match ("^ab", "a");
   cut_assert_partial_match ("ab", "xa");
+  cut_assert_partial_match ("a+b", "aa");
   cut_assert_partial_match ("(a)+b", "aa");
   cut_assert_partial_match ("a?b", "a");
   cut_assert_partial_mismatch ("^ab", "xa");
   cut_assert_partial_mismatch ("ab", "ab"); /* normal match. */
-  cut_assert_partial_mismatch ("a+b", "aa"); /* PCRE_ERROR_BAD_PARTIAL */
 }
 
 static void
