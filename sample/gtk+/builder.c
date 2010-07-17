@@ -976,7 +976,7 @@ void test_children (void)
   button = gtk_builder_get_object (builder, "button1");
   cut_assert (button != NULL);
   cut_assert (GTK_IS_BUTTON (button));
-  cut_assert (strcmp (GTK_WIDGET (GTK_WIDGET (button)->parent)->name, "window1") == 0);
+  cut_assert (strcmp (gtk_buildable_get_name (GTK_BUILDABLE (GTK_WIDGET (button)->parent)), "window1") == 0);
 
   gtk_widget_destroy (GTK_WIDGET (window));
   g_object_unref (builder);
@@ -993,9 +993,9 @@ void test_children (void)
   cut_assert (vbox != NULL);
   cut_assert (GTK_IS_VBOX (vbox));
   cut_assert (GTK_WIDGET (vbox)->parent != NULL);
-  cut_assert (strcmp (GTK_WIDGET (GTK_WIDGET (vbox)->parent)->name, "dialog1") == 0);
+  cut_assert (strcmp (gtk_buildable_get_name (GTK_BUILDABLE (GTK_WIDGET (vbox)->parent)), "dialog1") == 0);
   cut_assert (GTK_CONTAINER (vbox)->border_width == 10);
-  cut_assert (strcmp (GTK_WIDGET (GTK_DIALOG (dialog)->vbox)->name,
+  cut_assert (strcmp (gtk_buildable_get_name (GTK_BUILDABLE (GTK_DIALOG (dialog)->vbox)),
 				"dialog1-vbox") == 0);
 
   action_area = gtk_builder_get_object (builder, "dialog1-action_area");
@@ -1004,8 +1004,8 @@ void test_children (void)
   cut_assert (GTK_WIDGET (action_area)->parent != NULL);
   cut_assert (GTK_CONTAINER (action_area)->border_width == 20);
   cut_assert (GTK_DIALOG (dialog)->action_area != NULL);
-  cut_assert (GTK_WIDGET (GTK_DIALOG (dialog)->action_area)->name != NULL);
-  cut_assert (strcmp (GTK_WIDGET (GTK_DIALOG (dialog)->action_area)->name,
+  cut_assert (gtk_buildable_get_name (GTK_BUILDABLE (GTK_DIALOG (dialog)->action_area)) != NULL);
+  cut_assert (strcmp (gtk_buildable_get_name (GTK_BUILDABLE (GTK_DIALOG (dialog)->action_area)),
 				"dialog1-action_area") == 0);
   gtk_widget_destroy (GTK_WIDGET (dialog));
   g_object_unref (builder);
@@ -1548,15 +1548,6 @@ test_widget (void)
     "    </child>"
     "  </object>"
    "</interface>";
-  gchar *buffer3 =
-    "<interface>"
-    "  <object class=\"GtkWindow\" id=\"window1\">"
-    "     <accessibility>"
-    "       <atkproperty name=\"AtkObject::accessible_name\" translatable=\"yes\">Contacts</atkproperty>"
-    "       <atkrelation target=\"button1\" type=\"labelled-by\"/>"
-    "     </accessibility>"
-    "  </object>"
-   "</interface>";
   GObject *window1, *button1;
   
   builder = builder_new_from_string (buffer, -1, NULL);
@@ -1579,10 +1570,6 @@ test_widget (void)
   gtk_widget_destroy (GTK_WIDGET (window1));
   g_object_unref (builder);
 
-  builder = builder_new_from_string (buffer3, -1, NULL);
-  window1 = gtk_builder_get_object (builder, "window1");
-  gtk_widget_destroy (GTK_WIDGET (window1));
-  g_object_unref (builder);
   builder = NULL;
 }
 
