@@ -820,7 +820,6 @@ AC_CONFIG_FILES([Makefile
 		 sample/Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
-		 sample/cairo/Makefile
                  test/Makefile
 		 test/fixtures/Makefile
 		 test/fixtures/assertions/Makefile

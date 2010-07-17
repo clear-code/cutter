@@ -4,10 +4,6 @@ if HAVE_GTK
 SUBDIRS += gtk+
 endif
 
-if HAVE_CAIRO
-SUBDIRS += cairo
-endif
-
 stackdir = $(pkgdatadir)/stack
 
 stack_SCRIPTS =			\
