@@ -457,6 +457,7 @@ run_async (CutPipeline *pipeline)
     result = g_spawn_async_with_pipes(NULL,
                                       command_line_args,
                                       NULL,
+                                      G_SPAWN_SEARCH_PATH |
                                       G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
                                       G_SPAWN_DO_NOT_REAP_CHILD,
 #ifndef G_OS_WIN32

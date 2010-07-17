@@ -1,5 +1,8 @@
 2010-07-17  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-pipeline.c: work sub-cutter without full-path.
+	Patch by Romain Tartière. Thanks!!!
+
 	* README*: update Romain Tartière to thanks entry. Thanks!!!
 
 	* configure.ac: show configure result at the end of configure.
