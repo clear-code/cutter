@@ -1,3 +1,9 @@
+2010-07-20  Kouhei Sutou  <kou@cozmixng.org>
+
+	* configure.ac: show lcov related paths only when coverage is
+	enabled.
+	Suggested by Romain Tartière. Thanks!!!
+
 2010-07-17  Kouhei Sutou  <kou@cozmixng.org>
 
 	* sample/cairo/: remove because we can't maintain it.

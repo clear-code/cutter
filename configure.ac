@@ -373,7 +373,7 @@ AC_MSG_RESULT([$ac_cv_enable_goffice])
 
 goffice_exists=no
 if test "$ac_cv_enable_goffice" = "yes"; then
-  PKG_CHECK_MODULES(GOFFICE, libgoffice-0.6,
+  PKG_CHECK_MODULES(GOFFICE, libgoffice-0.8,
 		    [goffice_exists=yes], [goffice_exists=no])
   AC_SUBST(GOFFICE_CFLAGS)
   AC_SUBST(GOFFICE_LIBS)
@@ -882,6 +882,9 @@ AC_OUTPUT
 echo
 echo "Configure Result:"
 echo
+echo " Options:"
+echo "  coverage                         : $cutter_enable_coverage"
+echo
 echo " Libraries:"
 echo "  GLib <= 2.12                     : $glib_2_12"
 echo "  GIO                              : $gio_exists"
@@ -910,5 +913,7 @@ echo " Tools:"
 echo "  GTK-Doc                          : $enable_gtk_doc"
 echo "  Ruby                             : $RUBY"
 echo "  rd2                              : $RD2"
+if test "$cutter_enable_coverage" = "yes"; then
 echo "  lcov                             : $LCOV"
 echo "  genhtml                          : $GENHTML"
+fi
