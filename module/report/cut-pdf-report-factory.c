@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -203,7 +203,7 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
         goffice_initialized = TRUE;
         libgoffice_init();
         go_plugins_init(NULL, NULL, NULL, NULL, TRUE,
-                        GO_PLUGIN_LOADER_MODULE_TYPE);
+                        GO_TYPE_PLUGIN_LOADER_MODULE);
     }
 #endif
 

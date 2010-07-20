@@ -1,5 +1,10 @@
 2010-07-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac, module/report/cut-pdf-report.c,
+	module/report/cut-pdf-report-factory.c: use libgoffice-0.8 instead
+	of libgoffice-0.6.
+	Suggested by Romain Tartière. Thanks!!!
+
 	* configure.ac: show lcov related paths only when coverage is
 	enabled.
 	Suggested by Romain Tartière. Thanks!!!

@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
- *  Copyright (C) 2009  Kouhei Sutou  <kou@cozmixng.org>
+ *  Copyright (C) 2009-2010  Kouhei Sutou  <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -43,7 +43,6 @@
 #  include <goffice/graph/gog-label.h>
 #  include <goffice/graph/gog-series.h>
 #  include <goffice/graph/gog-data-set.h>
-#  include <goffice/graph/gog-style.h>
 #  include <goffice/graph/gog-styled-object.h>
 #endif
 
@@ -485,17 +484,17 @@ graph_setup_title (GogGraph *graph, const gchar *title)
 {
     GogLabel *label;
     GOData *data;
-    GogStyle *style;
+    GOStyle *style;
     PangoFontDescription *desc;
 
-    label = g_object_new(GOG_LABEL_TYPE, NULL);
+    label = g_object_new(GOG_TYPE_LABEL, NULL);
     data = go_data_scalar_str_new(title, FALSE);
     gog_dataset_set_dim(GOG_DATASET(label), 0, data, NULL);
     gog_object_add_by_name(GOG_OBJECT(graph), "Title", GOG_OBJECT(label));
 
-    style = gog_styled_object_get_style(GOG_STYLED_OBJECT(label));
+    style = go_styled_object_get_style(GO_STYLED_OBJECT(label));
     desc = pango_font_description_from_string("Sans bold 16");
-    gog_style_set_font_desc(style, desc);
+    go_style_set_font_desc(style, desc);
 }
 
 static void
@@ -505,20 +504,26 @@ graph_setup_chart (GogGraph *graph, CutRunContext *run_context)
     GogPlot *pie;
     GOData *data;
     GogSeries *series;
-    const gchar *legends[CUT_TEST_RESULT_LAST];
-    double values[CUT_TEST_RESULT_LAST];
+    gchar **legends;
+    double *values;
+    gint n = 0;
 
     chart = GOG_CHART(gog_object_get_child_by_name(GOG_OBJECT(graph), "Chart"));
     pie = gog_plot_new_by_name("GogPiePlot");
     gog_object_add_by_name(GOG_OBJECT(chart), "Plot", GOG_OBJECT(pie));
 
+    legends = g_new0(gchar *, CUT_TEST_RESULT_LAST);
+    values = g_new0(double, CUT_TEST_RESULT_LAST);
+
 #define STATUS(status) (CUT_TEST_RESULT_ ## status)
 #define SET_DATA(status, n_statuses) G_STMT_START                       \
 {                                                                       \
-    legends[STATUS(status)] =                                           \
-        cut_test_result_status_to_signal_name(STATUS(status));          \
+    const gchar *name;                                                  \
+    name = cut_test_result_status_to_signal_name(STATUS(status));       \
+    legends[STATUS(status)] = g_strdup(name);                           \
     values[STATUS(status)] =                                            \
         cut_run_context_get_n_ ## n_statuses(run_context);              \
+    n++;                                                                \
 } G_STMT_END                                                            \
 
     SET_DATA(SUCCESS, successes);
@@ -532,9 +537,10 @@ graph_setup_chart (GogGraph *graph, CutRunContext *run_context)
 #undef SET_DATA
 
     series = gog_plot_new_series(pie);
-    data = go_data_vector_str_new(legends, CUT_TEST_RESULT_LAST, NULL);
+    data = go_data_vector_str_new((const gchar * const *)legends, n,
+                                  (GDestroyNotify)g_strfreev);
     gog_series_set_dim(series, 0, data, NULL);
-    data = go_data_vector_val_new(values, CUT_TEST_RESULT_LAST, NULL);
+    data = go_data_vector_val_new(values, n, g_free);
     gog_series_set_dim(series, 1, data, NULL);
     gog_object_add_by_name(GOG_OBJECT(chart), "Legend", NULL);
 }
@@ -544,7 +550,7 @@ graph_new (const gchar *title, CutRunContext *run_context)
 {
     GogGraph *graph;
 
-    graph = g_object_new(GOG_GRAPH_TYPE, NULL);
+    graph = g_object_new(GOG_TYPE_GRAPH, NULL);
     gog_object_add_by_name(GOG_OBJECT(graph), "Chart", NULL);
 
     graph_setup_title(graph, title);
