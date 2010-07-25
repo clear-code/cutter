@@ -9,7 +9,13 @@ FreeBSDへのCutterのインストール方法を説明します。
 == インストール
 
 Cutterはportsに収録されているので、portupgradeでインストール
-します。
+できます。
+
+パッケージでインストールする場合は以下のようにします。
+
+  % sudo /usr/local/sbin/portupgrade -PNRr cutter
+
+portsでインストールする場合は以下のようにします。
 
   % sudo /usr/local/sbin/portupgrade -NRr cutter
 
