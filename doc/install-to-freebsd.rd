@@ -6,37 +6,12 @@
 
 This document explains how to install Cutter to FreeBSD.
 
-== Install dependency libraries
+== Install
 
-Here is a dependency library to build Cutter:
+Cutter is in the official ports. We can use portupgrade to
+install Cutter:
 
-  * GLib
-
-Here are dependency libraries needed by development with
-Cutter:
-
-  * autoconf
-  * automake
-  * libtool
-  * intltool
-
-Those packages can be installed from ports with portupgrade:
-
-  % sudo /usr/local/sbin/portupgrade -NRr devel/glib20 autotools intltool
-
-== Install Cutter
-
-Cutter can be installed like other free software because
-Cutter uses GNU build tools:
-
-  % mkdir -p ~/src
-  % cd ~/src
-  % fetch http://downloads.sourceforge.net/cutter/cutter-1.1.4.tar.gz
-  % tar xvzf cutter-1.1.4.tar.gz
-  % cd cutter-1.1.4
-  % ./configure CPPFLAGS="-I/usr/local/include"
-  % gmake
-  % sudo gmake install
+  % sudo /usr/local/sbin/portupgrade -NRr cutter
 
 == The next step
 

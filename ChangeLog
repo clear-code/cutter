@@ -1,3 +1,8 @@
+2010-07-25  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/install-to-freebsd.rd*: use ports to install Cutter.
+	Suggested by Romain Tartière. Thanks!!!
+
 2010-07-20  Kouhei Sutou  <kou@cozmixng.org>
 
 	* configure.ac, module/report/cut-pdf-report.c,
