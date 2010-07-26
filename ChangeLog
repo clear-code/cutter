@@ -1,3 +1,9 @@
+2010-07-26  Kouhei Sutou  <kou@clear-code.com>
+
+	* doc/install-to-freebsd.rd*: use pkg_add and 'make install'
+	instead of portupgrade for installing Cutter on FreeBSD.
+	Suggested by Romain Tartière. Thanks!!!
+
 2010-07-25  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/install-to-freebsd.rd*: use ports to install Cutter.

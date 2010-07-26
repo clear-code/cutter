@@ -13,11 +13,18 @@ Cutterはportsに収録されているので、portupgradeでインストール
 
 パッケージでインストールする場合は以下のようにします。
 
-  % sudo /usr/local/sbin/portupgrade -PNRr cutter
+  % sudo /usr/sbin/pkg_add -r cutter
 
 portsでインストールする場合は以下のようにします。
 
-  % sudo /usr/local/sbin/portupgrade -NRr cutter
+  % (cd /usr/ports/devel/cutter && sudo make install)
+
+参考:
+
+  * パッケージとportsについて:
+    ((<アプリケーションのインストール - packages と ports|URL:http://www.freebsd.org/doc/ja/books/handbook/ports.html>))
+  * Cutterのportについて:
+    ((<FreshPorts -- devel/cutter|URL:http://www.freshports.org/devel/cutter/>))
 
 == 次のステップ
 

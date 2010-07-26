@@ -12,11 +12,18 @@ Cutter can be installed either using packages or ports. As usual
 you shall not mix them so depending on the way you maintain third
 party packages, install the package:
 
-  % sudo /usr/local/sbin/portupgrade -PNRr cutter
+  % sudo /usr/sbin/pkg_add -r cutter
 
 or compile and install the port:
 
-  % sudo /usr/local/sbin/portupgrade -NRr cutter
+  % (cd /usr/ports/devel/cutter && sudo make install)
+
+See also:
+
+  * about packages and ports:
+    ((<Installing Applications: Packages and Ports|URL:http://www.freebsd.org/doc/en/books/handbook/ports.html>))
+  * about the port:
+    ((<FreshPorts -- devel/cutter|URL:http://www.freshports.org/devel/cutter/>))
 
 == The next step
 
