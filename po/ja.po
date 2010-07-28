@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2010-07-28 21:46+0900\n"
-"PO-Revision-Date: 2010-03-08 23:40+0900\n"
+"PO-Revision-Date: 2010-07-28 22:54+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -36,7 +36,7 @@ msgstr "unified diff形式を使用"
 
 #: ../cutter/cut-diff.c:64
 msgid "Use LINES as diff context lines"
-msgstr ""
+msgstr "diffの周辺LINES行を表示"
 
 #: ../cutter/cut-diff.c:139
 msgid "FILE_FROM FILE_TO"
