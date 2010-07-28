@@ -32,7 +32,7 @@
  * @title: SoupCutter
  * @short_description: HTTP supported Cutter with libsoup.
  * @see_also: <link
- *            linkend="cutter-Assertions-for-HTTP-client-and-server-based-on-libsoup">
+ *            linkend="cutter-Assertions-for-HTTP-client-and-server">
  *            Assertions for HTTP client/server based on libsoup</link>
  *
  * SoupCutter adds many useful HTTP related features based
