@@ -45,7 +45,7 @@ G_BEGIN_DECLS
  * Compares two #GString, @string1 and @string2.
  *
  * Returns: %TRUE if both of @string1 and @string2 have the same
- * domain, code and message, %FALSE otherwise.
+ * content, %FALSE otherwise.
  *
  * Since: 1.1.5
  */

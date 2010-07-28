@@ -1,5 +1,7 @@
 2010-07-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-string.h: fix document.
+
 	* gcutter/gcut-data.h: fix a typo.
 
 	* doc/reference/cutter-docs.sgml: add 1.1.5 entry.
