@@ -7,10 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.0.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-04-03 12:22+0900\n"
+"POT-Creation-Date: 2010-07-28 21:46+0900\n"
 "PO-Revision-Date: 2010-03-08 23:40+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -33,7 +34,11 @@ msgstr "色付きで差分を出力"
 msgid "Use unified diff format"
 msgstr "unified diff形式を使用"
 
-#: ../cutter/cut-diff.c:136
+#: ../cutter/cut-diff.c:64
+msgid "Use LINES as diff context lines"
+msgstr ""
+
+#: ../cutter/cut-diff.c:139
 msgid "FILE_FROM FILE_TO"
 msgstr "変更前ファイル 変更後ファイル"
 
@@ -181,6 +186,291 @@ msgstr "UIのオプション"
 #: ../cutter/cut-ui-factory-builder.c:141
 msgid "Show UI options"
 msgstr "コンソールUIのオプションの表示"
+
+#: ../glib-compatible/gregex.c:127
+msgid "corrupted object"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:129
+msgid "internal error or corrupted object"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:131
+msgid "out of memory"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:136
+msgid "backtracking limit reached"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:148 ../glib-compatible/gregex.c:156
+msgid "the pattern contains items not supported for partial matching"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:150
+msgid "internal error"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:158
+msgid "back references as conditions are not supported for partial matching"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:167
+msgid "recursion limit reached"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:169
+msgid "workspace limit for empty substrings reached"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:171
+msgid "invalid combination of newline flags"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:175
+msgid "unknown error"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:185
+msgid "\\ at end of pattern"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:187
+msgid "\\c at end of pattern"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:189
+msgid "unrecognized character follows \\"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:191
+msgid "case changing escapes are not allowed here"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:193
+msgid "numbers out of order in {} quantifier"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:195
+msgid "number too big in {} quantifier"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:197
+msgid "missing terminating ] for character class"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:199
+msgid "invalid escape sequence in character class"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:201
+msgid "range out of order in character class"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:203
+msgid "nothing to repeat"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:205
+msgid "unrecognized character after (?"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:207
+msgid "unrecognized character after (?<"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:209
+msgid "unrecognized character after (?P"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:211
+msgid "POSIX named classes are supported only within a class"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:213
+msgid "(?R or (?[+-]digits must be followed by )"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:215
+msgid "reference to non-existent subpattern"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:217
+msgid "missing ) after comment"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:219
+msgid "regular expression too large"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:221
+msgid "failed to get memory"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:223
+msgid "lookbehind assertion is not fixed length"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:225
+msgid "malformed number or name after (?("
+msgstr ""
+
+#: ../glib-compatible/gregex.c:227
+msgid "conditional group contains more than two branches"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:229
+msgid "assertion expected after (?("
+msgstr ""
+
+#: ../glib-compatible/gregex.c:231
+msgid "unknown POSIX class name"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:233
+msgid "POSIX collating elements are not supported"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:235
+msgid "character value in \\x{...} sequence is too large"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:237
+msgid "invalid condition (?(0)"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:239
+msgid "\\C not allowed in lookbehind assertion"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:241
+msgid "recursive call could loop indefinitely"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:243
+msgid "missing terminator in subpattern name"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:245
+msgid "two named subpatterns have the same name"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:247
+msgid "malformed \\P or \\p sequence"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:249
+msgid "unknown property name after \\P or \\p"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:251
+msgid "subpattern name is too long (maximum 32 characters)"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:253
+msgid "too many named subpatterns (maximum 10,000)"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:255
+msgid "octal value is greater than \\377"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:257
+msgid "DEFINE group contains more than one branch"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:259
+msgid "repeating a DEFINE group is not allowed"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:261
+msgid "inconsistent NEWLINE options"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:263
+msgid ""
+"\\g is not followed by a braced name or an optionally braced non-zero number"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:266
+msgid "unexpected repeat"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:268
+msgid "code overflow"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:270
+msgid "overran compiling workspace"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:272
+msgid "previously-checked referenced subpattern not found"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:435 ../glib-compatible/gregex.c:1487
+#, c-format
+msgid "Error while matching regular expression %s: %s"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:991
+msgid "PCRE library is compiled without UTF8 support"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1000
+msgid "PCRE library is compiled without UTF8 properties support"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1055
+#, c-format
+msgid "Error while compiling regular expression %s at char %d: %s"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1091
+#, c-format
+msgid "Error while optimizing regular expression %s: %s"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1915
+msgid "hexadecimal digit or '}' expected"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1931
+msgid "hexadecimal digit expected"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1971
+msgid "missing '<' in symbolic reference"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1980
+msgid "unfinished symbolic reference"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1987
+msgid "zero-length symbolic reference"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:1998
+msgid "digit expected"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:2016
+msgid "illegal symbolic reference"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:2078
+msgid "stray final '\\'"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:2082
+msgid "unknown escape sequence"
+msgstr ""
+
+#: ../glib-compatible/gregex.c:2092
+#, c-format
+msgid "Error while parsing replacement text \"%s\" at char %lu: %s"
+msgstr ""
 
 #: ../module/report/cut-pdf-report-factory.c:250
 msgid "PDF Report Options"

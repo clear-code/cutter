@@ -68,7 +68,9 @@ gcutter/gcut-key-file.c
 gcutter/gcut-list.c
 gcutter/gcut-main.c
 gcutter/gcut-object.c
+gcutter/gcut-process.c
 gcutter/gcut-string-io-channel.c
+gcutter/gcut-string.c
 gcutter/gcut-types.c
 gcutter/gcut-value-equal.c
 gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c
