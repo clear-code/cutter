@@ -26,6 +26,79 @@
 
 G_BEGIN_DECLS
 
+/**
+ * SECTION: gcut-process
+ * @title: External command
+ * @short_description: Convenience API for using external
+ * command.
+ *
+ * #GCutProcess encapsulates external command execution,
+ * communication and termination. #GCutProcess reports an error
+ * as #GError. It can be asserted easily by
+ * gcut_assert_error().
+ *
+ * External command is specified to constructor like
+ * gcut_process_new(), gcut_process_new_strings() and so
+ * on. External command isn't run at the
+ * time. gcut_process_run() runs specified external command.
+ *
+ * Standard/Error outputs of external command are passed by
+ * #GCutProcess::output-received/#GCutProcess::error-received signals
+ * or #GIOChannel returned by
+ * gcut_process_get_output()/gcut_process_get_error().
+ * gcut_process_write() writes a chunk to standard input of
+ * external command.
+ *
+ * To wait external command finished, gcut_process_wait() can be
+ * used. It accepts timeout to avoid infinite waiting.
+ *
+ * e.g.:
+ * |[
+ * static GString *output_string;
+ * static GCutProcess *process;
+ *
+ * void
+ * cut_setup (void)
+ * {
+ *     output_string = g_string_new(NULL);
+ *     process = NULL;
+ * }
+ *
+ * void
+ * cut_teardown (void)
+ * {
+ *     if (output_string)
+ *         g_string_free(output_string, TRUE);
+ *     if (process)
+ *         g_object_unref(process);
+ * }
+ *
+ * static void
+ * cb_output_received (GCutProcess *process, const gchar *chunk, gsize size,
+ *                     gpointer user_data)
+ * {
+ *     g_string_append_len(output_string, chunk, size);
+ * }
+ *
+ * void
+ * test_echo (void)
+ * {
+ *     GError *error = NULL;
+ *
+ *     process = gcut_process_new("echo", "XXX", NULL);
+ *     g_signal_connect(process, "receive-output",
+ *                      G_CALLBACK(cb_output_received), NULL);
+ *
+ *     gcut_process_run(process, &error);
+ *     gcut_assert_error(error);
+ *
+ *     gcut_process_wait(process, 1000, &error);
+ *     gcut_assert_error(error);
+ *     cut_assert_equal_string("XXX\n", output_string->str);
+ * }
+ * ]|
+ */
+
 #define GCUT_TYPE_PROCESS            (gcut_process_get_type ())
 #define GCUT_PROCESS(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GCUT_TYPE_PROCESS, GCutProcess))
 #define GCUT_PROCESS_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GCUT_TYPE_PROCESS, GCutProcessClass))
@@ -59,6 +132,21 @@ struct _GCutProcessClass
                              GError      *error);
 };
 
+/**
+ * GCutProcessError:
+ * @GCUT_PROCESS_ERROR_COMMAND_LINE: Command line related error.
+ * @GCUT_PROCESS_ERROR_IO_ERROR: IO error.
+ * @GCUT_PROCESS_ERROR_ALREADY_RUNNING: External command is already running.
+ * @GCUT_PROCESS_ERROR_NOT_RUNNING: External command isn't running.
+ * @GCUT_PROCESS_ERROR_INVALID_OBJECT: Invalid #GCutProcess object is passed.
+ * @GCUT_PROCESS_ERROR_INVALID_SIGNAL: Invalid signal is passed.
+ * @GCUT_PROCESS_ERROR_PERMISSION_DENIED: Permission denied.
+ * @GCUT_PROCESS_ERROR_TIMEOUT: Timeout.
+ *
+ * Error codes returned by #GCutProcess related operations.
+ *
+ * Since: 1.1.5
+ */
 typedef enum
 {
     GCUT_PROCESS_ERROR_COMMAND_LINE,
@@ -215,7 +303,7 @@ gchar       **gcut_process_get_env  (GCutProcess  *process);
  * @process: a #GCutProcess
  * @error: return location for an error, or %NULL
  *
- * Hatches a new external process.
+ * Runs a new external process.
  *
  * Returns: %TRUE on success, otherwise %FALSE
  *
@@ -266,6 +354,8 @@ gint         gcut_process_wait    (GCutProcess *porcess,
  * @error: return location for an error, or %NULL
  *
  * Sends @signal_number signal to external process.
+ *
+ * Returns: %TRUE on success, otherwise %FALSE
  *
  * Since: 1.1.5
  */
