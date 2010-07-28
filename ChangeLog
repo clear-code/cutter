@@ -1,5 +1,7 @@
 2010-07-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-egg.h: mark deprecated.
+
 	* gcutter/gcut-process.h: add missing document.
 
 	* doc/reference/ja.po: update.

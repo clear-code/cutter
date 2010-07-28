@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,11 +24,12 @@
 
 G_BEGIN_DECLS
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * SECTION: gcut-egg
- * @title: External command
+ * @title: External command (deprecated)
  * @short_description: Convenience API for using external
- * command.
+ * command. (deprecated)
  *
  * #GCutEgg encapsulates external command execution,
  * communication and termination. #GCutEgg reports an error
@@ -77,6 +78,7 @@ G_BEGIN_DECLS
  * {
  *     g_string_append_len(output_string, chunk, size);
  * }
+ *
  * void
  * test_echo (void)
  * {
@@ -94,6 +96,8 @@ G_BEGIN_DECLS
  *     cut_assert_equal_string("XXX\n", output_string->str);
  * }
  * ]|
+ *
+ * Deprecated: 1.1.5: Use #GCutProcess instead.
  */
 
 #define GCUT_TYPE_EGG            (gcut_egg_get_type ())
@@ -141,6 +145,7 @@ struct _GCutEggClass
  * Error codes returned by #GCutEgg related operations.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use #GCutProcessError instead.
  */
 typedef enum
 {
@@ -166,6 +171,7 @@ GType         gcut_egg_get_type      (void) G_GNUC_CONST;
  * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_new() instead.
  */
 GCutEgg      *gcut_egg_new           (const gchar  *command,
                                       ...) G_GNUC_NULL_TERMINATED;
@@ -180,6 +186,7 @@ GCutEgg      *gcut_egg_new           (const gchar  *command,
  * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_new_va_list() instead.
  */
 GCutEgg      *gcut_egg_new_va_list   (const gchar  *command,
                                       va_list       args);
@@ -195,6 +202,7 @@ GCutEgg      *gcut_egg_new_va_list   (const gchar  *command,
  * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_new_argv() instead.
  */
 GCutEgg      *gcut_egg_new_argv      (gint          argc,
                                       gchar       **argv);
@@ -209,6 +217,7 @@ GCutEgg      *gcut_egg_new_argv      (gint          argc,
  * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_new_strings() instead.
  */
 GCutEgg      *gcut_egg_new_strings   (const gchar **command);
 
@@ -222,6 +231,7 @@ GCutEgg      *gcut_egg_new_strings   (const gchar **command);
  * Returns: a new #GCutEgg.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_new_array() instead.
  */
 GCutEgg      *gcut_egg_new_array     (GArray       *command);
 
@@ -233,6 +243,7 @@ GCutEgg      *gcut_egg_new_array     (GArray       *command);
  * Sets @flags for spawning.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_set_flags() instead.
  */
 void          gcut_egg_set_flags     (GCutEgg      *egg,
                                       GSpawnFlags   flags);
@@ -246,6 +257,7 @@ void          gcut_egg_set_flags     (GCutEgg      *egg,
  * Returns: the flags for spawning.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_get_flags() instead.
  */
 GSpawnFlags   gcut_egg_get_flags     (GCutEgg      *egg);
 
@@ -259,6 +271,7 @@ GSpawnFlags   gcut_egg_get_flags     (GCutEgg      *egg);
  * Sets environment variable for external command.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_set_env() instead.
  */
 void          gcut_egg_set_env       (GCutEgg      *egg,
                                       const gchar  *name,
@@ -276,6 +289,7 @@ void          gcut_egg_set_env       (GCutEgg      *egg,
  * needed.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_get_env() instead.
  */
 gchar       **gcut_egg_get_env       (GCutEgg      *egg);
 
@@ -289,6 +303,7 @@ gchar       **gcut_egg_get_env       (GCutEgg      *egg);
  * Returns: %TRUE on success, otherwise %FALSE
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_run() instead.
  */
 gboolean      gcut_egg_hatch         (GCutEgg      *egg,
                                       GError      **error);
@@ -301,6 +316,7 @@ gboolean      gcut_egg_hatch         (GCutEgg      *egg,
  * implicitly on destroy.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: no need to close explicitly on #GCutProcess.
  */
 void          gcut_egg_close         (GCutEgg      *egg);
 
@@ -316,6 +332,7 @@ void          gcut_egg_close         (GCutEgg      *egg);
  * Returns: %TRUE on success, otherwise %FALSE
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_write() instead.
  */
 gboolean      gcut_egg_write         (GCutEgg      *egg,
                                       const gchar  *chunk,
@@ -333,6 +350,7 @@ gboolean      gcut_egg_write         (GCutEgg      *egg,
  * external process is running, otherwise 0.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_get_pid() instead.
  */
 GPid          gcut_egg_get_pid       (GCutEgg      *egg);
 
@@ -353,6 +371,7 @@ GPid          gcut_egg_get_pid       (GCutEgg      *egg);
  * otherwise -1.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_wait() instead.
  */
 gint          gcut_egg_wait          (GCutEgg      *egg,
                                       guint         timeout,
@@ -366,6 +385,7 @@ gint          gcut_egg_wait          (GCutEgg      *egg,
  * Sends @signal_number signal to external process.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_kill() instead.
  */
 void          gcut_egg_kill          (GCutEgg      *egg,
                                       gint          signal_number);
@@ -381,6 +401,7 @@ void          gcut_egg_kill          (GCutEgg      *egg,
  * otherwise %NULL.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_get_input_channel() instead.
  */
 GIOChannel   *gcut_egg_get_input     (GCutEgg      *egg);
 
@@ -395,6 +416,7 @@ GIOChannel   *gcut_egg_get_input     (GCutEgg      *egg);
  * otherwise %NULL.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_get_outputput_channel() instead.
  */
 GIOChannel   *gcut_egg_get_output    (GCutEgg      *egg);
 
@@ -409,6 +431,7 @@ GIOChannel   *gcut_egg_get_output    (GCutEgg      *egg);
  * otherwise %NULL.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_get_error_channel() instead.
  */
 GIOChannel   *gcut_egg_get_error     (GCutEgg      *egg);
 
@@ -423,6 +446,7 @@ GIOChannel   *gcut_egg_get_error     (GCutEgg      *egg);
  * external command on dispose.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_get_forced_termination_wait_time() instead.
  */
 guint         gcut_egg_get_forced_termination_wait_time
                                      (GCutEgg      *egg);
@@ -437,10 +461,12 @@ guint         gcut_egg_get_forced_termination_wait_time
  * termination of external process. The default value is 10.
  *
  * Since: 1.0.6
+ * Deprecated: 1.1.5: Use gcut_process_set_forced_termination_wait_time() instead.
  */
 void          gcut_egg_set_forced_termination_wait_time
                                      (GCutEgg      *egg,
                                       guint         timeout);
+#endif
 
 G_END_DECLS
 
