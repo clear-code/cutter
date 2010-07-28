@@ -56,6 +56,7 @@
       <xi:include href="xml/gcut-test-utils.xml"/>
       <xi:include href="xml/gcut-types.xml"/>
       <xi:include href="xml/gcut-data.xml"/>
+      <xi:include href="xml/gcut-process.xml"/>
       <xi:include href="xml/gcut-egg.xml"/>
       <!--xi:include href="xml/gcut-string-io-channel.xml"/-->
       <!--xi:include href="xml/gcut-key-file.xml"/-->
@@ -79,6 +80,7 @@
       <xi:include href="xml/gcut-object.xml"/>
       <xi:include href="xml/gcut-value-equal.xml"/>
       <xi:include href="xml/gcut-inspect.xml"/>
+      <xi:include href="xml/gcut-string.xml"/>
       <!--xi:include href="xml/gcut-io.xml"/-->
       <!--xi:include href="xml/gdkcut-pixbuf.xml"/-->
     </chapter>

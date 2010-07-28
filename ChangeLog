@@ -1,5 +1,8 @@
 2010-07-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-docs.sgml: add gcut-process and gcut-string
+	entries.
+
 	* gcutter/gcut-egg.h: mark deprecated.
 
 	* gcutter/gcut-process.h: add missing document.
