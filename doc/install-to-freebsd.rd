@@ -23,7 +23,7 @@ See also:
   * about packages and ports:
     ((<Installing Applications: Packages and Ports|URL:http://www.freebsd.org/doc/en/books/handbook/ports.html>))
   * about the port:
-    ((<FreshPorts -- devel/cutter|URL:http://www.freshports.org/devel/cutter/>))
+    ((<"FreshPorts -- devel/cutter"|URL:http://www.freshports.org/devel/cutter/>))
 
 == The next step
 

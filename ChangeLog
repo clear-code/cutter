@@ -1,3 +1,7 @@
+2010-07-28  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/install-to-freebsd.rd*: fix format.
+
 2010-07-26  Kouhei Sutou  <kou@clear-code.com>
 
 	* doc/install-to-freebsd.rd*: use pkg_add and 'make install'

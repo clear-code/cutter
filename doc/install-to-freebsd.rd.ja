@@ -24,7 +24,7 @@ portsでインストールする場合は以下のようにします。
   * パッケージとportsについて:
     ((<アプリケーションのインストール - packages と ports|URL:http://www.freebsd.org/doc/ja/books/handbook/ports.html>))
   * Cutterのportについて:
-    ((<FreshPorts -- devel/cutter|URL:http://www.freshports.org/devel/cutter/>))
+    ((<"FreshPorts -- devel/cutter"|URL:http://www.freshports.org/devel/cutter/>))
 
 == 次のステップ
 
