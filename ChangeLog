@@ -1,5 +1,7 @@
 2010-07-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+
 	* gcutter/gcut-string.h: fix document.
 
 	* gcutter/gcut-data.h: fix a typo.
