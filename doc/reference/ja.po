@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.3\n"
-"POT-Creation-Date: 2010-07-28 22:05+0900\n"
-"PO-Revision-Date: 2010-07-28 22:24+0900\n"
+"POT-Creation-Date: 2010-07-28 22:25+0900\n"
+"PO-Revision-Date: 2010-07-28 22:25+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -4062,7 +4062,10 @@ msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed integer values and must be freed with <link linkend=\"g-list-"
 "free\"><function>g_list_free()</function></link>."
-msgstr "渡された整数を含む<link linkend=\"GList\"><type>GList</type></link>。<link linkend=\"g-list-free\"><function>g_list_free()</function></link>で開放すること。"
+msgstr ""
+"渡された整数を含む<link linkend=\"GList\"><type>GList</type></link>。<link "
+"linkend=\"g-list-free\"><function>g_list_free()</function></link>で開放するこ"
+"と。"
 
 #: xml/gcut-test-utils.xml:202(para) xml/gcut-test-utils.xml:232(para)
 #: xml/gcut-test-utils.xml:294(para) xml/gcut-test-utils.xml:322(para)
@@ -4125,7 +4128,10 @@ msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed unsigned integer values and must be freed with <link linkend="
 "\"g-list-free\"><function>g_list_free()</function></link>."
-msgstr "渡された符号無し整数を含む<link linkend=\"GList\"><type>GList</type></link>。<link linkend=\"g-list-free\"><function>g_list_free()</function></link>で開放すること。"
+msgstr ""
+"渡された符号無し整数を含む<link linkend=\"GList\"><type>GList</type></link>。"
+"<link linkend=\"g-list-free\"><function>g_list_free()</function></link>で開放"
+"すること。"
 
 #: xml/gcut-test-utils.xml:234(title)
 msgid "gcut_list_string_new ()"
@@ -4211,7 +4217,8 @@ msgstr ""
 
 #: xml/gcut-test-utils.xml:271(para)
 msgid "Creates a list from passed integer values that is owned by Cutter."
-msgstr "渡された整数からリストを作ります。作られたリストはCutterが所有権を持ちます。"
+msgstr ""
+"渡された整数からリストを作ります。作られたリストはCutterが所有権を持ちます。"
 
 #: xml/gcut-test-utils.xml:277(programlisting)
 #, no-wrap
@@ -4228,7 +4235,9 @@ msgstr "リストの残りの文字列。"
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed integer values and is owned by Cutter."
-msgstr "渡された整数と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。Cutterが所有権を持ちます。"
+msgstr ""
+"渡された整数と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。"
+"Cutterが所有権を持ちます。"
 
 #: xml/gcut-test-utils.xml:296(title)
 msgid "gcut_take_new_list_uint()"
@@ -4242,7 +4251,9 @@ msgstr ""
 #: xml/gcut-test-utils.xml:299(para)
 msgid ""
 "Creates a list from passed unsigned integer values that is owned by Cutter."
-msgstr "渡された符号無し整数からリストを作ります。作られたリストはCutterが所有権を持ちます。"
+msgstr ""
+"渡された符号無し整数からリストを作ります。作られたリストはCutterが所有権を持"
+"ちます。"
 
 #: xml/gcut-test-utils.xml:305(programlisting)
 #, no-wrap
@@ -4255,7 +4266,9 @@ msgstr ""
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed unsigned integer values and is owned by Cutter."
-msgstr "渡された符号無し整数と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。Cutterが所有権を持ちます。"
+msgstr ""
+"渡された符号無し整数と同じ内容の<link linkend=\"GList\"><type>GList</type></"
+"link>。Cutterが所有権を持ちます。"
 
 #: xml/gcut-test-utils.xml:324(title)
 msgid "gcut_take_new_list_string ()"
@@ -4525,7 +4538,9 @@ msgstr "GString用の検証ユーティリティ"
 msgid ""
 "Utilities to write assertions related to <link linkend=\"GString"
 "\"><placeholder-1/></link> more easily."
-msgstr "<link linkend=\"GString\"><placeholder-1/></link>に関する検証をもっと簡単に書くためのユーティリティ。"
+msgstr ""
+"<link linkend=\"GString\"><placeholder-1/></link>に関する検証をもっと簡単に書"
+"くためのユーティリティ。"
 
 #: xml/gcut-string.xml:22(link) xml/gcut-string.xml:43(primary)
 #: xml/api-index-full.xml:384(link) xml/api-index-1.1.5.xml:42(link)
@@ -4561,7 +4576,9 @@ msgstr ""
 msgid ""
 "The utilities help you to write assertions that are related to <link linkend="
 "\"GString\"><type>GString</type></link>."
-msgstr "このユーティリティは<link linkend=\"GString\"><type>GString</type></link>に関する検証の作成を補助します。"
+msgstr ""
+"このユーティリティは<link linkend=\"GString\"><type>GString</type></link>に関"
+"する検証の作成を補助します。"
 
 #: xml/gcut-string.xml:42(title)
 msgid "gcut_string_equal ()"
@@ -4578,7 +4595,9 @@ msgstr ""
 msgid ""
 "Compares two <link linkend=\"GString\"><type>GString</type></link>, "
 "<parameter>string1</parameter> and <parameter>string2</parameter>."
-msgstr "ふたつの<link linkend=\"GString\"><type>GString</type></link>、<parameter>string1</parameter>と<parameter>string2</parameter>を比較します。"
+msgstr ""
+"ふたつの<link linkend=\"GString\"><type>GString</type></link>、"
+"<parameter>string1</parameter>と<parameter>string2</parameter>を比較します。"
 
 #: xml/gcut-string.xml:49(term) xml/cut-helper.xml:494(term)
 msgid "<parameter>string1</parameter> :"
@@ -4596,8 +4615,8 @@ msgstr ""
 msgid ""
 "<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> if both of "
 "<parameter>string1</parameter> and <parameter>string2</parameter> have the "
-"same domain, code and message, <link linkend=\"FALSE:CAPS\"><literal>FALSE</"
-"literal></link> otherwise."
+"same content, <link linkend=\"FALSE:CAPS\"><literal>FALSE</literal></link> "
+"otherwise."
 msgstr "<parameter>string1</parameter>と<parameter>string2</parameter>が同じ内容なら<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>、そうでなれば<link linkend=\"FALSE:CAPS\"><literal>FALSE</literal></link>。"
 
 #: xml/gcut-string.xml:61(title)
@@ -4613,7 +4632,9 @@ msgstr ""
 msgid ""
 "Inspects <parameter>string</parameter>. The returned string should be freed "
 "when no longer needed."
-msgstr "<parameter>string</parameter>の詳細を返します。返された文字列が必要なくなったときは開放してください。"
+msgstr ""
+"<parameter>string</parameter>の詳細を返します。返された文字列が必要なくなった"
+"ときは開放してください。"
 
 #: xml/gcut-string.xml:69(simpara)
 msgid "a <link linkend=\"GString\"><type>GString</type></link> value."
@@ -5445,7 +5466,9 @@ msgstr ""
 msgid ""
 "Creates a new <link linkend=\"GCutProcess\"><type>GCutProcess</type></link> "
 "object that runs <parameter>command</parameter>."
-msgstr "<parameter>command</parameter>を実行する新しい<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>オブジェクトを生成します。"
+msgstr ""
+"<parameter>command</parameter>を実行する新しい<link linkend=\"GCutProcess"
+"\"><type>GCutProcess</type></link>オブジェクトを生成します。"
 
 #: xml/gcut-process.xml:149(term) xml/gcut-process.xml:181(term)
 #: xml/gcut-process.xml:217(term) xml/gcut-process.xml:232(term)
@@ -5467,7 +5490,8 @@ msgstr "<parameter>command</parameter>の引数"
 #: xml/gcut-process.xml:187(simpara) xml/gcut-process.xml:206(simpara)
 #: xml/gcut-process.xml:221(simpara) xml/gcut-process.xml:236(simpara)
 msgid "a new <link linkend=\"GCutProcess\"><type>GCutProcess</type></link>."
-msgstr "<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>オブジェクト。"
+msgstr ""
+"<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>オブジェクト。"
 
 #: xml/gcut-process.xml:160(title)
 msgid "gcut_process_new_command_line ()"
@@ -5769,7 +5793,14 @@ msgid ""
 "linkend=\"GCUT-PROCESS-ERROR-NOT-RUNNING:CAPS"
 "\"><literal>GCUT_PROCESS_ERROR_NOT_RUNNING</literal></link> error is set and "
 "-1 is returned."
-msgstr "実行中の外部プロセスが終了することを<parameter>timeout</parameter>ミリ秒待ちます。外部コマンドが<parameter>timeout</parameter>ミリ秒以内に終了しなかった場合は、<link linkend=\"GCUT-PROCESS-ERROR-TIMEOUT:CAPS\"><literal>GCUT_PROCESS_ERROR_TIMEOUT</literal></link>エラーが設定され、-1が返ります。外部プロセスが実行されていない場合は、<link linkend=\"GCUT-PROCESS-ERROR-NOT-RUNNING:CAPS\"><literal>GCUT_PROCESS_ERROR_NOT_RUNNING</literal></link>エラーが設定され、-1が返ります。"
+msgstr ""
+"実行中の外部プロセスが終了することを<parameter>timeout</parameter>ミリ秒待ち"
+"ます。外部コマンドが<parameter>timeout</parameter>ミリ秒以内に終了しなかった"
+"場合は、<link linkend=\"GCUT-PROCESS-ERROR-TIMEOUT:CAPS"
+"\"><literal>GCUT_PROCESS_ERROR_TIMEOUT</literal></link>エラーが設定され、-1が"
+"返ります。外部プロセスが実行されていない場合は、<link linkend=\"GCUT-PROCESS-"
+"ERROR-NOT-RUNNING:CAPS\"><literal>GCUT_PROCESS_ERROR_NOT_RUNNING</literal></"
+"link>エラーが設定され、-1が返ります。"
 
 #: xml/gcut-process.xml:354(term)
 msgid "<parameter>porcess</parameter> :"
@@ -5958,14 +5989,19 @@ msgstr ""
 msgid ""
 "Gets a <link linkend=\"GOutputStream\"><type>GOutputStream</type></link> "
 "connected with standard output of external process."
-msgstr "外部プロセスの標準出力と結びついた<link linkend=\"GOutputStream\"><type>GOutputStream</type></link>を取得します。"
+msgstr ""
+"外部プロセスの標準出力と結びついた<link linkend=\"GOutputStream"
+"\"><type>GOutputStream</type></link>を取得します。"
 
 #: xml/gcut-process.xml:512(simpara) xml/gcut-process.xml:528(simpara)
 msgid ""
 "a <link linkend=\"GOutputStream\"><type>GOutputStream</type></link> if "
 "external process is running, otherwise <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>."
-msgstr "外部プロセスが実行中の場合は<link linkend=\"GOutputStream\"><type>GOutputStream</type></link>。そうでない場合は<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
+msgstr ""
+"外部プロセスが実行中の場合は<link linkend=\"GOutputStream"
+"\"><type>GOutputStream</type></link>。そうでない場合は<link linkend=\"NULL:"
+"CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/gcut-process.xml:518(title)
 msgid "gcut_process_get_error_stream ()"
@@ -5980,7 +6016,9 @@ msgstr ""
 msgid ""
 "Gets a <link linkend=\"GOutputStream\"><type>GOutputStream</type></link> "
 "connected with standard error output of external process."
-msgstr "外部プロセスの標準エラー出力に結びついた<link linkend=\"GOuputStream\"><type>GOutputStream</type></link>を返します。"
+msgstr ""
+"外部プロセスの標準エラー出力に結びついた<link linkend=\"GOuputStream"
+"\"><type>GOutputStream</type></link>を返します。"
 
 #: xml/gcut-process.xml:534(title)
 msgid "gcut_process_get_forced_termination_wait_time ()"
@@ -10058,10 +10096,12 @@ msgstr ""
 
 #: xml/gcut-data.xml:323(para)
 msgid ""
-"Returns <link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> is "
+"Returns <link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> if "
 "<parameter>data</parameter> has a field named by <parameter>field_name</"
 "parameter>."
-msgstr "<parameter>data</parameter>がフィールド名<parameter>field_name</parameter>を持っていたら<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>。"
+msgstr ""
+"<parameter>data</parameter>がフィールド名<parameter>field_name</parameter>を"
+"持っていたら<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>。"
 
 #: xml/gcut-data.xml:327(simpara) xml/gcut-data.xml:345(simpara)
 #: xml/gcut-data.xml:363(simpara) xml/gcut-data.xml:381(simpara)
@@ -10114,7 +10154,10 @@ msgid ""
 "<parameter>data</parameter> has a <parameter>field_name</parameter> field is "
 "available, <link linkend=\"FALSE:CAPS\"><literal>FALSE</literal></link> "
 "otherwise."
-msgstr "<parameter>data</parameter>に<parameter>field_name</parameter>フィールドがあれば<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>、そうでなければ<link linkend=\"FALSE:CAPS\"><literal>FALSE</literal></link>。"
+msgstr ""
+"<parameter>data</parameter>に<parameter>field_name</parameter>フィールドがあ"
+"れば<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>、そうでなけれ"
+"ば<link linkend=\"FALSE:CAPS\"><literal>FALSE</literal></link>。"
 
 #: xml/gcut-data.xml:338(title)
 msgid "gcut_data_get_char()"
