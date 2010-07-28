@@ -492,8 +492,8 @@ gcut_process_new_command_line (const gchar *command_line)
                             NULL)) {
         return FALSE;
     }
-      
-    process = gcut_process_new_strings((const gchar**)argv);
+
+    process = gcut_process_new_strings((const gchar **)argv);
     g_strfreev (argv);
 
     return process;
