@@ -1,5 +1,7 @@
 2010-07-28  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/cut-xml-report-factory.c: add missing static.
+
 	* doc/reference/cutter-docs.sgml: add gcut-process and gcut-string
 	entries.
 

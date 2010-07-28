@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -225,12 +225,12 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
     g_option_context_add_group(context, group);
 }
 
-GObject *
+static GObject *
 create (CutModuleFactory *factory)
 {
     CutXMLReportFactory *xml = CUT_XML_REPORT_FACTORY(factory);
 
-    return G_OBJECT(cut_report_new("xml", 
+    return G_OBJECT(cut_report_new("xml",
                                    "filename", xml->filename,
                                    NULL));
 }
