@@ -116,6 +116,8 @@ dispose (GObject *object)
         g_free(xml->filename);
         xml->filename = NULL;
     }
+
+    G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
 static void
