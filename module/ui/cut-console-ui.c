@@ -448,19 +448,37 @@ cb_start_test_iterator (CutRunContext *run_context,
     g_print(":\n");
 }
 
+static guint
+utf8_n_spaces (const gchar *string)
+{
+    guint n = 0;
+
+    for (; string[0]; string = g_utf8_next_char(string)) {
+        if (g_unichar_iswide_cjk(g_utf8_get_char(string))) {
+            n += 2;
+        } else if (string[0] == '\t') {
+            n += 8;
+        } else {
+            n++;
+        }
+    }
+
+    return n;
+}
+
 static void
 print_test_on_start (CutConsoleUI *console, const gchar *name,
                      CutTest *test, const gchar *indent)
 {
     GString *tab_stop;
-    gint name_length;
+    guint name_length;
     const gchar *description;
 
     description = cut_test_get_description(test);
     if (description)
         g_print("  %s%s\n", indent, description);
 
-    name_length = strlen(indent) + strlen(name) + 2;
+    name_length = utf8_n_spaces(indent) + utf8_n_spaces(name) + 2;
     tab_stop = g_string_new("");
     while (name_length < (8 * 7 - 1)) {
         g_string_append_c(tab_stop, '\t');

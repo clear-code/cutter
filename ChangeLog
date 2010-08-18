@@ -1,3 +1,7 @@
+2010-08-18  Kouhei Sutou  <kou@clear-code.com>
+
+	* module/ui/cut-console-ui.c: support multi width spaces.
+
 2010-07-28  Kouhei Sutou  <kou@cozmixng.org>
 
 	* module/report/cut-xml-report-factory.c: add missing parent
