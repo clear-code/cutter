@@ -13,7 +13,7 @@ AC_DEFUN([AC_CHECK_ENABLE_COVERAGE],
                  fi
 
                  if test "x$ac_cv_enable_coverage" != "xno"; then
-                   ltp_version_list="1.6 1.7 1.8"
+                   ltp_version_list="1.6 1.7 1.8 1.9"
                    AC_PATH_TOOL(LCOV, lcov)
                    AC_PATH_TOOL(GENHTML, genhtml)
 

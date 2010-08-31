@@ -1,3 +1,8 @@
+2010-08-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* m4macros/cutter.m4: support lcov 1.9. #3056684
+	Patch by Romain Tartière. Thanks!!!
+
 2010-08-18  Kouhei Sutou  <kou@clear-code.com>
 
 	* module/ui/cut-console-ui.c: support multi width spaces.
