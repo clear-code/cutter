@@ -711,10 +711,12 @@ output_received (GCutProcess *process,
 
     priv = GCUT_PROCESS_GET_PRIVATE(process);
 
+#ifdef CUT_SUPPORT_GIO
     g_memory_input_stream_add_data(G_MEMORY_INPUT_STREAM(priv->output_stream),
                                    g_strndup(chunk, size),
                                    size,
                                    g_free);
+#endif
     g_string_append_len(priv->output_string, chunk, size);
 }
 
@@ -727,10 +729,12 @@ error_received (GCutProcess *process,
 
     priv = GCUT_PROCESS_GET_PRIVATE(process);
 
+#ifdef CUT_SUPPORT_GIO
     g_memory_input_stream_add_data(G_MEMORY_INPUT_STREAM(priv->error_stream),
                                    g_strndup(chunk, size),
                                    size,
                                    g_free);
+#endif
     g_string_append_len(priv->error_string, chunk, size);
 }
 
