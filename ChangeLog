@@ -1,5 +1,8 @@
 2010-09-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/Makefile.am, doc/reference/cutter.types: include
+	GCutProcess.
+
 	* doc/cut-diff.rd*: fix typos.
 
 	* ./: 1.1.4 -> 1.1.5.

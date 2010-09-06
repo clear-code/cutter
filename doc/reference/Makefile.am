@@ -46,6 +46,7 @@ HFILE_GLOB =								\
 	$(top_srcdir)/gcutter/gcut-inspect.h				\
 	$(top_srcdir)/gcutter/gcut-list.h				\
 	$(top_srcdir)/gcutter/gcut-object.h				\
+	$(top_srcdir)/gcutter/gcut-process.h				\
 	$(top_srcdir)/gcutter/gcut-test-utils.h				\
 	$(top_srcdir)/gcutter/gcut-value-equal.h			\
 	$(top_srcdir)/gcutter/gcutter.h					\
