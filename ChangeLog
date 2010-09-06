@@ -1,5 +1,9 @@
 2010-09-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-test-utils.h, doc/reference/ja.po,
+	doc/reference/cutter-overrides.txt, doc/reference/overrides.txt:
+	update cut_build_path_array().
+
 	* doc/reference/ja.po: update translations.
 
 	* gcutter/gcut-data.h, gcutter/gcut-egg.h, gcutter/gcut-process.h:

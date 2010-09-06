@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.5\n"
-"POT-Creation-Date: 2010-09-06 09:56+0900\n"
-"PO-Revision-Date: 2010-09-06 10:27+0900\n"
+"POT-Creation-Date: 2010-09-06 10:45+0900\n"
+"PO-Revision-Date: 2010-09-06 10:48+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -976,7 +976,9 @@ msgstr ""
 #: xml/gcut-assertions.xml:104(returnvalue)
 #: xml/gcut-assertions.xml:107(returnvalue)
 #: xml/gcut-assertions.xml:111(returnvalue)
+#: xml/gcut-assertions.xml:114(returnvalue)
 #: xml/gcut-assertions.xml:117(returnvalue)
+#: xml/gcut-assertions.xml:120(returnvalue)
 #: xml/gcut-assertions.xml:123(returnvalue)
 #: xml/gcut-assertions.xml:126(returnvalue)
 #: xml/gcut-assertions.xml:129(returnvalue)
@@ -1195,7 +1197,9 @@ msgstr ""
 #: xml/gcut-assertions.xml:106(parameter)
 #: xml/gcut-assertions.xml:110(parameter)
 #: xml/gcut-assertions.xml:113(parameter)
+#: xml/gcut-assertions.xml:116(parameter)
 #: xml/gcut-assertions.xml:119(parameter)
+#: xml/gcut-assertions.xml:122(parameter)
 #: xml/gcut-assertions.xml:125(parameter)
 #: xml/gcut-assertions.xml:128(parameter)
 #: xml/gcut-assertions.xml:131(parameter)
@@ -1524,9 +1528,9 @@ msgstr "ひとつめのクエリパラメータの名前"
 #: xml/gcut-assertions.xml:596(term) xml/gcut-assertions.xml:628(term)
 #: xml/gcut-assertions.xml:665(term) xml/gcut-assertions.xml:695(term)
 #: xml/gcut-assertions.xml:737(term) xml/gcut-assertions.xml:756(term)
-#: xml/gcut-assertions.xml:773(term) xml/gcut-assertions.xml:792(term)
-#: xml/gcut-assertions.xml:809(term) xml/gcut-assertions.xml:828(term)
-#: xml/gcut-assertions.xml:847(term) xml/gcut-assertions.xml:866(term)
+#: xml/gcut-assertions.xml:775(term) xml/gcut-assertions.xml:794(term)
+#: xml/gcut-assertions.xml:813(term) xml/gcut-assertions.xml:832(term)
+#: xml/gcut-assertions.xml:851(term) xml/gcut-assertions.xml:870(term)
 #: xml/gcut-assertions-helper.xml:497(term) xml/cutter.xml:286(term)
 #: xml/cutter.xml:304(term) xml/cutter.xml:342(term) xml/cutter.xml:414(term)
 #: xml/cutter.xml:461(term) xml/cut-test-utils.xml:188(term)
@@ -1790,10 +1794,10 @@ msgstr ""
 #: xml/gcut-assertions.xml:540(term) xml/gcut-assertions.xml:590(term)
 #: xml/gcut-assertions.xml:622(term) xml/gcut-assertions.xml:659(term)
 #: xml/gcut-assertions.xml:689(term) xml/gcut-assertions.xml:728(term)
-#: xml/gcut-assertions.xml:750(term) xml/gcut-assertions.xml:767(term)
-#: xml/gcut-assertions.xml:786(term) xml/gcut-assertions.xml:803(term)
-#: xml/gcut-assertions.xml:822(term) xml/gcut-assertions.xml:841(term)
-#: xml/gcut-assertions.xml:860(term) xml/gcut-assertions-helper.xml:159(term)
+#: xml/gcut-assertions.xml:750(term) xml/gcut-assertions.xml:769(term)
+#: xml/gcut-assertions.xml:788(term) xml/gcut-assertions.xml:807(term)
+#: xml/gcut-assertions.xml:826(term) xml/gcut-assertions.xml:845(term)
+#: xml/gcut-assertions.xml:864(term) xml/gcut-assertions-helper.xml:159(term)
 #: xml/gcut-assertions-helper.xml:181(term)
 #: xml/gcut-assertions-helper.xml:207(term)
 #: xml/gcut-assertions-helper.xml:241(term)
@@ -1877,10 +1881,10 @@ msgstr "期待するContent-Type。"
 #: xml/gcut-assertions.xml:547(simpara) xml/gcut-assertions.xml:597(simpara)
 #: xml/gcut-assertions.xml:629(simpara) xml/gcut-assertions.xml:666(simpara)
 #: xml/gcut-assertions.xml:696(simpara) xml/gcut-assertions.xml:738(simpara)
-#: xml/gcut-assertions.xml:757(simpara) xml/gcut-assertions.xml:774(simpara)
-#: xml/gcut-assertions.xml:793(simpara) xml/gcut-assertions.xml:810(simpara)
-#: xml/gcut-assertions.xml:829(simpara) xml/gcut-assertions.xml:848(simpara)
-#: xml/gcut-assertions.xml:867(simpara) xml/cut-assertions.xml:345(simpara)
+#: xml/gcut-assertions.xml:757(simpara) xml/gcut-assertions.xml:776(simpara)
+#: xml/gcut-assertions.xml:795(simpara) xml/gcut-assertions.xml:814(simpara)
+#: xml/gcut-assertions.xml:833(simpara) xml/gcut-assertions.xml:852(simpara)
+#: xml/gcut-assertions.xml:871(simpara) xml/cut-assertions.xml:345(simpara)
 #: xml/cut-assertions.xml:360(simpara) xml/cut-assertions.xml:375(simpara)
 #: xml/cut-assertions.xml:404(simpara) xml/cut-assertions.xml:433(simpara)
 #: xml/cut-assertions.xml:448(simpara) xml/cut-assertions.xml:463(simpara)
@@ -2361,7 +2365,7 @@ msgstr "GdkCutter Pixbufが有効なとき定義されます。"
 #: xml/gcut-data.xml:478(para) xml/gcut-data.xml:497(para)
 #: xml/gcut-data.xml:516(para) xml/gcut-data.xml:535(para)
 #: xml/gcut-assertions.xml:251(para) xml/gcut-assertions.xml:479(para)
-#: xml/gcut-assertions.xml:831(para) xml/cutter.xml:168(para)
+#: xml/gcut-assertions.xml:835(para) xml/cutter.xml:168(para)
 #: xml/cutter.xml:189(para) xml/cutter.xml:198(para) xml/cutter.xml:207(para)
 #: xml/cutter.xml:417(para) xml/cutter.xml:433(para) xml/cutter.xml:442(para)
 #: xml/cut-test-utils.xml:247(para) xml/cut-helper.xml:251(para)
@@ -2659,10 +2663,10 @@ msgstr "期待する<link linkend=\"GdkPixbuf\"><type>GdkPixbuf</type></link>。
 #: xml/gcut-assertions.xml:543(term) xml/gcut-assertions.xml:593(term)
 #: xml/gcut-assertions.xml:625(term) xml/gcut-assertions.xml:662(term)
 #: xml/gcut-assertions.xml:692(term) xml/gcut-assertions.xml:731(term)
-#: xml/gcut-assertions.xml:753(term) xml/gcut-assertions.xml:770(term)
-#: xml/gcut-assertions.xml:789(term) xml/gcut-assertions.xml:806(term)
-#: xml/gcut-assertions.xml:825(term) xml/gcut-assertions.xml:844(term)
-#: xml/gcut-assertions.xml:863(term) xml/gcut-assertions-helper.xml:162(term)
+#: xml/gcut-assertions.xml:753(term) xml/gcut-assertions.xml:772(term)
+#: xml/gcut-assertions.xml:791(term) xml/gcut-assertions.xml:810(term)
+#: xml/gcut-assertions.xml:829(term) xml/gcut-assertions.xml:848(term)
+#: xml/gcut-assertions.xml:867(term) xml/gcut-assertions-helper.xml:162(term)
 #: xml/gcut-assertions-helper.xml:184(term)
 #: xml/gcut-assertions-helper.xml:210(term)
 #: xml/gcut-assertions-helper.xml:244(term)
@@ -2750,7 +2754,7 @@ msgstr "ピクセルの違いを検出するために使われるしきい値。
 #: xml/gcut-assertions.xml:549(para) xml/gcut-assertions.xml:631(para)
 #: xml/gcut-assertions.xml:668(para) xml/gcut-assertions.xml:698(para)
 #: xml/gcut-assertions.xml:740(para) xml/gcut-assertions.xml:759(para)
-#: xml/gcut-assertions.xml:795(para) xml/cut-test-utils.xml:90(para)
+#: xml/gcut-assertions.xml:797(para) xml/cut-test-utils.xml:90(para)
 #: xml/cut-test-utils.xml:105(para) xml/cut-test-utils.xml:134(para)
 #: xml/cut-test-utils.xml:155(para) xml/cut-test-utils.xml:175(para)
 #: xml/cut-multi-process.xml:341(para) xml/cut-multi-process.xml:359(para)
@@ -3524,7 +3528,7 @@ msgstr ""
 "の<link linkend=\"GType\"><type>GType</type></link>。"
 
 #: xml/gcut-types.xml:68(para) xml/gcut-data.xml:554(para)
-#: xml/gcut-assertions.xml:850(para) xml/cut-version.xml:93(para)
+#: xml/gcut-assertions.xml:854(para) xml/cut-version.xml:93(para)
 #: xml/cut-test-utils.xml:381(para) xml/cut-assertions.xml:406(para)
 #: xml/cut-assertions.xml:435(para) xml/cut-assertions.xml:518(para)
 #: xml/cut-assertions.xml:976(para) xml/cut-assertions.xml:1434(para)
@@ -4251,7 +4255,7 @@ msgstr ""
 #: xml/gcut-process.xml:605(para) xml/gcut-process.xml:621(para)
 #: xml/gcut-process.xml:637(para) xml/gcut-process.xml:653(para)
 #: xml/gcut-process.xml:670(para) xml/gcut-process.xml:688(para)
-#: xml/gcut-data.xml:335(para) xml/gcut-assertions.xml:869(para)
+#: xml/gcut-data.xml:335(para) xml/gcut-assertions.xml:873(para)
 #: xml/cut-test-utils.xml:395(para) xml/cut-helper.xml:588(para)
 #: xml/cut-assertions.xml:2039(para) xml/cut-assertions.xml:2084(para)
 msgid "Since 1.1.5"
@@ -5597,7 +5601,13 @@ msgid ""
 "linkend=\"GError\"><type>GError</type></link>. It can be asserted easily by "
 "<link linkend=\"gcut-assert-error\"><function>gcut_assert_error()</"
 "function></link>."
-msgstr "<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>は外部コマンドの実行・通信・終了をカプセル化します。<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>はエラーを<link linkend=\"GError\"><type>GError</type></link>として報告します。エラーは<link linkend=\"gcut-assert-error\"><function>gcut_assert_error()</function></link>を使うことにより簡単に検証できます。"
+msgstr ""
+"<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>は外部コマンドの"
+"実行・通信・終了をカプセル化します。<link linkend=\"GCutProcess"
+"\"><type>GCutProcess</type></link>はエラーを<link linkend=\"GError"
+"\"><type>GError</type></link>として報告します。エラーは<link linkend=\"gcut-"
+"assert-error\"><function>gcut_assert_error()</function></link>を使うことによ"
+"り簡単に検証できます。"
 
 #: xml/gcut-process.xml:81(para)
 msgid ""
@@ -5607,7 +5617,13 @@ msgid ""
 "function></link> and so on. External command isn't run at the time. <link "
 "linkend=\"gcut-process-run\"><function>gcut_process_run()</function></link> "
 "runs specified external command."
-msgstr "外部コマンドは<link linkend=\"gcut-process-new\"><function>gcut_process_new()</function></link>、<link linkend=\"gcut-process-new-strings\"><function>gcut_process_new_strings()</function></link>などのようなコンストラクタで指定します。この時点では外部コマンドは実行されません。<link linkend=\"gcut-process-hatch\"><function>gcut_process_hatch()</function></link>で指定された外部コマンドが実行されます。"
+msgstr ""
+"外部コマンドは<link linkend=\"gcut-process-new\"><function>gcut_process_new()"
+"</function></link>、<link linkend=\"gcut-process-new-strings"
+"\"><function>gcut_process_new_strings()</function></link>などのようなコンスト"
+"ラクタで指定します。この時点では外部コマンドは実行されません。<link linkend="
+"\"gcut-process-hatch\"><function>gcut_process_hatch()</function></link>で指定"
+"された外部コマンドが実行されます。"
 
 #: xml/gcut-process.xml:87(para)
 msgid ""
@@ -5620,14 +5636,26 @@ msgid ""
 "\"gcut-process-get-error\"><function>gcut_process_get_error()</function></"
 "link>. <link linkend=\"gcut-process-write\"><function>gcut_process_write()</"
 "function></link> writes a chunk to standard input of external command."
-msgstr "外部コマンドの標準出力・エラー出力は<link linkend=\"GCutProcess-output-received\"><type>\"output-received\"</type></link>シグナル・<link linkend=\"GCutProcess-error-received\"><type>\"error-received\"</type></link>シグナル、あるいは、<link linkend=\"gcut-process-get-output\"><function>gcut_process_get_output()</function></link>・<link linkend=\"gcut-process-get-error\"><function>gcut_process_get_error()</function></link>が返す<link linkend=\"GIOChannel\"><type>GIOChannel</type></link>で取得できます。<link linkend=\"gcut-process-write\"><function>gcut_process_write()</function></link>は外部コマンドの標準入力にデータを書き込みます。"
+msgstr ""
+"外部コマンドの標準出力・エラー出力は<link linkend=\"GCutProcess-output-"
+"received\"><type>\"output-received\"</type></link>シグナル・<link linkend="
+"\"GCutProcess-error-received\"><type>\"error-received\"</type></link>シグナ"
+"ル、あるいは、<link linkend=\"gcut-process-get-output"
+"\"><function>gcut_process_get_output()</function></link>・<link linkend="
+"\"gcut-process-get-error\"><function>gcut_process_get_error()</function></"
+"link>が返す<link linkend=\"GIOChannel\"><type>GIOChannel</type></link>で取得"
+"できます。<link linkend=\"gcut-process-write\"><function>gcut_process_write()"
+"</function></link>は外部コマンドの標準入力にデータを書き込みます。"
 
 #: xml/gcut-process.xml:95(para)
 msgid ""
 "To wait external command finished, <link linkend=\"gcut-process-wait"
 "\"><function>gcut_process_wait()</function></link> can be used. It accepts "
 "timeout to avoid infinite waiting."
-msgstr "外部コマンドの終了を待つためには<link linkend=\"gcut-process-wait\"><function>gcut_process_wait()</function></link>を使うことができます。無限待ちを避けるために、タイムアウトを指定することができます。"
+msgstr ""
+"外部コマンドの終了を待つためには<link linkend=\"gcut-process-wait"
+"\"><function>gcut_process_wait()</function></link>を使うことができます。無限"
+"待ちを避けるために、タイムアウトを指定することができます。"
 
 #: xml/gcut-process.xml:101(programlisting)
 #, no-wrap
@@ -5733,7 +5761,9 @@ msgstr ""
 msgid ""
 "Error codes returned by <link linkend=\"GCutProcess\"><type>GCutProcess</"
 "type></link> related operations."
-msgstr "<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>関連の操作で返されるエラーコード。"
+msgstr ""
+"<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>関連の操作で返さ"
+"れるエラーコード。"
 
 #: xml/gcut-process.xml:204(literal)
 msgid "GCUT_PROCESS_ERROR_COMMAND_LINE"
@@ -5775,7 +5805,9 @@ msgstr ""
 msgid ""
 "Invalid <link linkend=\"GCutProcess\"><type>GCutProcess</type></link> object "
 "is passed."
-msgstr "不正な<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>オブジェクトが渡されました。"
+msgstr ""
+"不正な<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>オブジェク"
+"トが渡されました。"
 
 #: xml/gcut-process.xml:229(literal)
 msgid "GCUT_PROCESS_ERROR_INVALID_SIGNAL"
@@ -5867,7 +5899,9 @@ msgstr ""
 msgid ""
 "Creates a new <link linkend=\"GCutProcess\"><type>GCutProcess</type></link> "
 "object that runs <parameter>command_line</parameter>."
-msgstr "<parameter>command_line</parameter>を実行する新しい<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>オブジェクトを生成します。"
+msgstr ""
+"<parameter>command_line</parameter>を実行する新しい<link linkend="
+"\"GCutProcess\"><type>GCutProcess</type></link>オブジェクトを生成します。"
 
 #: xml/gcut-process.xml:278(term)
 msgid "<parameter>command_line</parameter> :"
@@ -5992,7 +6026,7 @@ msgstr ""
 #: xml/gcut-process.xml:647(simpara) xml/gcut-process.xml:664(simpara)
 #: xml/gcut-process.xml:683(simpara)
 msgid "a <link linkend=\"GCutProcess\"><type>GCutProcess</type></link>"
-msgstr ""
+msgstr "<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>"
 
 #: xml/gcut-process.xml:363(term) xml/gcut-egg.xml:360(term)
 msgid "<parameter>flags</parameter> :"
@@ -6286,7 +6320,9 @@ msgstr ""
 msgid ""
 "a <link linkend=\"GString\"><type>GString</type></link> that has all result "
 "of standard output of external process."
-msgstr "外部プロセスの標準出力の結果をすべて持った<link linkend=\"GString\"><type>GString</type></link>。"
+msgstr ""
+"外部プロセスの標準出力の結果をすべて持った<link linkend=\"GString"
+"\"><type>GString</type></link>。"
 
 #: xml/gcut-process.xml:562(title)
 msgid "gcut_process_get_error_string ()"
@@ -6301,7 +6337,9 @@ msgstr ""
 msgid ""
 "a <link linkend=\"GString\"><type>GString</type></link> that has all result "
 "of standard error of external process."
-msgstr "外部プロセスの標準エラー出力の結果をすべて持った<link linkend=\"GString\"><type>GString</type></link>。"
+msgstr ""
+"外部プロセスの標準エラー出力の結果をすべて持った<link linkend=\"GString"
+"\"><type>GString</type></link>。"
 
 #: xml/gcut-process.xml:575(title)
 msgid "gcut_process_get_input_channel ()"
@@ -6379,14 +6417,19 @@ msgstr ""
 msgid ""
 "Gets a <link linkend=\"GInputStream\"><type>GInputStream</type></link> "
 "connected with standard output of external process."
-msgstr "外部プロセスの標準出力と結びついた<link linkend=\"GInputStream\"><type>GInputStream</type></link>を取得します。"
+msgstr ""
+"外部プロセスの標準出力と結びついた<link linkend=\"GInputStream"
+"\"><type>GInputStream</type></link>を取得します。"
 
 #: xml/gcut-process.xml:633(simpara) xml/gcut-process.xml:649(simpara)
 msgid ""
 "a <link linkend=\"GInputStream\"><type>GInputStream</type></link> if "
 "external process is running, otherwise <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>."
-msgstr "外部プロセスが実行中の場合は<link linkend=\"GInputStream\"><type>GInputStream</type></link>。そうでない場合は<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
+msgstr ""
+"外部プロセスが実行中の場合は<link linkend=\"GInputStream"
+"\"><type>GInputStream</type></link>。そうでない場合は<link linkend=\"NULL:"
+"CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/gcut-process.xml:639(title)
 msgid "gcut_process_get_error_stream ()"
@@ -6401,7 +6444,9 @@ msgstr ""
 msgid ""
 "Gets a <link linkend=\"GInputStream\"><type>GInputStream</type></link> "
 "connected with standard error output of external process."
-msgstr "外部プロセスの標準エラー出力に結びついた<link linkend=\"GInputStream\"><type>GInputStream</type></link>を返します。"
+msgstr ""
+"外部プロセスの標準エラー出力に結びついた<link linkend=\"GInputStream"
+"\"><type>GInputStream</type></link>を返します。"
 
 #: xml/gcut-process.xml:655(title)
 msgid "gcut_process_get_forced_termination_wait_time ()"
@@ -9441,7 +9486,9 @@ msgstr ""
 msgid ""
 "<literal>GCUT_EGG_ERROR</literal> is deprecated and should not be used in "
 "newly-written code."
-msgstr "<literal>GCUT_EGG_ERROR</literal>は非推奨です。新しいコードでは使わないでください。"
+msgstr ""
+"<literal>GCUT_EGG_ERROR</literal>は非推奨です。新しいコードでは使わないでくだ"
+"さい。"
 
 #: xml/gcut-egg.xml:175(programlisting)
 #, no-wrap
@@ -9452,7 +9499,8 @@ msgstr ""
 msgid ""
 "<literal>GCutEgg</literal> is deprecated and should not be used in newly-"
 "written code."
-msgstr "<literal>GCutEgg</literal>は非推奨です。新しいコードでは使わないでください。"
+msgstr ""
+"<literal>GCutEgg</literal>は非推奨です。新しいコードでは使わないでください。"
 
 #: xml/gcut-egg.xml:182(programlisting)
 #, no-wrap
@@ -9477,7 +9525,9 @@ msgstr ""
 msgid ""
 "<literal>GCutEggClass</literal> is deprecated and should not be used in "
 "newly-written code."
-msgstr "<literal>GCutEggClass</literal>は非推奨です。新しいコードでは使わないでください。"
+msgstr ""
+"<literal>GCutEggClass</literal>は非推奨です。新しいコードでは使わないでくださ"
+"い。"
 
 #: xml/gcut-egg.xml:201(title)
 msgid "enum GCutEggError"
@@ -9502,7 +9552,10 @@ msgid ""
 "<literal>GCutEggError</literal> has been deprecated since version 1.1.5 and "
 "should not be used in newly-written code. Use <link linkend="
 "\"GCutProcessError\"><type>GCutProcessError</type></link> instead."
-msgstr "<literal>GCutEggError</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"GCutProcessError\"><type>GCutProcessError</type></link>を使ってください。"
+msgstr ""
+"<literal>GCutEggError</literal>はバージョン1.1.5から非推奨になりました。新し"
+"く書くコードでは使わないでください。代わりに<link linkend=\"GCutProcessError"
+"\"><type>GCutProcessError</type></link>を使ってください。"
 
 #: xml/gcut-egg.xml:214(para)
 msgid ""
@@ -9557,7 +9610,9 @@ msgstr ""
 msgid ""
 "<literal>gcut_egg_error_quark</literal> is deprecated and should not be used "
 "in newly-written code."
-msgstr "<literal>gcut_egg_error_quark</literal>は非推奨です。新しいコードでは使わないでください。"
+msgstr ""
+"<literal>gcut_egg_error_quark</literal>は非推奨です。新しいコードでは使わない"
+"でください。"
 
 #: xml/gcut-egg.xml:259(title)
 msgid "gcut_egg_new ()"
@@ -9575,7 +9630,10 @@ msgid ""
 "<literal>gcut_egg_new</literal> has been deprecated since version 1.1.5 and "
 "should not be used in newly-written code. Use <link linkend=\"gcut-process-"
 "new\"><function>gcut_process_new()</function></link> instead."
-msgstr "<literal>gcut_egg_new</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-new\"><function>gcut_process_new()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_new</literal>はバージョン1.1.5から非推奨になりました。新し"
+"く書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-new"
+"\"><function>gcut_process_new()</function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:264(para) xml/gcut-egg.xml:283(para)
 #: xml/gcut-egg.xml:302(para) xml/gcut-egg.xml:321(para)
@@ -9610,7 +9668,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-new-va-list\"><function>gcut_process_new_va_list()</function></link> "
 "instead."
-msgstr "<literal>gcut_egg_new_va_list</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないで下さい。代わりに<link linkend=\"gcut-process-new-va-list\"><function>gcut_process_new_va_list()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_new_va_list</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないで下さい。代わりに<link linkend=\"gcut-"
+"process-new-va-list\"><function>gcut_process_new_va_list()</function></link>"
+"を使ってください。"
 
 #: xml/gcut-egg.xml:297(title)
 msgid "gcut_egg_new_argv ()"
@@ -9629,7 +9691,10 @@ msgid ""
 "and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-new-argv\"><function>gcut_process_new_argv()</function></link> "
 "instead."
-msgstr "<literal>gcut_egg_new_argv</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-egg-new-argv\"><function>gcut_egg_new_argv()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_new_argv</literal>はバージョン1.1.5から非推奨になりました。"
+"新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-egg-new-"
+"argv\"><function>gcut_egg_new_argv()</function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:317(title)
 msgid "gcut_egg_new_strings ()"
@@ -9646,7 +9711,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-new-strings\"><function>gcut_process_new_strings()</function></link> "
 "instead."
-msgstr "<literal>gcut_egg_new_strings</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-new-strings\"><function>gcut_process_new_strings()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_new_strings</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"process-new-strings\"><function>gcut_process_new_strings()</function></link>"
+"を使ってください。"
 
 #: xml/gcut-egg.xml:333(title)
 msgid "gcut_egg_new_array ()"
@@ -9663,7 +9732,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-new-array\"><function>gcut_process_new_array()</function></link> "
 "instead."
-msgstr "<literal>gcut_egg_new_array</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-egg-new-array\"><function>gcut_egg_new_array()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_new_array</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-egg-"
+"new-array\"><function>gcut_egg_new_array()</function></link>を使ってくださ"
+"い。"
 
 #: xml/gcut-egg.xml:349(title)
 msgid "gcut_egg_set_flags ()"
@@ -9682,7 +9755,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-set-flags\"><function>gcut_process_set_flags()</function></link> "
 "instead."
-msgstr "<literal>gcut_egg_set_flags</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-set-flags\"><function>gcut_process_set_flags()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_set_flags</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"process-set-flags\"><function>gcut_process_set_flags()</function></link>を"
+"使ってください。"
 
 #: xml/gcut-egg.xml:357(term) xml/gcut-egg.xml:372(term)
 #: xml/gcut-egg.xml:389(term) xml/gcut-egg.xml:408(term)
@@ -9723,7 +9800,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-get-flags\"><function>gcut_process_get_flags()</function></link> "
 "instead."
-msgstr "<literal>gcut_egg_get_flags</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-get-flags\"><function>gcut_process_get_flags()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_get_flags</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"process-get-flags\"><function>gcut_process_get_flags()</function></link>を"
+"使ってください。"
 
 #: xml/gcut-egg.xml:380(title)
 msgid "gcut_egg_set_env ()"
@@ -9742,7 +9823,11 @@ msgid ""
 "<literal>gcut_egg_set_env</literal> has been deprecated since version 1.1.5 "
 "and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-set-env\"><function>gcut_process_set_env()</function></link> instead."
-msgstr "<literal>gcut_egg_set_env</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-set-env\"><function>gcut_process_set_env()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_set_env</literal>はバージョン1.1.5から非推奨になりました。"
+"新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-"
+"set-env\"><function>gcut_process_set_env()</function></link>を使ってくださ"
+"い。"
 
 #: xml/gcut-egg.xml:401(title)
 msgid "gcut_egg_get_env ()"
@@ -9758,7 +9843,11 @@ msgid ""
 "<literal>gcut_egg_get_env</literal> has been deprecated since version 1.1.5 "
 "and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-get-env\"><function>gcut_process_get_env()</function></link> instead."
-msgstr "<literal>gcut_egg_get_env</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-get-env\"><function>gcut_process_get_env()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_get_env</literal>はバージョン1.1.5から非推奨になりました。"
+"新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-"
+"get-env\"><function>gcut_process_get_env()</function></link>を使ってくださ"
+"い。"
 
 #: xml/gcut-egg.xml:419(title)
 msgid "gcut_egg_hatch ()"
@@ -9776,7 +9865,10 @@ msgid ""
 "<literal>gcut_egg_hatch</literal> has been deprecated since version 1.1.5 "
 "and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-run\"><function>gcut_process_run()</function></link> instead."
-msgstr "<literal>gcut_egg_hatch</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-run\"><function>gcut_process_run()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_hatch</literal>はバージョン1.1.5から非推奨になりました。新"
+"しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-"
+"run\"><function>gcut_process_run()</function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:424(para)
 msgid "Hatches a new external process."
@@ -9796,7 +9888,10 @@ msgid ""
 "<literal>gcut_egg_close</literal> has been deprecated since version 1.1.5 "
 "and should not be used in newly-written code. no need to close explicitly on "
 "<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>."
-msgstr "<literal>gcut_egg_close</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_close</literal>はバージョン1.1.5から非推奨になりました。新"
+"しく書くコードでは使わないでください。代わりに<link linkend=\"GCutProcess"
+"\"><type>GCutProcess</type></link>を使ってください。"
 
 #: xml/gcut-egg.xml:442(para)
 msgid "Closes a hatched external process. It is closed implicitly on destroy."
@@ -9822,7 +9917,10 @@ msgid ""
 "<literal>gcut_egg_write</literal> has been deprecated since version 1.1.5 "
 "and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-write\"><function>gcut_process_write()</function></link> instead."
-msgstr "<literal>gcut_egg_write</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-write\"><function>gcut_process_write()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_write</literal>はバージョン1.1.5から非推奨になりました。新"
+"しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-"
+"write\"><function>gcut_process_write()</function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:478(title)
 msgid "gcut_egg_get_pid ()"
@@ -9838,7 +9936,11 @@ msgid ""
 "<literal>gcut_egg_get_pid</literal> has been deprecated since version 1.1.5 "
 "and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-get-pid\"><function>gcut_process_get_pid()</function></link> instead."
-msgstr "<literal>gcut_egg_get_pid</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-get-pid\"><function>gcut_process_get_pid()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_get_pid</literal>はバージョン1.1.5から非推奨になりました。"
+"新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-"
+"get-pid\"><function>gcut_process_get_pid()</function></link>を使ってくださ"
+"い。"
 
 #: xml/gcut-egg.xml:495(title)
 msgid "gcut_egg_wait ()"
@@ -9857,7 +9959,10 @@ msgid ""
 "<literal>gcut_egg_wait</literal> has been deprecated since version 1.1.5 and "
 "should not be used in newly-written code. Use <link linkend=\"gcut-process-"
 "wait\"><function>gcut_process_wait()</function></link> instead."
-msgstr "<literal>gcut_egg_wait</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-wait\"><function>gcut_process_wait()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_wait</literal>はバージョン1.1.5から非推奨になりました。新し"
+"く書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-wait"
+"\"><function>gcut_process_wait()</function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:501(para)
 msgid ""
@@ -9893,7 +9998,10 @@ msgid ""
 "<literal>gcut_egg_kill</literal> has been deprecated since version 1.1.5 and "
 "should not be used in newly-written code. Use <link linkend=\"gcut-process-"
 "kill\"><function>gcut_process_kill()</function></link> instead."
-msgstr "<literal>gcut_egg_kill</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないで下さい。代わりに<link linkend=\"gcut-process-kill\"><function>gcut_process_kill()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_kill</literal>はバージョン1.1.5から非推奨になりました。新し"
+"く書くコードでは使わないで下さい。代わりに<link linkend=\"gcut-process-kill"
+"\"><function>gcut_process_kill()</function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:540(title)
 msgid "gcut_egg_get_input ()"
@@ -9910,7 +10018,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-get-input-channel\"><function>gcut_process_get_input_channel()</"
 "function></link> instead."
-msgstr "<literal>gcut_egg_get_input</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-get-input-channel\"><function>gcut_process_get_input_channel()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_get_input</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"process-get-input-channel\"><function>gcut_process_get_input_channel()</"
+"function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:557(title)
 msgid "gcut_egg_get_output ()"
@@ -9927,7 +10039,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-get-output-channel\"><function>gcut_process_get_output_channel()</"
 "function></link> instead."
-msgstr "<literal>gcut_egg_get_output</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-get-output-channel\"><function>gcut_process_get_output_channel()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_get_output</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-"
+"process-get-output-channel\"><function>gcut_process_get_output_channel()</"
+"function></link>を使ってください。"
 
 #: xml/gcut-egg.xml:574(title)
 msgid "gcut_egg_get_error ()"
@@ -9944,7 +10060,11 @@ msgid ""
 "1.1.5 and should not be used in newly-written code. Use <link linkend=\"gcut-"
 "process-get-error-channel\"><function>gcut_process_get_error_channel()</"
 "function></link> instead."
-msgstr "<literal>gcut_egg_get_error</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-egg-get-error\"><function>gcut_egg_get_error()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_get_error</literal>はバージョン1.1.5から非推奨になりまし"
+"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-egg-"
+"get-error\"><function>gcut_egg_get_error()</function></link>を使ってくださ"
+"い。"
 
 #: xml/gcut-egg.xml:591(title)
 msgid "gcut_egg_get_forced_termination_wait_time ()"
@@ -9964,7 +10084,12 @@ msgid ""
 "Use <link linkend=\"gcut-process-get-forced-termination-wait-time"
 "\"><function>gcut_process_get_forced_termination_wait_time()</function></"
 "link> instead."
-msgstr "<literal>gcut_egg_get_forced_termination_wait_time</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-process-get-forced-termination-wait-time\"><function>gcut_process_get_forced_termination_wait_time()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_get_forced_termination_wait_time</literal>はバージョン1.1.5"
+"から非推奨になりました。新しく書くコードでは使わないでください。代わりに"
+"<link linkend=\"gcut-process-get-forced-termination-wait-time"
+"\"><function>gcut_process_get_forced_termination_wait_time()</function></"
+"link>を使ってください。"
 
 #: xml/gcut-egg.xml:609(title)
 msgid "gcut_egg_set_forced_termination_wait_time ()"
@@ -9985,7 +10110,12 @@ msgid ""
 "Use <link linkend=\"gcut-process-set-forced-termination-wait-time"
 "\"><function>gcut_process_set_forced_termination_wait_time()</function></"
 "link> instead."
-msgstr "<literal>gcut_egg_set_forced_termination_wait_time</literal>はバージョン1.1.5から非推奨になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"gcut-egg-set-forced-termination-wait-time\"><function>gcut_egg_set_forced_termination_wait_time()</function></link>を使ってください。"
+msgstr ""
+"<literal>gcut_egg_set_forced_termination_wait_time</literal>はバージョン1.1.5"
+"から非推奨になりました。新しく書くコードでは使わないでください。代わりに"
+"<link linkend=\"gcut-egg-set-forced-termination-wait-time"
+"\"><function>gcut_egg_set_forced_termination_wait_time()</function></link>を"
+"使ってください。"
 
 #: xml/gcut-egg.xml:631(title)
 msgid "The <literal>\"command\"</literal> property"
@@ -11075,7 +11205,8 @@ msgid "gcut_data_get_uint_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:33(returnvalue) xml/gcut-assertions.xml:111(type)
-#: xml/gcut-assertions.xml:112(type) xml/gcut-assertions-helper.xml:112(type)
+#: xml/gcut-assertions.xml:112(type) xml/gcut-assertions.xml:114(type)
+#: xml/gcut-assertions.xml:115(type) xml/gcut-assertions-helper.xml:112(type)
 #: xml/gcut-assertions-helper.xml:113(type)
 #: xml/gcut-assertions-helper.xml:116(type)
 #: xml/gcut-assertions-helper.xml:117(type)
@@ -11088,7 +11219,8 @@ msgid "gcut_data_get_int64_helper"
 msgstr ""
 
 #: xml/gcut-data-helper.xml:36(returnvalue) xml/gcut-assertions.xml:117(type)
-#: xml/gcut-assertions.xml:118(type) xml/gcut-assertions-helper.xml:120(type)
+#: xml/gcut-assertions.xml:118(type) xml/gcut-assertions.xml:120(type)
+#: xml/gcut-assertions.xml:121(type) xml/gcut-assertions-helper.xml:120(type)
 #: xml/gcut-assertions-helper.xml:121(type)
 #: xml/gcut-assertions-helper.xml:124(type)
 #: xml/gcut-assertions-helper.xml:125(type)
@@ -11674,12 +11806,14 @@ msgid "gcut_assert_equal_int64"
 msgstr ""
 
 #: xml/gcut-assertions.xml:111(parameter)
+#: xml/gcut-assertions.xml:114(parameter)
 #: xml/gcut-assertions-helper.xml:112(parameter)
 #: xml/gcut-assertions-helper.xml:116(parameter)
 msgid "<link linkend=\"gint64\"><placeholder-1/></link> expected"
 msgstr ""
 
 #: xml/gcut-assertions.xml:112(parameter)
+#: xml/gcut-assertions.xml:115(parameter)
 #: xml/gcut-assertions-helper.xml:113(parameter)
 #: xml/gcut-assertions-helper.xml:117(parameter)
 msgid "<link linkend=\"gint64\"><placeholder-1/></link> actual"
@@ -11690,29 +11824,31 @@ msgstr ""
 msgid "gcut_assert_not_equal_int64"
 msgstr ""
 
-#: xml/gcut-assertions.xml:117(link) xml/gcut-assertions.xml:779(primary)
+#: xml/gcut-assertions.xml:117(link) xml/gcut-assertions.xml:781(primary)
 #: xml/api-index-full.xml:222(link) xml/api-index-1.0.5.xml:26(link)
 msgid "gcut_assert_equal_uint64"
 msgstr ""
 
 #: xml/gcut-assertions.xml:117(parameter)
+#: xml/gcut-assertions.xml:120(parameter)
 #: xml/gcut-assertions-helper.xml:120(parameter)
 #: xml/gcut-assertions-helper.xml:124(parameter)
 msgid "<link linkend=\"guint64\"><placeholder-1/></link> expected"
 msgstr ""
 
 #: xml/gcut-assertions.xml:118(parameter)
+#: xml/gcut-assertions.xml:121(parameter)
 #: xml/gcut-assertions-helper.xml:121(parameter)
 #: xml/gcut-assertions-helper.xml:125(parameter)
 msgid "<link linkend=\"guint64\"><placeholder-1/></link> actual"
 msgstr ""
 
-#: xml/gcut-assertions.xml:120(link) xml/gcut-assertions.xml:798(primary)
+#: xml/gcut-assertions.xml:120(link) xml/gcut-assertions.xml:800(primary)
 #: xml/api-index-full.xml:232(link) xml/api-index-1.1.4.xml:12(link)
 msgid "gcut_assert_not_equal_uint64"
 msgstr ""
 
-#: xml/gcut-assertions.xml:123(link) xml/gcut-assertions.xml:815(primary)
+#: xml/gcut-assertions.xml:123(link) xml/gcut-assertions.xml:819(primary)
 #: xml/api-index-full.xml:214(link) xml/api-index-1.0.6.xml:21(link)
 msgid "gcut_assert_equal_pid"
 msgstr ""
@@ -11731,12 +11867,12 @@ msgstr ""
 msgid "<link linkend=\"GPid\"><placeholder-1/></link> actual"
 msgstr ""
 
-#: xml/gcut-assertions.xml:126(link) xml/gcut-assertions.xml:834(primary)
+#: xml/gcut-assertions.xml:126(link) xml/gcut-assertions.xml:838(primary)
 #: xml/api-index-full.xml:230(link) xml/api-index-1.0.7.xml:22(link)
 msgid "gcut_assert_not_equal_pid"
 msgstr ""
 
-#: xml/gcut-assertions.xml:129(link) xml/gcut-assertions.xml:853(primary)
+#: xml/gcut-assertions.xml:129(link) xml/gcut-assertions.xml:857(primary)
 #: xml/api-index-full.xml:216(link) xml/api-index-1.1.5.xml:15(link)
 msgid "gcut_assert_equal_string"
 msgstr ""
@@ -11844,24 +11980,24 @@ msgid ""
 "<link linkend=\"void\"><placeholder-140/></link>                <placeholder-141/>             (<placeholder-142/>,\n"
 "                                                         <placeholder-143/>,\n"
 "                                                         <placeholder-144/>);\n"
-"#define             <placeholder-145/>         (expected,\n"
-"                                                         actual,\n"
-"                                                         ...)\n"
-"<link linkend=\"void\"><placeholder-146/></link>                <placeholder-147/>            (<placeholder-148/>,\n"
-"                                                         <placeholder-149/>,\n"
-"                                                         <placeholder-150/>);\n"
-"#define             <placeholder-151/>        (expected,\n"
-"                                                         actual,\n"
-"                                                         ...)\n"
-"<link linkend=\"void\"><placeholder-152/></link>                <placeholder-153/>               (<placeholder-154/>,\n"
-"                                                         <placeholder-155/>,\n"
-"                                                         <placeholder-156/>);\n"
-"<link linkend=\"void\"><placeholder-157/></link>                <placeholder-158/>           (<placeholder-159/>,\n"
-"                                                         <placeholder-160/>,\n"
-"                                                         <placeholder-161/>);\n"
-"<link linkend=\"void\"><placeholder-162/></link>                <placeholder-163/>            (<placeholder-164/>,\n"
-"                                                         <placeholder-165/>,\n"
-"                                                         <placeholder-166/>);\n"
+"<link linkend=\"void\"><placeholder-145/></link>                <placeholder-146/>         (<placeholder-147/>,\n"
+"                                                         <placeholder-148/>,\n"
+"                                                         <placeholder-149/>);\n"
+"<link linkend=\"void\"><placeholder-150/></link>                <placeholder-151/>            (<placeholder-152/>,\n"
+"                                                         <placeholder-153/>,\n"
+"                                                         <placeholder-154/>);\n"
+"<link linkend=\"void\"><placeholder-155/></link>                <placeholder-156/>        (<placeholder-157/>,\n"
+"                                                         <placeholder-158/>,\n"
+"                                                         <placeholder-159/>);\n"
+"<link linkend=\"void\"><placeholder-160/></link>                <placeholder-161/>               (<placeholder-162/>,\n"
+"                                                         <placeholder-163/>,\n"
+"                                                         <placeholder-164/>);\n"
+"<link linkend=\"void\"><placeholder-165/></link>                <placeholder-166/>           (<placeholder-167/>,\n"
+"                                                         <placeholder-168/>,\n"
+"                                                         <placeholder-169/>);\n"
+"<link linkend=\"void\"><placeholder-170/></link>                <placeholder-171/>            (<placeholder-172/>,\n"
+"                                                         <placeholder-173/>,\n"
+"                                                         <placeholder-174/>);\n"
 msgstr ""
 
 #: xml/gcut-assertions.xml:142(title)
@@ -11884,8 +12020,8 @@ msgstr ""
 #: xml/gcut-assertions.xml:487(para) xml/gcut-assertions.xml:537(para)
 #: xml/gcut-assertions.xml:587(para) xml/gcut-assertions.xml:607(para)
 #: xml/gcut-assertions.xml:639(para) xml/gcut-assertions.xml:747(para)
-#: xml/gcut-assertions.xml:783(para) xml/gcut-assertions.xml:819(para)
-#: xml/gcut-assertions.xml:857(para) xml/cut-assertions.xml:487(para)
+#: xml/gcut-assertions.xml:785(para) xml/gcut-assertions.xml:823(para)
+#: xml/gcut-assertions.xml:861(para) xml/cut-assertions.xml:487(para)
 #: xml/cut-assertions.xml:523(para) xml/cut-assertions.xml:565(para)
 #: xml/cut-assertions.xml:607(para) xml/cut-assertions.xml:649(para)
 #: xml/cut-assertions.xml:691(para) xml/cut-assertions.xml:733(para)
@@ -11910,10 +12046,10 @@ msgstr ""
 #: xml/gcut-assertions.xml:541(simpara) xml/gcut-assertions.xml:591(simpara)
 #: xml/gcut-assertions.xml:623(simpara) xml/gcut-assertions.xml:660(simpara)
 #: xml/gcut-assertions.xml:690(simpara) xml/gcut-assertions.xml:729(simpara)
-#: xml/gcut-assertions.xml:751(simpara) xml/gcut-assertions.xml:768(simpara)
-#: xml/gcut-assertions.xml:787(simpara) xml/gcut-assertions.xml:804(simpara)
-#: xml/gcut-assertions.xml:823(simpara) xml/gcut-assertions.xml:842(simpara)
-#: xml/gcut-assertions.xml:861(simpara) xml/cut-assertions.xml:1945(simpara)
+#: xml/gcut-assertions.xml:751(simpara) xml/gcut-assertions.xml:770(simpara)
+#: xml/gcut-assertions.xml:789(simpara) xml/gcut-assertions.xml:808(simpara)
+#: xml/gcut-assertions.xml:827(simpara) xml/gcut-assertions.xml:846(simpara)
+#: xml/gcut-assertions.xml:865(simpara) xml/cut-assertions.xml:1945(simpara)
 #: xml/cppcut-assertions.xml:54(simpara)
 msgid "an expected value."
 msgstr "期待値。"
@@ -11923,10 +12059,10 @@ msgstr "期待値。"
 #: xml/gcut-assertions.xml:544(simpara) xml/gcut-assertions.xml:594(simpara)
 #: xml/gcut-assertions.xml:626(simpara) xml/gcut-assertions.xml:663(simpara)
 #: xml/gcut-assertions.xml:693(simpara) xml/gcut-assertions.xml:732(simpara)
-#: xml/gcut-assertions.xml:754(simpara) xml/gcut-assertions.xml:771(simpara)
-#: xml/gcut-assertions.xml:790(simpara) xml/gcut-assertions.xml:807(simpara)
-#: xml/gcut-assertions.xml:826(simpara) xml/gcut-assertions.xml:845(simpara)
-#: xml/gcut-assertions.xml:864(simpara) xml/cut-assertions.xml:1948(simpara)
+#: xml/gcut-assertions.xml:754(simpara) xml/gcut-assertions.xml:773(simpara)
+#: xml/gcut-assertions.xml:792(simpara) xml/gcut-assertions.xml:811(simpara)
+#: xml/gcut-assertions.xml:830(simpara) xml/gcut-assertions.xml:849(simpara)
+#: xml/gcut-assertions.xml:868(simpara) xml/cut-assertions.xml:1948(simpara)
 #: xml/cppcut-assertions.xml:57(simpara)
 msgid "an actual value."
 msgstr "実測値。"
@@ -12677,16 +12813,19 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-assertions.xml:761(title)
-msgid "gcut_assert_not_equal_int64()"
+msgid "gcut_assert_not_equal_int64 ()"
 msgstr ""
 
 #: xml/gcut-assertions.xml:763(programlisting)
 #, no-wrap
-msgid "#define             gcut_assert_not_equal_int64(expected, actual, ...)"
+msgid ""
+"<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_not_equal_int64         (<parameter><link linkend=\"gint64\"><type>gint64</type></link> expected</parameter>,\n"
+"                                                         <parameter><link linkend=\"gint64\"><type>gint64</type></link> actual</parameter>,\n"
+"                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:764(para) xml/gcut-assertions.xml:800(para)
-#: xml/gcut-assertions.xml:838(para) xml/cut-assertions.xml:506(para)
+#: xml/gcut-assertions.xml:766(para) xml/gcut-assertions.xml:804(para)
+#: xml/gcut-assertions.xml:842(para) xml/cut-assertions.xml:506(para)
 #: xml/cut-assertions.xml:544(para) xml/cut-assertions.xml:586(para)
 #: xml/cut-assertions.xml:628(para) xml/cut-assertions.xml:670(para)
 #: xml/cut-assertions.xml:712(para) xml/cut-assertions.xml:754(para)
@@ -12705,17 +12844,17 @@ msgstr ""
 "<parameter>expected</parameter> != <parameter>actual</parameter>が成り立つと"
 "きパスします。"
 
-#: xml/gcut-assertions.xml:776(para) xml/gcut-assertions.xml:812(para)
+#: xml/gcut-assertions.xml:778(para) xml/gcut-assertions.xml:816(para)
 #: xml/cut-test-utils.xml:283(para) xml/cut-helper.xml:577(para)
 #: xml/cut-assertions.xml:2206(para) xml/cut-assertions.xml:2223(para)
 msgid "Since 1.1.4"
 msgstr "1.1.4から"
 
-#: xml/gcut-assertions.xml:778(title)
+#: xml/gcut-assertions.xml:780(title)
 msgid "gcut_assert_equal_uint64 ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:780(programlisting)
+#: xml/gcut-assertions.xml:782(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_equal_uint64            (<parameter><link linkend=\"guint64\"><type>guint64</type></link> expected</parameter>,\n"
@@ -12723,20 +12862,23 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:797(title)
-msgid "gcut_assert_not_equal_uint64()"
+#: xml/gcut-assertions.xml:799(title)
+msgid "gcut_assert_not_equal_uint64 ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:799(programlisting)
+#: xml/gcut-assertions.xml:801(programlisting)
 #, no-wrap
-msgid "#define             gcut_assert_not_equal_uint64(expected, actual, ...)"
+msgid ""
+"<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_not_equal_uint64        (<parameter><link linkend=\"guint64\"><type>guint64</type></link> expected</parameter>,\n"
+"                                                         <parameter><link linkend=\"guint64\"><type>guint64</type></link> actual</parameter>,\n"
+"                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:814(title)
+#: xml/gcut-assertions.xml:818(title)
 msgid "gcut_assert_equal_pid ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:816(programlisting)
+#: xml/gcut-assertions.xml:820(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_equal_pid               (<parameter><link linkend=\"GPid\"><type>GPid</type></link> expected</parameter>,\n"
@@ -12744,11 +12886,11 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:833(title)
+#: xml/gcut-assertions.xml:837(title)
 msgid "gcut_assert_not_equal_pid ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:835(programlisting)
+#: xml/gcut-assertions.xml:839(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_not_equal_pid           (<parameter><link linkend=\"GPid\"><type>GPid</type></link> expected</parameter>,\n"
@@ -12756,11 +12898,11 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-assertions.xml:852(title)
+#: xml/gcut-assertions.xml:856(title)
 msgid "gcut_assert_equal_string ()"
 msgstr ""
 
-#: xml/gcut-assertions.xml:854(programlisting)
+#: xml/gcut-assertions.xml:858(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_assert_equal_string            (<parameter><link linkend=\"GString\"><type>GString</type></link> *expected</parameter>,\n"
@@ -15682,8 +15824,10 @@ msgid "<parameter>paths</parameter> :"
 msgstr ""
 
 #: xml/cut-test-utils.xml:390(simpara)
-msgid "NULL-terminated array of strings containing the path elements."
-msgstr ""
+msgid ""
+"<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>-terminated array "
+"of strings containing the path elements."
+msgstr "パスの要素を含んだ<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端の文字列の配列。"
 
 #: xml/cut-test-utils.xml:397(title)
 msgid "cut_make_directory ()"
@@ -22441,8 +22585,7 @@ msgstr ""
 #: xml/api-index-full.xml:155(primaryie) xml/api-index-full.xml:159(primaryie)
 #: xml/api-index-full.xml:163(primaryie) xml/api-index-full.xml:164(primaryie)
 #: xml/api-index-full.xml:165(primaryie) xml/api-index-full.xml:166(primaryie)
-#: xml/api-index-full.xml:182(primaryie) xml/api-index-full.xml:228(primaryie)
-#: xml/api-index-full.xml:232(primaryie) xml/api-index-full.xml:236(primaryie)
+#: xml/api-index-full.xml:182(primaryie) xml/api-index-full.xml:236(primaryie)
 #: xml/api-index-full.xml:240(primaryie) xml/api-index-full.xml:242(primaryie)
 #: xml/api-index-full.xml:249(primaryie) xml/api-index-full.xml:252(primaryie)
 #: xml/api-index-full.xml:256(primaryie) xml/api-index-full.xml:263(primaryie)
@@ -22483,8 +22626,7 @@ msgstr ""
 #: xml/api-index-deprecated.xml:58(primaryie)
 #: xml/api-index-deprecated.xml:59(primaryie)
 #: xml/api-index-1.1.5.xml:11(primaryie) xml/api-index-1.1.4.xml:7(primaryie)
-#: xml/api-index-1.1.4.xml:8(primaryie) xml/api-index-1.1.4.xml:11(primaryie)
-#: xml/api-index-1.1.4.xml:12(primaryie) xml/api-index-1.1.3.xml:7(primaryie)
+#: xml/api-index-1.1.4.xml:8(primaryie) xml/api-index-1.1.3.xml:7(primaryie)
 #: xml/api-index-1.1.3.xml:8(primaryie) xml/api-index-1.1.3.xml:11(primaryie)
 #: xml/api-index-1.1.3.xml:12(primaryie) xml/api-index-1.1.3.xml:13(primaryie)
 #: xml/api-index-1.1.3.xml:14(primaryie) xml/api-index-1.1.3.xml:15(primaryie)
@@ -22589,8 +22731,9 @@ msgstr ""
 #: xml/api-index-full.xml:222(primaryie) xml/api-index-full.xml:223(primaryie)
 #: xml/api-index-full.xml:224(primaryie) xml/api-index-full.xml:225(primaryie)
 #: xml/api-index-full.xml:226(primaryie) xml/api-index-full.xml:227(primaryie)
-#: xml/api-index-full.xml:229(primaryie) xml/api-index-full.xml:230(primaryie)
-#: xml/api-index-full.xml:231(primaryie) xml/api-index-full.xml:233(primaryie)
+#: xml/api-index-full.xml:228(primaryie) xml/api-index-full.xml:229(primaryie)
+#: xml/api-index-full.xml:230(primaryie) xml/api-index-full.xml:231(primaryie)
+#: xml/api-index-full.xml:232(primaryie) xml/api-index-full.xml:233(primaryie)
 #: xml/api-index-full.xml:234(primaryie) xml/api-index-full.xml:235(primaryie)
 #: xml/api-index-full.xml:237(primaryie) xml/api-index-full.xml:238(primaryie)
 #: xml/api-index-full.xml:239(primaryie) xml/api-index-full.xml:241(primaryie)
@@ -22778,6 +22921,7 @@ msgstr ""
 #: xml/api-index-1.1.5.xml:43(primaryie) xml/api-index-1.1.5.xml:44(primaryie)
 #: xml/api-index-1.1.5.xml:45(primaryie) xml/api-index-1.1.5.xml:46(primaryie)
 #: xml/api-index-1.1.5.xml:47(primaryie) xml/api-index-1.1.5.xml:48(primaryie)
+#: xml/api-index-1.1.4.xml:11(primaryie) xml/api-index-1.1.4.xml:12(primaryie)
 #: xml/api-index-1.1.4.xml:13(primaryie) xml/api-index-1.1.4.xml:16(primaryie)
 #: xml/api-index-1.1.3.xml:17(primaryie) xml/api-index-1.1.3.xml:18(primaryie)
 #: xml/api-index-1.1.3.xml:19(primaryie) xml/api-index-1.1.3.xml:20(primaryie)

@@ -413,7 +413,7 @@ const char *path, ...
 </FUNCTION>
 
 <FUNCTION>
-<NAME>cut_build_array</NAME>
+<NAME>cut_build_path_array</NAME>
 <RETURNS>const char *</RETURNS>
 const char **paths
 </FUNCTION>
@@ -709,7 +709,19 @@ gint64 expected, gint64 actual, ...
 </FUNCTION>
 
 <FUNCTION>
+<NAME>gcut_assert_not_equal_int64</NAME>
+<RETURNS>void</RETURNS>
+gint64 expected, gint64 actual, ...
+</FUNCTION>
+
+<FUNCTION>
 <NAME>gcut_assert_equal_uint64</NAME>
+<RETURNS>void</RETURNS>
+guint64 expected, guint64 actual, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_assert_not_equal_uint64</NAME>
 <RETURNS>void</RETURNS>
 guint64 expected, guint64 actual, ...
 </FUNCTION>

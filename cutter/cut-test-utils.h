@@ -313,7 +313,7 @@ extern "C" {
 
 /**
  * cut_build_path_array:
- * @paths: NULL-terminated array of strings containing the path elements.
+ * @paths: %NULL-terminated array of strings containing the path elements.
  *
  * Builds path from @paths.
  *
