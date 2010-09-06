@@ -9,12 +9,12 @@
 ==== Improvements
 
   * Renamed assertions:
-    * ((<cut_assert_exist_path()>)) -> ((<cut_assert_path_exist()>))
-    * ((<cut_assert_not_exist_path()>)) -> ((<cut_assert_path_not_exist()>))
+    * ((<cut_assert_path_exist()>)) -> ((<cut_assert_exist_path()>))
+    * ((<cut_assert_path_not_exist()>)) -> ((<cut_assert_not_exist_path()>))
   * Added an assertion:
     * ((<gcut_assert_equal_string()>))
   * Renamed an utility:
-    * ((<GCutEgg>)) -> ((<GCutProcess>))
+    * ((<GCutEgg|GCutEgg.html>)) -> ((<GCutProcess|GCutProcess.html>))
   * Added utilities:
     * ((<cut_get_source_directory()>))
     * ((<cut_build_path_array()>))
