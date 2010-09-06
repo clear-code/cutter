@@ -1,5 +1,7 @@
 2010-09-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* ./: 1.1.4 -> 1.1.5.
+
 	* debian/changelog: 1.1.4-1 -> 1.1.5-1.
 
 	* NEWS*: add 1.1.5 entry.
