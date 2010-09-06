@@ -1,3 +1,7 @@
+2010-09-06  Kouhei Sutou  <kou@clear-code.com>
+
+	* doc/reference/overrides.txt: add newly added symbols.
+
 2010-08-31  Kouhei Sutou  <kou@cozmixng.org>
 
 	* m4macros/cutter.m4: support lcov 1.9. #3056684
