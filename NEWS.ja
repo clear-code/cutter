@@ -8,7 +8,7 @@
 
 ==== 改良
 
-* 検証の名前変更:
+  * 検証の名前変更:
     * ((<cut_assert_path_exist()>)) -> ((<cut_assert_exist_path()>))
     * ((<cut_assert_path_not_exist()>)) -> ((<cut_assert_not_exist_path()>))
   * 検証の追加:
