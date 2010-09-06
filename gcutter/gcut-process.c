@@ -37,6 +37,10 @@
 #include "gcut-marshalers.h"
 #include "cut-utils.h"
 
+#ifdef ERROR
+#  undef ERROR
+#endif
+
 #define GCUT_PROCESS_GET_PRIVATE(obj)                                     \
     (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_PROCESS, GCutProcessPrivate))
 
@@ -93,7 +97,6 @@ enum
     ERROR_RECEIVED,
     REAPED,
     ERROR,
-
     LAST_SIGNAL
 };
 
