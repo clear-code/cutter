@@ -36,6 +36,13 @@ to use with patch(1) or you don't need color.
 
    cut-diff uses unified diff format.
 
+: --context-liens=LINES
+
+   Shows diff context around (({LINES})).
+
+   All lines are shown by default. When unified diff format
+   is used, 3 lines are shown by default.
+
 == EXIT STATUS
 
 The exit status is 0 for success, non-0 otherwise.

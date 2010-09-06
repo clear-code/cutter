@@ -1,5 +1,7 @@
 2010-09-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/cut-diff.rd*: add documents for --context-lines.
+
 	* cutter/cut-test-utils.h, doc/reference/ja.po,
 	doc/reference/cutter-overrides.txt, doc/reference/overrides.txt:
 	update cut_build_path_array().
