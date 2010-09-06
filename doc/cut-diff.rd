@@ -36,7 +36,7 @@ to use with patch(1) or you don't need color.
 
    cut-diff uses unified diff format.
 
-: --context-liens=LINES
+: --context-lines=LINES
 
    Shows diff context around (({LINES})).
 

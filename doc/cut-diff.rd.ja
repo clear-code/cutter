@@ -35,7 +35,7 @@ patchコマンドと一緒に使う、色がなくても問題ない、などの
 
    unified diff形式で出力します。
 
-: --context-liens=LINES
+: --context-lines=LINES
 
    差分の周辺(({LINES}))行を表示します。
 
