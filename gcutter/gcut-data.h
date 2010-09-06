@@ -286,8 +286,6 @@ G_BEGIN_DECLS
  * @data: the data added by gcut_add_datum().
  * @field_name: the field name.
  *
- * Returns %TRUE if @data has a field named by @field_name.
- *
  * Returns: %TRUE if @data has a @field_name field is
  *          available, %FALSE otherwise.
  *

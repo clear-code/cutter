@@ -179,9 +179,9 @@ GCutProcess *gcut_process_new        (const gchar  *command,
 
 /**
  * gcut_process_new_command_line:
- * @command: a command line
+ * @command_line: a command line
  *
- * Creates a new #GCutProcess object that runs @command.
+ * Creates a new #GCutProcess object that runs @command_line.
  *
  * Returns: a new #GCutProcess.
  *
@@ -344,7 +344,7 @@ GPid         gcut_process_get_pid (GCutProcess *process);
  *
  * Since: 1.1.5
  */
-gint         gcut_process_wait    (GCutProcess *porcess,
+gint         gcut_process_wait    (GCutProcess *process,
                                    guint        timeout,
                                    GError     **error);
 /**
@@ -401,6 +401,9 @@ GIOStatus     gcut_process_flush          (GCutProcess  *process,
  * gcut_process_get_output_string:
  * @process: a #GCutProcess
  *
+ * Returns: a #GString that has all result of standard
+ * output of external process.
+ *
  * Since: 1.1.5
  */
 GString     *gcut_process_get_output_string
@@ -409,6 +412,9 @@ GString     *gcut_process_get_output_string
 /**
  * gcut_process_get_error_string:
  * @process: a #GCutProcess
+ *
+ * Returns: a #GString that has all result of standard
+ * error of external process.
  *
  * Since: 1.1.5
  */
@@ -444,7 +450,7 @@ GIOChannel *gcut_process_get_input_channel (GCutProcess  *process);
 GIOChannel *gcut_process_get_output_channel (GCutProcess *process);
 
 /**
- * gcut_process_get_error:
+ * gcut_process_get_error_channel:
  * @process: a #GCutProcess
  *
  * Gets a #GIOChannel connected with standard error output
@@ -464,10 +470,10 @@ GIOChannel *gcut_process_get_error_channel (GCutProcess *process);
  * gcut_process_get_output_stream:
  * @process: a #GCutProcess
  *
- * Gets a #GOutputStream connected with standard output of
+ * Gets a #GInputStream connected with standard output of
  * external process.
  *
- * Returns: a #GOutputStream if external process is running,
+ * Returns: a #GInputStream if external process is running,
  * otherwise %NULL.
  *
  * Since: 1.1.5
@@ -478,10 +484,10 @@ GInputStream *gcut_process_get_output_stream (GCutProcess *process);
  * gcut_process_get_error_stream:
  * @process: a #GCutProcess
  *
- * Gets a #GOutputStream connected with standard error output
+ * Gets a #GInputStream connected with standard error output
  * of external process.
  *
- * Returns: a #GOutputStream if external process is running,
+ * Returns: a #GInputStream if external process is running,
  * otherwise %NULL.
  *
  * Since: 1.1.5

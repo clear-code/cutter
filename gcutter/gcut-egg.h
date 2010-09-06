@@ -416,7 +416,7 @@ GIOChannel   *gcut_egg_get_input     (GCutEgg      *egg);
  * otherwise %NULL.
  *
  * Since: 1.0.6
- * Deprecated: 1.1.5: Use gcut_process_get_outputput_channel() instead.
+ * Deprecated: 1.1.5: Use gcut_process_get_output_channel() instead.
  */
 GIOChannel   *gcut_egg_get_output    (GCutEgg      *egg);
 
