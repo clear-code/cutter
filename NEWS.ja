@@ -2,6 +2,61 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-1-5] 1.1.5: 2010-09-06
+
+=== Cutter
+
+==== 改良
+
+  * 検証の名前変更:
+    * ((<cut_assert_exist_path()>)) -> ((<cut_assert_path_exist()>))
+    * ((<cut_assert_not_exist_path()>)) -> ((<cut_assert_path_not_exist()>))
+  * 検証の追加:
+    * ((<gcut_assert_equal_string()>))
+  * ユーティリティの名前変更:
+    * ((<GCutEgg>)) -> ((<GCutProcess>))
+  * ユーティリティの追加:
+    * ((<cut_get_source_directory()>))
+    * ((<cut_build_path_array()>))
+    * ((<gcut_data_has_field()>))
+    * ((<gcut_list_int_new()>))
+    * ((<gcut_list_uint_new()>))
+    * ((<gcut_take_new_list_int()>))
+    * ((<gcut_take_new_list_uint()>))
+  * Ubuntu Lucid Lynx対応。
+  * configure終了時に結果を報告。
+    [Romain Tartièreさんが提案]
+  * libgoffice-0.8対応。（libgoffice-0.6対応は終了）
+    [Romain Tartièreさんが提案]
+  * lcov 1.9対応。#3056684
+    [Romain Tartièreさんが改良]
+  * テスト説明文内の全角スペース表示に対応。
+  * サブcutterプロセスがPATH上にあれば動作するように修正。
+    [Romain Tartièreさんが改良]
+
+==== 修正
+
+  * ロケールに依存したテストを修正。
+    [Romain Tartièreさんが提案]
+
+=== cut-diff
+
+==== 改良
+
+  * diffの周辺何行を表示するかを指定する((<--context-linesオ
+    プション|cut-diff#--context-lines>))を追加。
+
+=== ドキュメント
+
+==== 改良
+
+  * FreeBSDではportsを使うように変更。
+    [Romain Tartièreさんが提案]
+
+=== 感謝
+
+  * Romain Tartièreさん
+
 == [release-1-1-4] 1.1.4: 2010-06-10
 
 CentOS対応。

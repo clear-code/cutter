@@ -1,5 +1,7 @@
 2010-09-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* NEWS*: add 1.1.5 entry.
+
 	* doc/cut-diff.rd*: add documents for --context-lines.
 
 	* cutter/cut-test-utils.h, doc/reference/ja.po,

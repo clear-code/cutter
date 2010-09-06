@@ -2,6 +2,62 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-1-5] 1.1.5: 2010-09-06
+
+=== Cutter
+
+==== Improvements
+
+  * Renamed assertions:
+    * ((<cut_assert_exist_path()>)) -> ((<cut_assert_path_exist()>))
+    * ((<cut_assert_not_exist_path()>)) -> ((<cut_assert_path_not_exist()>))
+  * Added an assertion:
+    * ((<gcut_assert_equal_string()>))
+  * Renamed an utility:
+    * ((<GCutEgg>)) -> ((<GCutProcess>))
+  * Added utilities:
+    * ((<cut_get_source_directory()>))
+    * ((<cut_build_path_array()>))
+    * ((<gcut_data_has_field()>))
+    * ((<gcut_list_int_new()>))
+    * ((<gcut_list_uint_new()>))
+    * ((<gcut_take_new_list_int()>))
+    * ((<gcut_take_new_list_uint()>))
+  * Supported Ubuntu Lucid Lynx.
+  * Supported configure result report on configure finish.
+    [Suggested by Romain Tartière]
+  * Supported libgoffice-0.8. (libgoffice-0.6 support was dropped.)
+    [Suggested by Romain Tartière]
+  * Supported lcov 1.9. #3056684
+    [Patch by Romain Tartière]
+  * Supported full-width spaces in test description.
+  * Supported sub-cutter command in PATH.
+    [Patch by Romain Tartière]
+
+==== Fixes
+
+  * Fixed locale depended tests.
+    [Suggested by Romain Tartière]
+
+=== cut-diff
+
+==== Improvements
+
+  * Added ((<--context-lines
+    option|cut-diff#--context-lines>)) that specifies how
+    many lines are shown around diff.
+
+=== Documentation
+
+==== Improvements
+
+  * Used ports on FreeBSD.
+    [Suggested by Romain Tartière]
+
+=== Thanks
+
+  * Romain Tartière
+
 == [release-1-1-4] 1.1.4: 2010-06-10
 
 Supported CentOS.
