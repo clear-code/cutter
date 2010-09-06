@@ -1,5 +1,7 @@
 2010-09-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/header.html*: add install link.
+
 	* configure.ac: 1.1.5 -> 1.1.6.
 
 	* test/fixtures/loader/: link missing GIO libraries.
