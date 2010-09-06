@@ -1,5 +1,7 @@
 2010-09-06  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/fixtures/loader/: link missing GIO libraries.
+
 	* gcutter/gcut-process.c: ensure undefing ERROR macro.
 
 	* gcutter/gcut-process.c: add missing GIO check.

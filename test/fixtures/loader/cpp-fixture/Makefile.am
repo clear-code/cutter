@@ -21,7 +21,8 @@ LIBS =							\
 	$(top_builddir)/cutter/libcutter.la		\
 	$(top_builddir)/gcutter/libgcutter.la		\
 	$(top_builddir)/cppcutter/libcppcutter.la	\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)					\
+	$(GIO_LIBS)
 
 with_prefix_la_SOURCES = with-prefix.cpp
 without_prefix_la_SOURCES = without-prefix.cpp
