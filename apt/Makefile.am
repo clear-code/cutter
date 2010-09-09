@@ -2,7 +2,7 @@ SERVER_PATH = $(SF_USER),$(SF_PROJECT_ID)@$(SF_HTDOCS)
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
-CODE_NAMES = lenny unstable hardy lucid
+CODE_NAMES = lenny squeeze unstable hardy lucid
 
 release: remove-existing-packages build update sign upload
 
