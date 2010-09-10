@@ -1,3 +1,7 @@
+2010-09-10  Kouhei Sutou  <kou@clear-code.com>
+
+	* apt/: support squeeze.
+
 2010-09-09  Kouhei Sutou  <kou@cozmixng.org>
 
 	* apt/Makefile.am (CODE_NAMES): add squeeze.

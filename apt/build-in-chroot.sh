@@ -70,7 +70,7 @@ build()
     fi
 
     case ${code_name} in
-	lenny|unstable)
+	lenny|squeeze|unstable)
 	    distribution=debian
 	    component=main
 	    ;;
