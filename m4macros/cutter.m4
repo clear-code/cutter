@@ -45,9 +45,12 @@ AC_DEFUN([AC_CHECK_ENABLE_COVERAGE],
 
 AC_DEFUN([AC_CHECK_COVERAGE],
 [
-  dnl **************************************************************
-  dnl Configure for coverage.
-  dnl **************************************************************
+  ac_check_coverage_makefile=$1
+  if test -z "$ac_check_coverage_makefile"; then
+    ac_check_coverage_makefile=Makefile
+  fi
+  AC_SUBST(ac_check_coverage_makefile)
+
   AC_CHECK_ENABLE_COVERAGE
 
   COVERAGE_CFLAGS=
@@ -70,10 +73,11 @@ AC_DEFUN([AC_CHECK_COVERAGE],
 
   if test "x$ac_cv_enable_coverage" = "xyes"; then
     AC_CONFIG_COMMANDS([coverage], [
-      if grep '^coverage:' Makefile > /dev/null; then
+      if test -e $ac_check_coverage_makefile && \
+         grep '^coverage:' $ac_check_coverage_makefile > /dev/null; then
         : # do nothing
       else
-        cat | sed -e 's/^        /	/g' >>Makefile <<EOS
+        cat | sed -e 's/^        /	/g' >>$ac_check_coverage_makefile <<EOS
 .PHONY: coverage-clean coverage-report coverage coverage-force
 
 coverage-clean:
@@ -99,7 +103,8 @@ coverage-force:
 	\$(MAKE) \$(AM_MAKEFLAGS) coverage-report
 EOS
       fi
-    ])
+    ],
+    [ac_check_coverage_makefile="$ac_check_coverage_makefile"])
   fi
 ])
 

@@ -1,3 +1,8 @@
+2010-09-15  Kouhei Sutou  <kou@clear-code.com>
+
+	* m4macros/cutter.m4 (AC_CHECK_COVERAGE): support Makefile
+	filename customize.
+
 2010-09-10  Kouhei Sutou  <kou@clear-code.com>
 
 	* doc/install-to-debian.rd*: add an apt-lien for squeeze.
