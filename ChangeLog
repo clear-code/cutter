@@ -1,3 +1,7 @@
+2010-09-26  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-contractor.c: remove unused codes.
+
 2010-09-15  Kouhei Sutou  <kou@clear-code.com>
 
 	* m4macros/cutter.m4 (AC_CHECK_COVERAGE): support Makefile

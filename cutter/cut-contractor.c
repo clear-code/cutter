@@ -138,57 +138,6 @@ cut_contractor_has_builder (CutContractor *contractor, const gchar *type_name)
     return FALSE;
 }
 
-#if 0
-static gchar *
-create_builder_type_name (const gchar *builder_name)
-{
-    return  g_strconcat("Cut", builder_name, "FactoryBuilder", NULL);
-}
-
-static GType
-get_builder_type_from_name (const gchar *type_name)
-{
-    GType *children;
-    GType type = 0;
-    guint n_children, i;
-
-    children = g_type_children(CUT_TYPE_FACTORY_BUILDER, &n_children);
-
-    for (i = 0; i < n_children; i++) {
-        GType child = children[i];
-        const gchar *name = g_type_name(child);
-        if (g_ascii_strcasecmp(name, type_name))
-            type = child;
-    }
-
-    g_free(children);
-
-    return type;
-}
-
-GObject *
-cut_contractor_create_builder (CutContractor *contractor, const gchar *type_name)
-{
-    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
-    gchar *gtype_name;
-    GType type;
-    GObject *builder;
-
-    gtype_name = create_builder_type_name(type_name);
-    type = get_builder_type_from_name(gtype_name);
-
-    g_free(gtype_name);
-
-    if (!type)
-        return NULL;
-    builder = g_object_new(type, NULL);
-    if (builder)
-        priv->builders = g_list_prepend(priv->builders, builder);
-
-    return builder;
-}
-#endif
-
 GList *
 cut_contractor_build_factories (CutContractor *contractor)
 {
