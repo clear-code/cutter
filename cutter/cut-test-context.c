@@ -1097,6 +1097,21 @@ cut_test_context_take_g_hash_table (CutTestContext *context,
                                                (CutDestroyFunction)g_hash_table_unref);
 }
 
+static void
+cut_test_context_g_string_free (GString *string)
+{
+    g_string_free(string, TRUE);
+}
+
+GString *
+cut_test_context_take_g_string (CutTestContext *context,
+                                GString        *string)
+{
+    return (GString *)cut_test_context_take(context,
+                                            string,
+                                            (CutDestroyFunction) cut_test_context_g_string_free);
+}
+
 int
 cut_test_context_trap_fork (CutTestContext *context)
 {

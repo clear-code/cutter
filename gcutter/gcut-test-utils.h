@@ -105,6 +105,22 @@ G_BEGIN_DECLS
                                        (hash_table))
 
 /**
+ * gcut_take_string:
+ * @string: the #GString to be owned by Cutter.
+ *
+ * Passes ownership of @string to Cutter and returns
+ * @string itself.
+ *
+ * Returns: a #GString owned by Cutter. Don't
+ * g_string_free() it.
+ *
+ * Since: 1.1.6
+ */
+#define gcut_take_string(string)                                        \
+    cut_test_context_take_g_string(cut_get_current_test_context(),      \
+                                   (string))
+
+/**
  * gcut_list_new:
  * @element: the first #gpointer.
  * @...: remaining elements in list. %NULL-terminate.

@@ -38,6 +38,8 @@ const GList  *cut_test_context_take_g_list   (CutTestContext     *context,
 GHashTable   *cut_test_context_take_g_hash_table
                                              (CutTestContext     *context,
                                               GHashTable         *hash_table);
+GString      *cut_test_context_take_g_string (CutTestContext     *context,
+                                              GString            *string);
 
 
 G_END_DECLS

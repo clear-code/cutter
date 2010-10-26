@@ -1,3 +1,14 @@
+2010-10-26  Yuto Hayamizu  <y.hayamizu@gmail.com>
+
+	* test/gcutter/test-gcut-test-utils.c: add test of gcut_take_string.
+
+	* gcutter/gcut-test-utils.h (gcut_take_string): add.
+
+	* gcutter/gcut-public.h (cut_test_context_take_g_string): add.
+
+	* cutter/cut-test-context.c (cut_test_context_take_g_string)
+	(cut_test_context_g_string_free): add new take function.
+
 2010-09-26  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-contractor.c: remove unused codes.
