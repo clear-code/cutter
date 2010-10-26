@@ -30,6 +30,7 @@ void test_take_new_list_string_array (void);
 void test_take_new_list_object (void);
 void test_data_get (void);
 void test_take_string (void);
+void test_take_new_string (void);
 
 static GList *string_list;
 static GList *object_list;
@@ -203,9 +204,21 @@ void
 test_take_string (void)
 {
     GString *expected, *actual;
+
     expected = g_string_new("foo bar baz");
     actual = gcut_take_string(expected);
 
     cut_assert_equal_string(expected->str, actual->str);
 }
 
+void
+test_take_new_string (void)
+{
+    GString *expected, *actual;
+
+    expected = g_string_new("hello world");
+    gcut_take_string(expected);
+    actual = gcut_take_new_string("hello world");
+
+    cut_assert_equal_string(expected->str, actual->str);
+}

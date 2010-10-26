@@ -1,5 +1,9 @@
 2010-10-26  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
+	* test/gcutter/test-gcut-test-utils.c (test_take_new_string): add test of gcut_take_new_string.
+
+	* gcutter/gcut-test-utils.h: add new take function.
+
 	* test/gcutter/test-gcut-test-utils.c: add test of gcut_take_string.
 
 	* gcutter/gcut-test-utils.h (gcut_take_string): add.

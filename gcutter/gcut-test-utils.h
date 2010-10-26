@@ -121,6 +121,20 @@ G_BEGIN_DECLS
                                    (string))
 
 /**
+ * gcut_take_new_string:
+ * @string: the string. It can be NULL.
+ *
+ * Create a #GString object from passed string.
+ *
+ * Returns: a #GString owned by Cutter. Don't
+ * g_string_free() it.
+ *
+ * Since: 1.1.6
+ */
+#define gcut_take_new_string(string)            \
+    gcut_take_string(g_string_new(string))
+
+/**
  * gcut_list_new:
  * @element: the first #gpointer.
  * @...: remaining elements in list. %NULL-terminate.
