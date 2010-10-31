@@ -1,3 +1,7 @@
+2010-10-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* doc/cutter.rd, doc/cut-diff.rd: capitalize section title.
+
 2010-10-26  Yuto Hayamizu  <y.hayamizu@gmail.com>
 
 	* test/gcutter/test-gcut-test-utils.c (test_take_new_string): add test of gcut_take_new_string.

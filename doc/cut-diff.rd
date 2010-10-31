@@ -16,7 +16,7 @@ It shows difference with color.
 It's recommended that you use a normal diff(1) when you want
 to use with patch(1) or you don't need color.
 
-== Options
+== OPTIONS
 
 : --version
 

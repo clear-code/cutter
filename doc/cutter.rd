@@ -29,7 +29,7 @@ test_*.so are searched recursively.
 files. Cutter logs test results when --stream-directory
 option is specified.
 
-== Options
+== OPTIONS
 
 : --version
 
