@@ -174,19 +174,20 @@ char        *cut_utils_append_diff          (const char *message,
                                              const char *from,
                                              const char *to);
 
-char       *cut_test_context_build_fixture_data_path
+const char *cut_test_context_build_fixture_path
                                             (CutTestContext *context,
                                              const char     *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
 
-const char *cut_utils_get_fixture_data_string
-                                            (CutTestContext *context,
-                                             char **fixture_data_path,
+const char *cut_utils_get_fixture_data      (CutTestContext *context,
+                                             const char **fixture_path,
+                                             size_t *size,
                                              const char *path,
                                              ...) CUT_GNUC_NULL_TERMINATED;
-const char *cut_utils_get_fixture_data_string_va_list
+const char *cut_utils_get_fixture_data_va_list
                                             (CutTestContext *context,
-                                             char **fixture_data_path,
+                                             const char **fixture_path,
+                                             size_t *size,
                                              const char *path,
                                              va_list args);
 

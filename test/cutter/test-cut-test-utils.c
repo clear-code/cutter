@@ -26,6 +26,8 @@ void test_take_convert (void);
 void test_remove_path (void);
 void test_build_path (void);
 void test_make_directory (void);
+void test_build_fixture_path (void);
+void test_fixture_data (void);
 
 static gchar *tmp_dir;
 
@@ -108,6 +110,29 @@ test_make_directory (void)
     cut_assert_false(g_file_test(new_dir, G_FILE_TEST_IS_DIR));
     cut_make_directory(tmp_dir, "sub", "sub-sub", NULL);
     cut_assert_true(g_file_test(new_dir, G_FILE_TEST_IS_DIR));
+}
+
+void
+test_build_fixture_path (void)
+{
+    cut_set_fixture_data_dir(cuttest_get_base_dir(), "a", "b", NULL);
+    cut_assert_equal_string(
+        cut_build_path(cut_take_string(g_get_current_dir()),
+                       cuttest_get_base_dir(), "a", "b", "c", NULL),
+        cut_build_fixture_path("c", NULL));
+}
+
+void
+test_fixture_data (void)
+{
+    const gchar *expected, *data;
+    gsize size;
+
+    cut_set_fixture_data_dir(cuttest_get_base_dir(), "fixtures", "data", NULL);
+    data = cut_get_fixture_data(&size, "1.txt", NULL);
+    expected = "file1\n";
+    cut_assert_equal_memory(expected, strlen(expected),
+                            data, size);
 }
 
 /*

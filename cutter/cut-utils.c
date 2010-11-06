@@ -457,35 +457,37 @@ cut_utils_regex_replace (const gchar *pattern, const gchar *string,
 }
 
 const gchar *
-cut_utils_get_fixture_data_string (CutTestContext *context,
-                                   gchar **fixture_data_path,
-                                   const char *path,
-                                   ...)
+cut_utils_get_fixture_data (CutTestContext *context,
+                            const gchar **fixture_data_path,
+                            gsize *size,
+                            const char *path,
+                            ...)
 {
     const gchar *data;
     va_list args;
 
     va_start(args, path);
-    data = cut_utils_get_fixture_data_string_va_list(context, fixture_data_path,
-                                                     path, args);
+    data = cut_utils_get_fixture_data_va_list(context, fixture_data_path, size,
+                                              path, args);
     va_end(args);
 
     return data;
 }
 
 const gchar *
-cut_utils_get_fixture_data_string_va_list (CutTestContext *context,
-                                           gchar **fixture_data_path,
-                                           const gchar *path,
-                                           va_list args)
+cut_utils_get_fixture_data_va_list (CutTestContext *context,
+                                    const gchar **fixture_data_path,
+                                    gsize *size,
+                                    const gchar *path,
+                                    va_list args)
 {
     GError *error = NULL;
     const gchar *fixture_data;
 
     fixture_data =
-        cut_test_context_get_fixture_data_string_va_list(context, &error,
-                                                         fixture_data_path,
-                                                         path, args);
+        cut_test_context_get_fixture_data_va_list(context, &error,
+                                                  fixture_data_path, size,
+                                                  path, args);
     if (error) {
         gchar *inspected, *message;
 

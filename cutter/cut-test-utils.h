@@ -258,9 +258,31 @@ extern "C" {
  * when no longer needed.
  *
  * Since: 1.0.2
+ *
+ * Deprecated: 1.1.7: Use cut_build_fixture_path() instead.
  */
-#define cut_build_fixture_data_path(...)                \
-    cut_test_context_build_fixture_data_path(           \
+#define cut_build_fixture_data_path(...)                        \
+    strdup(cut_test_context_build_fixture_path(                 \
+               cut_get_current_test_context(), __VA_ARGS__))
+
+/**
+ * cut_build_fixture_path:
+ * @path: a first element of the path to the fixture data.
+ * @...: remaining elements in path.
+ *       %NULL-terminate is required.
+ *
+ * Builds a path to the fixture data. If @path is relative
+ * path, the path is handled as a relative path from a
+ * directory that is specified by cut_set_fixture_data_dir()
+ * or the current directory.
+ *
+ * Returns: a path to the fixture data. It is owned by
+ * Cutter. Don't free it.
+ *
+ * Since: 1.1.7
+ */
+#define cut_build_fixture_path(...)                             \
+    cut_test_context_build_fixture_path(                        \
         cut_get_current_test_context(), __VA_ARGS__)
 
 /**
@@ -271,17 +293,38 @@ extern "C" {
  *
  * Reads the fixture data at "@path/..." and returns it as a
  * string that is owned by Cutter. The description of
- * cut_build_fixture_data_path() shows how the fixture data
- * path is determined.
+ * cut_build_fixture_path() shows how the fixture data path
+ * is determined.
  *
- * Returns: a content of the fixture data as string.
- * Don't free it.
+ * Returns: a content of the fixture data as string owend by
+ * Cutter.  Don't free it.
  *
  * Since: 1.0.2
  */
 #define cut_get_fixture_data_string(...)                                \
-    cut_utils_get_fixture_data_string(cut_get_current_test_context(),   \
-                                      NULL, __VA_ARGS__)
+    cut_utils_get_fixture_data(cut_get_current_test_context(),          \
+                               NULL, NULL, __VA_ARGS__)
+
+/**
+ * cut_get_fixture_data:
+ * @size: return location for a size of the fixture data, or %NULL.
+ * @path: a first element of the path to the fixture data.
+ * @...: remaining elements in path.
+ *       %NULL-terminate is required.
+ *
+ * Reads the fixture data at "@path/..." and returns it as a
+ * string that is owned by Cutter. The description of
+ * cut_build_fixture_path() shows how the fixture data path
+ * is determined.
+ *
+ * Returns: a content of the fixture data as string owend by
+ * Cutter. Don't free it.
+ *
+ * Since: 1.1.7
+ */
+#define cut_get_fixture_data(size, ...)                                 \
+    cut_utils_get_fixture_data(cut_get_current_test_context(),          \
+                               NULL, size, __VA_ARGS__)
 
 /**
  * cut_remove_path:

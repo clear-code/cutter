@@ -1550,23 +1550,23 @@ cut_assert_equal_pointer_helper (const void     *expected,
 
 void
 cut_assert_equal_fixture_data_string_helper (const char     *expected,
-                                             const gchar    *expression_expected,
+                                             const char     *expression_expected,
                                              const char     *path,
                                              ...)
 {
     GError *error = NULL;
-    const char *data;
-    char *full_path;
+    const gchar *data;
+    const gchar *full_path;
     va_list args;
 
     va_start(args, path);
-    data = cut_utils_get_fixture_data_string_va_list(
-        cut_get_current_test_context(), &full_path, path, args);
+    data = cut_utils_get_fixture_data_va_list(
+        cut_get_current_test_context(), &full_path, NULL, path, args);
     cut_test_context_keep_user_message(cut_get_current_test_context());
     gcut_assert_error_helper(error, expression_expected);
     cut_assert_equal_string_helper(expected, data,
                                    expression_expected,
-                                   cut_take_string(full_path));
+                                   full_path);
 }
 
 void

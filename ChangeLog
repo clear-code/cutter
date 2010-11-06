@@ -1,3 +1,16 @@
+2010-11-06  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-utils.h,
+	cutter/cut-assertions-helper.c,
+	cutter/cut-public.h,
+	cutter/cut-test-context.c,
+	cutter/cut-test-context.h,
+	cutter/cut-utils.c,
+	test/cutter/test-cut-test-utils.c:
+	- make cut_build_fixture_data_path() deprecated.
+	- add cut_build_fixture_path() that returns Cutter owened path.
+	- add cut_get_fixture_data() that also returns data size.
+
 2010-10-31  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/cutter.rd, doc/cut-diff.rd: capitalize section title.
