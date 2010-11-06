@@ -481,28 +481,18 @@ cut_utils_get_fixture_data_va_list (CutTestContext *context,
                                     const gchar *path,
                                     va_list args)
 {
-    GError *error = NULL;
-    const gchar *fixture_data;
+    GString *fixture_data;
 
-    fixture_data =
-        cut_test_context_get_fixture_data_va_list(context, &error,
-                                                  fixture_data_path, size,
-                                                  path, args);
-    if (error) {
-        gchar *inspected, *message;
+    fixture_data = gcut_utils_get_fixture_data_va_list(context,
+                                                       fixture_data_path,
+                                                       path, args);
+    if (!fixture_data)
+        return NULL;
 
-        inspected = gcut_error_inspect(error);
-        message = g_strdup_printf("can't get fixture data: %s", inspected);
-        g_error_free(error);
-        cut_test_context_register_result(context,
-                                         CUT_TEST_RESULT_ERROR,
-                                         message);
-        g_free(inspected);
-        g_free(message);
-        cut_test_context_long_jump(context);
-    }
+    if (size)
+        *size = fixture_data->len;
 
-    return fixture_data;
+    return fixture_data->str;
 }
 
 void

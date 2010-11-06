@@ -406,6 +406,25 @@ GHashTable *gcut_hash_table_string_string_new_va_list(const gchar *key,
 #define gcut_take_new_hash_table_string_string(key, ...)                \
     gcut_take_hash_table(gcut_hash_table_string_string_new(key, ## __VA_ARGS__))
 
+/**
+ * gcut_get_fixture_data:
+ * @path: a first element of the path to the fixture data.
+ * @...: remaining elements in path.
+ *       %NULL-terminate is required.
+ *
+ * Reads the fixture data at "@path/..." and returns it as a
+ * #GString that is owned by Cutter. The description of
+ * cut_build_fixture_path() shows how the fixture data path
+ * is determined.
+ *
+ * Returns: a content of the fixture data as #GString owend by
+ * Cutter. Don't free it.
+ *
+ * Since: 1.1.6
+ */
+#define gcut_get_fixture_data(...)                                      \
+    gcut_utils_get_fixture_data(cut_get_current_test_context(),         \
+                                NULL, __VA_ARGS__)
 
 G_END_DECLS
 

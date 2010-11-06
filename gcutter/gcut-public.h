@@ -41,6 +41,15 @@ GHashTable   *cut_test_context_take_g_hash_table
 GString      *cut_test_context_take_g_string (CutTestContext     *context,
                                               GString            *string);
 
+GString      *gcut_utils_get_fixture_data    (CutTestContext *context,
+                                              const gchar   **full_path,
+                                              const gchar    *path,
+                                              ...) G_GNUC_NULL_TERMINATED;
+GString      *gcut_utils_get_fixture_data_va_list
+                                             (CutTestContext *context,
+                                              const gchar   **full_path,
+                                              const gchar    *path,
+                                              va_list         args);
 
 G_END_DECLS
 

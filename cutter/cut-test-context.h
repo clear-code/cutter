@@ -120,18 +120,16 @@ const gchar  *cut_test_context_build_fixture_path_va_list
                                               (CutTestContext *context,
                                                const gchar    *path,
                                                va_list         args);
-const gchar  *cut_test_context_get_fixture_data
+GString      *cut_test_context_get_fixture_data
                                               (CutTestContext *context,
                                                GError        **error,
                                                const gchar   **full_path,
-                                               gsize          *size,
                                                const gchar    *path,
                                                ...) G_GNUC_NULL_TERMINATED;
-const gchar  *cut_test_context_get_fixture_data_va_list
+GString      *cut_test_context_get_fixture_data_va_list
                                               (CutTestContext *context,
                                                GError        **error,
                                                const gchar  **full_path,
-                                               gsize          *size,
                                                const gchar    *path,
                                                va_list         args);
 

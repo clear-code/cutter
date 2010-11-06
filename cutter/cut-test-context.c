@@ -1334,16 +1334,15 @@ cut_test_context_build_fixture_path (CutTestContext *context,
     return full_path;
 }
 
-const gchar *
+GString *
 cut_test_context_get_fixture_data_va_list (CutTestContext *context,
                                            GError **error,
                                            const gchar **full_path,
-                                           gsize *size,
                                            const gchar *path,
                                            va_list args)
 {
     CutTestContextPrivate *priv;
-    GString *value;
+    GString *data;
     const gchar *fixture_full_path;
 
     if (!path)
@@ -1353,52 +1352,44 @@ cut_test_context_get_fixture_data_va_list (CutTestContext *context,
 
     fixture_full_path = cut_test_context_build_fixture_path_va_list(context,
                                                                     path, args);
-    value = g_hash_table_lookup(priv->cached_fixture_data, fixture_full_path);
-    if (!value) {
+    data = g_hash_table_lookup(priv->cached_fixture_data, fixture_full_path);
+    if (!data) {
         gchar *contents;
         gsize length;
 
         if (g_file_get_contents(fixture_full_path, &contents, &length, error)) {
-            value = g_string_new_len(contents, length);
+            data = g_string_new_len(contents, length);
             g_free(contents);
             g_hash_table_insert(priv->cached_fixture_data,
                                 g_strdup(fixture_full_path),
-                                value);
+                                data);
         }
     }
 
     if (full_path)
         *full_path = fixture_full_path;
 
-    if (!value)
-        return NULL;
-
-    if (size)
-        *size = value->len;
-
-    return value->str;
+    return data;
 }
 
-const gchar *
+GString *
 cut_test_context_get_fixture_data (CutTestContext *context,
                                    GError **error,
                                    const gchar **full_path,
-                                   gsize *size,
                                    const gchar *path, ...)
 {
-    const gchar *value;
+    GString *data;
     va_list args;
 
     if (!path)
         return NULL;
 
     va_start(args, path);
-    value = cut_test_context_get_fixture_data_va_list(context, error,
-                                                      full_path, size,
-                                                      path, args);
+    data = cut_test_context_get_fixture_data_va_list(context, error,
+                                                     full_path, path, args);
     va_end(args);
 
-    return value;
+    return data;
 }
 
 gchar *

@@ -19,6 +19,8 @@
 
 #include <gcutter.h>
 
+#include "../lib/cuttest-utils.h"
+
 #include <cutter/cut-enum-types.h>
 #include <cuttest-enum.h>
 
@@ -31,6 +33,7 @@ void test_take_new_list_object (void);
 void test_data_get (void);
 void test_take_string (void);
 void test_take_new_string (void);
+void test_fixture_data (void);
 
 static GList *string_list;
 static GList *object_list;
@@ -221,4 +224,17 @@ test_take_new_string (void)
     actual = gcut_take_new_string("hello world");
 
     cut_assert_equal_string(expected->str, actual->str);
+}
+
+void
+test_fixture_data (void)
+{
+    const gchar *expected;
+    GString *data;
+
+    cut_set_fixture_data_dir(cuttest_get_base_dir(), "fixtures", "data", NULL);
+    data = gcut_get_fixture_data("1.txt", NULL);
+    expected = "file1\n";
+    cut_assert_equal_memory(expected, strlen(expected),
+                            data->str, data->len);
 }

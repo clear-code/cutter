@@ -1,3 +1,10 @@
+2010-11-07  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-context.c, cutter/cut-test-context.h,
+	cutter/cut-utils.c, gcutter/gcut-public.h, gcutter/gcut-test-utils.h,
+	gcutter/gcut-utils.c, test/gcutter/test-gcut-test-utils.c:
+	add gcut_get_fixture_data() that returns GString.
+
 2010-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-utils.h: fix version number.

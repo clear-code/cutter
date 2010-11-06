@@ -73,7 +73,8 @@ libgcutter_sources =			\
 	gcut-string-io-channel.c	\
 	gcut-types.c			\
 	gcut-process.c			\
-	gcut-value-equal.c
+	gcut-value-equal.c		\
+	gcut-utils.c
 
 libgcutter_la_SOURCES =			\
 	$(gcutter_public_headers)	\
