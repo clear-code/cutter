@@ -1,5 +1,7 @@
 2010-11-06  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-test-utils.h: fix version number.
+
 	* cutter/cut-test-utils.h,
 	cutter/cut-assertions-helper.c,
 	cutter/cut-public.h,

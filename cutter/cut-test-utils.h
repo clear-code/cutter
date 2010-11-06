@@ -259,7 +259,7 @@ extern "C" {
  *
  * Since: 1.0.2
  *
- * Deprecated: 1.1.7: Use cut_build_fixture_path() instead.
+ * Deprecated: 1.1.6: Use cut_build_fixture_path() instead.
  */
 #define cut_build_fixture_data_path(...)                        \
     strdup(cut_test_context_build_fixture_path(                 \
@@ -279,7 +279,7 @@ extern "C" {
  * Returns: a path to the fixture data. It is owned by
  * Cutter. Don't free it.
  *
- * Since: 1.1.7
+ * Since: 1.1.6
  */
 #define cut_build_fixture_path(...)                             \
     cut_test_context_build_fixture_path(                        \
@@ -320,7 +320,7 @@ extern "C" {
  * Returns: a content of the fixture data as string owend by
  * Cutter. Don't free it.
  *
- * Since: 1.1.7
+ * Since: 1.1.6
  */
 #define cut_get_fixture_data(size, ...)                                 \
     cut_utils_get_fixture_data(cut_get_current_test_context(),          \
