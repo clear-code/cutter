@@ -1,3 +1,7 @@
+2010-11-23  Kouhei Sutou  <kou@cozmixng.org>
+
+	* Makefile.am, misc/update-latest-release.rb: parameterize package name.
+
 2010-11-22  Kouhei Sutou  <kou@cozmixng.org>
 
 	* yum/build-repository-rpm.sh, yum/Makefile.am: parameterize.
