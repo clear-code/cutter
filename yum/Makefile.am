@@ -38,7 +38,8 @@ build-in-chroot:
 	  '$(ARCHITECTURES)' '$(DISTRIBUTIONS)'
 
 build-repository-rpm: RPM-GPG-KEY-cutter
-	./build-repository-rpm.sh $(PACKAGE) '$(DISTRIBUTIONS)'
+	./build-repository-rpm.sh \
+	  $(PACKAGE) '$(PACKAGE_TITLE)' '$(DISTRIBUTIONS)'
 
 RPM-GPG-KEY-cutter:
 	./gpg-public-key.sh > $@

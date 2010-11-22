@@ -3,13 +3,14 @@
 script_base_dir=`dirname $0`
 
 if [ $# != 2 ]; then
-    echo "Usage: $0 PACKAGE DISTRIBUTIONS"
-    echo " e.g.: $0 cutter 'fedora centos'"
+    echo "Usage: $0 PACKAGE PACKAGE_TITLE DISTRIBUTIONS"
+    echo " e.g.: $0 cutter 'Cutter' 'fedora centos'"
     exit 1
 fi
 
 PACKAGE=$1
-DISTRIBUTIONS=$2
+PACKAGE_TITLE=$2
+DISTRIBUTIONS=$3
 
 run()
 {
@@ -45,12 +46,12 @@ for distribution in ${DISTRIBUTIONS}; do
     esac
     repo=${PACKAGE}.repo
     run cat <<EOR > $repo
-[cutter]
-name=Cutter for $distribution_label \$releasever - \$basearch
-baseurl=http://cutter.sourceforge.net/$distribution/\$releasever/\$basearch/
+[$PACKAGE]
+name=$PACKAGE_TITLE for $distribution_label \$releasever - \$basearch
+baseurl=http://$PACKAGE.sourceforge.net/$distribution/\$releasever/\$basearch/
 gpgcheck=1
 enabled=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-cutter
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-$PACKAGE
 metadata_expire=7d
 EOR
     run tar cfz $rpm_base_dir/SOURCES/${PACKAGE}-repository.tar.gz \

@@ -1,3 +1,7 @@
+2010-11-22  Kouhei Sutou  <kou@cozmixng.org>
+
+	* yum/build-repository-rpm.sh, yum/Makefile.am: parameterize.
+
 2010-11-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* cutter/cut-test-context.c, cutter/cut-test-context.h,
