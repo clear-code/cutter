@@ -77,7 +77,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
          grep '^coverage:' $ac_check_coverage_makefile > /dev/null; then
         : # do nothing
       else
-        cat | sed -e 's/^        /	/g' >>$ac_check_coverage_makefile <<EOS
+        sed -e 's/^        /	/g' <<EOS >>$ac_check_coverage_makefile
 .PHONY: coverage-clean coverage-report coverage coverage-force
 
 coverage-clean:
