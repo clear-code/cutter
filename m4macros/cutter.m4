@@ -74,7 +74,7 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   if test "x$ac_cv_enable_coverage" = "xyes"; then
     AC_CONFIG_COMMANDS([coverage], [
       if test -e $ac_check_coverage_makefile && \
-         grep '^coverage:' $ac_check_coverage_makefile > /dev/null; then
+         grep -q '^coverage:' $ac_check_coverage_makefile; then
         : # do nothing
       else
         sed -e 's/^        /	/g' <<EOS >>$ac_check_coverage_makefile
