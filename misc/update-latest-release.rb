@@ -24,8 +24,7 @@ files.each do |file|
     if content !~ /#{Regexp.escape(new_version)}/
       replaced_content = content.sub(/^(%changelog\n)/, <<-EOC)
 %changelog
-* #{date} Kouhei Sutou <kou@clear-code.com>
-- (#{new_version}-0)
+* #{date} Kouhei Sutou <kou@clear-code.com> - #{new_version}-0
 - new upstream release
 
       EOC

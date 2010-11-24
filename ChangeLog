@@ -1,3 +1,8 @@
+2010-11-24  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/update-latest-release.rb: append version number at the sign
+	line in RPM %changelog.
+
 2010-11-23  Kouhei Sutou  <kou@cozmixng.org>
 
 	* m4macros/cutter.m4: use -q instead of /dev/null.
