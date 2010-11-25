@@ -1,3 +1,7 @@
+2010-11-25  Kouhei Sutou  <kou@clear-code.com>
+
+	* misc/update-latest-release.rb: add missing the last ".".
+
 2010-11-24  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/update-latest-release.rb: append version number at the sign

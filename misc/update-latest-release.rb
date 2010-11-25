@@ -25,7 +25,7 @@ files.each do |file|
       replaced_content = content.sub(/^(%changelog\n)/, <<-EOC)
 %changelog
 * #{date} Kouhei Sutou <kou@clear-code.com> - #{new_version}-0
-- new upstream release
+- new upstream release.
 
       EOC
     end
