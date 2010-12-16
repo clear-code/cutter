@@ -66,11 +66,11 @@ EOT
 
     def apply_to_RefToElement(element, content)
       content = content.join.sub(/^function#/, "")
-      ".BR #{content.strip}\n"
+      "\n.BR #{content.strip}\n"
     end
 
     def apply_to_Reference_with_RDLabel(element, content)
-      ".BR #{content.join.sub(/\.rd(\.[a-z]{2})?\z/, '')}\n"
+      "\n.BR #{content.join.sub(/\.rd(\.[a-z]{2})?\z/, '')}\n"
     end
 
     def apply_to_Var(element, content)
