@@ -727,9 +727,9 @@ void
 test_compare_string (void)
 {
     cut_assert_equal_int(0, cut_utils_compare_string(NULL, NULL));
-    cut_assert_operator_int(-1, <=, cut_utils_compare_string(NULL, "a"));
-    cut_assert_operator_int(1, >=, cut_utils_compare_string("a", NULL));
-    cut_assert_operator_int(-1, <=, cut_utils_compare_string("a", "b"));
+    cut_assert_operator_int(-1, >=, cut_utils_compare_string(NULL, "a"));
+    cut_assert_operator_int(1, <=, cut_utils_compare_string("a", NULL));
+    cut_assert_operator_int(-1, >=, cut_utils_compare_string("a", "b"));
     cut_assert_operator_int(1, <=, cut_utils_compare_string("b", "a"));
 }
 
