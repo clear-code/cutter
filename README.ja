@@ -356,6 +356,8 @@ cut_set_attributes("bug", "123")を呼び、属性を設定しています。
   * Zed Shawさん: 不具合を報告してくれました。
   * Romuald Contyさん: ドキュメントの不具合を報告してくれま
     した。
-  * Romain Tartière:
+  * Romain Tartièreさん:
     * 不具合を報告してくれました。
     * 改良方法を提案してくれました。
+  * Ilya Baryginさん:
+    * テストの不具合を報告してくれました。

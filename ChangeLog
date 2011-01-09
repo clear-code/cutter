@@ -1,3 +1,10 @@
+2011-01-10  Kouhei Sutou  <kou@cozmixng.org>
+
+	* test/cutter/test-cut-utils.c (test_compare_string): don't assume
+	that strcmp() returns 1 and -1. It may return 1 or greater and -1
+	or less. #3153801
+	Reported by Ilya Barygin. Thanks!!!
+
 2010-11-25  Kouhei Sutou  <kou@clear-code.com>
 
 	* misc/update-latest-release.rb: add missing the last ".".
