@@ -1,5 +1,7 @@
 2011-01-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* yum/gpg-uid.sh: always use 1c837f31 GPG key.
+
 	* yum/cutter-repository.spec: don't install GPG key for RPM by hand.
 
 2011-01-10  Kouhei Sutou  <kou@cozmixng.org>
