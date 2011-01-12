@@ -1,3 +1,7 @@
+2011-01-12  Kouhei Sutou  <kou@cozmixng.org>
+
+	* yum/cutter-repository.spec: don't install GPG key for RPM by hand.
+
 2011-01-10  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-utils.c (test_compare_string): don't assume
