@@ -1,5 +1,8 @@
 2011-01-12  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/install-to-fedora.rd*, doc/install-to-centos.rd*: update
+	cutter-repository RPM path.
+
 	* yum/gpg-uid.sh: always use 1c837f31 GPG key.
 
 	* yum/cutter-repository.spec: don't install GPG key for RPM by hand.
