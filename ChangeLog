@@ -1,3 +1,11 @@
+2011-01-15  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-string-io-channel.[ch]
+	(gcut_string_io_channel_get_main_context)
+	(gcut_string_io_channel_set_main_context): make main context used
+	in string IO channel customizable.
+	* test/gcutter/test-gcut-string-io-channel.c: add tests for the above.
+
 2011-01-12  Kouhei Sutou  <kou@cozmixng.org>
 
 	* doc/install-to-fedora.rd*, doc/install-to-centos.rd*: update

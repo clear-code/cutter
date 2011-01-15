@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,18 +27,22 @@ void test_new_null(void);
 void test_read_write(void);
 void test_clear(void);
 void test_source(void);
-void test_buffer_limit_block(void);
+void data_buffer_limit_block(void);
+void test_buffer_limit_block(gpointer data);
 void test_buffer_limit_non_block(void);
-void test_limit(void);
+void data_limit_block(void);
+void test_limit_block(gpointer data);
 void test_limit_non_block(void);
 void test_read_fail(void);
 void test_pipe_mode(void);
 void test_pipe_mode_eof(void);
+void test_main_context(void);
 
 static GIOChannel *channel;
 static gchar *data;
 static guint watch_id;
 static guint timeout_id;
+static GMainContext *main_context;
 static GError *expected_error;
 static GError *actual_error;
 
@@ -49,6 +53,7 @@ cut_setup (void)
     data = NULL;
     watch_id = 0;
     timeout_id = 0;
+    main_context = NULL;
     expected_error = NULL;
     actual_error = NULL;
 }
@@ -61,12 +66,32 @@ cut_teardown (void)
         gcut_string_io_channel_set_limit(channel, 0);
         g_io_channel_unref(channel);
     }
+
     if (data)
         g_free(data);
-    if (watch_id > 0)
-        g_source_remove(watch_id);
-    if (timeout_id > 0)
-        g_source_remove(timeout_id);
+
+    if (watch_id > 0) {
+        GSource *source;
+        source = g_main_context_find_source_by_id(main_context, watch_id);
+        if (source) {
+            g_source_destroy(source);
+        } else {
+            g_source_remove(watch_id);
+        }
+    }
+
+    if (timeout_id > 0) {
+        GSource *source;
+        source = g_main_context_find_source_by_id(main_context, timeout_id);
+        if (source) {
+            g_source_destroy(source);
+        } else {
+            g_source_remove(timeout_id);
+        }
+    }
+
+    if (main_context)
+        g_main_context_unref(main_context);
 
     if (expected_error)
         g_error_free(expected_error);
@@ -231,16 +256,31 @@ cb_timeout_detect (gpointer user_data)
     gcut_string_io_channel_set_buffer_limit(channel, limit + 1);
     return FALSE;
 }
+
 void
-test_buffer_limit_block (void)
+data_buffer_limit_block (void)
+{
+    cut_add_data("default context",
+                 NULL, NULL,
+                 "new context",
+                 g_main_context_new(), NULL,
+                 NULL);
+}
+
+void
+test_buffer_limit_block (gpointer data)
 {
     gchar write_data[] = "data\n";
     gsize length;
     GIOStatus status;
+    GSource *timeout_source;
     gboolean timed_out = FALSE;
     GError *error = NULL;
 
+    main_context = data;
+
     channel = gcut_string_io_channel_new(NULL);
+    gcut_string_io_channel_set_main_context(channel, main_context);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -256,7 +296,11 @@ test_buffer_limit_block (void)
     g_io_channel_seek_position(channel, 0, G_SEEK_SET, &error);
     gcut_assert_error(error);
 
-    timeout_id = g_timeout_add(100, cb_timeout_detect, &timed_out);
+    timeout_source = g_timeout_source_new(100);
+    g_source_set_callback(timeout_source, cb_timeout_detect, &timed_out, NULL);
+    timeout_id = g_source_attach(timeout_source, main_context);
+    g_source_unref(timeout_source);
+
     gcut_string_io_channel_set_buffer_limit(channel, length * 2 -1);
     status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
                                       &length, &error);
@@ -321,16 +365,29 @@ cb_timeout (gpointer data)
 }
 
 void
-test_limit (void)
+data_limit_block (void)
+{
+    cut_add_data("default context",
+                 NULL, NULL,
+                 "new context",
+                 g_main_context_new(), NULL,
+                 NULL);
+}
+
+void
+test_limit_block (gpointer data)
 {
     gchar write_data[] = "data\n";
     gsize length;
     GIOStatus status;
-    guint timeout_id = 0;
+    GSource *timeout_source;
     gboolean timeout_emitted = FALSE;
     GError *error = NULL;
 
+    main_context = data;
+
     channel = gcut_string_io_channel_new(NULL);
+    gcut_string_io_channel_set_main_context(channel, main_context);
     g_io_channel_set_encoding(channel, NULL, &error);
     gcut_assert_error(error);
     g_io_channel_set_buffered(channel, FALSE);
@@ -343,10 +400,13 @@ test_limit (void)
     cut_assert_equal_uint(G_IO_STATUS_NORMAL, status);
     cut_assert_equal_size(sizeof(write_data), length);
 
-    timeout_id = g_timeout_add(10, cb_timeout, &timeout_emitted);
+    timeout_source = g_timeout_source_new(10);
+    g_source_set_callback(timeout_source, cb_timeout, &timeout_emitted, NULL);
+    timeout_id = g_source_attach(timeout_source, main_context);
+    g_source_unref(timeout_source);
+
     status = g_io_channel_write_chars(channel, write_data, sizeof(write_data),
                                       &length, &actual_error);
-    g_source_remove(timeout_id);
     cut_assert_true(timeout_emitted);
 }
 
@@ -484,6 +544,18 @@ test_pipe_mode_eof (void)
     cut_assert_equal_uint(G_IO_STATUS_EOF, status);
 }
 
+void
+test_main_context (void)
+{
+    channel = gcut_string_io_channel_new(NULL);
+
+    cut_assert_equal_pointer(NULL,
+                             gcut_string_io_channel_get_main_context(channel));
+    main_context = g_main_context_new();
+    gcut_string_io_channel_set_main_context(channel, main_context);
+    cut_assert_equal_pointer(main_context,
+                             gcut_string_io_channel_get_main_context(channel));
+}
 
 /*
 vi:nowrap:ai:expandtab:sw=4:ts=4

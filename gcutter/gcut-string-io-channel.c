@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -42,6 +42,7 @@ struct _GCutStringIOChannel
     GIOFlags flags;
     gboolean reach_eof;
     gboolean pipe_mode;
+    GMainContext *main_context;
 };
 
 struct _GCutStringSource
@@ -230,7 +231,7 @@ determine_write_size (GCutStringIOChannel *string_channel,
             }
         }
 
-        g_main_context_iteration(NULL, TRUE);
+        g_main_context_iteration(string_channel->main_context, TRUE);
     }
 
     return G_IO_STATUS_NORMAL;
@@ -260,7 +261,7 @@ gcut_string_io_channel_write (GIOChannel *channel, const gchar *buf, gsize count
                         "%s", g_strerror(ENOSPC));
             return G_IO_STATUS_ERROR;
         } else {
-            g_main_context_iteration(NULL, TRUE);
+            g_main_context_iteration(string_channel->main_context, TRUE);
         }
     }
 
@@ -353,6 +354,8 @@ gcut_string_io_channel_free (GIOChannel *channel)
 
     if (string_channel->string)
         g_string_free(string_channel->string, TRUE);
+    if (string_channel->main_context)
+        g_main_context_unref(string_channel->main_context);
     g_free(string_channel);
 }
 
@@ -410,6 +413,7 @@ gcut_string_io_channel_new (const gchar *initial)
     string_channel->flags = 0;
     string_channel->reach_eof = FALSE;
     string_channel->pipe_mode = FALSE;
+    string_channel->main_context = NULL;
 
     return channel;
 }
@@ -494,6 +498,30 @@ gcut_string_io_channel_set_pipe_mode (GIOChannel *channel, gboolean pipe_mode)
     GCutStringIOChannel *string_channel = (GCutStringIOChannel *)channel;
 
     string_channel->pipe_mode = pipe_mode;
+}
+
+GMainContext *
+gcut_string_io_channel_get_main_context (GIOChannel *channel)
+{
+    GCutStringIOChannel *string_channel = (GCutStringIOChannel *)channel;
+
+    return string_channel->main_context;
+}
+
+void
+gcut_string_io_channel_set_main_context (GIOChannel *channel,
+                                         GMainContext *main_context)
+{
+    GCutStringIOChannel *string_channel = (GCutStringIOChannel *)channel;
+
+    if (string_channel->main_context == main_context)
+        return;
+
+    if (string_channel->main_context)
+        g_main_context_unref(string_channel->main_context);
+    string_channel->main_context = main_context;
+    if (string_channel->main_context)
+        g_main_context_ref(string_channel->main_context);
 }
 
 /*
