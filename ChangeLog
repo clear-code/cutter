@@ -1,3 +1,8 @@
+2011-01-16  Kouhei Sutou  <kou@cozmixng.org>
+
+	* gcutter/gcut-assertions-helper.c (gcut_assert_error_helper): use
+	g_error_free() instead of g_clear_error().
+
 2011-01-15  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-string-io-channel.[ch]
