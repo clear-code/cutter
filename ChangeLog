@@ -1,3 +1,7 @@
+2011-01-19  Kouhei Sutou  <kou@cozmixng.org>
+
+	* misc/rd2refentry-lib.rb: add '[' and ',' to separator list.
+
 2011-01-16  Kouhei Sutou  <kou@cozmixng.org>
 
 	* gcutter/gcut-assertions-helper.c (gcut_assert_error_helper): use
