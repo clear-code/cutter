@@ -43,6 +43,15 @@ to use with patch(1) or you don't need color.
    All lines are shown by default. When unified diff format
    is used, 3 lines are shown by default.
 
+: --label=LABEL, -L=LABEL
+
+   Uses (({LABEL})) as a header label. The first
+   ((*--label*)) option value is used as ((*file1*))'s label
+   and the second ((*--label*)) option value is used as
+   ((*file2*))'s label.
+
+   Labels are the same as file names by default.
+
 == EXIT STATUS
 
 The exit status is 0 for success, non-0 otherwise.

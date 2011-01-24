@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -33,6 +33,7 @@
 static gboolean use_color = FALSE;
 static gboolean unified_diff = FALSE;
 static gint context_lines = -1;
+static gchar **labels = NULL;
 
 static gboolean
 print_version (const gchar *option_name, const gchar *value,
@@ -62,6 +63,8 @@ static const GOptionEntry option_entries[] =
      N_("Use unified diff format"), NULL},
     {"context-lines", '\0', 0, G_OPTION_ARG_INT, &context_lines,
      N_("Use LINES as diff context lines"), "LINES"},
+    {"label", 'L', 0, G_OPTION_ARG_STRING_ARRAY, &labels,
+     N_("Use LABEL as label"), "LABEL"},
     {NULL}
 };
 
@@ -75,11 +78,12 @@ pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
 }
 
 static void
-print_diff_header (CutDiffWriter *writer, const gchar *from, const gchar *to)
+print_diff_header (CutDiffWriter *writer,
+                   const gchar *from_label, const gchar *to_label)
 {
-    cut_diff_writer_mark_line(writer, "---", " ", from,
+    cut_diff_writer_mark_line(writer, "---", " ", from_label,
                               CUT_DIFF_WRITER_TAG_DELETED_MARK);
-    cut_diff_writer_mark_line(writer, "+++", " ", to,
+    cut_diff_writer_mark_line(writer, "+++", " ", to_label,
                               CUT_DIFF_WRITER_TAG_INSERTED_MARK);
 }
 
@@ -90,6 +94,8 @@ print_diff (const gchar *from, const gchar *to)
     gchar *from_contents, *to_contents;
     CutDiffer *differ;
     CutDiffWriter *writer;
+    const gchar *from_label = from;
+    const gchar *to_label = to;
 
     if (!g_file_get_contents(from, &from_contents, NULL, &error)) {
         g_print("%s\n", error->message);
@@ -104,18 +110,25 @@ print_diff (const gchar *from, const gchar *to)
         return FALSE;
     }
 
+    if (labels[0]) {
+        from_label = labels[0];
+        if (labels[1]) {
+            to_label = labels[1];
+        }
+    }
+
     writer = cut_console_diff_writer_new(use_color);
     if (unified_diff) {
         differ = cut_unified_differ_new(from_contents, to_contents);
-        cut_unified_differ_set_from_label(differ, from);
-        cut_unified_differ_set_to_label(differ, to);
+        cut_unified_differ_set_from_label(differ, from_label);
+        cut_unified_differ_set_to_label(differ, to_label);
     } else {
         if (use_color) {
             differ = cut_colorize_differ_new(from_contents, to_contents);
         } else {
             differ = cut_readable_differ_new(from_contents, to_contents);
         }
-        print_diff_header(writer, from, to);
+        print_diff_header(writer, from_label, to_label);
     }
     if (context_lines > 0)
         cut_differ_set_context_size(differ, context_lines);
