@@ -22,7 +22,7 @@
 
 #include <cutter.h>
 #include <gcutter/gcut-assertions.h>
-#include <gcutter/gcut-event-loop.h>
+#include <gcutter/gcut-glib-event-loop.h>
 
 /**
  * SECTION: gcutter

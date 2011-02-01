@@ -1,5 +1,9 @@
 2011-02-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-glib-event-loop.[ch],
+	gcutter/gcutter.h, gcutter/Makefile.am: add GLib implementation
+	of GCutEventLoop.
+
 	* gcutter/gcut-event-loop.[ch],
 	gcutter/gcutter.h, gcutter/Makefile.am: add abstracted event loop
 	GCutEventLoop.
