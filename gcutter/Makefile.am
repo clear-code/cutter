@@ -43,6 +43,7 @@ gcutter_public_headers =		\
 	gcut-data-helper.h		\
 	gcut-dynamic-data.h		\
 	gcut-process.h			\
+	gcut-event-loop.h		\
 	gcut-main.h
 
 noinst_headers = 	\
@@ -74,6 +75,7 @@ libgcutter_sources =			\
 	gcut-types.c			\
 	gcut-process.c			\
 	gcut-value-equal.c		\
+	gcut-event-loop.c		\
 	gcut-utils.c
 
 libgcutter_la_SOURCES =			\
