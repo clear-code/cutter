@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -34,6 +34,7 @@
 
 #include "gcut-io.h"
 #include "gcut-process.h"
+#include "gcut-glib-event-loop.h"
 #include "gcut-marshalers.h"
 #include "cut-utils.h"
 
@@ -81,6 +82,8 @@ struct _GCutProcessPrivate
     WatchOutputData *watch_error_data;
 
     guint forced_termination_wait_time;
+
+    GCutEventLoop *event_loop;
 };
 
 enum
@@ -284,27 +287,35 @@ gcut_process_init (GCutProcess *process)
     priv->watch_error_data = NULL;
 
     priv->forced_termination_wait_time = 10;
+
+    priv->event_loop = NULL;
 }
 
 static void
 remove_child_watch_func (GCutProcessPrivate *priv)
 {
-    g_source_remove(priv->process_watch_id);
-    priv->process_watch_id = 0;
+    if (priv->process_watch_id > 0) {
+        gcut_event_loop_remove(priv->event_loop, priv->process_watch_id);
+        priv->process_watch_id = 0;
+    }
 }
 
 static void
 remove_output_watch_func (GCutProcessPrivate *priv)
 {
-    g_source_remove(priv->output_watch_id);
-    priv->output_watch_id = 0;
+    if (priv->output_watch_id > 0) {
+        gcut_event_loop_remove(priv->event_loop, priv->output_watch_id);
+        priv->output_watch_id = 0;
+    }
 }
 
 static void
 remove_error_watch_func (GCutProcessPrivate *priv)
 {
-    g_source_remove(priv->error_watch_id);
-    priv->error_watch_id = 0;
+    if (priv->error_watch_id > 0) {
+        gcut_event_loop_remove(priv->event_loop, priv->error_watch_id);
+        priv->error_watch_id = 0;
+    }
 }
 
 static gboolean
@@ -323,11 +334,8 @@ dispose_io_channel (GCutProcessPrivate *priv)
         priv->input = NULL;
     }
 
-    if (priv->output_watch_id > 0)
-        remove_output_watch_func(priv);
-
-    if (priv->error_watch_id > 0)
-        remove_error_watch_func(priv);
+    remove_output_watch_func(priv);
+    remove_error_watch_func(priv);
 
     if (priv->output) {
         g_io_channel_unref(priv->output);
@@ -404,8 +412,7 @@ dispose (GObject *object)
         }
     }
 
-    if (priv->process_watch_id)
-        remove_child_watch_func(priv);
+    remove_child_watch_func(priv);
 
     if (priv->pid) {
         gcut_process_close(GCUT_PROCESS(object));
@@ -423,6 +430,11 @@ dispose (GObject *object)
     dispose_streams(priv);
 #endif
     dispose_io_channel(priv);
+
+    if (priv->event_loop) {
+        g_object_unref(priv->event_loop);
+        priv->event_loop = NULL;
+    }
 
     G_OBJECT_CLASS(gcut_process_parent_class)->dispose(object);
 }
@@ -686,7 +698,7 @@ create_output_channel (gint fd)
 }
 
 static GIOChannel *
-create_input_channel (gint fd, guint *watch_id,
+create_input_channel (GCutEventLoop *loop, gint fd, guint *watch_id,
                       GIOFunc watch_func, gpointer user_data)
 {
     GIOChannel *channel;
@@ -697,10 +709,11 @@ create_input_channel (gint fd, guint *watch_id,
 
     g_io_channel_set_flags(channel, G_IO_FLAG_NONBLOCK, NULL);
 
-    *watch_id = g_io_add_watch(channel,
-                               G_IO_IN | G_IO_PRI |
-                               G_IO_ERR | G_IO_HUP | G_IO_NVAL,
-                               watch_func, user_data);
+    *watch_id = gcut_event_loop_watch_io(loop,
+                                         channel,
+                                         G_IO_IN | G_IO_PRI |
+                                         G_IO_ERR | G_IO_HUP | G_IO_NVAL,
+                                         watch_func, user_data);
 
     return channel;
 }
@@ -813,6 +826,7 @@ gcut_process_run (GCutProcess *process, GError **error)
     gboolean success;
     gint input_fd = 0, output_fd = 0, error_fd = 0;
     gchar **env;
+    GCutEventLoop *loop;
 
     priv = GCUT_PROCESS_GET_PRIVATE(process);
 
@@ -854,9 +868,11 @@ gcut_process_run (GCutProcess *process, GError **error)
     if (!success)
         return FALSE;
 
-    priv->process_watch_id = g_child_watch_add(priv->pid,
-                                               child_watch_func,
-                                               process);
+    loop = gcut_process_get_event_loop(process);
+    priv->process_watch_id = gcut_event_loop_watch_child(loop,
+                                                         priv->pid,
+                                                         child_watch_func,
+                                                         process);
 
     if (input_fd > 0)
         priv->input = create_output_channel(input_fd);
@@ -865,7 +881,8 @@ gcut_process_run (GCutProcess *process, GError **error)
         priv->watch_output_data = g_new(WatchOutputData, 1);
         priv->watch_output_data->process = process;
         priv->watch_output_data->signal = signals[OUTPUT_RECEIVED];
-        priv->output = create_input_channel(output_fd,
+        priv->output = create_input_channel(loop,
+                                            output_fd,
                                             &(priv->output_watch_id),
                                             watch_output,
                                             priv->watch_output_data);
@@ -874,7 +891,8 @@ gcut_process_run (GCutProcess *process, GError **error)
         priv->watch_error_data = g_new(WatchOutputData, 1);
         priv->watch_error_data->process = process;
         priv->watch_error_data->signal = signals[ERROR_RECEIVED];
-        priv->error = create_input_channel(error_fd,
+        priv->error = create_input_channel(loop,
+                                           error_fd,
                                            &(priv->error_watch_id),
                                            watch_output,
                                            priv->watch_error_data);
@@ -1121,6 +1139,39 @@ gcut_process_get_error_stream (GCutProcess *process)
     return priv->error_stream;
 }
 #endif
+
+GCutEventLoop *
+gcut_process_get_event_loop (GCutProcess *process)
+{
+    GCutProcessPrivate *priv;
+
+    g_return_val_if_fail(GCUT_IS_PROCESS(process), NULL);
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+
+    if (!priv->event_loop) {
+        priv->event_loop = gcut_glib_event_loop_new(NULL);
+    }
+
+    return priv->event_loop;
+}
+
+void
+gcut_process_set_event_loop (GCutProcess *process, GCutEventLoop *loop)
+{
+    GCutProcessPrivate *priv;
+
+    g_return_if_fail(GCUT_IS_PROCESS(process));
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+    if (priv->event_loop == loop)
+        return;
+
+    g_object_ref(loop);
+    if (priv->event_loop)
+        g_object_unref(priv->event_loop);
+    priv->event_loop = loop;
+}
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

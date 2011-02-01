@@ -1,5 +1,7 @@
 2011-02-01  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-process.[ch]: support GCutEventLoop.
+
 	* gcutter/gcut-glib-event-loop.[ch],
 	gcutter/gcutter.h, gcutter/Makefile.am: add GLib implementation
 	of GCutEventLoop.

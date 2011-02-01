@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,7 +22,7 @@
 
 #include <glib-object.h>
 #include <cutter/cut-features.h>
-#include <cutter/cut-test-result.h>
+#include <gcutter/gcut-event-loop.h>
 
 G_BEGIN_DECLS
 
@@ -97,6 +97,8 @@ G_BEGIN_DECLS
  *     cut_assert_equal_string("XXX\n", output_string->str);
  * }
  * ]|
+ *
+ * Since: 1.1.5
  */
 
 #define GCUT_TYPE_PROCESS            (gcut_process_get_type ())
@@ -525,6 +527,33 @@ guint         gcut_process_get_forced_termination_wait_time
 void          gcut_process_set_forced_termination_wait_time
                                      (GCutProcess      *process,
                                       guint         timeout);
+
+/**
+ * gcut_process_get_event_loop:
+ * @process: a #GCutProcess
+ *
+ * Gets a event loop using by the @process.
+ *
+ * Returns: a #GCutEventLoop.
+ *
+ * Since: 1.1.6
+ */
+GCutEventLoop *gcut_process_get_event_loop
+                                     (GCutProcess      *process);
+
+/**
+ * gcut_process_set_event_loop:
+ * @process: a #GCutProcess
+ * @loop: the event loop or %NULL
+ *
+ * Sets a event loop for the @process. If @loop is %NULL,
+ * the default GLib event loop will be used.
+ *
+ * Since: 1.1.6
+ */
+void          gcut_process_set_event_loop
+                                     (GCutProcess      *process,
+                                      GCutEventLoop    *loop);
 
 G_END_DECLS
 
