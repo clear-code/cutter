@@ -961,6 +961,7 @@ gint
 gcut_process_wait (GCutProcess *process, guint timeout, GError **error)
 {
     GCutProcessPrivate *priv;
+    GCutEventLoop *loop;
     gboolean is_timeout = FALSE;
     guint timeout_id;
 
@@ -994,10 +995,14 @@ gcut_process_wait (GCutProcess *process, guint timeout, GError **error)
         return -1;
     }
 
-    timeout_id = g_timeout_add(timeout, cb_timeout_wait, &is_timeout);
+    loop = gcut_process_get_event_loop(process);
+    timeout_id = gcut_event_loop_add_timeout(loop,
+                                             timeout,
+                                             cb_timeout_wait,
+                                             &is_timeout);
     while (!is_timeout && priv->pid > 0)
         g_main_context_iteration(NULL, TRUE);
-    g_source_remove(timeout_id);
+    gcut_event_loop_remove(loop, timeout_id);
 
     if (is_timeout) {
         gchar *command;
