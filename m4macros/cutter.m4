@@ -115,9 +115,6 @@ AC_DEFUN([AC_CHECK_CUTTER],
                              [Use Cutter (default: auto)]),
               [ac_cv_with_cutter=$withval],
               [ac_cv_with_cutter=auto])
-  AC_CACHE_CHECK([whether to use Cutter],
-                 [ac_cv_with_cutter],
-                 [ac_cv_with_cutter=auto])
   AC_CACHE_VAL([ac_cv_use_cutter],
                [ac_cv_use_cutter=$ac_cv_with_cutter
                 if test "$ac_cv_use_cutter" != "no"; then
