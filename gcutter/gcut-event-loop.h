@@ -128,7 +128,7 @@ gboolean             gcut_event_loop_iterate           (GCutEventLoop   *loop,
                                                         gboolean         may_block);
 
 /**
- * gcut_event_loop_stop:
+ * gcut_event_loop_quit:
  * @loop: a #GCutEventLoop.
  *
  * Stops the @loop from running.

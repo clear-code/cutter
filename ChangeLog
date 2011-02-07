@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-event-loop.h: fix a typo.
+
 	* doc/reference/ja.po: resolve fuzzy items.
 
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
