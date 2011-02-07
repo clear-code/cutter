@@ -17,6 +17,11 @@ a:visited
   color: #5c6e00;
 }
 
+img.eye-catch
+{
+  float: right;
+}
+
 div.header
 {
   position: relative;
