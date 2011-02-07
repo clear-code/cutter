@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-test-utils.h: fix markup.
+
 	* gcutter/gcut-event-loop.h: unify documents.
 
 	* doc/reference/cutter-docs.sgml: add GCutGLibEventLoop.

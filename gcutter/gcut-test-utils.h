@@ -122,9 +122,9 @@ G_BEGIN_DECLS
 
 /**
  * gcut_take_new_string:
- * @string: the string. It can be NULL.
+ * @string: the string. It can be %NULL.
  *
- * Create a #GString object from passed string.
+ * Creates a #GString object from passed string.
  *
  * Returns: a #GString owned by Cutter. Don't
  * g_string_free() it.
