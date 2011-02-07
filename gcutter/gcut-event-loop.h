@@ -167,7 +167,7 @@ guint                gcut_event_loop_watch_io          (GCutEventLoop   *loop,
  * @data: data to pass to @function
  *
  * Adds the @function to be called when the child indicated
- * by @pid exists into @loop with the default priority.
+ * by @pid exits into @loop with the default priority.
  *
  * Returns: the event ID.
  *
@@ -188,7 +188,7 @@ guint                gcut_event_loop_watch_child       (GCutEventLoop   *loop,
  * @notify: function to call when the event is removed, or %NULL
  *
  * Adds the @function to be called when the child indicated
- * by @pid exists into @loop with the @priority.
+ * by @pid exits into @loop with the @priority.
  *
  * Returns: the event ID.
  *
