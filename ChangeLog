@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* NEWS*: add 1.1.6 entry.
+
 	* module/ui/cut-console-ui.c, module/ui/cut-console-ui-factory.c:
 	add --notify option to notify test result by notify-send.
 	* data/icons/kinotan/: add kinotan icons.
@@ -176,7 +178,7 @@
 
 2010-09-10  Kouhei Sutou  <kou@clear-code.com>
 
-	* doc/install-to-debian.rd*: add an apt-lien for squeeze.
+	* doc/install-to-debian.rd*: add an apt-line for squeeze.
 	Suggested by Romuald Conty. Thanks!!!
 
 	* apt/: support squeeze.

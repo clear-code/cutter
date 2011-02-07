@@ -2,6 +2,45 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-1-6] 1.1.6: 2011-02-09
+
+=== Cutter
+
+==== 改良
+
+  * ユーティリティの名前変更:
+    * ((<cut_build_fixture_data_path()>)) -> ((<cut_build_fixture_path()>))
+  * ユーティリティの追加:
+    * ((<gcut_take_string()>))
+    * ((<cut_get_fixture_data()>))
+    * ((<gcut_get_fixture_data()>))
+    * ((<GCutEventLoop>))
+    * ((<GCutGLibEventLoop>))
+  * Debian GNU/Linux squeeze対応。
+    [Romuald Contyさんが提案]
+  * cutter.m4: --config-cache対応。
+  * cutter.m4: --enable-coverageが更新するMakefileとして
+    Makefile以外の名前に対応。（AC_CHECK_COVERAGE()の引数に
+    Makefileのファイル名を指定）
+  * notify-send対応。
+
+==== 修正
+
+  * 間違ったテストを修正。
+    [Ilya Baryginさんが提案]
+
+=== cut-diff
+
+==== 改良
+
+  * ヘッダーのラベルを指定する((<--labelオプション
+    |cut-diff#--label>))を追加。
+
+=== 感謝
+
+  * Romuald Contyさん
+  * Ilya Baryginさん
+
 == [release-1-1-5] 1.1.5: 2010-09-06
 
 === Cutter

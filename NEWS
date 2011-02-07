@@ -2,6 +2,45 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-1-6] 1.1.6: 2011-02-09
+
+=== Cutter
+
+==== Improvment
+
+  * Renamed an utility:
+    * ((<cut_build_fixture_data_path()>)) -> ((<cut_build_fixture_path()>))
+  * Added utitlities:
+    * ((<gcut_take_string()>))
+    * ((<cut_get_fixture_data()>))
+    * ((<gcut_get_fixture_data()>))
+    * ((<GCutEventLoop>))
+    * ((<GCutGLibEventLoop>))
+  * Supported Debian GNU/Linux squeeze.
+    [Suggested by Romuald Conty]
+  * cutter.m4: supported --config-cache.
+  * cutter.m4: supported custom Makefile for
+    --enable-coverage. (specify custome Makefile name to
+    AC_CHECK_COVERAGE() argument)
+  * Supported notify-send.
+
+==== Fixes
+
+  * Fixed a wrong test.
+    [Suggested by Ilya Barygin]
+
+=== cut-diff
+
+==== Improvements
+
+  * Added ((<--label option|cut-diff#--label>)) that specify
+    labels in header.
+
+=== Thanks
+
+  * Romuald Conty
+  * Ilya Barygin
+
 == [release-1-1-5] 1.1.5: 2010-09-06
 
 === Cutter
