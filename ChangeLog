@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-overrides.txt: add new symbols.
+
 	* doc/reference/cutter-docs.sgml: remove duplicated entry.
 
 	* gcutter/gcut-glib-event-loop.h: fix a typo.
