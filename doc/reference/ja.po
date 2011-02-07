@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.6\n"
 "POT-Creation-Date: 2011-02-07 11:49+0900\n"
-"PO-Revision-Date: 2011-02-07 12:39+0900\n"
+"PO-Revision-Date: 2011-02-07 20:41+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -4864,36 +4864,26 @@ msgid "#define             gcut_get_fixture_data(...)"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:530(para)
-#, fuzzy
 msgid ""
 "Reads the fixture data at \"<parameter>path</parameter>/...\" and returns it "
 "as a <link linkend=\"GString\"><type>GString</type></link> that is owned by "
 "Cutter. The description of <link linkend=\"cut-build-fixture-path"
 "\"><function>cut_build_fixture_path()</function></link> shows how the "
 "fixture data path is determined."
-msgstr ""
-"\"<parameter>path</parameter>/...\"にあるフィクスチャデータを読み込み、文字列"
-"として返します。文字列はCutterが所持します。<link linkend=\"cut-build-"
-"fixture-data-path\"><function>cut_build_fixture_data_path()</function></link>"
-"の説明にはフィクスチャデータのパスがどのように決定されるかが書かれています。"
+msgstr "<parameter>path</parameter>/...\"にあるフィクスチャデータを読み込み、<link linkend=\"GString\"><type>GString</type></link>として返します。GStringはCutterが所持します。<link linkend=\"cut-build-fixture-data-path\"><function>cut_build_fixture_data_path()</function></link>の説明にはフィクスチャデータのパスがどのように決定されるかが書かれています。"
 
 #: xml/gcut-test-utils.xml:537(simpara) xml/cut-test-utils.xml:339(simpara)
 #: xml/cut-test-utils.xml:384(simpara)
-#, fuzzy
 msgid ""
 "remaining elements in path. <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>-terminate is required."
-msgstr ""
-"パスの残りの要素。1.0.7から<link linkend=\"NULL:CAPS\"><literal>NULL</"
-"literal></link>終端が必須となりました。"
+msgstr "パスの残りの要素。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端が必須です。"
 
 #: xml/gcut-test-utils.xml:540(simpara)
-#, fuzzy
 msgid ""
 "a content of the fixture data as <link linkend=\"GString\"><type>GString</"
 "type></link> owend by Cutter. Don't free it."
-msgstr ""
-"詳細情報を保存する<link linkend=\"GString\"><type>GString</type></link>。"
+msgstr "フィクスチャデータの内容が入った<link linkend=\"GString\"><type>GString</type></link>。GStringはCutterが所持します。開放しないでください。"
 
 #: xml/gcut-string.xml:7(refentrytitle) xml/gcut-string.xml:14(refname)
 #: xml/api-index-full.xml:562(link) xml/api-index-full.xml:563(link)
@@ -6933,14 +6923,13 @@ msgid "gcut_process_get_event_loop ()"
 msgstr ""
 
 #: xml/gcut-process.xml:714(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "<link linkend=\"GCutEventLoop\"><returnvalue>GCutEventLoop</returnvalue></link> *     gcut_process_get_event_loop         (<parameter><link linkend=\"GCutProcess\"><type>GCutProcess</type></link> *process</parameter>);"
-msgstr "<link linkend=\"CutSubProcessGroup\"><type>CutSubProcessGroup</type></link>はいくつかの<link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>をまとめて実行するための便利オブジェクトです。"
+msgstr ""
 
 #: xml/gcut-process.xml:715(para)
-#, fuzzy
 msgid "Gets a event loop using by the <parameter>process</parameter>."
-msgstr "<parameter>sub_process</parameter>を実行していた間の時間を取得します。"
+msgstr "<parameter>process</parameter>が使っているイベントループを取得します。"
 
 #: xml/gcut-process.xml:721(simpara) xml/gcut-event-loop.xml:164(simpara)
 #: xml/gcut-event-loop.xml:179(simpara)
@@ -6959,16 +6948,11 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-process.xml:730(para)
-#, fuzzy
 msgid ""
 "Sets a event loop for the <parameter>process</parameter>. If "
 "<parameter>loop</parameter> is <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>, the default GLib event loop will be used."
-msgstr ""
-"<parameter>expected</parameter>か<parameter>actual</parameter>のどちらかが"
-"<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>のとき、または、"
-"strcmp(<parameter>expected</parameter>, <parameter>actual</parameter>) != 0の"
-"ときパスします。"
+msgstr "<parameter>process</parameter>のイベントループを設定します。<parameter>loop</parameter>が<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>なら、デフォルトのGLibイベントループが使われます。"
 
 #: xml/gcut-process.xml:737(term) xml/gcut-event-loop.xml:163(term)
 #: xml/gcut-event-loop.xml:178(term) xml/gcut-event-loop.xml:194(term)
@@ -6980,12 +6964,9 @@ msgid "<parameter>loop</parameter> :"
 msgstr ""
 
 #: xml/gcut-process.xml:738(simpara)
-#, fuzzy
 msgid ""
 "the event loop or <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
-msgstr ""
-"エラーを返すアドレスまたは<link linkend=\"NULL:CAPS\"><literal>NULL</"
-"literal></link>。"
+msgstr "イベントループまたは<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/gcut-process.xml:745(title) xml/gcut-egg.xml:631(title)
 msgid "The <literal>\"command\"</literal> property"
@@ -7002,9 +6983,8 @@ msgid "  \"command\"                  <link linkend=\"gpointer\"><type>gpointer<
 msgstr ""
 
 #: xml/gcut-process.xml:748(para)
-#, fuzzy
 msgid "The command to be ran by the process."
-msgstr "実行する外部コマンド。"
+msgstr "このプロセスが実行する外部コマンド。"
 
 #: xml/gcut-process.xml:751(title) xml/gcut-egg.xml:637(title)
 msgid "Signal Details"
@@ -9311,14 +9291,11 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-glib-event-loop.xml:30(para)
-#, fuzzy
 msgid ""
 "<link linkend=\"GCutGLibEventLoop\"><type>GCutGLibEventLoop</type></link> is "
 "an <link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> "
 "implementation for GLib's main context and loop."
-msgstr ""
-"詳細を示す<link linkend=\"guint\"><type>guint</type></link>の<link linkend="
-"\"GList\"><type>GList</type></link>です。"
+msgstr "<link linkend=\"GCutGLibEventLoop\"><type>GCutGLibEventLoop</type></link>はGLibのGMainContextとGMainLoop用の<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>実装です。"
 
 #: xml/gcut-glib-event-loop.xml:40(programlisting)
 #, no-wrap
@@ -9810,9 +9787,8 @@ msgstr ""
 
 #: xml/gcut-event-loop.xml:274(simpara) xml/gcut-event-loop.xml:336(simpara)
 #: xml/gcut-event-loop.xml:393(simpara)
-#, fuzzy
 msgid "the priority of the event."
-msgstr "テストするパス。"
+msgstr "このイベントの優先度。"
 
 #: xml/gcut-event-loop.xml:285(term) xml/gcut-event-loop.xml:347(term)
 #: xml/gcut-event-loop.xml:401(term)
@@ -9821,13 +9797,10 @@ msgstr ""
 
 #: xml/gcut-event-loop.xml:286(simpara) xml/gcut-event-loop.xml:348(simpara)
 #: xml/gcut-event-loop.xml:402(simpara)
-#, fuzzy
 msgid ""
 "function to call when the event is removed, or <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>"
-msgstr ""
-"エラーを返すアドレスまたは<link linkend=\"NULL:CAPS\"><literal>NULL</"
-"literal></link>。"
+msgstr "このイベントが削除された時に呼ばれる関数または<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/gcut-event-loop.xml:293(title)
 msgid "gcut_event_loop_add_timeout ()"
@@ -9853,10 +9826,9 @@ msgid "<parameter>interval_in_seconds</parameter> :"
 msgstr ""
 
 #: xml/gcut-event-loop.xml:307(simpara) xml/gcut-event-loop.xml:339(simpara)
-#, fuzzy
 msgid ""
 "the time between calls to the <parameter>function</parameter>, in seconds."
-msgstr "<parameter>inspect_function</parameter>に渡されるデータ。"
+msgstr "<parameter>function</parameter>を呼び出す感覚。単位は秒。"
 
 #: xml/gcut-event-loop.xml:320(title)
 msgid "gcut_event_loop_add_timeout_full ()"
@@ -9874,13 +9846,10 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-event-loop.xml:328(para)
-#, fuzzy
 msgid ""
 "Adds the <parameter>function</parameter> to be called at regular intervals, "
 "with the <parameter>priority</parameter>."
-msgstr ""
-"<parameter>client</parameter>のベースURIを<parameter>uri</parameter>に設定し"
-"ます。"
+msgstr "定期的に呼び出される関数を優先度<parameter>priority</parameter>で追加します。"
 
 #: xml/gcut-event-loop.xml:355(title)
 msgid "gcut_event_loop_add_idle ()"
@@ -9932,9 +9901,8 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-event-loop.xml:413(para)
-#, fuzzy
 msgid "Removes the event with the given ID, <parameter>tag</parameter>."
-msgstr "変換先のコードセット名。"
+msgstr "IDが<parameter>tag</parameter>のイベントを削除します。"
 
 #: xml/gcut-event-loop.xml:419(term)
 msgid "<parameter>tag</parameter> :"
@@ -9945,13 +9913,10 @@ msgid "the ID of the source to remove"
 msgstr ""
 
 #: xml/gcut-event-loop.xml:422(simpara)
-#, fuzzy
 msgid ""
 "<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> if the source was "
 "found and removed."
-msgstr ""
-"マルチスレッドモードで実行するなら<link linkend=\"CUT-TRUE:CAPS"
-"\"><literal>CUT_TRUE</literal></link>。"
+msgstr "ソースが見つかって削除されたら<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>。"
 
 #: xml/gcut-error.xml:7(refentrytitle) xml/gcut-error.xml:14(refname)
 #: xml/api-index-full.xml:389(link) xml/api-index-full.xml:391(link)
@@ -16875,17 +16840,12 @@ msgid ""
 msgstr ""
 
 #: xml/cut-test-utils.xml:309(para)
-#, fuzzy
 msgid ""
 "<literal>cut_build_fixture_data_path</literal> has been deprecated since "
 "version 1.1.6 and should not be used in newly-written code. Use <link "
 "linkend=\"cut-build-fixture-path\"><function>cut_build_fixture_path()</"
 "function></link> instead."
-msgstr ""
-"<literal>cut_assert_path_exist</literal>はバージョン1.1.5から非推奨になりまし"
-"た。新しく書くコードでは使わないでください。代わりに<link linkend=\"cut-"
-"assert-exist-path\"><function>cut_assert_exist_path()</function></link>を使っ"
-"てください。"
+msgstr "<literal>cut_build_fixture_data_path</literal>はバージョン1.1.6からヒス衣装になりました。新しく書くコードでは使わないでください。代わりに<link linkend=\"cut-build-fixture-path\"><function>cut_build_fixture_path()</function></link>を使ってください。"
 
 #: xml/cut-test-utils.xml:310(para) xml/cut-test-utils.xml:332(para)
 msgid ""
@@ -16921,9 +16881,8 @@ msgid "#define             cut_build_fixture_path(...)"
 msgstr ""
 
 #: xml/cut-test-utils.xml:342(simpara)
-#, fuzzy
 msgid "a path to the fixture data. It is owned by Cutter. Don't free it."
-msgstr "Cutterが所有する整形された文字列。解放しないで下さい。"
+msgstr "Cutterが所有するフィクスチャデータのパス。解放しないで下さい。"
 
 #: xml/cut-test-utils.xml:348(title)
 msgid "cut_get_fixture_data_string ()"
@@ -16937,7 +16896,6 @@ msgid ""
 msgstr ""
 
 #: xml/cut-test-utils.xml:352(para) xml/cut-test-utils.xml:374(para)
-#, fuzzy
 msgid ""
 "Reads the fixture data at \"<parameter>path</parameter>/...\" and returns it "
 "as a string that is owned by Cutter. The description of <link linkend=\"cut-"
@@ -16950,9 +16908,8 @@ msgstr ""
 "の説明にはフィクスチャデータのパスがどのように決定されるかが書かれています。"
 
 #: xml/cut-test-utils.xml:365(simpara) xml/cut-test-utils.xml:387(simpara)
-#, fuzzy
 msgid "a content of the fixture data as string owend by Cutter. Don't free it."
-msgstr "フィクスチャデータの内容。開放しないください。"
+msgstr "フィクスチャデータの内容。Cutterが所有しているので開放しないください。"
 
 #: xml/cut-test-utils.xml:371(title)
 msgid "cut_get_fixture_data()"
@@ -16964,13 +16921,10 @@ msgid "#define             cut_get_fixture_data(size, ...)"
 msgstr ""
 
 #: xml/cut-test-utils.xml:381(simpara)
-#, fuzzy
 msgid ""
 "return location for a size of the fixture data, or <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>."
-msgstr ""
-"エラーを返すアドレスまたは<link linkend=\"NULL:CAPS\"><literal>NULL</"
-"literal></link>。"
+msgstr "フィクスチャデータのサイズを返すアドレスまたは<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/cut-test-utils.xml:393(title)
 msgid "cut_remove_path ()"
