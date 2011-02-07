@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-glib-event-loop.h: fix a typo.
+
 	* doc/reference/ja.po: update.
 
 	* gcutter/gcut-event-loop.h: fix a typo.

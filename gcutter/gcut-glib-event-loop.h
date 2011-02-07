@@ -59,7 +59,7 @@ struct _GCutGLibEventLoopClass
 GType                gcut_glib_event_loop_get_type     (void) G_GNUC_CONST;
 
 /**
- * gcut_glib_event_loop_run:
+ * gcut_glib_event_loop_new:
  * @context: a #GMainContext or %NULL
  *
  * Creates a new #GCutEeventLoop for @context. If @context
