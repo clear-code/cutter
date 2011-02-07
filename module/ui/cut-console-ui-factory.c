@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -50,6 +50,7 @@ struct _CutConsoleUIFactory
 
     gboolean             use_color;
     CutVerboseLevel      verbose_level;
+    gboolean             notify;
 };
 
 struct _CutConsoleUIFactoryClass
@@ -61,7 +62,8 @@ enum
 {
     PROP_0,
     PROP_USE_COLOR,
-    PROP_VERBOSE_LEVEL
+    PROP_VERBOSE_LEVEL,
+    PROP_NOTIFY
 };
 
 static GType cut_type_console_ui_factory = 0;
@@ -114,6 +116,13 @@ class_init (CutModuleFactoryClass *klass)
                              CUT_VERBOSE_LEVEL_NORMAL,
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
+
+    spec = g_param_spec_boolean("notify",
+                                "Notify",
+                                "Whether notify the test result",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_NOTIFY, spec);
 }
 
 static void
@@ -121,6 +130,7 @@ init (CutConsoleUIFactory *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
+    console->notify = FALSE;
 }
 
 static void
@@ -186,13 +196,16 @@ set_property (GObject      *object,
     CutConsoleUIFactory *console = CUT_CONSOLE_UI_FACTORY(object);
 
     switch (prop_id) {
-      case PROP_USE_COLOR:
+    case PROP_USE_COLOR:
         console->use_color = g_value_get_boolean(value);
         break;
-      case PROP_VERBOSE_LEVEL:
+    case PROP_VERBOSE_LEVEL:
         console->verbose_level = g_value_get_enum(value);
         break;
-      default:
+    case PROP_NOTIFY:
+        console->notify = g_value_get_boolean(value);
+        break;
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -207,13 +220,16 @@ get_property (GObject    *object,
     CutConsoleUIFactory *console = CUT_CONSOLE_UI_FACTORY(object);
 
     switch (prop_id) {
-      case PROP_USE_COLOR:
+    case PROP_USE_COLOR:
         g_value_set_boolean(value, console->use_color);
         break;
-      case PROP_VERBOSE_LEVEL:
+    case PROP_VERBOSE_LEVEL:
         g_value_set_enum(value, console->verbose_level);
         break;
-      default:
+    case PROP_NOTIFY:
+        g_value_set_boolean(value, console->notify);
+        break;
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -279,12 +295,59 @@ parse_color_arg (const gchar *option_name, const gchar *value,
 }
 
 static gboolean
+program_exist (const gchar *program)
+{
+    gchar *path;
+    gboolean found = FALSE;
+
+    path = g_find_program_in_path(program);
+    if (path) {
+        found = TRUE;
+        g_free(path);
+    }
+    return found;
+}
+
+static gboolean
+notify_command_exist (void)
+{
+    return program_exist(NOTIFY_COMMAND);
+}
+
+static gboolean
+parse_notify_arg (const gchar *option_name, const gchar *value,
+                  gpointer data, GError **error)
+{
+    CutConsoleUIFactory *console = data;
+
+    if (value == NULL ||
+        g_utf8_collate(value, "yes") == 0 ||
+        g_utf8_collate(value, "true") == 0) {
+        console->notify = TRUE;
+    } else if (g_utf8_collate(value, "no") == 0 ||
+               g_utf8_collate(value, "false") == 0) {
+        console->notify = FALSE;
+    } else if (g_utf8_collate(value, "auto") == 0) {
+        console->notify = notify_command_exist();
+    } else {
+        g_set_error(error,
+                    G_OPTION_ERROR,
+                    G_OPTION_ERROR_BAD_VALUE,
+                    _("Invalid notify value: %s"), value);
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+static gboolean
 pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
            GError **error)
 {
     CutConsoleUIFactory *console = data;
 
     console->use_color = cut_console_guess_color_usability();
+    console->notify = notify_command_exist();
 
     return TRUE;
 }
@@ -300,6 +363,8 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
         {"color", 'c', G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
          parse_color_arg, N_("Output log with colors"),
          "[yes|true|no|false|auto]"},
+        {"notify", 0, G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
+         parse_notify_arg, N_("Notify test result"), "[yes|true|no|false|auto]"},
         {NULL}
     };
 
@@ -324,6 +389,7 @@ create (CutModuleFactory *factory)
     return G_OBJECT(cut_ui_new("console",
                                "use-color", console->use_color,
                                "verbose-level", console->verbose_level,
+                               "notify", console->notify,
                                "progress-row-max", guess_term_width(),
                                NULL));
 }

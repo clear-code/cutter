@@ -245,6 +245,7 @@ test_help_all (void)
         "Console UI Options" LINE_FEED_CODE
         "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level" LINE_FEED_CODE
         "  -c, --color=[yes|true|no|false|auto]            Output log with colors" LINE_FEED_CODE
+        "  --notify=[yes|true|no|false|auto]               Notify test result" LINE_FEED_CODE
         "" LINE_FEED_CODE
 #ifdef HAVE_GTK
         "GTK+ Options" LINE_FEED_CODE
@@ -344,7 +345,7 @@ test_get_test_directory (void)
                               "fixtures",
                               "test-directory",
                               NULL);
-    cut_assert(run_cutter(test_dir));
+    cut_assert(run_cutter(cut_take_printf("--notify=no %s", test_dir)));
     cut_assert_exit_success();
 }
 

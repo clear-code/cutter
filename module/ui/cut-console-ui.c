@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -62,6 +62,7 @@ struct _CutConsoleUI
     gchar        *name;
     gboolean      use_color;
     CutVerboseLevel verbose_level;
+    gboolean      notify;
     GList        *errors;
     gint          progress_row;
     gint          progress_row_max;
@@ -77,6 +78,7 @@ enum
     PROP_0,
     PROP_USE_COLOR,
     PROP_VERBOSE_LEVEL,
+    PROP_NOTIFY,
     PROP_PROGRESS_ROW_MAX
 };
 
@@ -129,6 +131,13 @@ class_init (CutConsoleUIClass *klass)
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
 
+    spec = g_param_spec_boolean("notify",
+                                "Notify",
+                                "Whether notify test result",
+                                FALSE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_NOTIFY, spec);
+
     spec = g_param_spec_int("progress-row-max",
                             "Progress Row Max",
                             "The max number of progress row",
@@ -142,6 +151,7 @@ init (CutConsoleUI *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
+    console->notify = FALSE;
     console->errors = NULL;
     console->progress_row = 0;
     console->progress_row_max = -1;
@@ -256,16 +266,19 @@ set_property (GObject      *object,
     CutConsoleUI *console = CUT_CONSOLE_UI(object);
 
     switch (prop_id) {
-      case PROP_USE_COLOR:
+    case PROP_USE_COLOR:
         console->use_color = g_value_get_boolean(value);
         break;
-      case PROP_VERBOSE_LEVEL:
+    case PROP_VERBOSE_LEVEL:
         console->verbose_level = g_value_get_enum(value);
         break;
-      case PROP_PROGRESS_ROW_MAX:
+    case PROP_NOTIFY:
+        console->notify = g_value_get_boolean(value);
+        break;
+    case PROP_PROGRESS_ROW_MAX:
         console->progress_row_max = g_value_get_int(value);
         break;
-      default:
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -280,16 +293,19 @@ get_property (GObject    *object,
     CutConsoleUI *console = CUT_CONSOLE_UI(object);
 
     switch (prop_id) {
-      case PROP_USE_COLOR:
+    case PROP_USE_COLOR:
         g_value_set_boolean(value, console->use_color);
         break;
-      case PROP_VERBOSE_LEVEL:
+    case PROP_VERBOSE_LEVEL:
         g_value_set_enum(value, console->verbose_level);
         break;
-      case PROP_PROGRESS_ROW_MAX:
+    case PROP_NOTIFY:
+        g_value_set_boolean(value, console->notify);
+        break;
+    case PROP_PROGRESS_ROW_MAX:
         g_value_set_int(value, console->progress_row_max);
         break;
-      default:
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -297,6 +313,21 @@ get_property (GObject    *object,
 
 static const gchar *
 status_to_name(CutTestResultStatus status)
+{
+    GEnumClass *enum_class;
+    GEnumValue *value;
+    const gchar *name = "unknown";
+
+    enum_class = g_type_class_ref(CUT_TYPE_TEST_RESULT_STATUS);
+    value = g_enum_get_value(enum_class, status);
+    if (value)
+        name = value->value_nick;
+    g_type_class_unref(enum_class);
+    return name;
+}
+
+static const gchar *
+status_to_label(CutTestResultStatus status)
 {
     const gchar *name;
 
@@ -838,7 +869,7 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
             name = cut_test_result_get_test_suite_name(result);
 
         g_print("\n%d) ", i);
-        print_for_status(console, status, "%s", status_to_name(status));
+        print_for_status(console, status, "%s", status_to_label(status));
         g_print(": %s", name);
 
         test = cut_test_result_get_test(result);
@@ -862,13 +893,29 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
     }
 }
 
-static void
-print_summary (CutConsoleUI *console, CutRunContext *run_context)
+static gdouble
+compute_pass_percentage (CutRunContext *run_context)
+{
+    guint n_tests, n_successes;
+    gdouble pass_percentage;
+
+    n_tests = cut_run_context_get_n_tests(run_context);
+    n_successes = cut_run_context_get_n_successes(run_context);
+
+    if (n_tests == 0) {
+        pass_percentage = 0;
+    } else {
+        pass_percentage = 100.0 * ((gdouble)n_successes / (gdouble)n_tests);
+    }
+
+    return pass_percentage;
+}
+
+static gchar *
+format_summary (CutRunContext *run_context)
 {
     guint n_tests, n_assertions, n_successes, n_failures, n_errors;
     guint n_pendings, n_notifications, n_omissions;
-    gdouble pass_percentage;
-    const gchar *color;
 
     n_tests = cut_run_context_get_n_tests(run_context);
     n_assertions = cut_run_context_get_n_assertions(run_context);
@@ -879,22 +926,125 @@ print_summary (CutConsoleUI *console, CutRunContext *run_context)
     n_notifications = cut_run_context_get_n_notifications(run_context);
     n_omissions = cut_run_context_get_n_omissions(run_context);
 
+    return g_strdup_printf("%d test(s), %d assertion(s), %d failure(s), "
+                           "%d error(s), %d pending(s), %d omission(s), "
+                           "%d notification(s)",
+                           n_tests, n_assertions, n_failures, n_errors,
+                           n_pendings, n_omissions, n_notifications);
+}
+
+static void
+print_summary (CutConsoleUI *console, CutRunContext *run_context)
+{
+    const gchar *color;
+    gchar *summary;
+
     color = status_to_color(cut_run_context_get_status(run_context));
-    print_with_color(console, color,
-                     "%d test(s), %d assertion(s), %d failure(s), "
-                     "%d error(s), %d pending(s), %d omission(s), "
-                     "%d notification(s)",
-                     n_tests, n_assertions, n_failures, n_errors,
-                     n_pendings, n_omissions, n_notifications);
+    summary = format_summary(run_context);
+    print_with_color(console, color, "%s", summary);
+    g_free(summary);
     g_print("\n");
 
-    if (n_tests == 0) {
-        pass_percentage = 0;
-    } else {
-        pass_percentage = 100.0 * ((gdouble)n_successes / (gdouble)n_tests);
-    }
-    print_with_color(console, color, "%g%% passed", pass_percentage);
+    print_with_color(console, color,
+                     "%g%% passed", compute_pass_percentage(run_context));
     g_print("\n");
+}
+
+static gchar *
+search_icon_path (CutTestResultStatus status, gboolean success)
+{
+    GList *candiate_icon_names = NULL, *node;
+    const gchar *icon_theme = "kinotan";
+    gchar *icon_path = NULL;
+
+    candiate_icon_names = g_list_append(candiate_icon_names,
+                                        (gchar *)status_to_name(status));
+    if (success) {
+        candiate_icon_names = g_list_append(candiate_icon_names, "pass");
+    } else {
+        switch (status) {
+        case CUT_TEST_RESULT_FAILURE:
+            candiate_icon_names = g_list_append(candiate_icon_names, "error");
+            break;
+        case CUT_TEST_RESULT_ERROR:
+            candiate_icon_names = g_list_append(candiate_icon_names, "failure");
+            break;
+        default:
+            break;
+        }
+    }
+    candiate_icon_names = g_list_append(candiate_icon_names, "default");
+
+    for (node = candiate_icon_names; node; node = g_list_next(node)) {
+        const gchar *icon_name = node->data;
+        gchar *icon_base_path;
+
+        icon_base_path = g_strdup_printf("%s.png", icon_name);
+        icon_path = g_build_filename(ICONS_DIR, icon_theme, icon_base_path,
+                                     NULL);
+        g_free(icon_base_path);
+        if (g_file_test(icon_path, G_FILE_TEST_IS_REGULAR)) {
+            break;
+        } else {
+            g_free(icon_path);
+            icon_path = NULL;
+        }
+    }
+
+    return icon_path;
+}
+
+static void
+notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
+{
+    GPtrArray *args;
+    GError *error = NULL;
+    CutTestResultStatus status;
+    gchar *icon_path;
+
+    status = cut_run_context_get_status(run_context);
+    icon_path = search_icon_path(status, success);
+
+    args = g_ptr_array_new_with_free_func(g_free);
+    g_ptr_array_add(args, g_strdup(NOTIFY_COMMAND));
+    g_ptr_array_add(args, g_strdup("--expire-time"));
+    g_ptr_array_add(args, g_strdup("5000"));
+    g_ptr_array_add(args, g_strdup("--urgency"));
+    if (success) {
+        g_ptr_array_add(args, g_strdup("normal"));
+    } else {
+        g_ptr_array_add(args, g_strdup("critical"));
+    }
+    if (icon_path) {
+        g_ptr_array_add(args, g_strdup("--icon"));
+        g_ptr_array_add(args, icon_path);
+    }
+    g_ptr_array_add(args,
+                    g_strdup_printf("%s [%g%%] (%gs)",
+                                    status_to_label(status),
+                                    compute_pass_percentage(run_context),
+                                    cut_run_context_get_elapsed(run_context)));
+    g_ptr_array_add(args, format_summary(run_context));
+    g_ptr_array_add(args, NULL);
+
+    g_spawn_async(NULL,
+                  (gchar **)args->pdata,
+                  NULL,
+                  G_SPAWN_SEARCH_PATH,
+                  NULL,
+                  NULL,
+                  NULL,
+                  &error);
+    if (error) {
+        gchar *command_line;
+        command_line = g_strjoinv(" ", (gchar **)args->pdata);
+        g_print("failed to run send-notify: <%s>: <%s>\n",
+                command_line,
+                error->message);
+        g_free(command_line);
+        g_error_free(error);
+    }
+    g_ptr_array_free(args, TRUE);
 }
 
 static void
@@ -902,6 +1052,9 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
                  CutConsoleUI *console)
 {
     CutVerboseLevel verbose_level;
+
+    if (console->notify)
+        notify(console, run_context, success);
 
     verbose_level = console->verbose_level;
     if (verbose_level < CUT_VERBOSE_LEVEL_NORMAL)

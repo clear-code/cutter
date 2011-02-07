@@ -8,15 +8,21 @@ Cutter
 
 == Author
 
+=== Program
+
   * Kouhei Sutou <kou@clear-code.com>
   * Hiroyuki Ikezoe <ikezoe@clear-code.com>
   * Yuto Hayamizu <y.hayamizu@gmail.com>
+
+=== Kinotan Icons
+
+  * Mayu & Co.
 
 == License
 
   * Source: LGPLv3 or later. (detail:
     ((<"license/lgpl-3.txt"|URL:http://www.gnu.org/licenses/lgpl.html>)))
-  * Document: Triple license: LGPL, GFDL and/or CC.
+  * Document and kinotan icons: Triple license: LGPL, GFDL and/or CC.
     * LGPL: v3 or later. (detail:
       ((<"license/lgpl-3.txt"|URL:http://www.gnu.org/licenses/lgpl.html>)))
     * GFDL: v1.3 or later. (detail:

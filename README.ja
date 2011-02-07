@@ -8,9 +8,15 @@ Cutter
 
 == 作者
 
+=== プログラム
+
   * Kouhei Sutou <kou@clear-code.com>
   * Hiroyuki Ikezoe <ikezoe@clear-code.com>
   * Yuto Hayamizu <y.hayamizu@gmail.com>
+
+=== きのたんアイコン
+
+  * Mayu & Co.
 
 == ライセンス
 
@@ -18,8 +24,8 @@ Cutter
     （詳細:
     ((<"license/lgpl-3.txt"|URL:http://www.gnu.org/licenses/lgpl.html>))）
     です。
-  * ドキュメント: LGPLとGFDLとクリエイティブ・コモンズ・ライセンス
-    のトリプルライセンス。
+  * ドキュメントときのたんアイコン: LGPLとGFDLとクリエイティ
+    ブ・コモンズ・ライセンスのトリプルライセンス。
     * LGPLバージョン3またはそれ以降のバージョン
       （詳細:
       ((<"license/lgpl-3.txt"|URL:http://www.gnu.org/licenses/lgpl.html>))）

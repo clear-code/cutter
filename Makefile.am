@@ -9,6 +9,7 @@ SUBDIRS = 			\
 	gdkcutter-pixbuf	\
 	soupcutter		\
 	module			\
+	data			\
 	test			\
 	sample			\
 	gst-plugins		\

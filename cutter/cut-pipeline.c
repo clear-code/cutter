@@ -302,6 +302,7 @@ create_command_line_args_from_argv (CutPipeline *pipeline, const gchar **argv)
     new_argv = cut_utils_strv_concat((const gchar **)copy,
                                      "--ui=console",
                                      "-v", "s",
+                                     "--notify", "no",
                                      "--stream=xml",
                                      stream_fd,
                                      test_directory,
@@ -350,6 +351,7 @@ create_command_line_args_from_parameters (CutPipeline *pipeline)
 
     append_arg(argv, cut_utils_get_cutter_command_path());
     append_arg(argv, "--verbose=silent");
+    append_arg(argv, "--notify=no");
     append_arg(argv, "--stream=xml");
     append_arg_printf(argv, "--stream-fd=%d", priv->child_pipe[CUT_WRITE]);
 

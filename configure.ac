@@ -557,6 +557,9 @@ dnl **************************************************************
 dnl Cutter related variables.
 dnl **************************************************************
 
+icons_dir="\$(pkgdatadir)/icons"
+AC_SUBST(icons_dir)
+
 CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
 AC_SUBST(CUTTER)
 
@@ -568,6 +571,7 @@ CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULEDIR=\\\"\"\$(report_factory
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULEDIR=\\\"\"\$(stream_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULEDIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULEDIR=\\\"\"\$(factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DICONSDIR=\\\"\"\$(iconsdir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
 
 dnl **************************************************************
@@ -817,6 +821,9 @@ AC_CONFIG_FILES([Makefile
 		 module/stream/Makefile
 		 gst-plugins/Makefile
 		 gst-plugins/test/Makefile
+		 data/Makefile
+		 data/icons/Makefile
+		 data/icons/kinotan/Makefile
 		 sample/Makefile
 		 sample/glib/Makefile
 		 sample/gtk+/Makefile
