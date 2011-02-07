@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/ja.po: update partially.
+
 	* gcutter/gcut-test-utils.h: fix markup.
 
 	* gcutter/gcut-event-loop.h: unify documents.
