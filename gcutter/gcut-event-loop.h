@@ -179,7 +179,7 @@ guint                gcut_event_loop_watch_child       (GCutEventLoop   *loop,
                                                         gpointer         data);
 
 /**
- * gcut_event_loop_watch_child:
+ * gcut_event_loop_watch_child_full:
  * @loop: a #GCutEventLoop
  * @priority: the priority of the event.
  * @pid: process ID to watch
@@ -202,7 +202,7 @@ guint                gcut_event_loop_watch_child_full  (GCutEventLoop   *loop,
                                                         GDestroyNotify   notify);
 
 /**
- * gcut_event_loop_add_timeout_full:
+ * gcut_event_loop_add_timeout:
  * @loop: a #GCutEventLoop
  * @interval: the time between calls to the @function, in seconds.
  * @function: function to call

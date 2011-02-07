@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-event-loop.h: fix function names.
+
 	* m4macros/cutter.m4: support --config-cache.
 
 	* gcutter/gcut-event-loop.h: add missing "Since: 1.1.6".
