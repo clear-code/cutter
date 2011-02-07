@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-event-loop.h: add missing "Since: 1.1.6".
+
 	* m4macros/cutter.m4: remove needless AC_CACHEK_CHECK.
 
 2011-02-06  Kouhei Sutou  <kou@cozmixng.org>

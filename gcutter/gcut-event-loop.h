@@ -40,6 +40,8 @@ G_BEGIN_DECLS
  *
  * GCutter provides #GCutEventLoop for GLib's main context
  * and main loop, #GCutGLibEventLoop.
+ *
+ * Since: 1.1.6
  */
 
 #define GCUT_TYPE_EVENT_LOOP            (gcut_event_loop_get_type ())
