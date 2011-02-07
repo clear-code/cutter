@@ -35,7 +35,7 @@ Description: Documentation of Cutter
 Package: libcutter-dev
 Section: libdevel
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, libglib2.0-0
+Depends: ${misc:Depends}, ${shlibs:Depends}, libglib2.0-0, libnotify-bin
 Description: Development files to write tests with Cutter
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .

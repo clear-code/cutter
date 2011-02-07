@@ -20,6 +20,7 @@ DEB_INSTALL_DIRS_libcutter-dev =		\
 	/usr/lib/cutter/module/factory/stream	\
 	/usr/lib/cutter/module/factory/report	\
 	/usr/lib/pkgconfig			\
+	/usr/share/cutter/icons/kinotan		\
 	/usr/share/aclocal			\
 	/usr/share/locale
 
@@ -84,6 +85,8 @@ install/libcutter-dev::
 	cp -ar debian/tmp/usr/lib/libcutter* debian/libcutter-dev/usr/lib/
 	cp -ar debian/tmp/usr/lib/pkgconfig/libcutter.pc \
 		debian/libcutter-dev/usr/lib/pkgconfig/
+	cp -ar debian/tmp/usr/share/cutter/icons/kinotan/* \
+		debian/libcutter-dev/usr/share/cutter/icons/kinotan/
 	cp -ar debian/tmp/usr/share/aclocal/* \
 		debian/libcutter-dev/usr/share/aclocal/
 	cp -ar debian/tmp/usr/share/locale/* \

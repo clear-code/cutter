@@ -1,5 +1,7 @@
 2011-02-08  Kouhei Sutou  <kou@cozmixng.org>
 
+	* debian/control, debian/rules: support --notify.
+
 	* NEWS*: add Ubuntu Maveric and Fedora 14 support.
 
 	* rpm/centos/cutter.spec.in, rpm/fedora/cutter.spec.in: require
