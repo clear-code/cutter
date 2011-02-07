@@ -14,6 +14,7 @@ BuildRequires: glib2-devel
 BuildRequires: libsoup-devel
 Requires: glib2
 Requires: libsoup
+Requires: libnotify
 
 %description
 Cutter is a xUnit family Unit Testing Framework for C.
