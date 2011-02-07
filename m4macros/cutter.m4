@@ -5,42 +5,36 @@ AC_DEFUN([AC_CHECK_ENABLE_COVERAGE],
                                [Enable coverage]),
                 [cutter_enable_coverage=$enableval],
                 [cutter_enable_coverage=no])
-  AC_CACHE_VAL([ac_cv_enable_coverage],
-               [
-                 if test "x$cutter_enable_coverage" = "xno" -o \
-                         "x$GCC" != "xyes"; then
-                   ac_cv_enable_coverage=no
-                 fi
+  if test "x$cutter_enable_coverage" != "xno"; then
+    ltp_version_list="1.6 1.7 1.8 1.9"
+    AC_PATH_TOOL(LCOV, lcov)
+    AC_PATH_TOOL(GENHTML, genhtml)
 
-                 if test "x$ac_cv_enable_coverage" != "xno"; then
-                   ltp_version_list="1.6 1.7 1.8 1.9"
-                   AC_PATH_TOOL(LCOV, lcov)
-                   AC_PATH_TOOL(GENHTML, genhtml)
+    if test -x "$LCOV"; then
+      AC_CACHE_CHECK([for ltp version],
+                     cutter_cv_ltp_version,
+                     [
+        ltp_version=`$LCOV -v 2>/dev/null | $SED -e 's/^.* //'`
+        cutter_cv_ltp_version="$ltp_version (NG)"
+        for ltp_check_version in $ltp_version_list; do
+          if test "$ltp_version" = "$ltp_check_version"; then
+            cutter_cv_ltp_version="$ltp_check_version (ok)"
+          fi
+        done
+      ])
+    fi
 
-                   if test -x "$LCOV"; then
-                     AC_CACHE_CHECK([for ltp version], cutter_cv_ltp_version, [
-                       ltp_version=`$LCOV -v 2>/dev/null | $SED -e 's/^.* //'`
-                       cutter_cv_ltp_version="$ltp_version (NG)"
-                       for ltp_check_version in $ltp_version_list; do
-                         if test "$ltp_version" = "$ltp_check_version"; then
-                           cutter_cv_ltp_version="$ltp_check_version (ok)"
-                         fi
-                       done
-                     ])
-                   fi
-
-                   case "$cutter_cv_ltp_version" in
-                     *\(ok\)*)
-                       ac_cv_enable_coverage=yes
-                       ;;
-                     *)
-                       ac_cv_enable_coverage=no
-                       ;;
-                   esac
-                 fi
-               ])
+    case "$cutter_cv_ltp_version" in
+      *\(ok\)*)
+        cutter_enable_coverage=yes
+        ;;
+      *)
+        cutter_enable_coverage=no
+        ;;
+    esac
+  fi
   AC_MSG_CHECKING([for enabling coverage])
-  AC_MSG_RESULT($ac_cv_enable_coverage)
+  AC_MSG_RESULT($cutter_enable_coverage)
 ])
 
 AC_DEFUN([AC_CHECK_COVERAGE],
@@ -54,11 +48,11 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   AC_CHECK_ENABLE_COVERAGE
 
   COVERAGE_CFLAGS=
-  if test "x$ac_cv_enable_coverage" = "xyes"; then
+  if test "$cutter_enable_coverage" = "yes"; then
     COVERAGE_CFLAGS="--coverage"
   fi
   AC_SUBST(COVERAGE_CFLAGS)
-  AM_CONDITIONAL([ENABLE_COVERAGE], [test "x$ac_cv_enable_coverage" = "xyes"])
+  AM_CONDITIONAL([ENABLE_COVERAGE], [test "$cutter_enable_coverage" = "yes"])
 
   COVERAGE_INFO_FILE="coverage.info"
   AC_SUBST(COVERAGE_INFO_FILE)
@@ -71,9 +65,9 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   fi
   AC_SUBST(GENHTML_OPTIONS)
 
-  if test "x$ac_cv_enable_coverage" = "xyes"; then
+  if test "$cutter_enable_coverage" = "yes"; then
     AC_CONFIG_COMMANDS([coverage], [
-      if test -e $ac_check_coverage_makefile && \
+      if test -e "$ac_check_coverage_makefile" && \
          grep -q '^coverage:' $ac_check_coverage_makefile; then
         : # do nothing
       else
@@ -113,19 +107,22 @@ AC_DEFUN([AC_CHECK_CUTTER],
   AC_ARG_WITH([cutter],
               AS_HELP_STRING([--with-cutter],
                              [Use Cutter (default: auto)]),
-              [ac_cv_with_cutter=$withval],
-              [ac_cv_with_cutter=auto])
-  AC_CACHE_VAL([ac_cv_use_cutter],
-               [ac_cv_use_cutter=$ac_cv_with_cutter
-                if test "$ac_cv_use_cutter" != "no"; then
-                  PKG_CHECK_MODULES(CUTTER, cutter $1,
-                                    [], [ac_cv_use_cutter=no])
-                fi
-
-                if test "$ac_cv_use_cutter" != "no"; then
-                  _PKG_CONFIG(CUTTER, variable=cutter, cutter)
-                  CUTTER=$pkg_cv_CUTTER
-                fi])
+              [cutter_with_value=$withval],
+              [cutter_with_value=auto])
+  if test -z "$cutter_use_cutter"; then
+    if test "x$cutter_with_value" = "xno"; then
+      cutter_use_cutter=no
+    else
+      PKG_CHECK_MODULES(CUTTER, cutter $1,
+                        [cutter_use_cutter=yes],
+                        [cutter_use_cutter=no])
+    fi
+  fi
+  if test "$cutter_use_cutter" != "no"; then
+    _PKG_CONFIG(CUTTER, variable=cutter, cutter)
+    CUTTER=$pkg_cv_CUTTER
+  fi
+  ac_cv_use_cutter="$cutter_use_cutter" # for backward compatibility
   AC_SUBST([CUTTER_CFLAGS])
   AC_SUBST([CUTTER_LIBS])
   AC_SUBST([CUTTER])
@@ -134,12 +131,15 @@ AC_DEFUN([AC_CHECK_CUTTER],
 AC_DEFUN([AC_CHECK_GCUTTER],
 [
   AC_CHECK_CUTTER($1)
-  AC_CACHE_VAL([ac_cv_use_gcutter],
-               [ac_cv_use_gcutter=no
-                if test "$ac_cv_use_cutter" != "no"; then
-                  PKG_CHECK_MODULES(GCUTTER, gcutter $1,
-                                    [ac_cv_use_gcutter=yes], [:])
-                fi])
+  if test "$cutter_use_cutter" = "no"; then
+    cutter_use_gcutter=no
+  fi
+  if test "x$cutter_use_gcutter" = "x"; then
+    PKG_CHECK_MODULES(GCUTTER, gcutter $1,
+                      [cutter_use_gcutter=yes],
+                      [cutter_use_gcutter=no])
+  fi
+  ac_cv_use_gcutter="$cutter_use_gcutter" # for backward compatibility
   AC_SUBST([GCUTTER_CFLAGS])
   AC_SUBST([GCUTTER_LIBS])
 ])
@@ -147,12 +147,15 @@ AC_DEFUN([AC_CHECK_GCUTTER],
 AC_DEFUN([AC_CHECK_CPPCUTTER],
 [
   AC_CHECK_CUTTER($1)
-  AC_CACHE_VAL([ac_cv_use_cppcutter],
-               [ac_cv_use_cppcutter=no
-                if test "$ac_cv_use_cutter" != "no"; then
-                  PKG_CHECK_MODULES(CPPCUTTER, cppcutter $1,
-                                    [ac_cv_use_cppcutter=yes], [:])
-                fi])
+  if test "$cutter_use_cutter" = "no"; then
+    cutter_use_cppcutter=no
+  fi
+  if test "x$cutter_use_cppcutter" = "x"; then
+    PKG_CHECK_MODULES(CPPCUTTER, cppcutter $1,
+                      [cutter_use_cppcutter=yes],
+                      [cutter_use_cppcutter=no])
+  fi
+  ac_cv_use_cppcutter="$cutter_use_cppcutter" # for backward compatibility
   AC_SUBST([CPPCUTTER_CFLAGS])
   AC_SUBST([CPPCUTTER_LIBS])
 ])
@@ -160,12 +163,15 @@ AC_DEFUN([AC_CHECK_CPPCUTTER],
 AC_DEFUN([AC_CHECK_GDKCUTTER_PIXBUF],
 [
   AC_CHECK_GCUTTER($1)
-  AC_CACHE_VAL([ac_cv_use_gdkcutter_pixbuf],
-               [ac_cv_use_gdkcutter_pixbuf=no
-                if test "$ac_cv_use_cutter" != "no"; then
-                  PKG_CHECK_MODULES(GDKCUTTER_PIXBUF, gdkcutter-pixbuf $1,
-                                    [ac_cv_use_gdkcutter_pixbuf=yes], [:])
-                fi])
+  if test "$cutter_use_cutter" = "no"; then
+    cutter_use_gdkcutter_pixbuf=no
+  fi
+  if test "x$cutter_use_gdkcutter_pixbuf" = "x"; then
+    PKG_CHECK_MODULES(GDKCUTTER_PIXBUF, gdkcutter-pixbuf $1,
+                      [cutter_use_gdkcutter_pixbuf=yes],
+                      [cutter_use_gdkcutter_pixbuf=no])
+  fi
+  ac_cv_use_gdkcutter_pixbuf="$cutter_use_gdkcutter_pixbuf" # for backward compatibility
   AC_SUBST([GDKCUTTER_PIXBUF_CFLAGS])
   AC_SUBST([GDKCUTTER_PIXBUF_LIBS])
 ])
@@ -173,12 +179,15 @@ AC_DEFUN([AC_CHECK_GDKCUTTER_PIXBUF],
 AC_DEFUN([AC_CHECK_SOUPCUTTER],
 [
   AC_CHECK_GCUTTER($1)
-  AC_CACHE_VAL([ac_cv_use_soupcutter],
-               [ac_cv_use_soupcutter=no
-                if test "$ac_cv_use_cutter" != "no"; then
-                  PKG_CHECK_MODULES(SOUPCUTTER, soupcutter $1,
-                                    [ac_cv_use_soupcutter=yes], [:])
-                fi])
+  if test "$cutter_use_cutter" = "no"; then
+    cutter_use_soupcutter=no
+  fi
+  if test "$cutter_use_soupcutter" != "no"; then
+    PKG_CHECK_MODULES(SOUPCUTTER, soupcutter $1,
+                      [cutter_use_soupcutter=yes],
+		      [cutter_use_soupcutter=no])
+  fi
+  ac_cv_use_soupcutter="$cutter_use_soupcutter" # for backward compatibility
   AC_SUBST([SOUPCUTTER_CFLAGS])
   AC_SUBST([SOUPCUTTER_LIBS])
 ])
