@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-event-loop.h: unify documents.
+
 	* doc/reference/cutter-docs.sgml: add GCutGLibEventLoop.
 
 	* gcutter/gcut-event-loop.h: fix variable names in document.

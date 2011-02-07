@@ -139,7 +139,7 @@ void                 gcut_event_loop_quit              (GCutEventLoop   *loop);
 
 /**
  * gcut_event_loop_watch_io:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @channel: a #GIOChannel
  * @condition: conditions to watch for
  * @function: function to call
@@ -161,7 +161,7 @@ guint                gcut_event_loop_watch_io          (GCutEventLoop   *loop,
 
 /**
  * gcut_event_loop_watch_child:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @pid: process ID to watch
  * @function: function to call
  * @data: data to pass to @function
@@ -180,7 +180,7 @@ guint                gcut_event_loop_watch_child       (GCutEventLoop   *loop,
 
 /**
  * gcut_event_loop_watch_child_full:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @priority: the priority of the event.
  * @pid: process ID to watch
  * @function: function to call
@@ -203,7 +203,7 @@ guint                gcut_event_loop_watch_child_full  (GCutEventLoop   *loop,
 
 /**
  * gcut_event_loop_add_timeout:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @interval_in_seconds: the time between calls to the @function, in seconds.
  * @function: function to call
  * @data: data to pass to @function
@@ -222,7 +222,7 @@ guint                gcut_event_loop_add_timeout       (GCutEventLoop   *loop,
 
 /**
  * gcut_event_loop_add_timeout_full:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @priority: the priority of the event.
  * @interval_in_seconds: the time between calls to the @function, in seconds.
  * @function: function to call
@@ -245,7 +245,7 @@ guint                gcut_event_loop_add_timeout_full  (GCutEventLoop   *loop,
 
 /**
  * gcut_event_loop_add_idle:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @function: function to call
  * @data: data to pass to @function
  *
@@ -262,7 +262,7 @@ guint                gcut_event_loop_add_idle          (GCutEventLoop   *loop,
 
 /**
  * gcut_event_loop_add_idle_full:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @priority: the priority of the event.
  * @function: function to call
  * @data: data to pass to @function
@@ -283,7 +283,7 @@ guint                gcut_event_loop_add_idle_full     (GCutEventLoop   *loop,
 
 /**
  * gcut_event_loop_remove:
- * @loop: a #GCutEventLoop
+ * @loop: a #GCutEventLoop.
  * @tag: the ID of the source to remove
  *
  * Removes the event with the given ID, @tag.
