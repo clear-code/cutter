@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.6\n"
-"POT-Creation-Date: 2011-02-07 20:43+0900\n"
-"PO-Revision-Date: 2011-02-07 20:47+0900\n"
+"POT-Creation-Date: 2011-02-07 21:02+0900\n"
+"PO-Revision-Date: 2011-02-07 21:03+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -582,11 +582,11 @@ msgstr ""
 #: xml/gcut-hash-table.xml:162(term) xml/gcut-hash-table.xml:182(term)
 #: xml/gcut-hash-table.xml:200(term) xml/gcut-hash-table.xml:216(term)
 #: xml/gcut-glib-event-loop.xml:64(term) xml/gcut-event-loop.xml:152(term)
-#: xml/gcut-event-loop.xml:184(term) xml/gcut-event-loop.xml:226(term)
-#: xml/gcut-event-loop.xml:253(term) xml/gcut-event-loop.xml:288(term)
-#: xml/gcut-event-loop.xml:315(term) xml/gcut-event-loop.xml:350(term)
-#: xml/gcut-event-loop.xml:373(term) xml/gcut-event-loop.xml:404(term)
-#: xml/gcut-event-loop.xml:422(term) xml/gcut-error.xml:55(term)
+#: xml/gcut-event-loop.xml:184(term) xml/gcut-event-loop.xml:227(term)
+#: xml/gcut-event-loop.xml:254(term) xml/gcut-event-loop.xml:289(term)
+#: xml/gcut-event-loop.xml:316(term) xml/gcut-event-loop.xml:351(term)
+#: xml/gcut-event-loop.xml:374(term) xml/gcut-event-loop.xml:405(term)
+#: xml/gcut-event-loop.xml:423(term) xml/gcut-error.xml:55(term)
 #: xml/gcut-error.xml:71(term) xml/gcut-enum.xml:68(term)
 #: xml/gcut-enum.xml:109(term) xml/gcut-enum.xml:134(term)
 #: xml/gcut-enum.xml:153(term) xml/gcut-enum.xml:179(term)
@@ -3366,10 +3366,10 @@ msgstr ""
 #: xml/gcut-inspect.xml:277(term) xml/gcut-inspect.xml:302(term)
 #: xml/gcut-inspect.xml:333(term) xml/gcut-inspect.xml:364(term)
 #: xml/gcut-inspect.xml:390(term) xml/gcut-inspect.xml:420(term)
-#: xml/gcut-inspect.xml:446(term) xml/gcut-event-loop.xml:223(term)
-#: xml/gcut-event-loop.xml:250(term) xml/gcut-event-loop.xml:282(term)
-#: xml/gcut-event-loop.xml:312(term) xml/gcut-event-loop.xml:344(term)
-#: xml/gcut-event-loop.xml:370(term) xml/gcut-event-loop.xml:398(term)
+#: xml/gcut-inspect.xml:446(term) xml/gcut-event-loop.xml:224(term)
+#: xml/gcut-event-loop.xml:251(term) xml/gcut-event-loop.xml:283(term)
+#: xml/gcut-event-loop.xml:313(term) xml/gcut-event-loop.xml:345(term)
+#: xml/gcut-event-loop.xml:371(term) xml/gcut-event-loop.xml:399(term)
 #: xml/gcut-data.xml:325(term) xml/gcut-data.xml:343(term)
 #: xml/gcut-data.xml:361(term) xml/gcut-data.xml:379(term)
 #: xml/gcut-data.xml:398(term) xml/gcut-data.xml:416(term)
@@ -3495,8 +3495,8 @@ msgstr ""
 #: xml/api-index-full.xml:586(link) xml/api-index-full.xml:587(link)
 #: xml/api-index-full.xml:588(link) xml/api-index-full.xml:589(link)
 #: xml/api-index-full.xml:590(link) xml/api-index-full.xml:591(link)
-#: xml/api-index-deprecated.xml:70(link) xml/api-index-1.1.6.xml:23(link)
-#: xml/api-index-1.1.6.xml:30(link) xml/api-index-1.1.6.xml:31(link)
+#: xml/api-index-deprecated.xml:70(link) xml/api-index-1.1.6.xml:24(link)
+#: xml/api-index-1.1.6.xml:31(link) xml/api-index-1.1.6.xml:32(link)
 #: xml/api-index-1.1.5.xml:19(link) xml/api-index-1.1.5.xml:20(link)
 #: xml/api-index-1.1.5.xml:59(link) xml/api-index-1.1.5.xml:60(link)
 #: xml/api-index-1.1.1.xml:16(link) xml/api-index-1.1.1.xml:17(link)
@@ -3631,12 +3631,12 @@ msgid "<link linkend=\"GHashTable\"><placeholder-1/></link> *hash_table"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:27(link) xml/gcut-test-utils.xml:150(primary)
-#: xml/api-index-full.xml:591(link) xml/api-index-1.1.6.xml:31(link)
+#: xml/api-index-full.xml:591(link) xml/api-index-1.1.6.xml:32(link)
 msgid "gcut_take_string"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:28(link) xml/gcut-test-utils.xml:166(primary)
-#: xml/api-index-full.xml:589(link) xml/api-index-1.1.6.xml:30(link)
+#: xml/api-index-full.xml:589(link) xml/api-index-1.1.6.xml:31(link)
 msgid "gcut_take_new_string"
 msgstr ""
 
@@ -3787,7 +3787,7 @@ msgid "gcut_take_new_hash_table_string_string"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:63(link) xml/gcut-test-utils.xml:528(primary)
-#: xml/api-index-full.xml:421(link) xml/api-index-1.1.6.xml:23(link)
+#: xml/api-index-full.xml:421(link) xml/api-index-1.1.6.xml:24(link)
 msgid "gcut_get_fixture_data"
 msgstr ""
 
@@ -4089,12 +4089,12 @@ msgstr ""
 #: xml/gcut-test-utils.xml:163(para) xml/gcut-test-utils.xml:178(para)
 #: xml/gcut-test-utils.xml:544(para) xml/gcut-process.xml:724(para)
 #: xml/gcut-process.xml:740(para) xml/gcut-event-loop.xml:166(para)
-#: xml/gcut-event-loop.xml:187(para) xml/gcut-event-loop.xml:229(para)
-#: xml/gcut-event-loop.xml:256(para) xml/gcut-event-loop.xml:291(para)
-#: xml/gcut-event-loop.xml:318(para) xml/gcut-event-loop.xml:353(para)
-#: xml/gcut-event-loop.xml:376(para) xml/gcut-event-loop.xml:407(para)
-#: xml/gcut-event-loop.xml:425(para) xml/cut-test-utils.xml:346(para)
-#: xml/cut-test-utils.xml:391(para)
+#: xml/gcut-event-loop.xml:187(para) xml/gcut-event-loop.xml:198(para)
+#: xml/gcut-event-loop.xml:230(para) xml/gcut-event-loop.xml:257(para)
+#: xml/gcut-event-loop.xml:292(para) xml/gcut-event-loop.xml:319(para)
+#: xml/gcut-event-loop.xml:354(para) xml/gcut-event-loop.xml:377(para)
+#: xml/gcut-event-loop.xml:408(para) xml/gcut-event-loop.xml:426(para)
+#: xml/cut-test-utils.xml:346(para) xml/cut-test-utils.xml:391(para)
 msgid "Since 1.1.6"
 msgstr "1.1.6から"
 
@@ -4119,7 +4119,8 @@ msgstr ""
 msgid ""
 "the string. It can be <link linkend=\"NULL:CAPS\"><literal>NULL</literal></"
 "link>."
-msgstr "文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>も可。"
+msgstr ""
+"文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>も可。"
 
 #: xml/gcut-test-utils.xml:180(title)
 msgid "gcut_list_new ()"
@@ -5079,7 +5080,7 @@ msgstr ""
 #: xml/gcut-string-io-channel.xml:180(term)
 #: xml/gcut-string-io-channel.xml:194(term)
 #: xml/gcut-string-io-channel.xml:208(term)
-#: xml/gcut-string-io-channel.xml:222(term) xml/gcut-event-loop.xml:214(term)
+#: xml/gcut-string-io-channel.xml:222(term) xml/gcut-event-loop.xml:215(term)
 msgid "<parameter>channel</parameter> :"
 msgstr ""
 
@@ -5446,8 +5447,8 @@ msgstr ""
 #: xml/api-index-full.xml:524(link) xml/api-index-full.xml:525(link)
 #: xml/api-index-full.xml:526(link) xml/api-index-full.xml:527(link)
 #: xml/api-index-full.xml:528(link) xml/api-index-full.xml:529(link)
-#: xml/api-index-full.xml:530(link) xml/api-index-1.1.6.xml:26(link)
-#: xml/api-index-1.1.6.xml:27(link) xml/api-index-1.1.5.xml:23(link)
+#: xml/api-index-full.xml:530(link) xml/api-index-1.1.6.xml:27(link)
+#: xml/api-index-1.1.6.xml:28(link) xml/api-index-1.1.5.xml:23(link)
 #: xml/api-index-1.1.5.xml:24(link) xml/api-index-1.1.5.xml:25(link)
 #: xml/api-index-1.1.5.xml:26(link) xml/api-index-1.1.5.xml:27(link)
 #: xml/api-index-1.1.5.xml:28(link) xml/api-index-1.1.5.xml:29(link)
@@ -5726,17 +5727,17 @@ msgstr ""
 #: xml/api-index-1.1.6.xml:14(link) xml/api-index-1.1.6.xml:15(link)
 #: xml/api-index-1.1.6.xml:16(link) xml/api-index-1.1.6.xml:17(link)
 #: xml/api-index-1.1.6.xml:18(link) xml/api-index-1.1.6.xml:19(link)
-#: xml/api-index-1.1.6.xml:20(link)
+#: xml/api-index-1.1.6.xml:20(link) xml/api-index-1.1.6.xml:21(link)
 msgid "GCutEventLoop"
 msgstr ""
 
 #: xml/gcut-process.xml:70(link) xml/gcut-process.xml:713(primary)
-#: xml/api-index-full.xml:509(link) xml/api-index-1.1.6.xml:26(link)
+#: xml/api-index-full.xml:509(link) xml/api-index-1.1.6.xml:27(link)
 msgid "gcut_process_get_event_loop"
 msgstr ""
 
 #: xml/gcut-process.xml:71(link) xml/gcut-process.xml:727(primary)
-#: xml/api-index-full.xml:526(link) xml/api-index-1.1.6.xml:27(link)
+#: xml/api-index-full.xml:526(link) xml/api-index-1.1.6.xml:28(link)
 msgid "gcut_process_set_event_loop"
 msgstr ""
 
@@ -6775,11 +6776,11 @@ msgid "Gets a event loop using by the <parameter>process</parameter>."
 msgstr "<parameter>process</parameter>が使っているイベントループを取得します。"
 
 #: xml/gcut-process.xml:721(simpara) xml/gcut-event-loop.xml:164(simpara)
-#: xml/gcut-event-loop.xml:179(simpara) xml/gcut-event-loop.xml:212(simpara)
-#: xml/gcut-event-loop.xml:242(simpara) xml/gcut-event-loop.xml:271(simpara)
-#: xml/gcut-event-loop.xml:304(simpara) xml/gcut-event-loop.xml:333(simpara)
-#: xml/gcut-event-loop.xml:365(simpara) xml/gcut-event-loop.xml:390(simpara)
-#: xml/gcut-event-loop.xml:417(simpara)
+#: xml/gcut-event-loop.xml:179(simpara) xml/gcut-event-loop.xml:196(simpara)
+#: xml/gcut-event-loop.xml:213(simpara) xml/gcut-event-loop.xml:243(simpara)
+#: xml/gcut-event-loop.xml:272(simpara) xml/gcut-event-loop.xml:305(simpara)
+#: xml/gcut-event-loop.xml:334(simpara) xml/gcut-event-loop.xml:366(simpara)
+#: xml/gcut-event-loop.xml:391(simpara) xml/gcut-event-loop.xml:418(simpara)
 msgid "a <link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>."
 msgstr "<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>。"
 
@@ -6805,11 +6806,11 @@ msgstr ""
 "デフォルトのGLibイベントループが使われます。"
 
 #: xml/gcut-process.xml:737(term) xml/gcut-event-loop.xml:163(term)
-#: xml/gcut-event-loop.xml:178(term) xml/gcut-event-loop.xml:194(term)
-#: xml/gcut-event-loop.xml:211(term) xml/gcut-event-loop.xml:241(term)
-#: xml/gcut-event-loop.xml:270(term) xml/gcut-event-loop.xml:303(term)
-#: xml/gcut-event-loop.xml:332(term) xml/gcut-event-loop.xml:364(term)
-#: xml/gcut-event-loop.xml:389(term) xml/gcut-event-loop.xml:416(term)
+#: xml/gcut-event-loop.xml:178(term) xml/gcut-event-loop.xml:195(term)
+#: xml/gcut-event-loop.xml:212(term) xml/gcut-event-loop.xml:242(term)
+#: xml/gcut-event-loop.xml:271(term) xml/gcut-event-loop.xml:304(term)
+#: xml/gcut-event-loop.xml:333(term) xml/gcut-event-loop.xml:365(term)
+#: xml/gcut-event-loop.xml:390(term) xml/gcut-event-loop.xml:417(term)
 msgid "<parameter>loop</parameter> :"
 msgstr ""
 
@@ -8189,7 +8190,7 @@ msgstr ""
 msgid "<link linkend=\"gchar\"><returnvalue>gchar</returnvalue></link> *             gcut_io_inspect_condition           (<parameter><link linkend=\"GIOCondition\"><type>GIOCondition</type></link> condition</parameter>);"
 msgstr ""
 
-#: xml/gcut-io.xml:38(term) xml/gcut-event-loop.xml:217(term)
+#: xml/gcut-io.xml:38(term) xml/gcut-event-loop.xml:218(term)
 msgid "<parameter>condition</parameter> :"
 msgstr ""
 
@@ -9168,11 +9169,13 @@ msgstr ""
 #: xml/gcut-event-loop.xml:7(refentrytitle)
 #: xml/gcut-event-loop.xml:14(refname)
 msgid "Abstracted event loop"
-msgstr ""
+msgstr "抽象化されたイベントループ"
 
 #: xml/gcut-event-loop.xml:15(refpurpose)
 msgid "Abstracted event loop API for customizing event loop in GCutter."
 msgstr ""
+"GCutterで使うイベントループをカスタマイズするための抽象化されたイベントループ"
+"API。"
 
 #: xml/gcut-event-loop.xml:22(link) xml/gcut-event-loop.xml:95(title)
 #: xml/gcut-event-loop.xml:96(primary) xml/api-index-full.xml:398(link)
@@ -9190,7 +9193,7 @@ msgid "gcut_event_loop_error_quark"
 msgstr ""
 
 #: xml/gcut-event-loop.xml:26(link) xml/gcut-event-loop.xml:157(primary)
-#: xml/api-index-full.xml:403(link) xml/api-index-1.1.6.xml:17(link)
+#: xml/api-index-full.xml:403(link) xml/api-index-1.1.6.xml:18(link)
 msgid "gcut_event_loop_run"
 msgstr ""
 
@@ -9204,12 +9207,12 @@ msgid "<link linkend=\"gboolean\"><placeholder-1/></link> may_block"
 msgstr ""
 
 #: xml/gcut-event-loop.xml:29(link) xml/gcut-event-loop.xml:190(primary)
-#: xml/api-index-full.xml:401(link)
+#: xml/api-index-full.xml:401(link) xml/api-index-1.1.6.xml:16(link)
 msgid "gcut_event_loop_quit"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:30(link) xml/gcut-event-loop.xml:200(primary)
-#: xml/api-index-full.xml:406(link) xml/api-index-1.1.6.xml:20(link)
+#: xml/gcut-event-loop.xml:30(link) xml/gcut-event-loop.xml:201(primary)
+#: xml/api-index-full.xml:406(link) xml/api-index-1.1.6.xml:21(link)
 msgid "gcut_event_loop_watch_io"
 msgstr ""
 
@@ -9228,8 +9231,8 @@ msgstr ""
 msgid "<link linkend=\"gpointer\"><placeholder-1/></link> data"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:35(link) xml/gcut-event-loop.xml:232(primary)
-#: xml/api-index-full.xml:404(link) xml/api-index-1.1.6.xml:18(link)
+#: xml/gcut-event-loop.xml:35(link) xml/gcut-event-loop.xml:233(primary)
+#: xml/api-index-full.xml:404(link) xml/api-index-1.1.6.xml:19(link)
 msgid "gcut_event_loop_watch_child"
 msgstr ""
 
@@ -9245,8 +9248,8 @@ msgstr ""
 msgid "<link linkend=\"GChildWatchFunc\"><placeholder-1/></link> function"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:39(link) xml/gcut-event-loop.xml:259(primary)
-#: xml/api-index-full.xml:405(link) xml/api-index-1.1.6.xml:19(link)
+#: xml/gcut-event-loop.xml:39(link) xml/gcut-event-loop.xml:260(primary)
+#: xml/api-index-full.xml:405(link) xml/api-index-1.1.6.xml:20(link)
 msgid "gcut_event_loop_watch_child_full"
 msgstr ""
 
@@ -9265,7 +9268,7 @@ msgstr ""
 msgid "<link linkend=\"GDestroyNotify\"><placeholder-1/></link> notify"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:45(link) xml/gcut-event-loop.xml:294(primary)
+#: xml/gcut-event-loop.xml:45(link) xml/gcut-event-loop.xml:295(primary)
 #: xml/api-index-full.xml:396(link) xml/api-index-1.1.6.xml:13(link)
 msgid "gcut_event_loop_add_timeout"
 msgstr ""
@@ -9289,23 +9292,23 @@ msgstr ""
 msgid "<link linkend=\"GSourceFunc\"><placeholder-1/></link> function"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:49(link) xml/gcut-event-loop.xml:321(primary)
+#: xml/gcut-event-loop.xml:49(link) xml/gcut-event-loop.xml:322(primary)
 #: xml/api-index-full.xml:397(link) xml/api-index-1.1.6.xml:14(link)
 msgid "gcut_event_loop_add_timeout_full"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:55(link) xml/gcut-event-loop.xml:356(primary)
+#: xml/gcut-event-loop.xml:55(link) xml/gcut-event-loop.xml:357(primary)
 #: xml/api-index-full.xml:394(link) xml/api-index-1.1.6.xml:11(link)
 msgid "gcut_event_loop_add_idle"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:58(link) xml/gcut-event-loop.xml:379(primary)
+#: xml/gcut-event-loop.xml:58(link) xml/gcut-event-loop.xml:380(primary)
 #: xml/api-index-full.xml:395(link) xml/api-index-1.1.6.xml:12(link)
 msgid "gcut_event_loop_add_idle_full"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:63(link) xml/gcut-event-loop.xml:410(primary)
-#: xml/api-index-full.xml:402(link) xml/api-index-1.1.6.xml:16(link)
+#: xml/gcut-event-loop.xml:63(link) xml/gcut-event-loop.xml:411(primary)
+#: xml/api-index-full.xml:402(link) xml/api-index-1.1.6.xml:17(link)
 msgid "gcut_event_loop_remove"
 msgstr ""
 
@@ -9387,6 +9390,10 @@ msgid ""
 "type></link> isn't required. It is needed some special case. For example, "
 "using libev as event loop backend instead of GLib's main loop."
 msgstr ""
+"ふつうはカスタム<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></"
+"link>は必要ありません。必要になるのは特別な場合だけです。例えば、イベントルー"
+"プのバックエンドにGLibのGMainLoopではなく、libevのイベントループに使っている"
+"場合です。"
 
 #: xml/gcut-event-loop.xml:87(para)
 msgid ""
@@ -9522,11 +9529,15 @@ msgstr ""
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_event_loop_quit                (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:199(title)
+#: xml/gcut-event-loop.xml:192(para)
+msgid "Stops the <parameter>loop</parameter> from running."
+msgstr "実行中の<parameter>loop</parameter>を止めます。"
+
+#: xml/gcut-event-loop.xml:200(title)
 msgid "gcut_event_loop_watch_io ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:201(programlisting)
+#: xml/gcut-event-loop.xml:202(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\"><returnvalue>guint</returnvalue></link>               gcut_event_loop_watch_io            (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
@@ -9536,7 +9547,7 @@ msgid ""
 "                                                         <parameter><link linkend=\"gpointer\"><type>gpointer</type></link> data</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:206(para)
+#: xml/gcut-event-loop.xml:207(para)
 msgid ""
 "Adds the <parameter>channel</parameter> into <parameter>loop</parameter> "
 "with the default priority. <parameter>function</parameter> is called when "
@@ -9548,47 +9559,47 @@ msgstr ""
 "<parameter>condition</parameter>イベントが発生したら<parameter>function</"
 "parameter>が呼ばれます。"
 
-#: xml/gcut-event-loop.xml:215(simpara)
+#: xml/gcut-event-loop.xml:216(simpara)
 msgid "a <link linkend=\"GIOChannel\"><type>GIOChannel</type></link>"
 msgstr "<link linkend=\"GIOChannel\"><type>GIOChannel</type></link>。"
 
-#: xml/gcut-event-loop.xml:218(simpara)
+#: xml/gcut-event-loop.xml:219(simpara)
 msgid "conditions to watch for"
-msgstr ""
+msgstr "監視する状態。"
 
-#: xml/gcut-event-loop.xml:220(term) xml/gcut-event-loop.xml:247(term)
-#: xml/gcut-event-loop.xml:279(term) xml/gcut-event-loop.xml:309(term)
-#: xml/gcut-event-loop.xml:341(term) xml/gcut-event-loop.xml:367(term)
-#: xml/gcut-event-loop.xml:395(term) xml/cut-assertions.xml:1941(term)
+#: xml/gcut-event-loop.xml:221(term) xml/gcut-event-loop.xml:248(term)
+#: xml/gcut-event-loop.xml:280(term) xml/gcut-event-loop.xml:310(term)
+#: xml/gcut-event-loop.xml:342(term) xml/gcut-event-loop.xml:368(term)
+#: xml/gcut-event-loop.xml:396(term) xml/cut-assertions.xml:1941(term)
 msgid "<parameter>function</parameter> :"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:221(simpara) xml/gcut-event-loop.xml:248(simpara)
-#: xml/gcut-event-loop.xml:280(simpara) xml/gcut-event-loop.xml:310(simpara)
-#: xml/gcut-event-loop.xml:342(simpara) xml/gcut-event-loop.xml:368(simpara)
-#: xml/gcut-event-loop.xml:396(simpara)
+#: xml/gcut-event-loop.xml:222(simpara) xml/gcut-event-loop.xml:249(simpara)
+#: xml/gcut-event-loop.xml:281(simpara) xml/gcut-event-loop.xml:311(simpara)
+#: xml/gcut-event-loop.xml:343(simpara) xml/gcut-event-loop.xml:369(simpara)
+#: xml/gcut-event-loop.xml:397(simpara)
 msgid "function to call"
 msgstr "呼び出される関数"
 
-#: xml/gcut-event-loop.xml:224(simpara) xml/gcut-event-loop.xml:251(simpara)
-#: xml/gcut-event-loop.xml:283(simpara) xml/gcut-event-loop.xml:313(simpara)
-#: xml/gcut-event-loop.xml:345(simpara) xml/gcut-event-loop.xml:371(simpara)
-#: xml/gcut-event-loop.xml:399(simpara)
+#: xml/gcut-event-loop.xml:225(simpara) xml/gcut-event-loop.xml:252(simpara)
+#: xml/gcut-event-loop.xml:284(simpara) xml/gcut-event-loop.xml:314(simpara)
+#: xml/gcut-event-loop.xml:346(simpara) xml/gcut-event-loop.xml:372(simpara)
+#: xml/gcut-event-loop.xml:400(simpara)
 msgid "data to pass to <parameter>function</parameter>"
 msgstr "<parameter>function</parameter>に渡されるデータ"
 
-#: xml/gcut-event-loop.xml:226(simpara) xml/gcut-event-loop.xml:253(simpara)
-#: xml/gcut-event-loop.xml:288(simpara) xml/gcut-event-loop.xml:315(simpara)
-#: xml/gcut-event-loop.xml:350(simpara) xml/gcut-event-loop.xml:373(simpara)
-#: xml/gcut-event-loop.xml:404(simpara)
+#: xml/gcut-event-loop.xml:227(simpara) xml/gcut-event-loop.xml:254(simpara)
+#: xml/gcut-event-loop.xml:289(simpara) xml/gcut-event-loop.xml:316(simpara)
+#: xml/gcut-event-loop.xml:351(simpara) xml/gcut-event-loop.xml:374(simpara)
+#: xml/gcut-event-loop.xml:405(simpara)
 msgid "the event ID."
 msgstr "イベントID。"
 
-#: xml/gcut-event-loop.xml:231(title)
+#: xml/gcut-event-loop.xml:232(title)
 msgid "gcut_event_loop_watch_child ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:233(programlisting)
+#: xml/gcut-event-loop.xml:234(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\"><returnvalue>guint</returnvalue></link>               gcut_event_loop_watch_child         (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
@@ -9597,7 +9608,7 @@ msgid ""
 "                                                         <parameter><link linkend=\"gpointer\"><type>gpointer</type></link> data</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:237(para)
+#: xml/gcut-event-loop.xml:238(para)
 msgid ""
 "Adds the <parameter>function</parameter> to be called when the child "
 "indicated by <parameter>pid</parameter> exits into <parameter>loop</"
@@ -9607,21 +9618,21 @@ msgstr ""
 "<parameter>function</parameter>をデフォルトの優先度で<parameter>loop</"
 "parameter>に追加します。"
 
-#: xml/gcut-event-loop.xml:244(term) xml/gcut-event-loop.xml:276(term)
+#: xml/gcut-event-loop.xml:245(term) xml/gcut-event-loop.xml:277(term)
 #: xml/cut-experimental.xml:86(term) xml/cut-experimental.xml:116(term)
 #: xml/cut-experimental.xml:146(term)
 msgid "<parameter>pid</parameter> :"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:245(simpara) xml/gcut-event-loop.xml:277(simpara)
+#: xml/gcut-event-loop.xml:246(simpara) xml/gcut-event-loop.xml:278(simpara)
 msgid "process ID to watch"
-msgstr "監視するロセスのID"
+msgstr "監視するプロセスのID"
 
-#: xml/gcut-event-loop.xml:258(title)
+#: xml/gcut-event-loop.xml:259(title)
 msgid "gcut_event_loop_watch_child_full ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:260(programlisting)
+#: xml/gcut-event-loop.xml:261(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\"><returnvalue>guint</returnvalue></link>               gcut_event_loop_watch_child_full    (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
@@ -9632,7 +9643,7 @@ msgid ""
 "                                                         <parameter><link linkend=\"GDestroyNotify\"><type>GDestroyNotify</type></link> notify</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:266(para)
+#: xml/gcut-event-loop.xml:267(para)
 msgid ""
 "Adds the <parameter>function</parameter> to be called when the child "
 "indicated by <parameter>pid</parameter> exits into <parameter>loop</"
@@ -9642,23 +9653,23 @@ msgstr ""
 "<parameter>function</parameter>をデフォルトの優先度で<parameter>loop</"
 "parameter>に追加します。"
 
-#: xml/gcut-event-loop.xml:273(term) xml/gcut-event-loop.xml:335(term)
-#: xml/gcut-event-loop.xml:392(term)
+#: xml/gcut-event-loop.xml:274(term) xml/gcut-event-loop.xml:336(term)
+#: xml/gcut-event-loop.xml:393(term)
 msgid "<parameter>priority</parameter> :"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:274(simpara) xml/gcut-event-loop.xml:336(simpara)
-#: xml/gcut-event-loop.xml:393(simpara)
+#: xml/gcut-event-loop.xml:275(simpara) xml/gcut-event-loop.xml:337(simpara)
+#: xml/gcut-event-loop.xml:394(simpara)
 msgid "the priority of the event."
 msgstr "このイベントの優先度。"
 
-#: xml/gcut-event-loop.xml:285(term) xml/gcut-event-loop.xml:347(term)
-#: xml/gcut-event-loop.xml:401(term)
+#: xml/gcut-event-loop.xml:286(term) xml/gcut-event-loop.xml:348(term)
+#: xml/gcut-event-loop.xml:402(term)
 msgid "<parameter>notify</parameter> :"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:286(simpara) xml/gcut-event-loop.xml:348(simpara)
-#: xml/gcut-event-loop.xml:402(simpara)
+#: xml/gcut-event-loop.xml:287(simpara) xml/gcut-event-loop.xml:349(simpara)
+#: xml/gcut-event-loop.xml:403(simpara)
 msgid ""
 "function to call when the event is removed, or <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>"
@@ -9666,11 +9677,11 @@ msgstr ""
 "このイベントが削除された時に呼ばれる関数または<link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>。"
 
-#: xml/gcut-event-loop.xml:293(title)
+#: xml/gcut-event-loop.xml:294(title)
 msgid "gcut_event_loop_add_timeout ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:295(programlisting)
+#: xml/gcut-event-loop.xml:296(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\"><returnvalue>guint</returnvalue></link>               gcut_event_loop_add_timeout         (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
@@ -9679,26 +9690,28 @@ msgid ""
 "                                                         <parameter><link linkend=\"gpointer\"><type>gpointer</type></link> data</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:299(para)
+#: xml/gcut-event-loop.xml:300(para)
 msgid ""
 "Adds the <parameter>function</parameter> to be called at regular intervals, "
 "with the default priority."
 msgstr ""
+"一定間隔で呼び出される<parameter>function</parameter>をデフォルト優先度で追加"
+"します。"
 
-#: xml/gcut-event-loop.xml:306(term) xml/gcut-event-loop.xml:338(term)
+#: xml/gcut-event-loop.xml:307(term) xml/gcut-event-loop.xml:339(term)
 msgid "<parameter>interval_in_seconds</parameter> :"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:307(simpara) xml/gcut-event-loop.xml:339(simpara)
+#: xml/gcut-event-loop.xml:308(simpara) xml/gcut-event-loop.xml:340(simpara)
 msgid ""
 "the time between calls to the <parameter>function</parameter>, in seconds."
 msgstr "<parameter>function</parameter>を呼び出す感覚。単位は秒。"
 
-#: xml/gcut-event-loop.xml:320(title)
+#: xml/gcut-event-loop.xml:321(title)
 msgid "gcut_event_loop_add_timeout_full ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:322(programlisting)
+#: xml/gcut-event-loop.xml:323(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\"><returnvalue>guint</returnvalue></link>               gcut_event_loop_add_timeout_full    (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
@@ -9709,18 +9722,18 @@ msgid ""
 "                                                         <parameter><link linkend=\"GDestroyNotify\"><type>GDestroyNotify</type></link> notify</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:328(para)
+#: xml/gcut-event-loop.xml:329(para)
 msgid ""
 "Adds the <parameter>function</parameter> to be called at regular intervals, "
 "with the <parameter>priority</parameter>."
 msgstr ""
 "定期的に呼び出される関数を優先度<parameter>priority</parameter>で追加します。"
 
-#: xml/gcut-event-loop.xml:355(title)
+#: xml/gcut-event-loop.xml:356(title)
 msgid "gcut_event_loop_add_idle ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:357(programlisting)
+#: xml/gcut-event-loop.xml:358(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\"><returnvalue>guint</returnvalue></link>               gcut_event_loop_add_idle            (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
@@ -9728,17 +9741,19 @@ msgid ""
 "                                                         <parameter><link linkend=\"gpointer\"><type>gpointer</type></link> data</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:360(para)
+#: xml/gcut-event-loop.xml:361(para)
 msgid ""
 "Adds the <parameter>function</parameter> to be called whenever there are no "
 "higher priority events pending with the default priority."
 msgstr ""
+"デフォルト優先度より高い優先度がない場合に呼び出される関数"
+"<parameter>function</parameter>を追加します。"
 
-#: xml/gcut-event-loop.xml:378(title)
+#: xml/gcut-event-loop.xml:379(title)
 msgid "gcut_event_loop_add_idle_full ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:380(programlisting)
+#: xml/gcut-event-loop.xml:381(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"guint\"><returnvalue>guint</returnvalue></link>               gcut_event_loop_add_idle_full       (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
@@ -9748,36 +9763,38 @@ msgid ""
 "                                                         <parameter><link linkend=\"GDestroyNotify\"><type>GDestroyNotify</type></link> notify</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:385(para)
+#: xml/gcut-event-loop.xml:386(para)
 msgid ""
 "Adds the <parameter>function</parameter> to be called whenever there are no "
 "higher priority events pending with the <parameter>priority</parameter>."
 msgstr ""
+"優先度<parameter>priority</parameter>より高い優先度のイベントがない場合に呼び"
+"出される関数<parameter>function</parameter>を追加します。"
 
-#: xml/gcut-event-loop.xml:409(title)
+#: xml/gcut-event-loop.xml:410(title)
 msgid "gcut_event_loop_remove ()"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:411(programlisting)
+#: xml/gcut-event-loop.xml:412(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"gboolean\"><returnvalue>gboolean</returnvalue></link>            gcut_event_loop_remove              (<parameter><link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> *loop</parameter>,\n"
 "                                                         <parameter><link linkend=\"guint\"><type>guint</type></link> tag</parameter>);"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:413(para)
+#: xml/gcut-event-loop.xml:414(para)
 msgid "Removes the event with the given ID, <parameter>tag</parameter>."
 msgstr "IDが<parameter>tag</parameter>のイベントを削除します。"
 
-#: xml/gcut-event-loop.xml:419(term)
+#: xml/gcut-event-loop.xml:420(term)
 msgid "<parameter>tag</parameter> :"
 msgstr ""
 
-#: xml/gcut-event-loop.xml:420(simpara)
+#: xml/gcut-event-loop.xml:421(simpara)
 msgid "the ID of the source to remove"
-msgstr ""
+msgstr "削除するソースのID。"
 
-#: xml/gcut-event-loop.xml:422(simpara)
+#: xml/gcut-event-loop.xml:423(simpara)
 msgid ""
 "<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> if the source was "
 "found and removed."
@@ -23621,136 +23638,137 @@ msgstr ""
 #: xml/api-index-1.1.6.xml:15(primaryie) xml/api-index-1.1.6.xml:16(primaryie)
 #: xml/api-index-1.1.6.xml:17(primaryie) xml/api-index-1.1.6.xml:18(primaryie)
 #: xml/api-index-1.1.6.xml:19(primaryie) xml/api-index-1.1.6.xml:20(primaryie)
-#: xml/api-index-1.1.6.xml:26(primaryie) xml/api-index-1.1.6.xml:27(primaryie)
-#: xml/api-index-1.1.5.xml:7(primaryie) xml/api-index-1.1.5.xml:10(primaryie)
-#: xml/api-index-1.1.5.xml:11(primaryie) xml/api-index-1.1.5.xml:12(primaryie)
-#: xml/api-index-1.1.5.xml:13(primaryie) xml/api-index-1.1.5.xml:16(primaryie)
-#: xml/api-index-1.1.5.xml:19(primaryie) xml/api-index-1.1.5.xml:20(primaryie)
-#: xml/api-index-1.1.5.xml:28(primaryie) xml/api-index-1.1.5.xml:29(primaryie)
-#: xml/api-index-1.1.5.xml:30(primaryie) xml/api-index-1.1.5.xml:31(primaryie)
-#: xml/api-index-1.1.5.xml:32(primaryie) xml/api-index-1.1.5.xml:33(primaryie)
-#: xml/api-index-1.1.5.xml:34(primaryie) xml/api-index-1.1.5.xml:35(primaryie)
-#: xml/api-index-1.1.5.xml:36(primaryie) xml/api-index-1.1.5.xml:37(primaryie)
-#: xml/api-index-1.1.5.xml:38(primaryie) xml/api-index-1.1.5.xml:39(primaryie)
-#: xml/api-index-1.1.5.xml:40(primaryie) xml/api-index-1.1.5.xml:41(primaryie)
-#: xml/api-index-1.1.5.xml:42(primaryie) xml/api-index-1.1.5.xml:43(primaryie)
-#: xml/api-index-1.1.5.xml:44(primaryie) xml/api-index-1.1.5.xml:45(primaryie)
-#: xml/api-index-1.1.5.xml:46(primaryie) xml/api-index-1.1.5.xml:47(primaryie)
-#: xml/api-index-1.1.5.xml:48(primaryie) xml/api-index-1.1.5.xml:49(primaryie)
-#: xml/api-index-1.1.5.xml:50(primaryie) xml/api-index-1.1.5.xml:51(primaryie)
-#: xml/api-index-1.1.5.xml:52(primaryie) xml/api-index-1.1.5.xml:55(primaryie)
-#: xml/api-index-1.1.5.xml:56(primaryie) xml/api-index-1.1.5.xml:59(primaryie)
-#: xml/api-index-1.1.5.xml:60(primaryie) xml/api-index-1.1.4.xml:7(primaryie)
-#: xml/api-index-1.1.4.xml:8(primaryie) xml/api-index-1.1.4.xml:13(primaryie)
-#: xml/api-index-1.1.4.xml:14(primaryie) xml/api-index-1.1.3.xml:20(primaryie)
-#: xml/api-index-1.1.3.xml:21(primaryie) xml/api-index-1.1.3.xml:22(primaryie)
-#: xml/api-index-1.1.3.xml:23(primaryie) xml/api-index-1.1.3.xml:24(primaryie)
-#: xml/api-index-1.1.3.xml:25(primaryie) xml/api-index-1.1.1.xml:10(primaryie)
-#: xml/api-index-1.1.1.xml:16(primaryie) xml/api-index-1.1.1.xml:17(primaryie)
-#: xml/api-index-1.1.0.xml:48(primaryie) xml/api-index-1.0.xml:7(primaryie)
-#: xml/api-index-1.0.xml:8(primaryie) xml/api-index-1.0.xml:9(primaryie)
-#: xml/api-index-1.0.xml:10(primaryie) xml/api-index-1.0.9.xml:15(primaryie)
-#: xml/api-index-1.0.8.xml:7(primaryie) xml/api-index-1.0.8.xml:11(primaryie)
-#: xml/api-index-1.0.8.xml:12(primaryie) xml/api-index-1.0.8.xml:13(primaryie)
-#: xml/api-index-1.0.8.xml:14(primaryie) xml/api-index-1.0.8.xml:15(primaryie)
-#: xml/api-index-1.0.8.xml:16(primaryie) xml/api-index-1.0.8.xml:17(primaryie)
-#: xml/api-index-1.0.8.xml:18(primaryie) xml/api-index-1.0.8.xml:19(primaryie)
-#: xml/api-index-1.0.8.xml:20(primaryie) xml/api-index-1.0.8.xml:21(primaryie)
-#: xml/api-index-1.0.8.xml:22(primaryie) xml/api-index-1.0.8.xml:23(primaryie)
-#: xml/api-index-1.0.8.xml:24(primaryie) xml/api-index-1.0.8.xml:25(primaryie)
-#: xml/api-index-1.0.7.xml:7(primaryie) xml/api-index-1.0.7.xml:11(primaryie)
-#: xml/api-index-1.0.7.xml:12(primaryie) xml/api-index-1.0.7.xml:13(primaryie)
-#: xml/api-index-1.0.7.xml:14(primaryie) xml/api-index-1.0.7.xml:15(primaryie)
-#: xml/api-index-1.0.7.xml:16(primaryie) xml/api-index-1.0.7.xml:17(primaryie)
-#: xml/api-index-1.0.7.xml:18(primaryie) xml/api-index-1.0.7.xml:19(primaryie)
-#: xml/api-index-1.0.7.xml:20(primaryie) xml/api-index-1.0.7.xml:21(primaryie)
-#: xml/api-index-1.0.7.xml:24(primaryie) xml/api-index-1.0.6.xml:7(primaryie)
-#: xml/api-index-1.0.6.xml:8(primaryie) xml/api-index-1.0.6.xml:9(primaryie)
-#: xml/api-index-1.0.6.xml:10(primaryie) xml/api-index-1.0.6.xml:13(primaryie)
-#: xml/api-index-1.0.6.xml:14(primaryie) xml/api-index-1.0.6.xml:15(primaryie)
-#: xml/api-index-1.0.6.xml:16(primaryie) xml/api-index-1.0.6.xml:18(primaryie)
-#: xml/api-index-1.0.6.xml:19(primaryie) xml/api-index-1.0.6.xml:20(primaryie)
-#: xml/api-index-1.0.6.xml:21(primaryie) xml/api-index-1.0.6.xml:22(primaryie)
-#: xml/api-index-1.0.6.xml:23(primaryie) xml/api-index-1.0.6.xml:24(primaryie)
-#: xml/api-index-1.0.6.xml:25(primaryie) xml/api-index-1.0.6.xml:28(primaryie)
-#: xml/api-index-1.0.6.xml:29(primaryie) xml/api-index-1.0.6.xml:30(primaryie)
-#: xml/api-index-1.0.6.xml:31(primaryie) xml/api-index-1.0.6.xml:32(primaryie)
-#: xml/api-index-1.0.6.xml:33(primaryie) xml/api-index-1.0.6.xml:34(primaryie)
-#: xml/api-index-1.0.6.xml:42(primaryie) xml/api-index-1.0.6.xml:43(primaryie)
-#: xml/api-index-1.0.6.xml:44(primaryie) xml/api-index-1.0.6.xml:45(primaryie)
-#: xml/api-index-1.0.6.xml:46(primaryie) xml/api-index-1.0.6.xml:47(primaryie)
-#: xml/api-index-1.0.6.xml:48(primaryie) xml/api-index-1.0.6.xml:49(primaryie)
-#: xml/api-index-1.0.6.xml:50(primaryie) xml/api-index-1.0.6.xml:51(primaryie)
-#: xml/api-index-1.0.6.xml:52(primaryie) xml/api-index-1.0.6.xml:53(primaryie)
-#: xml/api-index-1.0.6.xml:54(primaryie) xml/api-index-1.0.6.xml:55(primaryie)
-#: xml/api-index-1.0.6.xml:56(primaryie) xml/api-index-1.0.6.xml:57(primaryie)
-#: xml/api-index-1.0.6.xml:58(primaryie) xml/api-index-1.0.6.xml:59(primaryie)
-#: xml/api-index-1.0.6.xml:60(primaryie) xml/api-index-1.0.6.xml:61(primaryie)
-#: xml/api-index-1.0.6.xml:64(primaryie) xml/api-index-1.0.6.xml:67(primaryie)
-#: xml/api-index-1.0.6.xml:68(primaryie) xml/api-index-1.0.6.xml:75(primaryie)
-#: xml/api-index-1.0.6.xml:76(primaryie) xml/api-index-1.0.6.xml:77(primaryie)
-#: xml/api-index-1.0.6.xml:78(primaryie) xml/api-index-1.0.6.xml:79(primaryie)
-#: xml/api-index-1.0.6.xml:80(primaryie) xml/api-index-1.0.6.xml:81(primaryie)
-#: xml/api-index-1.0.6.xml:82(primaryie) xml/api-index-1.0.6.xml:85(primaryie)
-#: xml/api-index-1.0.6.xml:86(primaryie) xml/api-index-1.0.6.xml:87(primaryie)
-#: xml/api-index-1.0.6.xml:88(primaryie) xml/api-index-1.0.6.xml:89(primaryie)
-#: xml/api-index-1.0.6.xml:90(primaryie) xml/api-index-1.0.6.xml:91(primaryie)
-#: xml/api-index-1.0.6.xml:92(primaryie) xml/api-index-1.0.6.xml:93(primaryie)
-#: xml/api-index-1.0.6.xml:94(primaryie) xml/api-index-1.0.6.xml:97(primaryie)
-#: xml/api-index-1.0.5.xml:7(primaryie) xml/api-index-1.0.5.xml:8(primaryie)
-#: xml/api-index-1.0.5.xml:9(primaryie) xml/api-index-1.0.5.xml:10(primaryie)
-#: xml/api-index-1.0.5.xml:11(primaryie) xml/api-index-1.0.5.xml:12(primaryie)
-#: xml/api-index-1.0.5.xml:13(primaryie) xml/api-index-1.0.5.xml:14(primaryie)
-#: xml/api-index-1.0.5.xml:15(primaryie) xml/api-index-1.0.5.xml:16(primaryie)
-#: xml/api-index-1.0.5.xml:17(primaryie) xml/api-index-1.0.5.xml:23(primaryie)
-#: xml/api-index-1.0.5.xml:24(primaryie) xml/api-index-1.0.5.xml:25(primaryie)
-#: xml/api-index-1.0.5.xml:26(primaryie) xml/api-index-1.0.5.xml:27(primaryie)
-#: xml/api-index-1.0.5.xml:28(primaryie) xml/api-index-1.0.5.xml:29(primaryie)
-#: xml/api-index-1.0.5.xml:30(primaryie) xml/api-index-1.0.5.xml:31(primaryie)
-#: xml/api-index-1.0.5.xml:32(primaryie) xml/api-index-1.0.5.xml:33(primaryie)
-#: xml/api-index-1.0.5.xml:34(primaryie) xml/api-index-1.0.5.xml:39(primaryie)
-#: xml/api-index-1.0.5.xml:40(primaryie) xml/api-index-1.0.5.xml:41(primaryie)
-#: xml/api-index-1.0.5.xml:44(primaryie) xml/api-index-1.0.5.xml:47(primaryie)
-#: xml/api-index-1.0.5.xml:50(primaryie) xml/api-index-1.0.5.xml:51(primaryie)
-#: xml/api-index-1.0.5.xml:52(primaryie) xml/api-index-1.0.5.xml:53(primaryie)
-#: xml/api-index-1.0.5.xml:54(primaryie) xml/api-index-1.0.5.xml:58(primaryie)
-#: xml/api-index-1.0.5.xml:60(primaryie) xml/api-index-1.0.5.xml:70(primaryie)
-#: xml/api-index-1.0.5.xml:71(primaryie) xml/api-index-1.0.5.xml:72(primaryie)
-#: xml/api-index-1.0.5.xml:75(primaryie) xml/api-index-1.0.5.xml:76(primaryie)
-#: xml/api-index-1.0.5.xml:79(primaryie) xml/api-index-1.0.5.xml:80(primaryie)
-#: xml/api-index-1.0.4.xml:7(primaryie) xml/api-index-1.0.4.xml:8(primaryie)
-#: xml/api-index-1.0.4.xml:16(primaryie) xml/api-index-1.0.4.xml:17(primaryie)
-#: xml/api-index-1.0.4.xml:18(primaryie) xml/api-index-1.0.4.xml:19(primaryie)
-#: xml/api-index-1.0.4.xml:20(primaryie) xml/api-index-1.0.4.xml:21(primaryie)
-#: xml/api-index-1.0.4.xml:22(primaryie) xml/api-index-1.0.4.xml:23(primaryie)
-#: xml/api-index-1.0.4.xml:24(primaryie) xml/api-index-1.0.4.xml:25(primaryie)
-#: xml/api-index-1.0.4.xml:26(primaryie) xml/api-index-1.0.4.xml:27(primaryie)
-#: xml/api-index-1.0.4.xml:28(primaryie) xml/api-index-1.0.4.xml:29(primaryie)
-#: xml/api-index-1.0.4.xml:30(primaryie) xml/api-index-1.0.4.xml:31(primaryie)
-#: xml/api-index-1.0.4.xml:32(primaryie) xml/api-index-1.0.4.xml:33(primaryie)
-#: xml/api-index-1.0.4.xml:34(primaryie) xml/api-index-1.0.4.xml:35(primaryie)
-#: xml/api-index-1.0.4.xml:36(primaryie) xml/api-index-1.0.4.xml:37(primaryie)
-#: xml/api-index-1.0.4.xml:38(primaryie) xml/api-index-1.0.4.xml:39(primaryie)
-#: xml/api-index-1.0.4.xml:40(primaryie) xml/api-index-1.0.4.xml:41(primaryie)
-#: xml/api-index-1.0.4.xml:42(primaryie) xml/api-index-1.0.4.xml:43(primaryie)
-#: xml/api-index-1.0.4.xml:44(primaryie) xml/api-index-1.0.4.xml:45(primaryie)
-#: xml/api-index-1.0.4.xml:48(primaryie) xml/api-index-1.0.4.xml:51(primaryie)
-#: xml/api-index-1.0.3.xml:7(primaryie) xml/api-index-1.0.3.xml:8(primaryie)
-#: xml/api-index-1.0.3.xml:9(primaryie) xml/api-index-1.0.3.xml:10(primaryie)
-#: xml/api-index-1.0.3.xml:11(primaryie) xml/api-index-1.0.3.xml:12(primaryie)
-#: xml/api-index-1.0.3.xml:13(primaryie) xml/api-index-1.0.3.xml:17(primaryie)
-#: xml/api-index-1.0.3.xml:20(primaryie) xml/api-index-1.0.3.xml:21(primaryie)
-#: xml/api-index-1.0.3.xml:24(primaryie) xml/api-index-1.0.3.xml:25(primaryie)
-#: xml/api-index-1.0.3.xml:26(primaryie) xml/api-index-1.0.2.xml:7(primaryie)
-#: xml/api-index-1.0.2.xml:8(primaryie) xml/api-index-1.0.2.xml:9(primaryie)
-#: xml/api-index-1.0.2.xml:10(primaryie) xml/api-index-1.0.2.xml:11(primaryie)
-#: xml/api-index-1.0.2.xml:12(primaryie) xml/api-index-1.0.2.xml:13(primaryie)
-#: xml/api-index-1.0.2.xml:14(primaryie) xml/api-index-1.0.2.xml:15(primaryie)
-#: xml/api-index-0.9.xml:7(primaryie) xml/api-index-0.9.xml:8(primaryie)
-#: xml/api-index-0.9.xml:9(primaryie) xml/api-index-0.9.xml:10(primaryie)
-#: xml/api-index-0.8.xml:7(primaryie) xml/api-index-0.8.xml:8(primaryie)
-#: xml/api-index-0.8.xml:9(primaryie) xml/api-index-0.8.xml:13(primaryie)
-#: xml/api-index-0.3.xml:7(primaryie) xml/api-index-0.3.xml:8(primaryie)
+#: xml/api-index-1.1.6.xml:21(primaryie) xml/api-index-1.1.6.xml:27(primaryie)
+#: xml/api-index-1.1.6.xml:28(primaryie) xml/api-index-1.1.5.xml:7(primaryie)
+#: xml/api-index-1.1.5.xml:10(primaryie) xml/api-index-1.1.5.xml:11(primaryie)
+#: xml/api-index-1.1.5.xml:12(primaryie) xml/api-index-1.1.5.xml:13(primaryie)
+#: xml/api-index-1.1.5.xml:16(primaryie) xml/api-index-1.1.5.xml:19(primaryie)
+#: xml/api-index-1.1.5.xml:20(primaryie) xml/api-index-1.1.5.xml:28(primaryie)
+#: xml/api-index-1.1.5.xml:29(primaryie) xml/api-index-1.1.5.xml:30(primaryie)
+#: xml/api-index-1.1.5.xml:31(primaryie) xml/api-index-1.1.5.xml:32(primaryie)
+#: xml/api-index-1.1.5.xml:33(primaryie) xml/api-index-1.1.5.xml:34(primaryie)
+#: xml/api-index-1.1.5.xml:35(primaryie) xml/api-index-1.1.5.xml:36(primaryie)
+#: xml/api-index-1.1.5.xml:37(primaryie) xml/api-index-1.1.5.xml:38(primaryie)
+#: xml/api-index-1.1.5.xml:39(primaryie) xml/api-index-1.1.5.xml:40(primaryie)
+#: xml/api-index-1.1.5.xml:41(primaryie) xml/api-index-1.1.5.xml:42(primaryie)
+#: xml/api-index-1.1.5.xml:43(primaryie) xml/api-index-1.1.5.xml:44(primaryie)
+#: xml/api-index-1.1.5.xml:45(primaryie) xml/api-index-1.1.5.xml:46(primaryie)
+#: xml/api-index-1.1.5.xml:47(primaryie) xml/api-index-1.1.5.xml:48(primaryie)
+#: xml/api-index-1.1.5.xml:49(primaryie) xml/api-index-1.1.5.xml:50(primaryie)
+#: xml/api-index-1.1.5.xml:51(primaryie) xml/api-index-1.1.5.xml:52(primaryie)
+#: xml/api-index-1.1.5.xml:55(primaryie) xml/api-index-1.1.5.xml:56(primaryie)
+#: xml/api-index-1.1.5.xml:59(primaryie) xml/api-index-1.1.5.xml:60(primaryie)
+#: xml/api-index-1.1.4.xml:7(primaryie) xml/api-index-1.1.4.xml:8(primaryie)
+#: xml/api-index-1.1.4.xml:13(primaryie) xml/api-index-1.1.4.xml:14(primaryie)
+#: xml/api-index-1.1.3.xml:20(primaryie) xml/api-index-1.1.3.xml:21(primaryie)
+#: xml/api-index-1.1.3.xml:22(primaryie) xml/api-index-1.1.3.xml:23(primaryie)
+#: xml/api-index-1.1.3.xml:24(primaryie) xml/api-index-1.1.3.xml:25(primaryie)
+#: xml/api-index-1.1.1.xml:10(primaryie) xml/api-index-1.1.1.xml:16(primaryie)
+#: xml/api-index-1.1.1.xml:17(primaryie) xml/api-index-1.1.0.xml:48(primaryie)
+#: xml/api-index-1.0.xml:7(primaryie) xml/api-index-1.0.xml:8(primaryie)
+#: xml/api-index-1.0.xml:9(primaryie) xml/api-index-1.0.xml:10(primaryie)
+#: xml/api-index-1.0.9.xml:15(primaryie) xml/api-index-1.0.8.xml:7(primaryie)
+#: xml/api-index-1.0.8.xml:11(primaryie) xml/api-index-1.0.8.xml:12(primaryie)
+#: xml/api-index-1.0.8.xml:13(primaryie) xml/api-index-1.0.8.xml:14(primaryie)
+#: xml/api-index-1.0.8.xml:15(primaryie) xml/api-index-1.0.8.xml:16(primaryie)
+#: xml/api-index-1.0.8.xml:17(primaryie) xml/api-index-1.0.8.xml:18(primaryie)
+#: xml/api-index-1.0.8.xml:19(primaryie) xml/api-index-1.0.8.xml:20(primaryie)
+#: xml/api-index-1.0.8.xml:21(primaryie) xml/api-index-1.0.8.xml:22(primaryie)
+#: xml/api-index-1.0.8.xml:23(primaryie) xml/api-index-1.0.8.xml:24(primaryie)
+#: xml/api-index-1.0.8.xml:25(primaryie) xml/api-index-1.0.7.xml:7(primaryie)
+#: xml/api-index-1.0.7.xml:11(primaryie) xml/api-index-1.0.7.xml:12(primaryie)
+#: xml/api-index-1.0.7.xml:13(primaryie) xml/api-index-1.0.7.xml:14(primaryie)
+#: xml/api-index-1.0.7.xml:15(primaryie) xml/api-index-1.0.7.xml:16(primaryie)
+#: xml/api-index-1.0.7.xml:17(primaryie) xml/api-index-1.0.7.xml:18(primaryie)
+#: xml/api-index-1.0.7.xml:19(primaryie) xml/api-index-1.0.7.xml:20(primaryie)
+#: xml/api-index-1.0.7.xml:21(primaryie) xml/api-index-1.0.7.xml:24(primaryie)
+#: xml/api-index-1.0.6.xml:7(primaryie) xml/api-index-1.0.6.xml:8(primaryie)
+#: xml/api-index-1.0.6.xml:9(primaryie) xml/api-index-1.0.6.xml:10(primaryie)
+#: xml/api-index-1.0.6.xml:13(primaryie) xml/api-index-1.0.6.xml:14(primaryie)
+#: xml/api-index-1.0.6.xml:15(primaryie) xml/api-index-1.0.6.xml:16(primaryie)
+#: xml/api-index-1.0.6.xml:18(primaryie) xml/api-index-1.0.6.xml:19(primaryie)
+#: xml/api-index-1.0.6.xml:20(primaryie) xml/api-index-1.0.6.xml:21(primaryie)
+#: xml/api-index-1.0.6.xml:22(primaryie) xml/api-index-1.0.6.xml:23(primaryie)
+#: xml/api-index-1.0.6.xml:24(primaryie) xml/api-index-1.0.6.xml:25(primaryie)
+#: xml/api-index-1.0.6.xml:28(primaryie) xml/api-index-1.0.6.xml:29(primaryie)
+#: xml/api-index-1.0.6.xml:30(primaryie) xml/api-index-1.0.6.xml:31(primaryie)
+#: xml/api-index-1.0.6.xml:32(primaryie) xml/api-index-1.0.6.xml:33(primaryie)
+#: xml/api-index-1.0.6.xml:34(primaryie) xml/api-index-1.0.6.xml:42(primaryie)
+#: xml/api-index-1.0.6.xml:43(primaryie) xml/api-index-1.0.6.xml:44(primaryie)
+#: xml/api-index-1.0.6.xml:45(primaryie) xml/api-index-1.0.6.xml:46(primaryie)
+#: xml/api-index-1.0.6.xml:47(primaryie) xml/api-index-1.0.6.xml:48(primaryie)
+#: xml/api-index-1.0.6.xml:49(primaryie) xml/api-index-1.0.6.xml:50(primaryie)
+#: xml/api-index-1.0.6.xml:51(primaryie) xml/api-index-1.0.6.xml:52(primaryie)
+#: xml/api-index-1.0.6.xml:53(primaryie) xml/api-index-1.0.6.xml:54(primaryie)
+#: xml/api-index-1.0.6.xml:55(primaryie) xml/api-index-1.0.6.xml:56(primaryie)
+#: xml/api-index-1.0.6.xml:57(primaryie) xml/api-index-1.0.6.xml:58(primaryie)
+#: xml/api-index-1.0.6.xml:59(primaryie) xml/api-index-1.0.6.xml:60(primaryie)
+#: xml/api-index-1.0.6.xml:61(primaryie) xml/api-index-1.0.6.xml:64(primaryie)
+#: xml/api-index-1.0.6.xml:67(primaryie) xml/api-index-1.0.6.xml:68(primaryie)
+#: xml/api-index-1.0.6.xml:75(primaryie) xml/api-index-1.0.6.xml:76(primaryie)
+#: xml/api-index-1.0.6.xml:77(primaryie) xml/api-index-1.0.6.xml:78(primaryie)
+#: xml/api-index-1.0.6.xml:79(primaryie) xml/api-index-1.0.6.xml:80(primaryie)
+#: xml/api-index-1.0.6.xml:81(primaryie) xml/api-index-1.0.6.xml:82(primaryie)
+#: xml/api-index-1.0.6.xml:85(primaryie) xml/api-index-1.0.6.xml:86(primaryie)
+#: xml/api-index-1.0.6.xml:87(primaryie) xml/api-index-1.0.6.xml:88(primaryie)
+#: xml/api-index-1.0.6.xml:89(primaryie) xml/api-index-1.0.6.xml:90(primaryie)
+#: xml/api-index-1.0.6.xml:91(primaryie) xml/api-index-1.0.6.xml:92(primaryie)
+#: xml/api-index-1.0.6.xml:93(primaryie) xml/api-index-1.0.6.xml:94(primaryie)
+#: xml/api-index-1.0.6.xml:97(primaryie) xml/api-index-1.0.5.xml:7(primaryie)
+#: xml/api-index-1.0.5.xml:8(primaryie) xml/api-index-1.0.5.xml:9(primaryie)
+#: xml/api-index-1.0.5.xml:10(primaryie) xml/api-index-1.0.5.xml:11(primaryie)
+#: xml/api-index-1.0.5.xml:12(primaryie) xml/api-index-1.0.5.xml:13(primaryie)
+#: xml/api-index-1.0.5.xml:14(primaryie) xml/api-index-1.0.5.xml:15(primaryie)
+#: xml/api-index-1.0.5.xml:16(primaryie) xml/api-index-1.0.5.xml:17(primaryie)
+#: xml/api-index-1.0.5.xml:23(primaryie) xml/api-index-1.0.5.xml:24(primaryie)
+#: xml/api-index-1.0.5.xml:25(primaryie) xml/api-index-1.0.5.xml:26(primaryie)
+#: xml/api-index-1.0.5.xml:27(primaryie) xml/api-index-1.0.5.xml:28(primaryie)
+#: xml/api-index-1.0.5.xml:29(primaryie) xml/api-index-1.0.5.xml:30(primaryie)
+#: xml/api-index-1.0.5.xml:31(primaryie) xml/api-index-1.0.5.xml:32(primaryie)
+#: xml/api-index-1.0.5.xml:33(primaryie) xml/api-index-1.0.5.xml:34(primaryie)
+#: xml/api-index-1.0.5.xml:39(primaryie) xml/api-index-1.0.5.xml:40(primaryie)
+#: xml/api-index-1.0.5.xml:41(primaryie) xml/api-index-1.0.5.xml:44(primaryie)
+#: xml/api-index-1.0.5.xml:47(primaryie) xml/api-index-1.0.5.xml:50(primaryie)
+#: xml/api-index-1.0.5.xml:51(primaryie) xml/api-index-1.0.5.xml:52(primaryie)
+#: xml/api-index-1.0.5.xml:53(primaryie) xml/api-index-1.0.5.xml:54(primaryie)
+#: xml/api-index-1.0.5.xml:58(primaryie) xml/api-index-1.0.5.xml:60(primaryie)
+#: xml/api-index-1.0.5.xml:70(primaryie) xml/api-index-1.0.5.xml:71(primaryie)
+#: xml/api-index-1.0.5.xml:72(primaryie) xml/api-index-1.0.5.xml:75(primaryie)
+#: xml/api-index-1.0.5.xml:76(primaryie) xml/api-index-1.0.5.xml:79(primaryie)
+#: xml/api-index-1.0.5.xml:80(primaryie) xml/api-index-1.0.4.xml:7(primaryie)
+#: xml/api-index-1.0.4.xml:8(primaryie) xml/api-index-1.0.4.xml:16(primaryie)
+#: xml/api-index-1.0.4.xml:17(primaryie) xml/api-index-1.0.4.xml:18(primaryie)
+#: xml/api-index-1.0.4.xml:19(primaryie) xml/api-index-1.0.4.xml:20(primaryie)
+#: xml/api-index-1.0.4.xml:21(primaryie) xml/api-index-1.0.4.xml:22(primaryie)
+#: xml/api-index-1.0.4.xml:23(primaryie) xml/api-index-1.0.4.xml:24(primaryie)
+#: xml/api-index-1.0.4.xml:25(primaryie) xml/api-index-1.0.4.xml:26(primaryie)
+#: xml/api-index-1.0.4.xml:27(primaryie) xml/api-index-1.0.4.xml:28(primaryie)
+#: xml/api-index-1.0.4.xml:29(primaryie) xml/api-index-1.0.4.xml:30(primaryie)
+#: xml/api-index-1.0.4.xml:31(primaryie) xml/api-index-1.0.4.xml:32(primaryie)
+#: xml/api-index-1.0.4.xml:33(primaryie) xml/api-index-1.0.4.xml:34(primaryie)
+#: xml/api-index-1.0.4.xml:35(primaryie) xml/api-index-1.0.4.xml:36(primaryie)
+#: xml/api-index-1.0.4.xml:37(primaryie) xml/api-index-1.0.4.xml:38(primaryie)
+#: xml/api-index-1.0.4.xml:39(primaryie) xml/api-index-1.0.4.xml:40(primaryie)
+#: xml/api-index-1.0.4.xml:41(primaryie) xml/api-index-1.0.4.xml:42(primaryie)
+#: xml/api-index-1.0.4.xml:43(primaryie) xml/api-index-1.0.4.xml:44(primaryie)
+#: xml/api-index-1.0.4.xml:45(primaryie) xml/api-index-1.0.4.xml:48(primaryie)
+#: xml/api-index-1.0.4.xml:51(primaryie) xml/api-index-1.0.3.xml:7(primaryie)
+#: xml/api-index-1.0.3.xml:8(primaryie) xml/api-index-1.0.3.xml:9(primaryie)
+#: xml/api-index-1.0.3.xml:10(primaryie) xml/api-index-1.0.3.xml:11(primaryie)
+#: xml/api-index-1.0.3.xml:12(primaryie) xml/api-index-1.0.3.xml:13(primaryie)
+#: xml/api-index-1.0.3.xml:17(primaryie) xml/api-index-1.0.3.xml:20(primaryie)
+#: xml/api-index-1.0.3.xml:21(primaryie) xml/api-index-1.0.3.xml:24(primaryie)
+#: xml/api-index-1.0.3.xml:25(primaryie) xml/api-index-1.0.3.xml:26(primaryie)
+#: xml/api-index-1.0.2.xml:7(primaryie) xml/api-index-1.0.2.xml:8(primaryie)
+#: xml/api-index-1.0.2.xml:9(primaryie) xml/api-index-1.0.2.xml:10(primaryie)
+#: xml/api-index-1.0.2.xml:11(primaryie) xml/api-index-1.0.2.xml:12(primaryie)
+#: xml/api-index-1.0.2.xml:13(primaryie) xml/api-index-1.0.2.xml:14(primaryie)
+#: xml/api-index-1.0.2.xml:15(primaryie) xml/api-index-0.9.xml:7(primaryie)
+#: xml/api-index-0.9.xml:8(primaryie) xml/api-index-0.9.xml:9(primaryie)
+#: xml/api-index-0.9.xml:10(primaryie) xml/api-index-0.8.xml:7(primaryie)
+#: xml/api-index-0.8.xml:8(primaryie) xml/api-index-0.8.xml:9(primaryie)
+#: xml/api-index-0.8.xml:13(primaryie) xml/api-index-0.3.xml:7(primaryie)
+#: xml/api-index-0.3.xml:8(primaryie)
 msgid "<placeholder-1/>, function in <placeholder-2/>"
 msgstr ""
 
@@ -23851,8 +23869,8 @@ msgstr ""
 #: xml/api-index-deprecated.xml:64(primaryie)
 #: xml/api-index-deprecated.xml:70(primaryie)
 #: xml/api-index-1.1.6.xml:7(primaryie) xml/api-index-1.1.6.xml:8(primaryie)
-#: xml/api-index-1.1.6.xml:23(primaryie) xml/api-index-1.1.6.xml:30(primaryie)
-#: xml/api-index-1.1.6.xml:31(primaryie) xml/api-index-1.1.4.xml:11(primaryie)
+#: xml/api-index-1.1.6.xml:24(primaryie) xml/api-index-1.1.6.xml:31(primaryie)
+#: xml/api-index-1.1.6.xml:32(primaryie) xml/api-index-1.1.4.xml:11(primaryie)
 #: xml/api-index-1.1.4.xml:12(primaryie) xml/api-index-1.1.3.xml:7(primaryie)
 #: xml/api-index-1.1.3.xml:8(primaryie) xml/api-index-1.1.3.xml:9(primaryie)
 #: xml/api-index-1.1.3.xml:12(primaryie) xml/api-index-1.1.3.xml:13(primaryie)
@@ -23967,7 +23985,7 @@ msgstr ""
 msgid "F"
 msgstr ""
 
-#: xml/api-index-full.xml:413(title) xml/api-index-1.1.6.xml:22(title)
+#: xml/api-index-full.xml:413(title) xml/api-index-1.1.6.xml:23(title)
 #: xml/api-index-1.0.6.xml:70(title) xml/api-index-1.0.5.xml:46(title)
 msgid "G"
 msgstr ""
@@ -23998,7 +24016,7 @@ msgstr ""
 msgid "O"
 msgstr ""
 
-#: xml/api-index-full.xml:493(title) xml/api-index-1.1.6.xml:25(title)
+#: xml/api-index-full.xml:493(title) xml/api-index-1.1.6.xml:26(title)
 #: xml/api-index-1.1.5.xml:22(title)
 msgid "P"
 msgstr ""
@@ -24013,7 +24031,7 @@ msgid "S"
 msgstr ""
 
 #: xml/api-index-full.xml:578(title) xml/api-index-deprecated.xml:69(title)
-#: xml/api-index-1.1.6.xml:29(title) xml/api-index-1.1.5.xml:58(title)
+#: xml/api-index-1.1.6.xml:30(title) xml/api-index-1.1.5.xml:58(title)
 #: xml/api-index-1.1.3.xml:27(title) xml/api-index-1.1.1.xml:19(title)
 #: xml/api-index-1.0.7.xml:26(title) xml/api-index-1.0.6.xml:96(title)
 #: xml/api-index-1.0.5.xml:74(title) xml/api-index-1.0.4.xml:50(title)
@@ -24177,9 +24195,3 @@ msgstr "0.3での新しいシンボル一覧"
 #: cutter-docs.sgml:0(None)
 msgid "translator-credits"
 msgstr ""
-
-#~ msgid "the string. It can be NULL."
-#~ msgstr "文字列。NULLでもよい。"
-
-#~ msgid "a <link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>"
-#~ msgstr "<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>"
