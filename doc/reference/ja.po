@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.6\n"
-"POT-Creation-Date: 2011-02-07 21:02+0900\n"
-"PO-Revision-Date: 2011-02-07 21:03+0900\n"
+"POT-Creation-Date: 2011-02-07 21:06+0900\n"
+"PO-Revision-Date: 2011-02-07 21:08+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -581,7 +581,7 @@ msgstr ""
 #: xml/gcut-hash-table.xml:81(term) xml/gcut-hash-table.xml:118(term)
 #: xml/gcut-hash-table.xml:162(term) xml/gcut-hash-table.xml:182(term)
 #: xml/gcut-hash-table.xml:200(term) xml/gcut-hash-table.xml:216(term)
-#: xml/gcut-glib-event-loop.xml:64(term) xml/gcut-event-loop.xml:152(term)
+#: xml/gcut-glib-event-loop.xml:66(term) xml/gcut-event-loop.xml:152(term)
 #: xml/gcut-event-loop.xml:184(term) xml/gcut-event-loop.xml:227(term)
 #: xml/gcut-event-loop.xml:254(term) xml/gcut-event-loop.xml:289(term)
 #: xml/gcut-event-loop.xml:316(term) xml/gcut-event-loop.xml:351(term)
@@ -684,7 +684,7 @@ msgstr ""
 #: xml/gcut-public.xml:73(term) xml/gcut-public.xml:90(term)
 #: xml/gcut-public.xml:109(term) xml/gcut-public.xml:125(term)
 #: xml/gcut-public.xml:143(term) xml/gcut-public.xml:167(term)
-#: xml/gcut-glib-event-loop.xml:61(term) xml/cutter.xml:301(term)
+#: xml/gcut-glib-event-loop.xml:63(term) xml/cutter.xml:301(term)
 msgid "<parameter>context</parameter> :"
 msgstr ""
 
@@ -3496,7 +3496,7 @@ msgstr ""
 #: xml/api-index-full.xml:588(link) xml/api-index-full.xml:589(link)
 #: xml/api-index-full.xml:590(link) xml/api-index-full.xml:591(link)
 #: xml/api-index-deprecated.xml:70(link) xml/api-index-1.1.6.xml:24(link)
-#: xml/api-index-1.1.6.xml:31(link) xml/api-index-1.1.6.xml:32(link)
+#: xml/api-index-1.1.6.xml:32(link) xml/api-index-1.1.6.xml:33(link)
 #: xml/api-index-1.1.5.xml:19(link) xml/api-index-1.1.5.xml:20(link)
 #: xml/api-index-1.1.5.xml:59(link) xml/api-index-1.1.5.xml:60(link)
 #: xml/api-index-1.1.1.xml:16(link) xml/api-index-1.1.1.xml:17(link)
@@ -3631,12 +3631,12 @@ msgid "<link linkend=\"GHashTable\"><placeholder-1/></link> *hash_table"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:27(link) xml/gcut-test-utils.xml:150(primary)
-#: xml/api-index-full.xml:591(link) xml/api-index-1.1.6.xml:32(link)
+#: xml/api-index-full.xml:591(link) xml/api-index-1.1.6.xml:33(link)
 msgid "gcut_take_string"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:28(link) xml/gcut-test-utils.xml:166(primary)
-#: xml/api-index-full.xml:589(link) xml/api-index-1.1.6.xml:31(link)
+#: xml/api-index-full.xml:589(link) xml/api-index-1.1.6.xml:32(link)
 msgid "gcut_take_new_string"
 msgstr ""
 
@@ -4088,13 +4088,14 @@ msgstr ""
 
 #: xml/gcut-test-utils.xml:163(para) xml/gcut-test-utils.xml:178(para)
 #: xml/gcut-test-utils.xml:544(para) xml/gcut-process.xml:724(para)
-#: xml/gcut-process.xml:740(para) xml/gcut-event-loop.xml:166(para)
-#: xml/gcut-event-loop.xml:187(para) xml/gcut-event-loop.xml:198(para)
-#: xml/gcut-event-loop.xml:230(para) xml/gcut-event-loop.xml:257(para)
-#: xml/gcut-event-loop.xml:292(para) xml/gcut-event-loop.xml:319(para)
-#: xml/gcut-event-loop.xml:354(para) xml/gcut-event-loop.xml:377(para)
-#: xml/gcut-event-loop.xml:408(para) xml/gcut-event-loop.xml:426(para)
-#: xml/cut-test-utils.xml:346(para) xml/cut-test-utils.xml:391(para)
+#: xml/gcut-process.xml:740(para) xml/gcut-glib-event-loop.xml:69(para)
+#: xml/gcut-event-loop.xml:166(para) xml/gcut-event-loop.xml:187(para)
+#: xml/gcut-event-loop.xml:198(para) xml/gcut-event-loop.xml:230(para)
+#: xml/gcut-event-loop.xml:257(para) xml/gcut-event-loop.xml:292(para)
+#: xml/gcut-event-loop.xml:319(para) xml/gcut-event-loop.xml:354(para)
+#: xml/gcut-event-loop.xml:377(para) xml/gcut-event-loop.xml:408(para)
+#: xml/gcut-event-loop.xml:426(para) xml/cut-test-utils.xml:346(para)
+#: xml/cut-test-utils.xml:391(para)
 msgid "Since 1.1.6"
 msgstr "1.1.6から"
 
@@ -5447,8 +5448,8 @@ msgstr ""
 #: xml/api-index-full.xml:524(link) xml/api-index-full.xml:525(link)
 #: xml/api-index-full.xml:526(link) xml/api-index-full.xml:527(link)
 #: xml/api-index-full.xml:528(link) xml/api-index-full.xml:529(link)
-#: xml/api-index-full.xml:530(link) xml/api-index-1.1.6.xml:27(link)
-#: xml/api-index-1.1.6.xml:28(link) xml/api-index-1.1.5.xml:23(link)
+#: xml/api-index-full.xml:530(link) xml/api-index-1.1.6.xml:28(link)
+#: xml/api-index-1.1.6.xml:29(link) xml/api-index-1.1.5.xml:23(link)
 #: xml/api-index-1.1.5.xml:24(link) xml/api-index-1.1.5.xml:25(link)
 #: xml/api-index-1.1.5.xml:26(link) xml/api-index-1.1.5.xml:27(link)
 #: xml/api-index-1.1.5.xml:28(link) xml/api-index-1.1.5.xml:29(link)
@@ -5732,12 +5733,12 @@ msgid "GCutEventLoop"
 msgstr ""
 
 #: xml/gcut-process.xml:70(link) xml/gcut-process.xml:713(primary)
-#: xml/api-index-full.xml:509(link) xml/api-index-1.1.6.xml:27(link)
+#: xml/api-index-full.xml:509(link) xml/api-index-1.1.6.xml:28(link)
 msgid "gcut_process_get_event_loop"
 msgstr ""
 
 #: xml/gcut-process.xml:71(link) xml/gcut-process.xml:727(primary)
-#: xml/api-index-full.xml:526(link) xml/api-index-1.1.6.xml:28(link)
+#: xml/api-index-full.xml:526(link) xml/api-index-1.1.6.xml:29(link)
 msgid "gcut_process_set_event_loop"
 msgstr ""
 
@@ -9099,16 +9100,17 @@ msgstr ""
 #: xml/gcut-glib-event-loop.xml:7(refentrytitle)
 #: xml/gcut-glib-event-loop.xml:14(refname)
 msgid "GLib event loop"
-msgstr ""
+msgstr "GLib用イベントループ"
 
 #: xml/gcut-glib-event-loop.xml:15(refpurpose)
 msgid "Event loop API for GLib main context and loop."
-msgstr ""
+msgstr "GLibのGMainContextとGMainLoop用のイベントループAPI。"
 
 #: xml/gcut-glib-event-loop.xml:22(link)
 #: xml/gcut-glib-event-loop.xml:38(title)
 #: xml/gcut-glib-event-loop.xml:39(primary) xml/api-index-full.xml:422(link)
 #: xml/api-index-full.xml:423(link) xml/api-index-full.xml:424(link)
+#: xml/api-index-1.1.6.xml:25(link)
 msgid "GCutGLibEventLoop"
 msgstr ""
 
@@ -9120,6 +9122,7 @@ msgstr ""
 
 #: xml/gcut-glib-event-loop.xml:24(link)
 #: xml/gcut-glib-event-loop.xml:57(primary) xml/api-index-full.xml:424(link)
+#: xml/api-index-1.1.6.xml:25(link)
 msgid "gcut_glib_event_loop_new"
 msgstr ""
 
@@ -9165,6 +9168,25 @@ msgstr ""
 #, no-wrap
 msgid "<link linkend=\"GCutEventLoop\"><returnvalue>GCutEventLoop</returnvalue></link> *     gcut_glib_event_loop_new            (<parameter><link linkend=\"GMainContext\"><type>GMainContext</type></link> *context</parameter>);"
 msgstr ""
+
+#: xml/gcut-glib-event-loop.xml:59(para)
+msgid ""
+"Creates a new <link linkend=\"GCutEeventLoop\"><type>GCutEeventLoop</type></"
+"link> for <parameter>context</parameter>. If <parameter>context</parameter> "
+"is <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>, the default "
+"GLib's main context is used."
+msgstr "<parameter>context</parameter>用の新しい<link linkend=\"GCutEeventLoop\"><type>GCutEeventLoop</type></link>を作ります。<parameter>context</parameter>が<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>ならGLibのデフォルトGMainContextが使われます。"
+
+#: xml/gcut-glib-event-loop.xml:64(simpara)
+msgid ""
+"a <link linkend=\"GMainContext\"><type>GMainContext</type></link> or <link "
+"linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
+msgstr "<link linkend=\"GMainContext\"><type>GMainContext</type></link>または<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
+
+#: xml/gcut-glib-event-loop.xml:66(simpara)
+msgid ""
+"a new <link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>."
+msgstr "新しい<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>。"
 
 #: xml/gcut-event-loop.xml:7(refentrytitle)
 #: xml/gcut-event-loop.xml:14(refname)
@@ -23638,137 +23660,137 @@ msgstr ""
 #: xml/api-index-1.1.6.xml:15(primaryie) xml/api-index-1.1.6.xml:16(primaryie)
 #: xml/api-index-1.1.6.xml:17(primaryie) xml/api-index-1.1.6.xml:18(primaryie)
 #: xml/api-index-1.1.6.xml:19(primaryie) xml/api-index-1.1.6.xml:20(primaryie)
-#: xml/api-index-1.1.6.xml:21(primaryie) xml/api-index-1.1.6.xml:27(primaryie)
-#: xml/api-index-1.1.6.xml:28(primaryie) xml/api-index-1.1.5.xml:7(primaryie)
-#: xml/api-index-1.1.5.xml:10(primaryie) xml/api-index-1.1.5.xml:11(primaryie)
-#: xml/api-index-1.1.5.xml:12(primaryie) xml/api-index-1.1.5.xml:13(primaryie)
-#: xml/api-index-1.1.5.xml:16(primaryie) xml/api-index-1.1.5.xml:19(primaryie)
-#: xml/api-index-1.1.5.xml:20(primaryie) xml/api-index-1.1.5.xml:28(primaryie)
-#: xml/api-index-1.1.5.xml:29(primaryie) xml/api-index-1.1.5.xml:30(primaryie)
-#: xml/api-index-1.1.5.xml:31(primaryie) xml/api-index-1.1.5.xml:32(primaryie)
-#: xml/api-index-1.1.5.xml:33(primaryie) xml/api-index-1.1.5.xml:34(primaryie)
-#: xml/api-index-1.1.5.xml:35(primaryie) xml/api-index-1.1.5.xml:36(primaryie)
-#: xml/api-index-1.1.5.xml:37(primaryie) xml/api-index-1.1.5.xml:38(primaryie)
-#: xml/api-index-1.1.5.xml:39(primaryie) xml/api-index-1.1.5.xml:40(primaryie)
-#: xml/api-index-1.1.5.xml:41(primaryie) xml/api-index-1.1.5.xml:42(primaryie)
-#: xml/api-index-1.1.5.xml:43(primaryie) xml/api-index-1.1.5.xml:44(primaryie)
-#: xml/api-index-1.1.5.xml:45(primaryie) xml/api-index-1.1.5.xml:46(primaryie)
-#: xml/api-index-1.1.5.xml:47(primaryie) xml/api-index-1.1.5.xml:48(primaryie)
-#: xml/api-index-1.1.5.xml:49(primaryie) xml/api-index-1.1.5.xml:50(primaryie)
-#: xml/api-index-1.1.5.xml:51(primaryie) xml/api-index-1.1.5.xml:52(primaryie)
-#: xml/api-index-1.1.5.xml:55(primaryie) xml/api-index-1.1.5.xml:56(primaryie)
-#: xml/api-index-1.1.5.xml:59(primaryie) xml/api-index-1.1.5.xml:60(primaryie)
-#: xml/api-index-1.1.4.xml:7(primaryie) xml/api-index-1.1.4.xml:8(primaryie)
-#: xml/api-index-1.1.4.xml:13(primaryie) xml/api-index-1.1.4.xml:14(primaryie)
-#: xml/api-index-1.1.3.xml:20(primaryie) xml/api-index-1.1.3.xml:21(primaryie)
-#: xml/api-index-1.1.3.xml:22(primaryie) xml/api-index-1.1.3.xml:23(primaryie)
-#: xml/api-index-1.1.3.xml:24(primaryie) xml/api-index-1.1.3.xml:25(primaryie)
-#: xml/api-index-1.1.1.xml:10(primaryie) xml/api-index-1.1.1.xml:16(primaryie)
-#: xml/api-index-1.1.1.xml:17(primaryie) xml/api-index-1.1.0.xml:48(primaryie)
-#: xml/api-index-1.0.xml:7(primaryie) xml/api-index-1.0.xml:8(primaryie)
-#: xml/api-index-1.0.xml:9(primaryie) xml/api-index-1.0.xml:10(primaryie)
-#: xml/api-index-1.0.9.xml:15(primaryie) xml/api-index-1.0.8.xml:7(primaryie)
-#: xml/api-index-1.0.8.xml:11(primaryie) xml/api-index-1.0.8.xml:12(primaryie)
-#: xml/api-index-1.0.8.xml:13(primaryie) xml/api-index-1.0.8.xml:14(primaryie)
-#: xml/api-index-1.0.8.xml:15(primaryie) xml/api-index-1.0.8.xml:16(primaryie)
-#: xml/api-index-1.0.8.xml:17(primaryie) xml/api-index-1.0.8.xml:18(primaryie)
-#: xml/api-index-1.0.8.xml:19(primaryie) xml/api-index-1.0.8.xml:20(primaryie)
-#: xml/api-index-1.0.8.xml:21(primaryie) xml/api-index-1.0.8.xml:22(primaryie)
-#: xml/api-index-1.0.8.xml:23(primaryie) xml/api-index-1.0.8.xml:24(primaryie)
-#: xml/api-index-1.0.8.xml:25(primaryie) xml/api-index-1.0.7.xml:7(primaryie)
-#: xml/api-index-1.0.7.xml:11(primaryie) xml/api-index-1.0.7.xml:12(primaryie)
-#: xml/api-index-1.0.7.xml:13(primaryie) xml/api-index-1.0.7.xml:14(primaryie)
-#: xml/api-index-1.0.7.xml:15(primaryie) xml/api-index-1.0.7.xml:16(primaryie)
-#: xml/api-index-1.0.7.xml:17(primaryie) xml/api-index-1.0.7.xml:18(primaryie)
-#: xml/api-index-1.0.7.xml:19(primaryie) xml/api-index-1.0.7.xml:20(primaryie)
-#: xml/api-index-1.0.7.xml:21(primaryie) xml/api-index-1.0.7.xml:24(primaryie)
-#: xml/api-index-1.0.6.xml:7(primaryie) xml/api-index-1.0.6.xml:8(primaryie)
-#: xml/api-index-1.0.6.xml:9(primaryie) xml/api-index-1.0.6.xml:10(primaryie)
-#: xml/api-index-1.0.6.xml:13(primaryie) xml/api-index-1.0.6.xml:14(primaryie)
-#: xml/api-index-1.0.6.xml:15(primaryie) xml/api-index-1.0.6.xml:16(primaryie)
-#: xml/api-index-1.0.6.xml:18(primaryie) xml/api-index-1.0.6.xml:19(primaryie)
-#: xml/api-index-1.0.6.xml:20(primaryie) xml/api-index-1.0.6.xml:21(primaryie)
-#: xml/api-index-1.0.6.xml:22(primaryie) xml/api-index-1.0.6.xml:23(primaryie)
-#: xml/api-index-1.0.6.xml:24(primaryie) xml/api-index-1.0.6.xml:25(primaryie)
-#: xml/api-index-1.0.6.xml:28(primaryie) xml/api-index-1.0.6.xml:29(primaryie)
-#: xml/api-index-1.0.6.xml:30(primaryie) xml/api-index-1.0.6.xml:31(primaryie)
-#: xml/api-index-1.0.6.xml:32(primaryie) xml/api-index-1.0.6.xml:33(primaryie)
-#: xml/api-index-1.0.6.xml:34(primaryie) xml/api-index-1.0.6.xml:42(primaryie)
-#: xml/api-index-1.0.6.xml:43(primaryie) xml/api-index-1.0.6.xml:44(primaryie)
-#: xml/api-index-1.0.6.xml:45(primaryie) xml/api-index-1.0.6.xml:46(primaryie)
-#: xml/api-index-1.0.6.xml:47(primaryie) xml/api-index-1.0.6.xml:48(primaryie)
-#: xml/api-index-1.0.6.xml:49(primaryie) xml/api-index-1.0.6.xml:50(primaryie)
-#: xml/api-index-1.0.6.xml:51(primaryie) xml/api-index-1.0.6.xml:52(primaryie)
-#: xml/api-index-1.0.6.xml:53(primaryie) xml/api-index-1.0.6.xml:54(primaryie)
-#: xml/api-index-1.0.6.xml:55(primaryie) xml/api-index-1.0.6.xml:56(primaryie)
-#: xml/api-index-1.0.6.xml:57(primaryie) xml/api-index-1.0.6.xml:58(primaryie)
-#: xml/api-index-1.0.6.xml:59(primaryie) xml/api-index-1.0.6.xml:60(primaryie)
-#: xml/api-index-1.0.6.xml:61(primaryie) xml/api-index-1.0.6.xml:64(primaryie)
-#: xml/api-index-1.0.6.xml:67(primaryie) xml/api-index-1.0.6.xml:68(primaryie)
-#: xml/api-index-1.0.6.xml:75(primaryie) xml/api-index-1.0.6.xml:76(primaryie)
-#: xml/api-index-1.0.6.xml:77(primaryie) xml/api-index-1.0.6.xml:78(primaryie)
-#: xml/api-index-1.0.6.xml:79(primaryie) xml/api-index-1.0.6.xml:80(primaryie)
-#: xml/api-index-1.0.6.xml:81(primaryie) xml/api-index-1.0.6.xml:82(primaryie)
-#: xml/api-index-1.0.6.xml:85(primaryie) xml/api-index-1.0.6.xml:86(primaryie)
-#: xml/api-index-1.0.6.xml:87(primaryie) xml/api-index-1.0.6.xml:88(primaryie)
-#: xml/api-index-1.0.6.xml:89(primaryie) xml/api-index-1.0.6.xml:90(primaryie)
-#: xml/api-index-1.0.6.xml:91(primaryie) xml/api-index-1.0.6.xml:92(primaryie)
-#: xml/api-index-1.0.6.xml:93(primaryie) xml/api-index-1.0.6.xml:94(primaryie)
-#: xml/api-index-1.0.6.xml:97(primaryie) xml/api-index-1.0.5.xml:7(primaryie)
-#: xml/api-index-1.0.5.xml:8(primaryie) xml/api-index-1.0.5.xml:9(primaryie)
-#: xml/api-index-1.0.5.xml:10(primaryie) xml/api-index-1.0.5.xml:11(primaryie)
-#: xml/api-index-1.0.5.xml:12(primaryie) xml/api-index-1.0.5.xml:13(primaryie)
-#: xml/api-index-1.0.5.xml:14(primaryie) xml/api-index-1.0.5.xml:15(primaryie)
-#: xml/api-index-1.0.5.xml:16(primaryie) xml/api-index-1.0.5.xml:17(primaryie)
-#: xml/api-index-1.0.5.xml:23(primaryie) xml/api-index-1.0.5.xml:24(primaryie)
-#: xml/api-index-1.0.5.xml:25(primaryie) xml/api-index-1.0.5.xml:26(primaryie)
-#: xml/api-index-1.0.5.xml:27(primaryie) xml/api-index-1.0.5.xml:28(primaryie)
-#: xml/api-index-1.0.5.xml:29(primaryie) xml/api-index-1.0.5.xml:30(primaryie)
-#: xml/api-index-1.0.5.xml:31(primaryie) xml/api-index-1.0.5.xml:32(primaryie)
-#: xml/api-index-1.0.5.xml:33(primaryie) xml/api-index-1.0.5.xml:34(primaryie)
-#: xml/api-index-1.0.5.xml:39(primaryie) xml/api-index-1.0.5.xml:40(primaryie)
-#: xml/api-index-1.0.5.xml:41(primaryie) xml/api-index-1.0.5.xml:44(primaryie)
-#: xml/api-index-1.0.5.xml:47(primaryie) xml/api-index-1.0.5.xml:50(primaryie)
-#: xml/api-index-1.0.5.xml:51(primaryie) xml/api-index-1.0.5.xml:52(primaryie)
-#: xml/api-index-1.0.5.xml:53(primaryie) xml/api-index-1.0.5.xml:54(primaryie)
-#: xml/api-index-1.0.5.xml:58(primaryie) xml/api-index-1.0.5.xml:60(primaryie)
-#: xml/api-index-1.0.5.xml:70(primaryie) xml/api-index-1.0.5.xml:71(primaryie)
-#: xml/api-index-1.0.5.xml:72(primaryie) xml/api-index-1.0.5.xml:75(primaryie)
-#: xml/api-index-1.0.5.xml:76(primaryie) xml/api-index-1.0.5.xml:79(primaryie)
-#: xml/api-index-1.0.5.xml:80(primaryie) xml/api-index-1.0.4.xml:7(primaryie)
-#: xml/api-index-1.0.4.xml:8(primaryie) xml/api-index-1.0.4.xml:16(primaryie)
-#: xml/api-index-1.0.4.xml:17(primaryie) xml/api-index-1.0.4.xml:18(primaryie)
-#: xml/api-index-1.0.4.xml:19(primaryie) xml/api-index-1.0.4.xml:20(primaryie)
-#: xml/api-index-1.0.4.xml:21(primaryie) xml/api-index-1.0.4.xml:22(primaryie)
-#: xml/api-index-1.0.4.xml:23(primaryie) xml/api-index-1.0.4.xml:24(primaryie)
-#: xml/api-index-1.0.4.xml:25(primaryie) xml/api-index-1.0.4.xml:26(primaryie)
-#: xml/api-index-1.0.4.xml:27(primaryie) xml/api-index-1.0.4.xml:28(primaryie)
-#: xml/api-index-1.0.4.xml:29(primaryie) xml/api-index-1.0.4.xml:30(primaryie)
-#: xml/api-index-1.0.4.xml:31(primaryie) xml/api-index-1.0.4.xml:32(primaryie)
-#: xml/api-index-1.0.4.xml:33(primaryie) xml/api-index-1.0.4.xml:34(primaryie)
-#: xml/api-index-1.0.4.xml:35(primaryie) xml/api-index-1.0.4.xml:36(primaryie)
-#: xml/api-index-1.0.4.xml:37(primaryie) xml/api-index-1.0.4.xml:38(primaryie)
-#: xml/api-index-1.0.4.xml:39(primaryie) xml/api-index-1.0.4.xml:40(primaryie)
-#: xml/api-index-1.0.4.xml:41(primaryie) xml/api-index-1.0.4.xml:42(primaryie)
-#: xml/api-index-1.0.4.xml:43(primaryie) xml/api-index-1.0.4.xml:44(primaryie)
-#: xml/api-index-1.0.4.xml:45(primaryie) xml/api-index-1.0.4.xml:48(primaryie)
-#: xml/api-index-1.0.4.xml:51(primaryie) xml/api-index-1.0.3.xml:7(primaryie)
-#: xml/api-index-1.0.3.xml:8(primaryie) xml/api-index-1.0.3.xml:9(primaryie)
-#: xml/api-index-1.0.3.xml:10(primaryie) xml/api-index-1.0.3.xml:11(primaryie)
-#: xml/api-index-1.0.3.xml:12(primaryie) xml/api-index-1.0.3.xml:13(primaryie)
-#: xml/api-index-1.0.3.xml:17(primaryie) xml/api-index-1.0.3.xml:20(primaryie)
-#: xml/api-index-1.0.3.xml:21(primaryie) xml/api-index-1.0.3.xml:24(primaryie)
-#: xml/api-index-1.0.3.xml:25(primaryie) xml/api-index-1.0.3.xml:26(primaryie)
-#: xml/api-index-1.0.2.xml:7(primaryie) xml/api-index-1.0.2.xml:8(primaryie)
-#: xml/api-index-1.0.2.xml:9(primaryie) xml/api-index-1.0.2.xml:10(primaryie)
-#: xml/api-index-1.0.2.xml:11(primaryie) xml/api-index-1.0.2.xml:12(primaryie)
-#: xml/api-index-1.0.2.xml:13(primaryie) xml/api-index-1.0.2.xml:14(primaryie)
-#: xml/api-index-1.0.2.xml:15(primaryie) xml/api-index-0.9.xml:7(primaryie)
-#: xml/api-index-0.9.xml:8(primaryie) xml/api-index-0.9.xml:9(primaryie)
-#: xml/api-index-0.9.xml:10(primaryie) xml/api-index-0.8.xml:7(primaryie)
-#: xml/api-index-0.8.xml:8(primaryie) xml/api-index-0.8.xml:9(primaryie)
-#: xml/api-index-0.8.xml:13(primaryie) xml/api-index-0.3.xml:7(primaryie)
-#: xml/api-index-0.3.xml:8(primaryie)
+#: xml/api-index-1.1.6.xml:21(primaryie) xml/api-index-1.1.6.xml:25(primaryie)
+#: xml/api-index-1.1.6.xml:28(primaryie) xml/api-index-1.1.6.xml:29(primaryie)
+#: xml/api-index-1.1.5.xml:7(primaryie) xml/api-index-1.1.5.xml:10(primaryie)
+#: xml/api-index-1.1.5.xml:11(primaryie) xml/api-index-1.1.5.xml:12(primaryie)
+#: xml/api-index-1.1.5.xml:13(primaryie) xml/api-index-1.1.5.xml:16(primaryie)
+#: xml/api-index-1.1.5.xml:19(primaryie) xml/api-index-1.1.5.xml:20(primaryie)
+#: xml/api-index-1.1.5.xml:28(primaryie) xml/api-index-1.1.5.xml:29(primaryie)
+#: xml/api-index-1.1.5.xml:30(primaryie) xml/api-index-1.1.5.xml:31(primaryie)
+#: xml/api-index-1.1.5.xml:32(primaryie) xml/api-index-1.1.5.xml:33(primaryie)
+#: xml/api-index-1.1.5.xml:34(primaryie) xml/api-index-1.1.5.xml:35(primaryie)
+#: xml/api-index-1.1.5.xml:36(primaryie) xml/api-index-1.1.5.xml:37(primaryie)
+#: xml/api-index-1.1.5.xml:38(primaryie) xml/api-index-1.1.5.xml:39(primaryie)
+#: xml/api-index-1.1.5.xml:40(primaryie) xml/api-index-1.1.5.xml:41(primaryie)
+#: xml/api-index-1.1.5.xml:42(primaryie) xml/api-index-1.1.5.xml:43(primaryie)
+#: xml/api-index-1.1.5.xml:44(primaryie) xml/api-index-1.1.5.xml:45(primaryie)
+#: xml/api-index-1.1.5.xml:46(primaryie) xml/api-index-1.1.5.xml:47(primaryie)
+#: xml/api-index-1.1.5.xml:48(primaryie) xml/api-index-1.1.5.xml:49(primaryie)
+#: xml/api-index-1.1.5.xml:50(primaryie) xml/api-index-1.1.5.xml:51(primaryie)
+#: xml/api-index-1.1.5.xml:52(primaryie) xml/api-index-1.1.5.xml:55(primaryie)
+#: xml/api-index-1.1.5.xml:56(primaryie) xml/api-index-1.1.5.xml:59(primaryie)
+#: xml/api-index-1.1.5.xml:60(primaryie) xml/api-index-1.1.4.xml:7(primaryie)
+#: xml/api-index-1.1.4.xml:8(primaryie) xml/api-index-1.1.4.xml:13(primaryie)
+#: xml/api-index-1.1.4.xml:14(primaryie) xml/api-index-1.1.3.xml:20(primaryie)
+#: xml/api-index-1.1.3.xml:21(primaryie) xml/api-index-1.1.3.xml:22(primaryie)
+#: xml/api-index-1.1.3.xml:23(primaryie) xml/api-index-1.1.3.xml:24(primaryie)
+#: xml/api-index-1.1.3.xml:25(primaryie) xml/api-index-1.1.1.xml:10(primaryie)
+#: xml/api-index-1.1.1.xml:16(primaryie) xml/api-index-1.1.1.xml:17(primaryie)
+#: xml/api-index-1.1.0.xml:48(primaryie) xml/api-index-1.0.xml:7(primaryie)
+#: xml/api-index-1.0.xml:8(primaryie) xml/api-index-1.0.xml:9(primaryie)
+#: xml/api-index-1.0.xml:10(primaryie) xml/api-index-1.0.9.xml:15(primaryie)
+#: xml/api-index-1.0.8.xml:7(primaryie) xml/api-index-1.0.8.xml:11(primaryie)
+#: xml/api-index-1.0.8.xml:12(primaryie) xml/api-index-1.0.8.xml:13(primaryie)
+#: xml/api-index-1.0.8.xml:14(primaryie) xml/api-index-1.0.8.xml:15(primaryie)
+#: xml/api-index-1.0.8.xml:16(primaryie) xml/api-index-1.0.8.xml:17(primaryie)
+#: xml/api-index-1.0.8.xml:18(primaryie) xml/api-index-1.0.8.xml:19(primaryie)
+#: xml/api-index-1.0.8.xml:20(primaryie) xml/api-index-1.0.8.xml:21(primaryie)
+#: xml/api-index-1.0.8.xml:22(primaryie) xml/api-index-1.0.8.xml:23(primaryie)
+#: xml/api-index-1.0.8.xml:24(primaryie) xml/api-index-1.0.8.xml:25(primaryie)
+#: xml/api-index-1.0.7.xml:7(primaryie) xml/api-index-1.0.7.xml:11(primaryie)
+#: xml/api-index-1.0.7.xml:12(primaryie) xml/api-index-1.0.7.xml:13(primaryie)
+#: xml/api-index-1.0.7.xml:14(primaryie) xml/api-index-1.0.7.xml:15(primaryie)
+#: xml/api-index-1.0.7.xml:16(primaryie) xml/api-index-1.0.7.xml:17(primaryie)
+#: xml/api-index-1.0.7.xml:18(primaryie) xml/api-index-1.0.7.xml:19(primaryie)
+#: xml/api-index-1.0.7.xml:20(primaryie) xml/api-index-1.0.7.xml:21(primaryie)
+#: xml/api-index-1.0.7.xml:24(primaryie) xml/api-index-1.0.6.xml:7(primaryie)
+#: xml/api-index-1.0.6.xml:8(primaryie) xml/api-index-1.0.6.xml:9(primaryie)
+#: xml/api-index-1.0.6.xml:10(primaryie) xml/api-index-1.0.6.xml:13(primaryie)
+#: xml/api-index-1.0.6.xml:14(primaryie) xml/api-index-1.0.6.xml:15(primaryie)
+#: xml/api-index-1.0.6.xml:16(primaryie) xml/api-index-1.0.6.xml:18(primaryie)
+#: xml/api-index-1.0.6.xml:19(primaryie) xml/api-index-1.0.6.xml:20(primaryie)
+#: xml/api-index-1.0.6.xml:21(primaryie) xml/api-index-1.0.6.xml:22(primaryie)
+#: xml/api-index-1.0.6.xml:23(primaryie) xml/api-index-1.0.6.xml:24(primaryie)
+#: xml/api-index-1.0.6.xml:25(primaryie) xml/api-index-1.0.6.xml:28(primaryie)
+#: xml/api-index-1.0.6.xml:29(primaryie) xml/api-index-1.0.6.xml:30(primaryie)
+#: xml/api-index-1.0.6.xml:31(primaryie) xml/api-index-1.0.6.xml:32(primaryie)
+#: xml/api-index-1.0.6.xml:33(primaryie) xml/api-index-1.0.6.xml:34(primaryie)
+#: xml/api-index-1.0.6.xml:42(primaryie) xml/api-index-1.0.6.xml:43(primaryie)
+#: xml/api-index-1.0.6.xml:44(primaryie) xml/api-index-1.0.6.xml:45(primaryie)
+#: xml/api-index-1.0.6.xml:46(primaryie) xml/api-index-1.0.6.xml:47(primaryie)
+#: xml/api-index-1.0.6.xml:48(primaryie) xml/api-index-1.0.6.xml:49(primaryie)
+#: xml/api-index-1.0.6.xml:50(primaryie) xml/api-index-1.0.6.xml:51(primaryie)
+#: xml/api-index-1.0.6.xml:52(primaryie) xml/api-index-1.0.6.xml:53(primaryie)
+#: xml/api-index-1.0.6.xml:54(primaryie) xml/api-index-1.0.6.xml:55(primaryie)
+#: xml/api-index-1.0.6.xml:56(primaryie) xml/api-index-1.0.6.xml:57(primaryie)
+#: xml/api-index-1.0.6.xml:58(primaryie) xml/api-index-1.0.6.xml:59(primaryie)
+#: xml/api-index-1.0.6.xml:60(primaryie) xml/api-index-1.0.6.xml:61(primaryie)
+#: xml/api-index-1.0.6.xml:64(primaryie) xml/api-index-1.0.6.xml:67(primaryie)
+#: xml/api-index-1.0.6.xml:68(primaryie) xml/api-index-1.0.6.xml:75(primaryie)
+#: xml/api-index-1.0.6.xml:76(primaryie) xml/api-index-1.0.6.xml:77(primaryie)
+#: xml/api-index-1.0.6.xml:78(primaryie) xml/api-index-1.0.6.xml:79(primaryie)
+#: xml/api-index-1.0.6.xml:80(primaryie) xml/api-index-1.0.6.xml:81(primaryie)
+#: xml/api-index-1.0.6.xml:82(primaryie) xml/api-index-1.0.6.xml:85(primaryie)
+#: xml/api-index-1.0.6.xml:86(primaryie) xml/api-index-1.0.6.xml:87(primaryie)
+#: xml/api-index-1.0.6.xml:88(primaryie) xml/api-index-1.0.6.xml:89(primaryie)
+#: xml/api-index-1.0.6.xml:90(primaryie) xml/api-index-1.0.6.xml:91(primaryie)
+#: xml/api-index-1.0.6.xml:92(primaryie) xml/api-index-1.0.6.xml:93(primaryie)
+#: xml/api-index-1.0.6.xml:94(primaryie) xml/api-index-1.0.6.xml:97(primaryie)
+#: xml/api-index-1.0.5.xml:7(primaryie) xml/api-index-1.0.5.xml:8(primaryie)
+#: xml/api-index-1.0.5.xml:9(primaryie) xml/api-index-1.0.5.xml:10(primaryie)
+#: xml/api-index-1.0.5.xml:11(primaryie) xml/api-index-1.0.5.xml:12(primaryie)
+#: xml/api-index-1.0.5.xml:13(primaryie) xml/api-index-1.0.5.xml:14(primaryie)
+#: xml/api-index-1.0.5.xml:15(primaryie) xml/api-index-1.0.5.xml:16(primaryie)
+#: xml/api-index-1.0.5.xml:17(primaryie) xml/api-index-1.0.5.xml:23(primaryie)
+#: xml/api-index-1.0.5.xml:24(primaryie) xml/api-index-1.0.5.xml:25(primaryie)
+#: xml/api-index-1.0.5.xml:26(primaryie) xml/api-index-1.0.5.xml:27(primaryie)
+#: xml/api-index-1.0.5.xml:28(primaryie) xml/api-index-1.0.5.xml:29(primaryie)
+#: xml/api-index-1.0.5.xml:30(primaryie) xml/api-index-1.0.5.xml:31(primaryie)
+#: xml/api-index-1.0.5.xml:32(primaryie) xml/api-index-1.0.5.xml:33(primaryie)
+#: xml/api-index-1.0.5.xml:34(primaryie) xml/api-index-1.0.5.xml:39(primaryie)
+#: xml/api-index-1.0.5.xml:40(primaryie) xml/api-index-1.0.5.xml:41(primaryie)
+#: xml/api-index-1.0.5.xml:44(primaryie) xml/api-index-1.0.5.xml:47(primaryie)
+#: xml/api-index-1.0.5.xml:50(primaryie) xml/api-index-1.0.5.xml:51(primaryie)
+#: xml/api-index-1.0.5.xml:52(primaryie) xml/api-index-1.0.5.xml:53(primaryie)
+#: xml/api-index-1.0.5.xml:54(primaryie) xml/api-index-1.0.5.xml:58(primaryie)
+#: xml/api-index-1.0.5.xml:60(primaryie) xml/api-index-1.0.5.xml:70(primaryie)
+#: xml/api-index-1.0.5.xml:71(primaryie) xml/api-index-1.0.5.xml:72(primaryie)
+#: xml/api-index-1.0.5.xml:75(primaryie) xml/api-index-1.0.5.xml:76(primaryie)
+#: xml/api-index-1.0.5.xml:79(primaryie) xml/api-index-1.0.5.xml:80(primaryie)
+#: xml/api-index-1.0.4.xml:7(primaryie) xml/api-index-1.0.4.xml:8(primaryie)
+#: xml/api-index-1.0.4.xml:16(primaryie) xml/api-index-1.0.4.xml:17(primaryie)
+#: xml/api-index-1.0.4.xml:18(primaryie) xml/api-index-1.0.4.xml:19(primaryie)
+#: xml/api-index-1.0.4.xml:20(primaryie) xml/api-index-1.0.4.xml:21(primaryie)
+#: xml/api-index-1.0.4.xml:22(primaryie) xml/api-index-1.0.4.xml:23(primaryie)
+#: xml/api-index-1.0.4.xml:24(primaryie) xml/api-index-1.0.4.xml:25(primaryie)
+#: xml/api-index-1.0.4.xml:26(primaryie) xml/api-index-1.0.4.xml:27(primaryie)
+#: xml/api-index-1.0.4.xml:28(primaryie) xml/api-index-1.0.4.xml:29(primaryie)
+#: xml/api-index-1.0.4.xml:30(primaryie) xml/api-index-1.0.4.xml:31(primaryie)
+#: xml/api-index-1.0.4.xml:32(primaryie) xml/api-index-1.0.4.xml:33(primaryie)
+#: xml/api-index-1.0.4.xml:34(primaryie) xml/api-index-1.0.4.xml:35(primaryie)
+#: xml/api-index-1.0.4.xml:36(primaryie) xml/api-index-1.0.4.xml:37(primaryie)
+#: xml/api-index-1.0.4.xml:38(primaryie) xml/api-index-1.0.4.xml:39(primaryie)
+#: xml/api-index-1.0.4.xml:40(primaryie) xml/api-index-1.0.4.xml:41(primaryie)
+#: xml/api-index-1.0.4.xml:42(primaryie) xml/api-index-1.0.4.xml:43(primaryie)
+#: xml/api-index-1.0.4.xml:44(primaryie) xml/api-index-1.0.4.xml:45(primaryie)
+#: xml/api-index-1.0.4.xml:48(primaryie) xml/api-index-1.0.4.xml:51(primaryie)
+#: xml/api-index-1.0.3.xml:7(primaryie) xml/api-index-1.0.3.xml:8(primaryie)
+#: xml/api-index-1.0.3.xml:9(primaryie) xml/api-index-1.0.3.xml:10(primaryie)
+#: xml/api-index-1.0.3.xml:11(primaryie) xml/api-index-1.0.3.xml:12(primaryie)
+#: xml/api-index-1.0.3.xml:13(primaryie) xml/api-index-1.0.3.xml:17(primaryie)
+#: xml/api-index-1.0.3.xml:20(primaryie) xml/api-index-1.0.3.xml:21(primaryie)
+#: xml/api-index-1.0.3.xml:24(primaryie) xml/api-index-1.0.3.xml:25(primaryie)
+#: xml/api-index-1.0.3.xml:26(primaryie) xml/api-index-1.0.2.xml:7(primaryie)
+#: xml/api-index-1.0.2.xml:8(primaryie) xml/api-index-1.0.2.xml:9(primaryie)
+#: xml/api-index-1.0.2.xml:10(primaryie) xml/api-index-1.0.2.xml:11(primaryie)
+#: xml/api-index-1.0.2.xml:12(primaryie) xml/api-index-1.0.2.xml:13(primaryie)
+#: xml/api-index-1.0.2.xml:14(primaryie) xml/api-index-1.0.2.xml:15(primaryie)
+#: xml/api-index-0.9.xml:7(primaryie) xml/api-index-0.9.xml:8(primaryie)
+#: xml/api-index-0.9.xml:9(primaryie) xml/api-index-0.9.xml:10(primaryie)
+#: xml/api-index-0.8.xml:7(primaryie) xml/api-index-0.8.xml:8(primaryie)
+#: xml/api-index-0.8.xml:9(primaryie) xml/api-index-0.8.xml:13(primaryie)
+#: xml/api-index-0.3.xml:7(primaryie) xml/api-index-0.3.xml:8(primaryie)
 msgid "<placeholder-1/>, function in <placeholder-2/>"
 msgstr ""
 
@@ -23869,8 +23891,8 @@ msgstr ""
 #: xml/api-index-deprecated.xml:64(primaryie)
 #: xml/api-index-deprecated.xml:70(primaryie)
 #: xml/api-index-1.1.6.xml:7(primaryie) xml/api-index-1.1.6.xml:8(primaryie)
-#: xml/api-index-1.1.6.xml:24(primaryie) xml/api-index-1.1.6.xml:31(primaryie)
-#: xml/api-index-1.1.6.xml:32(primaryie) xml/api-index-1.1.4.xml:11(primaryie)
+#: xml/api-index-1.1.6.xml:24(primaryie) xml/api-index-1.1.6.xml:32(primaryie)
+#: xml/api-index-1.1.6.xml:33(primaryie) xml/api-index-1.1.4.xml:11(primaryie)
 #: xml/api-index-1.1.4.xml:12(primaryie) xml/api-index-1.1.3.xml:7(primaryie)
 #: xml/api-index-1.1.3.xml:8(primaryie) xml/api-index-1.1.3.xml:9(primaryie)
 #: xml/api-index-1.1.3.xml:12(primaryie) xml/api-index-1.1.3.xml:13(primaryie)
@@ -24016,7 +24038,7 @@ msgstr ""
 msgid "O"
 msgstr ""
 
-#: xml/api-index-full.xml:493(title) xml/api-index-1.1.6.xml:26(title)
+#: xml/api-index-full.xml:493(title) xml/api-index-1.1.6.xml:27(title)
 #: xml/api-index-1.1.5.xml:22(title)
 msgid "P"
 msgstr ""
@@ -24031,7 +24053,7 @@ msgid "S"
 msgstr ""
 
 #: xml/api-index-full.xml:578(title) xml/api-index-deprecated.xml:69(title)
-#: xml/api-index-1.1.6.xml:30(title) xml/api-index-1.1.5.xml:58(title)
+#: xml/api-index-1.1.6.xml:31(title) xml/api-index-1.1.5.xml:58(title)
 #: xml/api-index-1.1.3.xml:27(title) xml/api-index-1.1.1.xml:19(title)
 #: xml/api-index-1.0.7.xml:26(title) xml/api-index-1.0.6.xml:96(title)
 #: xml/api-index-1.0.5.xml:74(title) xml/api-index-1.0.4.xml:50(title)
