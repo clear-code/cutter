@@ -243,6 +243,7 @@ extern "C" {
     cut_test_context_set_fixture_data_dir(              \
         cut_get_current_test_context(), __VA_ARGS__)
 
+#ifndef CUTTER_DISABLE_DEPRECATED
 /**
  * cut_build_fixture_data_path:
  * @path: a first element of the path to the fixture data.
@@ -264,6 +265,7 @@ extern "C" {
 #define cut_build_fixture_data_path(...)                        \
     strdup(cut_test_context_build_fixture_path(                 \
                cut_get_current_test_context(), __VA_ARGS__))
+#endif
 
 /**
  * cut_build_fixture_path:

@@ -1,5 +1,8 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* cutter/cut-test-utils.h (cut_build_fixture_data_path): add
+	missing deprecated guard.
+
 	* doc/reference/cutter-docs.sgml, doc/reference/cutter.types: add
 	GCutProcess and GCutEventLoop.
 
