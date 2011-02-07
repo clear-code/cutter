@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: update the latest release date.
+
 	* html/index.html*, html/notify-on-gnome.png: add screenshot of
 	--notify.
 
