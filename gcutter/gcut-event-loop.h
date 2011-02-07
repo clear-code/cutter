@@ -204,7 +204,7 @@ guint                gcut_event_loop_watch_child_full  (GCutEventLoop   *loop,
 /**
  * gcut_event_loop_add_timeout:
  * @loop: a #GCutEventLoop
- * @interval: the time between calls to the @function, in seconds.
+ * @interval_in_seconds: the time between calls to the @function, in seconds.
  * @function: function to call
  * @data: data to pass to @function
  *
@@ -224,7 +224,7 @@ guint                gcut_event_loop_add_timeout       (GCutEventLoop   *loop,
  * gcut_event_loop_add_timeout_full:
  * @loop: a #GCutEventLoop
  * @priority: the priority of the event.
- * @interval: the time between calls to the @function, in seconds.
+ * @interval_in_seconds: the time between calls to the @function, in seconds.
  * @function: function to call
  * @data: data to pass to @function
  * @notify: function to call when the event is removed, or %NULL

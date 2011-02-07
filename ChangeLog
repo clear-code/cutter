@@ -1,5 +1,7 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-event-loop.h: fix variable names in document.
+
 	* cutter/cut-test-utils.h (cut_build_fixture_data_path): add
 	missing deprecated guard.
 
