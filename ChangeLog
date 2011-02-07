@@ -1,5 +1,8 @@
 2011-02-07  Kouhei Sutou  <kou@clear-code.com>
 
+	* doc/reference/cutter-docs.sgml, doc/reference/cutter.types: add
+	GCutProcess and GCutEventLoop.
+
 	* gcutter/gcut-event-loop.h: fix function names.
 
 	* m4macros/cutter.m4: support --config-cache.
