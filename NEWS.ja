@@ -18,6 +18,8 @@
     * ((<GCutGLibEventLoop>))
   * Debian GNU/Linux squeeze対応。
     [Romuald Contyさんが提案]
+  * Ubuntu Maverick Meerkat対応。
+  * Fedora 14対応。
   * cutter.m4: --config-cache対応。
   * cutter.m4: --enable-coverageが更新するMakefileとして
     Makefile以外の名前に対応。（AC_CHECK_COVERAGE()の引数に

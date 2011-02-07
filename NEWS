@@ -18,6 +18,8 @@
     * ((<GCutGLibEventLoop>))
   * Supported Debian GNU/Linux squeeze.
     [Suggested by Romuald Conty]
+  * Supported Ubuntu Maverick Meerkat.
+  * Supported Fedora 14.
   * cutter.m4: supported --config-cache.
   * cutter.m4: supported custom Makefile for
     --enable-coverage. (specify custome Makefile name to
