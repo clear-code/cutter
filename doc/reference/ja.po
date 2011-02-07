@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.6\n"
 "POT-Creation-Date: 2011-02-07 11:49+0900\n"
-"PO-Revision-Date: 2011-02-07 11:57+0900\n"
+"PO-Revision-Date: 2011-02-07 12:39+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -9550,16 +9550,12 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-event-loop.xml:77(para)
-#, fuzzy
 msgid ""
 "<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link> "
 "encapsulates event loop. For example, event loop is used in <link linkend="
 "\"GCutProcess\"><type>GCutProcess</type></link>. It uses the GLib's default "
 "main context for it."
-msgstr ""
-"<link linkend=\"CutSubProcessGroup\"><type>CutSubProcessGroup</type></link>は"
-"いくつかの<link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>を"
-"まとめて実行するための便利オブジェクトです。"
+msgstr "<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>はイベントループをカプセル化します。イベントループは<link linkend=\"GCutProcess\"><type>GCutProcess</type></link>で使われています。GCutProcessはデフォルトではGLibのデフォルトGMainContextを使います。"
 
 #: xml/gcut-event-loop.xml:82(para)
 msgid ""
@@ -9569,15 +9565,11 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-event-loop.xml:87(para)
-#, fuzzy
 msgid ""
 "GCutter provides <link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></"
 "link> for GLib's main context and main loop, <link linkend="
 "\"GCutGLibEventLoop\"><type>GCutGLibEventLoop</type></link>."
-msgstr ""
-"<link linkend=\"CutSubProcessGroup\"><type>CutSubProcessGroup</type></link>は"
-"いくつかの<link linkend=\"CutSubProcess\"><type>CutSubProcess</type></link>を"
-"まとめて実行するための便利オブジェクトです。"
+msgstr "GCutterはGLibのGMainContextとGMainLoop用の<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>である<link linkend=\"GCutGLibEventLoop\"><type>GCutGLibEventLoop</type></link>を提供します。"
 
 #: xml/gcut-event-loop.xml:97(programlisting)
 #, no-wrap
@@ -9646,13 +9638,10 @@ msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>            
 msgstr ""
 
 #: xml/gcut-event-loop.xml:159(para)
-#, fuzzy
 msgid ""
 "Runs the given event loop until <link linkend=\"gcut-event-loop-quit"
 "\"><function>gcut_event_loop_quit()</function></link> is called on the loop."
-msgstr ""
-"<link linkend=\"cut-set-expected\"><function>cut_set_expected()</function></"
-"link>も見てください。"
+msgstr "<link linkend=\"gcut-event-loop-quit\"><function>gcut_event_loop_quit()</function></link>が呼ばれるまでイベントループを回します。"
 
 #: xml/gcut-event-loop.xml:168(title)
 msgid "gcut_event_loop_iterate ()"
@@ -9666,18 +9655,13 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-event-loop.xml:172(para)
-#, fuzzy
 msgid ""
 "Runs a single iteration for the given event loop. If no events are ready and "
 "<parameter>may_block</parameter> is <link linkend=\"TRUE:CAPS"
 "\"><literal>TRUE</literal></link>, waiting for a event become ready. "
 "Otherwise, if <parameter>may_block</parameter> is <link linkend=\"FALSE:CAPS"
 "\"><literal>FALSE</literal></link>, events are not waited to become ready."
-msgstr ""
-"<parameter>expected</parameter>と<parameter>actual</parameter>が両方とも"
-"<link linkend=\"CUT-TRUE:CAPS\"><literal>CUT_TRUE</literal></link>の値か、両"
-"方とも<link linkend=\"CUT-FALSE:CAPS\"><literal>CUT_FALSE</literal></link>の"
-"値のときパスします。"
+msgstr "イベントループを1回だけ回します。もし、イベントがなく<parameter>may_block</parameter>が<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>なら、イベントがくるまで待ちつづけます。<parameter>may_block</parameter>が<link linkend=\"FALSE:CAPS\"><literal>FALSE</literal></link>なら、イベントがくるのを待ちません。"
 
 #: xml/gcut-event-loop.xml:181(term)
 msgid "<parameter>may_block</parameter> :"
@@ -9685,16 +9669,13 @@ msgstr ""
 
 #: xml/gcut-event-loop.xml:182(simpara)
 msgid "whether the call may block."
-msgstr ""
+msgstr "呼び出しがブロックするかどうか。"
 
 #: xml/gcut-event-loop.xml:184(simpara)
-#, fuzzy
 msgid ""
 "<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link> if a event was "
 "dispatched."
-msgstr ""
-"マルチスレッドモードで実行するなら<link linkend=\"CUT-TRUE:CAPS"
-"\"><literal>CUT_TRUE</literal></link>。"
+msgstr "イベントを処理したら<link linkend=\"TRUE:CAPS\"><literal>TRUE</literal></link>。"
 
 #: xml/gcut-event-loop.xml:189(title)
 msgid "gcut_event_loop_quit ()"
@@ -9720,16 +9701,12 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-event-loop.xml:206(para)
-#, fuzzy
 msgid ""
 "Adds the <parameter>channel</parameter> into <parameter>loop</parameter> "
 "with the default priority. <parameter>function</parameter> is called when "
 "<parameter>condition</parameter> is met for the given <parameter>channel</"
 "parameter>."
-msgstr ""
-"(<parameter>expected</parameter> - <parameter>error</parameter>) &lt;= "
-"<parameter>actual</parameter> &lt;= (<parameter>expected</parameter> + "
-"<parameter>error</parameter>)が成り立つときパスします。"
+msgstr "<parameter>channel</parameter>をデフォルトの優先度で<parameter>loop</parameter>に追加します。<parameter>channel</parameter>に<parameter>condition</parameter>イベントが発生したら<parameter>function</parameter>が呼ばれます。"
 
 #: xml/gcut-event-loop.xml:212(simpara) xml/gcut-event-loop.xml:242(simpara)
 #: xml/gcut-event-loop.xml:271(simpara) xml/gcut-event-loop.xml:304(simpara)
@@ -9758,22 +9735,21 @@ msgstr ""
 #: xml/gcut-event-loop.xml:342(simpara) xml/gcut-event-loop.xml:368(simpara)
 #: xml/gcut-event-loop.xml:396(simpara)
 msgid "function to call"
-msgstr ""
+msgstr "呼び出される関数"
 
 #: xml/gcut-event-loop.xml:224(simpara) xml/gcut-event-loop.xml:251(simpara)
 #: xml/gcut-event-loop.xml:283(simpara) xml/gcut-event-loop.xml:313(simpara)
 #: xml/gcut-event-loop.xml:345(simpara) xml/gcut-event-loop.xml:371(simpara)
 #: xml/gcut-event-loop.xml:399(simpara)
-#, fuzzy
 msgid "data to pass to <parameter>function</parameter>"
-msgstr "<parameter>inspect_function</parameter>に渡されるデータ。"
+msgstr "<parameter>function</parameter>に渡されるデータ"
 
 #: xml/gcut-event-loop.xml:226(simpara) xml/gcut-event-loop.xml:253(simpara)
 #: xml/gcut-event-loop.xml:288(simpara) xml/gcut-event-loop.xml:315(simpara)
 #: xml/gcut-event-loop.xml:350(simpara) xml/gcut-event-loop.xml:373(simpara)
 #: xml/gcut-event-loop.xml:404(simpara)
 msgid "the event ID."
-msgstr ""
+msgstr "イベントID。"
 
 #: xml/gcut-event-loop.xml:231(title)
 msgid "gcut_event_loop_watch_child ()"
@@ -9802,9 +9778,8 @@ msgid "<parameter>pid</parameter> :"
 msgstr ""
 
 #: xml/gcut-event-loop.xml:245(simpara) xml/gcut-event-loop.xml:277(simpara)
-#, fuzzy
 msgid "process ID to watch"
-msgstr "終了を待つプロセスのID。"
+msgstr "監視するロセスのID"
 
 #: xml/gcut-event-loop.xml:258(title)
 msgid "gcut_event_loop_watch_child_full ()"
@@ -9822,15 +9797,11 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-event-loop.xml:266(para)
-#, fuzzy
 msgid ""
 "Adds the <parameter>function</parameter> to be called when the child "
 "indicated by <parameter>pid</parameter> exists into <parameter>loop</"
 "parameter> with the <parameter>priority</parameter>."
-msgstr ""
-"<parameter>object</parameter>の所有権をCutterに渡し、<parameter>object</"
-"parameter>自身を返します。<parameter>object</parameter>は"
-"<parameter>destroy_func</parameter>を用いて破棄されます。"
+msgstr "<parameter>pid</parameter>の子プロセスが終了した時に呼ばれる<parameter>function</parameter>をデフォルトの優先度で<parameter>loop</parameter>に追加します。"
 
 #: xml/gcut-event-loop.xml:273(term) xml/gcut-event-loop.xml:335(term)
 #: xml/gcut-event-loop.xml:392(term)
