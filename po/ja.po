@@ -1,14 +1,14 @@
 # Cutter ja.po.
-# Copyright (C) 2007-2010 Kouhei Sutou
+# Copyright (C) 2007-2011 Kouhei Sutou
 # This file is distributed under the same license as the Cutter package.
 # Kouhei Sutou <kou@clear-code.com>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.0.7\n"
+"Project-Id-Version: Cutter 1.1.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-28 21:46+0900\n"
-"PO-Revision-Date: 2010-07-28 22:54+0900\n"
+"POT-Creation-Date: 2011-02-08 01:11+0900\n"
+"PO-Revision-Date: 2011-02-08 01:12+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -22,23 +22,27 @@ msgstr ""
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: ../cutter/cut-diff.c:57 ../cutter/cut-main.c:134
+#: ../cutter/cut-diff.c:58 ../cutter/cut-main.c:134
 msgid "Show version"
 msgstr "バージョンを表示"
 
-#: ../cutter/cut-diff.c:59
+#: ../cutter/cut-diff.c:60
 msgid "Output diff with colors"
 msgstr "色付きで差分を出力"
 
-#: ../cutter/cut-diff.c:62
+#: ../cutter/cut-diff.c:63
 msgid "Use unified diff format"
 msgstr "unified diff形式を使用"
 
-#: ../cutter/cut-diff.c:64
+#: ../cutter/cut-diff.c:65
 msgid "Use LINES as diff context lines"
 msgstr "diffの周辺LINES行を表示"
 
-#: ../cutter/cut-diff.c:139
+#: ../cutter/cut-diff.c:67
+msgid "Use LABEL as label"
+msgstr ""
+
+#: ../cutter/cut-diff.c:152
 msgid "FILE_FROM FILE_TO"
 msgstr "変更前ファイル 変更後ファイル"
 
@@ -171,7 +175,7 @@ msgstr "ストリームのオプション"
 msgid "Show stream options"
 msgstr "ストリームのオプションを表示"
 
-#: ../cutter/cut-test-context.c:918
+#: ../cutter/cut-test-context.c:925
 msgid "Treat a failure as a fatal problem, aborting."
 msgstr "失敗を致命的な問題として扱い、異常終了しています。"
 
@@ -480,11 +484,11 @@ msgstr "PDFレポートのオプション"
 msgid "Show PDF report options"
 msgstr "PDFレポートのオプションを表示"
 
-#: ../module/report/cut-xml-report-factory.c:220
+#: ../module/report/cut-xml-report-factory.c:222
 msgid "XML Report Options"
 msgstr "XMLレポートのオプション"
 
-#: ../module/report/cut-xml-report-factory.c:221
+#: ../module/report/cut-xml-report-factory.c:223
 msgid "Show XML report options"
 msgstr "XMLレポートのオプションを表示"
 
@@ -496,19 +500,28 @@ msgstr "XMLストリームのオプション"
 msgid "Show XML stream options"
 msgstr "XMLストリームのオプションを表示"
 
-#: ../module/ui/cut-console-ui-factory.c:299
+#: ../module/ui/cut-console-ui-factory.c:336
+#, c-format
+msgid "Invalid notify value: %s"
+msgstr "不正な通知指定です: %s"
+
+#: ../module/ui/cut-console-ui-factory.c:362
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: ../module/ui/cut-console-ui-factory.c:301
+#: ../module/ui/cut-console-ui-factory.c:364
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: ../module/ui/cut-console-ui-factory.c:310
+#: ../module/ui/cut-console-ui-factory.c:367
+msgid "Notify test result"
+msgstr "テスト結果を通知"
+
+#: ../module/ui/cut-console-ui-factory.c:375
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: ../module/ui/cut-console-ui-factory.c:311
+#: ../module/ui/cut-console-ui-factory.c:376
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 

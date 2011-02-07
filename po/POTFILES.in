@@ -61,6 +61,8 @@ gcutter/gcut-dynamic-data.c
 gcutter/gcut-egg.c
 gcutter/gcut-enum.c
 gcutter/gcut-error.c
+gcutter/gcut-event-loop.c
+gcutter/gcut-glib-event-loop.c
 gcutter/gcut-hash-table.c
 gcutter/gcut-inspect.c
 gcutter/gcut-io.c
@@ -72,6 +74,7 @@ gcutter/gcut-process.c
 gcutter/gcut-string-io-channel.c
 gcutter/gcut-string.c
 gcutter/gcut-types.c
+gcutter/gcut-utils.c
 gcutter/gcut-value-equal.c
 gdkcutter-pixbuf/gdkcut-pixbuf-assertions-helper.c
 gdkcutter-pixbuf/gdkcut-pixbuf.c
