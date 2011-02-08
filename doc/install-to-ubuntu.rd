@@ -1,6 +1,6 @@
 # -*- rd -*-
 
-= Install to Ubuntu Linux --- How to install Cutter to Ubuntu Linux
+= Install to Ubuntu --- How to install Cutter to Ubuntu
 
 == Introduction
 
@@ -11,17 +11,10 @@ Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Ubuntu Linux Hardy Heron/Lucid
-Lynx i386/amd64. If you need a package for another
-environment, you can request on ((<mailing
+There are packages for Ubuntu Lucid Lynx/Maverick Meerkat
+i386/amd64. If you need a package for another environment,
+you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
-
-Here are apt lines for for Hardy. We put them into
-/etc/apt/sources.list.d/cutter.list.
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/ubuntu/ hardy main
-  deb-src http://cutter.sourceforge.net/ubuntu/ hardy main
 
 Here are apt lines for for Lucid. We put them into
 /etc/apt/sources.list.d/cutter.list.
@@ -29,6 +22,13 @@ Here are apt lines for for Lucid. We put them into
 /etc/apt/sources.list.d/cutter.list:
   deb http://cutter.sourceforge.net/ubuntu/ lucid main
   deb-src http://cutter.sourceforge.net/ubuntu/ lucid main
+
+Here are apt lines for for Maverick. We put them into
+/etc/apt/sources.list.d/cutter.list.
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://cutter.sourceforge.net/ubuntu/ maverick main
+  deb-src http://cutter.sourceforge.net/ubuntu/ maverick main
 
 Cutter packages are signed by key of
 kou@cozmixng.org/kou@clear-code.com. If we trust the key, we
