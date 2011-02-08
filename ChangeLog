@@ -1,5 +1,7 @@
 2011-02-08  Kouhei Sutou  <kou@clear-code.com>
 
+	* yum/build-in-chroot.sh: support build in parallel.
+
 	* apt/build-in-chroot.sh: support build in parallel.
 
 	* html/index.html*: Ubuntu Linux -> Ubuntu.
