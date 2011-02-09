@@ -1027,7 +1027,7 @@ notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
                                     cut_run_context_get_elapsed(run_context)));
     summary = format_summary(run_context);
     g_ptr_array_add(args, g_markup_escape_text(summary, -1));
-    g_free(summary));
+    g_free(summary);
     g_ptr_array_add(args, NULL);
 
     g_spawn_async(NULL,
