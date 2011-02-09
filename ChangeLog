@@ -1,3 +1,7 @@
+2011-02-09  Kouhei Sutou  <kou@clear-code.com>
+
+	* module/ui/cut-console-ui.c (notify): escape summary.
+
 2011-02-08  Kouhei Sutou  <kou@clear-code.com>
 
 	* yum/sign-rpm.sh: sign RPM at a time.
