@@ -1,5 +1,8 @@
 2011-02-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* test/cutter/test-cut-file-stream-reader.c: add missing include
+	<string.h>.
+
 	* module/ui/cut-console-ui.c, module/ui/cut-console-ui-factory.c:
 	support growlnotify for Mac OS X.
 
