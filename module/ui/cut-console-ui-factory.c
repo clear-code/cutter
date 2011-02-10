@@ -239,11 +239,18 @@ static gint
 guess_term_width (void)
 {
     gint term_width = 0;
+    const gchar *columns_env;
     const gchar *term_width_env;
 
-    term_width_env = g_getenv("TERM_WIDTH");
-    if (term_width_env)
-        term_width = atoi(term_width_env);
+    columns_env = g_getenv("COLUMNS");
+    if (columns_env)
+        term_width = atoi(columns_env);
+
+    if (term_width == 0) {
+        term_width_env = g_getenv("TERM_WIDTH");
+        if (term_width_env)
+            term_width = atoi(term_width_env);
+    }
 
     if (term_width < 0)
         return -1;
