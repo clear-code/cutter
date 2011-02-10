@@ -961,7 +961,7 @@ static gchar *
 search_icon_path (CutTestResultStatus status, gboolean success)
 {
     GList *candiate_icon_names = NULL, *node;
-    const gchar *icon_dir = NULL;
+    const gchar *icons_dir = NULL;
     const gchar *icon_theme = "kinotan";
     gchar *icon_path = NULL;
 
