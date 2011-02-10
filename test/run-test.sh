@@ -36,6 +36,7 @@ elif test x"$CUTTER_CHECK_LEAK" = x"yes"; then
     CUTTER_ARGS="--keep-opening-modules"
 fi
 
+CUT_ICONS_DIR=$top_dir/data/icons
 CUT_UI_MODULE_DIR=$top_dir/module/ui/.libs
 CUT_UI_FACTORY_MODULE_DIR=$top_dir/module/ui/.libs
 CUT_REPORT_MODULE_DIR=$top_dir/module/report/.libs
@@ -44,6 +45,7 @@ CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
 CUT_STREAM_FACTORY_MODULE_DIR=$top_dir/module/stream/.libs
 
 export CUTTER
+export CUT_ICONS_DIR
 export CUT_UI_MODULE_DIR
 export CUT_UI_FACTORY_MODULE_DIR
 export CUT_REPORT_MODULE_DIR

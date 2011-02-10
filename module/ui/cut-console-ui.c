@@ -961,6 +961,7 @@ static gchar *
 search_icon_path (CutTestResultStatus status, gboolean success)
 {
     GList *candiate_icon_names = NULL, *node;
+    const gchar *icon_dir = NULL;
     const gchar *icon_theme = "kinotan";
     gchar *icon_path = NULL;
 
@@ -982,12 +983,16 @@ search_icon_path (CutTestResultStatus status, gboolean success)
     }
     candiate_icon_names = g_list_append(candiate_icon_names, "default");
 
+    icons_dir = g_getenv("CUT_ICONS_DIR");
+    if (!icons_dir)
+        icons_dir = ICONS_DIR;
+
     for (node = candiate_icon_names; node; node = g_list_next(node)) {
         const gchar *icon_name = node->data;
         gchar *icon_base_path;
 
         icon_base_path = g_strdup_printf("%s.png", icon_name);
-        icon_path = g_build_filename(ICONS_DIR, icon_theme, icon_base_path,
+        icon_path = g_build_filename(icons_dir, icon_theme, icon_base_path,
                                      NULL);
         g_free(icon_base_path);
         if (g_file_test(icon_path, G_FILE_TEST_IS_REGULAR)) {
