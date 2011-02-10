@@ -1,6 +1,9 @@
 2011-02-10  Kouhei Sutou  <kou@clear-code.com>
 
-	* test/run-test.sh: use uninstalled icons in self test.
+	* test/run-test.sh: use absolute path for icons dir.
+
+	* module/ui/cut-console-ui.c, test/run-test.sh: use uninstalled
+	icons in self test.
 
 	* test/gdkcutter-pixbuf/test-gdkcut-pixbuf.c,
 	test/gdkcutter-pixbuf/test-gdkcut-pixbuf-assertions.c: add missing
