@@ -5,7 +5,6 @@ INCLUDES = 			\
 AM_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
 	-DICONS_DIR="\"$(icons_dir)\""		\
-	-DNOTIFY_COMMAND="\"notify-send\""	\
 	$(COVERAGE_CFLAGS)
 
 AM_LDFLAGS =							\

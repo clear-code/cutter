@@ -50,7 +50,7 @@ struct _CutConsoleUIFactory
 
     gboolean             use_color;
     CutVerboseLevel      verbose_level;
-    gboolean             notify;
+    gchar               *notify_command;
 };
 
 struct _CutConsoleUIFactoryClass
@@ -62,8 +62,7 @@ enum
 {
     PROP_0,
     PROP_USE_COLOR,
-    PROP_VERBOSE_LEVEL,
-    PROP_NOTIFY
+    PROP_VERBOSE_LEVEL
 };
 
 static GType cut_type_console_ui_factory = 0;
@@ -116,13 +115,6 @@ class_init (CutModuleFactoryClass *klass)
                              CUT_VERBOSE_LEVEL_NORMAL,
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
-
-    spec = g_param_spec_boolean("notify",
-                                "Notify",
-                                "Whether notify the test result",
-                                FALSE,
-                                G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_NOTIFY, spec);
 }
 
 static void
@@ -130,7 +122,7 @@ init (CutConsoleUIFactory *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
-    console->notify = FALSE;
+    console->notify_command = NULL;
 }
 
 static void
@@ -184,6 +176,12 @@ CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 static void
 dispose (GObject *object)
 {
+    CutConsoleUIFactory *console = CUT_CONSOLE_UI_FACTORY(object);
+
+    if (console->notify_command) {
+        g_free(console->notify_command);
+        console->notify_command = NULL;
+    }
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -201,9 +199,6 @@ set_property (GObject      *object,
         break;
     case PROP_VERBOSE_LEVEL:
         console->verbose_level = g_value_get_enum(value);
-        break;
-    case PROP_NOTIFY:
-        console->notify = g_value_get_boolean(value);
         break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -225,9 +220,6 @@ get_property (GObject    *object,
         break;
     case PROP_VERBOSE_LEVEL:
         g_value_set_enum(value, console->verbose_level);
-        break;
-    case PROP_NOTIFY:
-        g_value_set_boolean(value, console->notify);
         break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -315,10 +307,22 @@ program_exist (const gchar *program)
     return found;
 }
 
-static gboolean
-notify_command_exist (void)
+static const gchar *
+search_notify_command (void)
 {
-    return program_exist(NOTIFY_COMMAND);
+    const gchar *candidates[] = {
+        "notify-send",
+        "growlnotify",
+        NULL
+    };
+    int i;
+
+    for (i = 0; candidates[i]; i++) {
+        if (program_exist(candidates[i]))
+            return candidates[i];
+    }
+
+    return NULL;
 }
 
 static gboolean
@@ -329,13 +333,17 @@ parse_notify_arg (const gchar *option_name, const gchar *value,
 
     if (value == NULL ||
         g_utf8_collate(value, "yes") == 0 ||
-        g_utf8_collate(value, "true") == 0) {
-        console->notify = TRUE;
+        g_utf8_collate(value, "true") == 0 ||
+        g_utf8_collate(value, "auto") == 0) {
+        if (!console->notify_command) {
+            console->notify_command = g_strdup(search_notify_command());
+        }
     } else if (g_utf8_collate(value, "no") == 0 ||
                g_utf8_collate(value, "false") == 0) {
-        console->notify = FALSE;
-    } else if (g_utf8_collate(value, "auto") == 0) {
-        console->notify = notify_command_exist();
+        if (console->notify_command) {
+            g_free(console->notify_command);
+            console->notify_command = NULL;
+        }
     } else {
         g_set_error(error,
                     G_OPTION_ERROR,
@@ -354,7 +362,7 @@ pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
     CutConsoleUIFactory *console = data;
 
     console->use_color = cut_console_guess_color_usability();
-    console->notify = notify_command_exist();
+    console->notify_command = g_strdup(search_notify_command());
 
     return TRUE;
 }
@@ -396,7 +404,7 @@ create (CutModuleFactory *factory)
     return G_OBJECT(cut_ui_new("console",
                                "use-color", console->use_color,
                                "verbose-level", console->verbose_level,
-                               "notify", console->notify,
+                               "notify-command", console->notify_command,
                                "progress-row-max", guess_term_width(),
                                NULL));
 }

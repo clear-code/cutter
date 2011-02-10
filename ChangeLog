@@ -1,5 +1,8 @@
 2011-02-10  Kouhei Sutou  <kou@clear-code.com>
 
+	* module/ui/cut-console-ui.c, module/ui/cut-console-ui-factory.c:
+	support growlnotify for Mac OS X.
+
 	* module/ui/cut-console-ui-factory.c (guess_term_width): support
 	COLUMNS environment variable.
 

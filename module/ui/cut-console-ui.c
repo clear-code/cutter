@@ -62,7 +62,7 @@ struct _CutConsoleUI
     gchar        *name;
     gboolean      use_color;
     CutVerboseLevel verbose_level;
-    gboolean      notify;
+    gchar        *notify_command;
     GList        *errors;
     gint          progress_row;
     gint          progress_row_max;
@@ -78,7 +78,7 @@ enum
     PROP_0,
     PROP_USE_COLOR,
     PROP_VERBOSE_LEVEL,
-    PROP_NOTIFY,
+    PROP_NOTIFY_COMMAND,
     PROP_PROGRESS_ROW_MAX
 };
 
@@ -131,12 +131,12 @@ class_init (CutConsoleUIClass *klass)
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
 
-    spec = g_param_spec_boolean("notify",
-                                "Notify",
-                                "Whether notify test result",
-                                FALSE,
-                                G_PARAM_READWRITE);
-    g_object_class_install_property(gobject_class, PROP_NOTIFY, spec);
+    spec = g_param_spec_string("notify-command",
+                               "Notify Command",
+                               "The notify command for notifying test result",
+                               NULL,
+                               G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_NOTIFY_COMMAND, spec);
 
     spec = g_param_spec_int("progress-row-max",
                             "Progress Row Max",
@@ -151,7 +151,7 @@ init (CutConsoleUI *console)
 {
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
-    console->notify = FALSE;
+    console->notify_command = NULL;
     console->errors = NULL;
     console->progress_row = 0;
     console->progress_row_max = -1;
@@ -254,6 +254,11 @@ dispose (GObject *object)
         console->errors = NULL;
     }
 
+    if (console->notify_command) {
+        g_free(console->notify_command);
+        console->notify_command = NULL;
+    }
+
     G_OBJECT_CLASS(parent_class)->dispose(object);
 }
 
@@ -272,8 +277,10 @@ set_property (GObject      *object,
     case PROP_VERBOSE_LEVEL:
         console->verbose_level = g_value_get_enum(value);
         break;
-    case PROP_NOTIFY:
-        console->notify = g_value_get_boolean(value);
+    case PROP_NOTIFY_COMMAND:
+        if (console->notify_command)
+            g_free(console->notify_command);
+        console->notify_command = g_value_dup_string(value);
         break;
     case PROP_PROGRESS_ROW_MAX:
         console->progress_row_max = g_value_get_int(value);
@@ -299,8 +306,8 @@ get_property (GObject    *object,
     case PROP_VERBOSE_LEVEL:
         g_value_set_enum(value, console->verbose_level);
         break;
-    case PROP_NOTIFY:
-        g_value_set_boolean(value, console->notify);
+    case PROP_NOTIFY_COMMAND:
+        g_value_set_string(value, console->notify_command);
         break;
     case PROP_PROGRESS_ROW_MAX:
         g_value_set_int(value, console->progress_row_max);
@@ -995,10 +1002,72 @@ search_icon_path (CutTestResultStatus status, gboolean success)
 }
 
 static void
-notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
+run_notify_command (CutConsoleUI *console, gchar **args)
+{
+    GError *error = NULL;
+
+    g_spawn_async(NULL,
+                  args,
+                  NULL,
+                  G_SPAWN_SEARCH_PATH,
+                  NULL,
+                  NULL,
+                  NULL,
+                  &error);
+    if (error) {
+        gchar *command_line;
+        command_line = g_strjoinv(" ", args);
+        g_print("failed to run <%s>: <%s>: <%s>\n",
+                console->notify_command,
+                command_line,
+                error->message);
+        g_free(command_line);
+        g_error_free(error);
+    }
+}
+
+static void
+notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
+                       gboolean success)
 {
     GPtrArray *args;
-    GError *error = NULL;
+    CutTestResultStatus status;
+    gchar *icon_path;
+
+    status = cut_run_context_get_status(run_context);
+    icon_path = search_icon_path(status, success);
+
+    args = g_ptr_array_new_with_free_func(g_free);
+    g_ptr_array_add(args, g_strdup(console->notify_command));
+    g_ptr_array_add(args, g_strdup("--message"));
+    g_ptr_array_add(args, format_summary(run_context));
+    g_ptr_array_add(args, g_strdup("--priority"));
+    if (success) {
+        g_ptr_array_add(args, g_strdup("Normal"));
+    } else {
+        g_ptr_array_add(args, g_strdup("Emergency"));
+    }
+    if (icon_path) {
+        g_ptr_array_add(args, g_strdup("--image"));
+        g_ptr_array_add(args, icon_path);
+    }
+    g_ptr_array_add(args,
+                    g_strdup_printf("%s [%g%%] (%gs)",
+                                    status_to_label(status),
+                                    compute_pass_percentage(run_context),
+                                    cut_run_context_get_elapsed(run_context)));
+    g_ptr_array_add(args, NULL);
+
+    run_notify_command(console, (gchar **)args->pdata);
+
+    g_ptr_array_free(args, TRUE);
+}
+
+static void
+notify_by_notify_send (CutConsoleUI *console, CutRunContext *run_context,
+                       gboolean success)
+{
+    GPtrArray *args;
     CutTestResultStatus status;
     gchar *icon_path;
     gchar *summary;
@@ -1007,7 +1076,7 @@ notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
     icon_path = search_icon_path(status, success);
 
     args = g_ptr_array_new_with_free_func(g_free);
-    g_ptr_array_add(args, g_strdup(NOTIFY_COMMAND));
+    g_ptr_array_add(args, g_strdup(console->notify_command));
     g_ptr_array_add(args, g_strdup("--expire-time"));
     g_ptr_array_add(args, g_strdup("5000"));
     g_ptr_array_add(args, g_strdup("--urgency"));
@@ -1030,24 +1099,22 @@ notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
     g_free(summary);
     g_ptr_array_add(args, NULL);
 
-    g_spawn_async(NULL,
-                  (gchar **)args->pdata,
-                  NULL,
-                  G_SPAWN_SEARCH_PATH,
-                  NULL,
-                  NULL,
-                  NULL,
-                  &error);
-    if (error) {
-        gchar *command_line;
-        command_line = g_strjoinv(" ", (gchar **)args->pdata);
-        g_print("failed to run send-notify: <%s>: <%s>\n",
-                command_line,
-                error->message);
-        g_free(command_line);
-        g_error_free(error);
-    }
+    run_notify_command(console, (gchar **)args->pdata);
+
     g_ptr_array_free(args, TRUE);
+}
+
+static void
+notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
+{
+    if (!console->notify_command)
+        return;
+
+    if (strcmp(console->notify_command, "notify-send") == 0) {
+        notify_by_notify_send(console, run_context, success);
+    } else if (strcmp(console->notify_command, "growlnotify") == 0) {
+        notify_by_growlnotify(console, run_context, success);
+    }
 }
 
 static void
@@ -1056,8 +1123,7 @@ cb_complete_run (CutRunContext *run_context, gboolean success,
 {
     CutVerboseLevel verbose_level;
 
-    if (console->notify)
-        notify(console, run_context, success);
+    notify(console, run_context, success);
 
     verbose_level = console->verbose_level;
     if (verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
