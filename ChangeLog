@@ -1,3 +1,7 @@
+2011-02-10  Kenji Okimoto  <okimoto@clear-code.com>
+
+	* html/index.html.ja: fix typo.
+
 2011-02-09  Kouhei Sutou  <kou@clear-code.com>
 
 	* module/ui/cut-console-ui.c (notify): escape summary.
