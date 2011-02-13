@@ -4,6 +4,6 @@
 /usr/lib/cutter/module/factory/ui/console_*
 /usr/lib/cutter/module/factory/stream/
 /usr/lib/cutter/module/factory/report/xml_*
-/usr/lib/libcutter*.so.*.*
+/usr/lib/libcutter*.so.*
 /usr/share/cutter/icons/kinotan/
 /usr/share/locale/
