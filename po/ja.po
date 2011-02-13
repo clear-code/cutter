@@ -5,10 +5,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.1.6\n"
+"Project-Id-Version: Cutter 1.1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-08 01:11+0900\n"
-"PO-Revision-Date: 2011-02-08 01:12+0900\n"
+"POT-Creation-Date: 2011-02-13 13:12+0900\n"
+"PO-Revision-Date: 2011-02-13 13:13+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -500,28 +500,28 @@ msgstr "XMLストリームのオプション"
 msgid "Show XML stream options"
 msgstr "XMLストリームのオプションを表示"
 
-#: ../module/ui/cut-console-ui-factory.c:336
+#: ../module/ui/cut-console-ui-factory.c:351
 #, c-format
 msgid "Invalid notify value: %s"
 msgstr "不正な通知指定です: %s"
 
-#: ../module/ui/cut-console-ui-factory.c:362
+#: ../module/ui/cut-console-ui-factory.c:377
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: ../module/ui/cut-console-ui-factory.c:364
+#: ../module/ui/cut-console-ui-factory.c:379
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: ../module/ui/cut-console-ui-factory.c:367
+#: ../module/ui/cut-console-ui-factory.c:382
 msgid "Notify test result"
 msgstr "テスト結果を通知"
 
-#: ../module/ui/cut-console-ui-factory.c:375
+#: ../module/ui/cut-console-ui-factory.c:390
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: ../module/ui/cut-console-ui-factory.c:376
+#: ../module/ui/cut-console-ui-factory.c:391
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 
