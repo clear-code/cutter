@@ -1,5 +1,7 @@
 2011-02-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/install-to-debian.rd*, NEWS*: drop lenny support.
+
 	* debian/control: fix typos.
 
 	* apt/, debian/: remove lenny support.

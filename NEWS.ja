@@ -10,6 +10,10 @@
 
   * growlnotify対応。
 
+==== 変更
+
+  * Debian GNU/Linux lennyのサポートを終了。
+
 ==== 修正
 
   * CentOS 5.5で動かない問題を修正。

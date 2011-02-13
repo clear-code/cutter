@@ -11,17 +11,10 @@ GNU/Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Debian GNU/Linux lenny/squeeze/sid
+There are packages for Debian GNU/Linux squeeze/sid
 i386/amd64. If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
-
-Here are apt lines for for lenny. We put them into
-/etc/apt/sources.list.d/cutter.list.
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/debian/ lenny main
-  deb-src http://cutter.sourceforge.net/debian/ lenny main
 
 Here are apt lines for for squeeze. We put them into
 /etc/apt/sources.list.d/cutter.list.
