@@ -8,21 +8,22 @@ if test x"$RUNNING_TEST" = x"yes"; then
     exit 0
 fi
 
-if test x"$NO_MAKE" != x"yes"; then
-    if test -z "$MAKE"; then
-	if which gmake 2>&1 > /dev/null; then
-	    MAKE=gmake
-	else
-	    MAKE=make
-	fi
+if test -z "$MAKE"; then
+    if which gmake 2>&1 > /dev/null; then
+	MAKE=gmake
+    else
+	MAKE=make
     fi
+fi
+
+if test x"$NO_MAKE" != x"yes"; then
     RUNNING_TEST=yes
     export RUNNING_TEST
     $MAKE -C $top_dir/ check INTLTOOL_UPDATE=: > /dev/null || exit 1
 fi
 
 if test -z "$CUTTER"; then
-    CUTTER="$BASE_DIR/`make -s -C $BASE_DIR echo-cutter`"
+    CUTTER="$BASE_DIR/$($MAKE -s -C $BASE_DIR echo-cutter)"
 fi
 
 CUTTER_ARGS=
