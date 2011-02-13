@@ -2,7 +2,7 @@
 
 = チュートリアル --- Cutterの使い方
 
-Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
 
 : ライセンス
    ((<LGPLv3+|URL:URL:http://www.gnu.org/licenses/lgpl.html>))と
@@ -640,7 +640,7 @@ test/Makefile.am:
   TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
   ...
   echo-cutter:
-  	echo $(CUTTER)
+  	@echo $(CUTTER)
 
 test/Makefile.am全体は以下のようになる。
 
@@ -658,7 +658,7 @@ test/Makefile.am:
   test_stack_la_SOURCES = test-stack.c
 
   echo-cutter:
-          @echo $(CUTTER)
+  	@echo $(CUTTER)
 
 test/run-test.shを直接実行してテストが起動することを確認する。
 

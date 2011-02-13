@@ -1,5 +1,8 @@
 2011-02-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* TUTORIAL.ja: fix a typo.
+	Reported by Hiroaki Nakamura. Thanks!!!
+
 	* module/ui/cut-console-ui.c: don't use
 	g_ptr_array_new_with_fre_func() because GLib 2.12 on CentOS 5.5
 	doesn't have the function.
