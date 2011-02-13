@@ -1042,7 +1042,7 @@ notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
     status = cut_run_context_get_status(run_context);
     icon_path = search_icon_path(status, success);
 
-    args = g_ptr_array_new_with_free_func(g_free);
+    args = g_ptr_array_new();
     g_ptr_array_add(args, g_strdup(console->notify_command));
     g_ptr_array_add(args, g_strdup("--message"));
     g_ptr_array_add(args, format_summary(run_context));
@@ -1065,6 +1065,7 @@ notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
 
     run_notify_command(console, (gchar **)args->pdata);
 
+    g_ptr_array_foreach(args, (GFunc)g_free, NULL);
     g_ptr_array_free(args, TRUE);
 }
 
@@ -1080,7 +1081,7 @@ notify_by_notify_send (CutConsoleUI *console, CutRunContext *run_context,
     status = cut_run_context_get_status(run_context);
     icon_path = search_icon_path(status, success);
 
-    args = g_ptr_array_new_with_free_func(g_free);
+    args = g_ptr_array_new();
     g_ptr_array_add(args, g_strdup(console->notify_command));
     g_ptr_array_add(args, g_strdup("--expire-time"));
     g_ptr_array_add(args, g_strdup("5000"));
@@ -1106,6 +1107,7 @@ notify_by_notify_send (CutConsoleUI *console, CutRunContext *run_context,
 
     run_notify_command(console, (gchar **)args->pdata);
 
+    g_ptr_array_foreach(args, (GFunc)g_free, NULL);
     g_ptr_array_free(args, TRUE);
 }
 
