@@ -348,3 +348,5 @@ The following is a template of test.
     * suggested improvements.
   * Ilya Barygin:
     * reported bugs in test.
+  * Hiroaki Nakamura:
+    * reported a bug on CentOS.
