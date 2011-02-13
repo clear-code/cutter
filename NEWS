@@ -2,11 +2,35 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-1-7] 1.1.7: 2011-02-13
+
+=== Cutter
+
+==== Improvements
+
+  * Supported growlnotify.
+
+==== Fixes
+
+  * Fixed using unknown symbol on CentOS 5.5.
+    [Reported by Hiroaki Nakamura]
+
+=== Document
+
+===== Fixes
+
+  * Fixed typos in tutorial.
+    [Reported by Hiroaki Nakamura]
+
+=== Thanks
+
+  * Hiroaki Nakamura
+
 == [release-1-1-6] 1.1.6: 2011-02-09
 
 === Cutter
 
-==== Improvment
+==== Improvments
 
   * Renamed an utility:
     * ((<cut_build_fixture_data_path()>)) -> ((<cut_build_fixture_path()>))
