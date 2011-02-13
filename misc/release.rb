@@ -56,8 +56,8 @@ def upload_files(sf_user_name, project_id, package_name, release_name,
   dist_dir = File.join(dist_top_dir, package_name, release_name)
   FileUtils.mkdir_p(dist_dir)
   FileUtils.cp(files, dist_dir)
-  File.open(File.join(dist_dir, "#{release_name}-release.txt"), "w") do |note|
-    note.print(latest_release_changes(news))
+  File.open(File.join(dist_dir, "README.txt"), "w") do |readme|
+    readme.print(latest_release_changes(news))
   end
   Dir.chdir(dist_top_dir) do
     host = "#{sf_user_name},#{project_id}@frs.sourceforge.net"
