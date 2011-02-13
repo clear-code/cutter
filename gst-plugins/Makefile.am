@@ -2,6 +2,7 @@ SUBDIRS = test
 
 if HAVE_GSTREAMER
 gst_plugins_LTLIBRARIES = libgstcuttertest.la
+endif
 
 noinst_HEADERS = 			\
 	gst-cutter-test-runner.h	\
@@ -31,4 +32,3 @@ libgstcuttertest_la_LDFLAGS =		\
 	-export-dynamic 		\
 	-no-undefined			\
 	$(LIBTOOL_EXPORT_OPTIONS)
-endif

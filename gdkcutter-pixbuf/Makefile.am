@@ -12,12 +12,6 @@ CLEANFILES = *.gcno *.gcda
 
 if HAVE_GDK_PIXBUF
 lib_LTLIBRARIES = libgdkcutter-pixbuf.la
-endif
-
-gdkcutter_pixbuf_public_headers =		\
-	gdkcut-pixbuf-assertions.h		\
-	gdkcut-pixbuf-assertions-helper.h	\
-	gdkcut-pixbuf.h
 
 pkginclude_HEADERS = 		\
 	gdkcutter-pixbuf.h
@@ -25,6 +19,12 @@ pkginclude_HEADERS = 		\
 gdkcutter_pixbuf_includedir=$(pkgincludedir)/gdkcutter-pixbuf
 gdkcutter_pixbuf_include_HEADERS = 		\
 	$(gdkcutter_pixbuf_public_headers)
+endif
+
+gdkcutter_pixbuf_public_headers =		\
+	gdkcut-pixbuf-assertions.h		\
+	gdkcut-pixbuf-assertions-helper.h	\
+	gdkcut-pixbuf.h
 
 libgdkcutter_pixbuf_la_SOURCES =		\
 	$(gcutter_public_headers)		\

@@ -13,13 +13,6 @@ CLEANFILES = *.gcno *.gcda
 
 if HAVE_LIBSOUP
 lib_LTLIBRARIES = libsoupcutter.la
-endif
-
-soupcutter_public_headers =			\
-	soupcut-assertions.h			\
-	soupcut-assertions-helper.h		\
-	soupcut-client.h			\
-	soupcut-server.h
 
 pkginclude_HEADERS = 		\
 	soupcutter.h
@@ -27,6 +20,13 @@ pkginclude_HEADERS = 		\
 soupcutter_includedir=$(pkgincludedir)/soupcutter
 soupcutter_include_HEADERS = 		\
 	$(soupcutter_public_headers)
+endif
+
+soupcutter_public_headers =			\
+	soupcut-assertions.h			\
+	soupcut-assertions-helper.h		\
+	soupcut-client.h			\
+	soupcut-server.h
 
 libsoupcutter_la_SOURCES =			\
 	$(gcutter_public_headers)		\
