@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Cutter 1.1.6\n"
-"POT-Creation-Date: 2011-02-07 21:06+0900\n"
-"PO-Revision-Date: 2011-02-07 21:08+0900\n"
+"Project-Id-Version: Cutter 1.1.7\n"
+"POT-Creation-Date: 2011-02-13 13:13+0900\n"
+"PO-Revision-Date: 2011-02-13 13:14+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -154,7 +154,7 @@ msgstr ""
 #: xml/gdkcut-pixbuf-assertions.xml:30(title)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:31(title) xml/gcutter.xml:26(title)
 #: xml/gcut-value-equal.xml:31(title) xml/gcut-types.xml:32(title)
-#: xml/gcut-test-utils.xml:68(title) xml/gcut-string.xml:29(title)
+#: xml/gcut-test-utils.xml:69(title) xml/gcut-string.xml:29(title)
 #: xml/gcut-string-io-channel.xml:51(title) xml/gcut-public.xml:44(title)
 #: xml/gcut-process.xml:99(title) xml/gcut-object.xml:33(title)
 #: xml/gcut-main.xml:29(title) xml/gcut-list.xml:60(title)
@@ -167,7 +167,7 @@ msgstr ""
 #: xml/gcut-assertions.xml:136(title)
 #: xml/gcut-assertions-helper.xml:144(title) xml/cutter.xml:47(title)
 #: xml/cut-version.xml:32(title) xml/cut-unified-differ.xml:25(title)
-#: xml/cut-types.xml:30(title) xml/cut-test-utils.xml:62(title)
+#: xml/cut-types.xml:30(title) xml/cut-test-utils.xml:64(title)
 #: xml/cut-string-diff-writer.xml:29(title)
 #: xml/cut-readable-differ.xml:25(title) xml/cut-multi-process.xml:78(title)
 #: xml/cut-helper.xml:53(title) xml/cut-features.xml:30(title)
@@ -249,7 +249,7 @@ msgstr ""
 #: xml/gdkcut-pixbuf-assertions.xml:34(title)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:36(title) xml/gcutter.xml:62(title)
 #: xml/gcut-value-equal.xml:42(title) xml/gcut-types.xml:38(title)
-#: xml/gcut-test-utils.xml:80(title) xml/gcut-string.xml:40(title)
+#: xml/gcut-test-utils.xml:81(title) xml/gcut-string.xml:40(title)
 #: xml/gcut-string-io-channel.xml:56(title) xml/gcut-public.xml:49(title)
 #: xml/gcut-process.xml:173(title) xml/gcut-object.xml:44(title)
 #: xml/gcut-main.xml:34(title) xml/gcut-list.xml:71(title)
@@ -262,7 +262,7 @@ msgstr ""
 #: xml/gcut-assertions.xml:140(title)
 #: xml/gcut-assertions-helper.xml:149(title) xml/cutter.xml:149(title)
 #: xml/cut-version.xml:41(title) xml/cut-unified-differ.xml:30(title)
-#: xml/cut-types.xml:36(title) xml/cut-test-utils.xml:74(title)
+#: xml/cut-types.xml:36(title) xml/cut-test-utils.xml:76(title)
 #: xml/cut-string-diff-writer.xml:34(title)
 #: xml/cut-readable-differ.xml:30(title) xml/cut-multi-process.xml:96(title)
 #: xml/cut-helper.xml:128(title) xml/cut-features.xml:37(title)
@@ -371,10 +371,11 @@ msgstr ""
 #: xml/gdkcut-pixbuf-assertions-helper.xml:24(type)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:25(type)
 #: xml/gdkcut-pixbuf-assertions-helper.xml:26(type)
-#: xml/gcut-test-utils.xml:37(type) xml/gcut-test-utils.xml:39(type)
-#: xml/gcut-test-utils.xml:46(type) xml/gcut-test-utils.xml:50(type)
-#: xml/gcut-test-utils.xml:55(type) xml/gcut-test-utils.xml:58(type)
-#: xml/gcut-test-utils.xml:61(type) xml/gcut-string.xml:24(returnvalue)
+#: xml/gcut-test-utils.xml:28(type) xml/gcut-test-utils.xml:37(type)
+#: xml/gcut-test-utils.xml:39(type) xml/gcut-test-utils.xml:46(type)
+#: xml/gcut-test-utils.xml:50(type) xml/gcut-test-utils.xml:55(type)
+#: xml/gcut-test-utils.xml:58(type) xml/gcut-test-utils.xml:61(type)
+#: xml/gcut-test-utils.xml:63(type) xml/gcut-string.xml:24(returnvalue)
 #: xml/gcut-string-io-channel.xml:21(type) xml/gcut-public.xml:33(type)
 #: xml/gcut-public.xml:34(type) xml/gcut-public.xml:37(type)
 #: xml/gcut-public.xml:38(type) xml/gcut-process.xml:27(type)
@@ -476,9 +477,9 @@ msgstr ""
 msgid "soupcut_server_build_uri"
 msgstr ""
 
-#: xml/soupcut-server.xml:24(parameter) xml/gcut-public.xml:34(parameter)
-#: xml/gcut-public.xml:38(parameter) xml/gcut-assertions.xml:89(parameter)
-#: xml/gcut-assertions.xml:91(parameter)
+#: xml/soupcut-server.xml:24(parameter) xml/gcut-test-utils.xml:63(parameter)
+#: xml/gcut-public.xml:34(parameter) xml/gcut-public.xml:38(parameter)
+#: xml/gcut-assertions.xml:89(parameter) xml/gcut-assertions.xml:91(parameter)
 #: xml/gcut-assertions-helper.xml:88(parameter)
 msgid "const <link linkend=\"gchar\"><placeholder-1/></link> *path"
 msgstr ""
@@ -532,16 +533,16 @@ msgstr ""
 #: xml/gdkcut-pixbuf.xml:77(term) xml/gdkcut-pixbuf.xml:97(term)
 #: xml/gdkcut-pixbuf.xml:125(term) xml/gcut-value-equal.xml:59(term)
 #: xml/gcut-types.xml:83(term) xml/gcut-types.xml:92(term)
-#: xml/gcut-test-utils.xml:91(term) xml/gcut-test-utils.xml:106(term)
-#: xml/gcut-test-utils.xml:127(term) xml/gcut-test-utils.xml:143(term)
-#: xml/gcut-test-utils.xml:159(term) xml/gcut-test-utils.xml:174(term)
-#: xml/gcut-test-utils.xml:203(term) xml/gcut-test-utils.xml:232(term)
-#: xml/gcut-test-utils.xml:261(term) xml/gcut-test-utils.xml:281(term)
-#: xml/gcut-test-utils.xml:296(term) xml/gcut-test-utils.xml:326(term)
-#: xml/gcut-test-utils.xml:356(term) xml/gcut-test-utils.xml:376(term)
-#: xml/gcut-test-utils.xml:406(term) xml/gcut-test-utils.xml:425(term)
-#: xml/gcut-test-utils.xml:471(term) xml/gcut-test-utils.xml:496(term)
-#: xml/gcut-test-utils.xml:521(term) xml/gcut-test-utils.xml:540(term)
+#: xml/gcut-test-utils.xml:92(term) xml/gcut-test-utils.xml:107(term)
+#: xml/gcut-test-utils.xml:128(term) xml/gcut-test-utils.xml:144(term)
+#: xml/gcut-test-utils.xml:160(term) xml/gcut-test-utils.xml:175(term)
+#: xml/gcut-test-utils.xml:204(term) xml/gcut-test-utils.xml:233(term)
+#: xml/gcut-test-utils.xml:262(term) xml/gcut-test-utils.xml:282(term)
+#: xml/gcut-test-utils.xml:297(term) xml/gcut-test-utils.xml:327(term)
+#: xml/gcut-test-utils.xml:357(term) xml/gcut-test-utils.xml:377(term)
+#: xml/gcut-test-utils.xml:407(term) xml/gcut-test-utils.xml:426(term)
+#: xml/gcut-test-utils.xml:472(term) xml/gcut-test-utils.xml:497(term)
+#: xml/gcut-test-utils.xml:522(term) xml/gcut-test-utils.xml:545(term)
 #: xml/gcut-string.xml:55(term) xml/gcut-string.xml:71(term)
 #: xml/gcut-string-io-channel.xml:66(term)
 #: xml/gcut-string-io-channel.xml:78(term)
@@ -614,16 +615,16 @@ msgstr ""
 #: xml/gcut-data-helper.xml:273(term) xml/gcut-data-helper.xml:293(term)
 #: xml/gcut-data-helper.xml:313(term) xml/gcut-data-helper.xml:333(term)
 #: xml/gcut-data-helper.xml:353(term) xml/gcut-data-helper.xml:373(term)
-#: xml/cutter.xml:385(term) xml/cut-test-utils.xml:90(term)
-#: xml/cut-test-utils.xml:105(term) xml/cut-test-utils.xml:120(term)
-#: xml/cut-test-utils.xml:134(term) xml/cut-test-utils.xml:155(term)
-#: xml/cut-test-utils.xml:175(term) xml/cut-test-utils.xml:194(term)
-#: xml/cut-test-utils.xml:208(term) xml/cut-test-utils.xml:225(term)
-#: xml/cut-test-utils.xml:247(term) xml/cut-test-utils.xml:268(term)
-#: xml/cut-test-utils.xml:283(term) xml/cut-test-utils.xml:323(term)
-#: xml/cut-test-utils.xml:342(term) xml/cut-test-utils.xml:365(term)
-#: xml/cut-test-utils.xml:387(term) xml/cut-test-utils.xml:423(term)
-#: xml/cut-test-utils.xml:437(term) xml/cut-string-diff-writer.xml:59(term)
+#: xml/cutter.xml:385(term) xml/cut-test-utils.xml:92(term)
+#: xml/cut-test-utils.xml:107(term) xml/cut-test-utils.xml:122(term)
+#: xml/cut-test-utils.xml:136(term) xml/cut-test-utils.xml:157(term)
+#: xml/cut-test-utils.xml:177(term) xml/cut-test-utils.xml:196(term)
+#: xml/cut-test-utils.xml:210(term) xml/cut-test-utils.xml:227(term)
+#: xml/cut-test-utils.xml:249(term) xml/cut-test-utils.xml:270(term)
+#: xml/cut-test-utils.xml:285(term) xml/cut-test-utils.xml:325(term)
+#: xml/cut-test-utils.xml:348(term) xml/cut-test-utils.xml:371(term)
+#: xml/cut-test-utils.xml:398(term) xml/cut-test-utils.xml:434(term)
+#: xml/cut-test-utils.xml:448(term) xml/cut-string-diff-writer.xml:59(term)
 #: xml/cut-string-diff-writer.xml:71(term) xml/cut-multi-process.xml:153(term)
 #: xml/cut-multi-process.xml:167(term) xml/cut-multi-process.xml:195(term)
 #: xml/cut-multi-process.xml:211(term) xml/cut-multi-process.xml:226(term)
@@ -725,15 +726,17 @@ msgid ""
 msgstr ""
 "@server のベースURIにパスとして @path を組み合わせたURIの文字列を作成します。"
 
-#: xml/soupcut-server.xml:76(term) xml/gcut-public.xml:149(term)
-#: xml/gcut-public.xml:173(term) xml/gcut-assertions.xml:558(term)
-#: xml/gcut-assertions.xml:574(term) xml/gcut-assertions-helper.xml:494(term)
-#: xml/cut-test-utils.xml:296(term) xml/cut-test-utils.xml:316(term)
-#: xml/cut-test-utils.xml:358(term) xml/cut-test-utils.xml:401(term)
-#: xml/cut-test-utils.xml:417(term) xml/cut-test-utils.xml:450(term)
-#: xml/cut-assertions.xml:1988(term) xml/cut-assertions.xml:2011(term)
-#: xml/cut-assertions.xml:2033(term) xml/cut-assertions.xml:2056(term)
-#: xml/cut-assertions.xml:2078(term) xml/cut-assertions.xml:2163(term)
+#: xml/soupcut-server.xml:76(term) xml/gcut-test-utils.xml:538(term)
+#: xml/gcut-public.xml:149(term) xml/gcut-public.xml:173(term)
+#: xml/gcut-assertions.xml:558(term) xml/gcut-assertions.xml:574(term)
+#: xml/gcut-assertions-helper.xml:494(term) xml/cut-test-utils.xml:298(term)
+#: xml/cut-test-utils.xml:318(term) xml/cut-test-utils.xml:341(term)
+#: xml/cut-test-utils.xml:364(term) xml/cut-test-utils.xml:391(term)
+#: xml/cut-test-utils.xml:412(term) xml/cut-test-utils.xml:428(term)
+#: xml/cut-test-utils.xml:461(term) xml/cut-assertions.xml:1988(term)
+#: xml/cut-assertions.xml:2011(term) xml/cut-assertions.xml:2033(term)
+#: xml/cut-assertions.xml:2056(term) xml/cut-assertions.xml:2078(term)
+#: xml/cut-assertions.xml:2163(term)
 msgid "<parameter>path</parameter> :"
 msgstr ""
 
@@ -912,8 +915,8 @@ msgstr ""
 #: xml/cut-test-utils.xml:21(type) xml/cut-test-utils.xml:23(returnvalue)
 #: xml/cut-test-utils.xml:23(type) xml/cut-test-utils.xml:28(returnvalue)
 #: xml/cut-test-utils.xml:28(type) xml/cut-test-utils.xml:42(returnvalue)
-#: xml/cut-test-utils.xml:51(returnvalue)
-#: xml/cut-test-utils.xml:56(returnvalue)
+#: xml/cut-test-utils.xml:53(returnvalue)
+#: xml/cut-test-utils.xml:58(returnvalue)
 #: xml/cut-string-diff-writer.xml:23(type)
 #: xml/cut-multi-process.xml:26(returnvalue)
 #: xml/cut-multi-process.xml:31(returnvalue)
@@ -1075,21 +1078,22 @@ msgstr ""
 #: xml/gcut-test-utils.xml:36(parameter) xml/gcut-test-utils.xml:38(parameter)
 #: xml/gcut-test-utils.xml:42(parameter) xml/gcut-test-utils.xml:45(parameter)
 #: xml/gcut-test-utils.xml:47(parameter) xml/gcut-test-utils.xml:56(parameter)
-#: xml/gcut-test-utils.xml:62(parameter) xml/gcut-public.xml:35(parameter)
-#: xml/gcut-process.xml:28(parameter) xml/gcut-process.xml:41(parameter)
-#: xml/gcut-egg.xml:28(parameter) xml/gcut-egg.xml:40(parameter)
-#: xml/gcut-data.xml:24(parameter) xml/gcut-assertions.xml:24(parameter)
-#: xml/gcut-assertions.xml:27(parameter) xml/gcut-assertions.xml:30(parameter)
-#: xml/gcut-assertions.xml:33(parameter) xml/gcut-assertions.xml:39(parameter)
-#: xml/gcut-assertions.xml:42(parameter) xml/gcut-assertions.xml:45(parameter)
-#: xml/gcut-assertions.xml:48(parameter) xml/gcut-assertions.xml:51(parameter)
-#: xml/gcut-assertions.xml:54(parameter) xml/gcut-assertions.xml:57(parameter)
-#: xml/gcut-assertions.xml:62(parameter) xml/gcut-assertions.xml:66(parameter)
-#: xml/gcut-assertions.xml:70(parameter) xml/gcut-assertions.xml:77(parameter)
-#: xml/gcut-assertions.xml:81(parameter) xml/gcut-assertions.xml:83(parameter)
-#: xml/gcut-assertions.xml:85(parameter) xml/gcut-assertions.xml:88(parameter)
-#: xml/gcut-assertions.xml:90(parameter) xml/gcut-assertions.xml:92(parameter)
-#: xml/gcut-assertions.xml:95(parameter) xml/gcut-assertions.xml:99(parameter)
+#: xml/gcut-test-utils.xml:62(parameter) xml/gcut-test-utils.xml:64(parameter)
+#: xml/gcut-public.xml:35(parameter) xml/gcut-process.xml:28(parameter)
+#: xml/gcut-process.xml:41(parameter) xml/gcut-egg.xml:28(parameter)
+#: xml/gcut-egg.xml:40(parameter) xml/gcut-data.xml:24(parameter)
+#: xml/gcut-assertions.xml:24(parameter) xml/gcut-assertions.xml:27(parameter)
+#: xml/gcut-assertions.xml:30(parameter) xml/gcut-assertions.xml:33(parameter)
+#: xml/gcut-assertions.xml:39(parameter) xml/gcut-assertions.xml:42(parameter)
+#: xml/gcut-assertions.xml:45(parameter) xml/gcut-assertions.xml:48(parameter)
+#: xml/gcut-assertions.xml:51(parameter) xml/gcut-assertions.xml:54(parameter)
+#: xml/gcut-assertions.xml:57(parameter) xml/gcut-assertions.xml:62(parameter)
+#: xml/gcut-assertions.xml:66(parameter) xml/gcut-assertions.xml:70(parameter)
+#: xml/gcut-assertions.xml:77(parameter) xml/gcut-assertions.xml:81(parameter)
+#: xml/gcut-assertions.xml:83(parameter) xml/gcut-assertions.xml:85(parameter)
+#: xml/gcut-assertions.xml:88(parameter) xml/gcut-assertions.xml:90(parameter)
+#: xml/gcut-assertions.xml:92(parameter) xml/gcut-assertions.xml:95(parameter)
+#: xml/gcut-assertions.xml:99(parameter)
 #: xml/gcut-assertions.xml:103(parameter)
 #: xml/gcut-assertions.xml:106(parameter)
 #: xml/gcut-assertions.xml:110(parameter)
@@ -1103,8 +1107,9 @@ msgstr ""
 #: xml/gcut-assertions-helper.xml:89(parameter) xml/cutter.xml:36(parameter)
 #: xml/cutter.xml:41(parameter) xml/cut-test-utils.xml:31(parameter)
 #: xml/cut-test-utils.xml:43(parameter) xml/cut-test-utils.xml:45(parameter)
-#: xml/cut-test-utils.xml:48(parameter) xml/cut-test-utils.xml:52(parameter)
-#: xml/cut-test-utils.xml:54(parameter) xml/cut-test-utils.xml:57(parameter)
+#: xml/cut-test-utils.xml:47(parameter) xml/cut-test-utils.xml:49(parameter)
+#: xml/cut-test-utils.xml:52(parameter) xml/cut-test-utils.xml:54(parameter)
+#: xml/cut-test-utils.xml:56(parameter) xml/cut-test-utils.xml:59(parameter)
 #: xml/cut-helper.xml:24(parameter) xml/cut-assertions.xml:22(parameter)
 #: xml/cut-assertions.xml:24(parameter) xml/cut-assertions.xml:26(parameter)
 #: xml/cut-assertions.xml:29(parameter) xml/cut-assertions.xml:32(parameter)
@@ -1408,13 +1413,13 @@ msgstr "ひとつめのクエリパラメータの名前"
 #: xml/soupcut-client.xml:141(term) xml/soupcut-assertions.xml:63(term)
 #: xml/soupcut-assertions.xml:84(term) xml/soupcut-assertions.xml:99(term)
 #: xml/soupcut-assertions.xml:118(term) xml/soupcut-assertions.xml:138(term)
-#: xml/gdkcut-pixbuf-assertions.xml:64(term) xml/gcut-test-utils.xml:200(term)
-#: xml/gcut-test-utils.xml:229(term) xml/gcut-test-utils.xml:258(term)
-#: xml/gcut-test-utils.xml:278(term) xml/gcut-test-utils.xml:323(term)
-#: xml/gcut-test-utils.xml:353(term) xml/gcut-test-utils.xml:373(term)
-#: xml/gcut-test-utils.xml:391(term) xml/gcut-test-utils.xml:422(term)
-#: xml/gcut-test-utils.xml:465(term) xml/gcut-test-utils.xml:516(term)
-#: xml/gcut-test-utils.xml:536(term) xml/gcut-public.xml:152(term)
+#: xml/gdkcut-pixbuf-assertions.xml:64(term) xml/gcut-test-utils.xml:201(term)
+#: xml/gcut-test-utils.xml:230(term) xml/gcut-test-utils.xml:259(term)
+#: xml/gcut-test-utils.xml:279(term) xml/gcut-test-utils.xml:324(term)
+#: xml/gcut-test-utils.xml:354(term) xml/gcut-test-utils.xml:374(term)
+#: xml/gcut-test-utils.xml:392(term) xml/gcut-test-utils.xml:423(term)
+#: xml/gcut-test-utils.xml:466(term) xml/gcut-test-utils.xml:517(term)
+#: xml/gcut-test-utils.xml:541(term) xml/gcut-public.xml:152(term)
 #: xml/gcut-process.xml:286(term) xml/gcut-process.xml:418(term)
 #: xml/gcut-egg.xml:270(term) xml/gcut-egg.xml:395(term)
 #: xml/gcut-data.xml:312(term) xml/gcut-assertions.xml:156(term)
@@ -1436,11 +1441,11 @@ msgstr "ひとつめのクエリパラメータの名前"
 #: xml/gcut-assertions.xml:851(term) xml/gcut-assertions.xml:870(term)
 #: xml/gcut-assertions-helper.xml:497(term) xml/cutter.xml:286(term)
 #: xml/cutter.xml:304(term) xml/cutter.xml:342(term) xml/cutter.xml:414(term)
-#: xml/cutter.xml:461(term) xml/cut-test-utils.xml:191(term)
-#: xml/cut-test-utils.xml:299(term) xml/cut-test-utils.xml:319(term)
-#: xml/cut-test-utils.xml:338(term) xml/cut-test-utils.xml:361(term)
-#: xml/cut-test-utils.xml:383(term) xml/cut-test-utils.xml:404(term)
-#: xml/cut-test-utils.xml:420(term) xml/cut-test-utils.xml:453(term)
+#: xml/cutter.xml:461(term) xml/cut-test-utils.xml:193(term)
+#: xml/cut-test-utils.xml:301(term) xml/cut-test-utils.xml:321(term)
+#: xml/cut-test-utils.xml:344(term) xml/cut-test-utils.xml:367(term)
+#: xml/cut-test-utils.xml:394(term) xml/cut-test-utils.xml:415(term)
+#: xml/cut-test-utils.xml:431(term) xml/cut-test-utils.xml:464(term)
 #: xml/cut-helper.xml:150(term) xml/cut-assertions.xml:344(term)
 #: xml/cut-assertions.xml:359(term) xml/cut-assertions.xml:374(term)
 #: xml/cut-assertions.xml:403(term) xml/cut-assertions.xml:432(term)
@@ -1922,7 +1927,7 @@ msgstr ""
 
 #: xml/soupcut-assertions.xml:132(term)
 #: xml/soupcut-assertions-helper.xml:148(term)
-#: xml/cut-test-utils.xml:241(term) xml/cut-assertions.xml:2101(term)
+#: xml/cut-test-utils.xml:243(term) xml/cut-assertions.xml:2101(term)
 #: xml/cut-assertions.xml:2121(term)
 msgid "<parameter>pattern</parameter> :"
 msgstr ""
@@ -2225,8 +2230,8 @@ msgid "Defined when GdkCutter Pixbuf is enabled."
 msgstr "GdkCutter Pixbufが有効なとき定義されます。"
 
 #: xml/gdkcutter-pixbuf.xml:72(para) xml/gcutter.xml:70(para)
-#: xml/gcut-types.xml:60(para) xml/gcut-test-utils.xml:300(para)
-#: xml/gcut-test-utils.xml:410(para) xml/gcut-list.xml:151(para)
+#: xml/gcut-types.xml:60(para) xml/gcut-test-utils.xml:301(para)
+#: xml/gcut-test-utils.xml:411(para) xml/gcut-list.xml:151(para)
 #: xml/gcut-list.xml:166(para) xml/gcut-list.xml:186(para)
 #: xml/gcut-list.xml:201(para) xml/gcut-list.xml:221(para)
 #: xml/gcut-list.xml:236(para) xml/gcut-list.xml:251(para)
@@ -2258,7 +2263,7 @@ msgstr "GdkCutter Pixbufが有効なとき定義されます。"
 #: xml/gcut-assertions.xml:835(para) xml/cutter.xml:168(para)
 #: xml/cutter.xml:189(para) xml/cutter.xml:198(para) xml/cutter.xml:207(para)
 #: xml/cutter.xml:417(para) xml/cutter.xml:433(para) xml/cutter.xml:442(para)
-#: xml/cut-test-utils.xml:250(para) xml/cut-helper.xml:251(para)
+#: xml/cut-test-utils.xml:252(para) xml/cut-helper.xml:251(para)
 #: xml/cut-helper.xml:267(para) xml/cut-helper.xml:278(para)
 #: xml/cut-assertions.xml:1415(para) xml/cut-assertions.xml:2371(para)
 msgid "Since 1.0.6"
@@ -2446,7 +2451,7 @@ msgstr ""
 msgid "<parameter>prefix</parameter> :"
 msgstr ""
 
-#: xml/gdkcut-pixbuf.xml:122(term) xml/gcut-test-utils.xml:103(term)
+#: xml/gdkcut-pixbuf.xml:122(term) xml/gcut-test-utils.xml:104(term)
 #: xml/gcut-public.xml:76(term) xml/gcut-process.xml:451(term)
 #: xml/gcut-process.xml:494(term) xml/gcut-process.xml:517(term)
 #: xml/gcut-process.xml:543(term) xml/gcut-process.xml:561(term)
@@ -2626,8 +2631,8 @@ msgid "an threshold used for detecting pixel difference."
 msgstr "ピクセルの違いを検出するために使われるしきい値。"
 
 #: xml/gdkcut-pixbuf-assertions.xml:67(para) xml/gcut-value-equal.xml:63(para)
-#: xml/gcut-value-equal.xml:90(para) xml/gcut-test-utils.xml:380(para)
-#: xml/gcut-test-utils.xml:501(para) xml/gcut-test-utils.xml:525(para)
+#: xml/gcut-value-equal.xml:90(para) xml/gcut-test-utils.xml:381(para)
+#: xml/gcut-test-utils.xml:502(para) xml/gcut-test-utils.xml:526(para)
 #: xml/gcut-object.xml:70(para) xml/gcut-object.xml:85(para)
 #: xml/gcut-object.xml:108(para) xml/gcut-list.xml:101(para)
 #: xml/gcut-list.xml:131(para) xml/gcut-list.xml:311(para)
@@ -2644,9 +2649,9 @@ msgstr "ピクセルの違いを検出するために使われるしきい値。
 #: xml/gcut-assertions.xml:549(para) xml/gcut-assertions.xml:631(para)
 #: xml/gcut-assertions.xml:668(para) xml/gcut-assertions.xml:698(para)
 #: xml/gcut-assertions.xml:740(para) xml/gcut-assertions.xml:759(para)
-#: xml/gcut-assertions.xml:797(para) xml/cut-test-utils.xml:93(para)
-#: xml/cut-test-utils.xml:108(para) xml/cut-test-utils.xml:137(para)
-#: xml/cut-test-utils.xml:158(para) xml/cut-test-utils.xml:178(para)
+#: xml/gcut-assertions.xml:797(para) xml/cut-test-utils.xml:95(para)
+#: xml/cut-test-utils.xml:110(para) xml/cut-test-utils.xml:139(para)
+#: xml/cut-test-utils.xml:160(para) xml/cut-test-utils.xml:180(para)
 #: xml/cut-multi-process.xml:341(para) xml/cut-multi-process.xml:359(para)
 #: xml/cut-helper.xml:136(para) xml/cut-helper.xml:155(para)
 #: xml/cut-helper.xml:190(para) xml/cut-helper.xml:345(para)
@@ -3040,9 +3045,9 @@ msgid ""
 "TODO\n"
 msgstr ""
 
-#: xml/gcut-value-equal.xml:70(para) xml/gcut-test-utils.xml:187(para)
-#: xml/gcut-test-utils.xml:217(para) xml/gcut-test-utils.xml:246(para)
-#: xml/gcut-test-utils.xml:311(para) xml/gcut-test-utils.xml:341(para)
+#: xml/gcut-value-equal.xml:70(para) xml/gcut-test-utils.xml:188(para)
+#: xml/gcut-test-utils.xml:218(para) xml/gcut-test-utils.xml:247(para)
+#: xml/gcut-test-utils.xml:312(para) xml/gcut-test-utils.xml:342(para)
 #: xml/gcut-process.xml:124(para) xml/gcut-list.xml:82(para)
 #: xml/gcut-list.xml:113(para) xml/gcut-inspect.xml:86(para)
 #: xml/gcut-inspect.xml:111(para) xml/gcut-inspect.xml:137(para)
@@ -3144,7 +3149,9 @@ msgstr "GLibサポート付きテストで使う型です。"
 msgid "*GCutInspectFunction"
 msgstr ""
 
-#: xml/gcut-types.xml:21(type) xml/gcut-string.xml:16(type)
+#: xml/gcut-types.xml:21(type) xml/gcut-test-utils.xml:27(returnvalue)
+#: xml/gcut-test-utils.xml:27(type) xml/gcut-test-utils.xml:28(returnvalue)
+#: xml/gcut-test-utils.xml:63(returnvalue) xml/gcut-string.xml:16(type)
 #: xml/gcut-string.xml:22(type) xml/gcut-string.xml:23(type)
 #: xml/gcut-string.xml:24(type) xml/gcut-string-io-channel.xml:22(returnvalue)
 #: xml/gcut-public.xml:30(returnvalue) xml/gcut-public.xml:31(type)
@@ -3163,14 +3170,15 @@ msgstr ""
 msgid "GString"
 msgstr ""
 
-#: xml/gcut-types.xml:21(parameter) xml/gcut-public.xml:31(parameter)
-#: xml/gcut-inspect.xml:22(parameter) xml/gcut-inspect.xml:25(parameter)
-#: xml/gcut-inspect.xml:28(parameter) xml/gcut-inspect.xml:31(parameter)
-#: xml/gcut-inspect.xml:34(parameter) xml/gcut-inspect.xml:37(parameter)
-#: xml/gcut-inspect.xml:40(parameter) xml/gcut-inspect.xml:43(parameter)
-#: xml/gcut-inspect.xml:46(parameter) xml/gcut-inspect.xml:49(parameter)
-#: xml/gcut-inspect.xml:52(parameter) xml/gcut-inspect.xml:55(parameter)
-#: xml/gcut-inspect.xml:58(parameter) xml/gcut-inspect.xml:61(parameter)
+#: xml/gcut-types.xml:21(parameter) xml/gcut-test-utils.xml:27(parameter)
+#: xml/gcut-public.xml:31(parameter) xml/gcut-inspect.xml:22(parameter)
+#: xml/gcut-inspect.xml:25(parameter) xml/gcut-inspect.xml:28(parameter)
+#: xml/gcut-inspect.xml:31(parameter) xml/gcut-inspect.xml:34(parameter)
+#: xml/gcut-inspect.xml:37(parameter) xml/gcut-inspect.xml:40(parameter)
+#: xml/gcut-inspect.xml:43(parameter) xml/gcut-inspect.xml:46(parameter)
+#: xml/gcut-inspect.xml:49(parameter) xml/gcut-inspect.xml:52(parameter)
+#: xml/gcut-inspect.xml:55(parameter) xml/gcut-inspect.xml:58(parameter)
+#: xml/gcut-inspect.xml:61(parameter)
 msgid "<link linkend=\"GString\"><placeholder-1/></link> *string"
 msgstr ""
 
@@ -3336,8 +3344,8 @@ msgstr ""
 "要素のポインタを渡されるので、<parameter>data</parameter>の詳細を"
 "<parameter>string</parameter>に追加してください。"
 
-#: xml/gcut-types.xml:51(term) xml/gcut-test-utils.xml:156(term)
-#: xml/gcut-test-utils.xml:171(term) xml/gcut-string.xml:68(term)
+#: xml/gcut-types.xml:51(term) xml/gcut-test-utils.xml:157(term)
+#: xml/gcut-test-utils.xml:172(term) xml/gcut-string.xml:68(term)
 #: xml/gcut-public.xml:128(term) xml/gcut-inspect.xml:92(term)
 #: xml/gcut-inspect.xml:118(term) xml/gcut-inspect.xml:144(term)
 #: xml/gcut-inspect.xml:170(term) xml/gcut-inspect.xml:196(term)
@@ -3345,9 +3353,9 @@ msgstr ""
 #: xml/gcut-inspect.xml:274(term) xml/gcut-inspect.xml:299(term)
 #: xml/gcut-inspect.xml:330(term) xml/gcut-inspect.xml:361(term)
 #: xml/gcut-inspect.xml:387(term) xml/gcut-inspect.xml:417(term)
-#: xml/gcut-inspect.xml:443(term) xml/cut-test-utils.xml:117(term)
-#: xml/cut-test-utils.xml:131(term) xml/cut-test-utils.xml:149(term)
-#: xml/cut-test-utils.xml:259(term) xml/cut-test-utils.xml:279(term)
+#: xml/gcut-inspect.xml:443(term) xml/cut-test-utils.xml:119(term)
+#: xml/cut-test-utils.xml:133(term) xml/cut-test-utils.xml:151(term)
+#: xml/cut-test-utils.xml:261(term) xml/cut-test-utils.xml:281(term)
 #: xml/cut-assertions.xml:459(term)
 msgid "<parameter>string</parameter> :"
 msgstr ""
@@ -3431,7 +3439,7 @@ msgstr ""
 
 #: xml/gcut-types.xml:68(para) xml/gcut-data.xml:554(para)
 #: xml/gcut-assertions.xml:854(para) xml/cut-version.xml:93(para)
-#: xml/cut-test-utils.xml:426(para) xml/cut-assertions.xml:406(para)
+#: xml/cut-test-utils.xml:437(para) xml/cut-assertions.xml:406(para)
 #: xml/cut-assertions.xml:435(para) xml/cut-assertions.xml:518(para)
 #: xml/cut-assertions.xml:976(para) xml/cut-assertions.xml:1434(para)
 #: xml/cut-assertions.xml:1480(para) xml/cut-assertions.xml:1588(para)
@@ -3459,7 +3467,7 @@ msgstr ""
 #: xml/gcut-inspect.xml:452(para) xml/gcut-data.xml:352(para)
 #: xml/gcut-data.xml:425(para) xml/gcut-data.xml:443(para)
 #: xml/gcut-data.xml:460(para) xml/gcut-data.xml:589(para)
-#: xml/gcut-data.xml:607(para) xml/cut-test-utils.xml:271(para)
+#: xml/gcut-data.xml:607(para) xml/cut-test-utils.xml:273(para)
 #: xml/cut-assertions.xml:1504(para) xml/cut-assertions.xml:1528(para)
 msgid "Since 1.1.3"
 msgstr "1.1.3から"
@@ -3514,7 +3522,7 @@ msgstr "GLibサポート付きテストユーティリティ"
 msgid "Utilities to write tests more easily with GLib support."
 msgstr "テストをもっと簡単に書くためのGLibサポート付きユーティリティ。"
 
-#: xml/gcut-test-utils.xml:22(link) xml/gcut-test-utils.xml:83(primary)
+#: xml/gcut-test-utils.xml:22(link) xml/gcut-test-utils.xml:84(primary)
 #: xml/api-index-full.xml:590(link) xml/api-index-1.0.3.xml:26(link)
 msgid "gcut_take_object"
 msgstr ""
@@ -3523,7 +3531,7 @@ msgstr ""
 msgid "<link linkend=\"GObject\"><placeholder-1/></link> *object"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:23(link) xml/gcut-test-utils.xml:97(primary)
+#: xml/gcut-test-utils.xml:23(link) xml/gcut-test-utils.xml:98(primary)
 #: xml/api-index-full.xml:579(link) xml/api-index-1.0.3.xml:24(link)
 msgid "gcut_take_error"
 msgstr ""
@@ -3580,7 +3588,7 @@ msgstr ""
 msgid "GList"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:24(link) xml/gcut-test-utils.xml:113(primary)
+#: xml/gcut-test-utils.xml:24(link) xml/gcut-test-utils.xml:114(primary)
 #: xml/api-index-full.xml:581(link) xml/api-index-1.0.3.xml:25(link)
 msgid "gcut_take_list"
 msgstr ""
@@ -3621,7 +3629,7 @@ msgstr ""
 msgid "GHashTable"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:26(link) xml/gcut-test-utils.xml:134(primary)
+#: xml/gcut-test-utils.xml:26(link) xml/gcut-test-utils.xml:135(primary)
 #: xml/api-index-full.xml:580(link) xml/api-index-1.0.4.xml:51(link)
 msgid "gcut_take_hash_table"
 msgstr ""
@@ -3630,17 +3638,21 @@ msgstr ""
 msgid "<link linkend=\"GHashTable\"><placeholder-1/></link> *hash_table"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:27(link) xml/gcut-test-utils.xml:150(primary)
+#: xml/gcut-test-utils.xml:27(link) xml/gcut-test-utils.xml:151(primary)
 #: xml/api-index-full.xml:591(link) xml/api-index-1.1.6.xml:33(link)
 msgid "gcut_take_string"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:28(link) xml/gcut-test-utils.xml:166(primary)
+#: xml/gcut-test-utils.xml:28(link) xml/gcut-test-utils.xml:167(primary)
 #: xml/api-index-full.xml:589(link) xml/api-index-1.1.6.xml:32(link)
 msgid "gcut_take_new_string"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:29(link) xml/gcut-test-utils.xml:181(primary)
+#: xml/gcut-test-utils.xml:28(parameter)
+msgid "const <link linkend=\"gchar\"><placeholder-1/></link> *string"
+msgstr ""
+
+#: xml/gcut-test-utils.xml:29(link) xml/gcut-test-utils.xml:182(primary)
 #: xml/api-index-full.xml:476(link) xml/api-index-1.1.1.xml:16(link)
 msgid "gcut_list_new"
 msgstr ""
@@ -3649,7 +3661,7 @@ msgstr ""
 msgid "const <link linkend=\"gpointer\"><placeholder-1/></link> element"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:31(link) xml/gcut-test-utils.xml:210(primary)
+#: xml/gcut-test-utils.xml:31(link) xml/gcut-test-utils.xml:211(primary)
 #: xml/api-index-full.xml:475(link) xml/api-index-1.1.5.xml:19(link)
 msgid "gcut_list_int_new"
 msgstr ""
@@ -3680,7 +3692,7 @@ msgstr ""
 msgid "<link linkend=\"gint\"><placeholder-1/></link> value"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:34(link) xml/gcut-test-utils.xml:239(primary)
+#: xml/gcut-test-utils.xml:34(link) xml/gcut-test-utils.xml:240(primary)
 #: xml/api-index-full.xml:486(link) xml/api-index-1.1.5.xml:20(link)
 msgid "gcut_list_uint_new"
 msgstr ""
@@ -3689,7 +3701,7 @@ msgstr ""
 msgid "<link linkend=\"guint\"><placeholder-1/></link> value"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:37(link) xml/gcut-test-utils.xml:269(primary)
+#: xml/gcut-test-utils.xml:37(link) xml/gcut-test-utils.xml:270(primary)
 #: xml/api-index-full.xml:482(link) xml/api-index-1.0.3.xml:21(link)
 msgid "gcut_list_string_new"
 msgstr ""
@@ -3699,7 +3711,7 @@ msgstr ""
 msgid "const <link linkend=\"gchar\"><placeholder-1/></link> *value"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:39(link) xml/gcut-test-utils.xml:288(primary)
+#: xml/gcut-test-utils.xml:39(link) xml/gcut-test-utils.xml:289(primary)
 #: xml/api-index-full.xml:483(link) xml/api-index-1.0.6.xml:94(link)
 msgid "gcut_list_string_new_array"
 msgstr ""
@@ -3708,37 +3720,37 @@ msgstr ""
 msgid "const <link linkend=\"gchar\"><placeholder-1/></link> **strings"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:40(link) xml/gcut-test-utils.xml:303(primary)
+#: xml/gcut-test-utils.xml:40(link) xml/gcut-test-utils.xml:304(primary)
 #: xml/api-index-full.xml:583(link) xml/api-index-1.1.5.xml:59(link)
 msgid "gcut_take_new_list_int"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:43(link) xml/gcut-test-utils.xml:333(primary)
+#: xml/gcut-test-utils.xml:43(link) xml/gcut-test-utils.xml:334(primary)
 #: xml/api-index-full.xml:588(link) xml/api-index-1.1.5.xml:60(link)
 msgid "gcut_take_new_list_uint"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:46(link) xml/gcut-test-utils.xml:363(primary)
+#: xml/gcut-test-utils.xml:46(link) xml/gcut-test-utils.xml:364(primary)
 #: xml/api-index-full.xml:585(link) xml/api-index-1.0.5.xml:76(link)
 msgid "gcut_take_new_list_string"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:48(link) xml/gcut-test-utils.xml:383(primary)
+#: xml/gcut-test-utils.xml:48(link) xml/gcut-test-utils.xml:384(primary)
 #: xml/api-index-full.xml:587(link) xml/api-index-deprecated.xml:70(link)
 msgid "gcut_take_new_list_string_backward_compatibility"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:50(link) xml/gcut-test-utils.xml:397(primary)
+#: xml/gcut-test-utils.xml:50(link) xml/gcut-test-utils.xml:398(primary)
 #: xml/api-index-full.xml:586(link) xml/api-index-1.0.6.xml:97(link)
 msgid "gcut_take_new_list_string_array"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:51(link) xml/gcut-test-utils.xml:413(primary)
+#: xml/gcut-test-utils.xml:51(link) xml/gcut-test-utils.xml:414(primary)
 #: xml/api-index-full.xml:584(link) xml/api-index-1.1.1.xml:20(link)
 msgid "gcut_take_new_list_object"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:53(link) xml/gcut-test-utils.xml:432(primary)
+#: xml/gcut-test-utils.xml:53(link) xml/gcut-test-utils.xml:433(primary)
 #: xml/api-index-full.xml:480(link) xml/api-index-1.0.3.xml:20(link)
 msgid "gcut_list_string_free"
 msgstr ""
@@ -3748,12 +3760,12 @@ msgstr ""
 msgid "<link linkend=\"GList\"><placeholder-1/></link> *list"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:54(link) xml/gcut-test-utils.xml:443(primary)
+#: xml/gcut-test-utils.xml:54(link) xml/gcut-test-utils.xml:444(primary)
 #: xml/api-index-full.xml:477(link) xml/api-index-1.1.1.xml:17(link)
 msgid "gcut_list_object_free"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:55(link) xml/gcut-test-utils.xml:455(primary)
+#: xml/gcut-test-utils.xml:55(link) xml/gcut-test-utils.xml:456(primary)
 #: xml/api-index-full.xml:433(link) xml/api-index-1.0.4.xml:48(link)
 msgid "gcut_hash_table_string_string_new"
 msgstr ""
@@ -3764,7 +3776,7 @@ msgstr ""
 msgid "const <link linkend=\"gchar\"><placeholder-1/></link> *key"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:57(link) xml/gcut-test-utils.xml:479(primary)
+#: xml/gcut-test-utils.xml:57(link) xml/gcut-test-utils.xml:480(primary)
 #: xml/api-index-full.xml:434(link) xml/api-index-1.0.5.xml:54(link)
 msgid "gcut_hash_table_string_string_new_va_list"
 msgstr ""
@@ -3781,12 +3793,12 @@ msgstr ""
 msgid "<link linkend=\"va-list\"><placeholder-1/></link> args"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:60(link) xml/gcut-test-utils.xml:504(primary)
+#: xml/gcut-test-utils.xml:60(link) xml/gcut-test-utils.xml:505(primary)
 #: xml/api-index-full.xml:582(link) xml/api-index-1.0.5.xml:75(link)
 msgid "gcut_take_new_hash_table_string_string"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:63(link) xml/gcut-test-utils.xml:528(primary)
+#: xml/gcut-test-utils.xml:63(link) xml/gcut-test-utils.xml:529(primary)
 #: xml/api-index-full.xml:421(link) xml/api-index-1.1.6.xml:24(link)
 msgid "gcut_get_fixture_data"
 msgstr ""
@@ -3799,46 +3811,47 @@ msgid ""
 "const <link linkend=\"GList\"><placeholder-7/></link> *       <placeholder-8/>                      (<placeholder-9/>,\n"
 "                                                         <placeholder-10/>);\n"
 "<link linkend=\"GHashTable\"><placeholder-11/></link> *        <placeholder-12/>                (<placeholder-13/>);\n"
-"#define             <placeholder-14/>                    (string)\n"
-"#define             <placeholder-15/>                (string)\n"
-"<link linkend=\"GList\"><placeholder-16/></link> *             <placeholder-17/>                       (<placeholder-18/>,\n"
-"                                                         <placeholder-19/>);\n"
-"<link linkend=\"GList\"><placeholder-20/></link> *             <placeholder-21/>                   (<placeholder-22/>,\n"
-"                                                         <placeholder-23/>,\n"
-"                                                         <placeholder-24/>);\n"
-"<link linkend=\"GList\"><placeholder-25/></link> *             <placeholder-26/>                  (<placeholder-27/>,\n"
-"                                                         <placeholder-28/>,\n"
-"                                                         <placeholder-29/>);\n"
-"<link linkend=\"GList\"><placeholder-30/></link> *             <placeholder-31/>                (<placeholder-32/>,\n"
+"<link linkend=\"GString\"><placeholder-14/></link> *           <placeholder-15/>                    (<placeholder-16/>);\n"
+"<link linkend=\"GString\"><placeholder-17/></link> *           <placeholder-18/>                (<placeholder-19/>);\n"
+"<link linkend=\"GList\"><placeholder-20/></link> *             <placeholder-21/>                       (<placeholder-22/>,\n"
+"                                                         <placeholder-23/>);\n"
+"<link linkend=\"GList\"><placeholder-24/></link> *             <placeholder-25/>                   (<placeholder-26/>,\n"
+"                                                         <placeholder-27/>,\n"
+"                                                         <placeholder-28/>);\n"
+"<link linkend=\"GList\"><placeholder-29/></link> *             <placeholder-30/>                  (<placeholder-31/>,\n"
+"                                                         <placeholder-32/>,\n"
 "                                                         <placeholder-33/>);\n"
-"<link linkend=\"GList\"><placeholder-34/></link> *             <placeholder-35/>          (<placeholder-36/>);\n"
-"const <link linkend=\"GList\"><placeholder-37/></link> *       <placeholder-38/>              (<placeholder-39/>,\n"
-"                                                         <placeholder-40/>,\n"
-"                                                         <placeholder-41/>);\n"
-"const <link linkend=\"GList\"><placeholder-42/></link> *       <placeholder-43/>             (<placeholder-44/>,\n"
-"                                                         <placeholder-45/>,\n"
-"                                                         <placeholder-46/>);\n"
-"const <link linkend=\"GList\"><placeholder-47/></link> *       <placeholder-48/>           (<placeholder-49/>,\n"
+"<link linkend=\"GList\"><placeholder-34/></link> *             <placeholder-35/>                (<placeholder-36/>,\n"
+"                                                         <placeholder-37/>);\n"
+"<link linkend=\"GList\"><placeholder-38/></link> *             <placeholder-39/>          (<placeholder-40/>);\n"
+"const <link linkend=\"GList\"><placeholder-41/></link> *       <placeholder-42/>              (<placeholder-43/>,\n"
+"                                                         <placeholder-44/>,\n"
+"                                                         <placeholder-45/>);\n"
+"const <link linkend=\"GList\"><placeholder-46/></link> *       <placeholder-47/>             (<placeholder-48/>,\n"
+"                                                         <placeholder-49/>,\n"
 "                                                         <placeholder-50/>);\n"
-"#define             <placeholder-51/>(value,\n"
+"const <link linkend=\"GList\"><placeholder-51/></link> *       <placeholder-52/>           (<placeholder-53/>,\n"
+"                                                         <placeholder-54/>);\n"
+"#define             <placeholder-55/>(value,\n"
 "                                                         ...)\n"
-"const <link linkend=\"GList\"><placeholder-52/></link> *       <placeholder-53/>     (<placeholder-54/>);\n"
-"#define             <placeholder-55/>           (object,\n"
+"const <link linkend=\"GList\"><placeholder-56/></link> *       <placeholder-57/>     (<placeholder-58/>);\n"
+"#define             <placeholder-59/>           (object,\n"
 "                                                         ...)\n"
-"<link linkend=\"void\"><placeholder-56/></link>                <placeholder-57/>               (<placeholder-58/>);\n"
-"<link linkend=\"void\"><placeholder-59/></link>                <placeholder-60/>               (<placeholder-61/>);\n"
-"<link linkend=\"GHashTable\"><placeholder-62/></link> *        <placeholder-63/>   (<placeholder-64/>,\n"
-"                                                         <placeholder-65/>);\n"
-"<link linkend=\"GHashTable\"><placeholder-66/></link> *        <placeholder-67/>\n"
-"                                                        (<placeholder-68/>,\n"
+"<link linkend=\"void\"><placeholder-60/></link>                <placeholder-61/>               (<placeholder-62/>);\n"
+"<link linkend=\"void\"><placeholder-63/></link>                <placeholder-64/>               (<placeholder-65/>);\n"
+"<link linkend=\"GHashTable\"><placeholder-66/></link> *        <placeholder-67/>   (<placeholder-68/>,\n"
 "                                                         <placeholder-69/>);\n"
 "<link linkend=\"GHashTable\"><placeholder-70/></link> *        <placeholder-71/>\n"
 "                                                        (<placeholder-72/>,\n"
 "                                                         <placeholder-73/>);\n"
-"#define             <placeholder-74/>               (...)\n"
+"<link linkend=\"GHashTable\"><placeholder-74/></link> *        <placeholder-75/>\n"
+"                                                        (<placeholder-76/>,\n"
+"                                                         <placeholder-77/>);\n"
+"<link linkend=\"GString\"><placeholder-78/></link> *           <placeholder-79/>               (<placeholder-80/>,\n"
+"                                                         <placeholder-81/>);\n"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:69(para) xml/cut-test-utils.xml:63(para)
+#: xml/gcut-test-utils.xml:70(para) xml/cut-test-utils.xml:65(para)
 msgid ""
 "To write tests, you need to write codes that set up/tear down test "
 "environment, prepare expected and actual values and so on. Cutter provides "
@@ -3848,20 +3861,20 @@ msgstr ""
 "準備するコードなどたくさんのコードを書く必要があります。Cutterはもっと簡単に"
 "テストを書くためにユーティリティを提供します。"
 
-#: xml/gcut-test-utils.xml:75(para)
+#: xml/gcut-test-utils.xml:76(para)
 msgid "The utilities work with GLib."
 msgstr "このユーティリティはGLibと一緒に使います。"
 
-#: xml/gcut-test-utils.xml:82(title)
+#: xml/gcut-test-utils.xml:83(title)
 msgid "gcut_take_object ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:84(programlisting)
+#: xml/gcut-test-utils.xml:85(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GObject\"><returnvalue>GObject</returnvalue></link> *           gcut_take_object                    (<parameter><link linkend=\"GObject\"><type>GObject</type></link> *object</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:85(para)
+#: xml/gcut-test-utils.xml:86(para)
 msgid ""
 "Passes ownership of <parameter>object</parameter> to Cutter and returns "
 "<parameter>object</parameter>."
@@ -3869,20 +3882,20 @@ msgstr ""
 "<parameter>object</parameter>の所有権をCutterに渡し、<parameter>object</"
 "parameter>を返します。"
 
-#: xml/gcut-test-utils.xml:88(term) xml/gcut-test-utils.xml:419(term)
+#: xml/gcut-test-utils.xml:89(term) xml/gcut-test-utils.xml:420(term)
 #: xml/gcut-public.xml:60(term) xml/gcut-object.xml:79(term)
-#: xml/gcut-object.xml:96(term) xml/cut-test-utils.xml:84(term)
+#: xml/gcut-object.xml:96(term) xml/cut-test-utils.xml:86(term)
 msgid "<parameter>object</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:89(simpara)
+#: xml/gcut-test-utils.xml:90(simpara)
 msgid ""
 "the <link linkend=\"GObject\"><type>GObject</type></link> to be owned by "
 "Cutter."
 msgstr ""
 "Cutterに所有権を渡す<link linkend=\"GObject\"><type>GObject</type></link>。"
 
-#: xml/gcut-test-utils.xml:91(simpara)
+#: xml/gcut-test-utils.xml:92(simpara)
 msgid ""
 "<parameter>object</parameter> owned by Cutter. Don't <link linkend=\"g-"
 "object-unref\"><function>g_object_unref()</function></link> it."
@@ -3890,9 +3903,9 @@ msgstr ""
 "Cutterが所有権をもつ<parameter>object</parameter>。<link linkend=\"g-object-"
 "unref\"><function>g_object_unref()</function></link>しないでください。"
 
-#: xml/gcut-test-utils.xml:94(para) xml/gcut-test-utils.xml:110(para)
-#: xml/gcut-test-utils.xml:131(para) xml/gcut-test-utils.xml:285(para)
-#: xml/gcut-test-utils.xml:440(para) xml/gcut-assertions.xml:159(para)
+#: xml/gcut-test-utils.xml:95(para) xml/gcut-test-utils.xml:111(para)
+#: xml/gcut-test-utils.xml:132(para) xml/gcut-test-utils.xml:286(para)
+#: xml/gcut-test-utils.xml:441(para) xml/gcut-assertions.xml:159(para)
 #: xml/gcut-assertions.xml:198(para) xml/gcut-assertions.xml:270(para)
 #: xml/gcut-assertions.xml:309(para) xml/gcut-assertions.xml:328(para)
 #: xml/gcut-assertions.xml:514(para) xml/gcut-assertions.xml:564(para)
@@ -3900,16 +3913,16 @@ msgstr ""
 msgid "Since 1.0.3"
 msgstr "1.0.3から"
 
-#: xml/gcut-test-utils.xml:96(title)
+#: xml/gcut-test-utils.xml:97(title)
 msgid "gcut_take_error ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:98(programlisting)
+#: xml/gcut-test-utils.xml:99(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GError\"><returnvalue>GError</returnvalue></link> *            gcut_take_error                     (<parameter><link linkend=\"GError\"><type>GError</type></link> *error</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:99(para)
+#: xml/gcut-test-utils.xml:100(para)
 msgid ""
 "Passes ownership of <parameter>error</parameter> to Cutter and returns a "
 "<parameter>error</parameter> itself."
@@ -3917,14 +3930,14 @@ msgstr ""
 "Cutterに<parameter>error</parameter>の所有権を渡し、<parameter>error</"
 "parameter>それ自身を返します。"
 
-#: xml/gcut-test-utils.xml:104(simpara)
+#: xml/gcut-test-utils.xml:105(simpara)
 msgid ""
 "the <link linkend=\"GError\"><type>GError</type></link> to be owned by "
 "Cutter."
 msgstr ""
 "Cutterに所有権を渡す<link linkend=\"GError\"><type>GError</type></link>。"
 
-#: xml/gcut-test-utils.xml:106(simpara)
+#: xml/gcut-test-utils.xml:107(simpara)
 msgid ""
 "a <link linkend=\"GError\"><type>GError</type></link> owned by Cutter. Don't "
 "<link linkend=\"g-error-free\"><function>g_error_free()</function></link> it."
@@ -3933,18 +3946,18 @@ msgstr ""
 "<link linkend=\"g-error-free\"><function>g_error_free()</function></link>しな"
 "いでください。"
 
-#: xml/gcut-test-utils.xml:112(title)
+#: xml/gcut-test-utils.xml:113(title)
 msgid "gcut_take_list ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:114(programlisting)
+#: xml/gcut-test-utils.xml:115(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *       gcut_take_list                      (<parameter>const <link linkend=\"GList\"><type>GList</type></link> *list</parameter>,\n"
 "                                                         <parameter><link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></link> destroy_function</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:116(para)
+#: xml/gcut-test-utils.xml:117(para)
 msgid ""
 "Passes ownership of <parameter>list</parameter> to Cutter and returns "
 "<parameter>list</parameter> itself."
@@ -3952,8 +3965,8 @@ msgstr ""
 "<parameter>list</parameter>の所有権をCutterに渡し、<parameter>list</"
 "parameter>それ自身を返します。"
 
-#: xml/gcut-test-utils.xml:120(term) xml/gcut-test-utils.xml:437(term)
-#: xml/gcut-test-utils.xml:449(term) xml/gcut-public.xml:93(term)
+#: xml/gcut-test-utils.xml:121(term) xml/gcut-test-utils.xml:438(term)
+#: xml/gcut-test-utils.xml:450(term) xml/gcut-public.xml:93(term)
 #: xml/gcut-list.xml:119(term) xml/gcut-list.xml:160(term)
 #: xml/gcut-list.xml:195(term) xml/gcut-list.xml:230(term)
 #: xml/gcut-list.xml:245(term) xml/gcut-list.xml:265(term)
@@ -3964,17 +3977,17 @@ msgstr ""
 msgid "<parameter>list</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:121(simpara)
+#: xml/gcut-test-utils.xml:122(simpara)
 msgid ""
 "the <link linkend=\"GList\"><type>GList</type></link> to be owned by Cutter."
 msgstr ""
 "Cutterに所有権を渡す<link linkend=\"GList\"><type>GList</type></link>。"
 
-#: xml/gcut-test-utils.xml:123(term) xml/cut-test-utils.xml:87(term)
+#: xml/gcut-test-utils.xml:124(term) xml/cut-test-utils.xml:89(term)
 msgid "<parameter>destroy_function</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:124(simpara)
+#: xml/gcut-test-utils.xml:125(simpara)
 msgid ""
 "the destroy function that destroys the elements of <parameter>list</"
 "parameter>, or <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>."
@@ -3982,7 +3995,7 @@ msgstr ""
 "<parameter>list</parameter>の各要素を破棄する関数、または<link linkend="
 "\"NULL:CAPS\"><literal>NULL</literal></link>。"
 
-#: xml/gcut-test-utils.xml:127(simpara)
+#: xml/gcut-test-utils.xml:128(simpara)
 msgid ""
 "a <link linkend=\"GList\"><type>GList</type></link> owned by Cutter. Don't "
 "<link linkend=\"g-list-free\"><function>g_list_free()</function></link> it."
@@ -3991,16 +4004,16 @@ msgstr ""
 "linkend=\"g-list-free\"><function>g_list_free()</function></link>しないでくだ"
 "さい。"
 
-#: xml/gcut-test-utils.xml:133(title)
+#: xml/gcut-test-utils.xml:134(title)
 msgid "gcut_take_hash_table ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:135(programlisting)
+#: xml/gcut-test-utils.xml:136(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GHashTable\"><returnvalue>GHashTable</returnvalue></link> *        gcut_take_hash_table                (<parameter><link linkend=\"GHashTable\"><type>GHashTable</type></link> *hash_table</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:136(para)
+#: xml/gcut-test-utils.xml:137(para)
 msgid ""
 "Passes ownership of <parameter>hash_table</parameter> to Cutter and returns "
 "<parameter>hash_table</parameter> itself."
@@ -4008,11 +4021,11 @@ msgstr ""
 "<parameter>hash_table</parameter>の所有権をCutterに渡し、"
 "<parameter>hash_table</parameter>それ自身を返します。"
 
-#: xml/gcut-test-utils.xml:140(term) xml/gcut-public.xml:112(term)
+#: xml/gcut-test-utils.xml:141(term) xml/gcut-public.xml:112(term)
 msgid "<parameter>hash_table</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:141(simpara)
+#: xml/gcut-test-utils.xml:142(simpara)
 msgid ""
 "the <link linkend=\"GHashTable\"><type>GHashTable</type></link> to be owned "
 "by Cutter."
@@ -4020,7 +4033,7 @@ msgstr ""
 "Cutterに所有権を渡す<link linkend=\"GHashTable\"><type>GHashTable</type></"
 "link>。"
 
-#: xml/gcut-test-utils.xml:143(simpara)
+#: xml/gcut-test-utils.xml:144(simpara)
 msgid ""
 "a <link linkend=\"GHashTable\"><type>GHashTable</type></link> owned by "
 "Cutter. Don't <link linkend=\"g-hash-table-unref"
@@ -4030,7 +4043,7 @@ msgstr ""
 "link>。<link linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</"
 "function></link>しないでください。"
 
-#: xml/gcut-test-utils.xml:147(para) xml/gcut-test-utils.xml:476(para)
+#: xml/gcut-test-utils.xml:148(para) xml/gcut-test-utils.xml:477(para)
 #: xml/gcut-assertions.xml:499(para) xml/gcut-assertions.xml:599(para)
 #: xml/cutter.xml:347(para) xml/cutter.xml:388(para) xml/cutter.xml:401(para)
 #: xml/cut-multi-process.xml:115(para) xml/cut-multi-process.xml:140(para)
@@ -4052,16 +4065,16 @@ msgstr ""
 msgid "Since 1.0.4"
 msgstr "1.0.4から"
 
-#: xml/gcut-test-utils.xml:149(title)
-msgid "gcut_take_string()"
+#: xml/gcut-test-utils.xml:150(title)
+msgid "gcut_take_string ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:151(programlisting)
+#: xml/gcut-test-utils.xml:152(programlisting)
 #, no-wrap
-msgid "#define             gcut_take_string(string)"
+msgid "<link linkend=\"GString\"><returnvalue>GString</returnvalue></link> *           gcut_take_string                    (<parameter><link linkend=\"GString\"><type>GString</type></link> *string</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:152(para) xml/cut-test-utils.xml:113(para)
+#: xml/gcut-test-utils.xml:153(para) xml/cut-test-utils.xml:115(para)
 msgid ""
 "Passes ownership of <parameter>string</parameter> to Cutter and returns "
 "<parameter>string</parameter> itself."
@@ -4069,14 +4082,14 @@ msgstr ""
 "<parameter>string</parameter>の所有権をCutterに渡し、<parameter>string</"
 "parameter>それ自身を返します。"
 
-#: xml/gcut-test-utils.xml:157(simpara)
+#: xml/gcut-test-utils.xml:158(simpara)
 msgid ""
 "the <link linkend=\"GString\"><type>GString</type></link> to be owned by "
 "Cutter."
 msgstr ""
 "Cutterに所有権を渡す<link linkend=\"GString\"><type>GString</type></link>。"
 
-#: xml/gcut-test-utils.xml:159(simpara) xml/gcut-test-utils.xml:174(simpara)
+#: xml/gcut-test-utils.xml:160(simpara) xml/gcut-test-utils.xml:175(simpara)
 msgid ""
 "a <link linkend=\"GString\"><type>GString</type></link> owned by Cutter. "
 "Don't <link linkend=\"g-string-free\"><function>g_string_free()</function></"
@@ -4086,29 +4099,29 @@ msgstr ""
 "<link linkend=\"g-string-free\"><function>g_string_free()</function></link>し"
 "ないでください。"
 
-#: xml/gcut-test-utils.xml:163(para) xml/gcut-test-utils.xml:178(para)
-#: xml/gcut-test-utils.xml:544(para) xml/gcut-process.xml:724(para)
+#: xml/gcut-test-utils.xml:164(para) xml/gcut-test-utils.xml:179(para)
+#: xml/gcut-test-utils.xml:549(para) xml/gcut-process.xml:724(para)
 #: xml/gcut-process.xml:740(para) xml/gcut-glib-event-loop.xml:69(para)
 #: xml/gcut-event-loop.xml:166(para) xml/gcut-event-loop.xml:187(para)
 #: xml/gcut-event-loop.xml:198(para) xml/gcut-event-loop.xml:230(para)
 #: xml/gcut-event-loop.xml:257(para) xml/gcut-event-loop.xml:292(para)
 #: xml/gcut-event-loop.xml:319(para) xml/gcut-event-loop.xml:354(para)
 #: xml/gcut-event-loop.xml:377(para) xml/gcut-event-loop.xml:408(para)
-#: xml/gcut-event-loop.xml:426(para) xml/cut-test-utils.xml:346(para)
-#: xml/cut-test-utils.xml:391(para)
+#: xml/gcut-event-loop.xml:426(para) xml/cut-test-utils.xml:352(para)
+#: xml/cut-test-utils.xml:402(para)
 msgid "Since 1.1.6"
 msgstr "1.1.6から"
 
-#: xml/gcut-test-utils.xml:165(title)
-msgid "gcut_take_new_string()"
+#: xml/gcut-test-utils.xml:166(title)
+msgid "gcut_take_new_string ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:167(programlisting)
+#: xml/gcut-test-utils.xml:168(programlisting)
 #, no-wrap
-msgid "#define             gcut_take_new_string(string)"
+msgid "<link linkend=\"GString\"><returnvalue>GString</returnvalue></link> *           gcut_take_new_string                (<parameter>const <link linkend=\"gchar\"><type>gchar</type></link> *string</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:168(para)
+#: xml/gcut-test-utils.xml:169(para)
 msgid ""
 "Creates a <link linkend=\"GString\"><type>GString</type></link> object from "
 "passed string."
@@ -4116,29 +4129,29 @@ msgstr ""
 "渡された文字列から<link linkend=\"GString\"><type>GString</type></link>を作成"
 "します。"
 
-#: xml/gcut-test-utils.xml:172(simpara)
+#: xml/gcut-test-utils.xml:173(simpara)
 msgid ""
 "the string. It can be <link linkend=\"NULL:CAPS\"><literal>NULL</literal></"
 "link>."
 msgstr ""
 "文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>も可。"
 
-#: xml/gcut-test-utils.xml:180(title)
+#: xml/gcut-test-utils.xml:181(title)
 msgid "gcut_list_new ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:182(programlisting)
+#: xml/gcut-test-utils.xml:183(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *             gcut_list_new                       (<parameter>const <link linkend=\"gpointer\"><type>gpointer</type></link> element</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:184(para)
+#: xml/gcut-test-utils.xml:185(para)
 msgid "Creates a list from passed elements."
 msgstr "渡された要素を含むリストを作ります。"
 
-#: xml/gcut-test-utils.xml:189(programlisting)
+#: xml/gcut-test-utils.xml:190(programlisting)
 #, no-wrap
 msgid ""
 "\n"
@@ -4149,15 +4162,15 @@ msgid ""
 "egg_list = gcut_list_new(echo_egg, cat_egg, NULL);\n"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:197(term)
+#: xml/gcut-test-utils.xml:198(term)
 msgid "<parameter>element</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:198(simpara)
+#: xml/gcut-test-utils.xml:199(simpara)
 msgid "the first <link linkend=\"gpointer\"><type>gpointer</type></link>."
 msgstr "最初の<link linkend=\"gpointer\"><type>gpointer</type></link>。"
 
-#: xml/gcut-test-utils.xml:201(simpara)
+#: xml/gcut-test-utils.xml:202(simpara)
 msgid ""
 "remaining elements in list. <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>-terminate."
@@ -4165,7 +4178,7 @@ msgstr ""
 "パスの残りの要素。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
 "終端。"
 
-#: xml/gcut-test-utils.xml:203(simpara)
+#: xml/gcut-test-utils.xml:204(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed elements."
@@ -4173,18 +4186,18 @@ msgstr ""
 "新しく割り当てられた<link linkend=\"GList\"><type>GList</type></link>。渡され"
 "た要素を持ちます。"
 
-#: xml/gcut-test-utils.xml:207(para) xml/gcut-test-utils.xml:429(para)
-#: xml/gcut-test-utils.xml:452(para) xml/gcut-data.xml:572(para)
-#: xml/cut-test-utils.xml:456(para) xml/cut-helper.xml:548(para)
+#: xml/gcut-test-utils.xml:208(para) xml/gcut-test-utils.xml:430(para)
+#: xml/gcut-test-utils.xml:453(para) xml/gcut-data.xml:572(para)
+#: xml/cut-test-utils.xml:467(para) xml/cut-helper.xml:548(para)
 #: xml/cut-helper.xml:566(para) xml/cut-assertions.xml:2189(para)
 msgid "Since 1.1.1"
 msgstr "1.1.1から"
 
-#: xml/gcut-test-utils.xml:209(title)
+#: xml/gcut-test-utils.xml:210(title)
 msgid "gcut_list_int_new ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:211(programlisting)
+#: xml/gcut-test-utils.xml:212(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *             gcut_list_int_new                   (<parameter><link linkend=\"guint\"><type>guint</type></link> n</parameter>,\n"
@@ -4192,42 +4205,42 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:214(para)
+#: xml/gcut-test-utils.xml:215(para)
 msgid "Creates a list from passed integer values."
 msgstr "渡された整数からリストを作ります。"
 
-#: xml/gcut-test-utils.xml:219(programlisting)
+#: xml/gcut-test-utils.xml:220(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "gcut_list_int_new(3, -10, 1, 29); -&gt; (-10, 1, 29)\n"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:223(term) xml/gcut-test-utils.xml:252(term)
-#: xml/gcut-test-utils.xml:317(term) xml/gcut-test-utils.xml:347(term)
+#: xml/gcut-test-utils.xml:224(term) xml/gcut-test-utils.xml:253(term)
+#: xml/gcut-test-utils.xml:318(term) xml/gcut-test-utils.xml:348(term)
 msgid "<parameter>n</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:224(simpara) xml/gcut-test-utils.xml:318(simpara)
+#: xml/gcut-test-utils.xml:225(simpara) xml/gcut-test-utils.xml:319(simpara)
 msgid "the number of integer values."
 msgstr "整数の数。"
 
-#: xml/gcut-test-utils.xml:226(term) xml/gcut-test-utils.xml:255(term)
-#: xml/gcut-test-utils.xml:275(term) xml/gcut-test-utils.xml:320(term)
-#: xml/gcut-test-utils.xml:350(term) xml/gcut-test-utils.xml:370(term)
-#: xml/gcut-test-utils.xml:388(term) xml/cut-console.xml:169(term)
+#: xml/gcut-test-utils.xml:227(term) xml/gcut-test-utils.xml:256(term)
+#: xml/gcut-test-utils.xml:276(term) xml/gcut-test-utils.xml:321(term)
+#: xml/gcut-test-utils.xml:351(term) xml/gcut-test-utils.xml:371(term)
+#: xml/gcut-test-utils.xml:389(term) xml/cut-console.xml:169(term)
 msgid "<parameter>value</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:227(simpara) xml/gcut-test-utils.xml:321(simpara)
+#: xml/gcut-test-utils.xml:228(simpara) xml/gcut-test-utils.xml:322(simpara)
 msgid "the first integer value."
 msgstr "最初の整数値。"
 
-#: xml/gcut-test-utils.xml:230(simpara)
+#: xml/gcut-test-utils.xml:231(simpara)
 msgid "remaining integer values in list."
 msgstr "リストの残りの整数値。"
 
-#: xml/gcut-test-utils.xml:232(simpara)
+#: xml/gcut-test-utils.xml:233(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed integer values and must be freed with <link linkend=\"g-list-"
@@ -4237,8 +4250,8 @@ msgstr ""
 "linkend=\"g-list-free\"><function>g_list_free()</function></link>で開放するこ"
 "と。"
 
-#: xml/gcut-test-utils.xml:236(para) xml/gcut-test-utils.xml:266(para)
-#: xml/gcut-test-utils.xml:330(para) xml/gcut-test-utils.xml:360(para)
+#: xml/gcut-test-utils.xml:237(para) xml/gcut-test-utils.xml:267(para)
+#: xml/gcut-test-utils.xml:331(para) xml/gcut-test-utils.xml:361(para)
 #: xml/gcut-string.xml:59(para) xml/gcut-string.xml:74(para)
 #: xml/gcut-process.xml:265(para) xml/gcut-process.xml:292(para)
 #: xml/gcut-process.xml:306(para) xml/gcut-process.xml:324(para)
@@ -4256,16 +4269,16 @@ msgstr ""
 #: xml/gcut-process.xml:769(para) xml/gcut-process.xml:798(para)
 #: xml/gcut-process.xml:826(para) xml/gcut-process.xml:847(para)
 #: xml/gcut-data.xml:335(para) xml/gcut-assertions.xml:873(para)
-#: xml/cut-test-utils.xml:440(para) xml/cut-helper.xml:588(para)
+#: xml/cut-test-utils.xml:451(para) xml/cut-helper.xml:588(para)
 #: xml/cut-assertions.xml:2039(para) xml/cut-assertions.xml:2084(para)
 msgid "Since 1.1.5"
 msgstr "1.1.5から"
 
-#: xml/gcut-test-utils.xml:238(title)
+#: xml/gcut-test-utils.xml:239(title)
 msgid "gcut_list_uint_new ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:240(programlisting)
+#: xml/gcut-test-utils.xml:241(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *             gcut_list_uint_new                  (<parameter><link linkend=\"guint\"><type>guint</type></link> n</parameter>,\n"
@@ -4273,30 +4286,30 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:243(para)
+#: xml/gcut-test-utils.xml:244(para)
 msgid "Creates a list from passed unsigned integer values."
 msgstr "渡された符号無し整数からリストを作ります。"
 
-#: xml/gcut-test-utils.xml:248(programlisting)
+#: xml/gcut-test-utils.xml:249(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "gcut_list_uint_new(3, 0, 1, 2); -&gt; (0, 1, 2)\n"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:253(simpara) xml/gcut-test-utils.xml:348(simpara)
+#: xml/gcut-test-utils.xml:254(simpara) xml/gcut-test-utils.xml:349(simpara)
 msgid "the number of unsigned integer values."
 msgstr "符号無し符号整数の数。"
 
-#: xml/gcut-test-utils.xml:256(simpara) xml/gcut-test-utils.xml:351(simpara)
+#: xml/gcut-test-utils.xml:257(simpara) xml/gcut-test-utils.xml:352(simpara)
 msgid "the first unsigned integer value."
 msgstr "最初の符号無し符号整数値。"
 
-#: xml/gcut-test-utils.xml:259(simpara)
+#: xml/gcut-test-utils.xml:260(simpara)
 msgid "remaining unsigned integer values in list."
 msgstr "リストの残りの符号無し符号整数値。"
 
-#: xml/gcut-test-utils.xml:261(simpara)
+#: xml/gcut-test-utils.xml:262(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed unsigned integer values and must be freed with <link linkend="
@@ -4306,26 +4319,26 @@ msgstr ""
 "<link linkend=\"g-list-free\"><function>g_list_free()</function></link>で開放"
 "すること。"
 
-#: xml/gcut-test-utils.xml:268(title)
+#: xml/gcut-test-utils.xml:269(title)
 msgid "gcut_list_string_new ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:270(programlisting)
+#: xml/gcut-test-utils.xml:271(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *             gcut_list_string_new                (<parameter>const <link linkend=\"gchar\"><type>gchar</type></link> *value</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:272(para)
+#: xml/gcut-test-utils.xml:273(para)
 msgid "Creates a list from passed strings."
 msgstr "渡された文字列からリストを作ります。"
 
-#: xml/gcut-test-utils.xml:276(simpara) xml/gcut-test-utils.xml:371(simpara)
+#: xml/gcut-test-utils.xml:277(simpara) xml/gcut-test-utils.xml:372(simpara)
 msgid "the first string."
 msgstr "最初の文字列。"
 
-#: xml/gcut-test-utils.xml:279(simpara) xml/gcut-test-utils.xml:374(simpara)
+#: xml/gcut-test-utils.xml:280(simpara) xml/gcut-test-utils.xml:375(simpara)
 msgid ""
 "remaining strings in list. <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>-terminate."
@@ -4333,7 +4346,7 @@ msgstr ""
 "リストの残りの文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></"
 "link>終端。"
 
-#: xml/gcut-test-utils.xml:281(simpara)
+#: xml/gcut-test-utils.xml:282(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed strings and must be freed with <link linkend=\"gcut-list-"
@@ -4343,25 +4356,25 @@ msgstr ""
 "linkend=\"gcut-list-string-free\"><function>gcut_list_string_free()</"
 "function></link>で開放すること。"
 
-#: xml/gcut-test-utils.xml:287(title)
+#: xml/gcut-test-utils.xml:288(title)
 msgid "gcut_list_string_new_array ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:289(programlisting)
+#: xml/gcut-test-utils.xml:290(programlisting)
 #, no-wrap
 msgid "<link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *             gcut_list_string_new_array          (<parameter>const <link linkend=\"gchar\"><type>gchar</type></link> **strings</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:290(para)
+#: xml/gcut-test-utils.xml:291(para)
 msgid "Creates a list from passed string array."
 msgstr "渡された文字列配列からリストを作ります。"
 
-#: xml/gcut-test-utils.xml:293(term) xml/gcut-test-utils.xml:403(term)
-#: xml/cut-test-utils.xml:205(term) xml/cut-helper.xml:479(term)
+#: xml/gcut-test-utils.xml:294(term) xml/gcut-test-utils.xml:404(term)
+#: xml/cut-test-utils.xml:207(term) xml/cut-helper.xml:479(term)
 msgid "<parameter>strings</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:294(simpara) xml/gcut-test-utils.xml:404(simpara)
+#: xml/gcut-test-utils.xml:295(simpara) xml/gcut-test-utils.xml:405(simpara)
 msgid ""
 "the string array. <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>-"
 "terminate."
@@ -4369,7 +4382,7 @@ msgstr ""
 "文字列の配列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終"
 "端。"
 
-#: xml/gcut-test-utils.xml:296(simpara)
+#: xml/gcut-test-utils.xml:297(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed string array and must be freed with <link linkend=\"gcut-"
@@ -4379,11 +4392,11 @@ msgstr ""
 "link>。<link linkend=\"gcut-list-string-free"
 "\"><function>gcut_list_string_free()</function></link>で開放すること。"
 
-#: xml/gcut-test-utils.xml:302(title)
+#: xml/gcut-test-utils.xml:303(title)
 msgid "gcut_take_new_list_int ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:304(programlisting)
+#: xml/gcut-test-utils.xml:305(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *       gcut_take_new_list_int              (<parameter><link linkend=\"guint\"><type>guint</type></link> n</parameter>,\n"
@@ -4391,23 +4404,23 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:307(para)
+#: xml/gcut-test-utils.xml:308(para)
 msgid "Creates a list from passed integer values that is owned by Cutter."
 msgstr ""
 "渡された整数からリストを作ります。作られたリストはCutterが所有権を持ちます。"
 
-#: xml/gcut-test-utils.xml:313(programlisting)
+#: xml/gcut-test-utils.xml:314(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "gcut_take_new_list_int(3, -10, 1, 29); -&gt; (-10, 1, 29)\n"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:324(simpara) xml/gcut-test-utils.xml:354(simpara)
+#: xml/gcut-test-utils.xml:325(simpara) xml/gcut-test-utils.xml:355(simpara)
 msgid "remaining strings in list."
 msgstr "リストの残りの文字列。"
 
-#: xml/gcut-test-utils.xml:326(simpara)
+#: xml/gcut-test-utils.xml:327(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed integer values and is owned by Cutter."
@@ -4415,11 +4428,11 @@ msgstr ""
 "渡された整数と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。"
 "Cutterが所有権を持ちます。"
 
-#: xml/gcut-test-utils.xml:332(title)
+#: xml/gcut-test-utils.xml:333(title)
 msgid "gcut_take_new_list_uint ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:334(programlisting)
+#: xml/gcut-test-utils.xml:335(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *       gcut_take_new_list_uint             (<parameter><link linkend=\"guint\"><type>guint</type></link> n</parameter>,\n"
@@ -4427,21 +4440,21 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:337(para)
+#: xml/gcut-test-utils.xml:338(para)
 msgid ""
 "Creates a list from passed unsigned integer values that is owned by Cutter."
 msgstr ""
 "渡された符号無し整数からリストを作ります。作られたリストはCutterが所有権を持"
 "ちます。"
 
-#: xml/gcut-test-utils.xml:343(programlisting)
+#: xml/gcut-test-utils.xml:344(programlisting)
 #, no-wrap
 msgid ""
 "\n"
 "gcut_take_new_list_uint(3, 0, 1, 2); -&gt; (0, 1, 2)\n"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:356(simpara)
+#: xml/gcut-test-utils.xml:357(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed unsigned integer values and is owned by Cutter."
@@ -4449,24 +4462,24 @@ msgstr ""
 "渡された符号無し整数と同じ内容の<link linkend=\"GList\"><type>GList</type></"
 "link>。Cutterが所有権を持ちます。"
 
-#: xml/gcut-test-utils.xml:362(title)
+#: xml/gcut-test-utils.xml:363(title)
 msgid "gcut_take_new_list_string ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:364(programlisting)
+#: xml/gcut-test-utils.xml:365(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *       gcut_take_new_list_string           (<parameter>const <link linkend=\"gchar\"><type>gchar</type></link> *value</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:366(para)
+#: xml/gcut-test-utils.xml:367(para)
 msgid "Creates a list from passed strings that is owned by Cutter."
 msgstr ""
 "渡された文字列からリストを作ります。作られたリストはCutterが所有権を持ちま"
 "す。"
 
-#: xml/gcut-test-utils.xml:376(simpara)
+#: xml/gcut-test-utils.xml:377(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed strings and is owned by Cutter."
@@ -4474,16 +4487,16 @@ msgstr ""
 "渡された文字列と同じ内容の<link linkend=\"GList\"><type>GList</type></link>。"
 "Cutterが所有権を持ちます。"
 
-#: xml/gcut-test-utils.xml:382(title)
+#: xml/gcut-test-utils.xml:383(title)
 msgid "gcut_take_new_list_string_backward_compatibility()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:384(programlisting)
+#: xml/gcut-test-utils.xml:385(programlisting)
 #, no-wrap
 msgid "#define             gcut_take_new_list_string_backward_compatibility(value, ...)"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:385(para)
+#: xml/gcut-test-utils.xml:386(para)
 msgid ""
 "<literal>gcut_take_new_list_string_backward_compatibility</literal> is "
 "deprecated and should not be used in newly-written code."
@@ -4491,20 +4504,20 @@ msgstr ""
 "<literal>gcut_take_new_list_string_backward_compatibility</literal>は非推奨で"
 "す。新しいコードでは使わないでください。"
 
-#: xml/gcut-test-utils.xml:396(title)
+#: xml/gcut-test-utils.xml:397(title)
 msgid "gcut_take_new_list_string_array ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:398(programlisting)
+#: xml/gcut-test-utils.xml:399(programlisting)
 #, no-wrap
 msgid "const <link linkend=\"GList\"><returnvalue>GList</returnvalue></link> *       gcut_take_new_list_string_array     (<parameter>const <link linkend=\"gchar\"><type>gchar</type></link> **strings</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:399(para)
+#: xml/gcut-test-utils.xml:400(para)
 msgid "Creates a list from passed string array that is owned by Cutter."
 msgstr "渡された文字列の配列からリストを作ります。Cutterが所有権を持ちます。"
 
-#: xml/gcut-test-utils.xml:406(simpara)
+#: xml/gcut-test-utils.xml:407(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed string array and is owned by Cutter."
@@ -4512,26 +4525,26 @@ msgstr ""
 "渡された文字列の配列と同じ内容の<link linkend=\"GList\"><type>GList</type></"
 "link>。Cutterが所有。"
 
-#: xml/gcut-test-utils.xml:412(title)
+#: xml/gcut-test-utils.xml:413(title)
 msgid "gcut_take_new_list_object()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:414(programlisting)
+#: xml/gcut-test-utils.xml:415(programlisting)
 #, no-wrap
 msgid "#define             gcut_take_new_list_object(object, ...)"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:415(para)
+#: xml/gcut-test-utils.xml:416(para)
 msgid "Creates a list from passed objects that is owned by Cutter."
 msgstr ""
 "渡されたオブジェクトからリストを作ります。作られたリストはCutterが所有権を持"
 "ちます。"
 
-#: xml/gcut-test-utils.xml:420(simpara)
+#: xml/gcut-test-utils.xml:421(simpara)
 msgid "the first <link linkend=\"GObject\"><type>GObject</type></link>."
 msgstr "最初の<link linkend=\"GObject\"><type>GObject</type></link>。"
 
-#: xml/gcut-test-utils.xml:423(simpara)
+#: xml/gcut-test-utils.xml:424(simpara)
 msgid ""
 "remaining objects in list. <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>-terminate."
@@ -4539,7 +4552,7 @@ msgstr ""
 "リストの残りのオブジェクト。<link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>終端。"
 
-#: xml/gcut-test-utils.xml:425(simpara)
+#: xml/gcut-test-utils.xml:426(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GList\"><type>GList</type></link> that "
 "contains passed objects and is owned by Cutter."
@@ -4547,35 +4560,35 @@ msgstr ""
 "新しく割り当てられた<link linkend=\"GList\"><type>GList</type></link>。リスト"
 "には渡されたオブジェクトが含まれます。Cutterが所有権を持ちます。"
 
-#: xml/gcut-test-utils.xml:431(title)
+#: xml/gcut-test-utils.xml:432(title)
 msgid "gcut_list_string_free ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:433(programlisting)
+#: xml/gcut-test-utils.xml:434(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_list_string_free               (<parameter><link linkend=\"GList\"><type>GList</type></link> *list</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:434(para)
+#: xml/gcut-test-utils.xml:435(para)
 msgid "Frees <parameter>list</parameter> and contained strings."
 msgstr ""
 "<parameter>list</parameter>と<parameter>list</parameter>内にある文字列を開放"
 "します。"
 
-#: xml/gcut-test-utils.xml:438(simpara)
+#: xml/gcut-test-utils.xml:439(simpara)
 msgid "the list that contains strings to be freed."
 msgstr "開放する文字列のリスト。"
 
-#: xml/gcut-test-utils.xml:442(title)
+#: xml/gcut-test-utils.xml:443(title)
 msgid "gcut_list_object_free ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:444(programlisting)
+#: xml/gcut-test-utils.xml:445(programlisting)
 #, no-wrap
 msgid "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                gcut_list_object_free               (<parameter><link linkend=\"GList\"><type>GList</type></link> *list</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:445(para)
+#: xml/gcut-test-utils.xml:446(para)
 msgid ""
 "Frees <parameter>list</parameter> and contained objects. It's safe that "
 "<parameter>list</parameter> contains <link linkend=\"NULL:CAPS"
@@ -4585,7 +4598,7 @@ msgstr ""
 "parameter>に<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>が含ま"
 "れていても大丈夫です。"
 
-#: xml/gcut-test-utils.xml:450(simpara)
+#: xml/gcut-test-utils.xml:451(simpara)
 msgid ""
 "the list that contains <link linkend=\"GObject\"><type>GObject</type></"
 "link>'s to be unrefed."
@@ -4593,18 +4606,18 @@ msgstr ""
 "リファレンスを減らしたい<link linkend=\"GObject\"><type>GObject</type></link>"
 "を含んだリスト。"
 
-#: xml/gcut-test-utils.xml:454(title)
+#: xml/gcut-test-utils.xml:455(title)
 msgid "gcut_hash_table_string_string_new ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:456(programlisting)
+#: xml/gcut-test-utils.xml:457(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GHashTable\"><returnvalue>GHashTable</returnvalue></link> *        gcut_hash_table_string_string_new   (<parameter>const <link linkend=\"gchar\"><type>gchar</type></link> *key</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:458(para) xml/gcut-test-utils.xml:483(para)
+#: xml/gcut-test-utils.xml:459(para) xml/gcut-test-utils.xml:484(para)
 msgid ""
 "Creates a hash table that has string key and string value from passed key/"
 "value pairs."
@@ -4612,18 +4625,18 @@ msgstr ""
 "引数で指定されたキーと値のペアから、文字列のキーと値を持つハッシュテーブルを"
 "作成します。"
 
-#: xml/gcut-test-utils.xml:462(term) xml/gcut-test-utils.xml:487(term)
-#: xml/gcut-test-utils.xml:513(term) xml/gcut-key-file.xml:57(term)
+#: xml/gcut-test-utils.xml:463(term) xml/gcut-test-utils.xml:488(term)
+#: xml/gcut-test-utils.xml:514(term) xml/gcut-key-file.xml:57(term)
 #: xml/gcut-key-file.xml:85(term)
 msgid "<parameter>key</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:463(simpara) xml/gcut-test-utils.xml:488(simpara)
-#: xml/gcut-test-utils.xml:514(simpara)
+#: xml/gcut-test-utils.xml:464(simpara) xml/gcut-test-utils.xml:489(simpara)
+#: xml/gcut-test-utils.xml:515(simpara)
 msgid "The first key string."
 msgstr "最初のキー文字列。"
 
-#: xml/gcut-test-utils.xml:466(simpara) xml/gcut-test-utils.xml:491(simpara)
+#: xml/gcut-test-utils.xml:467(simpara) xml/gcut-test-utils.xml:492(simpara)
 msgid ""
 "A <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>-terminated list "
 "of rest arguments. The first item is the string value of the first key, "
@@ -4635,7 +4648,7 @@ msgstr ""
 "のペアを指定します。最後に<link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>を指定しなければいけません。"
 
-#: xml/gcut-test-utils.xml:471(simpara) xml/gcut-test-utils.xml:496(simpara)
+#: xml/gcut-test-utils.xml:472(simpara) xml/gcut-test-utils.xml:497(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GHashTable\"><type>GHashTable</type></"
 "link> that contains passed key/value pairs and must be freed with <link "
@@ -4646,11 +4659,11 @@ msgstr ""
 "link>。<link linkend=\"g-hash-table-unref\"><function>g_hash_table_unref()</"
 "function></link>で開放してください。"
 
-#: xml/gcut-test-utils.xml:478(title)
+#: xml/gcut-test-utils.xml:479(title)
 msgid "gcut_hash_table_string_string_new_va_list ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:480(programlisting)
+#: xml/gcut-test-utils.xml:481(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GHashTable\"><returnvalue>GHashTable</returnvalue></link> *        gcut_hash_table_string_string_new_va_list\n"
@@ -4658,17 +4671,17 @@ msgid ""
 "                                                         <parameter><link linkend=\"va-list\"><type>va_list</type></link> args</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:490(term) xml/gcut-public.xml:176(term)
+#: xml/gcut-test-utils.xml:491(term) xml/gcut-public.xml:176(term)
 #: xml/gcut-process.xml:318(term) xml/gcut-egg.xml:289(term)
 #: xml/cutter.xml:430(term)
 msgid "<parameter>args</parameter> :"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:503(title)
+#: xml/gcut-test-utils.xml:504(title)
 msgid "gcut_take_new_hash_table_string_string ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:505(programlisting)
+#: xml/gcut-test-utils.xml:506(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"GHashTable\"><returnvalue>GHashTable</returnvalue></link> *        gcut_take_new_hash_table_string_string\n"
@@ -4676,7 +4689,7 @@ msgid ""
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:508(para)
+#: xml/gcut-test-utils.xml:509(para)
 msgid ""
 "Creates a hash table that has string key and string value from passed key/"
 "value pairs. The created hash table is owned by Cutter. So don't <link "
@@ -4688,7 +4701,7 @@ msgstr ""
 "hash-table-unref\"><function>g_hash_table_unref()</function></link>を呼ばない"
 "でください。"
 
-#: xml/gcut-test-utils.xml:517(simpara)
+#: xml/gcut-test-utils.xml:518(simpara)
 msgid ""
 "A <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>-terminated list "
 "of rest arguments. The string value of the first key, followed optionally by "
@@ -4700,7 +4713,7 @@ msgstr ""
 "のペアを指定します。最後に<link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>を指定しなければいけません。"
 
-#: xml/gcut-test-utils.xml:521(simpara)
+#: xml/gcut-test-utils.xml:522(simpara)
 msgid ""
 "a newly-allocated <link linkend=\"GHashTable\"><type>GHashTable</type></"
 "link> that contains passed key/value pairs."
@@ -4708,16 +4721,18 @@ msgstr ""
 "渡されたキー・値を持つ<link linkend=\"GHashTable\"><type>GHashTable</type></"
 "link>。"
 
-#: xml/gcut-test-utils.xml:527(title)
-msgid "gcut_get_fixture_data()"
+#: xml/gcut-test-utils.xml:528(title)
+msgid "gcut_get_fixture_data ()"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:529(programlisting)
+#: xml/gcut-test-utils.xml:530(programlisting)
 #, no-wrap
-msgid "#define             gcut_get_fixture_data(...)"
+msgid ""
+"<link linkend=\"GString\"><returnvalue>GString</returnvalue></link> *           gcut_get_fixture_data               (<parameter>const <link linkend=\"gchar\"><type>gchar</type></link> *path</parameter>,\n"
+"                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/gcut-test-utils.xml:530(para)
+#: xml/gcut-test-utils.xml:532(para)
 msgid ""
 "Reads the fixture data at \"<parameter>path</parameter>/...\" and returns it "
 "as a <link linkend=\"GString\"><type>GString</type></link> that is owned by "
@@ -4731,8 +4746,14 @@ msgstr ""
 "\"><function>cut_build_fixture_data_path()</function></link>の説明にはフィク"
 "スチャデータのパスがどのように決定されるかが書かれています。"
 
-#: xml/gcut-test-utils.xml:537(simpara) xml/cut-test-utils.xml:339(simpara)
-#: xml/cut-test-utils.xml:384(simpara)
+#: xml/gcut-test-utils.xml:539(simpara) xml/cut-test-utils.xml:319(simpara)
+#: xml/cut-test-utils.xml:342(simpara) xml/cut-test-utils.xml:365(simpara)
+#: xml/cut-test-utils.xml:392(simpara) xml/cut-assertions.xml:2164(simpara)
+msgid "a first element of the path to the fixture data."
+msgstr "フィクスチャデータのパスの最初の要素。"
+
+#: xml/gcut-test-utils.xml:542(simpara) xml/cut-test-utils.xml:345(simpara)
+#: xml/cut-test-utils.xml:395(simpara)
 msgid ""
 "remaining elements in path. <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>-terminate is required."
@@ -4740,7 +4761,7 @@ msgstr ""
 "パスの残りの要素。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
 "終端が必須です。"
 
-#: xml/gcut-test-utils.xml:540(simpara)
+#: xml/gcut-test-utils.xml:545(simpara)
 msgid ""
 "a content of the fixture data as <link linkend=\"GString\"><type>GString</"
 "type></link> owend by Cutter. Don't free it."
@@ -6542,8 +6563,8 @@ msgstr "書き込むデータ"
 #: xml/gcut-process.xml:540(term) xml/gcut-process.xml:793(term)
 #: xml/gcut-process.xml:821(term) xml/gcut-egg.xml:467(term)
 #: xml/gcut-egg.xml:679(term) xml/gcut-egg.xml:707(term)
-#: xml/cut-test-utils.xml:152(term) xml/cut-test-utils.xml:172(term)
-#: xml/cut-test-utils.xml:380(term)
+#: xml/cut-test-utils.xml:154(term) xml/cut-test-utils.xml:174(term)
+#: xml/cut-test-utils.xml:388(term)
 msgid "<parameter>size</parameter> :"
 msgstr ""
 
@@ -9175,18 +9196,25 @@ msgid ""
 "link> for <parameter>context</parameter>. If <parameter>context</parameter> "
 "is <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>, the default "
 "GLib's main context is used."
-msgstr "<parameter>context</parameter>用の新しい<link linkend=\"GCutEeventLoop\"><type>GCutEeventLoop</type></link>を作ります。<parameter>context</parameter>が<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>ならGLibのデフォルトGMainContextが使われます。"
+msgstr ""
+"<parameter>context</parameter>用の新しい<link linkend=\"GCutEeventLoop"
+"\"><type>GCutEeventLoop</type></link>を作ります。<parameter>context</"
+"parameter>が<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>なら"
+"GLibのデフォルトGMainContextが使われます。"
 
 #: xml/gcut-glib-event-loop.xml:64(simpara)
 msgid ""
 "a <link linkend=\"GMainContext\"><type>GMainContext</type></link> or <link "
 "linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
-msgstr "<link linkend=\"GMainContext\"><type>GMainContext</type></link>または<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
+msgstr ""
+"<link linkend=\"GMainContext\"><type>GMainContext</type></link>または<link "
+"linkend=\"NULL:CAPS\"><literal>NULL</literal></link>。"
 
 #: xml/gcut-glib-event-loop.xml:66(simpara)
 msgid ""
 "a new <link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>."
-msgstr "新しい<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>。"
+msgstr ""
+"新しい<link linkend=\"GCutEventLoop\"><type>GCutEventLoop</type></link>。"
 
 #: xml/gcut-event-loop.xml:7(refentrytitle)
 #: xml/gcut-event-loop.xml:14(refname)
@@ -12062,7 +12090,7 @@ msgstr ""
 
 #: xml/gcut-data.xml:462(title)
 msgid "gcut_data_get_type ()"
-msgstr "gcut_data_get_type ()"
+msgstr ""
 
 #: xml/gcut-data.xml:464(programlisting)
 #, no-wrap
@@ -13680,9 +13708,9 @@ msgstr ""
 "assert-remove-path\"><function>gcut_assert_remove_path()</function></link>を"
 "使ってください。"
 
-#: xml/gcut-assertions.xml:580(para) xml/cut-test-utils.xml:303(para)
-#: xml/cut-test-utils.xml:327(para) xml/cut-test-utils.xml:369(para)
-#: xml/cut-test-utils.xml:408(para) xml/cut-assertions.xml:2017(para)
+#: xml/gcut-assertions.xml:580(para) xml/cut-test-utils.xml:305(para)
+#: xml/cut-test-utils.xml:329(para) xml/cut-test-utils.xml:375(para)
+#: xml/cut-test-utils.xml:419(para) xml/cut-assertions.xml:2017(para)
 #: xml/cut-assertions.xml:2062(para) xml/cut-assertions.xml:2169(para)
 #: xml/cut-assertions.xml:2258(para)
 msgid "Since 1.0.2"
@@ -13902,7 +13930,7 @@ msgstr ""
 "きパスします。"
 
 #: xml/gcut-assertions.xml:778(para) xml/gcut-assertions.xml:816(para)
-#: xml/cut-test-utils.xml:286(para) xml/cut-helper.xml:577(para)
+#: xml/cut-test-utils.xml:288(para) xml/cut-helper.xml:577(para)
 #: xml/cut-assertions.xml:2206(para) xml/cut-assertions.xml:2223(para)
 msgid "Since 1.1.4"
 msgstr "1.1.4から"
@@ -14170,10 +14198,12 @@ msgstr ""
 #: xml/cut-test-utils.xml:37(type) xml/cut-test-utils.xml:41(returnvalue)
 #: xml/cut-test-utils.xml:41(type) xml/cut-test-utils.xml:42(type)
 #: xml/cut-test-utils.xml:44(returnvalue) xml/cut-test-utils.xml:44(type)
-#: xml/cut-test-utils.xml:47(returnvalue) xml/cut-test-utils.xml:47(type)
-#: xml/cut-test-utils.xml:51(type) xml/cut-test-utils.xml:53(returnvalue)
+#: xml/cut-test-utils.xml:46(returnvalue) xml/cut-test-utils.xml:46(type)
+#: xml/cut-test-utils.xml:48(returnvalue) xml/cut-test-utils.xml:48(type)
+#: xml/cut-test-utils.xml:50(returnvalue) xml/cut-test-utils.xml:51(type)
 #: xml/cut-test-utils.xml:53(type) xml/cut-test-utils.xml:55(returnvalue)
-#: xml/cut-test-utils.xml:55(type) xml/cut-test-utils.xml:56(type)
+#: xml/cut-test-utils.xml:55(type) xml/cut-test-utils.xml:57(returnvalue)
+#: xml/cut-test-utils.xml:57(type) xml/cut-test-utils.xml:58(type)
 #: xml/cut-multi-process.xml:24(type)
 #: xml/cut-multi-process.xml:30(returnvalue)
 #: xml/cut-multi-process.xml:32(type)
@@ -15518,7 +15548,7 @@ msgid "Sets a message to be used by the next assertion."
 msgstr "次の検証で使われるメッセージです。"
 
 #: xml/cutter.xml:411(term) xml/cutter.xml:427(term) xml/cutter.xml:458(term)
-#: xml/cut-test-utils.xml:188(term) xml/cut-assertions.xml:2232(term)
+#: xml/cut-test-utils.xml:190(term) xml/cut-assertions.xml:2232(term)
 #: xml/cut-assertions.xml:2267(term) xml/cut-assertions.xml:2283(term)
 #: xml/cut-assertions.xml:2300(term) xml/cut-assertions.xml:2315(term)
 #: xml/cut-assertions.xml:2337(term)
@@ -15526,7 +15556,7 @@ msgid "<parameter>format</parameter> :"
 msgstr ""
 
 #: xml/cutter.xml:412(simpara) xml/cutter.xml:428(simpara)
-#: xml/cutter.xml:459(simpara) xml/cut-test-utils.xml:189(simpara)
+#: xml/cutter.xml:459(simpara) xml/cut-test-utils.xml:191(simpara)
 #: xml/cut-assertions.xml:2233(simpara) xml/cut-assertions.xml:2268(simpara)
 #: xml/cut-assertions.xml:2284(simpara) xml/cut-assertions.xml:2301(simpara)
 #: xml/cut-assertions.xml:2316(simpara) xml/cut-assertions.xml:2338(simpara)
@@ -15538,7 +15568,7 @@ msgstr ""
 "キュメントを見てください。"
 
 #: xml/cutter.xml:415(simpara) xml/cutter.xml:431(simpara)
-#: xml/cutter.xml:462(simpara) xml/cut-test-utils.xml:192(simpara)
+#: xml/cutter.xml:462(simpara) xml/cut-test-utils.xml:194(simpara)
 #: xml/cut-assertions.xml:2236(simpara) xml/cut-assertions.xml:2271(simpara)
 #: xml/cut-assertions.xml:2287(simpara) xml/cut-assertions.xml:2304(simpara)
 #: xml/cut-assertions.xml:2319(simpara) xml/cut-assertions.xml:2341(simpara)
@@ -15845,7 +15875,7 @@ msgstr "Cutterのマイナーバージョン。"
 
 #: xml/cut-version.xml:61(programlisting)
 #, no-wrap
-msgid "#define CUTTER_VERSION_MICRO 6\n"
+msgid "#define CUTTER_VERSION_MICRO 7\n"
 msgstr ""
 
 #: xml/cut-version.xml:63(para)
@@ -15854,7 +15884,7 @@ msgstr "Cutterのマイクロバージョン。"
 
 #: xml/cut-version.xml:69(programlisting)
 #, no-wrap
-msgid "#define CUTTER_VERSION_STRING \"1.1.6\"\n"
+msgid "#define CUTTER_VERSION_STRING \"1.1.7\"\n"
 msgstr ""
 
 #: xml/cut-version.xml:71(para)
@@ -16080,7 +16110,7 @@ msgstr "テストユーティリティ"
 msgid "Utilities to write tests more easily."
 msgstr "テストをもっと簡単に書くためのユーティリティ。"
 
-#: xml/cut-test-utils.xml:21(link) xml/cut-test-utils.xml:77(primary)
+#: xml/cut-test-utils.xml:21(link) xml/cut-test-utils.xml:79(primary)
 #: xml/api-index-full.xml:292(link) xml/api-index-1.0.5.xml:27(link)
 msgid "cut_take"
 msgstr ""
@@ -16089,7 +16119,7 @@ msgstr ""
 msgid "<link linkend=\"void\"><placeholder-1/></link> *object"
 msgstr ""
 
-#: xml/cut-test-utils.xml:23(link) xml/cut-test-utils.xml:96(primary)
+#: xml/cut-test-utils.xml:23(link) xml/cut-test-utils.xml:98(primary)
 #: xml/api-index-full.xml:297(link) xml/api-index-1.0.5.xml:29(link)
 msgid "cut_take_memory"
 msgstr ""
@@ -16098,7 +16128,7 @@ msgstr ""
 msgid "<link linkend=\"void\"><placeholder-1/></link> *memory"
 msgstr ""
 
-#: xml/cut-test-utils.xml:24(link) xml/cut-test-utils.xml:111(primary)
+#: xml/cut-test-utils.xml:24(link) xml/cut-test-utils.xml:113(primary)
 #: xml/api-index-full.xml:303(link)
 msgid "cut_take_string"
 msgstr ""
@@ -16107,7 +16137,7 @@ msgstr ""
 msgid "<link linkend=\"char\"><placeholder-1/></link> *string"
 msgstr ""
 
-#: xml/cut-test-utils.xml:25(link) xml/cut-test-utils.xml:125(primary)
+#: xml/cut-test-utils.xml:25(link) xml/cut-test-utils.xml:127(primary)
 #: xml/api-index-full.xml:302(link) xml/api-index-1.0.5.xml:30(link)
 msgid "cut_take_strdup"
 msgstr ""
@@ -16117,17 +16147,18 @@ msgstr ""
 msgid "const <link linkend=\"char\"><placeholder-1/></link> *string"
 msgstr ""
 
-#: xml/cut-test-utils.xml:26(link) xml/cut-test-utils.xml:140(primary)
+#: xml/cut-test-utils.xml:26(link) xml/cut-test-utils.xml:142(primary)
 #: xml/api-index-full.xml:305(link) xml/api-index-1.0.5.xml:31(link)
 msgid "cut_take_strndup"
 msgstr ""
 
 #: xml/cut-test-utils.xml:27(type) xml/cut-test-utils.xml:29(type)
-#: xml/cut-assertions.xml:171(type) xml/cut-assertions.xml:172(type)
-#: xml/cut-assertions.xml:174(type) xml/cut-assertions.xml:175(type)
-#: xml/cut-assertions.xml:205(type) xml/cut-assertions.xml:209(type)
-#: xml/cut-assertions.xml:212(type) xml/cut-assertions.xml:214(type)
-#: xml/cut-assertions.xml:217(type) xml/cut-assertions.xml:219(type)
+#: xml/cut-test-utils.xml:50(type) xml/cut-assertions.xml:171(type)
+#: xml/cut-assertions.xml:172(type) xml/cut-assertions.xml:174(type)
+#: xml/cut-assertions.xml:175(type) xml/cut-assertions.xml:205(type)
+#: xml/cut-assertions.xml:209(type) xml/cut-assertions.xml:212(type)
+#: xml/cut-assertions.xml:214(type) xml/cut-assertions.xml:217(type)
+#: xml/cut-assertions.xml:219(type)
 msgid "size_t"
 msgstr ""
 
@@ -16135,7 +16166,7 @@ msgstr ""
 msgid "<link linkend=\"size-t\"><placeholder-1/></link> size"
 msgstr ""
 
-#: xml/cut-test-utils.xml:28(link) xml/cut-test-utils.xml:161(primary)
+#: xml/cut-test-utils.xml:28(link) xml/cut-test-utils.xml:163(primary)
 #: xml/api-index-full.xml:296(link) xml/api-index-1.0.5.xml:28(link)
 msgid "cut_take_memdup"
 msgstr ""
@@ -16144,12 +16175,12 @@ msgstr ""
 msgid "const <link linkend=\"void\"><placeholder-1/></link> *memory"
 msgstr ""
 
-#: xml/cut-test-utils.xml:30(link) xml/cut-test-utils.xml:181(primary)
+#: xml/cut-test-utils.xml:30(link) xml/cut-test-utils.xml:183(primary)
 #: xml/api-index-full.xml:300(link)
 msgid "cut_take_printf"
 msgstr ""
 
-#: xml/cut-test-utils.xml:32(link) xml/cut-test-utils.xml:199(primary)
+#: xml/cut-test-utils.xml:32(link) xml/cut-test-utils.xml:201(primary)
 #: xml/api-index-full.xml:304(link)
 msgid "cut_take_string_array"
 msgstr ""
@@ -16158,7 +16189,7 @@ msgstr ""
 msgid "<link linkend=\"char\"><placeholder-1/></link> **strings"
 msgstr ""
 
-#: xml/cut-test-utils.xml:33(link) xml/cut-test-utils.xml:213(primary)
+#: xml/cut-test-utils.xml:33(link) xml/cut-test-utils.xml:215(primary)
 #: xml/api-index-full.xml:294(link)
 msgid "cut_take_diff"
 msgstr ""
@@ -16171,7 +16202,7 @@ msgstr ""
 msgid "const <link linkend=\"char\"><placeholder-1/></link> *to"
 msgstr ""
 
-#: xml/cut-test-utils.xml:35(link) xml/cut-test-utils.xml:230(primary)
+#: xml/cut-test-utils.xml:35(link) xml/cut-test-utils.xml:232(primary)
 #: xml/api-index-full.xml:301(link) xml/api-index-1.0.6.xml:24(link)
 msgid "cut_take_replace"
 msgstr ""
@@ -16189,71 +16220,76 @@ msgstr ""
 msgid "const <link linkend=\"char\"><placeholder-1/></link> *replacement"
 msgstr ""
 
-#: xml/cut-test-utils.xml:38(link) xml/cut-test-utils.xml:253(primary)
+#: xml/cut-test-utils.xml:38(link) xml/cut-test-utils.xml:255(primary)
 #: xml/api-index-full.xml:293(link) xml/api-index-1.1.3.xml:9(link)
 msgid "cut_take_convert"
 msgstr ""
 
-#: xml/cut-test-utils.xml:41(link) xml/cut-test-utils.xml:274(primary)
+#: xml/cut-test-utils.xml:41(link) xml/cut-test-utils.xml:276(primary)
 #: xml/api-index-full.xml:295(link) xml/api-index-1.1.4.xml:14(link)
 msgid "cut_take_inspect_string"
 msgstr ""
 
-#: xml/cut-test-utils.xml:42(link) xml/cut-test-utils.xml:289(primary)
+#: xml/cut-test-utils.xml:42(link) xml/cut-test-utils.xml:291(primary)
 #: xml/api-index-full.xml:250(link) xml/api-index-1.0.2.xml:15(link)
 msgid "cut_set_fixture_data_dir"
 msgstr ""
 
 #: xml/cut-test-utils.xml:42(parameter) xml/cut-test-utils.xml:44(parameter)
-#: xml/cut-test-utils.xml:47(parameter) xml/cut-test-utils.xml:51(parameter)
-#: xml/cut-test-utils.xml:53(parameter) xml/cut-test-utils.xml:56(parameter)
+#: xml/cut-test-utils.xml:46(parameter) xml/cut-test-utils.xml:48(parameter)
+#: xml/cut-test-utils.xml:51(parameter) xml/cut-test-utils.xml:53(parameter)
+#: xml/cut-test-utils.xml:55(parameter) xml/cut-test-utils.xml:58(parameter)
 #: xml/cut-assertions.xml:253(parameter) xml/cut-assertions.xml:255(parameter)
 #: xml/cut-assertions.xml:257(parameter) xml/cut-assertions.xml:259(parameter)
 #: xml/cut-assertions.xml:261(parameter)
 msgid "const <link linkend=\"char\"><placeholder-1/></link> *path"
 msgstr ""
 
-#: xml/cut-test-utils.xml:44(link) xml/cut-test-utils.xml:306(primary)
+#: xml/cut-test-utils.xml:44(link) xml/cut-test-utils.xml:308(primary)
 #: xml/api-index-full.xml:178(link) xml/api-index-deprecated.xml:21(link)
 #: xml/api-index-1.0.2.xml:11(link)
 msgid "cut_build_fixture_data_path"
 msgstr ""
 
-#: xml/cut-test-utils.xml:46(link) xml/cut-test-utils.xml:330(primary)
+#: xml/cut-test-utils.xml:46(link) xml/cut-test-utils.xml:332(primary)
 #: xml/api-index-full.xml:179(link) xml/api-index-1.1.6.xml:7(link)
 msgid "cut_build_fixture_path"
 msgstr ""
 
-#: xml/cut-test-utils.xml:47(link) xml/cut-test-utils.xml:349(primary)
+#: xml/cut-test-utils.xml:48(link) xml/cut-test-utils.xml:355(primary)
 #: xml/api-index-full.xml:224(link) xml/api-index-1.0.2.xml:13(link)
 msgid "cut_get_fixture_data_string"
 msgstr ""
 
-#: xml/cut-test-utils.xml:49(link) xml/cut-test-utils.xml:372(primary)
+#: xml/cut-test-utils.xml:50(link) xml/cut-test-utils.xml:378(primary)
 #: xml/api-index-full.xml:223(link) xml/api-index-1.1.6.xml:8(link)
 msgid "cut_get_fixture_data"
 msgstr ""
 
-#: xml/cut-test-utils.xml:51(link) xml/cut-test-utils.xml:394(primary)
+#: xml/cut-test-utils.xml:50(parameter)
+msgid "<link linkend=\"size-t\"><placeholder-1/></link> *size"
+msgstr ""
+
+#: xml/cut-test-utils.xml:53(link) xml/cut-test-utils.xml:405(primary)
 #: xml/api-index-full.xml:243(link) xml/api-index-1.0.2.xml:14(link)
 msgid "cut_remove_path"
 msgstr ""
 
-#: xml/cut-test-utils.xml:53(link) xml/cut-test-utils.xml:411(primary)
+#: xml/cut-test-utils.xml:55(link) xml/cut-test-utils.xml:422(primary)
 #: xml/api-index-full.xml:180(link) xml/api-index-1.0.7.xml:21(link)
 msgid "cut_build_path"
 msgstr ""
 
-#: xml/cut-test-utils.xml:55(link) xml/cut-test-utils.xml:429(primary)
+#: xml/cut-test-utils.xml:57(link) xml/cut-test-utils.xml:440(primary)
 #: xml/api-index-full.xml:181(link) xml/api-index-1.1.5.xml:12(link)
 msgid "cut_build_path_array"
 msgstr ""
 
-#: xml/cut-test-utils.xml:55(parameter)
+#: xml/cut-test-utils.xml:57(parameter)
 msgid "const <link linkend=\"char\"><placeholder-1/></link> **paths"
 msgstr ""
 
-#: xml/cut-test-utils.xml:56(link) xml/cut-test-utils.xml:443(primary)
+#: xml/cut-test-utils.xml:58(link) xml/cut-test-utils.xml:454(primary)
 #: xml/api-index-full.xml:234(link) xml/api-index-1.1.1.xml:10(link)
 msgid "cut_make_directory"
 msgstr ""
@@ -16286,36 +16322,38 @@ msgid ""
 "                                                         <placeholder-45/>);\n"
 "<link linkend=\"char\"><placeholder-46/></link> *              <placeholder-47/>         (<placeholder-48/>,\n"
 "                                                         <placeholder-49/>);\n"
-"#define             <placeholder-50/>              (...)\n"
-"const <link linkend=\"char\"><placeholder-51/></link> *        <placeholder-52/>         (<placeholder-53/>,\n"
-"                                                         <placeholder-54/>);\n"
-"#define             <placeholder-55/>                (size,\n"
-"                                                         ...)\n"
-"<link linkend=\"void\"><placeholder-56/></link>                <placeholder-57/>                     (<placeholder-58/>,\n"
-"                                                         <placeholder-59/>);\n"
-"const <link linkend=\"char\"><placeholder-60/></link> *        <placeholder-61/>                      (<placeholder-62/>,\n"
-"                                                         <placeholder-63/>);\n"
-"const <link linkend=\"char\"><placeholder-64/></link> *        <placeholder-65/>                (<placeholder-66/>);\n"
-"<link linkend=\"void\"><placeholder-67/></link>                <placeholder-68/>                  (<placeholder-69/>,\n"
+"const <link linkend=\"char\"><placeholder-50/></link> *        <placeholder-51/>              (<placeholder-52/>,\n"
+"                                                         <placeholder-53/>);\n"
+"const <link linkend=\"char\"><placeholder-54/></link> *        <placeholder-55/>         (<placeholder-56/>,\n"
+"                                                         <placeholder-57/>);\n"
+"const <link linkend=\"char\"><placeholder-58/></link> *        <placeholder-59/>                (<placeholder-60/>,\n"
+"                                                         <placeholder-61/>,\n"
+"                                                         <placeholder-62/>);\n"
+"<link linkend=\"void\"><placeholder-63/></link>                <placeholder-64/>                     (<placeholder-65/>,\n"
+"                                                         <placeholder-66/>);\n"
+"const <link linkend=\"char\"><placeholder-67/></link> *        <placeholder-68/>                      (<placeholder-69/>,\n"
 "                                                         <placeholder-70/>);\n"
+"const <link linkend=\"char\"><placeholder-71/></link> *        <placeholder-72/>                (<placeholder-73/>);\n"
+"<link linkend=\"void\"><placeholder-74/></link>                <placeholder-75/>                  (<placeholder-76/>,\n"
+"                                                         <placeholder-77/>);\n"
 msgstr ""
 
-#: xml/cut-test-utils.xml:69(para)
+#: xml/cut-test-utils.xml:71(para)
 msgid "The utilities work without GLib support."
 msgstr "このユーティリティはGLibサポート無しでも使えます。"
 
-#: xml/cut-test-utils.xml:76(title)
+#: xml/cut-test-utils.xml:78(title)
 msgid "cut_take ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:78(programlisting)
+#: xml/cut-test-utils.xml:80(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link> *              cut_take                            (<parameter><link linkend=\"void\"><type>void</type></link> *object</parameter>,\n"
 "                                                         <parameter><link linkend=\"CutDestroyFunction\"><type>CutDestroyFunction</type></link> destroy_function</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:80(para)
+#: xml/cut-test-utils.xml:82(para)
 msgid ""
 "Passes ownership of <parameter>object</parameter> to Cutter and returns "
 "<parameter>object</parameter> itself. <parameter>object</parameter> is "
@@ -16325,28 +16363,28 @@ msgstr ""
 "parameter>自身を返します。<parameter>object</parameter>は"
 "<parameter>destroy_func</parameter>を用いて破棄されます。"
 
-#: xml/cut-test-utils.xml:85(simpara)
+#: xml/cut-test-utils.xml:87(simpara)
 msgid "the object to be owned by Cutter."
 msgstr "Cutterが所有権をもつことになるオブジェクト。"
 
-#: xml/cut-test-utils.xml:88(simpara)
+#: xml/cut-test-utils.xml:90(simpara)
 msgid "the destroy function for the object."
 msgstr "オブジェクト用の破棄関数。"
 
-#: xml/cut-test-utils.xml:90(simpara)
+#: xml/cut-test-utils.xml:92(simpara)
 msgid "<parameter>object</parameter> owned by Cutter. Don't free it."
 msgstr "Cutterが所有する<parameter>object</parameter>。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:95(title)
+#: xml/cut-test-utils.xml:97(title)
 msgid "cut_take_memory ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:97(programlisting)
+#: xml/cut-test-utils.xml:99(programlisting)
 #, no-wrap
 msgid "const <link linkend=\"void\"><returnvalue>void</returnvalue></link> *        cut_take_memory                     (<parameter><link linkend=\"void\"><type>void</type></link> *memory</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:98(para)
+#: xml/cut-test-utils.xml:100(para)
 msgid ""
 "Passes ownership of <parameter>memory</parameter> to Cutter and returns "
 "<parameter>memory</parameter> itself. <parameter>memory</parameter> is "
@@ -16356,45 +16394,45 @@ msgstr ""
 "parameter>自身を返します。<parameter>memory</parameter>は<link linkend=\"free"
 "\"><function>free()</function></link>で破棄されます。"
 
-#: xml/cut-test-utils.xml:102(term) xml/cut-test-utils.xml:169(term)
+#: xml/cut-test-utils.xml:104(term) xml/cut-test-utils.xml:171(term)
 msgid "<parameter>memory</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:103(simpara)
+#: xml/cut-test-utils.xml:105(simpara)
 msgid "the memory to be owned by Cutter."
 msgstr "Cutterが所有権を持つことになるメモリ。"
 
-#: xml/cut-test-utils.xml:105(simpara)
+#: xml/cut-test-utils.xml:107(simpara)
 msgid "<parameter>memory</parameter> owned by Cutter. Don't free it."
 msgstr "Cutterが所有する<parameter>memory</parameter>。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:110(title)
+#: xml/cut-test-utils.xml:112(title)
 msgid "cut_take_string ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:112(programlisting)
+#: xml/cut-test-utils.xml:114(programlisting)
 #, no-wrap
 msgid "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_string                     (<parameter><link linkend=\"char\"><type>char</type></link> *string</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:118(simpara)
+#: xml/cut-test-utils.xml:120(simpara)
 msgid "the string to be owned by Cutter."
 msgstr "Cutterが所有権を持つことになる文字列。"
 
-#: xml/cut-test-utils.xml:120(simpara)
+#: xml/cut-test-utils.xml:122(simpara)
 msgid "<parameter>string</parameter> owned by Cutter. Don't free it."
 msgstr "Cutterが所有する<parameter>string</parameter>。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:124(title)
+#: xml/cut-test-utils.xml:126(title)
 msgid "cut_take_strdup ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:126(programlisting)
+#: xml/cut-test-utils.xml:128(programlisting)
 #, no-wrap
 msgid "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_strdup                     (<parameter>const <link linkend=\"char\"><type>char</type></link> *string</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:127(para)
+#: xml/cut-test-utils.xml:129(para)
 msgid ""
 "Duplicates <parameter>string</parameter>, passes ownership of the duplicated "
 "string to Cutter and returns the duplicated string."
@@ -16402,26 +16440,26 @@ msgstr ""
 "<parameter>string</parameter>を複製し、その所有権をCutterに渡し、複製されたメ"
 "モリを返します。"
 
-#: xml/cut-test-utils.xml:132(simpara) xml/cut-test-utils.xml:150(simpara)
+#: xml/cut-test-utils.xml:134(simpara) xml/cut-test-utils.xml:152(simpara)
 msgid "the string to be duplicated."
 msgstr "複製される文字列。"
 
-#: xml/cut-test-utils.xml:134(simpara) xml/cut-test-utils.xml:155(simpara)
+#: xml/cut-test-utils.xml:136(simpara) xml/cut-test-utils.xml:157(simpara)
 msgid "a duplicated string owned by Cutter. Don't free it."
 msgstr "Cutterが所有する複製された文字列。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:139(title)
+#: xml/cut-test-utils.xml:141(title)
 msgid "cut_take_strndup ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:141(programlisting)
+#: xml/cut-test-utils.xml:143(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_strndup                    (<parameter>const <link linkend=\"char\"><type>char</type></link> *string</parameter>,\n"
 "                                                         <parameter><link linkend=\"size-t\"><type>size_t</type></link> size</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:143(para)
+#: xml/cut-test-utils.xml:145(para)
 msgid ""
 "Duplicates the first <parameter>size</parameter> bytes of <parameter>string</"
 "parameter>, passes ownership of the duplicated string to Cutter and returns "
@@ -16433,22 +16471,22 @@ msgstr ""
 "は常に<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>終端していま"
 "す。"
 
-#: xml/cut-test-utils.xml:153(simpara) xml/cut-test-utils.xml:173(simpara)
+#: xml/cut-test-utils.xml:155(simpara) xml/cut-test-utils.xml:175(simpara)
 msgid "the number of bytes to duplicate."
 msgstr "複製するバイト数。"
 
-#: xml/cut-test-utils.xml:160(title)
+#: xml/cut-test-utils.xml:162(title)
 msgid "cut_take_memdup ()"
 msgstr "cut_take_memdup ()"
 
-#: xml/cut-test-utils.xml:162(programlisting)
+#: xml/cut-test-utils.xml:164(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"void\"><returnvalue>void</returnvalue></link> *        cut_take_memdup                     (<parameter>const <link linkend=\"void\"><type>void</type></link> *memory</parameter>,\n"
 "                                                         <parameter><link linkend=\"size-t\"><type>size_t</type></link> size</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:164(para)
+#: xml/cut-test-utils.xml:166(para)
 msgid ""
 "Duplicates <parameter>size</parameter> bytes of <parameter>memory</"
 "parameter>, passes ownership of the duplicated memory to Cutter and returns "
@@ -16457,26 +16495,26 @@ msgstr ""
 "<parameter>memory</parameter>の<parameter>size</parameter>バイトを複製し、そ"
 "の所有権をCutterに渡し、複製されたメモリを返します。"
 
-#: xml/cut-test-utils.xml:170(simpara)
+#: xml/cut-test-utils.xml:172(simpara)
 msgid "the memory to be duplicated."
 msgstr "複製されるメモリ。"
 
-#: xml/cut-test-utils.xml:175(simpara)
+#: xml/cut-test-utils.xml:177(simpara)
 msgid "a duplicated memory owned by Cutter. Don't free it."
 msgstr "Cutterが所有する複製されたメモリ。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:180(title)
+#: xml/cut-test-utils.xml:182(title)
 msgid "cut_take_printf ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:182(programlisting)
+#: xml/cut-test-utils.xml:184(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_printf                     (<parameter>const <link linkend=\"char\"><type>char</type></link> *format</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:184(para)
+#: xml/cut-test-utils.xml:186(para)
 msgid ""
 "Formats a string like <link linkend=\"printf\"><function>printf()</"
 "function></link> but the formatted string is owned by Cutter."
@@ -16484,20 +16522,20 @@ msgstr ""
 "<link linkend=\"printf\"><function>printf()</function></link>のように文字列を"
 "整形しますが、整形された文字列はCutterが所有します。"
 
-#: xml/cut-test-utils.xml:194(simpara)
+#: xml/cut-test-utils.xml:196(simpara)
 msgid "a formatted string owned by Cutter. Don't free it."
 msgstr "Cutterが所有する整形された文字列。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:198(title)
+#: xml/cut-test-utils.xml:200(title)
 msgid "cut_take_string_array ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:200(programlisting)
+#: xml/cut-test-utils.xml:202(programlisting)
 #, no-wrap
 msgid "<link linkend=\"char\"><returnvalue>char</returnvalue></link> **             cut_take_string_array               (<parameter><link linkend=\"char\"><type>char</type></link> **strings</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:201(para)
+#: xml/cut-test-utils.xml:203(para)
 msgid ""
 "Passes ownership of the array of strings to Cutter and returns "
 "<parameter>strings</parameter> itself."
@@ -16505,26 +16543,26 @@ msgstr ""
 "配列の所有権をCutterに渡し、<parameter>strings</parameter>それ自身を返しま"
 "す。"
 
-#: xml/cut-test-utils.xml:206(simpara)
+#: xml/cut-test-utils.xml:208(simpara)
 msgid "the array of strings to be owned by Cutter."
 msgstr "Cutterが所有権を持つことになる文字列の配列。"
 
-#: xml/cut-test-utils.xml:208(simpara)
+#: xml/cut-test-utils.xml:210(simpara)
 msgid "<parameter>strings</parameter> owned by Cutter. Don't free it."
 msgstr "Cutterが所有する<parameter>strings</parameter>。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:212(title)
+#: xml/cut-test-utils.xml:214(title)
 msgid "cut_take_diff ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:214(programlisting)
+#: xml/cut-test-utils.xml:216(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_diff                       (<parameter>const <link linkend=\"char\"><type>char</type></link> *from</parameter>,\n"
 "                                                         <parameter>const <link linkend=\"char\"><type>char</type></link> *to</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:216(para)
+#: xml/cut-test-utils.xml:218(para)
 msgid ""
 "Computes diff between <parameter>from</parameter> and <parameter>to</"
 "parameter> that is owned by Cutter."
@@ -16532,23 +16570,23 @@ msgstr ""
 "<parameter>from</parameter>と<parameter>to</parameter>のdiffを計算します。"
 "diffの所有者はCutterです。"
 
-#: xml/cut-test-utils.xml:219(term) xml/cut-helper.xml:423(term)
+#: xml/cut-test-utils.xml:221(term) xml/cut-helper.xml:423(term)
 msgid "<parameter>from</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:220(simpara) xml/cut-helper.xml:424(simpara)
+#: xml/cut-test-utils.xml:222(simpara) xml/cut-helper.xml:424(simpara)
 msgid "the original string."
 msgstr "元の文字列。"
 
-#: xml/cut-test-utils.xml:222(term) xml/cut-helper.xml:426(term)
+#: xml/cut-test-utils.xml:224(term) xml/cut-helper.xml:426(term)
 msgid "<parameter>to</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:223(simpara) xml/cut-helper.xml:427(simpara)
+#: xml/cut-test-utils.xml:225(simpara) xml/cut-helper.xml:427(simpara)
 msgid "the modified string."
 msgstr "修正された文字列。"
 
-#: xml/cut-test-utils.xml:225(simpara)
+#: xml/cut-test-utils.xml:227(simpara)
 msgid ""
 "a diff between <parameter>from</parameter> and <parameter>to</parameter> "
 "owned by Cutter. Don't free it."
@@ -16556,11 +16594,11 @@ msgstr ""
 "Cutterが所有する<parameter>from</parameter>と<parameter>to</parameter>の"
 "diff。開放しないでください。"
 
-#: xml/cut-test-utils.xml:229(title)
+#: xml/cut-test-utils.xml:231(title)
 msgid "cut_take_replace ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:231(programlisting)
+#: xml/cut-test-utils.xml:233(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_replace                    (<parameter>const <link linkend=\"char\"><type>char</type></link> *target</parameter>,\n"
@@ -16568,7 +16606,7 @@ msgid ""
 "                                                         <parameter>const <link linkend=\"char\"><type>char</type></link> *replacement</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:234(para)
+#: xml/cut-test-utils.xml:236(para)
 msgid ""
 "Replaces all occurrences of the <parameter>pattern</parameter> with the "
 "<parameter>replacement</parameter> in the <parameter>target</parameter> "
@@ -16577,40 +16615,40 @@ msgstr ""
 "<parameter>target</parameter>文字列中で、<parameter>pattern</parameter>にマッ"
 "チする部分を<parameter>replacement</parameter>で置き換えます。"
 
-#: xml/cut-test-utils.xml:238(term)
+#: xml/cut-test-utils.xml:240(term)
 msgid "<parameter>target</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:239(simpara)
+#: xml/cut-test-utils.xml:241(simpara)
 msgid "the replace target string."
 msgstr "置換対象の文字列。"
 
-#: xml/cut-test-utils.xml:242(simpara)
+#: xml/cut-test-utils.xml:244(simpara)
 msgid "the regular expression pattern as string."
 msgstr "正規表現パターン。（文字列で指定）"
 
-#: xml/cut-test-utils.xml:244(term)
+#: xml/cut-test-utils.xml:246(term)
 msgid "<parameter>replacement</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:245(simpara)
+#: xml/cut-test-utils.xml:247(simpara)
 msgid "text to replace each match with"
 msgstr "マッチした部分を置き換える文字列。"
 
-#: xml/cut-test-utils.xml:247(simpara)
+#: xml/cut-test-utils.xml:249(simpara)
 msgid "a replaced string owned by Cutter. Don't free it."
 msgstr "Cutterが所有する複製された文字列。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:252(title)
+#: xml/cut-test-utils.xml:254(title)
 msgid "cut_take_convert()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:254(programlisting)
+#: xml/cut-test-utils.xml:256(programlisting)
 #, no-wrap
 msgid "#define             cut_take_convert(string, to_code_set, from_code_set)"
 msgstr ""
 
-#: xml/cut-test-utils.xml:255(para)
+#: xml/cut-test-utils.xml:257(para)
 msgid ""
 "Converts <parameter>string</parameter> code set to <parameter>to_code_set</"
 "parameter> from <parameter>from_code_set</parameter>."
@@ -16618,7 +16656,7 @@ msgstr ""
 "<parameter>string</parameter>のコードセットを<parameter>from_code_set</"
 "parameter>から<parameter>to_code_set</parameter>へ変換します。"
 
-#: xml/cut-test-utils.xml:260(simpara)
+#: xml/cut-test-utils.xml:262(simpara)
 msgid ""
 "the convert target string. It should be <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>-terminated."
@@ -16626,40 +16664,40 @@ msgstr ""
 "変換対象の文字列。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
 "終端。"
 
-#: xml/cut-test-utils.xml:262(term)
+#: xml/cut-test-utils.xml:264(term)
 msgid "<parameter>to_code_set</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:263(simpara)
+#: xml/cut-test-utils.xml:265(simpara)
 msgid "the code set name which to convert <parameter>string</parameter>."
 msgstr "変換先のコードセット名。"
 
-#: xml/cut-test-utils.xml:265(term)
+#: xml/cut-test-utils.xml:267(term)
 msgid "<parameter>from_code_set</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:266(simpara)
+#: xml/cut-test-utils.xml:268(simpara)
 msgid "the code set name of <parameter>string</parameter>."
 msgstr "<parameter>string</parameter>のコードセット名。"
 
-#: xml/cut-test-utils.xml:268(simpara)
+#: xml/cut-test-utils.xml:270(simpara)
 msgid "a converted string owned by Cutter. Don't free it."
 msgstr "Cutterが所有する変換された文字列。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:273(title)
+#: xml/cut-test-utils.xml:275(title)
 msgid "cut_take_inspect_string ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:275(programlisting)
+#: xml/cut-test-utils.xml:277(programlisting)
 #, no-wrap
 msgid "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_take_inspect_string             (<parameter>const <link linkend=\"char\"><type>char</type></link> *string</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:276(para)
+#: xml/cut-test-utils.xml:278(para)
 msgid "Inspects <parameter>string</parameter>."
 msgstr "<parameter>string</parameter>の詳細を返す。"
 
-#: xml/cut-test-utils.xml:280(simpara)
+#: xml/cut-test-utils.xml:282(simpara)
 msgid ""
 "the inspect target string. It should be <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link> or <link linkend=\"NULL:CAPS"
@@ -16669,22 +16707,22 @@ msgstr ""
 "literal></link>または<link linkend=\"NULL:CAPS\"><literal>NULL</literal></"
 "link>終端でなければいけません。"
 
-#: xml/cut-test-utils.xml:283(simpara) xml/cut-helper.xml:482(simpara)
+#: xml/cut-test-utils.xml:285(simpara) xml/cut-helper.xml:482(simpara)
 msgid "a inspected string owned by Cutter. Don't free it."
 msgstr "Cutterが所有する整形された文字列。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:288(title)
+#: xml/cut-test-utils.xml:290(title)
 msgid "cut_set_fixture_data_dir ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:290(programlisting)
+#: xml/cut-test-utils.xml:292(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_set_fixture_data_dir            (<parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:292(para)
+#: xml/cut-test-utils.xml:294(para)
 msgid ""
 "Set fixture data directory that is used by <link linkend=\"cut-get-fixture-"
 "data-string\"><function>cut_get_fixture_data_string()</function></link> and "
@@ -16694,12 +16732,12 @@ msgstr ""
 "\"><function>cut_get_fixture_data_string()</function></link>などで使われる"
 "フィクスチャデータのディレクトリを指定します。"
 
-#: xml/cut-test-utils.xml:297(simpara)
+#: xml/cut-test-utils.xml:299(simpara)
 msgid "a first element of the path to the fixture data directory."
 msgstr "フィクスチャデータディレクトリのパスの最初の要素。"
 
-#: xml/cut-test-utils.xml:300(simpara) xml/cut-test-utils.xml:320(simpara)
-#: xml/cut-test-utils.xml:362(simpara) xml/cut-test-utils.xml:405(simpara)
+#: xml/cut-test-utils.xml:302(simpara) xml/cut-test-utils.xml:322(simpara)
+#: xml/cut-test-utils.xml:368(simpara) xml/cut-test-utils.xml:416(simpara)
 msgid ""
 "remaining elements in path. <link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>-terminate is required since 1.0.7."
@@ -16707,18 +16745,18 @@ msgstr ""
 "パスの残りの要素。1.0.7から<link linkend=\"NULL:CAPS\"><literal>NULL</"
 "literal></link>終端が必須となりました。"
 
-#: xml/cut-test-utils.xml:305(title)
+#: xml/cut-test-utils.xml:307(title)
 msgid "cut_build_fixture_data_path ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:307(programlisting)
+#: xml/cut-test-utils.xml:309(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"char\"><returnvalue>char</returnvalue></link> *              cut_build_fixture_data_path         (<parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:309(para)
+#: xml/cut-test-utils.xml:311(para)
 msgid ""
 "<literal>cut_build_fixture_data_path</literal> has been deprecated since "
 "version 1.1.6 and should not be used in newly-written code. Use <link "
@@ -16730,7 +16768,7 @@ msgstr ""
 "\"cut-build-fixture-path\"><function>cut_build_fixture_path()</function></"
 "link>を使ってください。"
 
-#: xml/cut-test-utils.xml:310(para) xml/cut-test-utils.xml:332(para)
+#: xml/cut-test-utils.xml:312(para) xml/cut-test-utils.xml:335(para)
 msgid ""
 "Builds a path to the fixture data. If <parameter>path</parameter> is "
 "relative path, the path is handled as a relative path from a directory that "
@@ -16743,42 +16781,39 @@ msgstr ""
 "\"><function>cut_set_fixture_data_dir()</function></link>で指定したディレクト"
 "リか、現在のディレクトリからの相対パスとして処理されます。"
 
-#: xml/cut-test-utils.xml:317(simpara) xml/cut-test-utils.xml:359(simpara)
-#: xml/cut-assertions.xml:2164(simpara)
-msgid "a first element of the path to the fixture data."
-msgstr "フィクスチャデータのパスの最初の要素。"
-
-#: xml/cut-test-utils.xml:323(simpara)
+#: xml/cut-test-utils.xml:325(simpara)
 msgid "a path to the fixture data. It should be freed when no longer needed."
 msgstr ""
 "フィクスチャデータのパス。返された文字列が必要なくなったときは開放してくださ"
 "い。"
 
-#: xml/cut-test-utils.xml:329(title)
-msgid "cut_build_fixture_path()"
+#: xml/cut-test-utils.xml:331(title)
+msgid "cut_build_fixture_path ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:331(programlisting)
+#: xml/cut-test-utils.xml:333(programlisting)
 #, no-wrap
-msgid "#define             cut_build_fixture_path(...)"
+msgid ""
+"const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_build_fixture_path              (<parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
+"                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:342(simpara)
+#: xml/cut-test-utils.xml:348(simpara)
 msgid "a path to the fixture data. It is owned by Cutter. Don't free it."
 msgstr "Cutterが所有するフィクスチャデータのパス。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:348(title)
+#: xml/cut-test-utils.xml:354(title)
 msgid "cut_get_fixture_data_string ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:350(programlisting)
+#: xml/cut-test-utils.xml:356(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_get_fixture_data_string         (<parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:352(para) xml/cut-test-utils.xml:374(para)
+#: xml/cut-test-utils.xml:358(para) xml/cut-test-utils.xml:382(para)
 msgid ""
 "Reads the fixture data at \"<parameter>path</parameter>/...\" and returns it "
 "as a string that is owned by Cutter. The description of <link linkend=\"cut-"
@@ -16790,20 +16825,23 @@ msgstr ""
 "fixture-data-path\"><function>cut_build_fixture_data_path()</function></link>"
 "の説明にはフィクスチャデータのパスがどのように決定されるかが書かれています。"
 
-#: xml/cut-test-utils.xml:365(simpara) xml/cut-test-utils.xml:387(simpara)
+#: xml/cut-test-utils.xml:371(simpara) xml/cut-test-utils.xml:398(simpara)
 msgid "a content of the fixture data as string owend by Cutter. Don't free it."
 msgstr "フィクスチャデータの内容。Cutterが所有しているので開放しないください。"
 
-#: xml/cut-test-utils.xml:371(title)
-msgid "cut_get_fixture_data()"
+#: xml/cut-test-utils.xml:377(title)
+msgid "cut_get_fixture_data ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:373(programlisting)
+#: xml/cut-test-utils.xml:379(programlisting)
 #, no-wrap
-msgid "#define             cut_get_fixture_data(size, ...)"
+msgid ""
+"const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_get_fixture_data                (<parameter><link linkend=\"size-t\"><type>size_t</type></link> *size</parameter>,\n"
+"                                                         <parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
+"                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:381(simpara)
+#: xml/cut-test-utils.xml:389(simpara)
 msgid ""
 "return location for a size of the fixture data, or <link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>."
@@ -16811,18 +16849,18 @@ msgstr ""
 "フィクスチャデータのサイズを返すアドレスまたは<link linkend=\"NULL:CAPS"
 "\"><literal>NULL</literal></link>。"
 
-#: xml/cut-test-utils.xml:393(title)
+#: xml/cut-test-utils.xml:404(title)
 msgid "cut_remove_path ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:395(programlisting)
+#: xml/cut-test-utils.xml:406(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_remove_path                     (<parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:397(para)
+#: xml/cut-test-utils.xml:408(para)
 msgid ""
 "Removes <parameter>path</parameter> and it's children recursively. It "
 "doesn't report any errors."
@@ -16830,31 +16868,31 @@ msgstr ""
 "<parameter>path</parameter>と、その下にあるパスを再帰的に削除します。いかなる"
 "エラーも報告しません。"
 
-#: xml/cut-test-utils.xml:402(simpara)
+#: xml/cut-test-utils.xml:413(simpara)
 msgid "a first element of the path to be removed."
 msgstr "削除するパスの最初の要素。"
 
-#: xml/cut-test-utils.xml:410(title)
+#: xml/cut-test-utils.xml:421(title)
 msgid "cut_build_path ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:412(programlisting)
+#: xml/cut-test-utils.xml:423(programlisting)
 #, no-wrap
 msgid ""
 "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_build_path                      (<parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:414(para)
+#: xml/cut-test-utils.xml:425(para)
 msgid ""
 "Builds path from <parameter>path</parameter> and the following elements."
 msgstr "<parameter>path</parameter>と続く要素を使ってパスを作ります。"
 
-#: xml/cut-test-utils.xml:418(simpara)
+#: xml/cut-test-utils.xml:429(simpara)
 msgid "a first element of the path."
 msgstr "パスの最初の要素。"
 
-#: xml/cut-test-utils.xml:421(simpara) xml/cut-test-utils.xml:454(simpara)
+#: xml/cut-test-utils.xml:432(simpara) xml/cut-test-utils.xml:465(simpara)
 #: xml/cut-assertions.xml:2167(simpara)
 msgid ""
 "remaining elements in path. <link linkend=\"NULL:CAPS\"><literal>NULL</"
@@ -16863,28 +16901,28 @@ msgstr ""
 "パスの残りの要素。<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
 "終端。"
 
-#: xml/cut-test-utils.xml:423(simpara) xml/cut-test-utils.xml:437(simpara)
+#: xml/cut-test-utils.xml:434(simpara) xml/cut-test-utils.xml:448(simpara)
 msgid "built path owned by Cutter. Don't free it."
 msgstr "Cutterが所有する作成したパス。解放しないで下さい。"
 
-#: xml/cut-test-utils.xml:428(title)
+#: xml/cut-test-utils.xml:439(title)
 msgid "cut_build_path_array ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:430(programlisting)
+#: xml/cut-test-utils.xml:441(programlisting)
 #, no-wrap
 msgid "const <link linkend=\"char\"><returnvalue>char</returnvalue></link> *        cut_build_path_array                (<parameter>const <link linkend=\"char\"><type>char</type></link> **paths</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:431(para)
+#: xml/cut-test-utils.xml:442(para)
 msgid "Builds path from <parameter>paths</parameter>."
 msgstr "<parameter>paths</parameter>からパスを作ります。"
 
-#: xml/cut-test-utils.xml:434(term)
+#: xml/cut-test-utils.xml:445(term)
 msgid "<parameter>paths</parameter> :"
 msgstr ""
 
-#: xml/cut-test-utils.xml:435(simpara)
+#: xml/cut-test-utils.xml:446(simpara)
 msgid ""
 "<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>-terminated array "
 "of strings containing the path elements."
@@ -16892,18 +16930,18 @@ msgstr ""
 "パスの要素を含んだ<link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>"
 "終端の文字列の配列。"
 
-#: xml/cut-test-utils.xml:442(title)
+#: xml/cut-test-utils.xml:453(title)
 msgid "cut_make_directory ()"
 msgstr ""
 
-#: xml/cut-test-utils.xml:444(programlisting)
+#: xml/cut-test-utils.xml:455(programlisting)
 #, no-wrap
 msgid ""
 "<link linkend=\"void\"><returnvalue>void</returnvalue></link>                cut_make_directory                  (<parameter>const <link linkend=\"char\"><type>char</type></link> *path</parameter>,\n"
 "                                                         <parameter>...</parameter>);"
 msgstr ""
 
-#: xml/cut-test-utils.xml:446(para)
+#: xml/cut-test-utils.xml:457(para)
 msgid ""
 "Makes <parameter>path</parameter> and it's parents recursively. It doesn't "
 "report any errors."
@@ -16911,7 +16949,7 @@ msgstr ""
 "<parameter>path</parameter>と、その途中にあるパスを再帰的に作成します。いかな"
 "るエラーも報告しません。"
 
-#: xml/cut-test-utils.xml:451(simpara)
+#: xml/cut-test-utils.xml:462(simpara)
 msgid "a first element of the path to be made."
 msgstr "作成するパスの最初の要素。"
 
@@ -23465,18 +23503,19 @@ msgstr ""
 #: xml/api-index-full.xml:166(primaryie) xml/api-index-full.xml:167(primaryie)
 #: xml/api-index-full.xml:173(primaryie) xml/api-index-full.xml:174(primaryie)
 #: xml/api-index-full.xml:175(primaryie) xml/api-index-full.xml:176(primaryie)
-#: xml/api-index-full.xml:178(primaryie) xml/api-index-full.xml:180(primaryie)
-#: xml/api-index-full.xml:181(primaryie) xml/api-index-full.xml:196(primaryie)
-#: xml/api-index-full.xml:197(primaryie) xml/api-index-full.xml:198(primaryie)
-#: xml/api-index-full.xml:199(primaryie) xml/api-index-full.xml:200(primaryie)
-#: xml/api-index-full.xml:201(primaryie) xml/api-index-full.xml:202(primaryie)
-#: xml/api-index-full.xml:203(primaryie) xml/api-index-full.xml:204(primaryie)
-#: xml/api-index-full.xml:205(primaryie) xml/api-index-full.xml:206(primaryie)
-#: xml/api-index-full.xml:207(primaryie) xml/api-index-full.xml:208(primaryie)
-#: xml/api-index-full.xml:209(primaryie) xml/api-index-full.xml:210(primaryie)
-#: xml/api-index-full.xml:211(primaryie) xml/api-index-full.xml:213(primaryie)
-#: xml/api-index-full.xml:214(primaryie) xml/api-index-full.xml:215(primaryie)
-#: xml/api-index-full.xml:217(primaryie) xml/api-index-full.xml:224(primaryie)
+#: xml/api-index-full.xml:178(primaryie) xml/api-index-full.xml:179(primaryie)
+#: xml/api-index-full.xml:180(primaryie) xml/api-index-full.xml:181(primaryie)
+#: xml/api-index-full.xml:196(primaryie) xml/api-index-full.xml:197(primaryie)
+#: xml/api-index-full.xml:198(primaryie) xml/api-index-full.xml:199(primaryie)
+#: xml/api-index-full.xml:200(primaryie) xml/api-index-full.xml:201(primaryie)
+#: xml/api-index-full.xml:202(primaryie) xml/api-index-full.xml:203(primaryie)
+#: xml/api-index-full.xml:204(primaryie) xml/api-index-full.xml:205(primaryie)
+#: xml/api-index-full.xml:206(primaryie) xml/api-index-full.xml:207(primaryie)
+#: xml/api-index-full.xml:208(primaryie) xml/api-index-full.xml:209(primaryie)
+#: xml/api-index-full.xml:210(primaryie) xml/api-index-full.xml:211(primaryie)
+#: xml/api-index-full.xml:213(primaryie) xml/api-index-full.xml:214(primaryie)
+#: xml/api-index-full.xml:215(primaryie) xml/api-index-full.xml:217(primaryie)
+#: xml/api-index-full.xml:223(primaryie) xml/api-index-full.xml:224(primaryie)
 #: xml/api-index-full.xml:225(primaryie) xml/api-index-full.xml:226(primaryie)
 #: xml/api-index-full.xml:232(primaryie) xml/api-index-full.xml:233(primaryie)
 #: xml/api-index-full.xml:234(primaryie) xml/api-index-full.xml:235(primaryie)
@@ -23550,71 +23589,73 @@ msgstr ""
 #: xml/api-index-full.xml:415(primaryie) xml/api-index-full.xml:416(primaryie)
 #: xml/api-index-full.xml:417(primaryie) xml/api-index-full.xml:418(primaryie)
 #: xml/api-index-full.xml:419(primaryie) xml/api-index-full.xml:420(primaryie)
-#: xml/api-index-full.xml:424(primaryie) xml/api-index-full.xml:427(primaryie)
-#: xml/api-index-full.xml:428(primaryie) xml/api-index-full.xml:429(primaryie)
-#: xml/api-index-full.xml:430(primaryie) xml/api-index-full.xml:431(primaryie)
-#: xml/api-index-full.xml:432(primaryie) xml/api-index-full.xml:433(primaryie)
-#: xml/api-index-full.xml:434(primaryie) xml/api-index-full.xml:437(primaryie)
-#: xml/api-index-full.xml:439(primaryie) xml/api-index-full.xml:440(primaryie)
-#: xml/api-index-full.xml:441(primaryie) xml/api-index-full.xml:442(primaryie)
-#: xml/api-index-full.xml:443(primaryie) xml/api-index-full.xml:444(primaryie)
-#: xml/api-index-full.xml:445(primaryie) xml/api-index-full.xml:446(primaryie)
-#: xml/api-index-full.xml:447(primaryie) xml/api-index-full.xml:448(primaryie)
-#: xml/api-index-full.xml:449(primaryie) xml/api-index-full.xml:450(primaryie)
-#: xml/api-index-full.xml:451(primaryie) xml/api-index-full.xml:452(primaryie)
-#: xml/api-index-full.xml:453(primaryie) xml/api-index-full.xml:456(primaryie)
-#: xml/api-index-full.xml:457(primaryie) xml/api-index-full.xml:461(primaryie)
-#: xml/api-index-full.xml:462(primaryie) xml/api-index-full.xml:463(primaryie)
-#: xml/api-index-full.xml:464(primaryie) xml/api-index-full.xml:466(primaryie)
-#: xml/api-index-full.xml:467(primaryie) xml/api-index-full.xml:468(primaryie)
-#: xml/api-index-full.xml:469(primaryie) xml/api-index-full.xml:470(primaryie)
-#: xml/api-index-full.xml:471(primaryie) xml/api-index-full.xml:472(primaryie)
-#: xml/api-index-full.xml:475(primaryie) xml/api-index-full.xml:476(primaryie)
-#: xml/api-index-full.xml:477(primaryie) xml/api-index-full.xml:480(primaryie)
-#: xml/api-index-full.xml:482(primaryie) xml/api-index-full.xml:483(primaryie)
-#: xml/api-index-full.xml:486(primaryie) xml/api-index-full.xml:489(primaryie)
-#: xml/api-index-full.xml:490(primaryie) xml/api-index-full.xml:491(primaryie)
-#: xml/api-index-full.xml:503(primaryie) xml/api-index-full.xml:504(primaryie)
-#: xml/api-index-full.xml:505(primaryie) xml/api-index-full.xml:506(primaryie)
-#: xml/api-index-full.xml:507(primaryie) xml/api-index-full.xml:508(primaryie)
-#: xml/api-index-full.xml:509(primaryie) xml/api-index-full.xml:510(primaryie)
-#: xml/api-index-full.xml:511(primaryie) xml/api-index-full.xml:512(primaryie)
-#: xml/api-index-full.xml:513(primaryie) xml/api-index-full.xml:514(primaryie)
-#: xml/api-index-full.xml:515(primaryie) xml/api-index-full.xml:516(primaryie)
-#: xml/api-index-full.xml:517(primaryie) xml/api-index-full.xml:518(primaryie)
-#: xml/api-index-full.xml:519(primaryie) xml/api-index-full.xml:520(primaryie)
-#: xml/api-index-full.xml:521(primaryie) xml/api-index-full.xml:522(primaryie)
-#: xml/api-index-full.xml:523(primaryie) xml/api-index-full.xml:524(primaryie)
-#: xml/api-index-full.xml:525(primaryie) xml/api-index-full.xml:526(primaryie)
-#: xml/api-index-full.xml:527(primaryie) xml/api-index-full.xml:528(primaryie)
-#: xml/api-index-full.xml:529(primaryie) xml/api-index-full.xml:530(primaryie)
-#: xml/api-index-full.xml:533(primaryie) xml/api-index-full.xml:536(primaryie)
-#: xml/api-index-full.xml:537(primaryie) xml/api-index-full.xml:542(primaryie)
-#: xml/api-index-full.xml:543(primaryie) xml/api-index-full.xml:544(primaryie)
-#: xml/api-index-full.xml:545(primaryie) xml/api-index-full.xml:546(primaryie)
-#: xml/api-index-full.xml:547(primaryie) xml/api-index-full.xml:548(primaryie)
-#: xml/api-index-full.xml:549(primaryie) xml/api-index-full.xml:550(primaryie)
-#: xml/api-index-full.xml:551(primaryie) xml/api-index-full.xml:552(primaryie)
-#: xml/api-index-full.xml:553(primaryie) xml/api-index-full.xml:554(primaryie)
-#: xml/api-index-full.xml:555(primaryie) xml/api-index-full.xml:556(primaryie)
-#: xml/api-index-full.xml:557(primaryie) xml/api-index-full.xml:558(primaryie)
-#: xml/api-index-full.xml:559(primaryie) xml/api-index-full.xml:560(primaryie)
-#: xml/api-index-full.xml:561(primaryie) xml/api-index-full.xml:562(primaryie)
-#: xml/api-index-full.xml:563(primaryie) xml/api-index-full.xml:564(primaryie)
-#: xml/api-index-full.xml:565(primaryie) xml/api-index-full.xml:566(primaryie)
-#: xml/api-index-full.xml:567(primaryie) xml/api-index-full.xml:568(primaryie)
-#: xml/api-index-full.xml:569(primaryie) xml/api-index-full.xml:570(primaryie)
-#: xml/api-index-full.xml:571(primaryie) xml/api-index-full.xml:572(primaryie)
-#: xml/api-index-full.xml:573(primaryie) xml/api-index-full.xml:574(primaryie)
-#: xml/api-index-full.xml:575(primaryie) xml/api-index-full.xml:576(primaryie)
-#: xml/api-index-full.xml:579(primaryie) xml/api-index-full.xml:580(primaryie)
-#: xml/api-index-full.xml:581(primaryie) xml/api-index-full.xml:582(primaryie)
-#: xml/api-index-full.xml:583(primaryie) xml/api-index-full.xml:585(primaryie)
-#: xml/api-index-full.xml:586(primaryie) xml/api-index-full.xml:588(primaryie)
-#: xml/api-index-full.xml:590(primaryie) xml/api-index-full.xml:592(primaryie)
-#: xml/api-index-full.xml:598(primaryie) xml/api-index-full.xml:599(primaryie)
-#: xml/api-index-full.xml:602(primaryie) xml/api-index-full.xml:603(primaryie)
-#: xml/api-index-full.xml:604(primaryie) xml/api-index-full.xml:605(primaryie)
+#: xml/api-index-full.xml:421(primaryie) xml/api-index-full.xml:424(primaryie)
+#: xml/api-index-full.xml:427(primaryie) xml/api-index-full.xml:428(primaryie)
+#: xml/api-index-full.xml:429(primaryie) xml/api-index-full.xml:430(primaryie)
+#: xml/api-index-full.xml:431(primaryie) xml/api-index-full.xml:432(primaryie)
+#: xml/api-index-full.xml:433(primaryie) xml/api-index-full.xml:434(primaryie)
+#: xml/api-index-full.xml:437(primaryie) xml/api-index-full.xml:439(primaryie)
+#: xml/api-index-full.xml:440(primaryie) xml/api-index-full.xml:441(primaryie)
+#: xml/api-index-full.xml:442(primaryie) xml/api-index-full.xml:443(primaryie)
+#: xml/api-index-full.xml:444(primaryie) xml/api-index-full.xml:445(primaryie)
+#: xml/api-index-full.xml:446(primaryie) xml/api-index-full.xml:447(primaryie)
+#: xml/api-index-full.xml:448(primaryie) xml/api-index-full.xml:449(primaryie)
+#: xml/api-index-full.xml:450(primaryie) xml/api-index-full.xml:451(primaryie)
+#: xml/api-index-full.xml:452(primaryie) xml/api-index-full.xml:453(primaryie)
+#: xml/api-index-full.xml:456(primaryie) xml/api-index-full.xml:457(primaryie)
+#: xml/api-index-full.xml:461(primaryie) xml/api-index-full.xml:462(primaryie)
+#: xml/api-index-full.xml:463(primaryie) xml/api-index-full.xml:464(primaryie)
+#: xml/api-index-full.xml:466(primaryie) xml/api-index-full.xml:467(primaryie)
+#: xml/api-index-full.xml:468(primaryie) xml/api-index-full.xml:469(primaryie)
+#: xml/api-index-full.xml:470(primaryie) xml/api-index-full.xml:471(primaryie)
+#: xml/api-index-full.xml:472(primaryie) xml/api-index-full.xml:475(primaryie)
+#: xml/api-index-full.xml:476(primaryie) xml/api-index-full.xml:477(primaryie)
+#: xml/api-index-full.xml:480(primaryie) xml/api-index-full.xml:482(primaryie)
+#: xml/api-index-full.xml:483(primaryie) xml/api-index-full.xml:486(primaryie)
+#: xml/api-index-full.xml:489(primaryie) xml/api-index-full.xml:490(primaryie)
+#: xml/api-index-full.xml:491(primaryie) xml/api-index-full.xml:503(primaryie)
+#: xml/api-index-full.xml:504(primaryie) xml/api-index-full.xml:505(primaryie)
+#: xml/api-index-full.xml:506(primaryie) xml/api-index-full.xml:507(primaryie)
+#: xml/api-index-full.xml:508(primaryie) xml/api-index-full.xml:509(primaryie)
+#: xml/api-index-full.xml:510(primaryie) xml/api-index-full.xml:511(primaryie)
+#: xml/api-index-full.xml:512(primaryie) xml/api-index-full.xml:513(primaryie)
+#: xml/api-index-full.xml:514(primaryie) xml/api-index-full.xml:515(primaryie)
+#: xml/api-index-full.xml:516(primaryie) xml/api-index-full.xml:517(primaryie)
+#: xml/api-index-full.xml:518(primaryie) xml/api-index-full.xml:519(primaryie)
+#: xml/api-index-full.xml:520(primaryie) xml/api-index-full.xml:521(primaryie)
+#: xml/api-index-full.xml:522(primaryie) xml/api-index-full.xml:523(primaryie)
+#: xml/api-index-full.xml:524(primaryie) xml/api-index-full.xml:525(primaryie)
+#: xml/api-index-full.xml:526(primaryie) xml/api-index-full.xml:527(primaryie)
+#: xml/api-index-full.xml:528(primaryie) xml/api-index-full.xml:529(primaryie)
+#: xml/api-index-full.xml:530(primaryie) xml/api-index-full.xml:533(primaryie)
+#: xml/api-index-full.xml:536(primaryie) xml/api-index-full.xml:537(primaryie)
+#: xml/api-index-full.xml:542(primaryie) xml/api-index-full.xml:543(primaryie)
+#: xml/api-index-full.xml:544(primaryie) xml/api-index-full.xml:545(primaryie)
+#: xml/api-index-full.xml:546(primaryie) xml/api-index-full.xml:547(primaryie)
+#: xml/api-index-full.xml:548(primaryie) xml/api-index-full.xml:549(primaryie)
+#: xml/api-index-full.xml:550(primaryie) xml/api-index-full.xml:551(primaryie)
+#: xml/api-index-full.xml:552(primaryie) xml/api-index-full.xml:553(primaryie)
+#: xml/api-index-full.xml:554(primaryie) xml/api-index-full.xml:555(primaryie)
+#: xml/api-index-full.xml:556(primaryie) xml/api-index-full.xml:557(primaryie)
+#: xml/api-index-full.xml:558(primaryie) xml/api-index-full.xml:559(primaryie)
+#: xml/api-index-full.xml:560(primaryie) xml/api-index-full.xml:561(primaryie)
+#: xml/api-index-full.xml:562(primaryie) xml/api-index-full.xml:563(primaryie)
+#: xml/api-index-full.xml:564(primaryie) xml/api-index-full.xml:565(primaryie)
+#: xml/api-index-full.xml:566(primaryie) xml/api-index-full.xml:567(primaryie)
+#: xml/api-index-full.xml:568(primaryie) xml/api-index-full.xml:569(primaryie)
+#: xml/api-index-full.xml:570(primaryie) xml/api-index-full.xml:571(primaryie)
+#: xml/api-index-full.xml:572(primaryie) xml/api-index-full.xml:573(primaryie)
+#: xml/api-index-full.xml:574(primaryie) xml/api-index-full.xml:575(primaryie)
+#: xml/api-index-full.xml:576(primaryie) xml/api-index-full.xml:579(primaryie)
+#: xml/api-index-full.xml:580(primaryie) xml/api-index-full.xml:581(primaryie)
+#: xml/api-index-full.xml:582(primaryie) xml/api-index-full.xml:583(primaryie)
+#: xml/api-index-full.xml:585(primaryie) xml/api-index-full.xml:586(primaryie)
+#: xml/api-index-full.xml:588(primaryie) xml/api-index-full.xml:589(primaryie)
+#: xml/api-index-full.xml:590(primaryie) xml/api-index-full.xml:591(primaryie)
+#: xml/api-index-full.xml:592(primaryie) xml/api-index-full.xml:598(primaryie)
+#: xml/api-index-full.xml:599(primaryie) xml/api-index-full.xml:602(primaryie)
+#: xml/api-index-full.xml:603(primaryie) xml/api-index-full.xml:604(primaryie)
+#: xml/api-index-full.xml:605(primaryie)
 #: xml/api-index-deprecated.xml:10(primaryie)
 #: xml/api-index-deprecated.xml:11(primaryie)
 #: xml/api-index-deprecated.xml:12(primaryie)
@@ -23655,142 +23696,145 @@ msgstr ""
 #: xml/api-index-deprecated.xml:53(primaryie)
 #: xml/api-index-deprecated.xml:67(primaryie)
 #: xml/api-index-deprecated.xml:71(primaryie)
+#: xml/api-index-1.1.6.xml:7(primaryie) xml/api-index-1.1.6.xml:8(primaryie)
 #: xml/api-index-1.1.6.xml:11(primaryie) xml/api-index-1.1.6.xml:12(primaryie)
 #: xml/api-index-1.1.6.xml:13(primaryie) xml/api-index-1.1.6.xml:14(primaryie)
 #: xml/api-index-1.1.6.xml:15(primaryie) xml/api-index-1.1.6.xml:16(primaryie)
 #: xml/api-index-1.1.6.xml:17(primaryie) xml/api-index-1.1.6.xml:18(primaryie)
 #: xml/api-index-1.1.6.xml:19(primaryie) xml/api-index-1.1.6.xml:20(primaryie)
-#: xml/api-index-1.1.6.xml:21(primaryie) xml/api-index-1.1.6.xml:25(primaryie)
-#: xml/api-index-1.1.6.xml:28(primaryie) xml/api-index-1.1.6.xml:29(primaryie)
-#: xml/api-index-1.1.5.xml:7(primaryie) xml/api-index-1.1.5.xml:10(primaryie)
-#: xml/api-index-1.1.5.xml:11(primaryie) xml/api-index-1.1.5.xml:12(primaryie)
-#: xml/api-index-1.1.5.xml:13(primaryie) xml/api-index-1.1.5.xml:16(primaryie)
-#: xml/api-index-1.1.5.xml:19(primaryie) xml/api-index-1.1.5.xml:20(primaryie)
-#: xml/api-index-1.1.5.xml:28(primaryie) xml/api-index-1.1.5.xml:29(primaryie)
-#: xml/api-index-1.1.5.xml:30(primaryie) xml/api-index-1.1.5.xml:31(primaryie)
-#: xml/api-index-1.1.5.xml:32(primaryie) xml/api-index-1.1.5.xml:33(primaryie)
-#: xml/api-index-1.1.5.xml:34(primaryie) xml/api-index-1.1.5.xml:35(primaryie)
-#: xml/api-index-1.1.5.xml:36(primaryie) xml/api-index-1.1.5.xml:37(primaryie)
-#: xml/api-index-1.1.5.xml:38(primaryie) xml/api-index-1.1.5.xml:39(primaryie)
-#: xml/api-index-1.1.5.xml:40(primaryie) xml/api-index-1.1.5.xml:41(primaryie)
-#: xml/api-index-1.1.5.xml:42(primaryie) xml/api-index-1.1.5.xml:43(primaryie)
-#: xml/api-index-1.1.5.xml:44(primaryie) xml/api-index-1.1.5.xml:45(primaryie)
-#: xml/api-index-1.1.5.xml:46(primaryie) xml/api-index-1.1.5.xml:47(primaryie)
-#: xml/api-index-1.1.5.xml:48(primaryie) xml/api-index-1.1.5.xml:49(primaryie)
-#: xml/api-index-1.1.5.xml:50(primaryie) xml/api-index-1.1.5.xml:51(primaryie)
-#: xml/api-index-1.1.5.xml:52(primaryie) xml/api-index-1.1.5.xml:55(primaryie)
-#: xml/api-index-1.1.5.xml:56(primaryie) xml/api-index-1.1.5.xml:59(primaryie)
-#: xml/api-index-1.1.5.xml:60(primaryie) xml/api-index-1.1.4.xml:7(primaryie)
-#: xml/api-index-1.1.4.xml:8(primaryie) xml/api-index-1.1.4.xml:13(primaryie)
-#: xml/api-index-1.1.4.xml:14(primaryie) xml/api-index-1.1.3.xml:20(primaryie)
-#: xml/api-index-1.1.3.xml:21(primaryie) xml/api-index-1.1.3.xml:22(primaryie)
-#: xml/api-index-1.1.3.xml:23(primaryie) xml/api-index-1.1.3.xml:24(primaryie)
-#: xml/api-index-1.1.3.xml:25(primaryie) xml/api-index-1.1.1.xml:10(primaryie)
-#: xml/api-index-1.1.1.xml:16(primaryie) xml/api-index-1.1.1.xml:17(primaryie)
-#: xml/api-index-1.1.0.xml:48(primaryie) xml/api-index-1.0.xml:7(primaryie)
-#: xml/api-index-1.0.xml:8(primaryie) xml/api-index-1.0.xml:9(primaryie)
-#: xml/api-index-1.0.xml:10(primaryie) xml/api-index-1.0.9.xml:15(primaryie)
-#: xml/api-index-1.0.8.xml:7(primaryie) xml/api-index-1.0.8.xml:11(primaryie)
-#: xml/api-index-1.0.8.xml:12(primaryie) xml/api-index-1.0.8.xml:13(primaryie)
-#: xml/api-index-1.0.8.xml:14(primaryie) xml/api-index-1.0.8.xml:15(primaryie)
-#: xml/api-index-1.0.8.xml:16(primaryie) xml/api-index-1.0.8.xml:17(primaryie)
-#: xml/api-index-1.0.8.xml:18(primaryie) xml/api-index-1.0.8.xml:19(primaryie)
-#: xml/api-index-1.0.8.xml:20(primaryie) xml/api-index-1.0.8.xml:21(primaryie)
-#: xml/api-index-1.0.8.xml:22(primaryie) xml/api-index-1.0.8.xml:23(primaryie)
-#: xml/api-index-1.0.8.xml:24(primaryie) xml/api-index-1.0.8.xml:25(primaryie)
-#: xml/api-index-1.0.7.xml:7(primaryie) xml/api-index-1.0.7.xml:11(primaryie)
-#: xml/api-index-1.0.7.xml:12(primaryie) xml/api-index-1.0.7.xml:13(primaryie)
-#: xml/api-index-1.0.7.xml:14(primaryie) xml/api-index-1.0.7.xml:15(primaryie)
-#: xml/api-index-1.0.7.xml:16(primaryie) xml/api-index-1.0.7.xml:17(primaryie)
-#: xml/api-index-1.0.7.xml:18(primaryie) xml/api-index-1.0.7.xml:19(primaryie)
-#: xml/api-index-1.0.7.xml:20(primaryie) xml/api-index-1.0.7.xml:21(primaryie)
-#: xml/api-index-1.0.7.xml:24(primaryie) xml/api-index-1.0.6.xml:7(primaryie)
-#: xml/api-index-1.0.6.xml:8(primaryie) xml/api-index-1.0.6.xml:9(primaryie)
-#: xml/api-index-1.0.6.xml:10(primaryie) xml/api-index-1.0.6.xml:13(primaryie)
-#: xml/api-index-1.0.6.xml:14(primaryie) xml/api-index-1.0.6.xml:15(primaryie)
-#: xml/api-index-1.0.6.xml:16(primaryie) xml/api-index-1.0.6.xml:18(primaryie)
-#: xml/api-index-1.0.6.xml:19(primaryie) xml/api-index-1.0.6.xml:20(primaryie)
-#: xml/api-index-1.0.6.xml:21(primaryie) xml/api-index-1.0.6.xml:22(primaryie)
-#: xml/api-index-1.0.6.xml:23(primaryie) xml/api-index-1.0.6.xml:24(primaryie)
-#: xml/api-index-1.0.6.xml:25(primaryie) xml/api-index-1.0.6.xml:28(primaryie)
-#: xml/api-index-1.0.6.xml:29(primaryie) xml/api-index-1.0.6.xml:30(primaryie)
-#: xml/api-index-1.0.6.xml:31(primaryie) xml/api-index-1.0.6.xml:32(primaryie)
-#: xml/api-index-1.0.6.xml:33(primaryie) xml/api-index-1.0.6.xml:34(primaryie)
-#: xml/api-index-1.0.6.xml:42(primaryie) xml/api-index-1.0.6.xml:43(primaryie)
-#: xml/api-index-1.0.6.xml:44(primaryie) xml/api-index-1.0.6.xml:45(primaryie)
-#: xml/api-index-1.0.6.xml:46(primaryie) xml/api-index-1.0.6.xml:47(primaryie)
-#: xml/api-index-1.0.6.xml:48(primaryie) xml/api-index-1.0.6.xml:49(primaryie)
-#: xml/api-index-1.0.6.xml:50(primaryie) xml/api-index-1.0.6.xml:51(primaryie)
-#: xml/api-index-1.0.6.xml:52(primaryie) xml/api-index-1.0.6.xml:53(primaryie)
-#: xml/api-index-1.0.6.xml:54(primaryie) xml/api-index-1.0.6.xml:55(primaryie)
-#: xml/api-index-1.0.6.xml:56(primaryie) xml/api-index-1.0.6.xml:57(primaryie)
-#: xml/api-index-1.0.6.xml:58(primaryie) xml/api-index-1.0.6.xml:59(primaryie)
-#: xml/api-index-1.0.6.xml:60(primaryie) xml/api-index-1.0.6.xml:61(primaryie)
-#: xml/api-index-1.0.6.xml:64(primaryie) xml/api-index-1.0.6.xml:67(primaryie)
-#: xml/api-index-1.0.6.xml:68(primaryie) xml/api-index-1.0.6.xml:75(primaryie)
-#: xml/api-index-1.0.6.xml:76(primaryie) xml/api-index-1.0.6.xml:77(primaryie)
-#: xml/api-index-1.0.6.xml:78(primaryie) xml/api-index-1.0.6.xml:79(primaryie)
-#: xml/api-index-1.0.6.xml:80(primaryie) xml/api-index-1.0.6.xml:81(primaryie)
-#: xml/api-index-1.0.6.xml:82(primaryie) xml/api-index-1.0.6.xml:85(primaryie)
-#: xml/api-index-1.0.6.xml:86(primaryie) xml/api-index-1.0.6.xml:87(primaryie)
-#: xml/api-index-1.0.6.xml:88(primaryie) xml/api-index-1.0.6.xml:89(primaryie)
-#: xml/api-index-1.0.6.xml:90(primaryie) xml/api-index-1.0.6.xml:91(primaryie)
-#: xml/api-index-1.0.6.xml:92(primaryie) xml/api-index-1.0.6.xml:93(primaryie)
-#: xml/api-index-1.0.6.xml:94(primaryie) xml/api-index-1.0.6.xml:97(primaryie)
-#: xml/api-index-1.0.5.xml:7(primaryie) xml/api-index-1.0.5.xml:8(primaryie)
-#: xml/api-index-1.0.5.xml:9(primaryie) xml/api-index-1.0.5.xml:10(primaryie)
-#: xml/api-index-1.0.5.xml:11(primaryie) xml/api-index-1.0.5.xml:12(primaryie)
-#: xml/api-index-1.0.5.xml:13(primaryie) xml/api-index-1.0.5.xml:14(primaryie)
-#: xml/api-index-1.0.5.xml:15(primaryie) xml/api-index-1.0.5.xml:16(primaryie)
-#: xml/api-index-1.0.5.xml:17(primaryie) xml/api-index-1.0.5.xml:23(primaryie)
-#: xml/api-index-1.0.5.xml:24(primaryie) xml/api-index-1.0.5.xml:25(primaryie)
-#: xml/api-index-1.0.5.xml:26(primaryie) xml/api-index-1.0.5.xml:27(primaryie)
-#: xml/api-index-1.0.5.xml:28(primaryie) xml/api-index-1.0.5.xml:29(primaryie)
-#: xml/api-index-1.0.5.xml:30(primaryie) xml/api-index-1.0.5.xml:31(primaryie)
-#: xml/api-index-1.0.5.xml:32(primaryie) xml/api-index-1.0.5.xml:33(primaryie)
-#: xml/api-index-1.0.5.xml:34(primaryie) xml/api-index-1.0.5.xml:39(primaryie)
-#: xml/api-index-1.0.5.xml:40(primaryie) xml/api-index-1.0.5.xml:41(primaryie)
-#: xml/api-index-1.0.5.xml:44(primaryie) xml/api-index-1.0.5.xml:47(primaryie)
-#: xml/api-index-1.0.5.xml:50(primaryie) xml/api-index-1.0.5.xml:51(primaryie)
-#: xml/api-index-1.0.5.xml:52(primaryie) xml/api-index-1.0.5.xml:53(primaryie)
-#: xml/api-index-1.0.5.xml:54(primaryie) xml/api-index-1.0.5.xml:58(primaryie)
-#: xml/api-index-1.0.5.xml:60(primaryie) xml/api-index-1.0.5.xml:70(primaryie)
-#: xml/api-index-1.0.5.xml:71(primaryie) xml/api-index-1.0.5.xml:72(primaryie)
-#: xml/api-index-1.0.5.xml:75(primaryie) xml/api-index-1.0.5.xml:76(primaryie)
-#: xml/api-index-1.0.5.xml:79(primaryie) xml/api-index-1.0.5.xml:80(primaryie)
-#: xml/api-index-1.0.4.xml:7(primaryie) xml/api-index-1.0.4.xml:8(primaryie)
-#: xml/api-index-1.0.4.xml:16(primaryie) xml/api-index-1.0.4.xml:17(primaryie)
-#: xml/api-index-1.0.4.xml:18(primaryie) xml/api-index-1.0.4.xml:19(primaryie)
-#: xml/api-index-1.0.4.xml:20(primaryie) xml/api-index-1.0.4.xml:21(primaryie)
-#: xml/api-index-1.0.4.xml:22(primaryie) xml/api-index-1.0.4.xml:23(primaryie)
-#: xml/api-index-1.0.4.xml:24(primaryie) xml/api-index-1.0.4.xml:25(primaryie)
-#: xml/api-index-1.0.4.xml:26(primaryie) xml/api-index-1.0.4.xml:27(primaryie)
-#: xml/api-index-1.0.4.xml:28(primaryie) xml/api-index-1.0.4.xml:29(primaryie)
-#: xml/api-index-1.0.4.xml:30(primaryie) xml/api-index-1.0.4.xml:31(primaryie)
-#: xml/api-index-1.0.4.xml:32(primaryie) xml/api-index-1.0.4.xml:33(primaryie)
-#: xml/api-index-1.0.4.xml:34(primaryie) xml/api-index-1.0.4.xml:35(primaryie)
-#: xml/api-index-1.0.4.xml:36(primaryie) xml/api-index-1.0.4.xml:37(primaryie)
-#: xml/api-index-1.0.4.xml:38(primaryie) xml/api-index-1.0.4.xml:39(primaryie)
-#: xml/api-index-1.0.4.xml:40(primaryie) xml/api-index-1.0.4.xml:41(primaryie)
-#: xml/api-index-1.0.4.xml:42(primaryie) xml/api-index-1.0.4.xml:43(primaryie)
-#: xml/api-index-1.0.4.xml:44(primaryie) xml/api-index-1.0.4.xml:45(primaryie)
-#: xml/api-index-1.0.4.xml:48(primaryie) xml/api-index-1.0.4.xml:51(primaryie)
-#: xml/api-index-1.0.3.xml:7(primaryie) xml/api-index-1.0.3.xml:8(primaryie)
-#: xml/api-index-1.0.3.xml:9(primaryie) xml/api-index-1.0.3.xml:10(primaryie)
-#: xml/api-index-1.0.3.xml:11(primaryie) xml/api-index-1.0.3.xml:12(primaryie)
-#: xml/api-index-1.0.3.xml:13(primaryie) xml/api-index-1.0.3.xml:17(primaryie)
-#: xml/api-index-1.0.3.xml:20(primaryie) xml/api-index-1.0.3.xml:21(primaryie)
-#: xml/api-index-1.0.3.xml:24(primaryie) xml/api-index-1.0.3.xml:25(primaryie)
-#: xml/api-index-1.0.3.xml:26(primaryie) xml/api-index-1.0.2.xml:7(primaryie)
-#: xml/api-index-1.0.2.xml:8(primaryie) xml/api-index-1.0.2.xml:9(primaryie)
-#: xml/api-index-1.0.2.xml:10(primaryie) xml/api-index-1.0.2.xml:11(primaryie)
-#: xml/api-index-1.0.2.xml:12(primaryie) xml/api-index-1.0.2.xml:13(primaryie)
-#: xml/api-index-1.0.2.xml:14(primaryie) xml/api-index-1.0.2.xml:15(primaryie)
-#: xml/api-index-0.9.xml:7(primaryie) xml/api-index-0.9.xml:8(primaryie)
-#: xml/api-index-0.9.xml:9(primaryie) xml/api-index-0.9.xml:10(primaryie)
-#: xml/api-index-0.8.xml:7(primaryie) xml/api-index-0.8.xml:8(primaryie)
-#: xml/api-index-0.8.xml:9(primaryie) xml/api-index-0.8.xml:13(primaryie)
-#: xml/api-index-0.3.xml:7(primaryie) xml/api-index-0.3.xml:8(primaryie)
+#: xml/api-index-1.1.6.xml:21(primaryie) xml/api-index-1.1.6.xml:24(primaryie)
+#: xml/api-index-1.1.6.xml:25(primaryie) xml/api-index-1.1.6.xml:28(primaryie)
+#: xml/api-index-1.1.6.xml:29(primaryie) xml/api-index-1.1.6.xml:32(primaryie)
+#: xml/api-index-1.1.6.xml:33(primaryie) xml/api-index-1.1.5.xml:7(primaryie)
+#: xml/api-index-1.1.5.xml:10(primaryie) xml/api-index-1.1.5.xml:11(primaryie)
+#: xml/api-index-1.1.5.xml:12(primaryie) xml/api-index-1.1.5.xml:13(primaryie)
+#: xml/api-index-1.1.5.xml:16(primaryie) xml/api-index-1.1.5.xml:19(primaryie)
+#: xml/api-index-1.1.5.xml:20(primaryie) xml/api-index-1.1.5.xml:28(primaryie)
+#: xml/api-index-1.1.5.xml:29(primaryie) xml/api-index-1.1.5.xml:30(primaryie)
+#: xml/api-index-1.1.5.xml:31(primaryie) xml/api-index-1.1.5.xml:32(primaryie)
+#: xml/api-index-1.1.5.xml:33(primaryie) xml/api-index-1.1.5.xml:34(primaryie)
+#: xml/api-index-1.1.5.xml:35(primaryie) xml/api-index-1.1.5.xml:36(primaryie)
+#: xml/api-index-1.1.5.xml:37(primaryie) xml/api-index-1.1.5.xml:38(primaryie)
+#: xml/api-index-1.1.5.xml:39(primaryie) xml/api-index-1.1.5.xml:40(primaryie)
+#: xml/api-index-1.1.5.xml:41(primaryie) xml/api-index-1.1.5.xml:42(primaryie)
+#: xml/api-index-1.1.5.xml:43(primaryie) xml/api-index-1.1.5.xml:44(primaryie)
+#: xml/api-index-1.1.5.xml:45(primaryie) xml/api-index-1.1.5.xml:46(primaryie)
+#: xml/api-index-1.1.5.xml:47(primaryie) xml/api-index-1.1.5.xml:48(primaryie)
+#: xml/api-index-1.1.5.xml:49(primaryie) xml/api-index-1.1.5.xml:50(primaryie)
+#: xml/api-index-1.1.5.xml:51(primaryie) xml/api-index-1.1.5.xml:52(primaryie)
+#: xml/api-index-1.1.5.xml:55(primaryie) xml/api-index-1.1.5.xml:56(primaryie)
+#: xml/api-index-1.1.5.xml:59(primaryie) xml/api-index-1.1.5.xml:60(primaryie)
+#: xml/api-index-1.1.4.xml:7(primaryie) xml/api-index-1.1.4.xml:8(primaryie)
+#: xml/api-index-1.1.4.xml:13(primaryie) xml/api-index-1.1.4.xml:14(primaryie)
+#: xml/api-index-1.1.3.xml:20(primaryie) xml/api-index-1.1.3.xml:21(primaryie)
+#: xml/api-index-1.1.3.xml:22(primaryie) xml/api-index-1.1.3.xml:23(primaryie)
+#: xml/api-index-1.1.3.xml:24(primaryie) xml/api-index-1.1.3.xml:25(primaryie)
+#: xml/api-index-1.1.1.xml:10(primaryie) xml/api-index-1.1.1.xml:16(primaryie)
+#: xml/api-index-1.1.1.xml:17(primaryie) xml/api-index-1.1.0.xml:48(primaryie)
+#: xml/api-index-1.0.xml:7(primaryie) xml/api-index-1.0.xml:8(primaryie)
+#: xml/api-index-1.0.xml:9(primaryie) xml/api-index-1.0.xml:10(primaryie)
+#: xml/api-index-1.0.9.xml:15(primaryie) xml/api-index-1.0.8.xml:7(primaryie)
+#: xml/api-index-1.0.8.xml:11(primaryie) xml/api-index-1.0.8.xml:12(primaryie)
+#: xml/api-index-1.0.8.xml:13(primaryie) xml/api-index-1.0.8.xml:14(primaryie)
+#: xml/api-index-1.0.8.xml:15(primaryie) xml/api-index-1.0.8.xml:16(primaryie)
+#: xml/api-index-1.0.8.xml:17(primaryie) xml/api-index-1.0.8.xml:18(primaryie)
+#: xml/api-index-1.0.8.xml:19(primaryie) xml/api-index-1.0.8.xml:20(primaryie)
+#: xml/api-index-1.0.8.xml:21(primaryie) xml/api-index-1.0.8.xml:22(primaryie)
+#: xml/api-index-1.0.8.xml:23(primaryie) xml/api-index-1.0.8.xml:24(primaryie)
+#: xml/api-index-1.0.8.xml:25(primaryie) xml/api-index-1.0.7.xml:7(primaryie)
+#: xml/api-index-1.0.7.xml:11(primaryie) xml/api-index-1.0.7.xml:12(primaryie)
+#: xml/api-index-1.0.7.xml:13(primaryie) xml/api-index-1.0.7.xml:14(primaryie)
+#: xml/api-index-1.0.7.xml:15(primaryie) xml/api-index-1.0.7.xml:16(primaryie)
+#: xml/api-index-1.0.7.xml:17(primaryie) xml/api-index-1.0.7.xml:18(primaryie)
+#: xml/api-index-1.0.7.xml:19(primaryie) xml/api-index-1.0.7.xml:20(primaryie)
+#: xml/api-index-1.0.7.xml:21(primaryie) xml/api-index-1.0.7.xml:24(primaryie)
+#: xml/api-index-1.0.6.xml:7(primaryie) xml/api-index-1.0.6.xml:8(primaryie)
+#: xml/api-index-1.0.6.xml:9(primaryie) xml/api-index-1.0.6.xml:10(primaryie)
+#: xml/api-index-1.0.6.xml:13(primaryie) xml/api-index-1.0.6.xml:14(primaryie)
+#: xml/api-index-1.0.6.xml:15(primaryie) xml/api-index-1.0.6.xml:16(primaryie)
+#: xml/api-index-1.0.6.xml:18(primaryie) xml/api-index-1.0.6.xml:19(primaryie)
+#: xml/api-index-1.0.6.xml:20(primaryie) xml/api-index-1.0.6.xml:21(primaryie)
+#: xml/api-index-1.0.6.xml:22(primaryie) xml/api-index-1.0.6.xml:23(primaryie)
+#: xml/api-index-1.0.6.xml:24(primaryie) xml/api-index-1.0.6.xml:25(primaryie)
+#: xml/api-index-1.0.6.xml:28(primaryie) xml/api-index-1.0.6.xml:29(primaryie)
+#: xml/api-index-1.0.6.xml:30(primaryie) xml/api-index-1.0.6.xml:31(primaryie)
+#: xml/api-index-1.0.6.xml:32(primaryie) xml/api-index-1.0.6.xml:33(primaryie)
+#: xml/api-index-1.0.6.xml:34(primaryie) xml/api-index-1.0.6.xml:42(primaryie)
+#: xml/api-index-1.0.6.xml:43(primaryie) xml/api-index-1.0.6.xml:44(primaryie)
+#: xml/api-index-1.0.6.xml:45(primaryie) xml/api-index-1.0.6.xml:46(primaryie)
+#: xml/api-index-1.0.6.xml:47(primaryie) xml/api-index-1.0.6.xml:48(primaryie)
+#: xml/api-index-1.0.6.xml:49(primaryie) xml/api-index-1.0.6.xml:50(primaryie)
+#: xml/api-index-1.0.6.xml:51(primaryie) xml/api-index-1.0.6.xml:52(primaryie)
+#: xml/api-index-1.0.6.xml:53(primaryie) xml/api-index-1.0.6.xml:54(primaryie)
+#: xml/api-index-1.0.6.xml:55(primaryie) xml/api-index-1.0.6.xml:56(primaryie)
+#: xml/api-index-1.0.6.xml:57(primaryie) xml/api-index-1.0.6.xml:58(primaryie)
+#: xml/api-index-1.0.6.xml:59(primaryie) xml/api-index-1.0.6.xml:60(primaryie)
+#: xml/api-index-1.0.6.xml:61(primaryie) xml/api-index-1.0.6.xml:64(primaryie)
+#: xml/api-index-1.0.6.xml:67(primaryie) xml/api-index-1.0.6.xml:68(primaryie)
+#: xml/api-index-1.0.6.xml:75(primaryie) xml/api-index-1.0.6.xml:76(primaryie)
+#: xml/api-index-1.0.6.xml:77(primaryie) xml/api-index-1.0.6.xml:78(primaryie)
+#: xml/api-index-1.0.6.xml:79(primaryie) xml/api-index-1.0.6.xml:80(primaryie)
+#: xml/api-index-1.0.6.xml:81(primaryie) xml/api-index-1.0.6.xml:82(primaryie)
+#: xml/api-index-1.0.6.xml:85(primaryie) xml/api-index-1.0.6.xml:86(primaryie)
+#: xml/api-index-1.0.6.xml:87(primaryie) xml/api-index-1.0.6.xml:88(primaryie)
+#: xml/api-index-1.0.6.xml:89(primaryie) xml/api-index-1.0.6.xml:90(primaryie)
+#: xml/api-index-1.0.6.xml:91(primaryie) xml/api-index-1.0.6.xml:92(primaryie)
+#: xml/api-index-1.0.6.xml:93(primaryie) xml/api-index-1.0.6.xml:94(primaryie)
+#: xml/api-index-1.0.6.xml:97(primaryie) xml/api-index-1.0.5.xml:7(primaryie)
+#: xml/api-index-1.0.5.xml:8(primaryie) xml/api-index-1.0.5.xml:9(primaryie)
+#: xml/api-index-1.0.5.xml:10(primaryie) xml/api-index-1.0.5.xml:11(primaryie)
+#: xml/api-index-1.0.5.xml:12(primaryie) xml/api-index-1.0.5.xml:13(primaryie)
+#: xml/api-index-1.0.5.xml:14(primaryie) xml/api-index-1.0.5.xml:15(primaryie)
+#: xml/api-index-1.0.5.xml:16(primaryie) xml/api-index-1.0.5.xml:17(primaryie)
+#: xml/api-index-1.0.5.xml:23(primaryie) xml/api-index-1.0.5.xml:24(primaryie)
+#: xml/api-index-1.0.5.xml:25(primaryie) xml/api-index-1.0.5.xml:26(primaryie)
+#: xml/api-index-1.0.5.xml:27(primaryie) xml/api-index-1.0.5.xml:28(primaryie)
+#: xml/api-index-1.0.5.xml:29(primaryie) xml/api-index-1.0.5.xml:30(primaryie)
+#: xml/api-index-1.0.5.xml:31(primaryie) xml/api-index-1.0.5.xml:32(primaryie)
+#: xml/api-index-1.0.5.xml:33(primaryie) xml/api-index-1.0.5.xml:34(primaryie)
+#: xml/api-index-1.0.5.xml:39(primaryie) xml/api-index-1.0.5.xml:40(primaryie)
+#: xml/api-index-1.0.5.xml:41(primaryie) xml/api-index-1.0.5.xml:44(primaryie)
+#: xml/api-index-1.0.5.xml:47(primaryie) xml/api-index-1.0.5.xml:50(primaryie)
+#: xml/api-index-1.0.5.xml:51(primaryie) xml/api-index-1.0.5.xml:52(primaryie)
+#: xml/api-index-1.0.5.xml:53(primaryie) xml/api-index-1.0.5.xml:54(primaryie)
+#: xml/api-index-1.0.5.xml:58(primaryie) xml/api-index-1.0.5.xml:60(primaryie)
+#: xml/api-index-1.0.5.xml:70(primaryie) xml/api-index-1.0.5.xml:71(primaryie)
+#: xml/api-index-1.0.5.xml:72(primaryie) xml/api-index-1.0.5.xml:75(primaryie)
+#: xml/api-index-1.0.5.xml:76(primaryie) xml/api-index-1.0.5.xml:79(primaryie)
+#: xml/api-index-1.0.5.xml:80(primaryie) xml/api-index-1.0.4.xml:7(primaryie)
+#: xml/api-index-1.0.4.xml:8(primaryie) xml/api-index-1.0.4.xml:16(primaryie)
+#: xml/api-index-1.0.4.xml:17(primaryie) xml/api-index-1.0.4.xml:18(primaryie)
+#: xml/api-index-1.0.4.xml:19(primaryie) xml/api-index-1.0.4.xml:20(primaryie)
+#: xml/api-index-1.0.4.xml:21(primaryie) xml/api-index-1.0.4.xml:22(primaryie)
+#: xml/api-index-1.0.4.xml:23(primaryie) xml/api-index-1.0.4.xml:24(primaryie)
+#: xml/api-index-1.0.4.xml:25(primaryie) xml/api-index-1.0.4.xml:26(primaryie)
+#: xml/api-index-1.0.4.xml:27(primaryie) xml/api-index-1.0.4.xml:28(primaryie)
+#: xml/api-index-1.0.4.xml:29(primaryie) xml/api-index-1.0.4.xml:30(primaryie)
+#: xml/api-index-1.0.4.xml:31(primaryie) xml/api-index-1.0.4.xml:32(primaryie)
+#: xml/api-index-1.0.4.xml:33(primaryie) xml/api-index-1.0.4.xml:34(primaryie)
+#: xml/api-index-1.0.4.xml:35(primaryie) xml/api-index-1.0.4.xml:36(primaryie)
+#: xml/api-index-1.0.4.xml:37(primaryie) xml/api-index-1.0.4.xml:38(primaryie)
+#: xml/api-index-1.0.4.xml:39(primaryie) xml/api-index-1.0.4.xml:40(primaryie)
+#: xml/api-index-1.0.4.xml:41(primaryie) xml/api-index-1.0.4.xml:42(primaryie)
+#: xml/api-index-1.0.4.xml:43(primaryie) xml/api-index-1.0.4.xml:44(primaryie)
+#: xml/api-index-1.0.4.xml:45(primaryie) xml/api-index-1.0.4.xml:48(primaryie)
+#: xml/api-index-1.0.4.xml:51(primaryie) xml/api-index-1.0.3.xml:7(primaryie)
+#: xml/api-index-1.0.3.xml:8(primaryie) xml/api-index-1.0.3.xml:9(primaryie)
+#: xml/api-index-1.0.3.xml:10(primaryie) xml/api-index-1.0.3.xml:11(primaryie)
+#: xml/api-index-1.0.3.xml:12(primaryie) xml/api-index-1.0.3.xml:13(primaryie)
+#: xml/api-index-1.0.3.xml:17(primaryie) xml/api-index-1.0.3.xml:20(primaryie)
+#: xml/api-index-1.0.3.xml:21(primaryie) xml/api-index-1.0.3.xml:24(primaryie)
+#: xml/api-index-1.0.3.xml:25(primaryie) xml/api-index-1.0.3.xml:26(primaryie)
+#: xml/api-index-1.0.2.xml:7(primaryie) xml/api-index-1.0.2.xml:8(primaryie)
+#: xml/api-index-1.0.2.xml:9(primaryie) xml/api-index-1.0.2.xml:10(primaryie)
+#: xml/api-index-1.0.2.xml:11(primaryie) xml/api-index-1.0.2.xml:12(primaryie)
+#: xml/api-index-1.0.2.xml:13(primaryie) xml/api-index-1.0.2.xml:14(primaryie)
+#: xml/api-index-1.0.2.xml:15(primaryie) xml/api-index-0.9.xml:7(primaryie)
+#: xml/api-index-0.9.xml:8(primaryie) xml/api-index-0.9.xml:9(primaryie)
+#: xml/api-index-0.9.xml:10(primaryie) xml/api-index-0.8.xml:7(primaryie)
+#: xml/api-index-0.8.xml:8(primaryie) xml/api-index-0.8.xml:9(primaryie)
+#: xml/api-index-0.8.xml:13(primaryie) xml/api-index-0.3.xml:7(primaryie)
+#: xml/api-index-0.3.xml:8(primaryie)
 msgid "<placeholder-1/>, function in <placeholder-2/>"
 msgstr ""
 
@@ -23839,18 +23883,17 @@ msgstr ""
 #: xml/api-index-full.xml:163(primaryie) xml/api-index-full.xml:168(primaryie)
 #: xml/api-index-full.xml:169(primaryie) xml/api-index-full.xml:170(primaryie)
 #: xml/api-index-full.xml:171(primaryie) xml/api-index-full.xml:172(primaryie)
-#: xml/api-index-full.xml:179(primaryie) xml/api-index-full.xml:182(primaryie)
-#: xml/api-index-full.xml:183(primaryie) xml/api-index-full.xml:184(primaryie)
-#: xml/api-index-full.xml:185(primaryie) xml/api-index-full.xml:186(primaryie)
-#: xml/api-index-full.xml:187(primaryie) xml/api-index-full.xml:188(primaryie)
-#: xml/api-index-full.xml:189(primaryie) xml/api-index-full.xml:190(primaryie)
-#: xml/api-index-full.xml:191(primaryie) xml/api-index-full.xml:192(primaryie)
-#: xml/api-index-full.xml:193(primaryie) xml/api-index-full.xml:194(primaryie)
-#: xml/api-index-full.xml:195(primaryie) xml/api-index-full.xml:212(primaryie)
-#: xml/api-index-full.xml:216(primaryie) xml/api-index-full.xml:218(primaryie)
-#: xml/api-index-full.xml:219(primaryie) xml/api-index-full.xml:220(primaryie)
-#: xml/api-index-full.xml:221(primaryie) xml/api-index-full.xml:222(primaryie)
-#: xml/api-index-full.xml:223(primaryie) xml/api-index-full.xml:227(primaryie)
+#: xml/api-index-full.xml:182(primaryie) xml/api-index-full.xml:183(primaryie)
+#: xml/api-index-full.xml:184(primaryie) xml/api-index-full.xml:185(primaryie)
+#: xml/api-index-full.xml:186(primaryie) xml/api-index-full.xml:187(primaryie)
+#: xml/api-index-full.xml:188(primaryie) xml/api-index-full.xml:189(primaryie)
+#: xml/api-index-full.xml:190(primaryie) xml/api-index-full.xml:191(primaryie)
+#: xml/api-index-full.xml:192(primaryie) xml/api-index-full.xml:193(primaryie)
+#: xml/api-index-full.xml:194(primaryie) xml/api-index-full.xml:195(primaryie)
+#: xml/api-index-full.xml:212(primaryie) xml/api-index-full.xml:216(primaryie)
+#: xml/api-index-full.xml:218(primaryie) xml/api-index-full.xml:219(primaryie)
+#: xml/api-index-full.xml:220(primaryie) xml/api-index-full.xml:221(primaryie)
+#: xml/api-index-full.xml:222(primaryie) xml/api-index-full.xml:227(primaryie)
 #: xml/api-index-full.xml:228(primaryie) xml/api-index-full.xml:229(primaryie)
 #: xml/api-index-full.xml:230(primaryie) xml/api-index-full.xml:231(primaryie)
 #: xml/api-index-full.xml:242(primaryie) xml/api-index-full.xml:246(primaryie)
@@ -23866,16 +23909,14 @@ msgstr ""
 #: xml/api-index-full.xml:341(primaryie) xml/api-index-full.xml:348(primaryie)
 #: xml/api-index-full.xml:363(primaryie) xml/api-index-full.xml:385(primaryie)
 #: xml/api-index-full.xml:398(primaryie) xml/api-index-full.xml:414(primaryie)
-#: xml/api-index-full.xml:421(primaryie) xml/api-index-full.xml:460(primaryie)
-#: xml/api-index-full.xml:465(primaryie) xml/api-index-full.xml:473(primaryie)
-#: xml/api-index-full.xml:474(primaryie) xml/api-index-full.xml:478(primaryie)
-#: xml/api-index-full.xml:479(primaryie) xml/api-index-full.xml:481(primaryie)
-#: xml/api-index-full.xml:484(primaryie) xml/api-index-full.xml:485(primaryie)
-#: xml/api-index-full.xml:502(primaryie) xml/api-index-full.xml:541(primaryie)
-#: xml/api-index-full.xml:584(primaryie) xml/api-index-full.xml:587(primaryie)
-#: xml/api-index-full.xml:589(primaryie) xml/api-index-full.xml:591(primaryie)
-#: xml/api-index-full.xml:593(primaryie) xml/api-index-full.xml:594(primaryie)
-#: xml/api-index-full.xml:595(primaryie)
+#: xml/api-index-full.xml:460(primaryie) xml/api-index-full.xml:465(primaryie)
+#: xml/api-index-full.xml:473(primaryie) xml/api-index-full.xml:474(primaryie)
+#: xml/api-index-full.xml:478(primaryie) xml/api-index-full.xml:479(primaryie)
+#: xml/api-index-full.xml:481(primaryie) xml/api-index-full.xml:484(primaryie)
+#: xml/api-index-full.xml:485(primaryie) xml/api-index-full.xml:502(primaryie)
+#: xml/api-index-full.xml:541(primaryie) xml/api-index-full.xml:584(primaryie)
+#: xml/api-index-full.xml:587(primaryie) xml/api-index-full.xml:593(primaryie)
+#: xml/api-index-full.xml:594(primaryie) xml/api-index-full.xml:595(primaryie)
 #: xml/api-index-deprecated.xml:7(primaryie)
 #: xml/api-index-deprecated.xml:8(primaryie)
 #: xml/api-index-deprecated.xml:9(primaryie)
@@ -23890,56 +23931,53 @@ msgstr ""
 #: xml/api-index-deprecated.xml:63(primaryie)
 #: xml/api-index-deprecated.xml:64(primaryie)
 #: xml/api-index-deprecated.xml:70(primaryie)
-#: xml/api-index-1.1.6.xml:7(primaryie) xml/api-index-1.1.6.xml:8(primaryie)
-#: xml/api-index-1.1.6.xml:24(primaryie) xml/api-index-1.1.6.xml:32(primaryie)
-#: xml/api-index-1.1.6.xml:33(primaryie) xml/api-index-1.1.4.xml:11(primaryie)
-#: xml/api-index-1.1.4.xml:12(primaryie) xml/api-index-1.1.3.xml:7(primaryie)
-#: xml/api-index-1.1.3.xml:8(primaryie) xml/api-index-1.1.3.xml:9(primaryie)
-#: xml/api-index-1.1.3.xml:12(primaryie) xml/api-index-1.1.3.xml:13(primaryie)
-#: xml/api-index-1.1.3.xml:14(primaryie) xml/api-index-1.1.3.xml:15(primaryie)
-#: xml/api-index-1.1.3.xml:16(primaryie) xml/api-index-1.1.3.xml:17(primaryie)
-#: xml/api-index-1.1.3.xml:28(primaryie) xml/api-index-1.1.2.xml:7(primaryie)
-#: xml/api-index-1.1.1.xml:7(primaryie) xml/api-index-1.1.1.xml:8(primaryie)
-#: xml/api-index-1.1.1.xml:9(primaryie) xml/api-index-1.1.1.xml:13(primaryie)
-#: xml/api-index-1.1.1.xml:20(primaryie) xml/api-index-1.1.0.xml:7(primaryie)
-#: xml/api-index-1.1.0.xml:8(primaryie) xml/api-index-1.1.0.xml:9(primaryie)
-#: xml/api-index-1.1.0.xml:10(primaryie) xml/api-index-1.1.0.xml:11(primaryie)
-#: xml/api-index-1.1.0.xml:12(primaryie) xml/api-index-1.1.0.xml:13(primaryie)
-#: xml/api-index-1.1.0.xml:14(primaryie) xml/api-index-1.1.0.xml:15(primaryie)
-#: xml/api-index-1.1.0.xml:16(primaryie) xml/api-index-1.1.0.xml:17(primaryie)
-#: xml/api-index-1.1.0.xml:18(primaryie) xml/api-index-1.1.0.xml:19(primaryie)
-#: xml/api-index-1.1.0.xml:20(primaryie) xml/api-index-1.1.0.xml:21(primaryie)
-#: xml/api-index-1.1.0.xml:22(primaryie) xml/api-index-1.1.0.xml:23(primaryie)
-#: xml/api-index-1.1.0.xml:24(primaryie) xml/api-index-1.1.0.xml:25(primaryie)
-#: xml/api-index-1.1.0.xml:26(primaryie) xml/api-index-1.1.0.xml:27(primaryie)
-#: xml/api-index-1.1.0.xml:28(primaryie) xml/api-index-1.1.0.xml:29(primaryie)
-#: xml/api-index-1.1.0.xml:30(primaryie) xml/api-index-1.1.0.xml:31(primaryie)
-#: xml/api-index-1.1.0.xml:32(primaryie) xml/api-index-1.1.0.xml:33(primaryie)
-#: xml/api-index-1.1.0.xml:34(primaryie) xml/api-index-1.1.0.xml:35(primaryie)
-#: xml/api-index-1.1.0.xml:36(primaryie) xml/api-index-1.1.0.xml:37(primaryie)
-#: xml/api-index-1.1.0.xml:38(primaryie) xml/api-index-1.1.0.xml:39(primaryie)
-#: xml/api-index-1.1.0.xml:40(primaryie) xml/api-index-1.1.0.xml:41(primaryie)
-#: xml/api-index-1.1.0.xml:42(primaryie) xml/api-index-1.1.0.xml:43(primaryie)
-#: xml/api-index-1.1.0.xml:44(primaryie) xml/api-index-1.1.0.xml:45(primaryie)
-#: xml/api-index-1.1.0.xml:46(primaryie) xml/api-index-1.1.0.xml:47(primaryie)
-#: xml/api-index-1.0.9.xml:7(primaryie) xml/api-index-1.0.9.xml:8(primaryie)
-#: xml/api-index-1.0.9.xml:9(primaryie) xml/api-index-1.0.9.xml:10(primaryie)
-#: xml/api-index-1.0.9.xml:11(primaryie) xml/api-index-1.0.9.xml:12(primaryie)
-#: xml/api-index-1.0.8.xml:10(primaryie) xml/api-index-1.0.7.xml:10(primaryie)
-#: xml/api-index-1.0.7.xml:27(primaryie) xml/api-index-1.0.6.xml:17(primaryie)
-#: xml/api-index-1.0.6.xml:63(primaryie) xml/api-index-1.0.6.xml:71(primaryie)
-#: xml/api-index-1.0.6.xml:98(primaryie) xml/api-index-1.0.5.xml:20(primaryie)
-#: xml/api-index-1.0.5.xml:21(primaryie) xml/api-index-1.0.5.xml:22(primaryie)
-#: xml/api-index-1.0.5.xml:35(primaryie) xml/api-index-1.0.5.xml:36(primaryie)
-#: xml/api-index-1.0.5.xml:57(primaryie) xml/api-index-1.0.5.xml:59(primaryie)
-#: xml/api-index-1.0.5.xml:61(primaryie) xml/api-index-1.0.5.xml:62(primaryie)
-#: xml/api-index-1.0.5.xml:63(primaryie) xml/api-index-1.0.5.xml:64(primaryie)
-#: xml/api-index-1.0.5.xml:65(primaryie) xml/api-index-1.0.5.xml:66(primaryie)
-#: xml/api-index-1.0.5.xml:67(primaryie) xml/api-index-1.0.4.xml:13(primaryie)
-#: xml/api-index-1.0.4.xml:14(primaryie) xml/api-index-1.0.4.xml:15(primaryie)
-#: xml/api-index-1.0.3.xml:16(primaryie) xml/api-index-0.8.xml:10(primaryie)
-#: xml/api-index-0.8.xml:11(primaryie) xml/api-index-0.8.xml:12(primaryie)
-#: xml/api-index-0.8.xml:14(primaryie)
+#: xml/api-index-1.1.4.xml:11(primaryie) xml/api-index-1.1.4.xml:12(primaryie)
+#: xml/api-index-1.1.3.xml:7(primaryie) xml/api-index-1.1.3.xml:8(primaryie)
+#: xml/api-index-1.1.3.xml:9(primaryie) xml/api-index-1.1.3.xml:12(primaryie)
+#: xml/api-index-1.1.3.xml:13(primaryie) xml/api-index-1.1.3.xml:14(primaryie)
+#: xml/api-index-1.1.3.xml:15(primaryie) xml/api-index-1.1.3.xml:16(primaryie)
+#: xml/api-index-1.1.3.xml:17(primaryie) xml/api-index-1.1.3.xml:28(primaryie)
+#: xml/api-index-1.1.2.xml:7(primaryie) xml/api-index-1.1.1.xml:7(primaryie)
+#: xml/api-index-1.1.1.xml:8(primaryie) xml/api-index-1.1.1.xml:9(primaryie)
+#: xml/api-index-1.1.1.xml:13(primaryie) xml/api-index-1.1.1.xml:20(primaryie)
+#: xml/api-index-1.1.0.xml:7(primaryie) xml/api-index-1.1.0.xml:8(primaryie)
+#: xml/api-index-1.1.0.xml:9(primaryie) xml/api-index-1.1.0.xml:10(primaryie)
+#: xml/api-index-1.1.0.xml:11(primaryie) xml/api-index-1.1.0.xml:12(primaryie)
+#: xml/api-index-1.1.0.xml:13(primaryie) xml/api-index-1.1.0.xml:14(primaryie)
+#: xml/api-index-1.1.0.xml:15(primaryie) xml/api-index-1.1.0.xml:16(primaryie)
+#: xml/api-index-1.1.0.xml:17(primaryie) xml/api-index-1.1.0.xml:18(primaryie)
+#: xml/api-index-1.1.0.xml:19(primaryie) xml/api-index-1.1.0.xml:20(primaryie)
+#: xml/api-index-1.1.0.xml:21(primaryie) xml/api-index-1.1.0.xml:22(primaryie)
+#: xml/api-index-1.1.0.xml:23(primaryie) xml/api-index-1.1.0.xml:24(primaryie)
+#: xml/api-index-1.1.0.xml:25(primaryie) xml/api-index-1.1.0.xml:26(primaryie)
+#: xml/api-index-1.1.0.xml:27(primaryie) xml/api-index-1.1.0.xml:28(primaryie)
+#: xml/api-index-1.1.0.xml:29(primaryie) xml/api-index-1.1.0.xml:30(primaryie)
+#: xml/api-index-1.1.0.xml:31(primaryie) xml/api-index-1.1.0.xml:32(primaryie)
+#: xml/api-index-1.1.0.xml:33(primaryie) xml/api-index-1.1.0.xml:34(primaryie)
+#: xml/api-index-1.1.0.xml:35(primaryie) xml/api-index-1.1.0.xml:36(primaryie)
+#: xml/api-index-1.1.0.xml:37(primaryie) xml/api-index-1.1.0.xml:38(primaryie)
+#: xml/api-index-1.1.0.xml:39(primaryie) xml/api-index-1.1.0.xml:40(primaryie)
+#: xml/api-index-1.1.0.xml:41(primaryie) xml/api-index-1.1.0.xml:42(primaryie)
+#: xml/api-index-1.1.0.xml:43(primaryie) xml/api-index-1.1.0.xml:44(primaryie)
+#: xml/api-index-1.1.0.xml:45(primaryie) xml/api-index-1.1.0.xml:46(primaryie)
+#: xml/api-index-1.1.0.xml:47(primaryie) xml/api-index-1.0.9.xml:7(primaryie)
+#: xml/api-index-1.0.9.xml:8(primaryie) xml/api-index-1.0.9.xml:9(primaryie)
+#: xml/api-index-1.0.9.xml:10(primaryie) xml/api-index-1.0.9.xml:11(primaryie)
+#: xml/api-index-1.0.9.xml:12(primaryie) xml/api-index-1.0.8.xml:10(primaryie)
+#: xml/api-index-1.0.7.xml:10(primaryie) xml/api-index-1.0.7.xml:27(primaryie)
+#: xml/api-index-1.0.6.xml:17(primaryie) xml/api-index-1.0.6.xml:63(primaryie)
+#: xml/api-index-1.0.6.xml:71(primaryie) xml/api-index-1.0.6.xml:98(primaryie)
+#: xml/api-index-1.0.5.xml:20(primaryie) xml/api-index-1.0.5.xml:21(primaryie)
+#: xml/api-index-1.0.5.xml:22(primaryie) xml/api-index-1.0.5.xml:35(primaryie)
+#: xml/api-index-1.0.5.xml:36(primaryie) xml/api-index-1.0.5.xml:57(primaryie)
+#: xml/api-index-1.0.5.xml:59(primaryie) xml/api-index-1.0.5.xml:61(primaryie)
+#: xml/api-index-1.0.5.xml:62(primaryie) xml/api-index-1.0.5.xml:63(primaryie)
+#: xml/api-index-1.0.5.xml:64(primaryie) xml/api-index-1.0.5.xml:65(primaryie)
+#: xml/api-index-1.0.5.xml:66(primaryie) xml/api-index-1.0.5.xml:67(primaryie)
+#: xml/api-index-1.0.4.xml:13(primaryie) xml/api-index-1.0.4.xml:14(primaryie)
+#: xml/api-index-1.0.4.xml:15(primaryie) xml/api-index-1.0.3.xml:16(primaryie)
+#: xml/api-index-0.8.xml:10(primaryie) xml/api-index-0.8.xml:11(primaryie)
+#: xml/api-index-0.8.xml:12(primaryie) xml/api-index-0.8.xml:14(primaryie)
 msgid "<placeholder-1/>, macro in <placeholder-2/>"
 msgstr ""
 
@@ -24105,111 +24143,115 @@ msgstr "コマンド"
 msgid "Writing test"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:77(title)
+#: cutter-docs.sgml:76(title)
 msgid "Writing assertion"
 msgstr "検証作成"
 
-#: cutter-docs.sgml:120(title)
+#: cutter-docs.sgml:119(title)
 msgid "Index of all symbols"
 msgstr "すべてのシンボル一覧"
 
-#: cutter-docs.sgml:123(title)
+#: cutter-docs.sgml:122(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:126(title)
+#: cutter-docs.sgml:125(title)
+msgid "Index of new symbols in 1.1.7"
+msgstr "1.1.7での新しいシンボル一覧"
+
+#: cutter-docs.sgml:128(title)
 msgid "Index of new symbols in 1.1.6"
 msgstr "1.1.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:129(title)
+#: cutter-docs.sgml:131(title)
 msgid "Index of new symbols in 1.1.5"
 msgstr "1.1.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:132(title)
+#: cutter-docs.sgml:134(title)
 msgid "Index of new symbols in 1.1.4"
 msgstr "1.1.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:135(title)
+#: cutter-docs.sgml:137(title)
 msgid "Index of new symbols in 1.1.3"
 msgstr "1.1.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:138(title)
+#: cutter-docs.sgml:140(title)
 msgid "Index of new symbols in 1.1.2"
 msgstr "1.1.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:141(title)
+#: cutter-docs.sgml:143(title)
 msgid "Index of new symbols in 1.1.1"
 msgstr "1.1.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:144(title)
+#: cutter-docs.sgml:146(title)
 msgid "Index of new symbols in 1.1.0"
 msgstr "1.1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:147(title)
+#: cutter-docs.sgml:149(title)
 msgid "Index of new symbols in 1.0.9"
 msgstr "1.0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:150(title)
+#: cutter-docs.sgml:152(title)
 msgid "Index of new symbols in 1.0.8"
 msgstr "1.0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:153(title)
+#: cutter-docs.sgml:155(title)
 msgid "Index of new symbols in 1.0.7"
 msgstr "1.0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:156(title)
+#: cutter-docs.sgml:158(title)
 msgid "Index of new symbols in 1.0.6"
 msgstr "1.0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:159(title)
+#: cutter-docs.sgml:161(title)
 msgid "Index of new symbols in 1.0.5"
 msgstr "1.0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:162(title)
+#: cutter-docs.sgml:164(title)
 msgid "Index of new symbols in 1.0.4"
 msgstr "1.0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:165(title)
+#: cutter-docs.sgml:167(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:168(title)
+#: cutter-docs.sgml:170(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:171(title)
+#: cutter-docs.sgml:173(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:174(title)
+#: cutter-docs.sgml:176(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:177(title)
+#: cutter-docs.sgml:179(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:180(title)
+#: cutter-docs.sgml:182(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:183(title)
+#: cutter-docs.sgml:185(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:186(title)
+#: cutter-docs.sgml:188(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:189(title)
+#: cutter-docs.sgml:191(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:192(title)
+#: cutter-docs.sgml:194(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:195(title)
+#: cutter-docs.sgml:197(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 

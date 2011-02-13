@@ -1,5 +1,7 @@
 2011-02-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/ja.po: update.
+
 	* */Makefile.am: don't install needless header files.
 
 	* configure.ac: don't use needless _cv_ variable name.
