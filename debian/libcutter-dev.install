@@ -1,0 +1,6 @@
+/usr/include/cutter/cutter.h
+/usr/include/cutter/cutter/
+/usr/lib/libcutter*.so
+/usr/lib/libcutter*.so.0
+/usr/lib/pkgconfig/libcutter.pc
+/usr/share/aclocal/

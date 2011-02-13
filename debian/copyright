@@ -10,7 +10,7 @@ Upstream Author(s):
 
 Copyright:
 
-    Copyright (C) 2007-2009 Kouhei Sutou
+    Copyright (C) 2007-2011 Kouhei Sutou
 
 License:
 
@@ -27,8 +27,5 @@ License:
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-The Debian packaging is (C) 2009, Kouhei Sutou <kou@clear-code.com> and
+The Debian packaging is (C) 2009-2011, Kouhei Sutou <kou@clear-code.com> and
 is licensed under the GPL, see `/usr/share/common-licenses/GPL'.
-
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.

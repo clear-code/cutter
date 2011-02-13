@@ -1,0 +1,6 @@
+/usr/include/cutter/cppcutter.h
+/usr/include/cutter/cppcutter/
+/usr/lib/pkgconfig/cppcutter.pc
+/usr/lib/libcppcutter*.la
+/usr/lib/libcppcutter*.so
+/usr/lib/libcppcutter*.so.0
