@@ -1,5 +1,7 @@
 2011-02-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* html/index.html*: add growlnotify note.
+
 	* ./: update the latest release date.
 
 	* NEWS*: add 1.1.7 entry.
