@@ -209,14 +209,14 @@ AC_MSG_CHECKING([whether to try to use BFD])
 AC_ARG_ENABLE([bfd],
               AS_HELP_STRING([--enable-bfd],
                              [Enable BFD detection]),
-              [ac_cv_enable_bfd=$enableval],
-              [ac_cv_enable_bfd=no])
-AC_MSG_RESULT([$ac_cv_enable_bfd])
+              [enable_bfd=$enableval],
+              [enable_bfd=no])
+AC_MSG_RESULT([$enable_bfd])
 
 bfd_available=no
 need_environ_declaration=no
 BFD_LIBS=
-if test x"$ac_cv_enable_bfd" = "xyes"; then
+if test x"$enable_bfd" = "xyes"; then
   AC_CHECK_HEADERS([bfd.h], [have_bfd_h=yes], [have_bfd_h=no])
 
   if test "$have_bfd_h" = "yes"; then
@@ -367,12 +367,12 @@ AC_MSG_CHECKING([whether to try to use GOffice])
 AC_ARG_ENABLE([goffice],
               AS_HELP_STRING([--disable-goffice],
                              [Disable GOffice support]),
-              [ac_cv_enable_goffice=$enableval],
-              [ac_cv_enable_goffice=yes])
-AC_MSG_RESULT([$ac_cv_enable_goffice])
+              [enable_goffice=$enableval],
+              [enable_goffice=yes])
+AC_MSG_RESULT([$enable_goffice])
 
 goffice_exists=no
-if test "$ac_cv_enable_goffice" = "yes"; then
+if test "$enable_goffice" = "yes"; then
   PKG_CHECK_MODULES(GOFFICE, libgoffice-0.8,
 		    [goffice_exists=yes], [goffice_exists=no])
   AC_SUBST(GOFFICE_CFLAGS)
@@ -391,12 +391,12 @@ AC_MSG_CHECKING([whether to try to use GStreamer])
 AC_ARG_ENABLE([gstreamer],
               AS_HELP_STRING([--disable-gstreamer],
                              [Disable GStreamer support]),
-              [ac_cv_enable_gstreamer=$enableval],
-              [ac_cv_enable_gstreamer=yes])
-AC_MSG_RESULT([$ac_cv_enable_gstreamer])
+              [enable_gstreamer=$enableval],
+              [enable_gstreamer=yes])
+AC_MSG_RESULT([$enable_gstreamer])
 
 gstreamer_exists=no
-if test "$ac_cv_enable_gstreamer" = "yes"; then
+if test "x$enable_gstreamer" = "xyes"; then
   PKG_CHECK_MODULES(GSTREAMER,
                     gstreamer-0.10 >= 0.10.0 gstreamer-base-0.10 >= 0.10.0,
 		    [gstreamer_exists=yes], [gstreamer_exists=no])
@@ -427,18 +427,19 @@ AC_MSG_CHECKING([whether to try to use libsoup])
 AC_ARG_ENABLE([libsoup],
               AS_HELP_STRING([--disable-libsoup],
                              [Disable libsoup support]),
-              [ac_cv_enable_libsoup=$enableval],
-              [ac_cv_enable_libsoup=yes])
-AC_MSG_RESULT([$ac_cv_enable_libsoup])
+              [enable_libsoup=$enableval],
+              [enable_libsoup=yes])
+AC_MSG_RESULT([$enable_libsoup])
 
 libsoup_exists=no
-if test "$ac_cv_enable_libsoup" = "yes"; then
+if test "x$enable_libsoup" = "xyes"; then
   PKG_CHECK_MODULES(LIBSOUP,
                     libsoup-2.4,
-		    [libsoup_exists=yes], [libsoup_exists=no])
+		    [libsoup_exists=yes],
+                    [libsoup_exists=no])
   AC_SUBST([LIBSOUP_CFLAGS])
   AC_SUBST([LIBSOUP_LIBS])
-  if test x"$libsoup_exists" = "xyes"; then
+  if test "$libsoup_exists" = "yes"; then
     AC_DEFINE(HAVE_LIBSOUP, 1, [Define to 1 if you have libsoup installed])
   fi
 fi

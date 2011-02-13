@@ -1,5 +1,7 @@
 2011-02-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* configure.ac: don't use needless _cv_ variable name.
+
 	* doc/reference/cutter-docs.sgml: add 1.1.7 entry.
 
 	* html/index.html*: add growlnotify note.
