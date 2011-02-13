@@ -1,5 +1,7 @@
 2011-02-13  Kouhei Sutou  <kou@cozmixng.org>
 
+	* debian/control: fix depend package name.
+
 	* misc/release.rb: use README.txt file name instead of
 	${verseion}-release.txt to follow SF.net change.
 

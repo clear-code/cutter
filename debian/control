@@ -113,7 +113,7 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          libcutter0 (= ${binary:Version}),
-         libgtk2.0
+         libgtk2.0-0
 Description: Cutter GdkPixbuf integration (shared library)
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
@@ -126,7 +126,7 @@ Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
          cutter-bin (= ${binary:Version}),
-         libgtk2.0
+         libgtk2.0-0
 Description: Cutter GTK+ test runner
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
