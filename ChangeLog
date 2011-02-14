@@ -1,5 +1,7 @@
 2011-02-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* gcutter/gcut-process.c: use GCutEventLoop.
+
 	* html/, doc/reference/: add favicon.
 
 	* html/: use screenshot in HTML.

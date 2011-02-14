@@ -155,9 +155,9 @@ gcut_process_class_init (GCutProcessClass *klass)
      * It is emitted each time an external process outputs
      * something to its standard output and it is read.
      *
-     * Note that you need to run GLib's main loop by
-     * g_main_loop_run(), g_main_context_iteration() and so
-     * on for detecting an external process's output is
+     * Note that you need to run %GCutEventLoop by
+     * gcut_event_loop_run() or gcut_event_loop_iterate()
+     * for detecting an external process's output is
      * readable.
      *
      * Since: 1.1.5
@@ -188,9 +188,9 @@ gcut_process_class_init (GCutProcessClass *klass)
      * something to its standard error output and it is
      * read.
      *
-     * Note that you need to run GLib's main loop by
-     * g_main_loop_run(), g_main_context_iteration() and so
-     * on for detecting an external process's output is
+     * Note that you need to run %GCutEventLoop by
+     * gcut_event_loop_run() or gcut_event_loop_iterate()
+     * for detecting an external process's output is
      * readable.
      *
      * Since: 1.1.5
@@ -217,9 +217,9 @@ gcut_process_class_init (GCutProcessClass *klass)
      *
      * It is emitted when an external process is exited.
      *
-     * Note that you need to run GLib's main loop by
-     * g_main_loop_run(), g_main_context_iteration() and so
-     * on for detecting an external process is exited.
+     * Note that you need to run %GCutEventLoop by
+     * gcut_event_loop_run() or gcut_event_loop_iterate()
+     * for detecting an external process is exited.
      *
      * Since: 1.1.5
      */
@@ -407,7 +407,7 @@ dispose (GObject *object)
                                             cb_timeout_wait,
                                             &is_timeout);
             while (!is_timeout && priv->process_watch_id > 0 && priv->pid > 0)
-                g_main_context_iteration(NULL, TRUE);
+                gcut_event_loop_iterate(priv->event_loop, TRUE);
             g_source_remove(timeout_wait_id);
         }
     }
@@ -1001,7 +1001,7 @@ gcut_process_wait (GCutProcess *process, guint timeout, GError **error)
                                              cb_timeout_wait,
                                              &is_timeout);
     while (!is_timeout && priv->pid > 0)
-        g_main_context_iteration(NULL, TRUE);
+        gcut_event_loop_iterate(priv->event_loop, TRUE);
     gcut_event_loop_remove(loop, timeout_id);
 
     if (is_timeout) {
