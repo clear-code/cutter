@@ -43,11 +43,16 @@
 	</p>
 
         <h2 id="about">Cutterとは</h2>
+        <div class="eye-catch">
+          <img alt="GNOME上での通知" src="notify-on-gnome.png" />
+          <img alt="Mac OS X上での通知" src="notify-on-mac-os-x.png" />
+        </div>
 	<p>
-          <img class="eye-catch" alt="screenshot" src="notify-on-gnome.png" />
-
-	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語・C++言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。また、テストを苦痛ではなく、楽しいものにすることも重視しています。（スクリーンショット参照。この機能にはnotify-sendコマンド（Linuxや*BSDなどの場合）またはgrowlnotifyコマンド（Mac OS Xの場合）が必要です。）
+	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語・C++言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
 	</p>
+        <p>
+          また、テストを苦痛ではなく、楽しいものにすることも重視しています。スクリーンショットはテスト結果の通知機能を利用している様子です。文字としてテストのパス・失敗を伝えるだけではなく、視覚的にも通知することで、テスト結果をわかりやすくします。わかりやすいので、頻繁にテストを実行したくなります。この機能はnotify-sendコマンド（Linuxや*BSDなどの場合）またはgrowlnotifyコマンド（Mac OS Xの場合）を利用します。
+        </p>
 
         <h2 id="platform">動作環境</h2>
 	<p>

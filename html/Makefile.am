@@ -25,6 +25,7 @@ images =					\
 	us.png					\
 	reference.png				\
 	notify-on-gnome.png			\
+	notify-on-mac-os-x.png			\
 	$(generated_images)
 
 generated_images =				\

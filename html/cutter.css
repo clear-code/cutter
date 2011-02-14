@@ -17,9 +17,14 @@ a:visited
   color: #5c6e00;
 }
 
-img.eye-catch
+div.eye-catch
 {
   float: right;
+}
+
+div.eye-catch img
+{
+  display: block;
 }
 
 div.header
