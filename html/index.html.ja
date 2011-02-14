@@ -7,6 +7,8 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="description" content="C言語用の書きやすくデバッグしやすいxUnit系のテスティングフレームワーク（単体テスト・ユニットテストを自動化するツール）" />
     <link rel="stylesheet" href="cutter.css" type="text/css" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" href="favicon.png" />
     <title>C言語・C++言語用テスティングフレームワーク - Cutter</title>
   </head>
   <body>

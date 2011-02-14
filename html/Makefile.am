@@ -16,7 +16,8 @@ svg_images =					\
 	heading-mark.svg			\
 	install.svg				\
 	readme.svg				\
-	tutorial.svg
+	tutorial.svg				\
+	favicon.svg
 
 images =					\
 	famfamfam-logo.png			\
@@ -38,7 +39,9 @@ generated_images =				\
 	install.png				\
 	mini-install.png			\
 	readme.png				\
-	tutorial.png
+	tutorial.png				\
+	favicon.png				\
+	favicon.ico
 
 MAINTAINER_CLEANFILES = $(generated_images)
 

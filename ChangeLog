@@ -1,5 +1,7 @@
 2011-02-14  Kouhei Sutou  <kou@clear-code.com>
 
+	* html/, doc/reference/: add favicon.
+
 	* html/: use screenshot in HTML.
 
 	* test/gcutter/test-gcut-test-utils.c: add missing <string.h> include.
