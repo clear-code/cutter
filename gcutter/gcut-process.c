@@ -386,6 +386,35 @@ gcut_process_close (GCutProcess *process)
 }
 
 static void
+dispose_process_watch_id (GCutProcess *process)
+{
+    GCutProcessPrivate *priv;
+    GError *error = NULL;
+    gboolean is_timeout = FALSE;
+    guint timeout_wait_id;
+
+    priv = GCUT_PROCESS_GET_PRIVATE(process);
+
+    if (priv->process_watch_id == 0 || priv->pid == 0)
+        return;
+
+    gcut_process_kill(process, SIGTERM, &error);
+    if (priv->forced_termination_wait_time == 0)
+        return;
+
+    timeout_wait_id =
+        gcut_event_loop_add_timeout_full(priv->event_loop,
+                                         G_PRIORITY_LOW,
+                                         priv->forced_termination_wait_time,
+                                         cb_timeout_wait,
+                                         &is_timeout,
+                                         NULL);
+    while (!is_timeout && priv->process_watch_id > 0 && priv->pid > 0)
+        gcut_event_loop_iterate(priv->event_loop, TRUE);
+    g_source_remove(timeout_wait_id);
+}
+
+static void
 dispose (GObject *object)
 {
     GCutProcessPrivate *priv;
@@ -396,21 +425,7 @@ dispose (GObject *object)
         priv->command = NULL;
     }
 
-    if (priv->process_watch_id && priv->pid) {
-        GError *error = NULL;
-        gcut_process_kill(GCUT_PROCESS(object), SIGTERM, &error);
-        if (priv->forced_termination_wait_time > 0) {
-            gboolean is_timeout = FALSE;
-            guint timeout_wait_id;
-
-            timeout_wait_id = g_timeout_add(priv->forced_termination_wait_time,
-                                            cb_timeout_wait,
-                                            &is_timeout);
-            while (!is_timeout && priv->process_watch_id > 0 && priv->pid > 0)
-                gcut_event_loop_iterate(priv->event_loop, TRUE);
-            g_source_remove(timeout_wait_id);
-        }
-    }
+    dispose_process_watch_id(GCUT_PROCESS(object));
 
     remove_child_watch_func(priv);
 
@@ -869,10 +884,13 @@ gcut_process_run (GCutProcess *process, GError **error)
         return FALSE;
 
     loop = gcut_process_get_event_loop(process);
-    priv->process_watch_id = gcut_event_loop_watch_child(loop,
-                                                         priv->pid,
-                                                         child_watch_func,
-                                                         process);
+    priv->process_watch_id =
+        gcut_event_loop_watch_child_full(loop,
+                                         G_PRIORITY_LOW,
+                                         priv->pid,
+                                         child_watch_func,
+                                         process,
+                                         NULL);
 
     if (input_fd > 0)
         priv->input = create_output_channel(input_fd);
@@ -996,10 +1014,12 @@ gcut_process_wait (GCutProcess *process, guint timeout, GError **error)
     }
 
     loop = gcut_process_get_event_loop(process);
-    timeout_id = gcut_event_loop_add_timeout(loop,
-                                             timeout,
-                                             cb_timeout_wait,
-                                             &is_timeout);
+    timeout_id = gcut_event_loop_add_timeout_full(loop,
+                                                  G_PRIORITY_LOW,
+                                                  timeout,
+                                                  cb_timeout_wait,
+                                                  &is_timeout,
+                                                  NULL);
     while (!is_timeout && priv->pid > 0)
         gcut_event_loop_iterate(priv->event_loop, TRUE);
     gcut_event_loop_remove(loop, timeout_id);
