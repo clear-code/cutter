@@ -1,3 +1,7 @@
+2011-02-14  Kouhei Sutou  <kou@clear-code.com>
+
+	* test/gcutter/test-gcut-test-utils.c: add missing <string.h> include.
+
 2011-02-13  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/run-test.sh: use bash instead of sh.

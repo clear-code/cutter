@@ -17,6 +17,8 @@
  *
  */
 
+#include <string.h>
+
 #include <gcutter.h>
 
 #include "../lib/cuttest-utils.h"
