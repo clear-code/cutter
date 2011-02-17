@@ -1,3 +1,7 @@
+2011-02-17  Kouhei Sutou  <kou@clear-code.com>
+
+	* debian/*-dev.install: install *.la.
+
 2011-02-14  Kouhei Sutou  <kou@clear-code.com>
 
 	* gcutter/gcut-process.c: use low priority for process exit watcher.

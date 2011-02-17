@@ -1,4 +1,5 @@
 /usr/include/cutter/soupcutter.h
 /usr/include/cutter/soupcutter/
+/usr/lib/libsoup*.la
 /usr/lib/libsoup*.so
 /usr/lib/pkgconfig/soupcutter.pc
