@@ -1,3 +1,8 @@
+2011-02-18  Kouhei Sutou  <kou@clear-code.com>
+
+	* module/ui/cut-console-ui-factory.c (search_notify_command): add
+	DBUS_SESSION_BUS_ADDRESS environment variable check for notify-send.
+
 2011-02-17  Kouhei Sutou  <kou@clear-code.com>
 
 	* debian/*-dev.install: install *.la.

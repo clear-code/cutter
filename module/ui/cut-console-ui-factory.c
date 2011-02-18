@@ -310,16 +310,16 @@ program_exist (const gchar *program)
 static const gchar *
 search_notify_command (void)
 {
-    const gchar *candidates[] = {
-        "notify-send",
-        "growlnotify",
-        NULL
-    };
-    int i;
+    const gchar *notify_send = "notify-send";
+    const gchar *growlnotify = "growlnotify";
 
-    for (i = 0; candidates[i]; i++) {
-        if (program_exist(candidates[i]))
-            return candidates[i];
+    if (program_exist(notify_send) &&
+        g_getenv("DBUS_SESSION_BUS_ADDRESS")) {
+        return notify_send;
+    }
+
+    if (program_exist(growlnotify)) {
+        return growlnotify;
     }
 
     return NULL;
