@@ -255,7 +255,8 @@ is_ignore_directory (const gchar *dir_name)
 static inline gchar *
 compute_relative_path (GArray *paths)
 {
-    gchar *last_component, *relative_path;
+    gchar *last_component = NULL;
+    gchar *relative_path;
     gboolean is_ignore_library_directory = FALSE;
 
     if (paths->len > 0) {
