@@ -21,6 +21,10 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
+#ifdef HAVE_UNISTD_H
+#  include <unistd.h>
+#endif
+
 #include <glib.h>
 
 #include "cut-file-stream-reader.h"
@@ -223,14 +227,24 @@ runner_run_async (CutRunner *runner)
     file_stream_reader = CUT_FILE_STREAM_READER(runner);
     stream_reader = CUT_STREAM_READER(file_stream_reader);
     priv = CUT_FILE_STREAM_READER_GET_PRIVATE(file_stream_reader);
-    priv->channel = g_io_channel_new_file(priv->file_name, "r", &error);
-    if (error) {
-        emit_error(file_stream_reader, CUT_FILE_STREAM_READER_ERROR_FILE, error,
-                   "can't open file: %s", priv->file_name);
-        return;
+    if (g_utf8_collate(priv->file_name, "-") == 0) {
+#ifdef STDIN_FILENO
+        priv->channel = g_io_channel_unix_new(STDIN_FILENO);
+#else
+        priv->channel = g_io_channel_win32_new(0);
+#endif
+    } else {
+        priv->channel = g_io_channel_new_file(priv->file_name, "r", &error);
+        if (error) {
+            emit_error(file_stream_reader,
+                       CUT_FILE_STREAM_READER_ERROR_FILE,
+                       error,
+                       "can't open file: %s", priv->file_name);
+            return;
+        }
+        g_io_channel_set_close_on_unref(priv->channel, TRUE);
     }
 
-    g_io_channel_set_close_on_unref(priv->channel, TRUE);
     priv->watch_source_id = cut_stream_reader_watch_io_channel(stream_reader,
                                                                priv->channel);
 }

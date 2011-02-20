@@ -1,5 +1,8 @@
 2011-02-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-file-stream-reader.c (runner_run_async): handle '-'
+	as stdin.
+
 	* cutter/cut-main.c, test/cutter/test-cutter.c: log path -> log file.
 
 	* cutter/cut-main.c: fix banner message format.
