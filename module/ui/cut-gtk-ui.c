@@ -1367,10 +1367,12 @@ cb_complete_test_suite (CutRunContext *run_context,
 }
 
 static void
-cb_error (CutRunContext *run_context, const gchar *name, const gchar *detail,
-          CutGtkUI *ui)
+cb_error (CutRunContext *run_context, GError *error, CutGtkUI *ui)
 {
-    g_print("SystemError: %s: %s\n", name, detail);
+    g_print("SystemError: %s:%d: %s\n",
+            g_quark_to_string(error->domain),
+            error->code,
+            error->message);
 }
 
 static void

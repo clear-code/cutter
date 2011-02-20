@@ -1,5 +1,7 @@
 2011-02-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-gtk-ui.c (cb_error): follow error signal API change.
+
 	* module/ui/cut-gtk-ui.c: support stream reader.
 
 	* cutter/cut-main.[ch] (cut_setup_run_context): add.
