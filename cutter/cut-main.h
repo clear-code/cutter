@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -39,7 +39,7 @@ void          cut_set_cutter_command_path (const char *argv0);
 const char   *cut_get_cutter_command_path (void);
 
 CutRunContext *cut_create_run_context(void);
-void           cut_setup_run_context (void);
+void           cut_setup_run_context (CutRunContext *run_context);
 gboolean       cut_start_run_context (CutRunContext *run_context);
 
 G_END_DECLS
