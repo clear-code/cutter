@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -234,7 +234,7 @@ cut_init (int *argc, char ***argv)
     parameter_string =
         g_strdup_printf(N_("TEST_DIRECTORY\n"
                            "  %s --mode=analyze %s LOG_DIRECTORY\n"
-                           "  %s --mode=play %s LOG\n"),
+                           "  %s --mode=play %s LOG_PATH"),
                         program_name, _("[OPTION...]"),
                         program_name, _("[OPTION...]"));
     option_context = g_option_context_new(parameter_string);

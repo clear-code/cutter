@@ -1,5 +1,9 @@
 2011-02-20  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-main.c: fix banner message format.
+
+	* test/cutter/test-cutter.c: follow --mode=play change.
+
 	* cutter/cut-stream-parser.c,
 	test/cutter/test-cut-stream-parser.c,
 	test/lib/cuttest-event-receiver.[ch]: support expected, actual,

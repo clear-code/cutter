@@ -87,6 +87,7 @@ cut_setup (void)
         "Usage:" LINE_FEED_CODE
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=play [OPTION...] LOG_PATH" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
 #if GLIB_CHECK_VERSION(2, 21, 0)
@@ -102,7 +103,7 @@ cut_setup (void)
         "" LINE_FEED_CODE
         "Application Options:" LINE_FEED_CODE
         "  --version                                       Show version" LINE_FEED_CODE
-        "  --mode=[test|analyze]                           Set run mode (default: test)" LINE_FEED_CODE
+        "  --mode=[test|analyze|play]                      Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
@@ -117,7 +118,10 @@ cut_setup (void)
         "  --enable-convenience-attribute-definition       Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
         "  --stop-before-test                              Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
       "" LINE_FEED_CODE;
-    help_message = cut_take_printf(format, g_get_prgname(), g_get_prgname());
+    help_message = cut_take_printf(format,
+                                   g_get_prgname(),
+                                   g_get_prgname(),
+                                   g_get_prgname());
 }
 
 void
@@ -207,6 +211,7 @@ test_help_all (void)
         "Usage:" LINE_FEED_CODE
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=play [OPTION...] LOG_PATH" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
 #if GLIB_CHECK_VERSION(2, 21, 0)
@@ -275,7 +280,7 @@ test_help_all (void)
 #endif
         "Application Options:" LINE_FEED_CODE
         "  --version                                       Show version" LINE_FEED_CODE
-        "  --mode=[test|analyze]                           Set run mode (default: test)" LINE_FEED_CODE
+        "  --mode=[test|analyze|play]                      Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
         "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
@@ -294,7 +299,10 @@ test_help_all (void)
 #endif
         "" LINE_FEED_CODE;
 
-    help_all_message = cut_take_printf(format, g_get_prgname(), g_get_prgname());
+    help_all_message = cut_take_printf(format,
+                                       g_get_prgname(),
+                                       g_get_prgname(),
+                                       g_get_prgname());
 
     cut_assert(run_cutter("--help-all"));
     cut_assert_exit_success();
