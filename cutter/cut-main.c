@@ -63,7 +63,7 @@ static gboolean initialized = FALSE;
 static RunMode mode = MODE_TEST;
 static gchar *test_directory = NULL;
 static gchar *log_directory = NULL;
-static gchar *log_path = NULL;
+static gchar *log_file = NULL;
 static gchar *source_directory = NULL;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
@@ -234,7 +234,7 @@ cut_init (int *argc, char ***argv)
     parameter_string =
         g_strdup_printf(N_("TEST_DIRECTORY\n"
                            "  %s --mode=analyze %s LOG_DIRECTORY\n"
-                           "  %s --mode=play %s LOG_PATH"),
+                           "  %s --mode=play %s LOG_FILE"),
                         program_name, _("[OPTION...]"),
                         program_name, _("[OPTION...]"));
     option_context = g_option_context_new(parameter_string);
@@ -305,7 +305,7 @@ cut_init (int *argc, char ***argv)
         log_directory = (*argv)[1];
         break;
     case MODE_PLAY:
-        log_path = (*argv)[1];
+        log_file = (*argv)[1];
         break;
     }
 
@@ -538,7 +538,7 @@ cut_run_in_play_mode (void)
     CutRunContext *run_context;
     gboolean success;
 
-    run_context = cut_file_stream_reader_new(log_path);
+    run_context = cut_file_stream_reader_new(log_file);
     cut_setup_run_context(run_context);
     success = cut_start_run_context(run_context);
     g_object_unref(run_context);
