@@ -39,6 +39,7 @@ void          cut_set_cutter_command_path (const char *argv0);
 const char   *cut_get_cutter_command_path (void);
 
 CutRunContext *cut_create_run_context(void);
+void           cut_setup_run_context (void);
 gboolean       cut_start_run_context (CutRunContext *run_context);
 
 G_END_DECLS

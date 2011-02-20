@@ -375,13 +375,9 @@ cut_quit (void)
     initialized = FALSE;
 }
 
-CutRunContext *
-cut_create_run_context (void)
+void
+cut_setup_run_context (CutRunContext *run_context)
 {
-    CutRunContext *run_context;
-
-    run_context = cut_test_runner_new();
-
     cut_run_context_set_test_directory(run_context, test_directory);
     cut_run_context_set_log_directory(run_context, log_directory);
     if (source_directory)
@@ -404,7 +400,15 @@ cut_create_run_context (void)
                                                                 enable_convenience_attribute_definition);
     cut_run_context_set_stop_before_test(run_context, stop_before_test);
     cut_run_context_set_command_line_args(run_context, original_argv);
+}
 
+CutRunContext *
+cut_create_run_context (void)
+{
+    CutRunContext *run_context;
+
+    run_context = cut_test_runner_new();
+    cut_setup_run_context(run_context);
     return run_context;
 }
 
@@ -535,6 +539,7 @@ cut_run_in_play_mode (void)
     gboolean success;
 
     run_context = cut_file_stream_reader_new(log_path);
+    cut_setup_run_context(run_context);
     success = cut_start_run_context(run_context);
     g_object_unref(run_context);
 
