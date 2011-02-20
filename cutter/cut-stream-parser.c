@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -90,6 +90,10 @@ typedef enum {
     IN_RESULT_BACKTRACE_ENTRY_INFO,
     IN_RESULT_START_TIME,
     IN_RESULT_ELAPSED,
+    IN_RESULT_EXPECTED,
+    IN_RESULT_ACTUAL,
+    IN_RESULT_DIFF,
+    IN_RESULT_FOLDED_DIFF,
 
     IN_COMPLETE_ITERATED_TEST,
 
@@ -1191,6 +1195,14 @@ start_result (CutStreamParserPrivate *priv, GMarkupParseContext *context,
         PUSH_STATE(priv, IN_RESULT_START_TIME);
     } else if (g_str_equal("elapsed", element_name)) {
         PUSH_STATE(priv, IN_RESULT_ELAPSED);
+    } else if (g_str_equal("expected", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_EXPECTED);
+    } else if (g_str_equal("actual", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_ACTUAL);
+    } else if (g_str_equal("diff", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_DIFF);
+    } else if (g_str_equal("folded-diff", element_name)) {
+        PUSH_STATE(priv, IN_RESULT_FOLDED_DIFF);
     } else {
         invalid_element(priv, context, error);
     }
@@ -2429,6 +2441,35 @@ text_result_elapsed (CutStreamParserPrivate *priv, GMarkupParseContext *context,
 }
 
 static void
+text_result_expected (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                      const gchar *text, gsize text_len, GError **error)
+{
+    cut_test_result_set_expected(priv->result, text);
+}
+
+static void
+text_result_actual (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                    const gchar *text, gsize text_len, GError **error)
+{
+    cut_test_result_set_actual(priv->result, text);
+}
+
+static void
+text_result_diff (CutStreamParserPrivate *priv, GMarkupParseContext *context,
+                  const gchar *text, gsize text_len, GError **error)
+{
+    cut_test_result_set_diff(priv->result, text);
+}
+
+static void
+text_result_folded_diff (CutStreamParserPrivate *priv,
+                         GMarkupParseContext *context,
+                         const gchar *text, gsize text_len, GError **error)
+{
+    cut_test_result_set_folded_diff(priv->result, text);
+}
+
+static void
 text_ready_test_suite_n_test_cases (CutStreamParserPrivate *priv,
                                     GMarkupParseContext *context,
                                     const gchar *text, gsize text_len,
@@ -2582,6 +2623,18 @@ text_handler (GMarkupParseContext *context,
         break;
       case IN_RESULT_ELAPSED:
         text_result_elapsed(priv, context, text, text_len, error);
+        break;
+      case IN_RESULT_EXPECTED:
+        text_result_expected(priv, context, text, text_len, error);
+        break;
+      case IN_RESULT_ACTUAL:
+        text_result_actual(priv, context, text, text_len, error);
+        break;
+      case IN_RESULT_DIFF:
+        text_result_diff(priv, context, text, text_len, error);
+        break;
+      case IN_RESULT_FOLDED_DIFF:
+        text_result_folded_diff(priv, context, text, text_len, error);
         break;
       case IN_READY_TEST_SUITE_N_TEST_CASES:
         text_ready_test_suite_n_test_cases(priv, context, text, text_len, error);

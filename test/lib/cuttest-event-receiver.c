@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -174,6 +174,38 @@ pass_assertion_info_free (CuttestPassAssertionInfo *info)
     g_slice_free(CuttestPassAssertionInfo, info);
 }
 
+static CuttestFailureTestInfo *
+failure_test_info_new (CutTest *test, CutTestContext *test_context,
+                       CutTestResult *test_result)
+{
+    CuttestFailureTestInfo *info;
+
+    info = g_slice_new(CuttestFailureTestInfo);
+    info->test = test;
+    if (info->test)
+        g_object_ref(info->test);
+    info->test_context = test_context;
+    if (info->test_context)
+        g_object_ref(info->test_context);
+    info->test_result = test_result;
+    if (info->test_result)
+        g_object_ref(info->test_result);
+
+    return info;
+}
+
+static void
+failure_test_info_free (CuttestFailureTestInfo *info)
+{
+    if (info->test)
+        g_object_unref(info->test);
+    if (info->test_context)
+        g_object_unref(info->test_context);
+    if (info->test_result)
+        g_object_unref(info->test_result);
+    g_slice_free(CuttestFailureTestInfo, info);
+}
+
 static CuttestCompleteIteratedTestInfo *
 complete_iterated_test_info_new (CutIteratedTest *iterated_test,
                                  CutTestContext *test_context,
@@ -297,6 +329,13 @@ dispose (GObject *object)
                        (GFunc)pass_assertion_info_free, NULL);
         g_list_free(receiver->pass_assertions);
         receiver->pass_assertions = NULL;
+    }
+
+    if (receiver->failure_tests) {
+        g_list_foreach(receiver->failure_tests,
+                       (GFunc)failure_test_info_free, NULL);
+        g_list_free(receiver->failure_tests);
+        receiver->failure_tests = NULL;
     }
 
     if (receiver->complete_iterated_tests) {
@@ -456,6 +495,19 @@ pass_assertion (CutRunContext *context, CutTest *test,
 }
 
 static void
+failure_test (CutRunContext *context, CutTest *test,
+              CutTestContext *test_context,
+              CutTestResult *test_result)
+{
+    CuttestEventReceiver *receiver;
+    CuttestFailureTestInfo *info;
+
+    receiver = CUTTEST_EVENT_RECEIVER(context);
+    info = failure_test_info_new(test, test_context, test_result);
+    receiver->failure_tests = g_list_append(receiver->failure_tests, info);
+}
+
+static void
 complete_iterated_test (CutRunContext *context, CutIteratedTest *iterated_test,
                         CutTestContext *test_context, gboolean success)
 {
@@ -547,6 +599,7 @@ cuttest_event_receiver_class_init (CuttestEventReceiverClass *klass)
     run_context_class->start_test = start_test;
     run_context_class->start_iterated_test = start_iterated_test;
     run_context_class->pass_assertion = pass_assertion;
+    run_context_class->failure_test = failure_test;
     run_context_class->complete_iterated_test = complete_iterated_test;
     run_context_class->complete_test = complete_test;
     run_context_class->complete_test_iterator = complete_test_iterator;

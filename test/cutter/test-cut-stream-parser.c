@@ -1,3 +1,22 @@
+/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 #include <gcutter.h>
 #include <cutter/cut-stream-parser.h>
 #include <cutter/cut-backtrace-entry.h>
@@ -19,6 +38,7 @@ void test_result_test_iterator (void);
 void test_result_test_case (void);
 void test_pass_assertion_test (void);
 void test_pass_assertion_iterated_test (void);
+void test_fail_assertion_test (void);
 void test_complete_iterated_test (void);
 void test_complete_test (void);
 void test_complete_test_iterator (void);
@@ -1165,6 +1185,250 @@ test_pass_assertion_iterated_test (void)
     cut_assert_equal_string("failure", cut_test_data_get_name(test_data));
 
     cut_assert_false(cut_test_context_is_failed(test_context));
+}
+
+void
+test_fail_assertion_test (void)
+{
+    CuttestFailureTestInfo *info;
+    CutTestResult *test_result;
+    const gchar xml[] =
+        "<stream>\n"
+        "  <ready-test-suite>\n"
+        "    <test-suite>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-suite>\n"
+        "    <n-test-cases>1</n-test-cases>\n"
+        "    <n-tests>1</n-tests>\n"
+        "  </ready-test-suite>\n"
+        "  <start-test-suite>\n"
+        "    <test-suite>\n"
+        "      <start-time>2011-02-20T04:31:27.561329Z</start-time>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-suite>\n"
+        "  </start-test-suite>\n"
+        "  <ready-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test-cut-assertions</name>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-case>\n"
+        "    <n-tests>1</n-tests>\n"
+        "  </ready-test-case>\n"
+        "  <start-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test-cut-assertions</name>\n"
+        "      <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test-case>\n"
+        "  </start-test-case>\n"
+        "  <start-test>\n"
+        "    <test>\n"
+        "      <name>test_equal_string</name>\n"
+        "      <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "      <elapsed>0.000000</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "        <start-time>2011-02-20T04:31:27.561329Z</start-time>\n"
+        "        <elapsed>0.000000</elapsed>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>test-cut-assertions</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "        <elapsed>0.000000</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_equal_string</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "        <elapsed>0.000000</elapsed>\n"
+        "      </test>\n"
+        "      <failed>false</failed>\n"
+        "    </test-context>\n"
+        "  </start-test>\n"
+        "  <test-result>\n"
+        "    <test>\n"
+        "      <name>test_equal_string</name>\n"
+        "      <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "      <elapsed>0.000148</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "        <start-time>2011-02-20T04:31:27.561329Z</start-time>\n"
+        "        <elapsed>0.000184</elapsed>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>test-cut-assertions</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "        <elapsed>0.000221</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_equal_string</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "        <elapsed>0.000231</elapsed>\n"
+        "      </test>\n"
+        "      <failed>true</failed>\n"
+        "    </test-context>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>test-cut-assertions</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "        <elapsed>0.000250</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_equal_string</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "        <elapsed>0.000261</elapsed>\n"
+        "      </test>\n"
+        "      <status>failure</status>\n"
+        "      <detail>&lt;&quot;expected\n&quot; &quot;loooooooooooooooooooooooooooooooooooooooo&quot; &quot;ooooooooooooooooooooooooooooooooooooooong&quot; &quot;xxxxxxxxline&quot; == &quot;actual\n&quot; &quot;loooooooooooooooooooooooooooooooooooooooo&quot; &quot;ooooooooooooooooooooooooooooooooooooooong&quot; &quot;ooooooooline&quot;&gt;\n"
+        "expected: &lt;&quot;expected\n"
+        "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongxxxxxxxxline&quot;&gt;\n"
+        "  actual: &lt;&quot;actual\n"
+        "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongooooooooline&quot;&gt;\n"
+        "\n"
+        "diff:\n"
+        "- &quot;expected\n"
+        "+ &quot;actual\n"
+        "- looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongxxxxxxxxline&quot;\n"
+        "?                                                                                   ^^^^^^^^\n"
+        "+ looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongooooooooline&quot;\n"
+        "?                                                                                   ^^^^^^^^\n"
+        "\n"
+        "folded diff:\n"
+        "- &quot;expected\n"
+        "+ &quot;actual\n"
+        "  looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo\n"
+        "- oongxxxxxxxxline&quot;\n"
+        "+ oongooooooooline&quot;</detail>\n"
+        "      <backtrace>\n"
+        "        <entry>\n"
+        "          <file>test/cutter/test-cut-assertions.c</file>\n"
+        "          <line>1351</line>\n"
+        "          <info>test_equal_string(): cut_assert_equal_string(&quot;expected\n&quot; &quot;loooooooooooooooooooooooooooooooooooooooo&quot; &quot;ooooooooooooooooooooooooooooooooooooooong&quot; &quot;xxxxxxxxline&quot;, &quot;actual\n&quot; &quot;loooooooooooooooooooooooooooooooooooooooo&quot; &quot;ooooooooooooooooooooooooooooooooooooooong&quot; &quot;ooooooooline&quot;, )</info>\n"
+        "        </entry>\n"
+        "      </backtrace>\n"
+        "      <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "      <elapsed>0.000103</elapsed>\n"
+        "      <expected>&quot;expected\n"
+        "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongxxxxxxxxline&quot;</expected>\n"
+        "      <actual>&quot;actual\n"
+        "looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongooooooooline&quot;</actual>\n"
+        "      <diff>- &quot;expected\n"
+        "+ &quot;actual\n"
+        "- looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongxxxxxxxxline&quot;\n"
+        "?                                                                                   ^^^^^^^^\n"
+        "+ looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooongooooooooline&quot;\n"
+        "?                                                                                   ^^^^^^^^</diff>\n"
+        "      <folded-diff>- &quot;expected\n"
+        "+ &quot;actual\n"
+        "  looooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo\n"
+        "- oongxxxxxxxxline&quot;\n"
+        "+ oongooooooooline&quot;</folded-diff>\n"
+        "    </result>\n"
+        "  </test-result>\n"
+        "  <complete-test>\n"
+        "    <test>\n"
+        "      <name>test_equal_string</name>\n"
+        "      <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "      <elapsed>0.002108</elapsed>\n"
+        "    </test>\n"
+        "    <test-context>\n"
+        "      <test-suite>\n"
+        "        <start-time>2011-02-20T04:31:27.561329Z</start-time>\n"
+        "        <elapsed>0.002108</elapsed>\n"
+        "      </test-suite>\n"
+        "      <test-case>\n"
+        "        <name>test-cut-assertions</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "        <elapsed>0.002108</elapsed>\n"
+        "      </test-case>\n"
+        "      <test>\n"
+        "        <name>test_equal_string</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561628Z</start-time>\n"
+        "        <elapsed>0.002108</elapsed>\n"
+        "      </test>\n"
+        "      <failed>true</failed>\n"
+        "    </test-context>\n"
+        "    <success>false</success>\n"
+        "  </complete-test>\n"
+        "  <test-case-result>\n"
+        "    <test-case>\n"
+        "      <name>test-cut-assertions</name>\n"
+        "      <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "      <elapsed>0.002108</elapsed>\n"
+        "    </test-case>\n"
+        "    <result>\n"
+        "      <test-case>\n"
+        "        <name>test-cut-assertions</name>\n"
+        "        <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "        <elapsed>0.002108</elapsed>\n"
+        "      </test-case>\n"
+        "      <status>failure</status>\n"
+        "      <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "      <elapsed>0.002108</elapsed>\n"
+        "    </result>\n"
+        "  </test-case-result>\n"
+        "  <complete-test-case>\n"
+        "    <test-case>\n"
+        "      <name>test-cut-assertions</name>\n"
+        "      <start-time>2011-02-20T04:31:27.561548Z</start-time>\n"
+        "      <elapsed>0.002108</elapsed>\n"
+        "    </test-case>\n"
+        "    <success>false</success>\n"
+        "  </complete-test-case>\n"
+        "  <complete-test-suite>\n"
+        "    <test-suite>\n"
+        "      <start-time>2011-02-20T04:31:27.561329Z</start-time>\n"
+        "      <elapsed>0.002108</elapsed>\n"
+        "    </test-suite>\n"
+        "    <success>false</success>\n"
+        "  </complete-test-suite>\n"
+        "  <success>false</success>\n"
+        "</stream>\n";
+
+    cut_assert_null(receiver->failure_tests);
+    cut_assert_parse(xml);
+    cut_assert_not_null(receiver->failure_tests);
+
+    cut_assert_equal_uint(1, g_list_length(receiver->failure_tests));
+    info = receiver->failure_tests->data;
+
+    test_result = info->test_result;
+    cut_assert_not_null(test_result);
+    cut_assert_equal_string("\"expected\n"
+                            "loooooooooooooooooooooooooooooooooooooooo"
+                            "ooooooooooooooooooooooooooooooooooooooong"
+                            "xxxxxxxxline\"",
+                            cut_test_result_get_expected(test_result));
+    cut_assert_equal_string("\"actual\n"
+                            "loooooooooooooooooooooooooooooooooooooooo"
+                            "ooooooooooooooooooooooooooooooooooooooong"
+                            "ooooooooline\"",
+                            cut_test_result_get_actual(test_result));
+    cut_assert_equal_string("- \"expected\n"
+                            "+ \"actual\n"
+                            "- looooooooooooooooooooooooooooooooooooooo"
+                            "oooooooooooooooooooooooooooooooooooooooong"
+                            "xxxxxxxxline\"\n"
+                            "?                                         "
+                            "                                          "
+                            "^^^^^^^^\n"
+                            "+ looooooooooooooooooooooooooooooooooooooo"
+                            "oooooooooooooooooooooooooooooooooooooooong"
+                            "ooooooooline\"\n"
+                            "?                                         "
+                            "                                          "
+                            "^^^^^^^^",
+                            cut_test_result_get_diff(test_result));
+    cut_assert_equal_string("- \"expected\n"
+                            "+ \"actual\n"
+                            "  looooooooooooooooooooooooooooooooooooooo"
+                            "oooooooooooooooooooooooooooooooooooooo\n"
+                            "- oongxxxxxxxxline\"\n"
+                            "+ oongooooooooline\"",
+                            cut_test_result_get_folded_diff(test_result));
 }
 
 void

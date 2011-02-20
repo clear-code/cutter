@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -49,6 +49,7 @@ struct _CuttestEventReceiver
     GList *start_tests;
     GList *start_iterated_tests;
     GList *pass_assertions;
+    GList *failure_tests;
     GList *complete_iterated_tests;
     GList *complete_tests;
     GList *complete_test_iterators;
@@ -98,6 +99,13 @@ typedef struct _CuttestPassAssertionInfo
     CutTest *test;
     CutTestContext *test_context;
 } CuttestPassAssertionInfo;
+
+typedef struct _CuttestFailureTestInfo
+{
+    CutTest        *test;
+    CutTestContext *test_context;
+    CutTestResult  *test_result;
+} CuttestFailureTestInfo;
 
 typedef struct _CuttestCompleteIteratedTestInfo
 {
