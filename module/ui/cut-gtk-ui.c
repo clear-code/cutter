@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -1427,7 +1427,12 @@ run (CutUI *ui, CutRunContext *run_context)
     CutGtkUI *gtk_ui = CUT_GTK_UI(ui);
     CutRunContext *pipeline;
 
-    pipeline = cut_pipeline_new_from_run_context(run_context);
+    if (CUT_IS_STREAM_READER(run_context)) {
+        pipeline = run_context;
+        g_object_ref(pipeline);
+    } else {
+        pipeline = cut_pipeline_new_from_run_context(run_context);
+    }
 
     gtk_ui->run_context = pipeline;
     gtk_widget_show_all(gtk_ui->window);
