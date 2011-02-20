@@ -38,6 +38,7 @@ char **environ = NULL;
 
 #include "cut-listener.h"
 #include "cut-analyzer.h"
+#include "cut-file-stream-reader.h"
 #include "cut-test-runner.h"
 #include "cut-test-suite.h"
 #include "cut-ui.h"
@@ -53,7 +54,8 @@ char **environ = NULL;
 
 typedef enum {
     MODE_TEST,
-    MODE_ANALYZE
+    MODE_ANALYZE,
+    MODE_PLAY
 } RunMode;
 
 static gboolean environment_initialized = FALSE;
@@ -61,6 +63,7 @@ static gboolean initialized = FALSE;
 static RunMode mode = MODE_TEST;
 static gchar *test_directory = NULL;
 static gchar *log_directory = NULL;
+static gchar *log_path = NULL;
 static gchar *source_directory = NULL;
 static gchar **test_case_names = NULL;
 static gchar **test_names = NULL;
@@ -96,6 +99,8 @@ parse_mode (const gchar *option_name, const gchar *value,
         mode = MODE_TEST;
     } else if (g_utf8_collate(value, "analyze") == 0) {
         mode = MODE_ANALYZE;
+    } else if (g_utf8_collate(value, "play") == 0) {
+        mode = MODE_PLAY;
     } else {
         g_set_error(error,
                     G_OPTION_ERROR,
@@ -133,7 +138,7 @@ static const GOptionEntry option_entries[] =
     {"version", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, print_version,
      N_("Show version"), NULL},
     {"mode", 0, 0, G_OPTION_ARG_CALLBACK, parse_mode,
-     N_("Set run mode (default: test)"), "[test|analyze]"},
+     N_("Set run mode (default: test)"), "[test|analyze|play]"},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,
      N_("Set directory of source code"), "DIRECTORY"},
     {"name", 'n', 0, G_OPTION_ARG_STRING_ARRAY, &test_names,
@@ -228,7 +233,9 @@ cut_init (int *argc, char ***argv)
     program_name = g_path_get_basename((*argv)[0]);
     parameter_string =
         g_strdup_printf(N_("TEST_DIRECTORY\n"
-                           "  %s --mode=analyze %s LOG_DIRECTORY"),
+                           "  %s --mode=analyze %s LOG_DIRECTORY\n"
+                           "  %s --mode=play %s LOG\n"),
+                        program_name, _("[OPTION...]"),
                         program_name, _("[OPTION...]"));
     option_context = g_option_context_new(parameter_string);
     g_free(program_name);
@@ -290,10 +297,17 @@ cut_init (int *argc, char ***argv)
         exit(EXIT_FAILURE);
     }
 
-    if (mode == MODE_ANALYZE)
-        log_directory = (*argv)[1];
-    else
+    switch (mode) {
+    case MODE_TEST:
         test_directory = (*argv)[1];
+        break;
+    case MODE_ANALYZE:
+        log_directory = (*argv)[1];
+        break;
+    case MODE_PLAY:
+        log_path = (*argv)[1];
+        break;
+    }
 
 #ifdef HAVE_LIBBFD
     bfd_init();
@@ -462,10 +476,15 @@ cut_start_run_context (CutRunContext *run_context)
     listeners = create_listeners();
     add_listeners(run_context, listeners);
 
-    if (mode == MODE_ANALYZE)
-        ui = NULL;
-    else
+    switch (mode) {
+    case MODE_TEST:
+    case MODE_PLAY:
         ui = get_cut_ui(listeners);
+        break;
+    case MODE_ANALYZE:
+        ui = NULL;
+        break;
+    }
 
     if (ui)
         success = cut_ui_run(ui, run_context);
@@ -478,26 +497,65 @@ cut_start_run_context (CutRunContext *run_context)
     return success;
 }
 
+static gboolean
+cut_run_in_test_mode (void)
+{
+    CutRunContext *run_context;
+    gboolean success;
+
+    run_context = cut_create_run_context();
+    success = cut_start_run_context(run_context);
+    g_object_unref(run_context);
+
+    return success;
+}
+
+static gboolean
+cut_run_in_analyze_mode (void)
+{
+    CutAnalyzer *analyzer;
+    GError *error = NULL;
+    gboolean success;
+
+    analyzer = cut_analyzer_new();
+    success = cut_analyzer_analyze(analyzer, log_directory, &error);
+    if (error) {
+        cut_utils_report_error(error);
+    }
+    g_object_unref(analyzer);
+
+    return success;
+}
+
+
+static gboolean
+cut_run_in_play_mode (void)
+{
+    CutRunContext *run_context;
+    gboolean success;
+
+    run_context = cut_file_stream_reader_new(log_path);
+    success = cut_start_run_context(run_context);
+    g_object_unref(run_context);
+
+    return success;
+}
+
 gboolean
 cut_run (void)
 {
-    CutRunContext *run_context;
-    CutAnalyzer *analyzer;
     gboolean success = TRUE;
 
-    if (mode == MODE_ANALYZE) {
-        GError *error = NULL;
-
-        analyzer = cut_analyzer_new();
-        success = cut_analyzer_analyze(analyzer, log_directory, &error);
-        if (error) {
-            cut_utils_report_error(error);
-        }
-        g_object_unref(analyzer);
-    } else {
-        run_context = cut_create_run_context();
-        success = cut_start_run_context(run_context);
-        g_object_unref(run_context);
+    switch (mode) {
+    case MODE_TEST:
+        success = cut_run_in_test_mode();
+        break;
+    case MODE_ANALYZE:
+        success = cut_run_in_analyze_mode();
+        break;
+    case MODE_PLAY:
+        success = cut_run_in_play_mode();
+        break;
     }
 
     return success;
