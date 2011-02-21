@@ -1,3 +1,4 @@
+* FIXME: cut-stream-reader's reader should stop on EOF.
 * random value generator.
 * cut_generate_uuid.
 * rename cut_process_* to cut_child_cutter_*.
