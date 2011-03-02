@@ -836,6 +836,24 @@ gconstpointer data, const gchar *field_name
 gconstpointer data, const gchar *field_name
 </FUNCTION>
 
+<FUNCTION>
+<NAME>gcut_data_get_object</NAME>
+<RETURNS>GObject *</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_boolean</NAME>
+<RETURNS>gboolean</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
+<FUNCTION>
+<NAME>gcut_data_get_double</NAME>
+<RETURNS>gdouble</RETURNS>
+gconstpointer data, const gchar *field_name
+</FUNCTION>
+
 # gdkcut-pixbuf-assertions.h
 
 <FUNCTION>
