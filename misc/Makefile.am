@@ -1,4 +1,5 @@
 dist_noinst_SCRIPTS =				\
+	rd-visitor-util.rb			\
 	rd2refentry-lib.rb			\
 	expand-rd2-snippet.rb			\
 	rd2man-lib.rb				\
