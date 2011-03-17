@@ -1,3 +1,7 @@
+2011-03-17  Kouhei Sutou  <kou@clear-code.com>
+
+	* cutter/cut-diff.c: don't require --label option.
+
 2011-03-07  Kouhei Sutou  <kou@cozmixng.org>
 
 	* misc/Makefile.am (dist_noinst_SCRIPTS): add missing

@@ -110,7 +110,7 @@ print_diff (const gchar *from, const gchar *to)
         return FALSE;
     }
 
-    if (labels[0]) {
+    if (labels) {
         from_label = labels[0];
         if (labels[1]) {
             to_label = labels[1];
