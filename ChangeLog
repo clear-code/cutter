@@ -1,3 +1,7 @@
+2011-04-27  Kenji Okimoto  <okimoto@clear-code.com>
+
+	* doc/install-to-solaris.rd.ja: update document for Solaris10.
+
 2011-03-17  Kouhei Sutou  <kou@clear-code.com>
 
 	* cutter/cut-diff.c: don't require --label option.
