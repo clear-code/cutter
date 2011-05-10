@@ -22,7 +22,7 @@ GLibをビルドするためにはGNU gettext、GNU libiconvが必要ですが�
 ルする必要があります。
 
 以下のシェルスクリプトを実行してビルド・インストールしてください。なお、
-以下のシェルスクリプトでは sudo を使用しているので事前に設定しておいて
+以下のシェルスクリプトでは pfexec を使用しているので事前に設定しておいて
 ください。
 
 このスクリプトではこれらのソフトウェアをインストールします。
@@ -67,7 +67,7 @@ install-cutter.sh:
   export LD_LIBRARY_PATH=$PREFIX/lib:$LD_LIBRARY_PATH
   export PKG_CONFIG_PATH=$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH
   export ACLOCAL_OPTIONS="-I $PREFIX/share/aclocal/"
-  sudo pkg-get -i autoconf automake libtool intltool pkgconfig
+  pfexec pkg-get -i autoconf automake libtool intltool pkgconfig
   mkdir -p ~/src
   cd ~/src
   wget -N http://ftp.gnu.org/pub/gnu/gettext/gettext-0.18.1.1.tar.gz
@@ -75,18 +75,18 @@ install-cutter.sh:
   cd gettext-0.18.1.1
   ./configure --prefix=$PREFIX --enable-shared --enable-relocatable --without-git
   gmake
-  sudo gmake install
+  pfexec gmake install
   cd ~/src
   wget -N http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.13.1.tar.gz
   gtar xf libiconv-1.13.1.tar.gz
   cd libiconv-1.13.1
   ./configure --prefix=$PREFIX --enable-shared
   gmake
-  sudo gmake install
+  pfexec gmake install
   cd ~/src/gettext-0.18.1.1
   ./configure --prefix=$PREFIX --enable-shared --enable-relocatable --without-git
   gmake
-  sudo gmake install
+  pfexec gmake install
   cd ~/src
   wget -N http://ftp.gnome.org/pub/gnome/sources/glib/2.28/glib-2.28.6.tar.bz2
   gtar xf glib-2.28.6.tar.bz2
@@ -95,7 +95,7 @@ install-cutter.sh:
   LDFLAGS="-lsocket -lnsl $LDFLAGS" \
   ./configure --prefix=$PREFIX --with-libiconv=gnu --enable-shared
   gmake
-  sudo gmake install
+  pfexec gmake install
   cd ~/src
   wget -N http://downloads.sourceforge.net/cutter/cutter-1.1.7.tar.gz
   gtar xf cutter-1.1.7.tar.gz

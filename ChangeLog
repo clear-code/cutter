@@ -1,3 +1,7 @@
+2011-05-10  Kenji Okimoto  <okimoto@clear-code.com>
+
+	* doc/install-to-solaris.rd.ja: use pfexec instead of sudo.
+
 2011-05-06  Kouhei Sutou  <kou@clear-code.com>
 
 	* configure.ac: add AC_LANG_PROGRAM for Autoconf 2.68.
