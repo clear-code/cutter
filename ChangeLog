@@ -1,5 +1,7 @@
 2011-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/report/cut-pdf-report.c: suppress warnings.
+
 	* module/ui/cut-console-ui.c: suppress warnings.
 
 	* cutter/cut-test-case.c : suppress warnings.

@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
- *  Copyright (C) 2009-2010  Kouhei Sutou  <kou@clear-code.com>
+ *  Copyright (C) 2009-2011  Kouhei Sutou  <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -416,7 +416,7 @@ show_summary (CutPDFReport *report, CutRunContext *run_context)
     const GList *node;
     CutTestCase *test_case = NULL;
     cairo_t *cr;
-    gdouble x, y, after_x, after_y, width, height;
+    gdouble x, y, after_x, after_y;
     guint n_tests, n_successes, n_failures, n_errors, n_pendings, n_omissions;
     CutTestResultStatus test_case_status;
 
@@ -474,8 +474,6 @@ show_summary (CutPDFReport *report, CutRunContext *run_context)
                        n_errors, n_pendings, n_omissions);
 
     cairo_get_current_point(cr, &after_x, &after_y);
-    width = A4_WIDTH - x * 2;
-    height = after_y - y;
 }
 
 #ifdef HAVE_GOFFICE
