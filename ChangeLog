@@ -1,5 +1,7 @@
 2011-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/stream/cut-xml-stream.c: suppress warnings.
+
 	* cutter/cut-stream-factory-builder.c: suppress warnings.
 
 	* gdkcutter-pixbuf/gdkcut-pixbuf.c: suppress warnings.
