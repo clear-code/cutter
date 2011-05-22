@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -584,7 +584,6 @@ static gboolean
 cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
                          const GList *tests)
 {
-    CutTestCasePrivate *priv;
     CutTestContext *test_context;
     gboolean all_success = TRUE;
     CutTestResult *result;
@@ -596,8 +595,6 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
 
     g_signal_emit_by_name(test_case, "ready", g_list_length((GList *)tests));
     g_signal_emit_by_name(CUT_TEST(test_case), "start", NULL);
-
-    priv = CUT_TEST_CASE_GET_PRIVATE(test_case);
 
     test_suite = cut_run_context_get_test_suite(run_context);
     test_context = cut_test_context_new(run_context,
