@@ -1,5 +1,7 @@
 2011-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-stream-parser.c: suppress warnings.
+
 	* cutter/cut-process.c: suppress warnings.
 
 	* cutter/cut-pipeline.c: suppress warnings.

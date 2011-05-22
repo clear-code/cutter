@@ -870,22 +870,6 @@ invalid_element (CutStreamParserPrivate *priv,
     set_parse_error(priv, context, error, "invalid element");
 }
 
-static const gchar *
-get_parent_element (CutStreamParserPrivate *priv,
-                    GMarkupParseContext *context)
-{
-    GList *tail;
-
-    tail = priv->element_stack->tail;
-    if (!tail)
-        return NULL;
-
-    if (!g_list_previous(tail))
-        return NULL;
-
-    return g_list_previous(tail)->data;
-}
-
 static void
 start_top_level (CutStreamParserPrivate *priv, GMarkupParseContext *context,
                  const gchar *element_name, GError **error)
@@ -2067,87 +2051,85 @@ end_element_handler (GMarkupParseContext *context,
 {
     CutStreamParser *parser = user_data;
     CutStreamParserPrivate *priv;
-    const gchar *parent_name;
     ParseState state;
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
 
-    parent_name = get_parent_element(priv, context);
     state = POP_STATE(priv);
     switch (state) {
-      case IN_TOP_LEVEL_RESULT:
+    case IN_TOP_LEVEL_RESULT:
         end_top_level_result(parser, priv, context, element_name, error);
         break;
-      case IN_STREAM:
+    case IN_STREAM:
         end_stream(parser, priv, context, element_name, error);
         break;
-      case IN_RESULT:
+    case IN_RESULT:
         end_result(parser, priv, context, element_name, error);
         break;
-      case IN_TEST_CONTEXT:
+    case IN_TEST_CONTEXT:
         end_test_context(parser, priv, context, element_name, error);
         break;
-      case IN_TEST_OPTION:
+    case IN_TEST_OPTION:
         end_test_option(parser, priv, context, element_name, error);
         break;
-      case IN_RESULT_BACKTRACE:
+    case IN_RESULT_BACKTRACE:
         end_result_backtrace(parser, priv, context, element_name, error);
         break;
-      case IN_RESULT_BACKTRACE_ENTRY:
+    case IN_RESULT_BACKTRACE_ENTRY:
         end_result_backtrace_entry(parser, priv, context, element_name, error);
         break;
-      case IN_READY_TEST_SUITE:
+    case IN_READY_TEST_SUITE:
         end_ready_test_suite(parser, priv, context, element_name, error);
         break;
-      case IN_START_TEST_SUITE:
+    case IN_START_TEST_SUITE:
         end_start_test_suite(parser, priv, context, element_name, error);
         break;
-      case IN_READY_TEST_CASE:
+    case IN_READY_TEST_CASE:
         end_ready_test_case(parser, priv, context, element_name, error);
         break;
-      case IN_START_TEST_CASE:
+    case IN_START_TEST_CASE:
         end_start_test_case(parser, priv, context, element_name, error);
         break;
-      case IN_READY_TEST_ITERATOR:
+    case IN_READY_TEST_ITERATOR:
         end_ready_test_iterator(parser, priv, context, element_name, error);
         break;
-      case IN_START_TEST_ITERATOR:
+    case IN_START_TEST_ITERATOR:
         end_start_test_iterator(parser, priv, context, element_name, error);
         break;
-      case IN_START_TEST:
+    case IN_START_TEST:
         end_start_test(parser, priv, context, element_name, error);
         break;
-      case IN_START_ITERATED_TEST:
+    case IN_START_ITERATED_TEST:
         end_start_iterated_test(parser, priv, context, element_name, error);
         break;
-      case IN_PASS_ASSERTION:
+    case IN_PASS_ASSERTION:
         end_pass_assertion(parser, priv, context, element_name, error);
         break;
-      case IN_TEST_RESULT:
+    case IN_TEST_RESULT:
         end_test_result(parser, priv, context, element_name, error);
         break;
-      case IN_COMPLETE_ITERATED_TEST:
+    case IN_COMPLETE_ITERATED_TEST:
         end_complete_iterated_test(parser, priv, context, element_name, error);
         break;
-      case IN_COMPLETE_TEST:
+    case IN_COMPLETE_TEST:
         end_complete_test(parser, priv, context, element_name, error);
         break;
-      case IN_TEST_ITERATOR_RESULT:
+    case IN_TEST_ITERATOR_RESULT:
         end_test_iterator_result(parser, priv, context, element_name, error);
         break;
-      case IN_COMPLETE_TEST_ITERATOR:
+    case IN_COMPLETE_TEST_ITERATOR:
         end_complete_test_iterator(parser, priv, context, element_name, error);
         break;
-      case IN_TEST_CASE_RESULT:
+    case IN_TEST_CASE_RESULT:
         end_test_case_result(parser, priv, context, element_name, error);
         break;
-      case IN_COMPLETE_TEST_CASE:
+    case IN_COMPLETE_TEST_CASE:
         end_complete_test_case(parser, priv, context, element_name, error);
         break;
-      case IN_COMPLETE_TEST_SUITE:
+    case IN_COMPLETE_TEST_SUITE:
         end_complete_test_suite(parser, priv, context, element_name, error);
         break;
-      default:
+    default:
         break;
     }
 
@@ -2577,89 +2559,87 @@ text_handler (GMarkupParseContext *context,
 {
     CutStreamParser *parser = user_data;
     CutStreamParserPrivate *priv;
-    const gchar *element;
     ParseState state;
 
     priv = CUT_STREAM_PARSER_GET_PRIVATE(parser);
-    element = g_markup_parse_context_get_element(context);
 
     state = PEEK_STATE(priv);
     switch (state) {
-      case IN_TEST_NAME:
+    case IN_TEST_NAME:
         text_test_name(priv, context, text, text_len, error);
         break;
-      case IN_TEST_DESCRIPTION:
+    case IN_TEST_DESCRIPTION:
         text_test_description(priv, context, text, text_len, error);
         break;
-      case IN_TEST_OPTION_NAME:
+    case IN_TEST_OPTION_NAME:
         text_test_option_name(priv, context, text, text_len, error);
         break;
-      case IN_TEST_OPTION_VALUE:
+    case IN_TEST_OPTION_VALUE:
         text_test_option_value(priv, context, text, text_len, error);
         break;
-      case IN_TEST_START_TIME:
+    case IN_TEST_START_TIME:
         text_test_start_time(priv, context, text, text_len, error);
         break;
-      case IN_TEST_ELAPSED:
+    case IN_TEST_ELAPSED:
         text_test_elapsed(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_STATUS:
+    case IN_RESULT_STATUS:
         text_result_status(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_DETAIL:
+    case IN_RESULT_DETAIL:
         text_result_detail(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_BACKTRACE_ENTRY_FILE:
+    case IN_RESULT_BACKTRACE_ENTRY_FILE:
         text_result_backtrace_entry_file(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_BACKTRACE_ENTRY_LINE:
+    case IN_RESULT_BACKTRACE_ENTRY_LINE:
         text_result_backtrace_entry_line(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_BACKTRACE_ENTRY_INFO:
+    case IN_RESULT_BACKTRACE_ENTRY_INFO:
         text_result_backtrace_entry_info(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_START_TIME:
+    case IN_RESULT_START_TIME:
         text_result_start_time(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_ELAPSED:
+    case IN_RESULT_ELAPSED:
         text_result_elapsed(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_EXPECTED:
+    case IN_RESULT_EXPECTED:
         text_result_expected(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_ACTUAL:
+    case IN_RESULT_ACTUAL:
         text_result_actual(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_DIFF:
+    case IN_RESULT_DIFF:
         text_result_diff(priv, context, text, text_len, error);
         break;
-      case IN_RESULT_FOLDED_DIFF:
+    case IN_RESULT_FOLDED_DIFF:
         text_result_folded_diff(priv, context, text, text_len, error);
         break;
-      case IN_READY_TEST_SUITE_N_TEST_CASES:
+    case IN_READY_TEST_SUITE_N_TEST_CASES:
         text_ready_test_suite_n_test_cases(priv, context, text, text_len, error);
         break;
-      case IN_READY_TEST_SUITE_N_TESTS:
+    case IN_READY_TEST_SUITE_N_TESTS:
         text_ready_test_suite_n_tests(priv, context, text, text_len, error);
         break;
-      case IN_READY_TEST_CASE_N_TESTS:
+    case IN_READY_TEST_CASE_N_TESTS:
         text_ready_test_case_n_tests(priv, context, text, text_len, error);
         break;
-      case IN_READY_TEST_ITERATOR_N_TESTS:
+    case IN_READY_TEST_ITERATOR_N_TESTS:
         text_ready_test_iterator_n_tests(priv, context, text, text_len, error);
         break;
-      case IN_TEST_DATA_NAME:
+    case IN_TEST_DATA_NAME:
         text_test_data_name(priv, context, text, text_len, error);
         break;
-      case IN_TEST_CONTEXT_FAILED:
+    case IN_TEST_CONTEXT_FAILED:
         text_test_context_failed(priv, context, text, text_len, error);
         break;
-      case IN_COMPLETE_SUCCESS:
+    case IN_COMPLETE_SUCCESS:
         text_complete_success(priv, context, text, text_len, error);
-      case IN_STREAM_SUCCESS:
+    case IN_STREAM_SUCCESS:
         text_stream_success(priv, context, text, text_len, error);
         break;
-      default:
+    default:
         break;
     }
 }
