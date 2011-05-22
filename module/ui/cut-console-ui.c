@@ -921,12 +921,11 @@ compute_pass_percentage (CutRunContext *run_context)
 static gchar *
 format_summary (CutRunContext *run_context)
 {
-    guint n_tests, n_assertions, n_successes, n_failures, n_errors;
+    guint n_tests, n_assertions, n_failures, n_errors;
     guint n_pendings, n_notifications, n_omissions;
 
     n_tests = cut_run_context_get_n_tests(run_context);
     n_assertions = cut_run_context_get_n_assertions(run_context);
-    n_successes = cut_run_context_get_n_successes(run_context);
     n_failures = cut_run_context_get_n_failures(run_context);
     n_errors = cut_run_context_get_n_errors(run_context);
     n_pendings = cut_run_context_get_n_pendings(run_context);

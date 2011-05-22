@@ -1,5 +1,7 @@
 2011-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-console-ui.c: suppress warnings.
+
 	* cutter/cut-test-case.c : suppress warnings.
 
 	* cutter/cut-stream-parser.c: suppress warnings.
