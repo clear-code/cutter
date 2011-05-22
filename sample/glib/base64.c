@@ -48,7 +48,7 @@ test_incremental (gboolean line_break,
 		  gsize   *decoded_length)
 {
   char *p;
-  gsize len, max, input_len, block_size;
+  gsize len, input_len, block_size;
   int state, save;
   guint decoder_save;
 
@@ -69,11 +69,6 @@ test_incremental (gboolean line_break,
   len += g_base64_encode_close (line_break, text + len, &state, &save);
 
   *encoded_length = len;
-
-  if (line_break)
-    max = length * 4 / 3 + length * 4 / (3 * 72) + 7;
-  else
-    max = length * 4 / 3 + 6;
 
   *decoded_length = 0;
   state = 0;

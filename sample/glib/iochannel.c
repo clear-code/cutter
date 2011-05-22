@@ -69,7 +69,6 @@ test_iochannel (void)
   gsize length_out;
   const gchar encoding[] = "EUC-JP";
   GIOStatus status;
-  GIOFlags flags;
   GError *error = NULL;
 
   if (!srcdir)
@@ -89,7 +88,6 @@ test_iochannel (void)
 
   status = g_io_channel_set_flags (gio_r, G_IO_FLAG_NONBLOCK, &error);
   gcut_assert_error (error);
-  flags = g_io_channel_get_flags (gio_r);
   buffer = g_string_sized_new (BUFFER_SIZE);
 
   while (TRUE)

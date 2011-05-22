@@ -863,7 +863,6 @@ void
 test_group_names (void)
 {
   const gchar *data;
-  gchar *value;
   GError *error = NULL;
 
   /* [ in group name */
@@ -917,7 +916,7 @@ test_group_names (void)
   keyfile = g_key_file_new ();
   cut_assert (keyfile);
   g_key_file_set_string (keyfile, "a[b", "key1", "123");
-  value = g_key_file_get_string (keyfile, "a[b", "key1", &error);
+  g_key_file_get_string (keyfile, "a[b", "key1", &error);
   check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_GROUP_NOT_FOUND);  
@@ -925,7 +924,7 @@ test_group_names (void)
 
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a]b", "key1", "123");
-  value = g_key_file_get_string (keyfile, "a]b", "key1", &error);
+  g_key_file_get_string (keyfile, "a]b", "key1", &error);
   check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_GROUP_NOT_FOUND);  
@@ -933,7 +932,7 @@ test_group_names (void)
 
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a\tb", "key1", "123");
-  value = g_key_file_get_string (keyfile, "a\tb", "key1", &error);
+  g_key_file_get_string (keyfile, "a\tb", "key1", &error);
   check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_GROUP_NOT_FOUND);  
@@ -951,7 +950,6 @@ test_key_names (void)
 {
   GError *error = NULL;
   const gchar *data;
-  gchar *value;
 
   /* [ in key name */
   data = "[a]\n"
@@ -1049,7 +1047,7 @@ test_key_names (void)
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a", "x", "123");
   g_key_file_set_string (keyfile, "a", "key=", "123");
-  value = g_key_file_get_string (keyfile, "a", "key=", &error);
+  g_key_file_get_string (keyfile, "a", "key=", &error);
   check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_KEY_NOT_FOUND);  
@@ -1058,7 +1056,7 @@ test_key_names (void)
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a", "x", "123");
   g_key_file_set_string (keyfile, "a", "key[", "123");
-  value = g_key_file_get_string (keyfile, "a", "key[", &error);
+  g_key_file_get_string (keyfile, "a", "key[", &error);
   check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_KEY_NOT_FOUND);  
@@ -1067,14 +1065,14 @@ test_key_names (void)
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a", "x", "123");
   g_key_file_set_string (keyfile, "a", "key\tfoo", "123");
-  value = g_key_file_get_string (keyfile, "a", "key\tfoo", &error);
+  g_key_file_get_string (keyfile, "a", "key\tfoo", &error);
   check_no_error (error);
   g_key_file_free (keyfile);  
 
   keyfile = g_key_file_new ();
   g_key_file_set_string (keyfile, "a", "x", "123");
   g_key_file_set_string (keyfile, "a", " key", "123");
-  value = g_key_file_get_string (keyfile, "a", " key", &error);
+  g_key_file_get_string (keyfile, "a", " key", &error);
   check_error (&error, 
                G_KEY_FILE_ERROR,
                G_KEY_FILE_ERROR_KEY_NOT_FOUND);  
