@@ -682,9 +682,7 @@ static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
     GCutProcess *process = data;
-    GCutProcessPrivate *priv;
 
-    priv = GCUT_PROCESS_GET_PRIVATE(process);
     reap_child(process, pid, status);
 }
 
