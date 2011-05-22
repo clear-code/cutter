@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -199,11 +199,9 @@ cut_pipeline_error_quark (void)
 #define emit_error(pipeline, code, error, ...) do                       \
 {                                                                       \
     CutPipeline *_pipeline;                                             \
-    CutPipelinePrivate *_priv;                                          \
     CutRunContext *_run_context;                                        \
                                                                         \
     _pipeline = (pipeline);                                             \
-    _priv = CUT_PIPELINE_GET_PRIVATE(_pipeline);                        \
     _run_context = CUT_RUN_CONTEXT(_pipeline);                          \
     cut_run_context_emit_error(_run_context, CUT_PIPELINE_ERROR,        \
                                code, error,                             \
