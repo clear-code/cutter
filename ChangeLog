@@ -1,5 +1,7 @@
 2011-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-process.c: suppress warnings.
+
 	* gcutter/gcut-egg.c: suppress warnings.
 
 2011-05-10  Kenji Okimoto  <okimoto@clear-code.com>

@@ -773,10 +773,8 @@ error_received (GCutProcess *process,
 static gboolean
 read_from_io_channel (GIOChannel *channel, GCutProcess *process, guint signal)
 {
-    GCutProcessPrivate *priv;
     gboolean need_more_data = TRUE;
 
-    priv = GCUT_PROCESS_GET_PRIVATE(process);
     while (need_more_data) {
         GIOStatus status;
         gchar stream[BUFFER_SIZE];
