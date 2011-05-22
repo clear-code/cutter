@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -568,9 +568,7 @@ static void
 child_watch_func (GPid pid, gint status, gpointer data)
 {
     GCutEgg *egg = data;
-    GCutEggPrivate *priv;
 
-    priv = GCUT_EGG_GET_PRIVATE(egg);
     reap_child(egg, pid, status);
 }
 
@@ -621,10 +619,8 @@ create_input_channel (gint fd, guint *watch_id,
 static gboolean
 read_from_io_channel (GIOChannel *channel, GCutEgg *egg, guint signal)
 {
-    GCutEggPrivate *priv;
     gboolean need_more_data = TRUE;
 
-    priv = GCUT_EGG_GET_PRIVATE(egg);
     while (need_more_data) {
         GIOStatus status;
         gchar stream[BUFFER_SIZE];
