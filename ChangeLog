@@ -1,3 +1,7 @@
+2011-05-27  Kouhei Sutou  <kou@clear-code.com>
+
+	* autogen.sh: add missing "".
+
 2011-05-22  Kouhei Sutou  <kou@cozmixng.org>
 
 	* sample/glib/: suppress warnings.
