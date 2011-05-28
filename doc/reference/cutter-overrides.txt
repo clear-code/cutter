@@ -1,6 +1,24 @@
 # cutter.h
 
 <FUNCTION>
+<NAME>cut_set_attributes</NAME>
+<RETURNS>void</RETURNS>
+const char *first_attribute_name, ...
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_get_current_test_context</NAME>
+<RETURNS>CutTestContext *</RETURNS>
+void
+</FUNCTION>
+
+<FUNCTION>
+<NAME>cut_set_current_test_context</NAME>
+<RETURNS>void</RETURNS>
+CutTestContext *test_context
+</FUNCTION>
+
+<FUNCTION>
 <NAME>cut_set_message</NAME>
 <RETURNS>void</RETURNS>
 const char *format, ...
