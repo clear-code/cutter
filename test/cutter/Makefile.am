@@ -48,7 +48,8 @@ check_LTLIBRARIES = 			\
 	test-cut-sub-process-group.la	\
 	test-cut-file-stream-reader.la	\
 	test-cut-path.la		\
-	test-cut-test-utils.la
+	test-cut-test-utils.la		\
+	test-cut-thread.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -104,6 +105,7 @@ test_cut_sub_process_group_la_SOURCES	= test-cut-sub-process-group.c
 test_cut_file_stream_reader_la_SOURCES	= test-cut-file-stream-reader.c
 test_cut_path_la_SOURCES		= test-cut-path.c
 test_cut_test_utils_la_SOURCES		= test-cut-test-utils.c
+test_cut_thread_la_SOURCES		= test-cut-thread.c
 
 echo-tests:
 	@echo $(noinst_LTLIBRARIES)

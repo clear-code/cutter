@@ -12,4 +12,5 @@ SUBDIRS =			\
 	pixbuf			\
 	path			\
 	test-context		\
-	test-directory
+	test-directory		\
+	thread

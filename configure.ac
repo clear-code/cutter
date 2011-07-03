@@ -867,6 +867,8 @@ AC_CONFIG_FILES([Makefile
 		 test/fixtures/path/parent/sub/Makefile
 		 test/fixtures/test-context/Makefile
 		 test/fixtures/test-directory/Makefile
+		 test/fixtures/thread/Makefile
+		 test/fixtures/thread/failure/Makefile
 		 test/lib/Makefile
 		 test/lib/cuttest-echo/Makefile
 		 test/cutter/Makefile
