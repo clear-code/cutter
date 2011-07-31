@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-def.rb: accept digits in symbols.
+
 	* vcc/Makefile.build (GLIB_LIBS): add GIO.
 
 	* vcc/include/cutter/cut-features.h (CUT_SUPPORT_GIO): enable GIO

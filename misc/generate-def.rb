@@ -4,7 +4,7 @@ puts "EXPORTS"
 ARGV.each do |file|
   content = File.read(file)
   content.scan(/^(?-m:const\s+)?\w(?-m:.+)\s+\**
-                ((?:|g|gdk|soup)cut(?:test)?_[a-z_]+)
+                ((?:|g|gdk|soup)cut(?:test)?_[a-z\d_]+)
                 \s*(?:\(|$)/mx) do
     function = $1
     case function
