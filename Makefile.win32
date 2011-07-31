@@ -21,6 +21,6 @@ clean:
 		$(MAKE) -nologo -f Makefile.win32 sub DIRECTORY=%d TARGET=clean
 
 check: cutter
-	$(MAKE) -C test -f Makefle.wi32 check
+	$(MAKE) -C test -f Makefle.win32 check
 
 !INCLUDE $(top_srcdir)\vcc\Makefile.sub
