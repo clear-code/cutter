@@ -97,9 +97,11 @@ gcut_inspect_char (GString *string, gconstpointer data, gpointer user_data)
     case '\r':
         g_string_append(string, "'\\r'");
         break;
+#ifndef _MSC_VER
     case '\e':
         g_string_append(string, "'\\e'");
         break;
+#endif
     case '\'':
         g_string_append(string, "'\\''");
         break;

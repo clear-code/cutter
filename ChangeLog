@@ -1,5 +1,8 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* gcutter/gcut-inspect.c (gcut_inspect_char): don't use '\e' in
+	Visual C++.
+
 	* vcc/Makefile.build: add gdk-pixbuf configuration.
 
 	* vcc/download-vendor-libraries.rb: add missing libraries.
