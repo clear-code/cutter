@@ -1,5 +1,11 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* apt/Makefile.am, doc/install-to-debian.rd*,
+	doc/install-to-ubuntu.rd*:
+	- add Debian GNU/Linux wheezy support.
+	- remove Ubuntu Maverick Meerkat support.
+	- add Ubuntu Natty Narwhal support.
+
 	* vcc/Makefile.build (MACHINE_LDFLAGS): use /machine:X86.
 
 	* test/run-test.bat: don't run make.

@@ -11,9 +11,9 @@ Debian GNU/LinuxへのCutterのインストール方法を説明します。
 CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
-現在は、Debian GNU/Linux squeeze/sid i386/amd64用のパッケージ
-を提供しています。他のバージョンが必要な場合は((<メーリングリ
-スト
+現在は、Debian GNU/Linux squeeze/wheezy/sid i386/amd64用のパッ
+ケージを提供しています。他のバージョンが必要な場合は((<メーリ
+ングリスト
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
 でリクエストしてください。
 
@@ -23,6 +23,13 @@ squeezeの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.list:
   deb http://cutter.sourceforge.net/debian/ squeeze main
   deb-src http://cutter.sourceforge.net/debian/ squeeze main
+
+wheezyの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://cutter.sourceforge.net/debian/ wheezy main
+  deb-src http://cutter.sourceforge.net/debian/ wheezy main
 
 sidの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
