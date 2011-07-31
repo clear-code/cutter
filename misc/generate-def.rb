@@ -8,7 +8,7 @@ ARGV.each do |file|
                 \s*(?:\(|$)/mx) do
     function = $1
     case function
-    when /u?int(max|ptr)/
+    when /u?int(max|ptr|_fast|_least)/
     else
       puts "\t#{function}"
     end

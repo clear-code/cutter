@@ -1,5 +1,8 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* misc/generate-def.rb, vcc/resource/cutter.def: don't output
+	int_least and int_fast families.
+
 	* vcc/resource/cutter.def: sync.
 
 	* misc/generate-def.rb: accept digits in symbols.
