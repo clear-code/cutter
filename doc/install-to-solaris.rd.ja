@@ -14,7 +14,7 @@ GLib 2.16以降のパッケージがないため、自分でビルド・イン�
 
 GLibをビルドするためにはGNU gettext、GNU libiconvが必要ですが、
 64bitでビルドされたものは、
-((<OpenCSW|http://www.opencsw.org/>))や
+((<OpenCSW|URL:http://www.opencsw.org/>))や
 ((<Sunfreeware|URL:http://www.sunfreeware.com/>))でも公開され
 ていません。
 
@@ -32,7 +32,7 @@ GLibをビルドするためにはGNU gettext、GNU libiconvが必要ですが�
     * GNU libiconv
     * glib
     * Cutter
-  * ((<OpenCSW|http://www.opencsw.org/>)) から pkg-get でインストールするもの
+  * ((<OpenCSW|URL:http://www.opencsw.org/>)) から pkg-get でインストールするもの
     * autoconf
     * automake
     * libtool
