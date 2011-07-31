@@ -1,8 +1,6 @@
 # -*- makefile -*-
 
 # DEBUG = yes
-WDK_DIR = C:\WinDDK\7600.16385.0
-WDK_LIB_DIR = $(WDK_DIR)\lib\crt\i386
 
 CFLAGS =					\
 	/nologo					\
@@ -23,16 +21,13 @@ CPPFLAGS =					\
 
 !IFDEF DEBUG
 OPTIMIZE = /Zi
-CRUNTIME = "$(WDK_LIB_DIR)\msvcrtd.lib"
+CRUNTIME = "msvcrtd.lib"
 DEBUG_LDFLAGS = /debug
 !ELSE
 OPTIMIZE = /Zi
-CRUNTIME = "$(WDK_LIB_DIR)\msvcrt.lib"
+CRUNTIME = "msvcrt.lib"
 DEBUG_LDFLAGS =
 !ENDIF
-
-INCLUDES =					\
-	-I "$(WDK_DIR)\inc\crt"
 
 DEFS =						\
 	-DHAVE_CONFIG_H
