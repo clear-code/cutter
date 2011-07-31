@@ -2,6 +2,35 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-1-8] 1.1.8: 2011-07-31
+
+=== Cutter
+
+==== Improvements
+
+  * Supported notify-send availability detection.
+  * Added --mode=play option that plays test result from
+    test log.
+  * Updated documents for Solaris 10.
+  * Supported assertion failures in other thread. Bug #3341429
+    [Reported by Romain Tartière]
+
+==== Changes
+
+  * Added Debian GNU/Linux wheezy support.
+  * Removed Ubuntu Maverick Meerkat support.
+  * Added Ubuntu Natty Narwhal support.
+
+=== cut-diff
+
+==== Improvements
+
+  * Made --label option optional.
+
+=== Thanks
+
+  * Romain Tartière
+
 == [release-1-1-7] 1.1.7: 2011-02-13
 
 === Cutter

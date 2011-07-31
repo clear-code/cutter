@@ -2,6 +2,34 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-1-8] 1.1.8: 2011-07-31
+
+=== Cutter
+
+==== 改良
+
+  * notify-sendが利用可能かを自動検出できるようにした。
+  * ログからテスト結果を再生する--mode=playオプションを追加。
+  * Solaris 10用にドキュメントを書き換えた。
+  * 別スレッド内での検証失敗の通知に対応。 Bug #3341429
+    [Romain Tartièreさんが報告]
+
+==== 変更
+
+  * Debian GNU/Linux wheezyのサポートを追加。
+  * Ubuntu Maverick Meerkatのサポートを削除。
+  * Ubuntu Natty Narwhalのサポートを追加。
+
+=== cut-diff
+
+==== 改良
+
+  * --labelオプションを省略可能にした。
+
+=== 感謝
+
+  * Romain Tartièreさん
+
 == [release-1-1-7] 1.1.7: 2011-02-13
 
 === Cutter
