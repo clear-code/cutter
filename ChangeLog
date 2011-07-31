@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* ./: update latest release.
+
 	* NEWS*: add 1.1.8 entry.
 
 	* apt/Makefile.am, doc/install-to-debian.rd*,

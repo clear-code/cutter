@@ -97,9 +97,9 @@ install-cutter.sh:
   gmake
   pfexec gmake install
   cd ~/src
-  wget -N http://downloads.sourceforge.net/cutter/cutter-1.1.7.tar.gz
-  gtar xf cutter-1.1.7.tar.gz
-  cd cutter-1.1.7
+  wget -N http://downloads.sourceforge.net/cutter/cutter-1.1.8.tar.gz
+  gtar xf cutter-1.1.8.tar.gz
+  cd cutter-1.1.8
   ./configure --prefix=$PREFIX
   gmake
   gmake install
