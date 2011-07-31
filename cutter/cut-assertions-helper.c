@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -1088,8 +1088,8 @@ cut_assert_equal_char_helper (char            expected,
 }
 
 void
-cut_assert_not_equal_char_helper (const char      expected,
-                                  const char      actual,
+cut_assert_not_equal_char_helper (char            expected,
+                                  char            actual,
                                   const char     *expression_expected,
                                   const char     *expression_actual)
 {

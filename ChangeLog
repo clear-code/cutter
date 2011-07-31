@@ -1,5 +1,8 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-assertions-helper.c
+	(cut_assert_not_equal_char_helper): remove needless const.
+
 	* gcutter/gcut-inspect.c (gcut_inspect_char): don't use '\e' in
 	Visual C++.
 
