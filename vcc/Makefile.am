@@ -61,7 +61,7 @@ generate-makefile:
 	      Makefile.objects.cppcutter
 
 generate-test-def:
-	($(MAKE) -s -C $(top_builddir)/test/cutter echo-tests) |	\
+	$(MAKE) -s -C $(top_builddir)/test/cutter echo-tests |		\
 	  xargs $(top_srcdir)/misc/generate-test-defs.rb		\
 	    $(top_srcdir)/test/cutter resource/test/cutter
 
@@ -74,7 +74,7 @@ generate-test-makefile:
 	  echo-cuttest-event-receiver-public-headers |	\
 	    xargs $(top_srcdir)/misc/generate-def.rb >	\
 	      resource/cuttest-event-receiver.def
-	($(MAKE) -s -C $(top_builddir)/test/cutter echo-tests) |	\
+	$(MAKE) -s -C $(top_builddir)/test/cutter echo-tests |	\
 	  xargs $(top_srcdir)/misc/generate-test-makefile.rb		\
 	    '$$(top_srcdir)' test/cutter
 
@@ -105,14 +105,14 @@ binary_fixture_paths =						\
 
 generate-test-fixture-def:
 	for path in $(binary_fixture_paths); do			\
-	  ($(MAKE) -s -C $(top_builddir)/$${path} echo-tests) |	\
+	  $(MAKE) -s -C $(top_builddir)/$${path} echo-tests |	\
 	    xargs $(top_srcdir)/misc/generate-test-defs.rb	\
 	      $(top_srcdir)/$${path} resource/$${path};		\
 	done
 
 generate-test-fixture-makefile:
 	for path in $(binary_fixture_paths); do			\
-	  ($(MAKE) -s -C $(top_builddir)/$${path} echo-tests) |	\
+	  $(MAKE) -s -C $(top_builddir)/$${path} echo-tests |	\
 	    xargs $(top_srcdir)/misc/generate-test-makefile.rb	\
 	      '$$(top_srcdir)' $${path};			\
 	done
