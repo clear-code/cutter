@@ -350,3 +350,5 @@ The following is a template of test.
     * reported bugs in test.
   * Hiroaki Nakamura:
     * reported a bug on CentOS.
+  * Tobias Gruetzmacher:
+    * fixed a GTK+ test runner bug.

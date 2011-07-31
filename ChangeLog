@@ -1,6 +1,6 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
-	* NEWS*: add Tobias Gruetzmacher to thanks list. Thanks!!!
+	* NEWS*, README*: add Tobias Gruetzmacher to thanks list. Thanks!!!
 
 	* module/ui/cut-gtk-ui.c: fix update in real-time.
 	Patch by Tobias Gruetzmacher. Thanks!!!
