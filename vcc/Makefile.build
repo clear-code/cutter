@@ -111,13 +111,17 @@ CAIRO_CFLAGS =						\
 PANGO_CFLAGS =						\
 	-I $(top_srcdir)/vcc/vendor/include/pango-1.0
 
-GTK_CFLAGS =						\
-	$(GLIB_CFLAGS)					\
-	$(CAIRO_CFLAGS)					\
-	$(PANGO_CFLAGS)					\
-	-I $(top_srcdir)/vcc/vendor/include/libpng12	\
-	-I $(top_srcdir)/vcc/vendor/include/atk-1.0	\
-	-I $(top_srcdir)/vcc/vendor/include/gtk-2.0	\
+GDK_PIXBUF_CFLAGS =						\
+	-I $(top_srcdir)/vcc/vendor/include/gdk-pixbuf-2.0
+
+GTK_CFLAGS =							\
+	$(GLIB_CFLAGS)						\
+	$(CAIRO_CFLAGS)						\
+	$(PANGO_CFLAGS)						\
+	$(GDK_PIXBUF_CFLAGS)					\
+	-I $(top_srcdir)/vcc/vendor/include/libpng12		\
+	-I $(top_srcdir)/vcc/vendor/include/atk-1.0		\
+	-I $(top_srcdir)/vcc/vendor/include/gtk-2.0		\
 	-I $(top_srcdir)/vcc/vendor/lib/gtk-2.0/include
 
 GTK_LDFLAGS =					\
@@ -130,16 +134,18 @@ PANGO_CAIRO_LIBS =				\
 	pango-1.0.lib				\
 	pangocairo-1.0.lib			\
 
+GDK_PIXBUF_LIBS =				\
+	gdk_pixbuf-2.0.lib
+
 GTK_LIBS =					\
 	$(GLIB_LIBS)				\
 	$(CAIRO_LIBS)				\
 	$(PANGO_CAIRO_LIBS)			\
+	$(GDK_PIXBUF_LIBS)			\
 	pangowin32-1.0.lib			\
 	libpng.lib				\
 	gio-2.0.lib				\
 	atk-1.0.lib				\
-	gdk_pixbuf-2.0.lib			\
-	gdk_pixbuf-2.0.lib			\
 	gdk-win32-2.0.lib			\
 	gtk-win32-2.0.lib			\
 	gdi32.lib

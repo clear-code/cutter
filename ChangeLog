@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: add gdk-pixbuf configuration.
+
 	* vcc/download-vendor-libraries.rb: add missing libraries.
 
 	* vcc/download-vendor-libraries.rb: add.
