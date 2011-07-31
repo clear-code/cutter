@@ -1,4 +1,3 @@
-SERVER_PATH = $(SF_USER),$(SF_PROJECT_ID)@$(SF_HTDOCS)
 DISTRIBUTIONS = fedora centos
 ARCHITECTURES = i386 x86_64
 CHROOT_BASE = /var/lib/chroot
@@ -21,13 +20,13 @@ upload:
 	for distribution in $(DISTRIBUTIONS); do		\
 	  rsync -avz --delete					\
 	    --exclude .gitignore --exclude .svn			\
-	    $${distribution}/ $(SERVER_PATH)/$${distribution};	\
+	    $${distribution}/ $(SF_HTDOCS)/$${distribution};	\
 	done
 
 download:
 	for distribution in $(DISTRIBUTIONS); do		\
 	  rsync -avz						\
-	    $(SERVER_PATH)/$${distribution}/ $${distribution};	\
+	    $(SF_HTDOCS)/$${distribution}/ $${distribution};	\
 	done
 
 build: build-in-chroot build-repository-rpm

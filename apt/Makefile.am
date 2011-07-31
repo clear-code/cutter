@@ -1,4 +1,3 @@
-SERVER_PATH = $(SF_USER),$(SF_PROJECT_ID)@$(SF_HTDOCS)
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
@@ -20,18 +19,18 @@ sign:
 	./sign-repository.sh '$(CODE_NAMES)'
 
 upload:
-	for distribution in $(DISTRIBUTIONS); do		\
-	  (cd $${distribution};					\
-	   rsync -avz --exclude .svn --delete			\
-	     dists pool $(SERVER_PATH)/$${distribution};	\
-	  );							\
+	for distribution in $(DISTRIBUTIONS); do	\
+	  (cd $${distribution};				\
+	   rsync -avz --exclude .svn --delete		\
+	     dists pool $(SF_HTDOCS)/$${distribution};	\
+	  );						\
 	done
 
 download:
-	for distribution in $(DISTRIBUTIONS); do			\
-	  (cd $${distribution};						\
-	   rsync -avz $(SERVER_PATH)/$${distribution}/pool/ pool;	\
-	  );								\
+	for distribution in $(DISTRIBUTIONS); do		\
+	  (cd $${distribution};					\
+	   rsync -avz $(SF_HTDOCS)/$${distribution}/pool/ pool;	\
+	  );							\
 	done
 
 build:

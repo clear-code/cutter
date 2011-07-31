@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* apt/Makefile.am, yum/Makefile.am: remove duplicated info.
+
 	* yum/build-in-chroot.sh:
 	- remove Fedora 14 support.
 	- add Fedora 15 support.
