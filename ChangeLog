@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/run-test.bat: don't run make.
+
 	* vcc/Makefile.build: don't specify /machine flag.
 
 	* test/Makefile.win32 (check): add.
