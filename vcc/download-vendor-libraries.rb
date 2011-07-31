@@ -135,7 +135,8 @@ class Win32BinaryDownloader
 end
 
 options = {
-  :output_dir => File.join(File.dirname(__FILE__), "vendor", "local"),
-  :packages => ["gtk+", "libsoup"],
+  :output_dir => File.join(File.dirname(__FILE__), "vendor"),
+  :packages => ["glib", "atk", "pango", "gdk-pixbuf", "gtk+", "libsoup"],
+  :dependencies => ["gettext-runtime", "zlib", "libpng", "cairo"],
 }
 Win32BinaryDownloader.download(options)
