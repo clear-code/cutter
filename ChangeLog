@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/download-vendor-libraries.rb: add.
+
 	* cutter/cutter.h: add missing parentheses.
 
 	* cutter/cut-test-context.[ch], cutter/cut-public.h: support

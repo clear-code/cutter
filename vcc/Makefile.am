@@ -1,4 +1,5 @@
 nobase_EXTRA_DIST =				\
+	download-vendor-libraries.rb		\
 	cutter.sln				\
 	cutter.vcproj				\
 	cutter-cui.vcproj			\
