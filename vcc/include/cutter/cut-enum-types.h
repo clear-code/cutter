@@ -1,5 +1,5 @@
 
-/* Generated data (by glib-mkenums) */
+
 
 #ifndef __CUT_ENUM_TYPES_H__
 #define __CUT_ENUM_TYPES_H__
@@ -18,8 +18,6 @@ GType cut_pipeline_error_get_type (void);
 #define CUT_TYPE_PIPELINE_ERROR (cut_pipeline_error_get_type())
 GType cut_order_get_type (void);
 #define CUT_TYPE_ORDER (cut_order_get_type())
-GType cut_sequence_match_operation_type_get_type (void);
-#define CUT_TYPE_SEQUENCE_MATCH_OPERATION_TYPE (cut_sequence_match_operation_type_get_type())
 GType cut_stream_reader_error_get_type (void);
 #define CUT_TYPE_STREAM_READER_ERROR (cut_stream_reader_error_get_type())
 GType cut_test_context_error_get_type (void);
@@ -32,5 +30,5 @@ G_END_DECLS
 
 #endif /* __CUT_ENUM_TYPES_H__ */
 
-/* Generated data ends here */
+
 

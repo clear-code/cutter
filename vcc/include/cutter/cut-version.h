@@ -50,7 +50,7 @@
  *
  * The micro version number of the Cutter.
  */
-#define CUTTER_VERSION_MICRO 2
+#define CUTTER_VERSION_MICRO 8
 
 /**
  * CUTTER_VERSION_STRING:
@@ -58,7 +58,7 @@
  * The version number string of the Cutter with
  * "#{MAJOR}.#{MINOR}.#{MICRO}" format.
  */
-#define CUTTER_VERSION_STRING "1.1.2"
+#define CUTTER_VERSION_STRING "1.1.8"
 
 /**
  * CUTTER_CHECK_VERSION:

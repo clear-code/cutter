@@ -1,5 +1,5 @@
 
-/* Generated data (by glib-mkenums) */
+
 
 #include "cut-enum-types.h"
 #include "cut-public.h"
@@ -27,7 +27,6 @@
 #include "cut-report.h"
 #include "cut-run-context.h"
 #include "cut-runner.h"
-#include "cut-sequence-matcher.h"
 #include "cut-stream-factory-builder.h"
 #include "cut-stream-parser.h"
 #include "cut-stream-reader.h"
@@ -144,22 +143,6 @@ cut_order_get_type (void)
   return etype;
 }
 GType
-cut_sequence_match_operation_type_get_type (void)
-{
-  static GType etype = 0;
-  if (etype == 0) {
-    static const GEnumValue values[] = {
-      { CUT_SEQUENCE_MATCH_OPERATION_EQUAL, "CUT_SEQUENCE_MATCH_OPERATION_EQUAL", "equal" },
-      { CUT_SEQUENCE_MATCH_OPERATION_INSERT, "CUT_SEQUENCE_MATCH_OPERATION_INSERT", "insert" },
-      { CUT_SEQUENCE_MATCH_OPERATION_DELETE, "CUT_SEQUENCE_MATCH_OPERATION_DELETE", "delete" },
-      { CUT_SEQUENCE_MATCH_OPERATION_REPLACE, "CUT_SEQUENCE_MATCH_OPERATION_REPLACE", "replace" },
-      { 0, NULL, NULL }
-    };
-    etype = g_enum_register_static ("CutSequenceMatchOperationType", values);
-  }
-  return etype;
-}
-GType
 cut_stream_reader_error_get_type (void)
 {
   static GType etype = 0;
@@ -218,5 +201,5 @@ cut_verbose_level_error_get_type (void)
   return etype;
 }
 
-/* Generated data ends here */
+
 

@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/: sync.
+
 	* vcc/Makefile.build: don't require Windows Driver Kit.
 
 	* cutter/cut-utils.[ch], module/ui/cut-console-ui.c: support

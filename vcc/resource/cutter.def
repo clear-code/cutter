@@ -15,6 +15,8 @@ EXPORTS
 	cut_assert_not_equal_size_helper
 	cut_assert_equal_double_helper
 	cut_assert_not_equal_double_helper
+	cut_assert_equal_char_helper
+	cut_assert_not_equal_char_helper
 	cut_assert_equal_string_helper
 	cut_assert_not_equal_string_helper
 	cut_assert_equal_substring_helper
@@ -29,14 +31,18 @@ EXPORTS
 	cut_assert_operator_double_helper
 	cut_assert_equal_helper
 	cut_assert_errno_helper
-	cut_assert_path_exist_helper
-	cut_assert_path_not_exist_helper
+	cut_assert_exist_path_helper
+	cut_assert_not_exist_path_helper
 	cut_assert_match_helper
 	cut_assert_equal_pointer_helper
 	cut_assert_equal_fixture_data_string_helper
+	cut_assert_equal_file_raw_helper
+	cut_assert_not_equal_file_raw_helper
 	cut_assert_equal_sockaddr_helper
 	cut_error_errno_helper
 	cut_pop_backtrace
+	cut_get_test_directory
+	cut_get_source_directory
 	cut_sub_process_run
 	cut_sub_process_run_async
 	cut_sub_process_wait
@@ -83,8 +89,9 @@ EXPORTS
 	cut_test_context_process_current_result
 	cut_test_context_get_have_current_result
 	cut_test_context_register_result
-	cut_test_context_set_have_user_message_jump
-	cut_test_context_get_have_user_message_jump
+	cut_test_context_start_user_message_jump
+	cut_test_context_finish_user_message_jump
+	cut_test_context_in_user_message_jump
 	cut_test_context_set_jump
 	cut_test_context_get_jump
 	cut_test_context_long_jump
@@ -108,14 +115,15 @@ EXPORTS
 	cut_utils_path_exist
 	cut_utils_build_path
 	cut_utils_build_path_va_list
+	cut_utils_build_path_array
 	cut_utils_remove_path_recursive_force
 	cut_utils_make_directory_recursive_force
 	cut_utils_regex_match
 	cut_utils_fold
 	cut_utils_append_diff
-	cut_test_context_build_fixture_data_path
-	cut_utils_get_fixture_data_string
-	cut_utils_get_fixture_data_string_va_list
+	cut_test_context_build_fixture_path
+	cut_utils_get_fixture_data
+	cut_utils_get_fixture_data_va_list
 	cut_test_context_add_data
 	cut_test_context_set_attributes
 	cut_test_context_trap_fork
@@ -132,6 +140,7 @@ EXPORTS
 	cut_utils_take_new_sub_process
 	cut_utils_take_new_sub_process_group
 	cut_take_replace_helper
+	cut_take_convert_helper
 	cut_analyzer_get_type
 	cut_analyzer_new
 	cut_analyzer_analyze
@@ -184,17 +193,22 @@ EXPORTS
 	cut_diff_writer_mark_line
 	cut_diff_writer_mark_lines
 	cut_diff_writer_write_character_n_times
+	cut_diff_writer_write_spaces
 	cut_diff_writer_finish
 	cut_differ_get_type
 	cut_differ_diff
+	cut_differ_write_summary
 	cut_differ_get_best_ratio
 	cut_differ_get_cut_off_ratio
 	cut_differ_get_from
 	cut_differ_get_to
 	cut_differ_get_sequence_matcher
+	cut_differ_set_context_size
+	cut_differ_get_context_size
 	cut_differ_need_diff
 	cut_differ_util_is_space_character
 	cut_differ_util_compute_width
+	cut_differ_util_is_same_content
 	cut_factory_builder_get_type
 	cut_factory_builder_get_type_name
 	cut_factory_builder_get_module_dir
@@ -222,6 +236,7 @@ EXPORTS
 	cut_set_cutter_command_path
 	cut_get_cutter_command_path
 	cut_create_run_context
+	cut_setup_run_context
 	cut_start_run_context
 	cut_module_factory_init
 	cut_module_factory_quit
@@ -336,23 +351,6 @@ EXPORTS
 	cut_runner_get_type
 	cut_runner_run
 	cut_runner_run_async
-	cut_sequence_match_info_new
-	cut_sequence_match_info_free
-	cut_sequence_match_operation_new
-	cut_sequence_match_operation_free
-	cut_sequence_matcher_get_type
-	cut_sequence_matcher_new
-	cut_sequence_matcher_char_new
-	cut_sequence_matcher_char_new_full
-	cut_sequence_matcher_string_new
-	cut_sequence_matcher_string_new_full
-	cut_sequence_matcher_get_to_index
-	cut_sequence_matcher_get_longest_match
-	cut_sequence_matcher_get_matches
-	cut_sequence_matcher_get_blocks
-	cut_sequence_matcher_get_operations
-	cut_sequence_matcher_get_grouped_operations
-	cut_sequence_matcher_get_ratio
 	cut_stream_factory_builder_get_type
 	cut_stream_parser_get_type
 	cut_stream_parser_new
@@ -401,6 +399,7 @@ EXPORTS
 	cut_test_context_current_quit
 	cut_test_context_new
 	cut_test_context_new_empty
+	cut_test_context_new_sub
 	cut_test_context_get_run_context
 	cut_test_context_set_run_context
 	cut_test_context_get_test_suite
@@ -425,9 +424,9 @@ EXPORTS
 	cut_test_context_emit_signal
 	cut_test_context_to_xml
 	cut_test_context_to_xml_string
-	cut_test_context_build_fixture_data_path_va_list
-	cut_test_context_get_fixture_data_string
-	cut_test_context_get_fixture_data_string_va_list
+	cut_test_context_build_fixture_path_va_list
+	cut_test_context_get_fixture_data
+	cut_test_context_get_fixture_data_va_list
 	cut_test_context_build_source_filename
 	cut_test_data_get_type
 	cut_test_data_new
@@ -534,8 +533,6 @@ EXPORTS
 	cut_unified_differ_get_from_label
 	cut_unified_differ_set_to_label
 	cut_unified_differ_get_to_label
-	cut_unified_differ_set_context
-	cut_unified_differ_get_context
 	cut_verbose_level_error_quark
 	cut_verbose_level_parse
 	cut_test_result_status_get_type
@@ -543,13 +540,13 @@ EXPORTS
 	cut_file_stream_reader_error_get_type
 	cut_pipeline_error_get_type
 	cut_order_get_type
-	cut_sequence_match_operation_type_get_type
 	cut_stream_reader_error_get_type
 	cut_test_context_error_get_type
 	cut_verbose_level_get_type
 	cut_verbose_level_error_get_type
 	cut_crash_backtrace_set_show_on_the_moment
 	cut_crash_backtrace_get_show_on_the_moment
+	cut_crash_backtrace_reset_signal_received
 	cut_crash_backtrace_new
 	cut_crash_backtrace_free
 	cut_crash_backtrace_emit
@@ -598,6 +595,25 @@ EXPORTS
 	cut_repository_create_test_suite
 	cut_repository_set_exclude_files
 	cut_repository_set_exclude_directories
+	cut_sequence_match_info_new
+	cut_sequence_match_info_free
+	cut_sequence_match_operation_new
+	cut_sequence_match_operation_free
+	cut_sequence_matcher_get_type
+	cut_sequence_matcher_new
+	cut_sequence_matcher_char_new
+	cut_sequence_matcher_char_new_full
+	cut_sequence_matcher_string_new
+	cut_sequence_matcher_string_new_full
+	cut_sequence_matcher_get_to_index
+	cut_sequence_matcher_get_longest_match
+	cut_sequence_matcher_get_matches
+	cut_sequence_matcher_get_blocks
+	cut_sequence_matcher_get_operations
+	cut_sequence_matcher_get_grouped_operations
+	cut_sequence_matcher_get_ratio
+	cut_sequence_matcher_get_context_size
+	cut_sequence_matcher_set_context_size
 	cut_utils_create_regex_pattern
 	cut_utils_filter_to_regexs
 	cut_utils_filter_match
@@ -636,11 +652,17 @@ EXPORTS
 	gcut_assert_equal_object_helper
 	gcut_assert_equal_pid_helper
 	gcut_assert_not_equal_pid_helper
+	gcut_assert_equal_string_helper
 	cut_test_context_take_g_object
 	cut_test_context_take_g_error
 	cut_test_context_take_g_list
 	cut_test_context_take_g_hash_table
+	cut_test_context_take_g_string
+	gcut_utils_get_fixture_data
+	gcut_utils_get_fixture_data_va_list
 	gcut_list_new
+	gcut_list_int_new
+	gcut_list_uint_new
 	gcut_list_string_new
 	gcut_list_string_new_array
 	gcut_list_string_free
@@ -675,9 +697,12 @@ EXPORTS
 	gcut_flags_parse
 	gcut_flags_get_all
 	gcut_error_get_type
+	gcut_size_get_type
 	gcut_object_equal
 	gcut_object_inspect
 	gcut_object_inspect_custom
+	gcut_string_equal
+	gcut_string_inspect
 	gcut_string_io_channel_new
 	gcut_string_io_channel_get_string
 	gcut_string_io_channel_clear
@@ -689,6 +714,8 @@ EXPORTS
 	gcut_string_io_channel_set_read_fail
 	gcut_string_io_channel_get_pipe_mode
 	gcut_string_io_channel_set_pipe_mode
+	gcut_string_io_channel_get_main_context
+	gcut_string_io_channel_set_main_context
 	gcut_egg_error_quark
 	gcut_egg_get_type
 	gcut_egg_new
@@ -717,35 +744,92 @@ EXPORTS
 	gcut_inspect_direct
 	gcut_inspect_int
 	gcut_inspect_uint
+	gcut_inspect_size
+	gcut_inspect_char
 	gcut_inspect_string
 	gcut_inspect_type
 	gcut_inspect_flags
 	gcut_inspect_enum
 	gcut_inspect_pointer
+	gcut_inspect_boolean
+	gcut_inspect_double
+	gcut_data_get_char_helper
 	gcut_data_get_string_helper
 	gcut_data_get_int_helper
 	gcut_data_get_uint_helper
+	gcut_data_get_size_helper
 	gcut_data_get_type_helper
 	gcut_data_get_flags_helper
 	gcut_data_get_enum_helper
 	gcut_data_get_pointer_helper
 	gcut_data_get_boxed_helper
 	gcut_data_get_object_helper
+	gcut_data_get_boolean_helper
+	gcut_data_get_double_helper
 	gcut_dynamic_data_error_quark
 	gcut_dynamic_data_get_type
 	gcut_dynamic_data_new
 	gcut_dynamic_data_new_va_list
 	gcut_dynamic_data_inspect
 	gcut_dynamic_data_equal
+	gcut_dynamic_data_has_field
+	gcut_dynamic_data_get_char
 	gcut_dynamic_data_get_string
 	gcut_dynamic_data_get_int
 	gcut_dynamic_data_get_uint
+	gcut_dynamic_data_get_size
 	gcut_dynamic_data_get_data_type
 	gcut_dynamic_data_get_flags
 	gcut_dynamic_data_get_enum
 	gcut_dynamic_data_get_pointer
 	gcut_dynamic_data_get_boxed
 	gcut_dynamic_data_get_object
+	gcut_dynamic_data_get_boolean
+	gcut_dynamic_data_get_double
+	gcut_process_error_quark
+	gcut_process_get_type
+	gcut_process_new
+	gcut_process_new_command_line
+	gcut_process_new_va_list
+	gcut_process_new_argv
+	gcut_process_new_strings
+	gcut_process_new_array
+	gcut_process_set_flags
+	gcut_process_get_flags
+	gcut_process_set_env
+	gcut_process_get_env
+	gcut_process_run
+	gcut_process_get_pid
+	gcut_process_wait
+	gcut_process_kill
+	gcut_process_write
+	gcut_process_flush
+	gcut_process_get_output_string
+	gcut_process_get_error_string
+	gcut_process_get_input_channel
+	gcut_process_get_output_channel
+	gcut_process_get_error_channel
+	gcut_process_get_output_stream
+	gcut_process_get_error_stream
+	gcut_process_get_forced_termination_wait_time
+	gcut_process_set_forced_termination_wait_time
+	gcut_process_get_event_loop
+	gcut_process_set_event_loop
+	gcut_event_loop_error_quark
+	gcut_event_loop_get_type
+	gcut_event_loop_run
+	gcut_event_loop_iterate
+	gcut_event_loop_quit
+	gcut_event_loop_watch_io
+	gcut_event_loop_watch_child
+	gcut_event_loop_watch_child_full
+	gcut_event_loop_add_timeout
+	gcut_event_loop_add_timeout_full
+	gcut_event_loop_add_idle
+	gcut_event_loop_add_idle_full
+	gcut_event_loop_remove
+	gcut_glib_event_loop_get_type
+	gcut_glib_event_loop_new
 	gcut_init
 	gcut_value_equal_init
 	gcut_quit
