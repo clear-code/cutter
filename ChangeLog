@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/Makefile.win32 (check): add.
+
 	* Makefile.win32 (check): fix a typo.
 
 	* misc/generate-def.rb, vcc/resource/cutter.def: don't output
