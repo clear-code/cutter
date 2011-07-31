@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -391,8 +391,8 @@ void cut_shutdown(void);
  *
  * Since: 1.0.4
  */
-#define cut_set_current_test_context(test_context)      \
-    cut_test_context_current_push(test_context)
+#define cut_set_current_test_context(test_context)              \
+    cut_test_context_current_push((test_context))
 
 #ifndef CUTTER_DISABLE_DEPRECATED
 /**

@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cutter.h: add missing parentheses.
+
 	* cutter/cut-test-context.[ch], cutter/cut-public.h: support
 	failures in other thread. Bug #3341429
 	Reported by Romain Tartière. Thanks!!!
