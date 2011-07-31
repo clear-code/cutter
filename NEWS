@@ -20,6 +20,8 @@
   * Added Debian GNU/Linux wheezy support.
   * Removed Ubuntu Maverick Meerkat support.
   * Added Ubuntu Natty Narwhal support.
+  * Removed Fedora 14 support.
+  * Added Fedora 15 support.
 
 === cut-diff
 

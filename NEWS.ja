@@ -19,6 +19,8 @@
   * Debian GNU/Linux wheezyのサポートを追加。
   * Ubuntu Maverick Meerkatのサポートを削除。
   * Ubuntu Natty Narwhalのサポートを追加。
+  * Fedora 14のサポートを削除。
+  * Fedora 15のサポートを追加。
 
 === cut-diff
 

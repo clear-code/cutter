@@ -1,5 +1,9 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* yum/build-in-chroot.sh:
+	- remove Fedora 14 support.
+	- add Fedora 15 support.
+
 	* po/ja.po, doc/reference/ja.po: update po.
 
 	* doc/reference/cutter-docs.sgml: add 1.1.8 entry.
