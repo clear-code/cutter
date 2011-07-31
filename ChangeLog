@@ -1,5 +1,8 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-file-stream-reader.c (runner_run_async): fix function
+	name on Windows.
+
 	* cutter/cut-differ.c (cut_differ_set_context_size): remove
 	needless return.
 

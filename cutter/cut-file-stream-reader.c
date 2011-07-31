@@ -231,7 +231,7 @@ runner_run_async (CutRunner *runner)
 #ifdef STDIN_FILENO
         priv->channel = g_io_channel_unix_new(STDIN_FILENO);
 #else
-        priv->channel = g_io_channel_win32_new(0);
+        priv->channel = g_io_channel_win32_new_fd(0);
 #endif
     } else {
         priv->channel = g_io_channel_new_file(priv->file_name, "r", &error);
