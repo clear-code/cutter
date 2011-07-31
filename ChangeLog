@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build (MACHINE_LDFLAGS): use /machine:X86.
+
 	* test/run-test.bat: don't run make.
 
 	* vcc/Makefile.build: don't specify /machine flag.
