@@ -1,5 +1,8 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* module/ui/cut-gtk-ui.c: fix update in real-time.
+	Patch by Tobias Gruetzmacher. Thanks!!!
+
 	* test/cutter/test-cut-thread.c: enable.
 
 	* module/ui/cut-console-ui.c: remove a garbage.

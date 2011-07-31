@@ -1309,6 +1309,11 @@ cb_complete_test_case (CutRunContext *run_context,
     g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_complete_test_case),
                                          data);
+
+    /* TODO: It's just a workaround. We should show test
+     * result in real-time without this. */
+    while (gtk_events_pending())
+        gtk_main_iteration();
 }
 
 static void
