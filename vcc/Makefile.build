@@ -29,12 +29,15 @@ CRUNTIME = "msvcrt.lib"
 DEBUG_LDFLAGS =
 !ENDIF
 
+# MACHINE_LDFLAGS = /machine:x86
+# MACHINE_LDFLAGS = /machine:x64
+
 DEFS =						\
 	-DHAVE_CONFIG_H
 
 LDFLAGS =					\
 	/link					\
-	/machine:ix86				\
+	$(MACHINE_LDFLAGS)			\
 	$(LIBPATHS)				\
 	$(DEBUG_LDFLAGS)			\
 	$(LOCAL_LDFLAGS)

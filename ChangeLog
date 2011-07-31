@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: don't specify /machine flag.
+
 	* test/Makefile.win32 (check): add.
 
 	* Makefile.win32 (check): fix a typo.
