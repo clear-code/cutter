@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -253,7 +253,7 @@ cut_differ_set_context_size (CutDiffer *differ, guint context_size)
     CutSequenceMatcher *matcher;
 
     matcher = cut_differ_get_sequence_matcher(differ);
-    return cut_sequence_matcher_set_context_size(matcher, context_size);
+    cut_sequence_matcher_set_context_size(matcher, context_size);
 }
 
 guint

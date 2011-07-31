@@ -1,5 +1,8 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* cutter/cut-differ.c (cut_differ_set_context_size): remove
+	needless return.
+
 	* cutter/cut-assertions-helper.c
 	(cut_assert_not_equal_char_helper): remove needless const.
 
