@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-20 13:48+0900\n"
-"PO-Revision-Date: 2011-02-20 13:49+0900\n"
+"POT-Creation-Date: 2011-07-31 21:21+0900\n"
+"PO-Revision-Date: 2011-07-31 21:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -40,7 +40,7 @@ msgstr "diffの周辺LINES行を表示"
 
 #: ../cutter/cut-diff.c:67
 msgid "Use LABEL as label"
-msgstr ""
+msgstr "ラベルとしてLABELを使う"
 
 #: ../cutter/cut-diff.c:152
 msgid "FILE_FROM FILE_TO"
@@ -177,7 +177,7 @@ msgstr "ストリームのオプション"
 msgid "Show stream options"
 msgstr "ストリームのオプションを表示"
 
-#: ../cutter/cut-test-context.c:925
+#: ../cutter/cut-test-context.c:999
 msgid "Treat a failure as a fatal problem, aborting."
 msgstr "失敗を致命的な問題として扱い、異常終了しています。"
 
