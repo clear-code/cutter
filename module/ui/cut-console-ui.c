@@ -42,10 +42,6 @@
 #include <cutter/cut-console.h>
 #include <cutter/cut-enum-types.h>
 
-#ifdef G_OS_WIN32
-static gchar *win32_icons_dir = NULL;
-#endif
-
 #define CUT_TYPE_CONSOLE_UI            cut_type_console_ui
 #define CUT_CONSOLE_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_CONSOLE_UI, CutConsoleUI))
 #define CUT_CONSOLE_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_CONSOLE_UI, CutConsoleUIClass))
