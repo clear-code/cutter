@@ -9,8 +9,40 @@ EXPORTS
 	cut_assert_not_null_helper
 	cut_assert_equal_int_helper
 	cut_assert_not_equal_int_helper
+	cut_assert_equal_int_least8_helper
+	cut_assert_not_equal_int_least8_helper
+	cut_assert_equal_int_least16_helper
+	cut_assert_not_equal_int_least16_helper
+	cut_assert_equal_int_least32_helper
+	cut_assert_not_equal_int_least32_helper
+	cut_assert_equal_int_least64_helper
+	cut_assert_not_equal_int_least64_helper
+	cut_assert_equal_int_fast8_helper
+	cut_assert_not_equal_int_fast8_helper
+	cut_assert_equal_int_fast16_helper
+	cut_assert_not_equal_int_fast16_helper
+	cut_assert_equal_int_fast32_helper
+	cut_assert_not_equal_int_fast32_helper
+	cut_assert_equal_int_fast64_helper
+	cut_assert_not_equal_int_fast64_helper
 	cut_assert_equal_uint_helper
 	cut_assert_not_equal_uint_helper
+	cut_assert_equal_uint_least8_helper
+	cut_assert_not_equal_uint_least8_helper
+	cut_assert_equal_uint_least16_helper
+	cut_assert_not_equal_uint_least16_helper
+	cut_assert_equal_uint_least32_helper
+	cut_assert_not_equal_uint_least32_helper
+	cut_assert_equal_uint_least64_helper
+	cut_assert_not_equal_uint_least64_helper
+	cut_assert_equal_uint_fast8_helper
+	cut_assert_not_equal_uint_fast8_helper
+	cut_assert_equal_uint_fast16_helper
+	cut_assert_not_equal_uint_fast16_helper
+	cut_assert_equal_uint_fast32_helper
+	cut_assert_not_equal_uint_fast32_helper
+	cut_assert_equal_uint_fast64_helper
+	cut_assert_not_equal_uint_fast64_helper
 	cut_assert_equal_size_helper
 	cut_assert_not_equal_size_helper
 	cut_assert_equal_double_helper
@@ -632,6 +664,11 @@ EXPORTS
 	cut_utils_double_to_string
 	cut_utils_compare_string
 	cut_utils_compare_direct
+	cut_win32_base_path
+	cut_win32_icons_dir
+	cut_win32_build_module_dir_name
+	cut_win32_build_factory_module_dir_name
+	cut_win32_kill_process
 	gcut_assert_equal_type_helper
 	gcut_assert_equal_value_helper
 	gcut_assert_equal_list_helper
@@ -650,6 +687,10 @@ EXPORTS
 	gcut_assert_equal_enum_helper
 	gcut_assert_equal_flags_helper
 	gcut_assert_equal_object_helper
+	gcut_assert_equal_int64_helper
+	gcut_assert_not_equal_int64_helper
+	gcut_assert_equal_uint64_helper
+	gcut_assert_not_equal_uint64_helper
 	gcut_assert_equal_pid_helper
 	gcut_assert_not_equal_pid_helper
 	gcut_assert_equal_string_helper
@@ -744,6 +785,8 @@ EXPORTS
 	gcut_inspect_direct
 	gcut_inspect_int
 	gcut_inspect_uint
+	gcut_inspect_int64
+	gcut_inspect_uint64
 	gcut_inspect_size
 	gcut_inspect_char
 	gcut_inspect_string
@@ -757,6 +800,8 @@ EXPORTS
 	gcut_data_get_string_helper
 	gcut_data_get_int_helper
 	gcut_data_get_uint_helper
+	gcut_data_get_int64_helper
+	gcut_data_get_uint64_helper
 	gcut_data_get_size_helper
 	gcut_data_get_type_helper
 	gcut_data_get_flags_helper
@@ -777,6 +822,8 @@ EXPORTS
 	gcut_dynamic_data_get_string
 	gcut_dynamic_data_get_int
 	gcut_dynamic_data_get_uint
+	gcut_dynamic_data_get_int64
+	gcut_dynamic_data_get_uint64
 	gcut_dynamic_data_get_size
 	gcut_dynamic_data_get_data_type
 	gcut_dynamic_data_get_flags
