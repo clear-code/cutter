@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -94,6 +94,8 @@ struct _CutTestContextPrivate
     gchar *actual;
     CutTestResult *current_result;
     guint user_message_jump_nest;
+    GThread *main_thread;
+    CutTestContext *parent;
 };
 
 enum
@@ -103,7 +105,8 @@ enum
     PROP_TEST_SUITE,
     PROP_TEST_CASE,
     PROP_TEST_ITERATOR,
-    PROP_TEST
+    PROP_TEST,
+    PROP_PARENT
 };
 
 G_DEFINE_TYPE (CutTestContext, cut_test_context, G_TYPE_OBJECT)
@@ -228,6 +231,13 @@ cut_test_context_class_init (CutTestContextClass *klass)
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_TEST, spec);
 
+    spec = g_param_spec_object("parent",
+                               "Parent",
+                               "The parent test context of the test context",
+                               CUT_TYPE_TEST_CONTEXT,
+                               G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
+    g_object_class_install_property(gobject_class, PROP_PARENT, spec);
+
     g_type_class_add_private(gobject_class, sizeof(CutTestContextPrivate));
 }
 
@@ -277,6 +287,10 @@ cut_test_context_init (CutTestContext *context)
     priv->current_result = NULL;
 
     priv->user_message_jump_nest = 0;
+
+    priv->main_thread = g_thread_self();
+
+    priv->parent = NULL;
 }
 
 static void
@@ -397,7 +411,31 @@ dispose (GObject *object)
     clear_additional_test_result_data(priv);
     clear_current_result(priv);
 
+    if (priv->parent) {
+        g_object_unref(priv->parent);
+        priv->parent = NULL;
+    }
+
     G_OBJECT_CLASS(cut_test_context_parent_class)->dispose(object);
+}
+
+static void
+set_parent (CutTestContext *context, CutTestContext *parent)
+{
+    CutTestContextPrivate *priv;
+
+    if (!parent)
+        return;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    priv->parent = g_object_ref(parent);
+    g_object_set(G_OBJECT(context),
+                 "run-context", cut_test_context_get_run_context(parent),
+                 "test-suite", cut_test_context_get_test_suite(parent),
+                 "test-case", cut_test_context_get_test_case(parent),
+                 "test-iterator", cut_test_context_get_test_iterator(parent),
+                 "test", cut_test_context_get_test(parent),
+                 NULL);
 }
 
 static void
@@ -409,22 +447,25 @@ set_property (GObject      *object,
     CutTestContext *context = CUT_TEST_CONTEXT(object);
 
     switch (prop_id) {
-      case PROP_RUN_CONTEXT:
+    case PROP_RUN_CONTEXT:
         cut_test_context_set_run_context(context, g_value_get_object(value));
         break;
-      case PROP_TEST_SUITE:
+    case PROP_TEST_SUITE:
         cut_test_context_set_test_suite(context, g_value_get_object(value));
         break;
-      case PROP_TEST_CASE:
+    case PROP_TEST_CASE:
         cut_test_context_set_test_case(context, g_value_get_object(value));
         break;
-      case PROP_TEST_ITERATOR:
+    case PROP_TEST_ITERATOR:
         cut_test_context_set_test_iterator(context, g_value_get_object(value));
         break;
-      case PROP_TEST:
+    case PROP_TEST:
         cut_test_context_set_test(context, g_value_get_object(value));
         break;
-      default:
+    case PROP_PARENT:
+        set_parent(context, g_value_get_object(value));
+        break;
+    default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
     }
@@ -489,6 +530,12 @@ void
 cut_test_context_current_push (CutTestContext *context)
 {
     GPtrArray *contexts;
+    CutTestContextPrivate *priv;
+
+    priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
+    if (priv->main_thread != g_thread_self()) {
+        context = cut_test_context_new_sub(context);
+    }
 
     contexts = g_static_private_get(&current_context_private);
     if (!contexts) {
@@ -543,6 +590,14 @@ CutTestContext *
 cut_test_context_new_empty (void)
 {
     return cut_test_context_new(NULL, NULL, NULL, NULL, NULL);
+}
+
+CutTestContext *
+cut_test_context_new_sub (CutTestContext *parent)
+{
+    return g_object_new(CUT_TYPE_TEST_CONTEXT,
+                        "parent", parent,
+                        NULL);
 }
 
 CutRunContext *
@@ -783,9 +838,28 @@ cut_test_context_get_jump (CutTestContext *context)
 void
 cut_test_context_long_jump (CutTestContext *context)
 {
+    gboolean same_thread_p = TRUE;
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
-    longjmp(*(priv->jump_buffer), 1);
+    if (priv->parent) {
+        CutTestContextPrivate *parent_priv;
+        parent_priv = CUT_TEST_CONTEXT_GET_PRIVATE(priv->parent);
+        if (parent_priv->main_thread != g_thread_self()) {
+            same_thread_p = FALSE;
+        }
+    } else {
+        if (priv->main_thread != g_thread_self()) {
+            same_thread_p = FALSE;
+        }
+    }
+
+    if (cut_test_context_in_user_message_jump(context) || same_thread_p) {
+        longjmp(*(priv->jump_buffer), 1);
+    } else {
+        cut_test_context_current_pop();
+        g_object_unref(context);
+        g_thread_exit(NULL);
+    }
 }
 
 void

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -68,6 +68,7 @@ CutTestContext  *cut_test_context_new (CutRunContext   *run_context,
                                        CutTestIterator *test_iterator,
                                        CutTest         *test);
 CutTestContext  *cut_test_context_new_empty (void);
+CutTestContext  *cut_test_context_new_sub (CutTestContext *parent);
 
 CutRunContext   *cut_test_context_get_run_context (CutTestContext *context);
 void             cut_test_context_set_run_context (CutTestContext *context,

@@ -1,3 +1,9 @@
+2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
+
+	* cutter/cut-test-context.[ch], cutter/cut-public.h: support
+	failures in other thread. Bug #3341429
+	Reported by Romain Tartière. Thanks!!!
+
 2011-07-03  Kouhei Sutou  <kou@cozmixng.org>
 
 	* test/cutter/test-cut-thread.c,
