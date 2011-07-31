@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* doc/reference/cutter-docs.sgml: add 1.1.8 entry.
+
 	* ./: update latest release.
 
 	* NEWS*: add 1.1.8 entry.
