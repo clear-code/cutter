@@ -43,6 +43,7 @@ GLibをビルドするためにはGNU gettext、GNU libiconvが必要ですが�
 glib-gatomic-missing-gthread-h.diff を保存しておいてください。
 
 glib-gatomic-missing-gthread-h.diff:
+  # diff
   --- glib-2.28.6/glib/gatomic.c.orig	Wed Apr 27 14:03:37 2011
   +++ glib-2.28.6/glib/gatomic.c	Wed Apr 27 14:04:08 2011
   @@ -28,6 +28,7 @@
