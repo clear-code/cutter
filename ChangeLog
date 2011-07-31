@@ -1,5 +1,8 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/include/cutter/cut-features.h (CUT_SUPPORT_GIO): enable GIO
+	support.
+
 	* vcc/: sync.
 
 	* vcc/Makefile.build: don't require Windows Driver Kit.

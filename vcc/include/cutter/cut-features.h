@@ -8,5 +8,6 @@
 
 #define CUT_SUPPORT_GLIB 1
 #define CUT_SUPPORT_GDK_PIXBUF 1
+#define CUT_SUPPORT_GIO 1
 
 #endif
