@@ -22,7 +22,7 @@
 
 #include "../lib/cuttest-assertions.h"
 
-void test_failure (void);
+void test_failure_not_crashed (void);
 
 static CutRunContext *pipeline;
 
@@ -59,7 +59,6 @@ run (const gchar *test_dir)
 void
 test_failure_not_crashed (void)
 {
-    cut_omit("cut_fail() in thread isn't supported yet.");
     cut_assert_false(run(cut_build_path(cuttest_get_base_dir(),
                                         "fixtures",
                                         "thread",

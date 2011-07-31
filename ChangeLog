@@ -1,5 +1,7 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* test/cutter/test-cut-thread.c: enable.
+
 	* module/ui/cut-console-ui.c: remove a garbage.
 
 	* apt/Makefile.am, yum/Makefile.am: remove duplicated info.
