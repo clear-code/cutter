@@ -14,6 +14,9 @@
   * Updated documents for Solaris 10.
   * Supported assertion failures in other thread. Bug #3341429
     [Reported by Romain Tartière]
+  * Fixed a problem that GTK+ test runner doesn't show test
+    result quickly.
+    [Patch by Tobias Gruetzmacher]
 
 ==== Changes
 
@@ -32,6 +35,7 @@
 === Thanks
 
   * Romain Tartière
+  * Tobias Gruetzmacher
 
 == [release-1-1-7] 1.1.7: 2011-02-13
 

@@ -13,6 +13,9 @@
   * Solaris 10用にドキュメントを書き換えた。
   * 別スレッド内での検証失敗の通知に対応。 Bug #3341429
     [Romain Tartièreさんが報告]
+  * GTK+テストランナーでテスト結果がすぐに表示されるようにし
+    た。
+    [Tobias Gruetzmacherさんが修正]
 
 ==== 変更
 
@@ -31,6 +34,7 @@
 === 感謝
 
   * Romain Tartièreさん
+  * Tobias Gruetzmacherさん
 
 == [release-1-1-7] 1.1.7: 2011-02-13
 
