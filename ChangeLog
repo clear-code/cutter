@@ -1,5 +1,10 @@
 2011-07-31  Kouhei Sutou  <kou@cozmixng.org>
 
+	* vcc/Makefile.build: don't require Windows Driver Kit.
+
+	* cutter/cut-utils.[ch], module/ui/cut-console-ui.c: support
+	ICONS_DIR on Windows.
+
 	* cutter/cut-file-stream-reader.c (runner_run_async): fix function
 	name on Windows.
 

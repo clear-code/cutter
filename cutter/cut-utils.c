@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -986,6 +986,19 @@ cut_win32_base_path (void)
     win32_base_path = g_win32_get_package_installation_directory_of_module(NULL);
 
     return win32_base_path;
+}
+
+static gchar *win32_icons_dir = NULL;
+
+const gchar *
+cut_win32_icons_dir (void)
+{
+    if (win32_icons_dir)
+        return win32_icons_dir;
+
+    win32_icons_dir = g_build_filename(cut_win32_base_path(), "share", PACKAGE,
+                                       "icons", NULL);
+    return win32_icons_dir;
 }
 
 gchar *

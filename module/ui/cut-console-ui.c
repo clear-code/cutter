@@ -42,6 +42,10 @@
 #include <cutter/cut-console.h>
 #include <cutter/cut-enum-types.h>
 
+#ifdef G_OS_WIN32
+static gchar *win32_icons_dir = NULL;
+#endif
+
 #define CUT_TYPE_CONSOLE_UI            cut_type_console_ui
 #define CUT_CONSOLE_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_CONSOLE_UI, CutConsoleUI))
 #define CUT_CONSOLE_UI_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), CUT_TYPE_CONSOLE_UI, CutConsoleUIClass))
@@ -983,8 +987,13 @@ search_icon_path (CutTestResultStatus status, gboolean success)
     candiate_icon_names = g_list_append(candiate_icon_names, "default");
 
     icons_dir = g_getenv("CUT_ICONS_DIR");
-    if (!icons_dir)
+    if (!icons_dir) {
+#ifdef G_OS_WIN32
+        icons_dir = cut_win32_icons_dir();
+#else
         icons_dir = ICONS_DIR;
+#endif
+    }
 
     for (node = candiate_icon_names; node; node = g_list_next(node)) {
         const gchar *icon_name = node->data;

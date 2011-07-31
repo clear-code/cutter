@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -87,6 +87,7 @@ gint         cut_utils_compare_direct        (gconstpointer data1,
 
 #ifdef G_OS_WIN32
 const gchar *cut_win32_base_path                     (void);
+const gchar *cut_win32_icons_dir                     (void);
 gchar       *cut_win32_build_module_dir_name         (const gchar *type);
 gchar       *cut_win32_build_factory_module_dir_name (const gchar *type);
 gboolean     cut_win32_kill_process                  (GPid pid,
