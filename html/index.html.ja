@@ -78,9 +78,9 @@
 
         <h2 id="development">Cutterの開発に参加</h2>
 	<p>
-	  CutterはSourceForge.netのSubversionリポジトリを利用して開発を行っています。ソースコードは以下のように取得できます。
-	  <pre class="command">% svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter</pre>
-	  新機能や問題修正のパッチはtrunkに対するものでお願いします。パッチは<a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a>に送ってください。
+	  CutterはGitHubの<a href="https://github.com/clear-code/cutter">gitリポジトリ</a>を利用して開発を行っています。ソースコードは以下のように取得できます。
+	  <pre class="command">% git clone https://github.com/clear-code/cutter.git</pre>
+	  新機能や問題修正のパッチがある場合は、リポジトリをforkしてpull requestを送ってください。または<a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a>でも受け付けています。
 	</p>
       </div>
 
@@ -132,6 +132,11 @@
 	<a href="http://sourceforge.net/projects/cutter">
 	  <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&amp;type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。" />
 	</a>
+      </p>
+      <p id="sponsor-github">
+        <a href="http://github.com/clear-code/cutter">
+          <img src="github-logo.png" width="100" height="45" border="0" alt="GitHubの提供するgitリポジトリを利用しています。" />
+        </a>
       </p>
       <p id="sponsor-tango">
 	<a href="http://tango.freedesktop.org/">
