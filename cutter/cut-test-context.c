@@ -28,6 +28,7 @@
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
 #endif
+#include <signal.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
@@ -855,7 +856,7 @@ cut_test_context_long_jump (CutTestContext *context)
     }
 
     if (cut_test_context_in_user_message_jump(context) || same_thread_p) {
-        longjmp(*(priv->jump_buffer), 1);
+        longjmp(*(priv->jump_buffer), SIGCHLD);
     } else {
         cut_test_context_current_pop();
         g_object_unref(context);
