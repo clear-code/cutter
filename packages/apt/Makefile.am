@@ -4,13 +4,7 @@ CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
 CODE_NAMES = squeeze wheezy unstable lucid natty oneiric
 
-release: remove-existing-packages build update sign upload
-
-remove-existing-packages:
-	for distribution in $(DISTRIBUTIONS); do	\
-	  find $${distribution}/pool -not		\
-	    -path '*/.svn/*' \-type f -delete;		\
-	done
+release: download build update sign upload
 
 update:
 	./update-repository.sh \
