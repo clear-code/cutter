@@ -9,9 +9,6 @@ USE_ATRPMS = no
 
 release: download build sign update upload
 
-dist:
-	cd ${top_builddir} && $(MAKE) dist
-
 sign:
 	./sign-rpm.sh '$(DISTRIBUTIONS)'
 
@@ -35,7 +32,7 @@ download:
 
 build: build-in-chroot build-repository-rpm
 
-build-in-chroot:
+build-in-chroot: source
 	./build-in-chroot.sh			\
 	  $(PACKAGE)				\
 	  $(VERSION)				\
@@ -58,3 +55,11 @@ build-repository-rpm: RPM-GPG-KEY-$(PACKAGE)
 
 RPM-GPG-KEY-$(PACKAGE):
 	./gpg-public-key.sh > $@
+
+source: ../$(PACKAGE)-$(VERSION).tar.gz
+
+../$(PACKAGE)-$(VERSION).tar.gz: $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz
+	ln -s $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz ../
+
+$(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz:
+	cd $(abs_top_builddir) && make dist
