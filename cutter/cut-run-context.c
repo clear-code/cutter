@@ -1321,7 +1321,7 @@ register_success_result (CutRunContext *context, CutTestResult *result)
 static void
 register_failure_result (CutRunContext *context, CutTestResult *result)
 {
-    CutRunContextPrivate *priv= CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
 
     g_mutex_lock(priv->mutex);
     priv->results = g_list_prepend(priv->results, g_object_ref(result));
