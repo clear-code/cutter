@@ -7,8 +7,6 @@ require "rd/version"
 
 require 'rd-visitor-util'
 
-require "rt/rtparser"
-
 begin
   require "gettext"
 rescue LoadError
@@ -119,6 +117,8 @@ module RD
     end
 
     def apply_to_RT(content)
+      require "rt/rtparser"
+
       rt = RT::RTParser.parse(content)
       elements = [tag("caption", {}, apply_to_String(rt.config["caption"]))]
 
