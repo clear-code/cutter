@@ -24,12 +24,8 @@ fi
 run aptitude update -V -D
 run aptitude safe-upgrade -V -D -y
 
-if aptitude show libgoffice-0.8-dev > /dev/null 2>&1; then
-    DEPENDED_PACKAGES=$(echo $DEPENDED_PACKAGES | sed -e 's/libgoffice-0-8/libgoffice-0.8/')
-else
-    if ! aptitude show libgoffice-0-8-dev > /dev/null 2>&1; then
-	DEPENDED_PACKAGES=$(echo $DEPENDED_PACKAGES | sed -e 's/libgoffice-0-8/libgoffice-0-6/')
-    fi
+if ! aptitude show libgoffice-0.8-dev > /dev/null 2>&1; then
+    DEPENDED_PACKAGES=$(echo $DEPENDED_PACKAGES | sed -e 's/libgoffice-0.8-dev//')
 fi
 
 run aptitude install -V -D -y devscripts ${DEPENDED_PACKAGES}
@@ -50,13 +46,10 @@ cd build
 tar xfz ${PACKAGE}_${VERSION}.orig.tar.gz
 cd ${PACKAGE}-${VERSION}/
 cp -rp /tmp/${PACKAGE}-debian debian
-if dpkg -l libgoffice-0.8-dev > /dev/null 2>&1; then
-    sed -i'' -e 's/libgoffice-0-8-dev/libgoffice-0.8-dev/g' debian/control
-    sed -i'' -e 's/libgoffice-0-8/libgoffice-0.8-8/g' debian/control
-else
-    if ! dpkg -l libgoffice-0-8-dev > /dev/null 2>&1; then
-        sed -i'' -e 's/libgoffice-0-8/libgoffice-0-6/g' debian/control
-    fi
+if ! dpkg -l libgoffice-0.8-dev > /dev/null 2>&1; then
+    mv debian/control debian/control.tmp
+    grep -v libgoffice-0.8-dev debian/control.tmp > debian/control
+    rm debian/control.tmp
 fi
 debuild -us -uc
 EOF

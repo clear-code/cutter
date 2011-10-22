@@ -2,12 +2,12 @@ Source: cutter
 Priority: extra
 Maintainer: Kouhei Sutou <kou@clear-code.com>
 Build-Depends: debhelper (>= 7.0.50),
-               quilt (>= 0.46-7~),
+               quilt,
                autotools-dev,
                intltool,
                gtk-doc-tools,
                libgtk2.0-dev,
-               libgoffice-0-8-dev,
+               libgoffice-0.8-dev,
                libgstreamer0.10-dev,
                libsoup2.4-dev
 Standards-Version: 3.9.1
@@ -47,7 +47,6 @@ Section: libs
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libglib2.0-0,
          libnotify-bin
 Description: Shared library to run tests with Cutter
  Cutter is a xUnit family Unit Testing Framework for C and C++.
@@ -112,8 +111,7 @@ Section: libs
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libcutter0 (= ${binary:Version}),
-         libgtk2.0-0
+         libcutter0 (= ${binary:Version})
 Description: Cutter GdkPixbuf integration (shared library)
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
@@ -125,8 +123,7 @@ Section: libs
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         cutter-bin (= ${binary:Version}),
-         libgtk2.0-0
+         cutter-bin (= ${binary:Version})
 Description: Cutter GTK+ test runner
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
@@ -149,8 +146,7 @@ Section: libdevel
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         cutter-bin (= ${binary:Version}),
-         libgoffice-0-8
+         cutter-bin (= ${binary:Version})
 Description: Test result reporting module for Cutter
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
@@ -161,8 +157,7 @@ Section: libs
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libcutter0 (= ${binary:Version}),
-         libgstreamer0.10-0
+         libcutter0 (= ${binary:Version})
 Description: Cutter GStreamer integration
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
@@ -173,8 +168,7 @@ Section: libs
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends},
-         libcutter0 (= ${binary:Version}),
-         libsoup2.4-1
+         libcutter0 (= ${binary:Version})
 Description: Cutter libsoup integration (shared library)
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
