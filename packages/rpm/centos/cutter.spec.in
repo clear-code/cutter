@@ -36,7 +36,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-, root, root, -)
-%doc ChangeLog README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja
+%doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja
 %doc %{_datadir}/gtk-doc/html/cutter/
 %{_bindir}/
 %{_includedir}/cutter/
