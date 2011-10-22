@@ -1,16 +1,21 @@
 #!/bin/sh
 
-if [ $# != 5 ]; then
-    echo "Usage: $0 PACKAGE VERSION CHROOT_BASE ARCHITECTURES DISTRIBUTIONS"
-    echo " e.g.: $0 cutter 1.1.1 /var/lib/chroot 'i386 x86_64' 'fedora centos'"
+if [ $# != 10 ]; then
+    echo "Usage: $0 PACKAGE VERSION SOURCE_BASE_NAME SPEC_DIR CHROOT_BASE ARCHITECTURES DISTRIBUTIONS HAVE_DEVELOPMENT_BRANCH USE_RPMFORGE USE_ATRPMS"
+    echo " e.g.: $0 milter-manager 1.1.1 ../milter-manager ../rpm /var/lib/chroot 'i386 x86_64' 'fedora centos' yes no no"
     exit 1
 fi
 
 PACKAGE=$1
 VERSION=$2
-CHROOT_BASE=$3
-ARCHITECTURES=$4
-DISTRIBUTIONS=$5
+SOURCE_BASE_NAME=$3
+SPEC_DIR=$4
+CHROOT_BASE=$5
+ARCHITECTURES=$6
+DISTRIBUTIONS=$7
+HAVE_DEVELOPMENT_BRANCH=$8
+USE_RPMFORGE=$9
+USE_ATRPMS=$10
 
 PATH=/usr/local/sbin:/usr/sbin:$PATH
 
@@ -79,41 +84,52 @@ build()
 {
     architecture=$1
     distribution=$2
+    distribution_version=$3
 
-    case $distribution in
-	fedora)
-	    distribution_version=15
-	    ;;
-	centos)
-	    distribution_version=5
-	    ;;
-    esac
     target=${distribution}-${distribution_version}-${architecture}
     base_dir=${CHROOT_BASE}/${target}
     if [ ! -d $base_dir ]; then
 	run build_chroot $architecture $distribution $distribution_version
     fi
 
-    source_dir=${script_base_dir}/..
     build_user=${PACKAGE}-build
     build_user_dir=${base_dir}/home/${build_user}
     rpm_base_dir=${build_user_dir}/rpm
     rpm_dir=${rpm_base_dir}/RPMS/${architecture}
     srpm_dir=${rpm_base_dir}/SRPMS
     pool_base_dir=${distribution}/${distribution_version}
+    if test "${HAVE_DEVELOPMENT_BRANCH}" = "yes"; then
+	minor_version=$(echo $VERSION | ruby -pe '$_.gsub!(/\A\d+\.(\d+)\..*/, "\\1")')
+	if test $(expr ${minor_version} % 2) -eq 0; then
+	    branch_name=stable
+	else
+	    branch_name=development
+	fi
+	pool_base_dir=${pool_base_dir}/${branch_name}
+    fi
     binary_pool_dir=$pool_base_dir/$architecture/Packages
     source_pool_dir=$pool_base_dir/source/SRPMS
-    run cp $source_dir/${PACKAGE}-${VERSION}.tar.gz \
-	${CHROOT_BASE}/$target/tmp/
-    run cp $source_dir/rpm/${distribution}/${PACKAGE}.spec \
-	${CHROOT_BASE}/$target/tmp/
+    if test -f ${SOURCE_BASE_NAME}-${VERSION}-*.src.rpm; then
+	run cp ${SOURCE_BASE_NAME}-${VERSION}-*.src.rpm \
+	    ${CHROOT_BASE}/$target/tmp/
+    else
+	run cp ${SOURCE_BASE_NAME}-${VERSION}.* \
+	    ${CHROOT_BASE}/$target/tmp/
+	run cp ${SPEC_DIR}/${distribution}/${PACKAGE}.spec \
+	    ${CHROOT_BASE}/$target/tmp/
+    fi
     run echo $PACKAGE > ${CHROOT_BASE}/$target/tmp/build-package
     run echo $VERSION > ${CHROOT_BASE}/$target/tmp/build-version
+    run echo $(basename ${SOURCE_BASE_NAME}) > \
+	${CHROOT_BASE}/$target/tmp/build-source-base-name
     run echo $build_user > ${CHROOT_BASE}/$target/tmp/build-user
     run cp ${script_base_dir}/${PACKAGE}-depended-packages \
 	${CHROOT_BASE}/$target/tmp/depended-packages
-    run cp ${script_base_dir}/build-rpm.sh \
-	${CHROOT_BASE}/$target/tmp/
+    run echo $USE_RPMFORGE > ${CHROOT_BASE}/$target/tmp/build-use-rpmforge
+    run echo $USE_ATRPMS > ${CHROOT_BASE}/$target/tmp/build-use-atrpms
+    run cp ${script_base_dir}/${PACKAGE}-build-options \
+	${CHROOT_BASE}/$target/tmp/build-options
+    run cp ${script_base_dir}/build-rpm.sh ${CHROOT_BASE}/$target/tmp/
     run_sudo rm -rf $rpm_dir $srpm_dir
     run_sudo su -c "chroot ${CHROOT_BASE}/$target /tmp/build-rpm.sh"
     run mkdir -p $binary_pool_dir
@@ -124,11 +140,21 @@ build()
 
 for architecture in $ARCHITECTURES; do
     for distribution in $DISTRIBUTIONS; do
-	if test "$parallel" = "yes"; then
-	    build $architecture $distribution &
-	else
-	    build $architecture $distribution
-	fi;
+	case $distribution in
+	    fedora)
+		distribution_versions="15"
+		;;
+	    centos)
+		distribution_versions="5 6"
+		;;
+	esac
+	for distribution_version in $distribution_versions; do
+	    if test "$parallel" = "yes"; then
+		build $architecture $distribution $distribution_version &
+	    else
+		build $architecture $distribution $distribution_version
+	    fi;
+	done;
     done;
 done
 
