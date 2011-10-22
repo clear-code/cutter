@@ -537,22 +537,26 @@ if test -n "$SF_USER"; then
 fi
 AC_SUBST(SF_USER_OPTION)
 
-SF_HOST="web.sourceforge.net"
+SF_WEB_HOST="web.sourceforge.net"
+SF_FRS_HOST="frs.sourceforge.net"
 if test -n "$SF_USER"; then
-   SF_HOST="$SF_USER,cutter@$SF_HOST"
-else
-   SF_HOST="$USER,cutter@$SF_HOST"
+   SF_WEB_HOST="$SF_USER,$SF_PROJECT_ID@$SF_WEB_HOST"
+   SF_FRS_HOST="$SF_USER,$SF_PROJECT_ID@$SF_FRS_HOST"
 fi
-AC_SUBST(SF_HOST)
+AC_SUBST(SF_WEB_HOST)
+AC_SUBST(SF_FRS_HOST)
 
-SF_HTDOCS_PATH="/home/groups/c/cu/cutter/htdocs"
+SF_PROJECT_ID_HEAD_1=`echo $SF_PROJECT_ID | sed -e 's/^\(.\).*/\1/'`
+SF_PROJECT_ID_HEAD_2=`echo $SF_PROJECT_ID | sed -e 's/^\(..\).*/\1/'`
+SF_HTDOCS_PATH="/home/groups/${SF_PROJECT_ID_HEAD_1}/${SF_PROJECT_ID_HEAD_2}/${SF_PROJECT_ID}/htdocs"
 AC_SUBST(SF_HTDOCS_PATH)
-
-SF_HTDOCS="$SF_HOST:$SF_HTDOCS_PATH"
+SF_HTDOCS="$SF_WEB_HOST:$SF_HTDOCS_PATH"
 AC_SUBST(SF_HTDOCS)
 
-SF_REPOS="https://cutter.svn.sourceforge.net/svnroot/cutter/cutter"
-AC_SUBST(SF_REPOS)
+SF_FRS_PATH="/home/frs/project/${SF_PROJECT_ID_HEAD_1}/${SF_PROJECT_ID_HEAD_2}/${SF_PROJECT_ID}"
+AC_SUBST(SF_FRS_PATH)
+SF_FRS="$SF_FRS_HOST:$SF_FRS_PATH"
+AC_SUBST(SF_FRS)
 
 dnl **************************************************************
 dnl Cutter related variables.

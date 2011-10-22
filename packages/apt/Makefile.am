@@ -1,3 +1,4 @@
+SERVER_PATH = $(SF_FRS)
 DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
@@ -21,21 +22,24 @@ sign:
 upload:
 	for distribution in $(DISTRIBUTIONS); do	\
 	  (cd $${distribution};				\
-	   rsync -avz --exclude .svn --delete		\
-	     dists pool $(SF_HTDOCS)/$${distribution};	\
+	   rsync -avz --delete				\
+	     .htaccess dists pool			\
+	     $(SERVER_PATH)/$${distribution};		\
 	  );						\
 	done
 
 download:
 	for distribution in $(DISTRIBUTIONS); do		\
-	  (cd $${distribution};					\
-	   rsync -avz $(SF_HTDOCS)/$${distribution}/pool/ pool;	\
+	  (mkdir -p $${distribution} &&				\
+	   cd $${distribution} &&				\
+	   rm -rf pool dists &&					\
+	   rsync -avz $(SERVER_PATH)/$${distribution}/ .;	\
 	  );							\
 	done
 
 build: source
-	./build-in-chroot.sh \
-	  $(PACKAGE) $(VERSION) $(CHROOT_BASE) \
+	./build-in-chroot.sh			\
+	  $(PACKAGE) $(VERSION) $(CHROOT_BASE)	\
 	  '$(ARCHITECTURES)' '$(CODE_NAMES)'
 
 source: ../$(PACKAGE)-$(VERSION).tar.gz
