@@ -28,9 +28,6 @@
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
 #endif
-#ifdef HAVE_UNISTD_H
-#  include <unistd.h>
-#endif
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
@@ -41,6 +38,10 @@
 #  include <winsock2.h>
 #  include <process.h>		/* For getpid() */
 #  include <io.h>
+#else
+#  ifdef HAVE_UNISTD_H
+#    include <unistd.h>
+#  endif
 #endif
 
 #include "cut-run-context.h"
