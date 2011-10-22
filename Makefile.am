@@ -75,8 +75,8 @@ release-debian:
 	rsync -avz tmp/archives $(SF_HTDOCS)/
 
 upload-doc:
-	cd html && $(MAKE) $(AM_MAKEFLAGS) upload
-	cd doc/reference && $(MAKE) $(AM_MAKEFLAGS) upload
+	cd html && $(MAKE) upload
+	cd doc/reference && $(MAKE) upload
 
 update-po:
 	cd $(top_srcdir) &&			\
