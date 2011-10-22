@@ -19,8 +19,7 @@ SUBDIRS = 			\
 	doc			\
 	html			\
 	vcc			\
-	apt			\
-	yum
+	packages
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = 	\
@@ -111,9 +110,9 @@ update-latest-release:
 	  $(PACKAGE)						\
 	  $(OLD_RELEASE) $(OLD_RELEASE_DATE)			\
 	  $(VERSION) $(NEW_RELEASE_DATE)			\
-	  rpm/fedora/cutter.spec.in				\
-	  rpm/centos/cutter.spec.in				\
-	  debian/changelog					\
+	  packages/rpm/fedora/cutter.spec.in			\
+	  packages/rpm/centos/cutter.spec.in			\
+	  packages/debian/changelog				\
 	  html/index.html					\
 	  html/index.html.ja					\
 	  doc/reference/header.html				\

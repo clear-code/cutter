@@ -805,8 +805,6 @@ AC_CONFIG_FILES([Makefile
 		 libcutter.pc
 		 gdkcutter-pixbuf.pc
 		 soupcutter.pc
-		 rpm/centos/cutter.spec
-		 rpm/fedora/cutter.spec
 		 m4macros/Makefile
 		 glib-compatible/Makefile
 		 glib-compatible/pcre/Makefile
@@ -884,8 +882,11 @@ AC_CONFIG_FILES([Makefile
 		 doc/reference/Makefile
 		 html/Makefile
 		 vcc/Makefile
-		 apt/Makefile
-		 yum/Makefile])
+		 packages/Makefile
+		 packages/rpm/centos/cutter.spec
+		 packages/rpm/fedora/cutter.spec
+		 packages/apt/Makefile
+		 packages/yum/Makefile])
 
 AC_OUTPUT
 
