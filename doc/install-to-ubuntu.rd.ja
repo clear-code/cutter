@@ -21,15 +21,15 @@ Lucidの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/ubuntu/ lucid main
-  deb-src http://cutter.sourceforge.net/ubuntu/ lucid main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
 
 Nattyの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/ubuntu/ natty main
-  deb-src http://cutter.sourceforge.net/ubuntu/ natty main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ natty main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ natty main
 
 パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン
 しています。信用する場合は鍵を登録します。

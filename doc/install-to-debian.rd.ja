@@ -21,22 +21,22 @@ squeezeの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/debian/ squeeze main
-  deb-src http://cutter.sourceforge.net/debian/ squeeze main
+  deb http://downloads.sourceforge.net/cutter/debian/ squeeze main
+  deb-src http://downloads.sourceforge.net/cutter/debian/ squeeze main
 
 wheezyの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/debian/ wheezy main
-  deb-src http://cutter.sourceforge.net/debian/ wheezy main
+  deb http://downloads.sourceforge.net/cutter/debian/ wheezy main
+  deb-src http://downloads.sourceforge.net/cutter/debian/ wheezy main
 
 sidの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/debian/ unstable main
-  deb-src http://cutter.sourceforge.net/debian/ unstable main
+  deb http://downloads.sourceforge.net/cutter/debian/ unstable main
+  deb-src http://downloads.sourceforge.net/cutter/debian/ unstable main
 
 パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン
 しています。信用する場合は鍵を登録します。

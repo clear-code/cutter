@@ -20,15 +20,15 @@ Here are apt lines for for Lucid. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/ubuntu/ lucid main
-  deb-src http://cutter.sourceforge.net/ubuntu/ lucid main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
 
 Here are apt lines for for Natty. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://cutter.sourceforge.net/ubuntu/ natty main
-  deb-src http://cutter.sourceforge.net/ubuntu/ natty main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ natty main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ natty main
 
 Cutter packages are signed by key of
 kou@cozmixng.org/kou@clear-code.com. If we trust the key, we

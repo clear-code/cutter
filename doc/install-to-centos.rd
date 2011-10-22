@@ -12,7 +12,7 @@ We can use yum because Cutter provides a Yum repository.
 
 First, we need to register Cutter Yum repository:
 
-  % sudo rpm -Uvh http://cutter.sourceforge.net/centos/cutter-repository-1.0.0-1.noarch.rpm
+  % sudo rpm -Uvh http://downloads.sourceforge.net/cutter/centos/cutter-repository-1.0.0-1.noarch.rpm
 
 Now, we can install Cutter by yum:
 
