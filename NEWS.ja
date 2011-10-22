@@ -2,6 +2,27 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-1-9] 1.1.9: 2011-10-22
+
+リポジトリをSF.netからGitHubへ移動しました。
+
+=== Cutter
+
+==== 変更
+
+  * Ubuntu Oneiric Ocelotのサポートを追加。
+  * CentOS 6のサポートを追加。
+
+==== 修正
+
+  * スレッド使用時の成功したテスト数のカウントがおかしくなる
+    問題を修正。 [SF.net #3383253]
+    [Romain Tartièreさんが報告]
+
+=== 感謝
+
+  * Romain Tartièreさん
+
 == [release-1-1-8] 1.1.8: 2011-07-31
 
 === Cutter

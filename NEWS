@@ -2,6 +2,26 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-1-9] 1.1.9: 2011-10-22
+
+We move the repository to GitHub from SF.net.
+
+=== Cutter
+
+==== Changes
+
+  * Added Ubuntu Oneiric Ocelot support.
+  * Added CentOS 6 support.
+
+==== Fixes
+
+  * Fixed as success test count with thread. [SF.net #3383253]
+    [Reported by Romain Tartière]
+
+=== Thanks
+
+  * Romain Tartière
+
 == [release-1-1-8] 1.1.8: 2011-07-31
 
 === Cutter
