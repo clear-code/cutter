@@ -39,3 +39,6 @@ Makefile.in
 /packages/yum/RPM-GPG-KEY-cutter
 /packages/yum/cutter-repository.spec
 /test/lib/cuttest-echo/cuttest-echo
+/*.tar.gz
+/packages/*.tar.gz
+/html/mini-heading-mark.png
