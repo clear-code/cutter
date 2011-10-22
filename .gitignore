@@ -32,10 +32,10 @@ Makefile.in
 /cppcutter.pc
 /cutter/cut-config.h
 /cutter/cut-diff
-/doc/cut-diff.jman
-/doc/cut-diff.man
-/doc/cutter.jman
-/doc/cutter.man
+/doc/*.jman
+/doc/*.man
+/doc/reference/*.xml
+/doc/reference/*.xml.ja
 /packages/yum/RPM-GPG-KEY-cutter
 /packages/yum/cutter-repository.spec
 /test/lib/cuttest-echo/cuttest-echo
