@@ -10,7 +10,8 @@ This document explains how to install Cutter to CentOS.
 
 We can use yum because Cutter provides a Yum repository.
 
-First, we need to register Cutter Yum repository:
+First, we need to register Cutter Yum repository. This way
+is valid for both CentOS 5 and CentOS 6.
 
   % sudo rpm -Uvh http://downloads.sourceforge.net/cutter/centos/cutter-repository-1.0.0-1.noarch.rpm
 
