@@ -858,6 +858,9 @@ cut_test_context_long_jump (CutTestContext *context)
     if (cut_test_context_in_user_message_jump(context) || same_thread_p) {
         longjmp(*(priv->jump_buffer), SIGCHLD);
     } else {
+        if (priv->parent && cut_test_context_is_failed(context)) {
+            cut_test_context_set_failed(priv->parent, TRUE);
+        }
         cut_test_context_current_pop();
         g_object_unref(context);
         g_thread_exit(NULL);
