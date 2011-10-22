@@ -30,6 +30,13 @@ Here are apt lines for for Natty. We put them into
   deb http://downloads.sourceforge.net/cutter/ubuntu/ natty main
   deb-src http://downloads.sourceforge.net/cutter/ubuntu/ natty main
 
+Here are apt lines for for Oneiric. We put them into
+/etc/apt/sources.list.d/cutter.list.
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ oneiric main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ oneiric main
+
 Cutter packages are signed by key of
 kou@cozmixng.org/kou@clear-code.com. If we trust the key, we
 can register the key:
