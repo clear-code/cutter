@@ -44,3 +44,6 @@ Makefile.in
 /*.tar.gz
 /packages/*.tar.gz
 /html/mini-heading-mark.png
+/tmp/
+/dist/
+/doc/reference/tmp/
