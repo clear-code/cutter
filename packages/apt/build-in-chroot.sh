@@ -76,7 +76,7 @@ build()
     fi
 
     case ${code_name} in
-	lenny|squeeze|unstable)
+	squeeze|wheezy|unstable)
 	    distribution=debian
 	    component=main
 	    ;;
@@ -98,7 +98,6 @@ build()
     run rm -rf ${CHROOT_BASE}/$target/tmp/${PACKAGE}-debian
     run cp -rp $source_dir/debian/ \
 	${CHROOT_BASE}/$target/tmp/${PACKAGE}-debian
-    run rm -rf ${CHROOT_BASE}/$target/tmp/${PACKAGE}-debian/.svn
     run echo $PACKAGE > ${CHROOT_BASE}/$target/tmp/build-package
     run echo $VERSION > ${CHROOT_BASE}/$target/tmp/build-version
     run echo $build_user > ${CHROOT_BASE}/$target/tmp/build-user
