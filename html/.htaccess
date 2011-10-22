@@ -1,0 +1,4 @@
+Redirect permanent /debian/ http://downloads.sourceforge.net/cutter/debian/
+Redirect permanent /ubuntu/ http://downloads.sourceforge.net/cutter/ubuntu/
+Redirect permanent /centos/ http://downloads.sourceforge.net/cutter/centos/
+Redirect permanent /fedora/ http://downloads.sourceforge.net/cutter/fedora/
