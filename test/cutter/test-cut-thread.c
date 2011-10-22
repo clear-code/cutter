@@ -65,6 +65,7 @@ test_failure_not_crashed (void)
                                         "failure",
                                         NULL)));
     cut_assert_false(cut_run_context_is_crashed(pipeline));
+    cut_assert_equal_int(0, cut_run_context_get_n_successes(pipeline));
 }
 
 /*
