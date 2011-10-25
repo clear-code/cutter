@@ -13,7 +13,7 @@ We can use port because Cutter provides MacPorts.
 First, we get MacPorts for Cutter:
 
   % cd ~
-  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/macports/ cutter-macports
+  % git clone https://github.com/clear-code/cutter-macports.git
 
 Next, we register MacPorts for Cutter:
 
