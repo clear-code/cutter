@@ -2,8 +2,15 @@ require "English"
 
 require "erb"
 require "optparse"
-require "rd/rdvisitor"
-require "rd/version"
+begin
+  require "rd/rdvisitor"
+  require "rd/version"
+rescue LoadError
+  require 'rubygems'
+  gem 'rdtool'
+  require "rd/rdvisitor"
+  require "rd/version"
+end
 
 require 'rd-visitor-util'
 
