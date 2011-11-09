@@ -61,7 +61,8 @@ namespace cut
                                expression_expected, expression_actual);
     };
 
-    template <class Type> void assert_equal(Type& expected, Type& actual,
+    template <class Type> void assert_equal(const Type& expected,
+                                            const Type& actual,
                                             const char *expression_expected,
                                             const char *expression_actual)
     {
@@ -70,7 +71,7 @@ namespace cut
     };
 
     template <class Type> void assert_equal_reference(
-        Type& expected, Type& actual,
+        const Type& expected, const Type& actual,
         const char *expression_expected, const char *expression_actual)
     {
         if (expected == actual) {
