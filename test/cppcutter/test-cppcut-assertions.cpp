@@ -301,35 +301,64 @@ namespace cppcut_assertions
     }
 
     static void
-    stub_equal_c_string (void)
+    stub_equal_c_string_literal (void)
     {
         cppcut_assert_equal("abcde", "abcde");
         MARK_FAIL(cppcut_assert_equal("abcde", "ABcDE"));
     }
 
     void
-    test_equal_c_string (void)
+    test_equal_c_string_literal (void)
     {
-        test = cut_test_new("equal_c_string test", stub_equal_c_string);
+        test = cut_test_new("equal_c_string_literal test",
+                            stub_equal_c_string_literal);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
         cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                               "equal_c_string test",
+                               "equal_c_string_literal test",
                                NULL,
                                "<\"abcde\" == \"ABcDE\">",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_c_string()",
+                               "void cppcut_assertions::stub_equal_c_string_literal()",
+                               NULL);
+    }
+
+    static void
+    stub_equal_c_string_buffer (void)
+    {
+        char expected[] = "abcde";
+        char actual[] = "ABcDE";
+        cppcut_assert_equal(expected, expected);
+        MARK_FAIL(cppcut_assert_equal(expected, actual));
+    }
+
+    void
+    test_equal_c_string_buffer (void)
+    {
+        test = cut_test_new("equal_c_string_buffer test",
+                            stub_equal_c_string_buffer);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_c_string_buffer test",
+                               NULL,
+                               "<expected == actual>",
+                               "abcde", "ABcDE",
+                               FAIL_LOCATION,
+                               "void cppcut_assertions::stub_equal_c_string_buffer()",
                                NULL);
     }
 
     static void
     stub_equal_c_string_reference (void)
     {
-        char expected[] = "abcde";
-        char actual[] = "ABcDE";
+        const char *expected = "abcde";
+        const char *actual = "ABcDE";
         cppcut_assert_equal(expected, expected);
         MARK_FAIL(cppcut_assert_equal(expected, actual));
     }
@@ -350,6 +379,34 @@ namespace cppcut_assertions
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
                                "void cppcut_assertions::stub_equal_c_string_reference()",
+                               NULL);
+    }
+
+    static void
+    stub_equal_c_string_mix (void)
+    {
+        char expected[] = "abcde";
+        const char *actual = "ABcDE";
+        cppcut_assert_equal(expected, expected);
+        MARK_FAIL(cppcut_assert_equal(expected, actual));
+    }
+
+    void
+    test_equal_c_string_mix (void)
+    {
+        test = cut_test_new("equal_c_string_mix test",
+                            stub_equal_c_string_mix);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_c_string_mix test",
+                               NULL,
+                               "<expected == actual>",
+                               "abcde", "ABcDE",
+                               FAIL_LOCATION,
+                               "void cppcut_assertions::stub_equal_c_string_mix()",
                                NULL);
     }
 

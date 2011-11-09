@@ -52,6 +52,15 @@ namespace cut
                       const char *expression_expected,
                       const char *expression_actual);
 
+    template <typename Type> void assert_equal(const Type *expected,
+                                               const Type *actual,
+                                               const char *expression_expected,
+                                               const char *expression_actual)
+    {
+        assert_equal_reference(expected, actual,
+                               expression_expected, expression_actual);
+    };
+
     template <class Type> void assert_equal(Type& expected, Type& actual,
                                             const char *expression_expected,
                                             const char *expression_actual)
