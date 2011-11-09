@@ -1,6 +1,6 @@
 /* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -35,7 +35,7 @@
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
 
-namespace assertions
+namespace cppcut_assertions
 {
     CutTest *test;
     CutRunContext *run_context;
@@ -112,7 +112,7 @@ namespace assertions
                                "<100 == 1 - 2>",
                                "100", "-1",
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_int()",
+                               "void cppcut_assertions::stub_equal_int()",
                                NULL);
     }
 
@@ -140,7 +140,7 @@ namespace assertions
                                "<expected == actual>",
                                "100", "-100",
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_int_reference()",
+                               "void cppcut_assertions::stub_equal_int_reference()",
                                NULL);
     }
 
@@ -165,7 +165,7 @@ namespace assertions
                                "<100 == 2 - 1>",
                                "100", "1",
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_unsigned_int()",
+                               "void cppcut_assertions::stub_equal_unsigned_int()",
                                NULL);
     }
 
@@ -202,7 +202,7 @@ namespace assertions
                                cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32 - 1),
 #endif
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_long()",
+                               "void cppcut_assertions::stub_equal_long()",
                                NULL);
     }
 
@@ -242,7 +242,7 @@ namespace assertions
                                                G_MAXUINT32 - 1),
 #endif
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_unsigned_long()",
+                               "void cppcut_assertions::stub_equal_unsigned_long()",
                                NULL);
     }
 
@@ -268,7 +268,7 @@ namespace assertions
                                cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
                                cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_long_long()",
+                               "void cppcut_assertions::stub_equal_long_long()",
                                NULL);
     }
 
@@ -296,7 +296,7 @@ namespace assertions
                                cut_take_printf("%" G_GUINT64_FORMAT,
                                                G_MAXUINT64 - 1U),
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_unsigned_long_long()",
+                               "void cppcut_assertions::stub_equal_unsigned_long_long()",
                                NULL);
     }
 
@@ -321,7 +321,7 @@ namespace assertions
                                "<\"abcde\" == \"ABcDE\">",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_c_string()",
+                               "void cppcut_assertions::stub_equal_c_string()",
                                NULL);
     }
 
@@ -349,7 +349,7 @@ namespace assertions
                                "<expected == actual>",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_c_string_reference()",
+                               "void cppcut_assertions::stub_equal_c_string_reference()",
                                NULL);
     }
 
@@ -376,7 +376,7 @@ namespace assertions
                                "<expected == actual>",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void assertions::stub_equal_string()",
+                               "void cppcut_assertions::stub_equal_string()",
                                NULL);
     }
 
@@ -400,7 +400,7 @@ namespace assertions
                                "<\"abcde\" == \"ABCDE\">",
                                "abcde", "ABCDE",
                                FAIL_LOCATION,
-                               "void assertions::stub_message()",
+                               "void cppcut_assertions::stub_message()",
                                NULL);
     }
 
@@ -424,7 +424,7 @@ namespace assertions
                                "<\"abcde\" == \"ABCDE\">",
                                "abcde", "ABCDE",
                                FAIL_LOCATION,
-                               "void assertions::stub_message_shift()",
+                               "void cppcut_assertions::stub_message_shift()",
                                NULL);
     }
 }
