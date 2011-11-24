@@ -31,6 +31,7 @@ svg_images =					\
 	cutter-easy-to-debug.svg		\
 	cutter-easy-to-write.svg
 
+if HAVE_RD2
 dist_man1_MANS =	\
 	cutter.man	\
 	cut-diff.man
@@ -42,6 +43,7 @@ dist_ja_man1_mans =	\
 	cut-diff.jman
 
 EXTRA_DIST += $(dist_ja_man1_mans)
+endif
 
 jman: $(dist_ja_man1_mans)
 
