@@ -16,6 +16,11 @@ end
 package, old_version, old_release_date, new_version, new_release_date, *files =
   ARGV
 
+git_user_name = `git config --get user.name`.chomp
+git_user_email = `git config --get user.email`.chomp
+name = ENV['DEBEMAIL'] || ENV['NAME'] || git_user_name
+email = ENV['DEBFULLNAME'] || ENV['EMAIL'] || git_user_email
+
 files.each do |file|
   content = replaced_content = File.read(file)
   case file
@@ -24,7 +29,7 @@ files.each do |file|
     if content !~ /#{Regexp.escape(new_version)}/
       replaced_content = content.sub(/^(%changelog\n)/, <<-EOC)
 %changelog
-* #{date} Kouhei Sutou <kou@clear-code.com> - #{new_version}-0
+* #{date} #{name} <#{email}> - #{new_version}-0
 - new upstream release.
 
       EOC
@@ -37,7 +42,7 @@ files.each do |file|
 
   * New upstream release.
 
- -- Kouhei Sutou <kou@clear-code.com>  #{date}
+ -- #{name} <#{email}>  #{date}
 
       EOC
     end
