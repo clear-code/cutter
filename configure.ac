@@ -156,6 +156,7 @@ esac
 AM_CONDITIONAL([HAVE_WINDRES], [test x"$WINDRES" != x])
 
 WINDOWS_LIBS=
+
 if test "$have_winsock2_h" = "yes"; then
   WINDOWS_LIBS="-lws2_32"
 fi
@@ -176,6 +177,14 @@ else
   glib_2_12=no
 fi
 AM_CONDITIONAL([GLIB_2_12], [test "$glib_2_12" = "yes"])
+
+AC_MSG_CHECKING([whether to enable deprecated GLib API])
+AC_ARG_ENABLE([deprecated-glib-api],
+              AS_HELP_STRING([--disable-deprecated-glib-api],
+                             [Disable deprecated GLib API]),
+              [enable_deprecated_glib_api=$enableval],
+              [enable_deprecated_glib_api=yes])
+AC_MSG_RESULT([$enable_deprecated_glib_api])
 
 dnl **************************************************************
 dnl Check for GIO
@@ -568,7 +577,11 @@ AC_SUBST(icons_dir)
 CUTTER="\$(top_builddir)/cutter/cutter\$(EXEEXT)"
 AC_SUBST(CUTTER)
 
-CUTTER_CFLAGS="$GLIB_CFLAGS -DG_DISABLE_DEPRECATED -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
+CUTTER_CFLAGS="$GLIB_CFLAGS "
+if test "$enable_deprecated_glib_api" != "yes"; then
+  CUTTER_CFLAGS="$CUTTER_CFLAGS -DG_DISABLE_DEPRECATED"
+fi
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS $GIO_CFLAGS"
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
