@@ -111,6 +111,32 @@ namespace cut
                          const char *expression_lhs,
                          const char *expression_operator,
                          const char *expression_rhs);
+    CPPCUT_DECL
+    void assert_operator(bool result, unsigned int lhs, unsigned int rhs,
+                         const char *expression_lhs,
+                         const char *expression_operator,
+                         const char *expression_rhs);
+    CPPCUT_DECL
+    void assert_operator(bool result, long lhs, long rhs,
+                         const char *expression_lhs,
+                         const char *expression_operator,
+                         const char *expression_rhs);
+    CPPCUT_DECL
+    void assert_operator(bool result, unsigned long lhs, unsigned long rhs,
+                         const char *expression_lhs,
+                         const char *expression_operator,
+                         const char *expression_rhs);
+    CPPCUT_DECL
+    void assert_operator(bool result, long long lhs, long long rhs,
+                         const char *expression_lhs,
+                         const char *expression_operator,
+                         const char *expression_rhs);
+    CPPCUT_DECL
+    void assert_operator(bool result,
+                         unsigned long long lhs, unsigned long long rhs,
+                         const char *expression_lhs,
+                         const char *expression_operator,
+                         const char *expression_rhs);
 
     template <typename Type> void assert_operator(
         bool result,

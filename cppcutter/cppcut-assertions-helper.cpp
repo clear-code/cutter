@@ -86,6 +86,72 @@ cut::assert_operator(bool result, int lhs, int rhs,
                                    expression_rhs);
 }
 
+CPPCUT_DECL void
+cut::assert_operator(bool result, unsigned int lhs, unsigned int rhs,
+                     const char *expression_lhs,
+                     const char *expression_operator,
+                     const char *expression_rhs)
+{
+    cut::assert_operator_reference(result,
+                                   lhs, rhs,
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs);
+}
+
+CPPCUT_DECL void
+cut::assert_operator(bool result, long lhs, long rhs,
+                     const char *expression_lhs,
+                     const char *expression_operator,
+                     const char *expression_rhs)
+{
+    cut::assert_operator_reference(result,
+                                   lhs, rhs,
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs);
+}
+
+CPPCUT_DECL void
+cut::assert_operator(bool result, unsigned long lhs, unsigned long rhs,
+                     const char *expression_lhs,
+                     const char *expression_operator,
+                     const char *expression_rhs)
+{
+    cut::assert_operator_reference(result,
+                                   lhs, rhs,
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs);
+}
+
+CPPCUT_DECL void
+cut::assert_operator(bool result, long long lhs, long long rhs,
+                     const char *expression_lhs,
+                     const char *expression_operator,
+                     const char *expression_rhs)
+{
+    cut::assert_operator_reference(result,
+                                   lhs, rhs,
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs);
+}
+
+CPPCUT_DECL void
+cut::assert_operator(bool result,
+                     unsigned long long lhs, unsigned long long rhs,
+                     const char *expression_lhs,
+                     const char *expression_operator,
+                     const char *expression_rhs)
+{
+    cut::assert_operator_reference(result,
+                                   lhs, rhs,
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */

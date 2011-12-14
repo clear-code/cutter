@@ -562,8 +562,10 @@ namespace cppcut_assertion_operator
     static void
     stub_int (void)
     {
-        cppcut_assert_operator(1 + 2, <, 2 + 3);
-        MARK_FAIL(cppcut_assert_operator(1 + 2, >, 2 + 3));
+        int lhs = 3;
+        int rhs = 5;
+        cppcut_assert_operator(lhs, <, rhs);
+        MARK_FAIL(cppcut_assert_operator(lhs, >, rhs));
     }
 
     void
@@ -577,7 +579,7 @@ namespace cppcut_assertion_operator
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                                "int test",
                                NULL,
-                               "expected: <1 + 2> > <2 + 3>\n"
+                               "expected: <lhs> > <rhs>\n"
                                "  actual: <3> > <5>",
                                NULL,
                                NULL,
@@ -585,6 +587,152 @@ namespace cppcut_assertion_operator
                                "void cppcut_assertion_operator::stub_int()",
                                NULL);
     }
+
+    static void
+    stub_unsigned_int (void)
+    {
+        unsigned int lhs = 3;
+        unsigned int rhs = 5;
+        cppcut_assert_operator(lhs, <, rhs);
+        MARK_FAIL(cppcut_assert_operator(lhs, >, rhs));
+    }
+
+    void
+    test_unsigned_int (void)
+    {
+        test = cut_test_new("unsigned int test", stub_unsigned_int);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "unsigned int test",
+                               NULL,
+                               "expected: <lhs> > <rhs>\n"
+                               "  actual: <3> > <5>",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_operator::stub_unsigned_int()",
+                               NULL);
+    }
+
+    static void
+    stub_long (void)
+    {
+        long lhs = 3;
+        long rhs = 5;
+        cppcut_assert_operator(lhs, <, rhs);
+        MARK_FAIL(cppcut_assert_operator(lhs, >, rhs));
+    }
+
+    void
+    test_long (void)
+    {
+        test = cut_test_new("long test", stub_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "long test",
+                               NULL,
+                               "expected: <lhs> > <rhs>\n"
+                               "  actual: <3> > <5>",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_operator::stub_long()",
+                               NULL);
+    }
+
+    static void
+    stub_unsigned_long (void)
+    {
+        unsigned long lhs = 3;
+        unsigned long rhs = 5;
+        cppcut_assert_operator(lhs, <, rhs);
+        MARK_FAIL(cppcut_assert_operator(lhs, >, rhs));
+    }
+
+    void
+    test_unsigned_long (void)
+    {
+        test = cut_test_new("unsigned long test", stub_unsigned_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "unsigned long test",
+                               NULL,
+                               "expected: <lhs> > <rhs>\n"
+                               "  actual: <3> > <5>",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_operator::stub_unsigned_long()",
+                               NULL);
+    }
+
+    static void
+    stub_long_long (void)
+    {
+        long long lhs = 3;
+        long long rhs = 5;
+        cppcut_assert_operator(lhs, <, rhs);
+        MARK_FAIL(cppcut_assert_operator(lhs, >, rhs));
+    }
+
+    void
+    test_long_long (void)
+    {
+        test = cut_test_new("long long test", stub_long_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "long long test",
+                               NULL,
+                               "expected: <lhs> > <rhs>\n"
+                               "  actual: <3> > <5>",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_operator::stub_long_long()",
+                               NULL);
+    }
+
+    static void
+    stub_unsigned_long_long (void)
+    {
+        unsigned long long lhs = 3;
+        unsigned long long rhs = 5;
+        cppcut_assert_operator(lhs, <, rhs);
+        MARK_FAIL(cppcut_assert_operator(lhs, >, rhs));
+    }
+
+    void
+    test_unsigned_long_long (void)
+    {
+        test = cut_test_new("unsigned long long test", stub_unsigned_long_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "unsigned long long test",
+                               NULL,
+                               "expected: <lhs> > <rhs>\n"
+                               "  actual: <3> > <5>",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_operator::stub_unsigned_long_long()",
+                               NULL);
+    }
+
 }
 
 namespace cppcut_assertion_message
