@@ -1,6 +1,6 @@
-/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -57,6 +57,35 @@
             cut::assert_equal(expected, actual, #expected, #actual),    \
             __VA_ARGS__),                                               \
         cppcut_assert_equal(expected, actual, __VA_ARGS__));            \
+} while (0)
+
+/**
+ * cppcut_assert:
+ * @object: the object to be checked.
+ * @...: an optional message. Use cppcut_message() for this.
+ *
+ * This assertion is a generic method based on template. You
+ * can pass any object's reference as @object.
+ *
+ * Passes if @object is not %NULL.
+ *
+ * e.g.:
+ * |[
+ * std::string message("hello");
+ * cppcut_assert(message);
+ * cppcut_assert(message, cppcut_message("easy expression"));
+ * cppcut_assert(message, cppcut_message() << "easy expression"));
+ * ]|
+ *
+ * Since: 1.2.0
+ */
+#define cppcut_assert(object, ...) do                                   \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut::assert(object, #object),                               \
+            __VA_ARGS__),                                               \
+        cppcut_assert(object, __VA_ARGS__));                            \
 } while (0)
 
 #endif /* __CPPCUT_ASSERTIONS_H__ */

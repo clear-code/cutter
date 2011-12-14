@@ -1,6 +1,6 @@
-/* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/* -*- Mode: C++; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -89,6 +89,19 @@ namespace cut
 
             message << "<" << expression_expected << " == ";
             message << expression_actual << ">";
+            cut_test_fail(message.str().c_str());
+        }
+    }
+
+    template <typename Type> void assert(const Type *object,
+                                         const char *expression_object)
+    {
+        if (object) {
+            cut_test_pass();
+        } else {
+            std::ostringstream message;
+
+            message << "expected: <" << object << "> is neither false nor NULL";
             cut_test_fail(message.str().c_str());
         }
     }
