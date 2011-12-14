@@ -35,18 +35,12 @@
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
 
-namespace cppcut_assertions
+namespace cppcut_assertion_equal
 {
     CutTest *test;
     CutRunContext *run_context;
     CutTestContext *test_context;
     CutTestResult *test_result;
-
-    GError *error;
-    GError *error1, *error2;
-    gboolean need_to_free_error;
-
-    GType flags_type = 0;
 
     gint fail_line;
 
@@ -92,16 +86,16 @@ namespace cppcut_assertions
 
 
     static void
-    stub_equal_int (void)
+    stub_int (void)
     {
         cppcut_assert_equal(100, 100);
         MARK_FAIL(cppcut_assert_equal(100, 1 - 2));
     }
 
     void
-    test_equal_int (void)
+    test_int (void)
     {
-        test = cut_test_new("equal_int test", stub_equal_int);
+        test = cut_test_new("equal_int test", stub_int);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -112,12 +106,12 @@ namespace cppcut_assertions
                                "<100 == 1 - 2>",
                                "100", "-1",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_int()",
+                               "void cppcut_assertion_equal::stub_int()",
                                NULL);
     }
 
     static void
-    stub_equal_int_reference (void)
+    stub_int_reference (void)
     {
         int expected = 100;
         int actual = -100;
@@ -126,10 +120,10 @@ namespace cppcut_assertions
     }
 
     void
-    test_equal_int_reference (void)
+    test_int_reference (void)
     {
         test = cut_test_new("equal_int_reference test",
-                            stub_equal_int_reference);
+                            stub_int_reference);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -140,21 +134,21 @@ namespace cppcut_assertions
                                "<expected == actual>",
                                "100", "-100",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_int_reference()",
+                               "void cppcut_assertion_equal::stub_int_reference()",
                                NULL);
     }
 
     static void
-    stub_equal_unsigned_int (void)
+    stub_unsigned_int (void)
     {
         cppcut_assert_equal(100, 100);
         MARK_FAIL(cppcut_assert_equal(100, 2 - 1));
     }
 
     void
-    test_equal_unsigned_int (void)
+    test_unsigned_int (void)
     {
-        test = cut_test_new("equal_unsigned_int test", stub_equal_unsigned_int);
+        test = cut_test_new("equal_unsigned_int test", stub_unsigned_int);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -165,12 +159,12 @@ namespace cppcut_assertions
                                "<100 == 2 - 1>",
                                "100", "1",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_unsigned_int()",
+                               "void cppcut_assertion_equal::stub_unsigned_int()",
                                NULL);
     }
 
     static void
-    stub_equal_long (void)
+    stub_long (void)
     {
 #if GLIB_SIZEOF_LONG == 8
         cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
@@ -182,9 +176,9 @@ namespace cppcut_assertions
     }
 
     void
-    test_equal_long (void)
+    test_long (void)
     {
-        test = cut_test_new("equal_long test", stub_equal_long);
+        test = cut_test_new("equal_long test", stub_long);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -202,12 +196,12 @@ namespace cppcut_assertions
                                cut_take_printf("%" G_GINT32_FORMAT, G_MAXINT32 - 1),
 #endif
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_long()",
+                               "void cppcut_assertion_equal::stub_long()",
                                NULL);
     }
 
     static void
-    stub_equal_unsigned_long (void)
+    stub_unsigned_long (void)
     {
 #if GLIB_SIZEOF_LONG == 8
         cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
@@ -219,10 +213,10 @@ namespace cppcut_assertions
     }
 
     void
-    test_equal_unsigned_long (void)
+    test_unsigned_long (void)
     {
         test = cut_test_new("equal_unsigned_long test",
-                            stub_equal_unsigned_long);
+                            stub_unsigned_long);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -242,21 +236,21 @@ namespace cppcut_assertions
                                                G_MAXUINT32 - 1),
 #endif
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_unsigned_long()",
+                               "void cppcut_assertion_equal::stub_unsigned_long()",
                                NULL);
     }
 
     static void
-    stub_equal_long_long (void)
+    stub_long_long (void)
     {
         cppcut_assert_equal(G_MAXINT64, G_MAXINT64);
         MARK_FAIL(cppcut_assert_equal(G_MAXINT64, G_MAXINT64 - 1));
     }
 
     void
-    test_equal_long_long (void)
+    test_long_long (void)
     {
-        test = cut_test_new("equal_long_long test", stub_equal_long_long);
+        test = cut_test_new("equal_long_long test", stub_long_long);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -268,22 +262,22 @@ namespace cppcut_assertions
                                cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64),
                                cut_take_printf("%" G_GINT64_FORMAT, G_MAXINT64 - 1),
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_long_long()",
+                               "void cppcut_assertion_equal::stub_long_long()",
                                NULL);
     }
 
     static void
-    stub_equal_unsigned_long_long (void)
+    stub_unsigned_long_long (void)
     {
         cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64);
         MARK_FAIL(cppcut_assert_equal(G_MAXUINT64, G_MAXUINT64 - 1));
     }
 
     void
-    test_equal_unsigned_long_long (void)
+    test_unsigned_long_long (void)
     {
         test = cut_test_new("equal_unsigned_long_long test",
-                            stub_equal_unsigned_long_long);
+                            stub_unsigned_long_long);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -296,22 +290,22 @@ namespace cppcut_assertions
                                cut_take_printf("%" G_GUINT64_FORMAT,
                                                G_MAXUINT64 - 1U),
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_unsigned_long_long()",
+                               "void cppcut_assertion_equal::stub_unsigned_long_long()",
                                NULL);
     }
 
     static void
-    stub_equal_c_string_literal (void)
+    stub_c_string_literal (void)
     {
         cppcut_assert_equal("abcde", "abcde");
         MARK_FAIL(cppcut_assert_equal("abcde", "ABcDE"));
     }
 
     void
-    test_equal_c_string_literal (void)
+    test_c_string_literal (void)
     {
         test = cut_test_new("equal_c_string_literal test",
-                            stub_equal_c_string_literal);
+                            stub_c_string_literal);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -322,12 +316,12 @@ namespace cppcut_assertions
                                "<\"abcde\" == \"ABcDE\">",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_c_string_literal()",
+                               "void cppcut_assertion_equal::stub_c_string_literal()",
                                NULL);
     }
 
     static void
-    stub_equal_c_string_buffer (void)
+    stub_c_string_buffer (void)
     {
         char expected[] = "abcde";
         char actual[] = "ABcDE";
@@ -336,10 +330,10 @@ namespace cppcut_assertions
     }
 
     void
-    test_equal_c_string_buffer (void)
+    test_c_string_buffer (void)
     {
         test = cut_test_new("equal_c_string_buffer test",
-                            stub_equal_c_string_buffer);
+                            stub_c_string_buffer);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -350,12 +344,12 @@ namespace cppcut_assertions
                                "<expected == actual>",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_c_string_buffer()",
+                               "void cppcut_assertion_equal::stub_c_string_buffer()",
                                NULL);
     }
 
     static void
-    stub_equal_c_string_reference (void)
+    stub_c_string_reference (void)
     {
         const char *expected = "abcde";
         const char *actual = "ABcDE";
@@ -364,10 +358,10 @@ namespace cppcut_assertions
     }
 
     void
-    test_equal_c_string_reference (void)
+    test_c_string_reference (void)
     {
         test = cut_test_new("equal_c_string_reference test",
-                            stub_equal_c_string_reference);
+                            stub_c_string_reference);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -378,12 +372,12 @@ namespace cppcut_assertions
                                "<expected == actual>",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_c_string_reference()",
+                               "void cppcut_assertion_equal::stub_c_string_reference()",
                                NULL);
     }
 
     static void
-    stub_equal_c_string_mix (void)
+    stub_c_string_mix (void)
     {
         char expected[] = "abcde";
         const char *actual = "ABcDE";
@@ -392,10 +386,10 @@ namespace cppcut_assertions
     }
 
     void
-    test_equal_c_string_mix (void)
+    test_c_string_mix (void)
     {
         test = cut_test_new("equal_c_string_mix test",
-                            stub_equal_c_string_mix);
+                            stub_c_string_mix);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -406,12 +400,12 @@ namespace cppcut_assertions
                                "<expected == actual>",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_c_string_mix()",
+                               "void cppcut_assertion_equal::stub_c_string_mix()",
                                NULL);
     }
 
     static void
-    stub_equal_string (void)
+    stub_string (void)
     {
         std::string expected("abcde");
         std::string actual("ABcDE");
@@ -420,9 +414,9 @@ namespace cppcut_assertions
     }
 
     void
-    test_equal_string (void)
+    test_string (void)
     {
-        test = cut_test_new("equal_string test", stub_equal_string);
+        test = cut_test_new("equal_string test", stub_string);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
@@ -433,12 +427,62 @@ namespace cppcut_assertions
                                "<expected == actual>",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_equal_string()",
+                               "void cppcut_assertion_equal::stub_string()",
                                NULL);
+    }
+}
+
+namespace cppcut_assertion_not_null
+{
+    CutTest *test;
+    CutRunContext *run_context;
+    CutTestContext *test_context;
+    CutTestResult *test_result;
+
+    gint fail_line;
+
+    static gboolean
+    run (void)
+    {
+        gboolean success;
+
+        run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
+
+        test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
+        cut_test_context_current_push(test_context);
+        success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                           test, test_context);
+        cut_test_context_current_pop();
+
+        return success;
+    }
+
+    void
+    cut_setup (void)
+    {
+        test = NULL;
+        run_context = NULL;
+        test_context = NULL;
+        test_result = NULL;
+
+        fail_line = 0;
+    }
+
+    void
+    cut_teardown (void)
+    {
+        if (test)
+            g_object_unref(test);
+        if (run_context)
+            g_object_unref(run_context);
+        if (test_context)
+            g_object_unref(test_context);
+        if (test_result)
+            g_object_unref(test_result);
     }
 
     static void
-    stub_not_null (void)
+    stub_std_string (void)
     {
         std::string object("abcde");
         std::string *null_object = NULL;
@@ -447,26 +491,153 @@ namespace cppcut_assertions
     }
 
     void
-    test_not_null (void)
+    test_std_string (void)
     {
-        test = cut_test_new("not_null test", stub_not_null);
+        test = cut_test_new("std::string test", stub_std_string);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
         cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                               "not_null test",
+                               "std::string test",
                                NULL,
                                "expected: <0> is not NULL",
                                NULL,
                                NULL,
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_not_null()",
+                               "void cppcut_assertion_not_null::stub_std_string()",
                                NULL);
+    }
+}
+
+namespace cppcut_assertion_operator
+{
+    CutTest *test;
+    CutRunContext *run_context;
+    CutTestContext *test_context;
+    CutTestResult *test_result;
+
+    gint fail_line;
+
+    static gboolean
+    run (void)
+    {
+        gboolean success;
+
+        run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
+
+        test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
+        cut_test_context_current_push(test_context);
+        success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                           test, test_context);
+        cut_test_context_current_pop();
+
+        return success;
+    }
+
+    void
+    cut_setup (void)
+    {
+        test = NULL;
+        run_context = NULL;
+        test_context = NULL;
+        test_result = NULL;
+
+        fail_line = 0;
+    }
+
+    void
+    cut_teardown (void)
+    {
+        if (test)
+            g_object_unref(test);
+        if (run_context)
+            g_object_unref(run_context);
+        if (test_context)
+            g_object_unref(test_context);
+        if (test_result)
+            g_object_unref(test_result);
     }
 
     static void
-    stub_message (void)
+    stub_int (void)
+    {
+        cppcut_assert_operator(1 + 2, <, 2 + 3);
+        MARK_FAIL(cppcut_assert_operator(1 + 2, >, 2 + 3));
+    }
+
+    void
+    test_int (void)
+    {
+        test = cut_test_new("int test", stub_int);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "int test",
+                               NULL,
+                               "expected: <1 + 2> > <2 + 3>\n"
+                               "  actual: <3> > <5>",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_operator::stub_int()",
+                               NULL);
+    }
+}
+
+namespace cppcut_assertion_message
+{
+    CutTest *test;
+    CutRunContext *run_context;
+    CutTestContext *test_context;
+    CutTestResult *test_result;
+
+    gint fail_line;
+
+    static gboolean
+    run (void)
+    {
+        gboolean success;
+
+        run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
+
+        test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
+        cut_test_context_current_push(test_context);
+        success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                           test, test_context);
+        cut_test_context_current_pop();
+
+        return success;
+    }
+
+    void
+    cut_setup (void)
+    {
+        test = NULL;
+        run_context = NULL;
+        test_context = NULL;
+        test_result = NULL;
+
+        fail_line = 0;
+    }
+
+    void
+    cut_teardown (void)
+    {
+        if (test)
+            g_object_unref(test);
+        if (run_context)
+            g_object_unref(run_context);
+        if (test_context)
+            g_object_unref(test_context);
+        if (test_result)
+            g_object_unref(test_result);
+    }
+
+    static void
+    stub_format (void)
     {
         MARK_FAIL(cppcut_assert_equal(
                       "abcde", "ABCDE",
@@ -474,9 +645,9 @@ namespace cppcut_assertions
     }
 
     void
-    test_message (void)
+    test_format (void)
     {
-        test = cut_test_new("optional message test", stub_message);
+        test = cut_test_new("optional message test", stub_format);
         cut_assert_false(run());
         cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
@@ -485,12 +656,12 @@ namespace cppcut_assertions
                                "<\"abcde\" == \"ABCDE\">",
                                "abcde", "ABCDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_message()",
+                               "void cppcut_assertion_message::stub_format()",
                                NULL);
     }
 
     static void
-    stub_message_shift (void)
+    stub_shift (void)
     {
         MARK_FAIL(cppcut_assert_equal(
                       "abcde", "ABCDE",
@@ -498,9 +669,9 @@ namespace cppcut_assertions
     }
 
     void
-    test_message_shift (void)
+    test_shift (void)
     {
-        test = cut_test_new("optional message test", stub_message_shift);
+        test = cut_test_new("optional message test", stub_shift);
         cut_assert_false(run());
         cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
@@ -509,7 +680,7 @@ namespace cppcut_assertions
                                "<\"abcde\" == \"ABCDE\">",
                                "abcde", "ABCDE",
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_message_shift()",
+                               "void cppcut_assertion_message::stub_shift()",
                                NULL);
     }
 }

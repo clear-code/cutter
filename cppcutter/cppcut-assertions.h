@@ -65,16 +65,17 @@
  * @...: an optional message. Use cppcut_message() for this.
  *
  * This assertion is a generic method based on template. You
- * can pass any object's reference as @object.
+ * can pass any object's pointer as @object.
  *
  * Passes if @object is not %NULL.
  *
  * e.g.:
  * |[
  * std::string message("hello");
- * cppcut_assert_not_null(message);
- * cppcut_assert_not_null(message, cppcut_message("easy expression"));
- * cppcut_assert_not_null(message, cppcut_message() << "easy expression"));
+ * std::string *not_null_string = &message;
+ * std::string *null_string = NULL;
+ * cppcut_assert_not_null(not_null_string); // pass
+ * cppcut_assert_not_null(null_string);     // fail
  * ]|
  *
  * Since: 1.2.0
@@ -83,9 +84,40 @@
 {                                                                       \
     cut_trace_with_info_expression(                                     \
         cut_test_with_user_message(                                     \
-            cut::assert_not_null(object, #object),                      \
+            cut::assert_not_null((object), #object),                    \
             __VA_ARGS__),                                               \
         cppcut_assert_not_null(object, __VA_ARGS__));                   \
+} while (0)
+
+/**
+ * cppcut_assert_not_null:
+ * @lhs: a left hand side value.
+ * @operator: a binary operator.
+ * @rhs: a right hand side value.
+ * @...: an optional message. Use cppcut_message() for this.
+ *
+ * This assertion is a generic method based on template. You
+ * can pass any object as @lhs and @rhs.
+ *
+ * Passes if (@lhs @operator @rhs) is TRUE.
+ *
+ * e.g.:
+ * |[
+ * cppcut_assert_operator(1, <, 2); // pass
+ * cppcut_assert_operator(1, >, 2); // fail
+ * ]|
+ *
+ * Since: 1.2.0
+ */
+#define cppcut_assert_operator(lhs, operator, rhs, ...) do              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut::assert_operator((lhs) operator (rhs),                  \
+                                 (lhs), (rhs),                          \
+                                 #lhs, #operator, #rhs),                \
+            __VA_ARGS__),                                               \
+        cppcut_assert_operator(lhs, operator, rhs, __VA_ARGS__));       \
 } while (0)
 
 #endif /* __CPPCUT_ASSERTIONS_H__ */

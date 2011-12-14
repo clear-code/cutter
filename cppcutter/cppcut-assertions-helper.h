@@ -105,6 +105,60 @@ namespace cut
             cut_test_fail(message.str().c_str());
         }
     }
+
+    CPPCUT_DECL
+    void assert_operator(bool result, int lhs, int rhs,
+                         const char *expression_lhs,
+                         const char *expression_operator,
+                         const char *expression_rhs);
+
+    template <typename Type> void assert_operator(
+        bool result,
+        const Type *lhs, const Type *rhs,
+        const char *expression_lhs,
+        const char *expression_operator,
+        const char *expression_rhs)
+    {
+        assert_operator_reference(result, lhs, rhs,
+                                  expression_lhs,
+                                  expression_operator,
+                                  expression_rhs);
+    }
+
+    template <class Type> void assert_operator(bool result,
+                                               const Type& lhs,
+                                               const Type& rhs,
+                                               const char *expression_lhs,
+                                               const char *expression_operator,
+                                               const char *expression_rhs)
+    {
+        assert_operator_reference(result, lhs, rhs,
+                                  expression_lhs,
+                                  expression_operator,
+                                  expression_rhs);
+    }
+
+    template <typename Type> void assert_operator_reference(
+        bool result,
+        const Type& lhs, const Type& rhs,
+        const char *expression_lhs,
+        const char *expression_operator,
+        const char *expression_rhs)
+    {
+        if (result) {
+            cut_test_pass();
+        } else {
+            std::ostringstream message;
+
+            message << "expected: <" << expression_lhs << "> ";
+            message << expression_operator;
+            message << " <" << expression_rhs << ">\n";
+            message << "  actual: <" << lhs << "> ";
+            message << expression_operator;
+            message << " <" << rhs << ">";
+            cut_test_fail(message.str().c_str());
+        }
+    }
 }
 
 #endif /* __CPPCUT_ASSERTIONS_HELPER_H__ */

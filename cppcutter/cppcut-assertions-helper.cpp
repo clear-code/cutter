@@ -73,6 +73,19 @@ cut::assert_equal(unsigned long long expected, unsigned long long actual,
                                 expression_expected, expression_actual);
 }
 
+CPPCUT_DECL void
+cut::assert_operator(bool result, int lhs, int rhs,
+                     const char *expression_lhs,
+                     const char *expression_operator,
+                     const char *expression_rhs)
+{
+    cut::assert_operator_reference(result,
+                                   lhs, rhs,
+                                   expression_lhs,
+                                   expression_operator,
+                                   expression_rhs);
+}
+
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4
 */
