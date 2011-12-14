@@ -432,6 +432,114 @@ namespace cppcut_assertion_equal
     }
 }
 
+namespace cppcut_assertion_null
+{
+    CutTest *test;
+    CutRunContext *run_context;
+    CutTestContext *test_context;
+    CutTestResult *test_result;
+
+    gint fail_line;
+
+    static gboolean
+    run (void)
+    {
+        gboolean success;
+
+        run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
+
+        test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
+        cut_test_context_current_push(test_context);
+        success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                           test, test_context);
+        cut_test_context_current_pop();
+
+        return success;
+    }
+
+    void
+    cut_setup (void)
+    {
+        test = NULL;
+        run_context = NULL;
+        test_context = NULL;
+        test_result = NULL;
+
+        fail_line = 0;
+    }
+
+    void
+    cut_teardown (void)
+    {
+        if (test)
+            g_object_unref(test);
+        if (run_context)
+            g_object_unref(run_context);
+        if (test_context)
+            g_object_unref(test_context);
+        if (test_result)
+            g_object_unref(test_result);
+    }
+
+    static void
+    stub_c_string (void)
+    {
+        const gchar *message = "abcde";
+        const gchar *not_null_object = message;
+        const gchar *null_object = NULL;
+        cppcut_assert_null(null_object);
+        MARK_FAIL(cppcut_assert_null(not_null_object));
+    }
+
+    void
+    test_c_string (void)
+    {
+        test = cut_test_new("C string test", stub_c_string);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "C string test",
+                               NULL,
+                               "expected: <abcde>(<not_null_object>) is NULL",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_null::stub_c_string()",
+                               NULL);
+    }
+
+    static void
+    stub_std_string (void)
+    {
+        std::string message("abcde");
+        std::string *not_null_object = &message;
+        std::string *null_object = NULL;
+        cppcut_assert_null(null_object);
+        MARK_FAIL(cppcut_assert_null(not_null_object));
+    }
+
+    void
+    test_std_string (void)
+    {
+        test = cut_test_new("std::string test", stub_std_string);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "std::string test",
+                               NULL,
+                               "expected: <abcde>(<not_null_object>) is NULL",
+                               NULL,
+                               NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_null::stub_std_string()",
+                               NULL);
+    }
+}
+
 namespace cppcut_assertion_not_null
 {
     CutTest *test;
@@ -484,9 +592,10 @@ namespace cppcut_assertion_not_null
     static void
     stub_std_string (void)
     {
-        std::string object("abcde");
+        std::string message("abcde");
+        std::string *not_null_object = &message;
         std::string *null_object = NULL;
-        cppcut_assert_not_null(&object);
+        cppcut_assert_not_null(not_null_object);
         MARK_FAIL(cppcut_assert_not_null(null_object));
     }
 
@@ -501,7 +610,7 @@ namespace cppcut_assertion_not_null
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                                "std::string test",
                                NULL,
-                               "expected: <0> is not NULL",
+                               "expected: <null_object> is not NULL",
                                NULL,
                                NULL,
                                FAIL_LOCATION,

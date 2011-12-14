@@ -27,6 +27,12 @@
 
 namespace cut
 {
+    inline std::ostream &operator<< (std::ostream &stream,
+                                     const std::string *str)
+    {
+        return stream.write(str->c_str(), str->length());
+    }
+
     CPPCUT_DECL
     void assert_equal(int expected, int actual,
                       const char *expression_expected,
@@ -93,6 +99,20 @@ namespace cut
         }
     }
 
+    template <typename Type> void assert_null(const Type *object,
+                                              const char *expression_object)
+    {
+        if (object == NULL) {
+            cut_test_pass();
+        } else {
+            std::ostringstream message;
+
+            message << "expected: <" << object << ">";
+            message << "(<" << expression_object<< ">) is NULL";
+            cut_test_fail(message.str().c_str());
+        }
+    }
+
     template <typename Type> void assert_not_null(const Type *object,
                                                   const char *expression_object)
     {
@@ -101,7 +121,7 @@ namespace cut
         } else {
             std::ostringstream message;
 
-            message << "expected: <" << object << "> is not NULL";
+            message << "expected: <" << expression_object << "> is not NULL";
             cut_test_fail(message.str().c_str());
         }
     }

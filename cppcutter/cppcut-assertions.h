@@ -60,6 +60,36 @@
 } while (0)
 
 /**
+ * cppcut_assert_null:
+ * @object: the object to be checked.
+ * @...: an optional message. Use cppcut_message() for this.
+ *
+ * This assertion is a generic method based on template. You
+ * can pass any object's pointer as @object.
+ *
+ * Passes if @object is %NULL.
+ *
+ * e.g.:
+ * |[
+ * std::string message("hello");
+ * std::string *not_null_string = &message;
+ * std::string *null_string = NULL;
+ * cppcut_assert_null(not_null_string); // fail
+ * cppcut_assert_null(null_string);     // pass
+ * ]|
+ *
+ * Since: 1.2.0
+ */
+#define cppcut_assert_null(object, ...) do                              \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut::assert_null((object), #object),                        \
+            __VA_ARGS__),                                               \
+        cppcut_assert_null(object, __VA_ARGS__));                       \
+} while (0)
+
+/**
  * cppcut_assert_not_null:
  * @object: the object to be checked.
  * @...: an optional message. Use cppcut_message() for this.
