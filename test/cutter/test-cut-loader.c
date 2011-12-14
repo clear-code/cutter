@@ -33,13 +33,14 @@ void test_fixture_function (gconstpointer data);
 void test_fail_to_load (void);
 void test_load_test_iterator (void);
 void test_load_cpp_namespace (void);
+void test_load_cpp_multi_namespace (void);
 void data_cpp_fixture_function (void);
 void test_cpp_fixture_function (gconstpointer data);
 
 static CutLoader *loader;
 static CutTestCase *test_case;
 static CutRunContext *run_context;
-static gchar **test_names;
+static GPtrArray *test_names;
 static GModule *module;
 
 void
@@ -60,7 +61,7 @@ cut_teardown (void)
     if (test_case)
         g_object_unref(test_case);
     if (test_names)
-        g_strfreev(test_names);
+        g_ptr_array_free(test_names, TRUE);
     if (run_context)
         g_object_unref(run_context);
     if (module)
@@ -98,14 +99,10 @@ run (void)
                                          test_case);
 }
 
-static gint
-compare_function_name (gconstpointer a, gconstpointer b)
+static int
+compare_test_name (gconstpointer a, gconstpointer b)
 {
-    CutTest *ta, *tb;
-    ta = CUT_TEST(a);
-    tb = CUT_TEST(b);
-
-    return strcmp(cut_test_get_name(ta), cut_test_get_name(tb));
+    return strcmp(*(gchar * const *)a, *(gchar * const *)b);
 }
 
 void
@@ -139,8 +136,7 @@ test_load_function (void)
     tests = (GList *)cut_test_container_get_children(container);
     cut_assert(tests);
 
-    tests = g_list_sort(tests, compare_function_name);
-    test_names = g_new0(gchar *, g_list_length(tests) + 1);
+    test_names = g_ptr_array_new_with_free_func(g_free);
     for (list = tests, i = 0; list; list = g_list_next(list), i++) {
         CutTest *test;
 
@@ -148,9 +144,12 @@ test_load_function (void)
         cut_assert(CUT_IS_TEST(list->data));
 
         test = CUT_TEST(list->data);
-        test_names[i] = g_strdup(cut_test_get_name(test));
+        g_ptr_array_add(test_names, g_strdup(cut_test_get_name(test)));
     }
-    cut_assert_equal_string_array(expected_functions, test_names);
+    g_ptr_array_sort(test_names, compare_test_name);
+    g_ptr_array_add(test_names, NULL);
+    cut_assert_equal_string_array(expected_functions,
+                                  (gchar **)test_names->pdata);
 }
 
 typedef struct _FixtureTestData
@@ -351,8 +350,7 @@ test_load_cpp_namespace (void)
     tests = (GList *)cut_test_container_get_children(container);
     cut_assert(tests);
 
-    tests = g_list_sort(tests, compare_function_name);
-    test_names = g_new0(gchar *, g_list_length(tests) + 1);
+    test_names = g_ptr_array_new_with_free_func(g_free);
     for (list = tests, i = 0; list; list = g_list_next(list), i++) {
         CutTest *test;
 
@@ -360,9 +358,48 @@ test_load_cpp_namespace (void)
         cut_assert(CUT_IS_TEST(list->data));
 
         test = CUT_TEST(list->data);
-        test_names[i] = g_strdup(cut_test_get_name(test));
+        g_ptr_array_add(test_names, g_strdup(cut_test_get_name(test)));
     }
-    cut_assert_equal_string_array(expected_functions, test_names);
+    g_ptr_array_sort(test_names, compare_test_name);
+    g_ptr_array_add(test_names, NULL);
+    cut_assert_equal_string_array(expected_functions,
+                                  (gchar **)test_names->pdata);
+}
+
+void
+test_load_cpp_multi_namespace (void)
+{
+    GList *test_cases, *test_case_node;
+    gchar *expected_functions[] = {
+        "adder::test_compute",
+        "subtracter::test_compute",
+        NULL
+    };
+
+    loader = loader_new("cpp", "stub-multi-namespace." G_MODULE_SUFFIX);
+    test_cases = cut_loader_load_test_cases(loader);
+    cut_assert_equal_int(2, g_list_length(test_cases));
+
+    test_names = g_ptr_array_new_with_free_func(g_free);
+    for (test_case_node = test_cases;
+         test_case_node;
+         test_case_node = g_list_next(test_case_node)) {
+        CutTestContainer *container;
+        GList *tests, *test_node;
+
+        container = CUT_TEST_CONTAINER(test_case_node->data);
+        tests = (GList *)cut_test_container_get_children(container);
+        for (test_node = tests; test_node; test_node = g_list_next(test_node)) {
+            CutTest *test = test_node->data;
+
+            cut_assert(CUT_IS_TEST(test));
+            g_ptr_array_add(test_names, g_strdup(cut_test_get_name(test)));
+        }
+    }
+    g_ptr_array_sort(test_names, compare_test_name);
+    g_ptr_array_add(test_names, NULL);
+    cut_assert_equal_string_array(expected_functions,
+                                  (gchar **)test_names->pdata);
 }
 
 #ifdef _WIN32

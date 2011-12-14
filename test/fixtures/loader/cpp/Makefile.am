@@ -5,8 +5,9 @@ INCLUDES =					\
 	-I$(top_srcdir)/cutter			\
 	-I$(top_srcdir)/cppcutter
 
-noinst_LTLIBRARIES = 		\
-	stub-namespace.la
+noinst_LTLIBRARIES =				\
+	stub-namespace.la			\
+	stub-multi-namespace.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -21,7 +22,8 @@ LIBS =							\
 	$(GLIB_LIBS)					\
 	$(GIO_LIBS)
 
-stub_namespace_la_SOURCES = stub-namespace.cpp
+stub_namespace_la_SOURCES	= stub-namespace.cpp
+stub_multi_namespace_la_SOURCES	= stub-multi-namespace.cpp
 
 echo-tests:
 	@echo $(noinst_LTLIBRARIES)
