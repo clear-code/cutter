@@ -2535,12 +2535,10 @@ not_equal_file_raw (void)
 void
 test_not_equal_file_raw (void)
 {
-    const gchar *data, *sub_data;
+    const gchar *data;
 
     data = cut_build_path(cuttest_get_base_dir(),
                           "fixtures", "assertions", "data.txt", NULL);
-    sub_data = cut_build_path(cuttest_get_base_dir(),
-                              "fixtures", "assertions", "sub", "data.txt", NULL);
 
     test = cut_test_new("not-equal-file-raw", not_equal_file_raw);
 
