@@ -93,15 +93,15 @@ namespace cut
         }
     }
 
-    template <typename Type> void assert(const Type *object,
-                                         const char *expression_object)
+    template <typename Type> void assert_not_null(const Type *object,
+                                                  const char *expression_object)
     {
-        if (object) {
+        if (object != NULL) {
             cut_test_pass();
         } else {
             std::ostringstream message;
 
-            message << "expected: <" << object << "> is neither false nor NULL";
+            message << "expected: <" << object << "> is not NULL";
             cut_test_fail(message.str().c_str());
         }
     }

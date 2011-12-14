@@ -438,30 +438,30 @@ namespace cppcut_assertions
     }
 
     static void
-    stub_assert_string (void)
+    stub_not_null (void)
     {
         std::string object("abcde");
         std::string *null_object = NULL;
-        cppcut_assert(&object);
-        MARK_FAIL(cppcut_assert(null_object));
+        cppcut_assert_not_null(&object);
+        MARK_FAIL(cppcut_assert_not_null(null_object));
     }
 
     void
-    test_assert_string (void)
+    test_not_null (void)
     {
-        test = cut_test_new("assert_string test", stub_assert_string);
+        test = cut_test_new("not_null test", stub_not_null);
         cut_assert_not_null(test);
 
         cut_assert_false(run());
         cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
-                               "assert_string test",
+                               "not_null test",
                                NULL,
-                               "expected: <0> is neither false nor NULL",
+                               "expected: <0> is not NULL",
                                NULL,
                                NULL,
                                FAIL_LOCATION,
-                               "void cppcut_assertions::stub_assert_string()",
+                               "void cppcut_assertions::stub_not_null()",
                                NULL);
     }
 

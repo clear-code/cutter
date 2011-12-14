@@ -60,7 +60,7 @@
 } while (0)
 
 /**
- * cppcut_assert:
+ * cppcut_assert_not_null:
  * @object: the object to be checked.
  * @...: an optional message. Use cppcut_message() for this.
  *
@@ -72,20 +72,20 @@
  * e.g.:
  * |[
  * std::string message("hello");
- * cppcut_assert(message);
- * cppcut_assert(message, cppcut_message("easy expression"));
- * cppcut_assert(message, cppcut_message() << "easy expression"));
+ * cppcut_assert_not_null(message);
+ * cppcut_assert_not_null(message, cppcut_message("easy expression"));
+ * cppcut_assert_not_null(message, cppcut_message() << "easy expression"));
  * ]|
  *
  * Since: 1.2.0
  */
-#define cppcut_assert(object, ...) do                                   \
+#define cppcut_assert_not_null(object, ...) do                          \
 {                                                                       \
     cut_trace_with_info_expression(                                     \
         cut_test_with_user_message(                                     \
-            cut::assert(object, #object),                               \
+            cut::assert_not_null(object, #object),                      \
             __VA_ARGS__),                                               \
-        cppcut_assert(object, __VA_ARGS__));                            \
+        cppcut_assert_not_null(object, __VA_ARGS__));                   \
 } while (0)
 
 #endif /* __CPPCUT_ASSERTIONS_H__ */
