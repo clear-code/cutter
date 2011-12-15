@@ -39,7 +39,6 @@ void test_sizegroup (void);
 void test_list_store (void);
 void test_tree_store (void);
 void test_types (void);
-void test_spin_button (void);
 void test_notebook (void);
 void test_construct_only_property (void);
 void test_object_properties (void);
@@ -48,7 +47,6 @@ void test_child_properties (void);
 void test_treeview_column (void);
 void test_icon_view (void);
 void test_combo_box (void);
-void test_combo_box_entry (void);
 void test_cell_view (void);
 void test_dialog (void);
 void test_accelerators (void);
@@ -757,49 +755,6 @@ void test_types (void)
   builder = NULL;
 }
 
-void test_spin_button (void)
-{
-  const gchar buffer[] =
-    "<interface>"
-    "<object class=\"GtkAdjustment\" id=\"adjustment1\">"
-    "<property name=\"lower\">0</property>"
-    "<property name=\"upper\">10</property>"
-    "<property name=\"step-increment\">2</property>"
-    "<property name=\"page-increment\">3</property>"
-    "<property name=\"page-size\">5</property>"
-    "<property name=\"value\">1</property>"
-    "</object>"
-    "<object class=\"GtkSpinButton\" id=\"spinbutton1\">"
-    "<property name=\"visible\">True</property>"
-    "<property name=\"adjustment\">adjustment1</property>"
-    "</object>"
-    "</interface>";
-  GObject *object;
-  GtkAdjustment *adjustment;
-  gdouble value;
-  
-  builder = builder_new_from_string (buffer, -1, NULL);
-  object = gtk_builder_get_object (builder, "spinbutton1");
-  cut_assert (GTK_IS_SPIN_BUTTON (object));
-  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (object));
-  cut_assert (GTK_IS_ADJUSTMENT (adjustment));
-  g_object_get (adjustment, "value", &value, NULL);
-  cut_assert_equal_int (1, value);
-  g_object_get (adjustment, "lower", &value, NULL);
-  cut_assert_equal_int (0, value);
-  g_object_get (adjustment, "upper", &value, NULL);
-  cut_assert_equal_int (10, value);
-  g_object_get (adjustment, "step-increment", &value, NULL);
-  cut_assert_equal_int (2, value);
-  g_object_get (adjustment, "page-increment", &value, NULL);
-  cut_assert_equal_int (3, value);
-  g_object_get (adjustment, "page-size", &value, NULL);
-  cut_assert_equal_int (5, value);
-  
-  g_object_unref (builder);
-  builder = NULL;
-}
-
 void test_notebook (void)
 {
   const gchar buffer[] =
@@ -1248,76 +1203,6 @@ void test_combo_box (void)
   combobox = gtk_builder_get_object (builder, "combobox1");
   cut_assert (combobox);
   gtk_widget_realize (GTK_WIDGET (combobox));
-
-  renderer = gtk_builder_get_object (builder, "renderer2");
-  cut_assert (renderer);
-  g_object_get (renderer, "text", &text, NULL);
-  cut_assert (text);
-  cut_assert_equal_string ("Bar", text);
-  g_free (text);
-
-  renderer = gtk_builder_get_object (builder, "renderer1");
-  cut_assert (renderer);
-  g_object_get (renderer, "text", &text, NULL);
-  cut_assert (text);
-  cut_assert_equal_string ("2", text);
-  g_free (text);
-
-  window = gtk_builder_get_object (builder, "window1");
-  gtk_widget_destroy (GTK_WIDGET (window));
-
-  g_object_unref (builder);
-  builder = NULL;
-}
-
-void
-test_combo_box_entry (void)
-{
-  const gchar buffer[] =
-    "<interface>"
-    "  <object class=\"GtkListStore\" id=\"liststore1\">"
-    "    <columns>"
-    "      <column type=\"guint\"/>"
-    "      <column type=\"gchararray\"/>"
-    "    </columns>"
-    "    <data>"
-    "      <row>"
-    "        <col id=\"0\">1</col>"
-    "        <col id=\"1\">Foo</col>"
-    "      </row>"
-    "      <row>"
-    "        <col id=\"0\">2</col>"
-    "        <col id=\"1\">Bar</col>"
-    "      </row>"
-    "    </data>"
-    "  </object>"
-    "  <object class=\"GtkWindow\" id=\"window1\">"
-    "    <child>"
-    "      <object class=\"GtkComboBoxEntry\" id=\"comboboxentry1\">"
-    "        <property name=\"model\">liststore1</property>"
-    "        <property name=\"visible\">True</property>"
-    "        <child>"
-    "          <object class=\"GtkCellRendererText\" id=\"renderer1\"/>"
-    "            <attributes>"
-    "              <attribute name=\"text\">0</attribute>"
-    "            </attributes>"
-    "        </child>"
-    "        <child>"
-    "          <object class=\"GtkCellRendererText\" id=\"renderer2\"/>"
-    "            <attributes>"
-    "              <attribute name=\"text\">1</attribute>"
-    "            </attributes>"
-    "        </child>"
-    "      </object>"
-    "    </child>"
-    "  </object>"
-    "</interface>";
-  GObject *window, *combobox, *renderer;
-  gchar *text;
-
-  builder = builder_new_from_string (buffer, -1, NULL);
-  combobox = gtk_builder_get_object (builder, "comboboxentry1");
-  cut_assert (combobox);
 
   renderer = gtk_builder_get_object (builder, "renderer2");
   cut_assert (renderer);
