@@ -47,3 +47,6 @@ Makefile.in
 /tmp/
 /dist/
 /doc/reference/tmp/
+/sample/glib/iochannel-test-outfile
+.gdb_history
+*.pot
