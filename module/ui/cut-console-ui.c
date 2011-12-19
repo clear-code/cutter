@@ -66,6 +66,7 @@ struct _CutConsoleUI
     GList        *errors;
     gint          progress_row;
     gint          progress_row_max;
+    gboolean      show_detail_immediately;
 };
 
 struct _CutConsoleUIClass
@@ -79,7 +80,8 @@ enum
     PROP_USE_COLOR,
     PROP_VERBOSE_LEVEL,
     PROP_NOTIFY_COMMAND,
-    PROP_PROGRESS_ROW_MAX
+    PROP_PROGRESS_ROW_MAX,
+    PROP_SHOW_DETAIL_IMMEDIATELY
 };
 
 static GType cut_type_console_ui = 0;
@@ -95,12 +97,16 @@ static void get_property   (GObject         *object,
                             GValue          *value,
                             GParamSpec      *pspec);
 
-static void     attach_to_run_context   (CutListener *listener,
-                                         CutRunContext   *run_context);
-static void     detach_from_run_context (CutListener *listener,
-                                         CutRunContext   *run_context);
-static gboolean run                     (CutUI       *ui,
-                                         CutRunContext   *run_context);
+static void     attach_to_run_context   (CutListener   *listener,
+                                         CutRunContext *run_context);
+static void     detach_from_run_context (CutListener   *listener,
+                                         CutRunContext *run_context);
+static gboolean run                     (CutUI         *ui,
+                                         CutRunContext *run_context);
+
+static void     print_result_detail     (CutConsoleUI  *console,
+                                         CutTestResultStatus status,
+                                         CutTestResult *result);
 
 static void
 class_init (CutConsoleUIClass *klass)
@@ -144,6 +150,14 @@ class_init (CutConsoleUIClass *klass)
                             -1, G_MAXINT16, -1,
                             G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_PROGRESS_ROW_MAX, spec);
+
+    spec = g_param_spec_boolean("show-detail-immediately",
+                                "Show Detail Immediately",
+                                "Whether shows test details immediately.",
+                                TRUE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_SHOW_DETAIL_IMMEDIATELY,
+                                    spec);
 }
 
 static void
@@ -155,6 +169,7 @@ init (CutConsoleUI *console)
     console->errors = NULL;
     console->progress_row = 0;
     console->progress_row_max = -1;
+    console->show_detail_immediately = TRUE;
 }
 
 static void
@@ -285,6 +300,9 @@ set_property (GObject      *object,
     case PROP_PROGRESS_ROW_MAX:
         console->progress_row_max = g_value_get_int(value);
         break;
+    case PROP_SHOW_DETAIL_IMMEDIATELY:
+        console->show_detail_immediately = g_value_get_boolean(value);
+        break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -311,6 +329,9 @@ get_property (GObject    *object,
         break;
     case PROP_PROGRESS_ROW_MAX:
         g_value_set_int(value, console->progress_row_max);
+        break;
+    case PROP_SHOW_DETAIL_IMMEDIATELY:
+        g_value_set_boolean(value, console->show_detail_immediately);
         break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -455,6 +476,23 @@ print_progress (CutConsoleUI *console, CutTestResultStatus status,
 }
 
 static void
+print_progress_in_detail (CutConsoleUI *console, CutTestResult *result)
+{
+    CutTestResultStatus status;
+
+    if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
+        return;
+
+    if (!console->show_detail_immediately)
+        return;
+
+    status = cut_test_result_get_status(result);
+
+    g_print("\n");
+    print_result_detail(console, status, result);
+}
+
+static void
 cb_start_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      CutConsoleUI *console)
 {
@@ -583,6 +621,7 @@ cb_notification_test (CutRunContext  *run_context,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_progress(console, CUT_TEST_RESULT_NOTIFICATION, "N");
+    print_progress_in_detail(console, result);
     fflush(stdout);
 }
 
@@ -596,6 +635,7 @@ cb_omission_test (CutRunContext  *run_context,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_progress(console, CUT_TEST_RESULT_OMISSION, "O");
+    print_progress_in_detail(console, result);
     fflush(stdout);
 }
 
@@ -609,6 +649,7 @@ cb_pending_test (CutRunContext  *run_context,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_progress(console, CUT_TEST_RESULT_PENDING, "P");
+    print_progress_in_detail(console, result);
     fflush(stdout);
 }
 
@@ -622,6 +663,7 @@ cb_failure_test (CutRunContext  *run_context,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_progress(console, CUT_TEST_RESULT_FAILURE, "F");
+    print_progress_in_detail(console, result);
     fflush(stdout);
 }
 
@@ -635,6 +677,7 @@ cb_error_test (CutRunContext  *run_context,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_progress(console, CUT_TEST_RESULT_ERROR, "E");
+    print_progress_in_detail(console, result);
     fflush(stdout);
 }
 
@@ -646,6 +689,7 @@ handle_crash (CutRunContext  *run_context,
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
     print_progress(console, CUT_TEST_RESULT_CRASH, "!");
+    print_progress_in_detail(console, result);
     fflush(stdout);
 }
 
@@ -785,8 +829,8 @@ console_diff_writer_new (gboolean use_color)
 }
 
 static void
-print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
-                     CutTestResult *result)
+print_result_message (CutConsoleUI *console, CutTestResultStatus status,
+                      CutTestResult *result)
 {
     const gchar *expected, *actual;
 
@@ -830,6 +874,64 @@ print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
             g_print("\n%s", message);
         }
     }
+    g_print("\n");
+}
+
+static void
+print_result_backtrace (CutConsoleUI *console, CutTestResultStatus status,
+                        CutTestResult *result)
+{
+    const GList *node;
+    for (node = cut_test_result_get_backtrace(result);
+         node;
+         node = g_list_next(node)) {
+        CutBacktraceEntry *entry = node->data;
+        gchar *formatted_entry;
+
+        formatted_entry = cut_backtrace_entry_format(entry);
+        g_print("%s\n", formatted_entry);
+        g_free(formatted_entry);
+    }
+}
+
+static void
+print_result_detail (CutConsoleUI *console, CutTestResultStatus status,
+                     CutTestResult *result)
+{
+    const gchar *name;
+    CutTest *test;
+
+    print_for_status(console, status, "%s", status_to_label(status));
+
+    name = cut_test_result_get_test_name(result);
+    if (!name)
+        name = cut_test_result_get_test_case_name(result);
+    if (!name)
+        name = cut_test_result_get_test_suite_name(result);
+
+    g_print(": %s", name);
+
+    test = cut_test_result_get_test(result);
+    if (test)
+        print_test_attributes(console, status, test);
+
+    print_result_message(console, status, result);
+    print_result_backtrace(console, status, result);
+}
+
+static void
+print_error_detail (CutConsoleUI *console, GError *error)
+{
+    print_for_status(console, CUT_TEST_RESULT_ERROR,
+                     "SystemError: %s:%d",
+                     g_quark_to_string(error->domain),
+                     error->code);
+    if (error->message) {
+        g_print("\n");
+        print_for_status(console, CUT_TEST_RESULT_ERROR,
+                         "%s", error->message);
+    }
+    g_print("\n");
 }
 
 static void
@@ -838,21 +940,15 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
     gint i;
     const GList *node;
 
+    if (console->show_detail_immediately)
+        return;
+
     i = 1;
     for (node = console->errors; node; node = g_list_next(node)) {
         GError *error = node->data;
 
         g_print("\n%d) ", i);
-        print_for_status(console, CUT_TEST_RESULT_ERROR,
-                         "SystemError: %s:%d",
-                         g_quark_to_string(error->domain),
-                         error->code);
-        if (error->message) {
-            g_print("\n");
-            print_for_status(console, CUT_TEST_RESULT_ERROR,
-                             "%s", error->message);
-        }
-        g_print("\n");
+        print_error_detail(console, error);
         i++;
     }
 
@@ -861,41 +957,13 @@ print_results (CutConsoleUI *console, CutRunContext *run_context)
          node = g_list_next(node)) {
         CutTestResult *result = node->data;
         CutTestResultStatus status;
-        CutTest *test;
-        const GList *node;
-        const gchar *name;
 
         status = cut_test_result_get_status(result);
         if (status == CUT_TEST_RESULT_SUCCESS)
             continue;
 
-        name = cut_test_result_get_test_name(result);
-        if (!name)
-            name = cut_test_result_get_test_case_name(result);
-        if (!name)
-            name = cut_test_result_get_test_suite_name(result);
-
         g_print("\n%d) ", i);
-        print_for_status(console, status, "%s", status_to_label(status));
-        g_print(": %s", name);
-
-        test = cut_test_result_get_test(result);
-        if (test)
-            print_test_attributes(console, status, test);
-
         print_result_detail(console, status, result);
-
-        g_print("\n");
-        for (node = cut_test_result_get_backtrace(result);
-             node;
-             node = g_list_next(node)) {
-            CutBacktraceEntry *entry = node->data;
-            gchar *formatted_entry;
-
-            formatted_entry = cut_backtrace_entry_format(entry);
-            g_print("%s\n", formatted_entry);
-            g_free(formatted_entry);
-        }
         i++;
     }
 }
@@ -1159,6 +1227,10 @@ cb_error (CutRunContext *run_context, GError *error, CutConsoleUI *console)
 {
     if (console->verbose_level >= CUT_VERBOSE_LEVEL_NORMAL) {
         print_with_color(console, status_to_color(CUT_TEST_RESULT_ERROR), "E");
+        if (console->show_detail_immediately) {
+            g_print("\n");
+            print_error_detail(console, error);
+        }
         fflush(stdout);
     }
 

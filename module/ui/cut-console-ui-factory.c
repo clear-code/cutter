@@ -51,6 +51,7 @@ struct _CutConsoleUIFactory
     gboolean             use_color;
     CutVerboseLevel      verbose_level;
     gchar               *notify_command;
+    gboolean             show_detail_immediately;
 };
 
 struct _CutConsoleUIFactoryClass
@@ -62,7 +63,8 @@ enum
 {
     PROP_0,
     PROP_USE_COLOR,
-    PROP_VERBOSE_LEVEL
+    PROP_VERBOSE_LEVEL,
+    PROP_SHOW_DETAIL_IMMEDIATELY
 };
 
 static GType cut_type_console_ui_factory = 0;
@@ -115,6 +117,14 @@ class_init (CutModuleFactoryClass *klass)
                              CUT_VERBOSE_LEVEL_NORMAL,
                              G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_VERBOSE_LEVEL, spec);
+
+    spec = g_param_spec_boolean("show-detail-immediately",
+                                "Show Detail Immediately",
+                                "Whether shows test details immediately.",
+                                TRUE,
+                                G_PARAM_READWRITE);
+    g_object_class_install_property(gobject_class, PROP_SHOW_DETAIL_IMMEDIATELY,
+                                    spec);
 }
 
 static void
@@ -123,6 +133,7 @@ init (CutConsoleUIFactory *console)
     console->use_color = FALSE;
     console->verbose_level = CUT_VERBOSE_LEVEL_NORMAL;
     console->notify_command = NULL;
+    console->show_detail_immediately = TRUE;
 }
 
 static void
@@ -200,6 +211,9 @@ set_property (GObject      *object,
     case PROP_VERBOSE_LEVEL:
         console->verbose_level = g_value_get_enum(value);
         break;
+    case PROP_SHOW_DETAIL_IMMEDIATELY:
+        console->show_detail_immediately = g_value_get_boolean(value);
+        break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
         break;
@@ -220,6 +234,9 @@ get_property (GObject    *object,
         break;
     case PROP_VERBOSE_LEVEL:
         g_value_set_enum(value, console->verbose_level);
+        break;
+    case PROP_SHOW_DETAIL_IMMEDIATELY:
+        g_value_set_boolean(value, console->show_detail_immediately);
         break;
     default:
         G_OBJECT_WARN_INVALID_PROPERTY_ID(object, prop_id, pspec);
@@ -356,6 +373,30 @@ parse_notify_arg (const gchar *option_name, const gchar *value,
 }
 
 static gboolean
+parse_show_detail_immediately (const gchar *option_name, const gchar *value,
+                               gpointer data, GError **error)
+{
+    CutConsoleUIFactory *console = data;
+
+    if (value == NULL ||
+        g_utf8_collate(value, "yes") == 0 ||
+        g_utf8_collate(value, "true") == 0) {
+        console->show_detail_immediately = TRUE;
+    } else if (g_utf8_collate(value, "no") == 0 ||
+               g_utf8_collate(value, "false") == 0) {
+        console->show_detail_immediately = FALSE;
+    } else {
+        g_set_error(error,
+                    G_OPTION_ERROR,
+                    G_OPTION_ERROR_BAD_VALUE,
+                    _("Invalid boolean value: %s"), value);
+        return FALSE;
+    }
+
+    return TRUE;
+}
+
+static gboolean
 pre_parse (GOptionContext *context, GOptionGroup *group, gpointer data,
            GError **error)
 {
@@ -380,6 +421,9 @@ set_option_group (CutModuleFactory *factory, GOptionContext *context)
          "[yes|true|no|false|auto]"},
         {"notify", 0, G_OPTION_FLAG_OPTIONAL_ARG, G_OPTION_ARG_CALLBACK,
          parse_notify_arg, N_("Notify test result"), "[yes|true|no|false|auto]"},
+        {"show-detail-immediately", 0, G_OPTION_FLAG_OPTIONAL_ARG,
+         G_OPTION_ARG_CALLBACK, parse_show_detail_immediately,
+         N_("Show test detail immediately"), "[yes|true|no|false]"},
         {NULL}
     };
 
@@ -406,6 +450,8 @@ create (CutModuleFactory *factory)
                                "verbose-level", console->verbose_level,
                                "notify-command", console->notify_command,
                                "progress-row-max", guess_term_width(),
+                               "show-detail-immediately",
+                               console->show_detail_immediately,
                                NULL));
 }
 

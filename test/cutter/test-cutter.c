@@ -91,32 +91,32 @@ cut_setup (void)
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
 #if GLIB_CHECK_VERSION(2, 21, 0)
-        "  -h, --help                                      Show help options" LINE_FEED_CODE
+        "  -h, --help                                        Show help options" LINE_FEED_CODE
 #else
-        "  -?, --help                                      Show help options" LINE_FEED_CODE
+        "  -?, --help                                        Show help options" LINE_FEED_CODE
 #endif
-        "  --help-all                                      Show all help options" LINE_FEED_CODE
-        "  --help-stream                                   Show stream options" LINE_FEED_CODE
-        "  --help-report                                   Show report options" LINE_FEED_CODE
-        "  --help-ui                                       Show UI options" LINE_FEED_CODE
-        "  --help-console-ui                               Show console UI options" LINE_FEED_CODE
+        "  --help-all                                        Show all help options" LINE_FEED_CODE
+        "  --help-stream                                     Show stream options" LINE_FEED_CODE
+        "  --help-report                                     Show report options" LINE_FEED_CODE
+        "  --help-ui                                         Show UI options" LINE_FEED_CODE
+        "  --help-console-ui                                 Show console UI options" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Application Options:" LINE_FEED_CODE
-        "  --version                                       Show version" LINE_FEED_CODE
-        "  --mode=[test|analyze|play]                      Set run mode (default: test)" LINE_FEED_CODE
-        "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
-        "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
-        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
-        "  -m, --multi-thread                              Run test cases and iterated tests with multi-thread" LINE_FEED_CODE
-        "  --max-threads=MAX_THREADS                       Run test cases and iterated tests with MAX_THREADS threads concurrently at a maximum (default: 10; -1 is no limit)" LINE_FEED_CODE
-        "  --disable-signal-handling                       Disable signal handling" LINE_FEED_CODE
-        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
-        "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
-        "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
-        "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
-        "  --keep-opening-modules                          Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
-        "  --enable-convenience-attribute-definition       Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
-        "  --stop-before-test                              Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
+        "  --version                                         Show version" LINE_FEED_CODE
+        "  --mode=[test|analyze|play]                        Set run mode (default: test)" LINE_FEED_CODE
+        "  -s, --source-directory=DIRECTORY                  Set directory of source code" LINE_FEED_CODE
+        "  -n, --name=TEST_NAME                              Specify tests" LINE_FEED_CODE
+        "  -t, --test-case=TEST_CASE_NAME                    Specify test cases" LINE_FEED_CODE
+        "  -m, --multi-thread                                Run test cases and iterated tests with multi-thread" LINE_FEED_CODE
+        "  --max-threads=MAX_THREADS                         Run test cases and iterated tests with MAX_THREADS threads concurrently at a maximum (default: 10; -1 is no limit)" LINE_FEED_CODE
+        "  --disable-signal-handling                         Disable signal handling" LINE_FEED_CODE
+        "  --test-case-order=[none|name|name-desc]           Sort test case by. Default is 'none'." LINE_FEED_CODE
+        "  --exclude-file=FILE                               Skip files" LINE_FEED_CODE
+        "  --exclude-directory=DIRECTORY                     Skip directories" LINE_FEED_CODE
+        "  --fatal-failures                                  Treat failures as fatal problem" LINE_FEED_CODE
+        "  --keep-opening-modules                            Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
+        "  --enable-convenience-attribute-definition         Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
+        "  --stop-before-test                                Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
       "" LINE_FEED_CODE;
     help_message = cut_take_printf(format,
                                    g_get_prgname(),
@@ -215,87 +215,88 @@ test_help_all (void)
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
 #if GLIB_CHECK_VERSION(2, 21, 0)
-        "  -h, --help                                      Show help options" LINE_FEED_CODE
+        "  -h, --help                                        Show help options" LINE_FEED_CODE
 #else
-        "  -?, --help                                      Show help options" LINE_FEED_CODE
+        "  -?, --help                                        Show help options" LINE_FEED_CODE
 #endif
-        "  --help-all                                      Show all help options" LINE_FEED_CODE
-        "  --help-stream                                   Show stream options" LINE_FEED_CODE
-        "  --help-report                                   Show report options" LINE_FEED_CODE
-        "  --help-ui                                       Show UI options" LINE_FEED_CODE
-        "  --help-console-ui                               Show console UI options" LINE_FEED_CODE
+        "  --help-all                                        Show all help options" LINE_FEED_CODE
+        "  --help-stream                                     Show stream options" LINE_FEED_CODE
+        "  --help-report                                     Show report options" LINE_FEED_CODE
+        "  --help-ui                                         Show UI options" LINE_FEED_CODE
+        "  --help-console-ui                                 Show console UI options" LINE_FEED_CODE
 #ifdef HAVE_GTK
-        "  --help-gtk                                      Show GTK+ Options" LINE_FEED_CODE
+        "  --help-gtk                                        Show GTK+ Options" LINE_FEED_CODE
 #endif
         "" LINE_FEED_CODE
         "Stream Options" LINE_FEED_CODE
-        "  --stream=[xml]                                  Specify stream" LINE_FEED_CODE
-        "  --stream-fd=FILE_DESCRIPTOR                     Stream to FILE_DESCRIPTOR (default: stdout)" LINE_FEED_CODE
-        "  --stream-directory=DIRECTORY                    Stream to a file under DIRECTORY (default: none)" LINE_FEED_CODE
-        "  --stream-log-directory=DIRECTORY                Obsoleted. Use --stream-directory instead" LINE_FEED_CODE
+        "  --stream=[xml]                                    Specify stream" LINE_FEED_CODE
+        "  --stream-fd=FILE_DESCRIPTOR                       Stream to FILE_DESCRIPTOR (default: stdout)" LINE_FEED_CODE
+        "  --stream-directory=DIRECTORY                      Stream to a file under DIRECTORY (default: none)" LINE_FEED_CODE
+        "  --stream-log-directory=DIRECTORY                  Obsoleted. Use --stream-directory instead" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "Report Options" LINE_FEED_CODE
 #if defined(HAVE_PANGO_CAIRO) && defined(HAVE_CAIRO_PDF)
-        "  --pdf-report=FILE                               Set filename of pdf report" LINE_FEED_CODE
+        "  --pdf-report=FILE                                 Set filename of pdf report" LINE_FEED_CODE
 #endif
-        "  --xml-report=FILE                               Set filename of xml report" LINE_FEED_CODE
+        "  --xml-report=FILE                                 Set filename of xml report" LINE_FEED_CODE
         "" LINE_FEED_CODE
         "UI Options" LINE_FEED_CODE
 #ifdef HAVE_GTK
-        "  -u, --ui=[console|gtk]                          Specify UI" LINE_FEED_CODE
+        "  -u, --ui=[console|gtk]                            Specify UI" LINE_FEED_CODE
 #else
-        "  -u, --ui=[console]                              Specify UI" LINE_FEED_CODE
+        "  -u, --ui=[console]                                Specify UI" LINE_FEED_CODE
 #endif
         "" LINE_FEED_CODE
         "Console UI Options" LINE_FEED_CODE
-        "  -v, --verbose=[s|silent|n|normal|v|verbose]     Set verbose level" LINE_FEED_CODE
-        "  -c, --color=[yes|true|no|false|auto]            Output log with colors" LINE_FEED_CODE
-        "  --notify=[yes|true|no|false|auto]               Notify test result" LINE_FEED_CODE
+        "  -v, --verbose=[s|silent|n|normal|v|verbose]       Set verbose level" LINE_FEED_CODE
+        "  -c, --color=[yes|true|no|false|auto]              Output log with colors" LINE_FEED_CODE
+        "  --notify=[yes|true|no|false|auto]                 Notify test result" LINE_FEED_CODE
+        "  --show-detail-immediately=[yes|true|no|false]     Show test detail immediately" LINE_FEED_CODE
         "" LINE_FEED_CODE
 #ifdef HAVE_GTK
         "GTK+ Options" LINE_FEED_CODE
-        "  --class=CLASS                                   Program class as used by the window manager" LINE_FEED_CODE
-        "  --gtk-name=NAME                                 Program name as used by the window manager" LINE_FEED_CODE
-        "  --screen=SCREEN                                 X screen to use" LINE_FEED_CODE
+        "  --class=CLASS                                     Program class as used by the window manager" LINE_FEED_CODE
+        "  --gtk-name=NAME                                   Program name as used by the window manager" LINE_FEED_CODE
+        "  --screen=SCREEN                                   X screen to use" LINE_FEED_CODE
 #  ifdef HAVE_GTK_ENABLE_DEBUG
-        "  --gdk-debug=FLAGS                               Gdk debugging flags to set" LINE_FEED_CODE
-        "  --gdk-no-debug=FLAGS                            Gdk debugging flags to unset" LINE_FEED_CODE
+        "  --gdk-debug=FLAGS                                 Gdk debugging flags to set" LINE_FEED_CODE
+        "  --gdk-no-debug=FLAGS                              Gdk debugging flags to unset" LINE_FEED_CODE
 #  endif
 #  ifdef GDK_WINDOWING_X11
-        "  --sync                                          Make X calls synchronous" LINE_FEED_CODE
+        "  --sync                                            Make X calls synchronous" LINE_FEED_CODE
 #  elif defined(GDK_WINDOWING_WIN32)
-        "  --sync                                          Don't batch GDI requests" LINE_FEED_CODE
-        "  --no-wintab                                     Don't use the Wintab API for tablet support" LINE_FEED_CODE
-        "  --ignore-wintab                                 Same as --no-wintab" LINE_FEED_CODE
-        "  --use-wintab                                    Do use the Wintab API [default]" LINE_FEED_CODE
-        "  --max-colors=COLORS                             Size of the palette in 8 bit mode" LINE_FEED_CODE
+        "  --sync                                            Don't batch GDI requests" LINE_FEED_CODE
+        "  --no-wintab                                       Don't use the Wintab API for tablet support" LINE_FEED_CODE
+        "  --ignore-wintab                                   Same as --no-wintab" LINE_FEED_CODE
+        "  --use-wintab                                      Do use the Wintab API [default]" LINE_FEED_CODE
+        "  --max-colors=COLORS                               Size of the palette in 8 bit mode" LINE_FEED_CODE
 #  endif
-        "  --gtk-module=MODULES                            Load additional GTK+ modules" LINE_FEED_CODE
-        "  --g-fatal-warnings                              Make all warnings fatal" LINE_FEED_CODE
+        "  --gtk-module=MODULES                              Load additional GTK+ modules" LINE_FEED_CODE
+        "  --g-fatal-warnings                                Make all warnings fatal" LINE_FEED_CODE
 #  ifdef HAVE_GTK_ENABLE_DEBUG
-        "  --gtk-debug=FLAGS                               GTK+ debugging flags to set" LINE_FEED_CODE
-        "  --gtk-no-debug=FLAGS                            GTK+ debugging flags to unset" LINE_FEED_CODE
+        "  --gtk-debug=FLAGS                                 GTK+ debugging flags to set" LINE_FEED_CODE
+        "  --gtk-no-debug=FLAGS                              GTK+ debugging flags to unset" LINE_FEED_CODE
 #  endif
         "" LINE_FEED_CODE
 #endif
         "Application Options:" LINE_FEED_CODE
-        "  --version                                       Show version" LINE_FEED_CODE
-        "  --mode=[test|analyze|play]                      Set run mode (default: test)" LINE_FEED_CODE
-        "  -s, --source-directory=DIRECTORY                Set directory of source code" LINE_FEED_CODE
-        "  -n, --name=TEST_NAME                            Specify tests" LINE_FEED_CODE
-        "  -t, --test-case=TEST_CASE_NAME                  Specify test cases" LINE_FEED_CODE
-        "  -m, --multi-thread                              Run test cases and iterated tests with multi-thread" LINE_FEED_CODE
-        "  --max-threads=MAX_THREADS                       Run test cases and iterated tests with MAX_THREADS threads concurrently at a maximum (default: 10; -1 is no limit)" LINE_FEED_CODE
-        "  --disable-signal-handling                       Disable signal handling" LINE_FEED_CODE
-        "  --test-case-order=[none|name|name-desc]         Sort test case by. Default is 'none'." LINE_FEED_CODE
-        "  --exclude-file=FILE                             Skip files" LINE_FEED_CODE
-        "  --exclude-directory=DIRECTORY                   Skip directories" LINE_FEED_CODE
-        "  --fatal-failures                                Treat failures as fatal problem" LINE_FEED_CODE
-        "  --keep-opening-modules                          Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
-        "  --enable-convenience-attribute-definition       Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
-        "  --stop-before-test                              Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
+        "  --version                                         Show version" LINE_FEED_CODE
+        "  --mode=[test|analyze|play]                        Set run mode (default: test)" LINE_FEED_CODE
+        "  -s, --source-directory=DIRECTORY                  Set directory of source code" LINE_FEED_CODE
+        "  -n, --name=TEST_NAME                              Specify tests" LINE_FEED_CODE
+        "  -t, --test-case=TEST_CASE_NAME                    Specify test cases" LINE_FEED_CODE
+        "  -m, --multi-thread                                Run test cases and iterated tests with multi-thread" LINE_FEED_CODE
+        "  --max-threads=MAX_THREADS                         Run test cases and iterated tests with MAX_THREADS threads concurrently at a maximum (default: 10; -1 is no limit)" LINE_FEED_CODE
+        "  --disable-signal-handling                         Disable signal handling" LINE_FEED_CODE
+        "  --test-case-order=[none|name|name-desc]           Sort test case by. Default is 'none'." LINE_FEED_CODE
+        "  --exclude-file=FILE                               Skip files" LINE_FEED_CODE
+        "  --exclude-directory=DIRECTORY                     Skip directories" LINE_FEED_CODE
+        "  --fatal-failures                                  Treat failures as fatal problem" LINE_FEED_CODE
+        "  --keep-opening-modules                            Keep opening loaded modules to resolve symbols for debugging" LINE_FEED_CODE
+        "  --enable-convenience-attribute-definition         Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' PREFIX}' attribute set function" LINE_FEED_CODE
+        "  --stop-before-test                                Set breakpoints at each line which invokes test. You can step into a test function with your debugger easily." LINE_FEED_CODE
 #ifdef HAVE_GTK
-        "  --display=DISPLAY                               X display to use" LINE_FEED_CODE
+        "  --display=DISPLAY                                 X display to use" LINE_FEED_CODE
 #endif
         "" LINE_FEED_CODE;
 
