@@ -150,6 +150,7 @@ collect_backtrace (void)
         return;
     }
 
+    g_print("\n");
     original_stdout_fileno = dup(STDOUT_FILENO);
     dup2(fds[1], STDOUT_FILENO);
     g_on_error_stack_trace(cut_get_cutter_command_path());
