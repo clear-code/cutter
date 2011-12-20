@@ -511,6 +511,8 @@ print_progress_in_detail (CutConsoleUI *console, CutTestResult *result)
     if (marker) {
         g_string_free(marker, TRUE);
     }
+
+    console->progress_row = 0;
 }
 
 static void
