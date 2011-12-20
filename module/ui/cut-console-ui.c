@@ -479,6 +479,9 @@ static void
 print_progress_in_detail (CutConsoleUI *console, CutTestResult *result)
 {
     CutTestResultStatus status;
+    char mark = '=';
+    GString *marker = NULL;
+    int i;
 
     if (console->verbose_level < CUT_VERBOSE_LEVEL_NORMAL)
         return;
@@ -486,10 +489,28 @@ print_progress_in_detail (CutConsoleUI *console, CutTestResult *result)
     if (!console->show_detail_immediately)
         return;
 
-    status = cut_test_result_get_status(result);
+    if (console->progress_row_max != -1) {
+        marker = g_string_new(NULL);
+        for (i = 0; i < console->progress_row_max; i++) {
+            g_string_append_c(marker, mark);
+        }
+    }
 
+    status = cut_test_result_get_status(result);
     g_print("\n");
+    if (marker) {
+        print_for_status(console, status, "%s", marker->str);
+        g_print("\n");
+    }
     print_result_detail(console, status, result);
+    if (marker) {
+        print_for_status(console, status, "%s", marker->str);
+        g_print("\n");
+    }
+
+    if (marker) {
+        g_string_free(marker, TRUE);
+    }
 }
 
 static void
