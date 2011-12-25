@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -37,6 +37,10 @@ struct _CutStreamReaderPrivate
 {
     CutStreamParser *parser;
     gboolean error_emitted;
+    guint read_source_id;
+    guint hung_up_source_id;
+    guint error_source_id;
+    gboolean ended;
 };
 
 G_DEFINE_TYPE(CutStreamReader, cut_stream_reader, CUT_TYPE_RUN_CONTEXT)
@@ -64,6 +68,29 @@ cut_stream_reader_init (CutStreamReader *stream_reader)
 
     priv->parser = cut_stream_parser_new(CUT_RUN_CONTEXT(stream_reader));
     priv->error_emitted = FALSE;
+    priv->read_source_id = 0;
+    priv->hung_up_source_id = 0;
+    priv->error_source_id = 0;
+    priv->ended = FALSE;
+}
+
+static void
+dispose_source (CutStreamReaderPrivate *priv)
+{
+    if (priv->read_source_id > 0) {
+        g_source_remove(priv->read_source_id);
+        priv->read_source_id = 0;
+    }
+
+    if (priv->hung_up_source_id > 0) {
+        g_source_remove(priv->hung_up_source_id);
+        priv->hung_up_source_id = 0;
+    }
+
+    if (priv->error_source_id > 0) {
+        g_source_remove(priv->error_source_id);
+        priv->error_source_id = 0;
+    }
 }
 
 static void
@@ -72,6 +99,9 @@ dispose (GObject *object)
     CutStreamReaderPrivate *priv;
 
     priv = CUT_STREAM_READER_GET_PRIVATE(object);
+
+    dispose_source(priv);
+
     if (priv->parser) {
         CutStreamParser *parser;
 
@@ -113,44 +143,83 @@ cut_stream_reader_error_quark (void)
 } while (0)
 
 static gboolean
-watch_func (GIOChannel *channel, GIOCondition condition, gpointer data)
+read_channel (GIOChannel *channel, GIOCondition condition, gpointer data)
 {
     CutStreamReader *stream_reader = data;
+    CutStreamReaderPrivate *priv;
     gboolean keep_callback = TRUE;
 
-    if (!CUT_IS_STREAM_READER(data))
-        return FALSE;
-
-    if (condition & (G_IO_IN | G_IO_PRI)) {
-        keep_callback = cut_stream_reader_read_from_io_channel(stream_reader,
-                                                               channel);
-    }
-
+    priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
+    keep_callback = cut_stream_reader_read_from_io_channel(stream_reader,
+                                                           channel);
     if (cut_run_context_is_completed(CUT_RUN_CONTEXT(stream_reader)))
-        return FALSE;
-
-    if (condition & (G_IO_ERR | G_IO_HUP | G_IO_NVAL)) {
-        gchar *message;
-
-        message = gcut_io_inspect_condition(condition);
-        emit_error(stream_reader,
-                   CUT_STREAM_READER_ERROR_IO_ERROR, NULL,
-                   "%s", message);
-        g_free(message);
         keep_callback = FALSE;
-    }
+
+    if (!keep_callback)
+        dispose_source(priv);
 
     return keep_callback;
 }
 
-guint
+static gboolean
+hung_up_channel (GIOChannel *channel, GIOCondition condition, gpointer data)
+{
+    CutStreamReader *stream_reader = data;
+    CutStreamReaderPrivate *priv;
+    gboolean keep_callback = FALSE;
+
+    cut_stream_reader_read_from_io_channel_to_end(stream_reader, channel);
+    priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
+    dispose_source(priv);
+
+    return keep_callback;
+}
+
+static gboolean
+error_channel (GIOChannel *channel, GIOCondition condition, gpointer data)
+{
+    CutStreamReader *stream_reader = data;
+    CutStreamReaderPrivate *priv;
+    gboolean keep_callback = FALSE;
+    gchar *message;
+
+    message = gcut_io_inspect_condition(condition);
+    emit_error(stream_reader,
+               CUT_STREAM_READER_ERROR_IO_ERROR, NULL,
+               "%s", message);
+    g_free(message);
+
+    priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
+    dispose_source(priv);
+
+    return keep_callback;
+}
+
+void
 cut_stream_reader_watch_io_channel (CutStreamReader *stream_reader,
                                     GIOChannel      *channel)
 {
-    return g_io_add_watch(channel,
-                          G_IO_IN | G_IO_PRI |
-                          G_IO_ERR | G_IO_HUP | G_IO_NVAL,
-                          watch_func, stream_reader);
+    CutStreamReaderPrivate *priv;
+
+    priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
+    dispose_source(priv);
+
+    priv->read_source_id = g_io_add_watch_full(channel,
+                                               G_PRIORITY_LOW,
+                                               G_IO_IN | G_IO_PRI,
+                                               read_channel, stream_reader,
+                                               NULL);
+    priv->hung_up_source_id = g_io_add_watch_full(channel,
+                                                  G_PRIORITY_LOW,
+                                                  G_IO_HUP,
+                                                  hung_up_channel,
+                                                  stream_reader,
+                                                  NULL);
+    priv->error_source_id = g_io_add_watch_full(channel,
+                                                G_PRIORITY_LOW,
+                                                G_IO_ERR | G_IO_NVAL,
+                                                error_channel, stream_reader,
+                                                NULL);
 }
 
 #define BUFFER_SIZE 4096
@@ -159,40 +228,55 @@ cut_stream_reader_read_from_io_channel (CutStreamReader *stream_reader,
                                         GIOChannel      *channel)
 {
     CutStreamReaderPrivate *priv;
+    GIOStatus status;
+    gboolean eof = FALSE;
+    gchar stream[BUFFER_SIZE + 1];
+    gsize length = 0;
+    GError *error = NULL;
 
     priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
-    while (!priv->error_emitted) {
-        GIOStatus status;
-        gboolean eof = FALSE;
-        gchar stream[BUFFER_SIZE + 1];
-        gsize length = 0;
-        GError *error = NULL;
+    if (priv->error_emitted)
+        return FALSE;
 
-        status = g_io_channel_read_chars(channel, stream, BUFFER_SIZE,
-                                         &length, &error);
-        if (status == G_IO_STATUS_EOF)
-            eof = TRUE;
+    status = g_io_channel_read_chars(channel, stream, BUFFER_SIZE,
+                                     &length, &error);
+    if (status == G_IO_STATUS_EOF)
+        eof = TRUE;
 
-        if (error) {
-            emit_error(stream_reader,
-                       CUT_STREAM_READER_ERROR_READ,
-                       error, "failed to read stream");
-            break;
-        }
+    if (error) {
+        emit_error(stream_reader,
+                   CUT_STREAM_READER_ERROR_READ,
+                   error, "failed to read stream");
+        return FALSE;
+    }
 
-        if (length <= 0)
-            break;
-
+    if (length > 0) {
         if (!cut_stream_reader_read(stream_reader, stream, length))
-            break;
+            return FALSE;
+    }
+    if (eof)
+        cut_stream_reader_end_read(stream_reader);
 
-        if (eof) {
-            cut_stream_reader_end_read(stream_reader);
+    return !priv->error_emitted;
+}
+
+gboolean
+cut_stream_reader_read_from_io_channel_to_end (CutStreamReader *stream_reader,
+                                               GIOChannel      *channel)
+{
+    CutStreamReaderPrivate *priv;
+    gboolean succeeded = TRUE;
+
+    priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
+    while (!priv->ended) {
+        succeeded = cut_stream_reader_read_from_io_channel(stream_reader,
+                                                           channel);
+        if (!succeeded) {
             break;
         }
     }
 
-    return !priv->error_emitted;
+    return succeeded;
 }
 
 gboolean
@@ -223,10 +307,13 @@ cut_stream_reader_end_read (CutStreamReader *stream_reader)
         return FALSE;
 
     cut_stream_parser_end_parse(priv->parser, &error);
-    if (error)
+    if (error) {
         emit_error(stream_reader,
                    CUT_STREAM_READER_ERROR_END_PARSE,
                    error, "failed to end parse stream");
+    } else {
+        priv->ended = TRUE;
+    }
 
     return !priv->error_emitted;
 }

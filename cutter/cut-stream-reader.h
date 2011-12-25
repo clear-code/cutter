@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -62,10 +62,13 @@ GType          cut_stream_reader_get_type  (void) G_GNUC_CONST;
 
 CutRunContext *cut_stream_reader_new       (void);
 
-guint          cut_stream_reader_watch_io_channel
+void           cut_stream_reader_watch_io_channel
                                            (CutStreamReader *stream_reader,
                                             GIOChannel      *channel);
 gboolean       cut_stream_reader_read_from_io_channel
+                                           (CutStreamReader *stream_reader,
+                                            GIOChannel      *channel);
+gboolean       cut_stream_reader_read_from_io_channel_to_end
                                            (CutStreamReader *stream_reader,
                                             GIOChannel      *channel);
 gboolean       cut_stream_reader_read      (CutStreamReader *stream_reader,

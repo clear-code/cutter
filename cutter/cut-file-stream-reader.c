@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -39,7 +39,6 @@ struct _CutFileStreamReaderPrivate
 {
     gchar *file_name;
     GIOChannel *channel;
-    guint watch_source_id;
 };
 
 enum
@@ -99,7 +98,6 @@ cut_file_stream_reader_init (CutFileStreamReader *file_stream_reader)
 
     priv->file_name = NULL;
     priv->channel = NULL;
-    priv->watch_source_id = 0;
 }
 
 static void
@@ -120,22 +118,12 @@ free_file_name (CutFileStreamReaderPrivate *priv)
 }
 
 static void
-remove_watch_func (CutFileStreamReaderPrivate *priv)
-{
-    g_source_remove(priv->watch_source_id);
-    priv->watch_source_id = 0;
-}
-
-static void
 dispose (GObject *object)
 {
     CutFileStreamReaderPrivate *priv;
 
     priv = CUT_FILE_STREAM_READER_GET_PRIVATE(object);
     free_file_name(priv);
-
-    if (priv->watch_source_id)
-        remove_watch_func(priv);
 
     if (priv->channel) {
         g_io_channel_unref(priv->channel);
@@ -245,8 +233,7 @@ runner_run_async (CutRunner *runner)
         g_io_channel_set_close_on_unref(priv->channel, TRUE);
     }
 
-    priv->watch_source_id = cut_stream_reader_watch_io_channel(stream_reader,
-                                                               priv->channel);
+    cut_stream_reader_watch_io_channel(stream_reader, priv->channel);
 }
 
 /*

@@ -51,7 +51,6 @@ struct _CutPipelinePrivate
 {
     GPid pid;
     guint process_source_id;
-    guint child_out_source_id;
     GIOChannel *child_out;
     gint child_pipe[2];
 };
@@ -85,7 +84,6 @@ cut_pipeline_init (CutPipeline *pipeline)
     CutPipelinePrivate *priv = CUT_PIPELINE_GET_PRIVATE(pipeline);
 
     priv->process_source_id = 0;
-    priv->child_out_source_id = 0;
     priv->pid               = 0;
 
     priv->child_out         = NULL;
@@ -109,13 +107,6 @@ remove_child_watch_func (CutPipelinePrivate *priv)
 }
 
 static void
-remove_child_out_watch_func (CutPipelinePrivate *priv)
-{
-    g_source_remove(priv->child_out_source_id);
-    priv->child_out_source_id = 0;
-}
-
-static void
 close_child (CutPipelinePrivate *priv)
 {
     g_spawn_close_pid(priv->pid);
@@ -136,9 +127,6 @@ dispose (GObject *object)
 
     if (priv->process_source_id)
         remove_child_watch_func(priv);
-
-    if (priv->child_out_source_id)
-        remove_child_out_watch_func(priv);
 
     if (priv->pid)
         close_child(priv);
@@ -218,7 +206,6 @@ reap_child (CutPipeline *pipeline, GPid pid)
         return;
 
     remove_child_watch_func(priv);
-    remove_child_out_watch_func(priv);
     unref_child_out_channel(priv);
     close_child(priv);
 }
@@ -226,8 +213,9 @@ reap_child (CutPipeline *pipeline, GPid pid)
 static gboolean
 read_stream (CutPipeline *pipeline, GIOChannel *channel)
 {
-    return cut_stream_reader_read_from_io_channel(CUT_STREAM_READER(pipeline),
-                                                  channel);
+    CutStreamReader *reader;
+    reader = CUT_STREAM_READER(pipeline);
+    return cut_stream_reader_read_from_io_channel_to_end(reader, channel);
 }
 
 static void
@@ -263,10 +251,7 @@ create_child_out_channel (CutPipeline *pipeline)
     g_io_channel_set_close_on_unref(channel, TRUE);
 
     reader = CUT_STREAM_READER(pipeline);
-    /* FIXME: should connect "error" or "complete-run"
-     * signal and cleanup resource. */
-    priv->child_out_source_id = cut_stream_reader_watch_io_channel(reader,
-                                                                   channel);
+    cut_stream_reader_watch_io_channel(reader, channel);
 
     return channel;
 }
