@@ -109,6 +109,9 @@ read_backtrace (int in_fd)
     gssize i, read_size;
     gchar *internal_backtrace;
 
+    if (cut_crash_backtrace_show_on_the_moment)
+        g_print("\n");
+
     crash_backtrace[0] = '\0';
     i = 0;
     while ((read_size = read(in_fd,
@@ -150,7 +153,6 @@ collect_backtrace (void)
         return;
     }
 
-    g_print("\n");
     original_stdout_fileno = dup(STDOUT_FILENO);
     dup2(fds[1], STDOUT_FILENO);
     g_on_error_stack_trace(cut_get_cutter_command_path());
