@@ -828,8 +828,8 @@ idle_cb_append_test_case_row (gpointer data)
     return FALSE;
 }
 
-static gboolean
-idle_cb_update_test_case_row (gpointer data)
+static void
+update_test_case_row (gpointer data)
 {
     TestCaseRowInfo *info = data;
     CutGtkUI *ui;
@@ -858,8 +858,6 @@ idle_cb_update_test_case_row (gpointer data)
         g_free(text);
         g_object_unref(icon);
     }
-
-    return FALSE;
 }
 
 static gboolean
@@ -1205,7 +1203,7 @@ cb_complete_test (CutRunContext *run_context,
     test_case_row_info->n_completed_tests++;
 
     update_summary(ui);
-    g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
+    update_test_case_row(info->test_case_row_info);
     pop_running_test_message(ui);
     g_idle_add(idle_cb_free_test_row_info, info);
 
