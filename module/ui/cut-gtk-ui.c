@@ -919,10 +919,9 @@ append_test_row (TestRowInfo *info)
     info->update_pulse_id = g_timeout_add(10, timeout_cb_pulse_test, info);
 }
 
-static gboolean
-idle_cb_update_test_row_status (gpointer data)
+static void
+update_test_row_status (TestRowInfo *info)
 {
-    TestRowInfo *info = data;
     CutGtkUI *ui;
     GtkTreeIter iter;
 
@@ -948,8 +947,6 @@ idle_cb_update_test_row_status (gpointer data)
             gtk_tree_path_free(path);
         }
     }
-
-    return FALSE;
 }
 
 
@@ -1062,7 +1059,7 @@ cb_success_test (CutRunContext *run_context,
     if (info->status == -1) {
         info->status = CUT_TEST_RESULT_SUCCESS;
 
-        g_idle_add(idle_cb_update_test_row_status, data);
+        update_test_row_status(info);
     }
 }
 
@@ -1075,7 +1072,7 @@ cb_failure_test (CutRunContext *run_context,
 
     update_status(info, CUT_TEST_RESULT_FAILURE);
 
-    g_idle_add(idle_cb_update_test_row_status, data);
+    update_test_row_status(info);
     append_test_result_row(info, result);
 }
 
@@ -1088,7 +1085,7 @@ cb_error_test (CutRunContext *run_context,
 
     update_status(info, CUT_TEST_RESULT_ERROR);
 
-    g_idle_add(idle_cb_update_test_row_status, data);
+    update_test_row_status(info);
     append_test_result_row(info, result);
 }
 
@@ -1101,7 +1098,7 @@ cb_pending_test (CutRunContext *run_context,
 
     update_status(info, CUT_TEST_RESULT_PENDING);
 
-    g_idle_add(idle_cb_update_test_row_status, data);
+    update_test_row_status(info);
     append_test_result_row(info, result);
 }
 
@@ -1114,7 +1111,7 @@ cb_notification_test (CutRunContext *run_context,
 
     update_status(info, CUT_TEST_RESULT_NOTIFICATION);
 
-    g_idle_add(idle_cb_update_test_row_status, data);
+    update_test_row_status(info);
     append_test_result_row(info, result);
 }
 
@@ -1127,7 +1124,7 @@ cb_omission_test (CutRunContext *run_context,
 
     update_status(info, CUT_TEST_RESULT_OMISSION);
 
-    g_idle_add(idle_cb_update_test_row_status, data);
+    update_test_row_status(info);
     append_test_result_row(info, result);
 }
 
@@ -1140,7 +1137,7 @@ cb_crash_test (CutRunContext *run_context,
 
     update_status(info, CUT_TEST_RESULT_CRASH);
 
-    g_idle_add(idle_cb_update_test_row_status, data);
+    update_test_row_status(info);
     append_test_result_row(info, result);
 }
 
