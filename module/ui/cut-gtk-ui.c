@@ -1171,36 +1171,26 @@ cb_crash_test (CutRunContext *run_context,
     idle_add_append_test_result_row(info, result);
 }
 
-static gboolean
-idle_cb_push_running_test_message (gpointer data)
+static void
+push_running_test_message (CutGtkUI *ui, CutTest *test)
 {
-    TestRowInfo *info = data;
-    CutGtkUI *ui;
     guint context_id;
     gchar *message;
 
-    ui = info->test_case_row_info->ui;
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test");
     message = g_strdup_printf(_("Running test: %s"),
-                              cut_test_get_name(info->test));
+                              cut_test_get_name(test));
     gtk_statusbar_push(ui->statusbar, context_id, message);
     g_free(message);
-
-    return FALSE;
 }
 
-static gboolean
-idle_cb_pop_running_test_message (gpointer data)
+static void
+pop_running_test_message (CutGtkUI *ui)
 {
-    TestRowInfo *info = data;
-    CutGtkUI *ui;
     guint context_id;
 
-    ui = info->test_case_row_info->ui;
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test");
     gtk_statusbar_pop(ui->statusbar, context_id);
-
-    return FALSE;
 }
 
 static void
@@ -1219,7 +1209,7 @@ cb_complete_test (CutRunContext *run_context,
 
     g_idle_add(idle_cb_update_summary, ui);
     g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
-    g_idle_add(idle_cb_pop_running_test_message, info);
+    pop_running_test_message(ui);
     g_idle_add(idle_cb_free_test_row_info, info);
 
 #define DISCONNECT(name)                                                \
@@ -1253,7 +1243,7 @@ cb_start_test (CutRunContext *run_context,
     info->pulse = 0;
     info->update_pulse_id = 0;
 
-    g_idle_add(idle_cb_push_running_test_message, info);
+    push_running_test_message(info->test_case_row_info->ui, test);
     g_idle_add(idle_cb_append_test_row, info);
 
 #define CONNECT(name) \
