@@ -801,8 +801,8 @@ update_status (TestRowInfo *info, CutTestResultStatus status)
         ui->status = status;
 }
 
-static gboolean
-idle_cb_append_test_case_row (gpointer data)
+static void
+append_test_case_row (gpointer data)
 {
     TestCaseRowInfo *info = data;
     CutGtkUI *ui;
@@ -824,8 +824,6 @@ idle_cb_append_test_case_row (gpointer data)
     info->path =
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
                                             &iter);
-
-    return FALSE;
 }
 
 static void
@@ -1310,7 +1308,7 @@ cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case, guint n_
     info->n_completed_tests = 0;
     info->status = CUT_TEST_RESULT_SUCCESS;
 
-    g_idle_add(idle_cb_append_test_case_row, info);
+    append_test_case_row(info);
 
     g_signal_connect(run_context, "start-test",
                      G_CALLBACK(cb_start_test), info);
