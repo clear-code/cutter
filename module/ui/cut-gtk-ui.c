@@ -726,10 +726,9 @@ typedef struct TestRowInfo
     CutTestResultStatus status;
 } TestRowInfo;
 
-static gboolean
-idle_cb_free_test_case_row_info (gpointer data)
+static void
+free_test_case_row_info (TestCaseRowInfo *info)
 {
-    TestCaseRowInfo *info = data;
     CutGtkUI *ui;
     GtkTreeIter iter;
 
@@ -750,8 +749,6 @@ idle_cb_free_test_case_row_info (gpointer data)
     g_free(info->path);
 
     g_free(info);
-
-    return FALSE;
 }
 
 static void
@@ -1250,7 +1247,7 @@ cb_complete_test_case (CutRunContext *run_context,
 
     update_summary(info->ui);
     collapse_test_case_row(info);
-    g_idle_add(idle_cb_free_test_case_row_info, data);
+    free_test_case_row_info(info);
     g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_start_test),
                                          data);
