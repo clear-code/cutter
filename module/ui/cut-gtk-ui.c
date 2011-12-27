@@ -960,9 +960,9 @@ typedef struct _TestResultRowInfo
 } TestResultRowInfo;
 
 static void
-append_test_result_row (CutGtkUI *ui, CutTestResult *result,
-                        GtkTreeIter *test_row_iter,
-                        GtkTreeIter *result_row_iter)
+append_test_result_row_under (CutGtkUI *ui, CutTestResult *result,
+                              GtkTreeIter *test_row_iter,
+                              GtkTreeIter *result_row_iter)
 {
     CutTestResultStatus status;
     const GList *node;
@@ -997,25 +997,22 @@ append_test_result_row (CutGtkUI *ui, CutTestResult *result,
     g_object_unref(icon);
 }
 
-static gboolean
-idle_cb_append_test_result_row (gpointer data)
+static void
+append_test_result_row (TestRowInfo *info, CutTestResult *result)
 {
-    TestResultRowInfo *info = data;
-    CutTestResult *result;
     CutGtkUI *ui;
     GtkTreeIter test_row_iter;
     gchar *test_row_path;
 
-    ui = info->test_row_info->test_case_row_info->ui;
-    result = info->result;
-    test_row_path = info->test_row_info->path;
+    ui = info->test_case_row_info->ui;
+    test_row_path = info->path;
 
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &test_row_iter, test_row_path)) {
         GtkTreePath *path;
         GtkTreeIter iter;
 
-        append_test_result_row(ui, result, &test_row_iter, &iter);
+        append_test_result_row_under(ui, result, &test_row_iter, &iter);
 
         path = gtk_tree_model_get_path(GTK_TREE_MODEL(ui->logs), &iter);
         gtk_tree_view_expand_to_path(ui->tree_view, path);
@@ -1025,20 +1022,6 @@ idle_cb_append_test_result_row (gpointer data)
     }
 
     g_object_unref(result);
-    g_free(info);
-
-    return FALSE;
-}
-
-static void
-idle_add_append_test_result_row (TestRowInfo *info, CutTestResult *result)
-{
-    TestResultRowInfo *result_row_info;
-
-    result_row_info = g_new0(TestResultRowInfo, 1);
-    result_row_info->test_row_info = info;
-    result_row_info->result = g_object_ref(result);
-    g_idle_add(idle_cb_append_test_result_row, result_row_info);
 }
 
 static void
@@ -1093,7 +1076,7 @@ cb_failure_test (CutRunContext *run_context,
     update_status(info, CUT_TEST_RESULT_FAILURE);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    idle_add_append_test_result_row(info, result);
+    append_test_result_row(info, result);
 }
 
 static void
@@ -1106,7 +1089,7 @@ cb_error_test (CutRunContext *run_context,
     update_status(info, CUT_TEST_RESULT_ERROR);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    idle_add_append_test_result_row(info, result);
+    append_test_result_row(info, result);
 }
 
 static void
@@ -1119,7 +1102,7 @@ cb_pending_test (CutRunContext *run_context,
     update_status(info, CUT_TEST_RESULT_PENDING);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    idle_add_append_test_result_row(info, result);
+    append_test_result_row(info, result);
 }
 
 static void
@@ -1132,7 +1115,7 @@ cb_notification_test (CutRunContext *run_context,
     update_status(info, CUT_TEST_RESULT_NOTIFICATION);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    idle_add_append_test_result_row(info, result);
+    append_test_result_row(info, result);
 }
 
 static void
@@ -1145,7 +1128,7 @@ cb_omission_test (CutRunContext *run_context,
     update_status(info, CUT_TEST_RESULT_OMISSION);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    idle_add_append_test_result_row(info, result);
+    append_test_result_row(info, result);
 }
 
 static void
@@ -1158,7 +1141,7 @@ cb_crash_test (CutRunContext *run_context,
     update_status(info, CUT_TEST_RESULT_CRASH);
 
     g_idle_add(idle_cb_update_test_row_status, data);
-    idle_add_append_test_result_row(info, result);
+    append_test_result_row(info, result);
 }
 
 static void
