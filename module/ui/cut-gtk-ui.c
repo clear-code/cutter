@@ -61,6 +61,16 @@ typedef struct _TestCaseRowInfo
     CutTestResultStatus status;
 } TestCaseRowInfo;
 
+typedef struct _TestIteratorRowInfo
+{
+    TestCaseRowInfo *test_case_row_info;
+    CutTestIterator *test_iterator;
+    gchar *path;
+    guint n_tests;
+    guint n_completed_tests;
+    CutTestResultStatus status;
+} TestIteratorRowInfo;
+
 typedef struct TestRowInfo
 {
     TestCaseRowInfo *test_case_row_info;
@@ -70,6 +80,17 @@ typedef struct TestRowInfo
     guint update_pulse_id;
     CutTestResultStatus status;
 } TestRowInfo;
+
+typedef struct IteratedTestRowInfo
+{
+    TestIteratorRowInfo *test_iterator_row_info;
+    CutIteratedTest *iterated_test;
+    gchar *data_name;
+    gchar *path;
+    gint pulse;
+    guint update_pulse_id;
+    CutTestResultStatus status;
+} IteratedTestRowInfo;
 
 typedef struct _TestResultRowInfo
 {
@@ -1202,6 +1223,223 @@ cb_start_test (CutRunContext *run_context,
 }
 
 static void
+free_iterated_test_row_info (IteratedTestRowInfo *info)
+{
+    CutGtkUI *ui;
+    GtkTreeIter iter;
+
+    if (info->update_pulse_id) {
+        g_source_remove(info->update_pulse_id);
+        info->update_pulse_id = 0;
+    }
+
+    ui = info->test_iterator_row_info->test_case_row_info->ui;
+
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &iter, info->path)) {
+        gtk_tree_store_set(ui->logs, &iter,
+                           COLUMN_PROGRESS_VISIBLE, FALSE,
+                           COLUMN_PROGRESS_PULSE, -1,
+                           -1);
+    }
+
+    g_object_unref(info->iterated_test);
+    g_free(info->data_name);
+    g_free(info->path);
+
+    g_free(info);
+}
+
+static void
+cb_complete_iterated_test (CutRunContext *run_context,
+                           CutIteratedTest *iterated_test,
+                           CutTestContext *test_context,
+                           gboolean success, gpointer data)
+{
+    IteratedTestRowInfo *info = data;
+    TestCaseRowInfo *test_case_row_info;
+    TestIteratorRowInfo *test_iterator_row_info;
+    CutGtkUI *ui;
+
+    test_iterator_row_info = info->test_iterator_row_info;
+    test_iterator_row_info->n_completed_tests++;
+    test_case_row_info = info->test_iterator_row_info->test_case_row_info;
+    test_case_row_info->n_completed_tests++;
+    ui = test_case_row_info->ui;
+    ui->n_completed_tests++;
+
+    update_row(ui,
+               test_iterator_row_info->path,
+               test_iterator_row_info->n_tests,
+               test_iterator_row_info->n_completed_tests,
+               test_iterator_row_info->status);
+    update_row(ui,
+               test_case_row_info->path,
+               test_case_row_info->n_tests,
+               test_case_row_info->n_completed_tests,
+               test_case_row_info->status);
+    update_summary(ui);
+    pop_message(ui, "iterated-test");
+    free_iterated_test_row_info(info);
+
+#define DISCONNECT(name)                                                \
+    g_signal_handlers_disconnect_by_func(run_context,                   \
+                                         G_CALLBACK(cb_ ## name),       \
+                                         data)
+    /* DISCONNECT(pass_assertion); */
+    /* DISCONNECT(success_test); */
+    /* DISCONNECT(failure_test); */
+    /* DISCONNECT(error_test); */
+    /* DISCONNECT(pending_test); */
+    /* DISCONNECT(notification_test); */
+    /* DISCONNECT(omission_test); */
+    /* DISCONNECT(crash_test); */
+    DISCONNECT(complete_iterated_test);
+#undef DISCONNECT
+}
+
+static void
+cb_start_iterated_test (CutRunContext *run_context,
+                        CutIteratedTest *iterated_test,
+                        CutTestContext *test_context, gpointer data)
+{
+    IteratedTestRowInfo *info;
+    CutGtkUI *ui;
+
+    info = g_new0(IteratedTestRowInfo, 1);
+    info->test_iterator_row_info = data;
+    info->iterated_test = g_object_ref(iterated_test);
+    if (cut_test_context_have_data(test_context)) {
+        CutTestData *data;
+        data = cut_test_context_get_current_data(test_context);
+        info->data_name = g_strdup(cut_test_data_get_name(data));
+    }
+    if (!info->data_name) {
+        info->data_name = g_strdup(cut_test_get_name(CUT_TEST(iterated_test)));
+    }
+    info->path = NULL;
+    info->status = -1;
+    info->pulse = 0;
+    info->update_pulse_id = 0;
+
+    ui = info->test_iterator_row_info->test_case_row_info->ui;
+    push_message(ui,
+                 "iterated-test",
+                 _("Running iterated test: %s (%s)"),
+                 cut_test_get_name(CUT_TEST(info->iterated_test)),
+                 info->data_name);
+    info->path = append_row(ui, info->test_iterator_row_info->path,
+                            info->data_name, NULL);
+    /* Always expand running test case row. Is it OK? */
+    expand_row(ui, info->path);
+
+#define CONNECT(name) \
+    g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), info)
+
+/*     CONNECT(pass_assertion); */
+/*     CONNECT(success_test); */
+/*     CONNECT(failure_test); */
+/*     CONNECT(error_test); */
+/*     CONNECT(pending_test); */
+/*     CONNECT(notification_test); */
+/*     CONNECT(omission_test); */
+/*     CONNECT(crash_test); */
+    CONNECT(complete_iterated_test);
+#undef CONNECT
+}
+
+static void
+collapse_test_iterator_row (TestIteratorRowInfo *info)
+{
+    CutGtkUI *ui;
+    GtkTreeIter iter;
+
+    ui = info->test_case_row_info->ui;
+
+    if (info->status == CUT_TEST_RESULT_SUCCESS &&
+        gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &iter, info->path)) {
+
+        GtkTreePath *path;
+        path = gtk_tree_model_get_path(GTK_TREE_MODEL(ui->logs), &iter);
+        gtk_tree_view_collapse_row(ui->tree_view, path);
+        gtk_tree_path_free(path);
+    }
+}
+
+static void
+free_test_iterator_row_info (TestIteratorRowInfo *info)
+{
+    CutGtkUI *ui;
+    GtkTreeIter iter;
+
+    ui = info->test_case_row_info->ui;
+
+    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &iter, info->path)) {
+        GdkPixbuf *icon;
+        icon = get_status_icon(ui->tree_view, info->status);
+        gtk_tree_store_set(ui->logs, &iter,
+                           COLUMN_STATUS_ICON, icon,
+                           -1);
+        g_object_unref(icon);
+    }
+
+    g_object_unref(info->test_iterator);
+    g_free(info->path);
+
+    g_free(info);
+}
+
+static void
+cb_complete_test_iterator (CutRunContext *run_context,
+                           CutTestCase *test_case, gboolean success,
+                           gpointer data)
+{
+    TestIteratorRowInfo *info = data;
+
+    update_summary(info->test_case_row_info->ui);
+    collapse_test_iterator_row(data);
+    free_test_iterator_row_info(data);
+
+    g_signal_handlers_disconnect_by_func(run_context,
+                                         G_CALLBACK(cb_start_iterated_test),
+                                         data);
+    g_signal_handlers_disconnect_by_func(run_context,
+                                         G_CALLBACK(cb_complete_test_iterator),
+                                         data);
+}
+
+static void
+cb_ready_test_iterator (CutRunContext *run_context,
+                        CutTestIterator *test_iterator, guint n_tests,
+                        TestCaseRowInfo *test_case_row_info)
+{
+    TestIteratorRowInfo *info;
+
+    info = g_new0(TestIteratorRowInfo, 1);
+    info->test_case_row_info = test_case_row_info;
+    info->test_iterator = g_object_ref(test_iterator);
+    info->path = NULL;
+    info->n_tests = n_tests;
+    info->n_completed_tests = 0;
+    info->status = CUT_TEST_RESULT_SUCCESS;
+
+    test_case_row_info->ui->n_tests += n_tests - 1;
+    test_case_row_info->n_tests += n_tests - 1;
+
+    info->path = append_row(test_case_row_info->ui,
+                            test_case_row_info->path,
+                            cut_test_get_name(CUT_TEST(test_iterator)),
+                            cut_test_get_description(CUT_TEST(test_iterator)));
+
+    g_signal_connect(run_context, "start-iterated-test",
+                     G_CALLBACK(cb_start_iterated_test), info);
+    g_signal_connect(run_context, "complete-test-iterator",
+                     G_CALLBACK(cb_complete_test_iterator), info);
+}
+
+static void
 collapse_test_case_row (TestCaseRowInfo *info)
 {
     CutGtkUI *ui;
@@ -1234,13 +1472,16 @@ cb_complete_test_case (CutRunContext *run_context,
                                          G_CALLBACK(cb_start_test),
                                          data);
     g_signal_handlers_disconnect_by_func(run_context,
+                                         G_CALLBACK(cb_ready_test_iterator),
+                                         data);
+    g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_complete_test_case),
                                          data);
 }
 
 static void
-cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case, guint n_tests,
-                    CutGtkUI *ui)
+cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case,
+                    guint n_tests, CutGtkUI *ui)
 {
     TestCaseRowInfo *info;
 
@@ -1258,6 +1499,8 @@ cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case, guint n_
 
     g_signal_connect(run_context, "start-test",
                      G_CALLBACK(cb_start_test), info);
+    g_signal_connect(run_context, "ready-test-iterator",
+                     G_CALLBACK(cb_ready_test_iterator), info);
     g_signal_connect(run_context, "complete-test-case",
                      G_CALLBACK(cb_complete_test_case), info);
 }
