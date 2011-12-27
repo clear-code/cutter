@@ -535,42 +535,46 @@ status_to_color (CutTestResultStatus status, gboolean only_if_not_success)
 }
 
 static GdkPixbuf *
+get_status_icon_by_id (GtkTreeView *tree_view, const gchar *stock_id)
+{
+    return gtk_widget_render_icon(GTK_WIDGET(tree_view),
+                                  stock_id, GTK_ICON_SIZE_MENU,
+                                  NULL);
+}
+
+static GdkPixbuf *
 get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
 {
-    GdkPixbuf *icon;
     const gchar *stock_id = "";
 
     switch (status) {
-      case CUT_TEST_RESULT_SUCCESS:
+    case CUT_TEST_RESULT_SUCCESS:
         stock_id = GTK_STOCK_APPLY;
         break;
-      case CUT_TEST_RESULT_NOTIFICATION:
+    case CUT_TEST_RESULT_NOTIFICATION:
         stock_id = GTK_STOCK_DIALOG_WARNING;
         break;
-      case CUT_TEST_RESULT_OMISSION:
+    case CUT_TEST_RESULT_OMISSION:
         stock_id = GTK_STOCK_DIALOG_ERROR;
         break;
-      case CUT_TEST_RESULT_PENDING:
+    case CUT_TEST_RESULT_PENDING:
         stock_id = GTK_STOCK_DIALOG_ERROR;
         break;
-      case CUT_TEST_RESULT_FAILURE:
+    case CUT_TEST_RESULT_FAILURE:
         stock_id = GTK_STOCK_STOP;
         break;
-      case CUT_TEST_RESULT_ERROR:
+    case CUT_TEST_RESULT_ERROR:
         stock_id = GTK_STOCK_CANCEL;
         break;
-      case CUT_TEST_RESULT_CRASH:
+    case CUT_TEST_RESULT_CRASH:
         stock_id = GTK_STOCK_STOP;
         break;
-      default:
+    default:
         stock_id = GTK_STOCK_INFO;
         break;
     }
-    icon = gtk_widget_render_icon(GTK_WIDGET(tree_view),
-                                  stock_id, GTK_ICON_SIZE_MENU,
-                                  NULL);
 
-    return icon;
+    return get_status_icon_by_id(tree_view, stock_id);
 }
 
 static gchar *
@@ -796,11 +800,13 @@ append_test_case_row (gpointer data)
     CutGtkUI *ui;
     CutTestCase *test_case;
     GtkTreeIter iter;
+    GdkPixbuf *icon;
 
     ui = info->ui;
     test_case = info->test_case;
 
     gtk_tree_store_append(ui->logs, &iter, NULL);
+    icon = get_status_icon_by_id(ui->tree_view, GTK_STOCK_MEDIA_PLAY);
     gtk_tree_store_set(ui->logs, &iter,
                        COLUMN_NAME,
                        cut_test_get_name(CUT_TEST(test_case)),
@@ -808,7 +814,10 @@ append_test_case_row (gpointer data)
                        cut_test_get_description(CUT_TEST(test_case)),
                        COLUMN_PROGRESS_PULSE, -1,
                        COLUMN_PROGRESS_VISIBLE, TRUE,
+                       COLUMN_STATUS_ICON, icon,
                        -1);
+    g_object_unref(icon);
+
     info->path =
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
                                             &iter);
@@ -873,6 +882,7 @@ append_test_row (TestRowInfo *info)
     CutGtkUI *ui;
     CutTest *test;
     GtkTreeIter test_case_iter, iter;
+    GdkPixbuf *icon;
 
     ui = info->test_case_row_info->ui;
     test = info->test;
@@ -881,12 +891,15 @@ append_test_row (TestRowInfo *info)
                                         &test_case_iter,
                                         info->test_case_row_info->path);
     gtk_tree_store_append(ui->logs, &iter, &test_case_iter);
+    icon = get_status_icon_by_id(ui->tree_view, GTK_STOCK_MEDIA_PLAY);
     gtk_tree_store_set(ui->logs, &iter,
                        COLUMN_PROGRESS_PULSE, 0,
                        COLUMN_PROGRESS_VISIBLE, TRUE,
                        COLUMN_NAME, cut_test_get_name(test),
                        COLUMN_DESCRIPTION, cut_test_get_description(test),
+                       COLUMN_STATUS_ICON, icon,
                        -1);
+    g_object_unref(icon);
     /* Always expand running test case row. Is it OK? */
     if (TRUE || info->status == CUT_TEST_RESULT_SUCCESS) {
         GtkTreePath *path;
