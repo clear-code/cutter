@@ -1048,10 +1048,9 @@ idle_add_append_test_result_row (TestRowInfo *info, CutTestResult *result)
     g_idle_add(idle_cb_append_test_result_row, result_row_info);
 }
 
-static gboolean
-idle_cb_update_summary (gpointer data)
+static void
+update_summary (CutGtkUI *ui)
 {
-    CutGtkUI *ui = data;
     gchar *summary, *short_summary, *title;
 
     summary = generate_summary_message(ui->run_context);
@@ -1063,8 +1062,6 @@ idle_cb_update_summary (gpointer data)
     gtk_window_set_title(GTK_WINDOW(ui->window), title);
     g_free(short_summary);
     g_free(title);
-
-    return FALSE;
 }
 
 static void
@@ -1076,7 +1073,7 @@ cb_pass_assertion (CutRunContext *run_context,
 
     /* slow */
     if (g_random_int_range(0, 1000) == 0)
-        g_idle_add(idle_cb_update_summary, info->test_case_row_info->ui);
+        update_summary(info->test_case_row_info->ui);
 }
 
 static void
@@ -1207,7 +1204,7 @@ cb_complete_test (CutRunContext *run_context,
     ui->n_completed_tests++;
     test_case_row_info->n_completed_tests++;
 
-    g_idle_add(idle_cb_update_summary, ui);
+    update_summary(ui);
     g_idle_add(idle_cb_update_test_case_row, info->test_case_row_info);
     pop_running_test_message(ui);
     g_idle_add(idle_cb_free_test_row_info, info);
@@ -1290,7 +1287,7 @@ cb_complete_test_case (CutRunContext *run_context,
 {
     TestCaseRowInfo *info = data;
 
-    g_idle_add(idle_cb_update_summary, info->ui);
+    update_summary(info->ui);
     g_idle_add(idle_cb_collapse_test_case_row, data);
     g_idle_add(idle_cb_free_test_case_row_info, data);
     g_signal_handlers_disconnect_by_func(run_context,
