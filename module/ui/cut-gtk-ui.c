@@ -51,6 +51,32 @@
 typedef struct _CutGtkUI CutGtkUI;
 typedef struct _CutGtkUIClass CutGtkUIClass;
 
+typedef struct _TestCaseRowInfo
+{
+    CutGtkUI *ui;
+    CutTestCase *test_case;
+    gchar *path;
+    guint n_tests;
+    guint n_completed_tests;
+    CutTestResultStatus status;
+} TestCaseRowInfo;
+
+typedef struct TestRowInfo
+{
+    TestCaseRowInfo *test_case_row_info;
+    CutTest *test;
+    gchar *path;
+    gint pulse;
+    guint update_pulse_id;
+    CutTestResultStatus status;
+} TestRowInfo;
+
+typedef struct _TestResultRowInfo
+{
+    TestRowInfo *test_row_info;
+    CutTestResult *result;
+} TestResultRowInfo;
+
 struct _CutGtkUI
 {
     GObject        object;
@@ -688,26 +714,6 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
     push_start_test_suite_message(ui, test_suite);
 }
 
-typedef struct _TestCaseRowInfo
-{
-    CutGtkUI *ui;
-    CutTestCase *test_case;
-    gchar *path;
-    guint n_tests;
-    guint n_completed_tests;
-    CutTestResultStatus status;
-} TestCaseRowInfo;
-
-typedef struct TestRowInfo
-{
-    TestCaseRowInfo *test_case_row_info;
-    CutTest *test;
-    gchar *path;
-    gint pulse;
-    guint update_pulse_id;
-    CutTestResultStatus status;
-} TestRowInfo;
-
 static void
 free_test_case_row_info (TestCaseRowInfo *info)
 {
@@ -928,12 +934,6 @@ update_test_row_status (TestRowInfo *info)
     }
 }
 
-
-typedef struct _TestResultRowInfo
-{
-    TestRowInfo *test_row_info;
-    CutTestResult *result;
-} TestResultRowInfo;
 
 static void
 append_test_result_row_under (CutGtkUI *ui, CutTestResult *result,
