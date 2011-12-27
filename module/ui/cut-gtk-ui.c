@@ -168,6 +168,38 @@ setup_progress_bar (GtkBox *box, CutGtkUI *ui)
     gtk_progress_bar_set_pulse_step(ui->progress_bar, 0.01);
 }
 
+static void
+push_message (CutGtkUI *ui, const gchar *context, const gchar *format, ...)
+{
+    guint context_id;
+    gchar *message;
+    va_list args;
+
+    context_id = gtk_statusbar_get_context_id(ui->statusbar, context);
+    va_start(args, format);
+    message = g_strdup_vprintf(format, args);
+    va_end(args);
+    gtk_statusbar_push(ui->statusbar, context_id, message);
+    g_free(message);
+}
+
+static void
+pop_message (CutGtkUI *ui, const gchar *context)
+{
+    guint context_id;
+
+    context_id = gtk_statusbar_get_context_id(ui->statusbar, context);
+    gtk_statusbar_pop(ui->statusbar, context_id);
+}
+
+static void
+remove_all_messages (CutGtkUI *ui, const gchar *context)
+{
+    guint context_id;
+
+    context_id = gtk_statusbar_get_context_id(ui->statusbar, context);
+    gtk_statusbar_remove_all(ui->statusbar, context_id);
+}
 
 static void
 run_test (CutGtkUI *ui)
@@ -175,7 +207,12 @@ run_test (CutGtkUI *ui)
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
+
     gtk_tree_store_clear(ui->logs);
+
+    remove_all_messages(ui, "test");
+    remove_all_messages(ui, "iterated-test");
+    remove_all_messages(ui, "test-suite");
 
     cut_run_context_add_listener(ui->run_context, CUT_LISTENER(ui));
     cut_run_context_start_async(ui->run_context);
@@ -691,19 +728,6 @@ update_progress_bar (CutGtkUI *ui)
 }
 
 static void
-push_start_test_suite_message (CutGtkUI *ui, CutTestSuite *test_suite)
-{
-    guint context_id;
-    gchar *message;
-
-    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
-    message = g_strdup_printf(_("Starting test suite %s..."),
-                              cut_test_get_name(CUT_TEST(test_suite)));
-    gtk_statusbar_push(ui->statusbar, context_id, message);
-    g_free(message);
-}
-
-static void
 cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
                      guint n_test_cases, guint n_tests, CutGtkUI *ui)
 {
@@ -711,7 +735,9 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
     ui->n_tests = n_tests;
 
     update_button_sensitive(ui);
-    push_start_test_suite_message(ui, test_suite);
+    push_message(ui, "test-suite",
+                 _("Starting test suite %s..."),
+                 cut_test_get_name(CUT_TEST(test_suite)));
 }
 
 static void
@@ -1121,28 +1147,6 @@ cb_crash_test (CutRunContext *run_context,
 }
 
 static void
-push_running_test_message (CutGtkUI *ui, CutTest *test)
-{
-    guint context_id;
-    gchar *message;
-
-    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test");
-    message = g_strdup_printf(_("Running test: %s"),
-                              cut_test_get_name(test));
-    gtk_statusbar_push(ui->statusbar, context_id, message);
-    g_free(message);
-}
-
-static void
-pop_running_test_message (CutGtkUI *ui)
-{
-    guint context_id;
-
-    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test");
-    gtk_statusbar_pop(ui->statusbar, context_id);
-}
-
-static void
 cb_complete_test (CutRunContext *run_context,
                   CutTest *test, CutTestContext *test_context,
                   gboolean success, gpointer data)
@@ -1158,7 +1162,7 @@ cb_complete_test (CutRunContext *run_context,
 
     update_summary(ui);
     update_test_case_row(info->test_case_row_info);
-    pop_running_test_message(ui);
+    pop_message(ui, "test");
     free_test_row_info(info);
 
     update_progress_bar(ui);
@@ -1194,7 +1198,8 @@ cb_start_test (CutRunContext *run_context,
     info->pulse = 0;
     info->update_pulse_id = 0;
 
-    push_running_test_message(info->test_case_row_info->ui, test);
+    push_message(info->test_case_row_info->ui, "test",
+                 _("Running test: %s"), cut_test_get_name(test));
     append_test_row(info);
 
 #define CONNECT(name) \
@@ -1272,23 +1277,6 @@ cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case, guint n_
 }
 
 static void
-push_complete_test_suite_message (CutGtkUI *ui)
-{
-    guint context_id;
-    gchar *message, *summary;
-
-    context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
-    summary = generate_summary_message(ui->run_context);
-    message = g_strdup_printf(_("Finished in %0.1f seconds: %s"),
-                              cut_run_context_get_elapsed(ui->run_context),
-                              summary);
-    g_free(summary);
-    gtk_statusbar_pop(ui->statusbar, context_id);
-    gtk_statusbar_push(ui->statusbar, context_id, message);
-    g_free(message);
-}
-
-static void
 cb_complete_run (CutRunContext *run_context, gboolean success, CutGtkUI *ui)
 {
     ui->running = FALSE;
@@ -1301,7 +1289,16 @@ cb_complete_test_suite (CutRunContext *run_context,
                         gboolean success,
                         CutGtkUI *ui)
 {
-    push_complete_test_suite_message(ui);
+    gchar *summary;
+
+    pop_message(ui, "test-suite");
+
+    summary = generate_summary_message(ui->run_context);
+    push_message(ui, "test-suite",
+                 _("Finished in %0.1f seconds: %s"),
+                 cut_run_context_get_elapsed(ui->run_context),
+                 summary);
+    g_free(summary);
 }
 
 static void
