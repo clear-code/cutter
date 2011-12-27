@@ -841,31 +841,28 @@ append_row (CutGtkUI *ui, const gchar *parent_path,
 }
 
 static void
-update_test_case_row (gpointer data)
+update_row (CutGtkUI *ui, const gchar *path,
+            guint n_tests, guint n_completed_tests, CutTestResultStatus status)
 {
-    TestCaseRowInfo *info = data;
-    CutGtkUI *ui;
     GtkTreeIter iter;
 
-    ui = info->ui;
-
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
-                                            &iter, info->path)) {
+                                            &iter, path)) {
         gdouble fraction;
         gint percent;
         gchar *text;
         GdkPixbuf *icon;
 
-        fraction = info->n_completed_tests / (gdouble)info->n_tests;
+        fraction = n_completed_tests / (gdouble)n_tests;
         percent = (gint)(fraction * 100);
         text = g_strdup_printf("%d/%d (%d%%)",
-                               info->n_completed_tests, info->n_tests, percent);
-        icon = get_status_icon(ui->tree_view, info->status);
+                               n_completed_tests, n_tests, percent);
+        icon = get_status_icon(ui->tree_view, status);
         gtk_tree_store_set(ui->logs, &iter,
                            COLUMN_PROGRESS_TEXT, text,
                            COLUMN_PROGRESS_VALUE, percent,
                            COLUMN_STATUS_ICON, icon,
-                           COLUMN_COLOR, status_to_color(info->status, TRUE),
+                           COLUMN_COLOR, status_to_color(status, TRUE),
                            -1);
         g_free(text);
         g_object_unref(icon);
@@ -1134,8 +1131,12 @@ cb_complete_test (CutRunContext *run_context,
     ui->n_completed_tests++;
     test_case_row_info->n_completed_tests++;
 
+    update_row(ui,
+               test_case_row_info->path,
+               test_case_row_info->n_tests,
+               test_case_row_info->n_completed_tests,
+               test_case_row_info->status);
     update_summary(ui);
-    update_test_case_row(info->test_case_row_info);
     pop_message(ui, "test");
     free_test_row_info(info);
 
