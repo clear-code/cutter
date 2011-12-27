@@ -61,8 +61,7 @@ struct _CutGtkUI
     GtkTreeStore  *logs;
     GtkStatusbar  *statusbar;
     GtkLabel      *summary;
-    GtkWidget     *cancel_button;
-    GtkWidget     *restart_button;
+    GtkWidget     *cancel_or_restart_button;
 
     CutRunContext *run_context;
 
@@ -145,28 +144,6 @@ setup_progress_bar (GtkBox *box, CutGtkUI *ui)
     gtk_progress_bar_set_pulse_step(ui->progress_bar, 0.01);
 }
 
-static void
-cb_cancel (GtkToolButton *button, gpointer data)
-{
-    CutGtkUI *ui = data;
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
-
-    cut_run_context_cancel(ui->run_context);
-}
-
-static void
-setup_cancel_button (GtkToolbar *toolbar, CutGtkUI *ui)
-{
-    GtkToolItem *cancel_button;
-
-    cancel_button = gtk_tool_button_new_from_stock(GTK_STOCK_CANCEL);
-    gtk_toolbar_insert(toolbar, cancel_button, -1);
-
-    g_signal_connect(cancel_button, "clicked", G_CALLBACK(cb_cancel), ui);
-
-    ui->cancel_button = GTK_WIDGET(cancel_button);
-}
 
 static void
 run_test (CutGtkUI *ui)
@@ -181,32 +158,37 @@ run_test (CutGtkUI *ui)
 }
 
 static void
-cb_restart (GtkToolButton *button, gpointer data)
+cb_cancel_or_restart (GtkToolButton *button, gpointer data)
 {
-
     CutGtkUI *ui = data;
-    CutRunContext *pipeline;
 
-    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+    if (strcmp(gtk_tool_button_get_stock_id(button), GTK_STOCK_CANCEL) == 0) {
+        gtk_tool_button_set_stock_id(button, GTK_STOCK_REDO);
+        cut_run_context_cancel(ui->run_context);
+    } else {
+        CutRunContext *pipeline;
 
-    pipeline = cut_pipeline_new_from_run_context(ui->run_context);
-    g_object_unref(ui->run_context);
-    ui->run_context = pipeline;
+        gtk_tool_button_set_stock_id(button, GTK_STOCK_CANCEL);
 
-    run_test(ui);
+        pipeline = cut_pipeline_new_from_run_context(ui->run_context);
+        g_object_unref(ui->run_context);
+        ui->run_context = pipeline;
+        run_test(ui);
+    }
 }
 
 static void
-setup_restart_button (GtkToolbar *toolbar, CutGtkUI *ui)
+setup_cancel_or_restart_button (GtkToolbar *toolbar, CutGtkUI *ui)
 {
-    GtkToolItem *restart_button;
+    GtkToolItem *button;
 
-    restart_button = gtk_tool_button_new_from_stock(GTK_STOCK_REDO);
-    gtk_toolbar_insert(toolbar, restart_button, -1);
+    button = gtk_tool_button_new_from_stock(GTK_STOCK_CANCEL);
+    gtk_toolbar_insert(toolbar, button, -1);
 
-    g_signal_connect(restart_button, "clicked", G_CALLBACK(cb_restart), ui);
+    g_signal_connect(button, "clicked",
+                     G_CALLBACK(cb_cancel_or_restart), ui);
 
-    ui->restart_button = GTK_WIDGET(restart_button);
+    ui->cancel_or_restart_button = GTK_WIDGET(button);
 }
 
 static void
@@ -222,8 +204,7 @@ setup_top_bar (GtkBox *box, CutGtkUI *ui)
     toolbar = gtk_toolbar_new();
     gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolbar), FALSE);
     gtk_box_pack_end(GTK_BOX(hbox), toolbar, FALSE, FALSE, 0);
-    setup_cancel_button(GTK_TOOLBAR(toolbar), ui);
-    setup_restart_button(GTK_TOOLBAR(toolbar), ui);
+    setup_cancel_or_restart_button(GTK_TOOLBAR(toolbar), ui);
 }
 
 static void
@@ -635,8 +616,14 @@ generate_short_summary_message (CutRunContext *run_context)
 static void
 update_button_sensitive (CutGtkUI *ui)
 {
-    gtk_widget_set_sensitive(ui->cancel_button, ui->running);
-    gtk_widget_set_sensitive(ui->restart_button, !ui->running);
+    GtkToolButton *button;
+
+    button = GTK_TOOL_BUTTON(ui->cancel_or_restart_button);
+    if (ui->running) {
+        gtk_tool_button_set_stock_id(button, GTK_STOCK_CANCEL);
+    } else {
+        gtk_tool_button_set_stock_id(button, GTK_STOCK_REDO);
+    }
 }
 
 static void
