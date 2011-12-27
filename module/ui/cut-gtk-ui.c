@@ -876,12 +876,6 @@ timeout_cb_pulse_test (gpointer data)
                            COLUMN_PROGRESS_PULSE, info->pulse,
                            -1);
     }
-#if 0
-    if (!ui->running) {
-        g_idle_add(idle_cb_free_test_row_info, info);
-        g_idle_add(idle_cb_free_test_case_row_info, test_case_row_info);
-    }
-#endif
     return ui->running;
 }
 
