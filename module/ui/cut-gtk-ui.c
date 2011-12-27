@@ -697,7 +697,7 @@ push_start_test_suite_message (CutGtkUI *ui, CutTestSuite *test_suite)
     gchar *message;
 
     context_id = gtk_statusbar_get_context_id(ui->statusbar, "test-suite");
-    message = g_strdup_printf(_("Staring test suite %s..."),
+    message = g_strdup_printf(_("Starting test suite %s..."),
                               cut_test_get_name(CUT_TEST(test_suite)));
     gtk_statusbar_push(ui->statusbar, context_id, message);
     g_free(message);
