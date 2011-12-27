@@ -70,8 +70,6 @@ struct _CutGtkUI
     guint          n_completed_tests;
 
     CutTestResultStatus status;
-
-    guint          update_pulse_id;
 };
 
 struct _CutGtkUIClass
@@ -355,7 +353,6 @@ init (CutGtkUI *ui)
     ui->n_tests = 0;
     ui->n_completed_tests = 0;
     ui->status = CUT_TEST_RESULT_SUCCESS;
-    ui->update_pulse_id = 0;
 
     setup_window(ui);
 }
@@ -448,11 +445,6 @@ static void
 dispose (GObject *object)
 {
     CutGtkUI *ui = CUT_GTK_UI(object);
-
-    if (ui->update_pulse_id) {
-        g_source_remove(ui->update_pulse_id);
-        ui->update_pulse_id = 0;
-    }
 
     if (ui->logs) {
         g_object_unref(ui->logs);
@@ -642,15 +634,12 @@ update_progress_color (GtkProgressBar *bar, CutTestResultStatus status)
     g_object_unref(style);
 }
 
-static gboolean
-timeout_cb_pulse (gpointer data)
+static void
+update_progress_bar (CutGtkUI *ui)
 {
-    CutGtkUI *ui = data;
     GtkProgressBar *bar;
-    gboolean running;
     guint n_tests, n_completed_tests;
 
-    running = ui->running;
     n_tests = ui->n_tests;
     n_completed_tests = ui->n_completed_tests;
     bar = ui->progress_bar;
@@ -673,10 +662,6 @@ timeout_cb_pulse (gpointer data)
     } else {
         gtk_progress_bar_pulse(bar);
     }
-
-    if (!running)
-        ui->update_pulse_id = 0;
-    return running;
 }
 
 static void
@@ -698,7 +683,6 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 {
     ui->running = TRUE;
     ui->n_tests = n_tests;
-    ui->update_pulse_id = g_timeout_add(10, timeout_cb_pulse, ui);
 
     update_button_sensitive(ui);
     push_start_test_suite_message(ui, test_suite);
@@ -1176,6 +1160,8 @@ cb_complete_test (CutRunContext *run_context,
     update_test_case_row(info->test_case_row_info);
     pop_running_test_message(ui);
     free_test_row_info(info);
+
+    update_progress_bar(ui);
 
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(run_context,                   \
