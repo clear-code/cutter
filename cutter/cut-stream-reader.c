@@ -230,7 +230,7 @@ cut_stream_reader_read_from_io_channel (CutStreamReader *stream_reader,
     CutStreamReaderPrivate *priv;
     GIOStatus status;
     gboolean eof = FALSE;
-    gchar stream[BUFFER_SIZE + 1];
+    gchar stream[BUFFER_SIZE];
     gsize length = 0;
     GError *error = NULL;
 
