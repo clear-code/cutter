@@ -754,10 +754,9 @@ idle_cb_free_test_case_row_info (gpointer data)
     return FALSE;
 }
 
-static gboolean
-idle_cb_free_test_row_info (gpointer data)
+static void
+free_test_row_info (TestRowInfo *info)
 {
-    TestRowInfo *info = data;
     CutGtkUI *ui;
     GtkTreeIter iter;
 
@@ -780,8 +779,6 @@ idle_cb_free_test_row_info (gpointer data)
     g_free(info->path);
 
     g_free(info);
-
-    return FALSE;
 }
 
 static void
@@ -1174,7 +1171,7 @@ cb_complete_test (CutRunContext *run_context,
     update_summary(ui);
     update_test_case_row(info->test_case_row_info);
     pop_running_test_message(ui);
-    g_idle_add(idle_cb_free_test_row_info, info);
+    free_test_row_info(info);
 
 #define DISCONNECT(name)                                                \
     g_signal_handlers_disconnect_by_func(run_context,                   \
