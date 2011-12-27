@@ -1254,10 +1254,9 @@ cb_start_test (CutRunContext *run_context,
 #undef CONNECT
 }
 
-static gboolean
-idle_cb_collapse_test_case_row (gpointer data)
+static void
+collapse_test_case_row (TestCaseRowInfo *info)
 {
-    TestCaseRowInfo *info = data;
     CutGtkUI *ui;
     GtkTreeIter iter;
 
@@ -1272,8 +1271,6 @@ idle_cb_collapse_test_case_row (gpointer data)
         gtk_tree_view_collapse_row(ui->tree_view, path);
         gtk_tree_path_free(path);
     }
-
-    return FALSE;
 }
 
 static void
@@ -1284,7 +1281,7 @@ cb_complete_test_case (CutRunContext *run_context,
     TestCaseRowInfo *info = data;
 
     update_summary(info->ui);
-    g_idle_add(idle_cb_collapse_test_case_row, data);
+    collapse_test_case_row(info);
     g_idle_add(idle_cb_free_test_case_row_info, data);
     g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_start_test),
