@@ -222,7 +222,7 @@ cut_stream_reader_watch_io_channel (CutStreamReader *stream_reader,
                                                 NULL);
 }
 
-#define BUFFER_SIZE 4096
+#define BUFFER_SIZE 16384
 gboolean
 cut_stream_reader_read_from_io_channel (CutStreamReader *stream_reader,
                                         GIOChannel      *channel)
