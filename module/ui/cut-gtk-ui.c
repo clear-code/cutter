@@ -169,24 +169,31 @@ setup_cancel_button (GtkToolbar *toolbar, CutGtkUI *ui)
 }
 
 static void
+run_test (CutGtkUI *ui)
+{
+    ui->n_tests = 0;
+    ui->n_completed_tests = 0;
+    ui->status = CUT_TEST_RESULT_SUCCESS;
+    gtk_tree_store_clear(ui->logs);
+
+    cut_run_context_add_listener(ui->run_context, CUT_LISTENER(ui));
+    cut_run_context_start_async(ui->run_context);
+}
+
+static void
 cb_restart (GtkToolButton *button, gpointer data)
 {
-/*
+
     CutGtkUI *ui = data;
-    CutRunContext *run_context;
+    CutRunContext *pipeline;
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
 
-    run_context = cut_run_context_copy(ui->run_context);
-    cut_run_context_set_test_suite(ui->run_context, NULL);
+    pipeline = cut_pipeline_new_from_run_context(ui->run_context);
     g_object_unref(ui->run_context);
-    ui->run_context = run_context;
+    ui->run_context = pipeline;
 
-    g_object_unref(ui->test_suite);
-    ui->test_suite = g_object_ref(cut_run_context_get_test_suite(ui->run_context));
-
-    g_idle_add(idle_cb_run_test, ui);
-*/
+    run_test(ui);
 }
 
 static void
@@ -1385,12 +1392,7 @@ run (CutUI *ui, CutRunContext *run_context)
     gtk_widget_show_all(gtk_ui->window);
     gtk_tree_store_clear(gtk_ui->logs);
 
-    gtk_ui->n_tests = 0;
-    gtk_ui->n_completed_tests = 0;
-    gtk_ui->status = CUT_TEST_RESULT_SUCCESS;
-
-    cut_run_context_add_listener(pipeline, CUT_LISTENER(ui));
-    cut_run_context_start_async(pipeline);
+    run_test(gtk_ui);
 
     gtk_main();
 
