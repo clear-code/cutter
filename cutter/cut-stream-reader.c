@@ -145,6 +145,7 @@ cut_stream_reader_error_quark (void)
 static gboolean
 read_channel (GIOChannel *channel, GIOCondition condition, gpointer data)
 {
+    CutRunContext *run_context;
     CutStreamReader *stream_reader = data;
     CutStreamReaderPrivate *priv;
     gboolean keep_callback = TRUE;
@@ -152,7 +153,10 @@ read_channel (GIOChannel *channel, GIOCondition condition, gpointer data)
     priv = CUT_STREAM_READER_GET_PRIVATE(stream_reader);
     keep_callback = cut_stream_reader_read_from_io_channel(stream_reader,
                                                            channel);
-    if (cut_run_context_is_completed(CUT_RUN_CONTEXT(stream_reader)))
+    run_context = CUT_RUN_CONTEXT(stream_reader);
+    if (cut_run_context_is_canceled(run_context))
+        cut_run_context_emit_complete_run(run_context, TRUE);
+    if (cut_run_context_is_completed(run_context))
         keep_callback = FALSE;
 
     if (!keep_callback)
