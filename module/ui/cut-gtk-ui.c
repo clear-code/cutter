@@ -885,10 +885,9 @@ timeout_cb_pulse_test (gpointer data)
     return ui->running;
 }
 
-static gboolean
-idle_cb_append_test_row (gpointer data)
+static void
+append_test_row (TestRowInfo *info)
 {
-    TestRowInfo *info = data;
     CutGtkUI *ui;
     CutTest *test;
     GtkTreeIter test_case_iter, iter;
@@ -918,8 +917,6 @@ idle_cb_append_test_row (gpointer data)
         gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
                                             &iter);
     info->update_pulse_id = g_timeout_add(10, timeout_cb_pulse_test, info);
-
-    return FALSE;
 }
 
 static gboolean
@@ -1237,7 +1234,7 @@ cb_start_test (CutRunContext *run_context,
     info->update_pulse_id = 0;
 
     push_running_test_message(info->test_case_row_info->ui, test);
-    g_idle_add(idle_cb_append_test_row, info);
+    append_test_row(info);
 
 #define CONNECT(name) \
     g_signal_connect(run_context, #name, G_CALLBACK(cb_ ## name), info)
