@@ -549,7 +549,7 @@ get_status_icon (GtkTreeView *tree_view, CutTestResultStatus status)
 
     switch (status) {
     case CUT_TEST_RESULT_SUCCESS:
-        stock_id = GTK_STOCK_APPLY;
+        stock_id = GTK_STOCK_YES;
         break;
     case CUT_TEST_RESULT_NOTIFICATION:
         stock_id = GTK_STOCK_DIALOG_WARNING;
