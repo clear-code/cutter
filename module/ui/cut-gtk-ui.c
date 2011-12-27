@@ -809,34 +809,35 @@ update_status (TestRowInfo *info, CutTestResultStatus status)
         ui->status = status;
 }
 
-static void
-append_test_case_row (gpointer data)
+static gchar *
+append_row (CutGtkUI *ui, const gchar *parent_path,
+            const gchar *name, const gchar *description)
 {
-    TestCaseRowInfo *info = data;
-    CutGtkUI *ui;
-    CutTestCase *test_case;
     GtkTreeIter iter;
     GdkPixbuf *icon;
 
-    ui = info->ui;
-    test_case = info->test_case;
+    if (parent_path) {
+        GtkTreeIter parent_iter;
+        gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
+                                            &parent_iter,
+                                            parent_path);
+        gtk_tree_store_append(ui->logs, &iter, &parent_iter);
+    } else {
+        gtk_tree_store_append(ui->logs, &iter, NULL);
+    }
 
-    gtk_tree_store_append(ui->logs, &iter, NULL);
     icon = get_status_icon_by_id(ui->tree_view, GTK_STOCK_MEDIA_PLAY);
     gtk_tree_store_set(ui->logs, &iter,
-                       COLUMN_NAME,
-                       cut_test_get_name(CUT_TEST(test_case)),
-                       COLUMN_DESCRIPTION,
-                       cut_test_get_description(CUT_TEST(test_case)),
+                       COLUMN_NAME, name,
+                       COLUMN_DESCRIPTION, description,
                        COLUMN_PROGRESS_PULSE, -1,
                        COLUMN_PROGRESS_VISIBLE, TRUE,
                        COLUMN_STATUS_ICON, icon,
                        -1);
     g_object_unref(icon);
 
-    info->path =
-        gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
-                                            &iter);
+    return gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
+                                               &iter);
 }
 
 static void
@@ -892,38 +893,15 @@ timeout_cb_pulse_test (gpointer data)
     return ui->running;
 }
 
-static gchar *
-append_test_row (CutGtkUI *ui, const gchar *parent_path,
-                 const gchar *name, const gchar *description)
+static void
+expand_row (CutGtkUI *ui, const gchar *path)
 {
-    GtkTreeIter parent_iter, iter;
-    GdkPixbuf *icon;
+    GtkTreePath *tree_path;
 
-    gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
-                                        &parent_iter,
-                                        parent_path);
-    gtk_tree_store_append(ui->logs, &iter, &parent_iter);
-    icon = get_status_icon_by_id(ui->tree_view, GTK_STOCK_MEDIA_PLAY);
-    gtk_tree_store_set(ui->logs, &iter,
-                       COLUMN_PROGRESS_PULSE, 0,
-                       COLUMN_PROGRESS_VISIBLE, TRUE,
-                       COLUMN_NAME, name,
-                       COLUMN_DESCRIPTION, description,
-                       COLUMN_STATUS_ICON, icon,
-                       -1);
-    g_object_unref(icon);
-
-    /* Always expand running test case row. Is it OK? */
-    if (TRUE) {
-        GtkTreePath *path;
-        path = gtk_tree_model_get_path(GTK_TREE_MODEL(ui->logs), &iter);
-        gtk_tree_view_expand_to_path(ui->tree_view, path);
-        gtk_tree_view_scroll_to_cell(ui->tree_view, path, NULL, TRUE, 0, 0.5);
-        gtk_tree_path_free(path);
-    }
-
-    return gtk_tree_model_get_string_from_iter(GTK_TREE_MODEL(ui->logs),
-                                               &iter);
+    tree_path = gtk_tree_path_new_from_string(path);
+    gtk_tree_view_expand_to_path(ui->tree_view, tree_path);
+    gtk_tree_view_scroll_to_cell(ui->tree_view, tree_path, NULL, TRUE, 0, 0.5);
+    gtk_tree_path_free(tree_path);
 }
 
 static void
@@ -1199,9 +1177,11 @@ cb_start_test (CutRunContext *run_context,
 
     push_message(ui, "test",
                  _("Running test: %s"), cut_test_get_name(test));
-    info->path = append_test_row(ui, info->test_case_row_info->path,
-                                 cut_test_get_name(test),
-                                 cut_test_get_description(test));
+    info->path = append_row(ui, info->test_case_row_info->path,
+                            cut_test_get_name(test),
+                            cut_test_get_description(test));
+    /* Always expand running test case row. Is it OK? */
+    expand_row(ui, info->path);
     info->update_pulse_id = g_timeout_add(10, timeout_cb_pulse_test, info);
 
 
@@ -1271,7 +1251,9 @@ cb_ready_test_case (CutRunContext *run_context, CutTestCase *test_case, guint n_
     info->n_completed_tests = 0;
     info->status = CUT_TEST_RESULT_SUCCESS;
 
-    append_test_case_row(info);
+    info->path = append_row(info->ui, NULL,
+                            cut_test_get_name(CUT_TEST(test_case)),
+                            cut_test_get_description(CUT_TEST(test_case)));
 
     g_signal_connect(run_context, "start-test",
                      G_CALLBACK(cb_start_test), info);
