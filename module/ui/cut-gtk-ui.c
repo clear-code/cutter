@@ -1143,15 +1143,11 @@ cb_crash_test (CutRunContext *run_context,
 }
 
 static void
-cb_complete_test (CutRunContext *run_context,
-                  CutTest *test, CutTestContext *test_context,
-                  gboolean success, gpointer data)
+increment_n_completed_tests (RowInfo *row_info)
 {
-    RowInfo *row_info, *parent_row_info;
-    TestRowInfo *info = data;
     CutGtkUI *ui;
+    RowInfo *parent_row_info;
 
-    row_info = &(info->row_info);
     ui = row_info->ui;
     for (parent_row_info = row_info->parent_row_info;
          parent_row_info;
@@ -1162,6 +1158,20 @@ cb_complete_test (CutRunContext *run_context,
 
     ui->n_completed_tests++;
     update_summary(ui);
+}
+
+static void
+cb_complete_test (CutRunContext *run_context,
+                  CutTest *test, CutTestContext *test_context,
+                  gboolean success, gpointer data)
+{
+    RowInfo *row_info;
+    TestRowInfo *info = data;
+    CutGtkUI *ui;
+
+    row_info = &(info->row_info);
+    increment_n_completed_tests(row_info);
+    ui = row_info->ui;
     pop_message(ui, "test");
     free_test_row_info(info);
 
@@ -1267,21 +1277,13 @@ cb_complete_iterated_test (CutRunContext *run_context,
                            CutTestContext *test_context,
                            gboolean success, gpointer data)
 {
-    RowInfo *row_info, *parent_row_info;
+    RowInfo *row_info;
     IteratedTestRowInfo *info = data;
     CutGtkUI *ui;
 
     row_info = &(info->row_info);
     ui = row_info->ui;
-    for (parent_row_info = row_info->parent_row_info;
-         parent_row_info;
-         parent_row_info = parent_row_info->parent_row_info) {
-        parent_row_info->n_completed_tests++;
-        update_row(ui, parent_row_info);
-    }
-
-    ui->n_completed_tests++;
-    update_summary(ui);
+    increment_n_completed_tests(row_info);
     pop_message(ui, "iterated-test");
     free_iterated_test_row_info(info);
 
