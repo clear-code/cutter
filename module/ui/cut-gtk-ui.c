@@ -756,15 +756,12 @@ cb_ready_test_suite (CutRunContext *run_context, CutTestSuite *test_suite,
 }
 
 static void
-free_test_case_row_info (TestCaseRowInfo *info)
+update_row_status (RowInfo *row_info)
 {
-    RowInfo *row_info;
     CutGtkUI *ui;
     GtkTreeIter iter;
 
-    row_info = &(info->row_info);
     ui = row_info->ui;
-
     if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
                                             &iter, row_info->path)) {
         GdkPixbuf *icon;
@@ -774,8 +771,16 @@ free_test_case_row_info (TestCaseRowInfo *info)
                            -1);
         g_object_unref(icon);
     }
+}
+
+static void
+free_test_case_row_info (TestCaseRowInfo *info)
+{
+    RowInfo *row_info;
 
     g_object_unref(info->test_case);
+
+    row_info = &(info->row_info);
     g_object_unref(row_info->ui);
     g_free(row_info->path);
 
@@ -1376,20 +1381,9 @@ free_test_iterator_row_info (TestIteratorRowInfo *info)
 {
     RowInfo *row_info;
     CutGtkUI *ui;
-    GtkTreeIter iter;
 
     row_info = &(info->row_info);
     ui = row_info->ui;
-
-    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
-                                            &iter, row_info->path)) {
-        GdkPixbuf *icon;
-        icon = get_status_icon(ui->tree_view, row_info->status);
-        gtk_tree_store_set(ui->logs, &iter,
-                           COLUMN_STATUS_ICON, icon,
-                           -1);
-        g_object_unref(icon);
-    }
 
     g_object_unref(info->test_iterator);
     g_object_unref(ui);
@@ -1403,11 +1397,14 @@ cb_complete_test_iterator (CutRunContext *run_context,
                            CutTestCase *test_case, gboolean success,
                            gpointer data)
 {
+    RowInfo *row_info;
     TestIteratorRowInfo *info = data;
 
-    update_summary(info->row_info.ui);
-    collapse_test_iterator_row(data);
-    free_test_iterator_row_info(data);
+    row_info = &(info->row_info);
+    update_summary(row_info->ui);
+    update_row_status(row_info);
+    collapse_test_iterator_row(info);
+    free_test_iterator_row_info(info);
 
     g_signal_handlers_disconnect_by_func(run_context,
                                          G_CALLBACK(cb_start_iterated_test),
@@ -1475,9 +1472,12 @@ cb_complete_test_case (CutRunContext *run_context,
                        CutTestCase *test_case, gboolean success,
                        gpointer data)
 {
+    RowInfo *row_info;
     TestCaseRowInfo *info = data;
 
-    update_summary(info->row_info.ui);
+    row_info = &(info->row_info);
+    update_summary(row_info->ui);
+    update_row_status(row_info);
     collapse_test_case_row(info);
     free_test_case_row_info(info);
     g_signal_handlers_disconnect_by_func(run_context,
