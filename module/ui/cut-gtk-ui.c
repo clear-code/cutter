@@ -788,13 +788,11 @@ free_test_case_row_info (TestCaseRowInfo *info)
 }
 
 static void
-free_test_row_info (TestRowInfo *info)
+disable_progress (RowInfo *row_info)
 {
-    RowInfo *row_info;
     CutGtkUI *ui;
     GtkTreeIter iter;
 
-    row_info = &(info->row_info);
     if (row_info->update_pulse_id) {
         g_source_remove(row_info->update_pulse_id);
         row_info->update_pulse_id = 0;
@@ -808,6 +806,15 @@ free_test_row_info (TestRowInfo *info)
                            COLUMN_PROGRESS_PULSE, -1,
                            -1);
     }
+}
+
+static void
+free_test_row_info (TestRowInfo *info)
+{
+    RowInfo *row_info;
+
+    row_info = &(info->row_info);
+    disable_progress(row_info);
 
     g_object_unref(info->test);
     g_object_unref(row_info->ui);
@@ -1244,24 +1251,9 @@ static void
 free_iterated_test_row_info (IteratedTestRowInfo *info)
 {
     RowInfo *row_info;
-    CutGtkUI *ui;
-    GtkTreeIter iter;
 
     row_info = &(info->row_info);
-    if (row_info->update_pulse_id) {
-        g_source_remove(row_info->update_pulse_id);
-        row_info->update_pulse_id = 0;
-    }
-
-    ui = row_info->ui;
-
-    if (gtk_tree_model_get_iter_from_string(GTK_TREE_MODEL(ui->logs),
-                                            &iter, row_info->path)) {
-        gtk_tree_store_set(ui->logs, &iter,
-                           COLUMN_PROGRESS_VISIBLE, FALSE,
-                           COLUMN_PROGRESS_PULSE, -1,
-                           -1);
-    }
+    disable_progress(row_info);
 
     g_object_unref(info->iterated_test);
     g_free(info->data_name);
