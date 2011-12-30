@@ -2,6 +2,39 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-2-0] 1.2.0: 2011-12-31
+
+We improved C++ support and test runner interface.
+
+=== Cutter
+
+==== Improvements
+
+  * [UI][console] Changed to show messages on failure, error
+    and so on immediately. You need to use
+    (({--show-detail-immediately=no})) command line option
+    to show messages on end of test like earlier versions.
+  * [UI][GTK+] Supported iterated test.
+  * [UI][GTK+] Supported re-run test.
+  * [UI][GTK+] Unified cancel button and re-run button.
+
+==== Changes
+
+  * Enabled deprecated GLib API. You need to use
+    (({--disable-deprecated-glib-api})) configure option to
+    disable deprecated GLib API.
+  * Supported Fedora 16.
+  * Dropped Fedora 15 support.
+
+=== CppCutter
+
+==== Improvements
+
+  * Added more supported types by ((<cppcut_assert_equal()>)).
+  * Added ((<cppcut_assert_null()>)).
+  * Added ((<cppcut_assert_not_null()>)).
+  * Added ((<cppcut_assert_operator()>)).
+
 == [release-1-1-9] 1.1.9: 2011-10-22
 
 We move the repository to GitHub from SF.net.
