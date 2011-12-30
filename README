@@ -64,17 +64,15 @@ See ((<FEATURES>)) for more details.
 
   * GLib >= 2.16
 
-== Get
-
-tar.gz:
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
-
-Subversion:
-  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter
-
 == Install
 
 See ((<Install>)).
+
+== Repository
+
+There is the repository at ((<"clear-code/cutter on GitHub"|URL:https://github.com/clear-code/cutter/>)).
+
+  % git clone https://github.com/clear-code/cutter.git
 
 == Usage
 

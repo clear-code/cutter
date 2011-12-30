@@ -75,17 +75,15 @@ Cutterの特徴は以下の通りです。
 
   * GLib >= 2.16
 
-== 入手方法
-
-tar.gz:
-  % wget http://downloads.sourceforge.net/cutter/cutter-1.1.0.tar.gz
-
-Subversion:
-  % svn co https://cutter.svn.sourceforge.net/svnroot/cutter/cutter/trunk cutter
-
 == インストール
 
 ((<インストール|install.html>))を見てください。
+
+== リポジトリ
+
+((<"GitHubのclear-code/cutter"|URL:https://github.com/clear-code/cutter/>))にあります。
+
+  % git clone https://github.com/clear-code/cutter.git
 
 == 使い方
 
