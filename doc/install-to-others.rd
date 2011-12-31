@@ -36,9 +36,9 @@ Cutter uses GNU build tools:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://downloads.sourceforge.net/project/cutter/cutter-1.1.9.tar.gz
-  % tar xvzf cutter-1.1.9.tar.gz
-  % cd cutter-1.1.9
+  % wget http://downloads.sourceforge.net/project/cutter/cutter-1.2.0.tar.gz
+  % tar xvzf cutter-1.2.0.tar.gz
+  % cd cutter-1.2.0
   % ./configure
   % make
   % sudo make install
@@ -49,9 +49,9 @@ into ~/local/:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://downloads.sourceforge.net/project/cutter/cutter-1.1.9.tar.gz
-  % tar xvzf cutter-1.1.9.tar.gz
-  % cd cutter-1.1.9
+  % wget http://downloads.sourceforge.net/project/cutter/cutter-1.2.0.tar.gz
+  % tar xvzf cutter-1.2.0.tar.gz
+  % cd cutter-1.2.0
   % ./configure PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig LD_LIBRARY_PATH=$HOME/local/lib --prefix=$HOME/local
   % make
   % make install
