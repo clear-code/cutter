@@ -14,18 +14,8 @@ end
 
 require 'rd-visitor-util'
 
-begin
-  require "gettext"
-rescue LoadError
-  require "rubygems"
-  require "gettext"
-end
-begin
-  require "gettext/tools"
-rescue LoadError
-  require "gettext/poparser"
-  GetText::MOFile = MOFile
-end
+require "rubygems"
+require "fast_gettext/po_file"
 
 module RD
   class RD2RefEntryVisitor < RDVisitor
@@ -301,12 +291,11 @@ module RD
     end
 
     def make_translate_data
-      data = GetText::MOFile.new
       if @@po
-        parser = GetText::PoParser.new
-        parser.parse(File.read(@@po), data)
+        FastGettext::PoFile.to_mo_file(@@po)
+      else
+        FastGettext::MoFile.empty
       end
-      data
     end
 
     def xml_decl
