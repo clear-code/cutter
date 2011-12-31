@@ -16,8 +16,14 @@ end
 package, old_version, old_release_date, new_version, new_release_date, *files =
   ARGV
 
-git_user_name = `git config --get user.name`.chomp
-git_user_email = `git config --get user.email`.chomp
+def git_user_name
+  `git config --get user.name`.chomp
+end
+
+def git_user_email
+  `git config --get user.email`.chomp
+end
+
 name = ENV['DEBFULLNAME'] || ENV['NAME'] || git_user_name
 email = ENV['DEBEMAIL'] || ENV['EMAIL'] || git_user_email
 
