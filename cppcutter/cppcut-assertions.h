@@ -102,7 +102,7 @@
  * e.g.:
  * |[
  * std::string message("hello");
- * std::string *not_null_string = &message;
+ * std::string *not_null_string = &amp;message;
  * std::string *null_string = NULL;
  * cppcut_assert_null(not_null_string); // fail
  * cppcut_assert_null(null_string);     // pass
@@ -132,7 +132,7 @@
  * e.g.:
  * |[
  * std::string message("hello");
- * std::string *not_null_string = &message;
+ * std::string *not_null_string = &amp;message;
  * std::string *null_string = NULL;
  * cppcut_assert_not_null(not_null_string); // pass
  * cppcut_assert_not_null(null_string);     // fail
