@@ -20,60 +20,6 @@
 #include "cppcut-assertions-helper.h"
 
 CPPCUT_DECL void
-cut::assert_equal(int expected, int actual,
-                  const char *expression_expected,
-                  const char *expression_actual)
-{
-    cut::assert_equal_reference(expected, actual,
-                                expression_expected, expression_actual);
-}
-
-CPPCUT_DECL void
-cut::assert_equal(unsigned int expected, unsigned int actual,
-                  const char *expression_expected,
-                  const char *expression_actual)
-{
-    cut::assert_equal_reference(expected, actual,
-                                expression_expected, expression_actual);
-}
-
-CPPCUT_DECL void
-cut::assert_equal(long expected, long actual,
-                  const char *expression_expected,
-                  const char *expression_actual)
-{
-    cut::assert_equal_reference(expected, actual,
-                                expression_expected, expression_actual);
-}
-
-CPPCUT_DECL void
-cut::assert_equal(unsigned long expected, unsigned long actual,
-                  const char *expression_expected,
-                  const char *expression_actual)
-{
-    cut::assert_equal_reference(expected, actual,
-                                expression_expected, expression_actual);
-}
-
-CPPCUT_DECL void
-cut::assert_equal(long long expected, long long actual,
-                  const char *expression_expected,
-                  const char *expression_actual)
-{
-    cut::assert_equal_reference(expected, actual,
-                                expression_expected, expression_actual);
-}
-
-CPPCUT_DECL void
-cut::assert_equal(unsigned long long expected, unsigned long long actual,
-                  const char *expression_expected,
-                  const char *expression_actual)
-{
-    cut::assert_equal_reference(expected, actual,
-                                expression_expected, expression_actual);
-}
-
-CPPCUT_DECL void
 cut::assert_equal(char *expected, char *actual,
                   const char *expression_expected,
                   const char *expression_actual)
