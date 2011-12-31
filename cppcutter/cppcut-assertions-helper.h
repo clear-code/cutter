@@ -107,6 +107,56 @@ namespace cut
         }
     }
 
+    CPPCUT_DECL
+    void assert_not_equal(char *expected, char *actual,
+                          const char *expression_expected,
+                          const char *expression_actual);
+    CPPCUT_DECL
+    void assert_not_equal(const char *expected, const char *actual,
+                          const char *expression_expected,
+                          const char *expression_actual);
+
+    template <class Type> void assert_not_equal(const Type& expected,
+                                                const Type& actual,
+                                                const char *expression_expected,
+                                                const char *expression_actual)
+    {
+        assert_not_equal_reference(expected, actual,
+                                   expression_expected, expression_actual);
+    };
+
+    template <class Type> void assert_not_equal(const Type *expected,
+                                                const Type *actual,
+                                                const char *expression_expected,
+                                                const char *expression_actual)
+    {
+        assert_not_equal_reference(expected, actual,
+                                   expression_expected, expression_actual);
+    };
+
+    template <class Type> void assert_not_equal_reference(
+        const Type& expected, const Type& actual,
+        const char *expression_expected, const char *expression_actual)
+    {
+        if (expected != actual) {
+            cut_test_pass();
+        } else {
+            std::ostringstream inspected_expected;
+            std::ostringstream inspected_actual;
+            std::ostringstream message;
+
+            inspected_expected << expected;
+            cut_set_expected(inspected_expected.str().c_str());
+
+            inspected_actual << actual;
+            cut_set_actual(inspected_actual.str().c_str());
+
+            message << "<" << expression_expected << " != ";
+            message << expression_actual << ">";
+            cut_test_fail(message.str().c_str());
+        }
+    }
+
     template <typename Type> void assert_null(const Type *object,
                                               const char *expression_object)
     {

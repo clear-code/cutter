@@ -436,6 +436,405 @@ namespace cppcut_assertion_equal
     }
 }
 
+namespace cppcut_assertion_not_equal
+{
+    CutTest *test;
+    CutRunContext *run_context;
+    CutTestContext *test_context;
+    CutTestResult *test_result;
+
+    gint fail_line;
+
+    static gboolean
+    run (void)
+    {
+        gboolean success;
+
+        run_context = CUT_RUN_CONTEXT(cut_test_runner_new());
+
+        test_context = cut_test_context_new(run_context, NULL, NULL, NULL, test);
+        cut_test_context_current_push(test_context);
+        success = cut_test_runner_run_test(CUT_TEST_RUNNER(run_context),
+                                           test, test_context);
+        cut_test_context_current_pop();
+
+        return success;
+    }
+
+    void
+    cut_setup (void)
+    {
+        test = NULL;
+        run_context = NULL;
+        test_context = NULL;
+        test_result = NULL;
+
+        fail_line = 0;
+    }
+
+    void
+    cut_teardown (void)
+    {
+        if (test)
+            g_object_unref(test);
+        if (run_context)
+            g_object_unref(run_context);
+        if (test_context)
+            g_object_unref(test_context);
+        if (test_result)
+            g_object_unref(test_result);
+    }
+
+
+    static void
+    stub_int (void)
+    {
+        cppcut_assert_not_equal(-100, 1 - 2);
+        MARK_FAIL(cppcut_assert_not_equal(-100, -99 - 1));
+    }
+
+    void
+    test_int (void)
+    {
+        test = cut_test_new("not_equal_int test", stub_int);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_int test",
+                               NULL,
+                               "<-100 != -99 - 1>",
+                               "-100", "-100",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_int()",
+                               NULL);
+    }
+
+    static void
+    stub_int_reference (void)
+    {
+        int expected = -100;
+        int actual_same = expected;
+        int actual_different = 100;
+        cppcut_assert_not_equal(expected, actual_different);
+        MARK_FAIL(cppcut_assert_not_equal(expected, actual_same));
+    }
+
+    void
+    test_int_reference (void)
+    {
+        test = cut_test_new("not_equal_int_reference test",
+                            stub_int_reference);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_int_reference test",
+                               NULL,
+                               "<expected != actual_same>",
+                               "-100", "-100",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_int_reference()",
+                               NULL);
+    }
+
+    static void
+    stub_unsigned_int (void)
+    {
+        cppcut_assert_not_equal(100, 2 - 1);
+        MARK_FAIL(cppcut_assert_not_equal(100, 99 + 1));
+    }
+
+    void
+    test_unsigned_int (void)
+    {
+        test = cut_test_new("not_equal_unsigned_int test", stub_unsigned_int);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_unsigned_int test",
+                               NULL,
+                               "<100 != 99 + 1>",
+                               "100", "100",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_unsigned_int()",
+                               NULL);
+    }
+
+    static void
+    stub_long (void)
+    {
+#if GLIB_SIZEOF_LONG == 8
+        cppcut_assert_not_equal(G_MININT64, G_MININT64 + 1);
+        MARK_FAIL(cppcut_assert_not_equal(G_MININT64, G_MININT64));
+#else
+        cppcut_assert_not_equal(G_MININT32, G_MININT32 - 1);
+        MARK_FAIL(cppcut_assert_not_equal(G_MININT32, G_MININT32));
+#endif
+    }
+
+    void
+    test_long (void)
+    {
+        test = cut_test_new("not_equal_long test", stub_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_long test",
+                               NULL,
+#if GLIB_SIZEOF_LONG == 8
+                               "<G_MININT64 != G_MININT64>",
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MININT64),
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MININT64),
+#else
+                               "<G_MININT32 != G_MININT32>",
+                               cut_take_printf("%" G_GINT32_FORMAT, G_MININT32),
+                               cut_take_printf("%" G_GINT32_FORMAT, G_MININT32),
+#endif
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_long()",
+                               NULL);
+    }
+
+    static void
+    stub_unsigned_long (void)
+    {
+#if GLIB_SIZEOF_LONG == 8
+        cppcut_assert_not_equal(G_MAXUINT64, G_MAXUINT64 - 1);
+        MARK_FAIL(cppcut_assert_not_equal(G_MAXUINT64, G_MAXUINT64));
+#else
+        cppcut_assert_not_equal(G_MAXUINT32, G_MAXUINT32 - 1);
+        MARK_FAIL(cppcut_assert_not_equal(G_MAXUINT32, G_MAXUINT32));
+#endif
+    }
+
+    void
+    test_unsigned_long (void)
+    {
+        test = cut_test_new("not_equal_unsigned_long test",
+                            stub_unsigned_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_unsigned_long test",
+                               NULL,
+#if GLIB_SIZEOF_LONG == 8
+                               "<G_MAXUINT64 != G_MAXUINT64>",
+                               cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
+                               cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
+#else
+                               "<G_MAXUINT32 != G_MAXUINT32>",
+                               cut_take_printf("%" G_GUINT32_FORMAT, G_MAXUINT32),
+                               cut_take_printf("%" G_GUINT32_FORMAT, G_MAXUINT32),
+#endif
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_unsigned_long()",
+                               NULL);
+    }
+
+    static void
+    stub_long_long (void)
+    {
+        cppcut_assert_not_equal(G_MININT64, G_MININT64 + 1);
+        MARK_FAIL(cppcut_assert_not_equal(G_MININT64, G_MININT64));
+    }
+
+    void
+    test_long_long (void)
+    {
+        test = cut_test_new("not_equal_long_long test", stub_long_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_long_long test",
+                               NULL,
+                               "<G_MININT64 != G_MININT64>",
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MININT64),
+                               cut_take_printf("%" G_GINT64_FORMAT, G_MININT64),
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_long_long()",
+                               NULL);
+    }
+
+    static void
+    stub_unsigned_long_long (void)
+    {
+        cppcut_assert_not_equal(G_MAXUINT64, G_MAXUINT64 - 1);
+        MARK_FAIL(cppcut_assert_not_equal(G_MAXUINT64, G_MAXUINT64));
+    }
+
+    void
+    test_unsigned_long_long (void)
+    {
+        test = cut_test_new("not_equal_unsigned_long_long test",
+                            stub_unsigned_long_long);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_unsigned_long_long test",
+                               NULL,
+                               "<G_MAXUINT64 != G_MAXUINT64>",
+                               cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
+                               cut_take_printf("%" G_GUINT64_FORMAT, G_MAXUINT64),
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_unsigned_long_long()",
+                               NULL);
+    }
+
+    static void
+    stub_c_string_literal (void)
+    {
+        cppcut_assert_not_equal("abcde", "ABcDE");
+        MARK_FAIL(cppcut_assert_not_equal("abcde", "ab" "c" "de"));
+    }
+
+    void
+    test_c_string_literal (void)
+    {
+        test = cut_test_new("not_equal_c_string_literal test",
+                            stub_c_string_literal);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_c_string_literal test",
+                               NULL,
+                               "<\"abcde\" != \"ab\" \"c\" \"de\">",
+                               "\"abcde\"", "\"abcde\"",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_c_string_literal()",
+                               NULL);
+    }
+
+    static void
+    stub_c_string_buffer (void)
+    {
+        char expected[] = "abcde";
+        char actual_same[] = "abcde";
+        char actual_different[] = "ABcDE";
+        cppcut_assert_not_equal(expected, actual_different);
+        MARK_FAIL(cppcut_assert_not_equal(expected, actual_same));
+    }
+
+    void
+    test_c_string_buffer (void)
+    {
+        test = cut_test_new("not_equal_c_string_buffer test",
+                            stub_c_string_buffer);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_c_string_buffer test",
+                               NULL,
+                               "<expected != actual_same>",
+                               "\"abcde\"", "\"abcde\"",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_c_string_buffer()",
+                               NULL);
+    }
+
+    static void
+    stub_c_string_reference (void)
+    {
+        const char *expected = "abcde";
+        const char *actual_same = "abcde";
+        const char *actual_different = "ABcDE";
+        cppcut_assert_not_equal(expected, actual_different);
+        MARK_FAIL(cppcut_assert_not_equal(expected, actual_same));
+    }
+
+    void
+    test_c_string_reference (void)
+    {
+        test = cut_test_new("not_equal_c_string_reference test",
+                            stub_c_string_reference);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_c_string_reference test",
+                               NULL,
+                               "<expected != actual_same>",
+                               "\"abcde\"", "\"abcde\"",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_c_string_reference()",
+                               NULL);
+    }
+
+    static void
+    stub_c_string_mix (void)
+    {
+        char expected[] = "abcde";
+        const char *actual_same = "abcde";
+        const char *actual_different = "ABcDE";
+        cppcut_assert_not_equal(expected, actual_different);
+        MARK_FAIL(cppcut_assert_not_equal(expected, actual_same));
+    }
+
+    void
+    test_c_string_mix (void)
+    {
+        test = cut_test_new("not_equal_c_string_mix test",
+                            stub_c_string_mix);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_c_string_mix test",
+                               NULL,
+                               "<expected != actual_same>",
+                               "\"abcde\"", "\"abcde\"",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_c_string_mix()",
+                               NULL);
+    }
+
+    static void
+    stub_string (void)
+    {
+        std::string expected("abcde");
+        std::string actual_same("abcde");
+        std::string actual_different("ABcDE");
+        cppcut_assert_not_equal(expected, actual_different);
+        MARK_FAIL(cppcut_assert_not_equal(expected, actual_same));
+    }
+
+    void
+    test_string (void)
+    {
+        test = cut_test_new("not_equal_string test", stub_string);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "not_equal_string test",
+                               NULL,
+                               "<expected != actual_same>",
+                               "abcde", "abcde",
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_not_equal::stub_string()",
+                               NULL);
+    }
+}
+
 namespace cppcut_assertion_null
 {
     CutTest *test;

@@ -60,6 +60,36 @@
 } while (0)
 
 /**
+ * cppcut_assert_not_equal:
+ * @expected: an expected value.
+ * @actual: an actual value.
+ * @...: an optional message. Use cppcut_message() for this.
+ *
+ * This assertion is a generic method based on template. You
+ * can pass any object's reference as @expected and @actual.
+ *
+ * Passes if @expected != @actual.
+ *
+ * e.g.:
+ * |[
+ * cppcut_assert_not_equal(3, 3 + 1);
+ * cppcut_assert_not_equal(3, 3 + 1, cppcut_message("easy expression"));
+ * cppcut_assert_not_equal(3, 3 + 1, cppcut_message() << "easy expression"));
+ * ]|
+ *
+ * Since: 1.2.0
+ */
+#define cppcut_assert_not_equal(expected, actual, ...) do               \
+{                                                                       \
+    cut_trace_with_info_expression(                                     \
+        cut_test_with_user_message(                                     \
+            cut::assert_not_equal(expected, actual,                     \
+                                  #expected, #actual),                  \
+            __VA_ARGS__),                                               \
+        cppcut_assert_not_equal(expected, actual, __VA_ARGS__));        \
+} while (0)
+
+/**
  * cppcut_assert_null:
  * @object: the object to be checked.
  * @...: an optional message. Use cppcut_message() for this.
