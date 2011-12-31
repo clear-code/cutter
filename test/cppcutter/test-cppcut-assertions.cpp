@@ -1314,7 +1314,7 @@ namespace cppcut_assertion_message
                                "optional message test",
                                "The message of assertion",
                                "<\"abcde\" == \"ABCDE\">",
-                               "abcde", "ABCDE",
+                               "\"abcde\"", "\"ABCDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_message::stub_format()",
                                NULL);
@@ -1338,7 +1338,7 @@ namespace cppcut_assertion_message
                                "optional message test",
                                "The message of assertion",
                                "<\"abcde\" == \"ABCDE\">",
-                               "abcde", "ABCDE",
+                               "\"abcde\"", "\"ABCDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_message::stub_shift()",
                                NULL);
