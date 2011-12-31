@@ -150,7 +150,7 @@
 } while (0)
 
 /**
- * cppcut_assert_not_null:
+ * cppcut_assert_operator:
  * @lhs: a left hand side value.
  * @operator: a binary operator.
  * @rhs: a right hand side value.
