@@ -18,8 +18,8 @@ package, old_version, old_release_date, new_version, new_release_date, *files =
 
 git_user_name = `git config --get user.name`.chomp
 git_user_email = `git config --get user.email`.chomp
-name = ENV['DEBEMAIL'] || ENV['NAME'] || git_user_name
-email = ENV['DEBFULLNAME'] || ENV['EMAIL'] || git_user_email
+name = ENV['DEBFULLNAME'] || ENV['NAME'] || git_user_name
+email = ENV['DEBEMAIL'] || ENV['EMAIL'] || git_user_email
 
 files.each do |file|
   content = replaced_content = File.read(file)
