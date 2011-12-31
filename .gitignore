@@ -37,6 +37,7 @@ Makefile.in
 /doc/reference/*.xml
 /doc/reference/*.xml.ja
 /packages/yum/RPM-GPG-KEY-cutter
+/packages/yum/cutter.repo
 /packages/yum/cutter-repository.spec
 /packages/apt/debian/
 /packages/apt/ubuntu/

@@ -1,6 +1,0 @@
-[cutter]
-name=Cutter for CentOS $releasever - $basearch
-baseurl=http://downloads.sourceforge.net/cutter/centos/$releasever/$basearch/
-gpgcheck=1
-enabled=1
-gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-cutter
