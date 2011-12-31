@@ -934,7 +934,7 @@ namespace cppcut_assertion_null
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                                "std::string test",
                                NULL,
-                               "expected: <abcde>(<not_null_object>) is NULL",
+                               "expected: <\"abcde\">(<not_null_object>) is NULL",
                                NULL,
                                NULL,
                                FAIL_LOCATION,

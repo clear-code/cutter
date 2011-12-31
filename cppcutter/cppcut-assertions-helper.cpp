@@ -20,6 +20,30 @@
 #include "cppcut-assertions-helper.h"
 
 CPPCUT_DECL void
+cut::inspect_string(std::ostream &stream, const std::string *str)
+{
+    const char *c_string = str->c_str();
+    unsigned int i, length = str->length();
+
+    stream << '"';
+    for (i = 0; i < length; i++) {
+        switch (c_string[i]) {
+        case '"':
+            stream << "\\\"";
+            break;
+        case '\\':
+            stream << "\\\\";
+            break;
+        default:
+            stream << c_string[i];
+            break;
+        }
+    }
+    stream << '"';
+
+}
+
+CPPCUT_DECL void
 cut::assert_equal(char *expected, char *actual,
                   const char *expression_expected,
                   const char *expression_actual)
