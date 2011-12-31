@@ -28,12 +28,20 @@
 namespace cut
 {
     CPPCUT_DECL
-    void inspect_string(std::ostream &stream, const std::string *str);
+    void inspect_c_string(std::ostream &stream,
+                          const char *c_string, unsigned int length);
+
+    inline std::ostream &operator<< (std::ostream &stream,
+                                     const std::string &str)
+    {
+        inspect_c_string(stream, str.c_str(), str.length());
+        return stream;
+    }
 
     inline std::ostream &operator<< (std::ostream &stream,
                                      const std::string *str)
     {
-        inspect_string(stream, str);
+        inspect_c_string(stream, str->c_str(), str->length());
         return stream;
     }
 

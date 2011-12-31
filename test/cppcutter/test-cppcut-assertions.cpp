@@ -429,7 +429,7 @@ namespace cppcut_assertion_equal
                                "equal_string test",
                                NULL,
                                "<expected == actual_different>",
-                               "abcde", "ABcDE",
+                               "\"abcde\"", "\"ABcDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_equal::stub_string()",
                                NULL);
@@ -828,7 +828,7 @@ namespace cppcut_assertion_not_equal
                                "not_equal_string test",
                                NULL,
                                "<expected != actual_same>",
-                               "abcde", "abcde",
+                               "\"abcde\"", "\"abcde\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_not_equal::stub_string()",
                                NULL);

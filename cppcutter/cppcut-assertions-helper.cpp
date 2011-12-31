@@ -20,13 +20,11 @@
 #include "cppcut-assertions-helper.h"
 
 CPPCUT_DECL void
-cut::inspect_string(std::ostream &stream, const std::string *str)
+cut::inspect_c_string(std::ostream &stream,
+                      const char *c_string, unsigned int length)
 {
-    const char *c_string = str->c_str();
-    unsigned int i, length = str->length();
-
     stream << '"';
-    for (i = 0; i < length; i++) {
+    for (unsigned int i = 0; i < length; i++) {
         switch (c_string[i]) {
         case '"':
             stream << "\\\"";
