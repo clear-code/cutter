@@ -31,7 +31,7 @@ svg_images =					\
 	cutter-easy-to-debug.svg		\
 	cutter-easy-to-write.svg
 
-if HAVE_RD2
+if MAN_AVAILABLE
 dist_man1_MANS =	\
 	cutter.man	\
 	cut-diff.man
@@ -42,16 +42,21 @@ dist_ja_man1_mans =	\
 	cutter.jman	\
 	cut-diff.jman
 
-EXTRA_DIST += $(dist_ja_man1_mans)
+man_build_stamp = man-build.stamp
+
+EXTRA_DIST +=					\
+	$(dist_ja_man1_mans)			\
+	$(man_build_stamp)
+
+man-build.stamp: $(dist_ja_man1_mans)
+	@touch $@
 endif
 
-jman: $(dist_ja_man1_mans)
+.PHONY: jman
 
-if HAVE_RD2
+jman: $(man_build_stamp)
+
 install-data-local: jman
-else
-install-data-local:
-endif
 	test -z "$(DESTDIR)$(ja_man1dir)" || $(mkdir_p) "$(DESTDIR)$(ja_man1dir)"
 	@for jman in $(dist_ja_man1_mans); do			\
 	  test -f "$${jman}" || break;				\

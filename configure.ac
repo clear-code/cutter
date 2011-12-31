@@ -511,7 +511,19 @@ dnl **************************************************************
 
 AC_PATH_PROG(RUBY, ruby, ruby-not-found)
 AC_PATH_PROG(RD2, rd2, rd2-not-found)
-AM_CONDITIONAL([HAVE_RD2], [test "$RD2" != "rd2-not-found"])
+if test x"$RD2" != x"rd2-not-found"; then
+  rd2_avialable=yes
+else
+  rd2_avialable=no
+fi
+AM_CONDITIONAL([HAVE_RD2], [test "$rd2_available" = "yes"])
+
+if test "$rd2_avialable" = "yes" -o -f "$srcdir/doc/man-build.stamp"; then
+  man_available=yes
+else
+  man_available=no
+fi
+AM_CONDITIONAL([MAN_AVAILABLE], [test "$man_available" = "yes"])
 
 dnl **************************************************************
 dnl Check for gettext.

@@ -47,6 +47,7 @@ Makefile.in
 /html/mini-heading-mark.png
 /tmp/
 /dist/
+/doc/man-build.stamp
 /doc/reference/tmp/
 /sample/glib/iochannel-test-outfile
 .gdb_history
