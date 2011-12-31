@@ -74,6 +74,24 @@ cut::assert_equal(unsigned long long expected, unsigned long long actual,
 }
 
 CPPCUT_DECL void
+cut::assert_equal(char *expected, char *actual,
+                  const char *expression_expected,
+                  const char *expression_actual)
+{
+    cut::assert_equal(static_cast<const char *>(expected),
+                      static_cast<const char *>(actual),
+                      expression_expected, expression_actual);
+}
+
+CPPCUT_DECL void
+cut::assert_equal(const char *expected, const char *actual,
+                  const char *expression_expected,
+                  const char *expression_actual)
+{
+    cut_assert_equal_string_helper(expected, actual,
+                                   expression_expected, expression_actual);
+}
+
 cut::assert_operator(bool result, int lhs, int rhs,
                      const char *expression_lhs,
                      const char *expression_operator,

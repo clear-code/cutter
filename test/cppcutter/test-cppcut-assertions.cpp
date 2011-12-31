@@ -314,7 +314,7 @@ namespace cppcut_assertion_equal
                                "equal_c_string_literal test",
                                NULL,
                                "<\"abcde\" == \"ABcDE\">",
-                               "abcde", "ABcDE",
+                               "\"abcde\"", "\"ABcDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_equal::stub_c_string_literal()",
                                NULL);
@@ -324,9 +324,10 @@ namespace cppcut_assertion_equal
     stub_c_string_buffer (void)
     {
         char expected[] = "abcde";
-        char actual[] = "ABcDE";
-        cppcut_assert_equal(expected, expected);
-        MARK_FAIL(cppcut_assert_equal(expected, actual));
+        char actual_same[] = "abcde";
+        char actual_different[] = "ABcDE";
+        cppcut_assert_equal(expected, actual_same);
+        MARK_FAIL(cppcut_assert_equal(expected, actual_different));
     }
 
     void
@@ -341,8 +342,8 @@ namespace cppcut_assertion_equal
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                                "equal_c_string_buffer test",
                                NULL,
-                               "<expected == actual>",
-                               "abcde", "ABcDE",
+                               "<expected == actual_different>",
+                               "\"abcde\"", "\"ABcDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_equal::stub_c_string_buffer()",
                                NULL);
@@ -352,9 +353,10 @@ namespace cppcut_assertion_equal
     stub_c_string_reference (void)
     {
         const char *expected = "abcde";
-        const char *actual = "ABcDE";
-        cppcut_assert_equal(expected, expected);
-        MARK_FAIL(cppcut_assert_equal(expected, actual));
+        const char *actual_same = cut_take_strdup(expected);
+        const char *actual_different = "ABcDE";
+        cppcut_assert_equal(expected, actual_same);
+        MARK_FAIL(cppcut_assert_equal(expected, actual_different));
     }
 
     void
@@ -369,8 +371,8 @@ namespace cppcut_assertion_equal
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                                "equal_c_string_reference test",
                                NULL,
-                               "<expected == actual>",
-                               "abcde", "ABcDE",
+                               "<expected == actual_different>",
+                               "\"abcde\"", "\"ABcDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_equal::stub_c_string_reference()",
                                NULL);
@@ -380,9 +382,10 @@ namespace cppcut_assertion_equal
     stub_c_string_mix (void)
     {
         char expected[] = "abcde";
-        const char *actual = "ABcDE";
-        cppcut_assert_equal(expected, expected);
-        MARK_FAIL(cppcut_assert_equal(expected, actual));
+        const char *actual_same = cut_take_strdup(expected);
+        const char *actual_different = "ABcDE";
+        cppcut_assert_equal(expected, actual_same);
+        MARK_FAIL(cppcut_assert_equal(expected, actual_different));
     }
 
     void
@@ -397,8 +400,8 @@ namespace cppcut_assertion_equal
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                                "equal_c_string_mix test",
                                NULL,
-                               "<expected == actual>",
-                               "abcde", "ABcDE",
+                               "<expected == actual_different>",
+                               "\"abcde\"", "\"ABcDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_equal::stub_c_string_mix()",
                                NULL);
@@ -408,9 +411,10 @@ namespace cppcut_assertion_equal
     stub_string (void)
     {
         std::string expected("abcde");
-        std::string actual("ABcDE");
-        cppcut_assert_equal(expected, expected);
-        MARK_FAIL(cppcut_assert_equal(expected, actual));
+        std::string actual_same(cut_take_printf(expected.c_str()));
+        std::string actual_different("ABcDE");
+        cppcut_assert_equal(expected, actual_same);
+        MARK_FAIL(cppcut_assert_equal(expected, actual_different));
     }
 
     void
@@ -424,7 +428,7 @@ namespace cppcut_assertion_equal
         cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
                                "equal_string test",
                                NULL,
-                               "<expected == actual>",
+                               "<expected == actual_different>",
                                "abcde", "ABcDE",
                                FAIL_LOCATION,
                                "void cppcut_assertion_equal::stub_string()",

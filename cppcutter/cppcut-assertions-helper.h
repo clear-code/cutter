@@ -57,6 +57,14 @@ namespace cut
     void assert_equal(unsigned long long expected, unsigned long long actual,
                       const char *expression_expected,
                       const char *expression_actual);
+    CPPCUT_DECL
+    void assert_equal(char *expected, char *actual,
+                      const char *expression_expected,
+                      const char *expression_actual);
+    CPPCUT_DECL
+    void assert_equal(const char *expected, const char *actual,
+                      const char *expression_expected,
+                      const char *expression_actual);
 
     template <typename Type> void assert_equal(const Type *expected,
                                                const Type *actual,
