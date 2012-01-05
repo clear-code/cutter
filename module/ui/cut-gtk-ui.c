@@ -210,10 +210,12 @@ pop_message (CutGtkUI *ui, const gchar *context)
 static void
 remove_all_messages (CutGtkUI *ui, const gchar *context)
 {
+#if GTK_CHECK_VERSION(2, 22, 0)
     guint context_id;
 
     context_id = gtk_statusbar_get_context_id(ui->statusbar, context);
     gtk_statusbar_remove_all(ui->statusbar, context_id);
+#endif
 }
 
 static void
