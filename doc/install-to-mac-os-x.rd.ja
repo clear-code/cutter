@@ -8,19 +8,7 @@ Mac OS XへのCutterのインストール方法を説明します。
 
 == インストール
 
-CutterのMacPortsが提供されているので、portでインストールでき
-ます。
-
-まず、Cutter用のMacPortsを取得します。
-
-  % cd ~
-  % git clone https://github.com/clear-code/cutter-macports.git
-
-次に、取得したディレクトリを登録します。
-
-  % echo file://$HOME/cutter-macports | sudo sh -c "cat >> /opt/local/etc/macports/sources.conf"
-
-portでインストールします。
+CutterのMacPortsは本家のリポジトリに含まれているので、portでインストールできます。
 
   % sudo port install cutter
 
