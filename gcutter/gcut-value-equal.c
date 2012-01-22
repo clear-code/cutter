@@ -144,7 +144,11 @@ value_equal_ ## type ## _ ## type (gconstpointer val1,                  \
         g_value_get_ ## type(value2);                                   \
 }
 
+#if GLIB_CHECK_VERSION(2, 32, 0)
+DEFINE_SAME_TYPE_EQUAL_FUNC(schar)
+#else
 DEFINE_SAME_TYPE_EQUAL_FUNC(char)
+#endif
 DEFINE_SAME_TYPE_EQUAL_FUNC(uchar)
 DEFINE_SAME_TYPE_EQUAL_FUNC(boolean)
 DEFINE_SAME_TYPE_EQUAL_FUNC(int)
@@ -177,7 +181,11 @@ gcut_value_equal_init (void)
     gcut_value_register_equal_func(g_type, g_type,                      \
                                    value_equal_ ## type ## _ ## type)
 
+#if GLIB_CHECK_VERSION(2, 32, 0)
+    REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_CHAR, schar);
+#else
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_CHAR, char);
+#endif
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_UCHAR, uchar);
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_BOOLEAN, boolean);
     REGISTER_SAME_TYPE_EQUAL_FUNC(G_TYPE_INT, int);
