@@ -1139,6 +1139,22 @@ notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
 
     args = g_ptr_array_new();
     g_ptr_array_add(args, g_strdup(console->notify_command));
+#ifdef G_OS_WIN32
+    g_ptr_array_add(args,
+                    g_strdup_printf("/t:\"%s [%g%%] (%gs)\"",
+                                    status_to_label(status),
+                                    compute_pass_percentage(run_context),
+                                    cut_run_context_get_elapsed(run_context)));
+    if (success) {
+        g_ptr_array_add(args, g_strdup("/p:0"));
+    } else {
+        g_ptr_array_add(args, g_strdup("/p:2"));
+    }
+    if (icon_path) {
+        g_ptr_array_add(args, g_strdup_printf("/i:\"%s\"", icon_path));
+    }
+    g_ptr_array_add(args, g_strdup_printf("%s", format_summary(run_context)));
+#else
     g_ptr_array_add(args, g_strdup("--message"));
     g_ptr_array_add(args, format_summary(run_context));
     g_ptr_array_add(args, g_strdup("--priority"));
@@ -1156,6 +1172,7 @@ notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
                                     status_to_label(status),
                                     compute_pass_percentage(run_context),
                                     cut_run_context_get_elapsed(run_context)));
+#endif
     g_ptr_array_add(args, NULL);
 
     run_notify_command(console, (gchar **)args->pdata);
