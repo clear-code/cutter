@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -28,7 +28,6 @@
 #ifdef HAVE_SYS_WAIT_H
 #  include <sys/wait.h>
 #endif
-#include <signal.h>
 #include <glib.h>
 #include <glib/gi18n-lib.h>
 
@@ -54,6 +53,8 @@
 #include "cut-process.h"
 #include "cut-backtrace-entry.h"
 #include "cut-utils.h"
+
+#define CUT_SIGNAL_EXPLICIT_JUMP G_MININT
 
 #define cut_omit(context, message) do                           \
 {                                                               \
@@ -856,7 +857,7 @@ cut_test_context_long_jump (CutTestContext *context)
     }
 
     if (cut_test_context_in_user_message_jump(context) || same_thread_p) {
-        longjmp(*(priv->jump_buffer), SIGCHLD);
+        longjmp(*(priv->jump_buffer), CUT_SIGNAL_EXPLICIT_JUMP);
     } else {
         if (priv->parent && cut_test_context_is_failed(context)) {
             cut_test_context_set_failed(priv->parent, TRUE);
