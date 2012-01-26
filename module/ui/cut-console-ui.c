@@ -1163,8 +1163,9 @@ notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
     }
     if (icon_path) {
         g_ptr_array_add(args, g_strdup_printf("/i:\"%s\"", icon_path));
+        g_free(icon_path);
     }
-    g_ptr_array_add(args, g_strdup_printf("%s", format_summary(run_context)));
+    g_ptr_array_add(args, format_summary(run_context));
 #else
     g_ptr_array_add(args, g_strdup("--message"));
     g_ptr_array_add(args, format_summary(run_context));
