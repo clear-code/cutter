@@ -1126,6 +1126,18 @@ run_notify_command (CutConsoleUI *console, gchar **args)
     }
 }
 
+static gchar *
+format_notify_message (CutRunContext *run_context)
+{
+    CutTestResultStatus status;
+
+    status = cut_run_context_get_status(run_context);
+    return g_strdup_printf("%s [%g%%] (%gs)",
+                           status_to_label(status),
+                           compute_pass_percentage(run_context),
+                           cut_run_context_get_elapsed(run_context));
+}
+
 static void
 notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
                        gboolean success)
@@ -1133,18 +1145,17 @@ notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
     GPtrArray *args;
     CutTestResultStatus status;
     gchar *icon_path;
+    gchar *message;
 
     status = cut_run_context_get_status(run_context);
     icon_path = search_icon_path(status, success);
+    message = format_notify_message(run_context);
 
     args = g_ptr_array_new();
     g_ptr_array_add(args, g_strdup(console->notify_command));
 #ifdef G_OS_WIN32
-    g_ptr_array_add(args,
-                    g_strdup_printf("/t:\"%s [%g%%] (%gs)\"",
-                                    status_to_label(status),
-                                    compute_pass_percentage(run_context),
-                                    cut_run_context_get_elapsed(run_context)));
+    g_ptr_array_add(args, g_strdup_printf("/t:\"%s\"", message));
+    g_free(message);
     if (success) {
         g_ptr_array_add(args, g_strdup("/p:0"));
     } else {
@@ -1167,11 +1178,7 @@ notify_by_growlnotify (CutConsoleUI *console, CutRunContext *run_context,
         g_ptr_array_add(args, g_strdup("--image"));
         g_ptr_array_add(args, icon_path);
     }
-    g_ptr_array_add(args,
-                    g_strdup_printf("%s [%g%%] (%gs)",
-                                    status_to_label(status),
-                                    compute_pass_percentage(run_context),
-                                    cut_run_context_get_elapsed(run_context)));
+    g_ptr_array_add(args, message);
 #endif
     g_ptr_array_add(args, NULL);
 
@@ -1207,11 +1214,7 @@ notify_by_notify_send (CutConsoleUI *console, CutRunContext *run_context,
         g_ptr_array_add(args, g_strdup("--icon"));
         g_ptr_array_add(args, icon_path);
     }
-    g_ptr_array_add(args,
-                    g_strdup_printf("%s [%g%%] (%gs)",
-                                    status_to_label(status),
-                                    compute_pass_percentage(run_context),
-                                    cut_run_context_get_elapsed(run_context)));
+    g_ptr_array_add(args, format_notify_message(run_context));
     summary = format_summary(run_context);
     g_ptr_array_add(args, g_markup_escape_text(summary, -1));
     g_free(summary);
