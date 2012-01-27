@@ -503,7 +503,11 @@ dnl **************************************************************
 dnl Checks for gtk-doc
 dnl **************************************************************
 
-GTK_DOC_CHECK([1.8])
+m4_ifdef([GTK_DOC_CHECK],
+         [GTK_DOC_CHECK([1.8])],
+         [enable_gtk_doc=no
+          AM_CONDITIONAL([GTK_DOC_USE_LIBTOOL], [false])
+          AM_CONDITIONAL([ENABLE_GTK_DOC], [false])])
 
 dnl **************************************************************
 dnl Checks for RD2
