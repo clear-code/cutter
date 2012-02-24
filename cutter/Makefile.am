@@ -1,9 +1,10 @@
-INCLUDES = 			\
+INCLUDES =			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)
 
-AM_CFLAGS = 					\
+AM_CFLAGS =					\
 	-DLOCALEDIR=\""$(localedir)"\"		\
+	-DCUT_LOG_DOMAIN=\""cutter"\"		\
 	$(CUTTER_CFLAGS)			\
 	$(COVERAGE_CFLAGS)
 
@@ -11,7 +12,7 @@ CLEANFILES = *.gcno *.gcda
 
 lib_LTLIBRARIES = libcutter.la
 
-cutter_public_headers = 		\
+cutter_public_headers =		\
 	cut-assertions-helper.h		\
 	cut-assertions.h		\
 	cut-experimental.h		\
@@ -26,7 +27,7 @@ cutter_public_headers = 		\
 	cut-version.h			\
 	cut-config.h
 
-libcutter_public_headers = 		\
+libcutter_public_headers =		\
 	cut-analyzer.h			\
 	cut-backtrace-entry.h		\
 	cut-colorize-differ.h		\
@@ -70,9 +71,10 @@ libcutter_public_headers = 		\
 	cut-ui-factory-builder.h	\
 	cut-ui.h			\
 	cut-unified-differ.h		\
-	cut-verbose-level.h
+	cut-verbose-level.h		\
+	cut-logger.h
 
-noinst_headers = 		\
+noinst_headers =		\
 	cut-crash-backtrace.h	\
 	cut-elf-loader.h	\
 	cut-loader.h		\
@@ -84,11 +86,11 @@ noinst_headers = 		\
 	cut-sequence-matcher.h	\
 	cut-utils.h
 
-pkginclude_HEADERS = 		\
+pkginclude_HEADERS =		\
 	cutter.h
 
 cutter_includedir=$(pkgincludedir)/cutter
-cutter_include_HEADERS = 		\
+cutter_include_HEADERS =		\
 	$(cutter_public_headers)	\
 	$(libcutter_public_headers)	\
 	$(enum_source_prefix).h
@@ -115,7 +117,7 @@ bin_PROGRAMS = cutter cut-diff
 cutter_SOURCES = main.c
 cut_diff_SOURCES = cut-diff.c
 
-libcutter_sources = 			\
+libcutter_sources =			\
 	cut-analyzer.c			\
 	cut-assertions-helper.c		\
 	cut-backtrace-entry.c		\
@@ -169,7 +171,8 @@ libcutter_sources = 			\
 	cut-ui.c			\
 	cut-unified-differ.c		\
 	cut-utils.c			\
-	cut-verbose-level.c
+	cut-verbose-level.c		\
+	cut-logger.c
 
 libcutter_la_SOURCES =			\
 	$(cutter_public_headers)	\

@@ -1,4 +1,4 @@
-INCLUDES = 					\
+INCLUDES =					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_srcdir)/cutter			\
@@ -10,7 +10,7 @@ AM_CFLAGS =			\
 
 CLEANFILES = *.gcno *.gcda
 
-check_LTLIBRARIES = 			\
+check_LTLIBRARIES =			\
 	test-cutter.la			\
 	test-cut-assertions.la		\
 	test-cut-test-attribute.la	\
@@ -49,7 +49,8 @@ check_LTLIBRARIES = 			\
 	test-cut-file-stream-reader.la	\
 	test-cut-path.la		\
 	test-cut-test-utils.la		\
-	test-cut-thread.la
+	test-cut-thread.la		\
+	test-cut-logger.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -106,6 +107,7 @@ test_cut_file_stream_reader_la_SOURCES	= test-cut-file-stream-reader.c
 test_cut_path_la_SOURCES		= test-cut-path.c
 test_cut_test_utils_la_SOURCES		= test-cut-test-utils.c
 test_cut_thread_la_SOURCES		= test-cut-thread.c
+test_cut_logger_la_SOURCES		= test-cut-logger.c
 
 echo-tests:
 	@echo $(noinst_LTLIBRARIES)
