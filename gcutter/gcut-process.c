@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2012 Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -1035,6 +1035,7 @@ gcut_process_wait (GCutProcess *process, guint timeout, GError **error)
     return priv->status;
 }
 
+#ifndef G_OS_WIN32
 static GCutProcessError
 gcut_process_error_from_errno (gint err_no)
 {
@@ -1053,6 +1054,7 @@ gcut_process_error_from_errno (gint err_no)
         break;
     }
 }
+#endif
 
 gboolean
 gcut_process_kill (GCutProcess *process, int signal_number, GError **error)
