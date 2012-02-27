@@ -331,11 +331,14 @@ if test "$gtk_exists" != "no"; then
   AC_DEFINE(HAVE_GTK, 1, [Define to 1 if you have GTK+ installed])
 
   AC_MSG_CHECKING(for GTK+ is built with debug mode)
-  ac_save_CFLAGS="$CFLAGS"
-  ac_save_LIBS="$LIBS"
-  CFLAGS="$CFLAGS $GTK_CFLAGS"
-  LIBS="$CFLAGS $GTK_LIBS"
-  AC_RUN_IFELSE([AC_LANG_PROGRAM([
+  if test "$cross_compiling" = "yes"; then
+    AC_MSG_RESULT(no (cross compiling; assumed no))
+  else
+    ac_save_CFLAGS="$CFLAGS"
+    ac_save_LIBS="$LIBS"
+    CFLAGS="$CFLAGS $GTK_CFLAGS"
+    LIBS="$CFLAGS $GTK_LIBS"
+    AC_RUN_IFELSE([AC_LANG_PROGRAM([
 #include <stdlib.h>
 #include <gtk/gtk.h>
 
@@ -359,13 +362,14 @@ main (int argc, char **argv)
 
     return debug_mode ? EXIT_SUCCESS : EXIT_FAILURE;
 }
-    ])],
-    [AC_DEFINE(HAVE_GTK_ENABLE_DEBUG, 1,
-               [Define to 1 if you have GTK+ installed and built with debug mode])
-     AC_MSG_RESULT(yes)],
-    [AC_MSG_RESULT(no)])
-  CFLAGS="$ac_save_CFLAGS"
-  LIBS="$ac_save_LIBS"
+      ])],
+      [AC_DEFINE(HAVE_GTK_ENABLE_DEBUG, 1,
+		 [Define to 1 if you have GTK+ installed and built with debug mode])
+       AC_MSG_RESULT(yes)],
+      [AC_MSG_RESULT(no)])
+    CFLAGS="$ac_save_CFLAGS"
+    LIBS="$ac_save_LIBS"
+  fi
 fi
 AM_CONDITIONAL([HAVE_GTK], [test "$gtk_exists" = "yes"])
 
