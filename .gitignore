@@ -1,6 +1,7 @@
 *.la
 *.lo
 *.o
+*.exe
 .deps
 .libs
 /.gdb_history
