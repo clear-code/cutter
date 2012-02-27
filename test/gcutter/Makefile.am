@@ -1,4 +1,4 @@
-INCLUDES = 					\
+INCLUDES =					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_srcdir)/cutter			\
@@ -9,7 +9,7 @@ AM_CFLAGS = $(CUTTER_CFLAGS)
 
 CLEANFILES = *.gcno *.gcda
 
-check_LTLIBRARIES = 			\
+check_LTLIBRARIES =			\
 	test-gcut-assertions.la		\
 	test-gcut-assertions-helper.la	\
 	test-gcut-test-utils.la		\
