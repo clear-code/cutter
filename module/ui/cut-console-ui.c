@@ -41,6 +41,7 @@
 #include <cutter/cut-console-diff-writer.h>
 #include <cutter/cut-console.h>
 #include <cutter/cut-enum-types.h>
+#include <cutter/cut-utils.h>
 
 #define CUT_TYPE_CONSOLE_UI            cut_type_console_ui
 #define CUT_CONSOLE_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_CONSOLE_UI, CutConsoleUI))
