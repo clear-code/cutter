@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -429,7 +429,6 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     CutTestPrivate *priv;
     gboolean success = TRUE;
     jmp_buf jump_buffer;
-    CutTestSuite *test_suite;
     CutTestCase *test_case;
     CutTestIterator *test_iterator;
     CutTestResult *result;
@@ -444,7 +443,6 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     if (!klass->is_available(test, test_context, run_context))
         return FALSE;
 
-    test_suite = cut_test_context_get_test_suite(test_context);
     test_case = cut_test_context_get_test_case(test_context);
     test_iterator = cut_test_context_get_test_iterator(test_context);
     if (CUT_IS_ITERATED_TEST(test))
@@ -482,9 +480,13 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     case SIGABRT:
     case SIGTERM:
         success = FALSE;
-        cut_crash_backtrace_emit(test_suite, test_case,
-                                 test, test_iterator, data,
-                                 test_context);
+        {
+            CutTestSuite *test_suite;
+            test_suite = cut_test_context_get_test_suite(test_context);
+            cut_crash_backtrace_emit(test_suite, test_case,
+                                     test, test_iterator, data,
+                                     test_context);
+        }
         break;
     case SIGINT:
         cut_run_context_cancel(run_context);
