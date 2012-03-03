@@ -1,0 +1,26 @@
+<ui>
+  <menubar name="mainwindow">
+    <menu name="FileMenu" action="FileMenu">
+      <menuitem name="Quit" action="Quit"/>
+    </menu>
+    <menu name="TestMenu" action="TestMenu">
+      <menuitem name="RunTestAll" action="RunTestAll"/>
+    </menu>
+    <menu name="HelpMenu" action="HelpMenu">
+      <menu name="Website" action="Website">
+        <menuitem name="WebsiteEn" action="WebsiteEn"/>
+        <menuitem name="WebsiteJa" action="WebsiteJa"/>
+      </menu>
+      <separator/>
+      <menu name="Tutorial" action="Tutorial">
+        <menuitem name="TutorialEn" action="TutorialEn"/>
+        <menuitem name="TutorialJa" action="TutorialJa"/>
+      </menu>
+      <separator/>
+      <menu name="Reference" action="Reference">
+        <menuitem name="ReferenceEn" action="ReferenceEn"/>
+        <menuitem name="ReferenceJa" action="ReferenceJa"/>
+      </menu>
+    </menu>
+  </menubar>
+</ui>
