@@ -255,6 +255,141 @@ cb_cancel_or_restart (GtkToolButton *button, gpointer data)
     }
 }
 
+typedef struct _CutActionEntry CutActionEntry;
+struct _CutActionEntry {
+    GtkUIManagerItemType type;
+    gboolean is_active;
+    gint value;
+    GtkActionEntry entry;
+};
+
+static void
+cb_file_quit (GtkWidget *widget, gpointer data)
+{
+    CutGtkUI *ui = CUT_GTK_UI(data);
+    
+    if (ui != NULL) {
+        ui->window = NULL;
+        gtk_main_quit();
+    }
+}
+
+static void
+cb_test_runtestall (GtkWidget *widget, gpointer data)
+{
+    CutGtkUI *ui = CUT_GTK_UI(data);
+    
+    if (ui != NULL) {
+        cb_cancel_or_restart(GTK_TOOL_BUTTON(ui->cancel_or_restart_button), (gpointer)ui);
+    }
+}
+
+#define CUT_WEBSITE_EN "http://cutter.sourceforge.net/"
+#define CUT_WEBSITE_JA "http://cutter.sourceforge.net/index.html.ja"
+#define CUT_TUTORIAL_EN "http://cutter.sourceforge.net/reference/tutorial.html"
+#define CUT_TUTORIAL_JA "http://cutter.sourceforge.net/reference/ja/tutorial.html"
+#define CUT_REFERENCE_EN "http://cutter.sourceforge.net/reference/"
+#define CUT_REFERENCE_JA "http://cutter.sourceforge.net/reference/ja/"
+
+static void
+cb_help_uri(GtkWidget *widget, gpointer data)
+{
+    GError *error = NULL;
+
+    GtkAction *action = GTK_ACTION(widget);
+
+    gchar *uri = NULL;
+    const gchar *name = gtk_action_get_name(GTK_ACTION(action));
+    if (strcmp(name, "WebsiteEn") == 0) {
+        uri = CUT_WEBSITE_EN;
+    } else if (strcmp(name, "WebsiteJa") == 0) {
+        uri = CUT_WEBSITE_JA;
+    } else if (strcmp(name, "TutorialEn") == 0) {
+        uri = CUT_TUTORIAL_EN;
+    } else if (strcmp(name, "TutorialJa") == 0) {
+        uri = CUT_TUTORIAL_JA;
+    } else if (strcmp(name, "ReferenceEn") == 0) {
+        uri = CUT_REFERENCE_EN;
+    } else if (strcmp(name, "ReferenceJa") == 0) {
+        uri = CUT_REFERENCE_JA;
+    }
+    
+    if (uri != NULL) {
+        gboolean status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
+        if (status != TRUE) {
+            /* fallback */
+            GPtrArray *args = g_ptr_array_new();
+            g_ptr_array_add(args, "chrome");
+            g_ptr_array_add(args, uri);
+            g_ptr_array_add(args, NULL);
+    
+            g_spawn_async(NULL, (gchar**)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
+        }
+    }
+}
+
+static CutActionEntry menu_entries[] = {
+    /* type, is_active, value, {name, stock_id,label, accelerator, tooltip, callback} */
+    {GTK_UI_MANAGER_AUTO, 0, 0, {"FileMenu", NULL, N_("_File"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0, {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_file_quit)}},
+
+    {GTK_UI_MANAGER_AUTO, 0, 0, {"TestMenu", NULL, N_("_Test"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"RunTestAll", GTK_STOCK_REDO, N_("_RunTestAll"), NULL, "", G_CALLBACK(cb_test_runtestall)}},
+
+    {GTK_UI_MANAGER_AUTO, 0, 0, {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0, {"Website", NULL, N_("_Website"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"WebsiteEn", NULL, N_("_Website English"), NULL, "", G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"WebsiteJa", NULL, N_("_Website Japanese"), NULL, "", G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0, {"Tutorial", NULL, N_("_Tutorial"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"TutorialEn", NULL, N_("_Tutorial English"), NULL, "", G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"TutorialJa", NULL, N_("_Tutorial Japanese"), NULL, "", G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0, {"Reference", NULL, N_("_Reference"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"ReferenceEn", NULL, N_("_Reference English"), NULL, "", G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"ReferenceJa", NULL, N_("_Reference Japanese"), NULL, "", G_CALLBACK(cb_help_uri)}},
+};
+
+
+
+
+static void
+setup_menu_bar(GtkBox *box, CutGtkUI *ui)
+{
+    GtkActionGroup *action_group = gtk_action_group_new("cutmenubar");
+    gint i = 0;
+    for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
+        gtk_action_group_add_actions(action_group, (GtkActionEntry*)&(menu_entries[i].entry), 1, ui);
+    }
+    
+    GtkUIManager *uimanager = gtk_ui_manager_new();
+    gtk_ui_manager_insert_action_group(uimanager, action_group, 0);
+
+    gchar *cutter_path = g_find_program_in_path("cutter");
+    if (cutter_path != NULL) {
+        gchar *root_path = g_path_get_dirname(cutter_path);
+        /* expect that .ui file is placed at ../share/cutter/cut-gtk-ui.ui */
+        gchar *ui_path = g_build_path(G_DIR_SEPARATOR_S, root_path, "..", "share", "cutter", "cut-gtk-ui.ui", NULL);
+        gtk_ui_manager_add_ui_from_file(uimanager, ui_path, NULL);
+        
+        g_free(cutter_path);
+        g_free(ui_path);
+    }
+
+    gtk_window_add_accel_group(GTK_WINDOW(ui->window), gtk_ui_manager_get_accel_group(uimanager));
+
+    GtkWidget *menubar = gtk_ui_manager_get_widget(GTK_UI_MANAGER(uimanager), "/mainwindow");
+    
+    if (menubar) {
+        gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
+    }
+}
+
 static void
 setup_cancel_or_restart_button (GtkToolbar *toolbar, CutGtkUI *ui)
 {
@@ -274,15 +409,15 @@ setup_top_bar (GtkBox *box, CutGtkUI *ui)
 {
     GtkWidget *hbox, *toolbar;
 
+    toolbar = gtk_toolbar_new();
+    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolbar), FALSE);
+    gtk_box_pack_start(GTK_BOX(box), toolbar, FALSE, TRUE, 0);
+    setup_cancel_or_restart_button(GTK_TOOLBAR(toolbar), ui);
+
     hbox = gtk_hbox_new(FALSE, 0);
     gtk_box_pack_start(box, hbox, FALSE, TRUE, 0);
 
     setup_progress_bar(GTK_BOX(hbox), ui);
-
-    toolbar = gtk_toolbar_new();
-    gtk_toolbar_set_show_arrow(GTK_TOOLBAR(toolbar), FALSE);
-    gtk_box_pack_end(GTK_BOX(hbox), toolbar, FALSE, FALSE, 0);
-    setup_cancel_or_restart_button(GTK_TOOLBAR(toolbar), ui);
 }
 
 static void
@@ -418,6 +553,7 @@ setup_window (CutGtkUI *ui)
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_container_add(GTK_CONTAINER(window), vbox);
 
+    setup_menu_bar(GTK_BOX(vbox), ui);
     setup_top_bar(GTK_BOX(vbox), ui);
     setup_summary_label(GTK_BOX(vbox), ui);
     setup_tree_view(GTK_BOX(vbox), ui);
