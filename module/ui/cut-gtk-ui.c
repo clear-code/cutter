@@ -281,7 +281,7 @@ cb_test_runtestall (GtkWidget *widget, gpointer data)
 #define CUT_REFERENCE_JA "http://cutter.sourceforge.net/reference/ja/"
 
 static void
-cb_help_uri (GtkWidget *widget, gpointer data)
+cb_open_uri (GtkWidget *widget, gpointer data)
 {
     GError *error = NULL;
 
@@ -328,19 +328,19 @@ static GtkActionEntry menu_entries[] = {
     {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL},
     {"Website", NULL, N_("_Website"), NULL, "", NULL},
     {"WebsiteEn", NULL, N_("_Website English"), NULL, "",
-     G_CALLBACK(cb_help_uri)},
+     G_CALLBACK(cb_open_uri)},
     {"WebsiteJa", NULL, N_("_Website Japanese"), NULL, "",
-     G_CALLBACK(cb_help_uri)},
+     G_CALLBACK(cb_open_uri)},
     {"Tutorial", NULL, N_("_Tutorial"), NULL, "", NULL},
     {"TutorialEn", NULL, N_("_Tutorial English"), NULL, "",
-     G_CALLBACK(cb_help_uri)},
+     G_CALLBACK(cb_open_uri)},
     {"TutorialJa", NULL, N_("_Tutorial Japanese"), NULL, "",
-     G_CALLBACK(cb_help_uri)},
+     G_CALLBACK(cb_open_uri)},
     {"Reference", NULL, N_("_Reference"), NULL, "", NULL},
     {"ReferenceEn", NULL, N_("_Reference English"), NULL, "",
-     G_CALLBACK(cb_help_uri)},
+     G_CALLBACK(cb_open_uri)},
     {"ReferenceJa", NULL, N_("_Reference Japanese"), NULL, "",
-     G_CALLBACK(cb_help_uri)}
+     G_CALLBACK(cb_open_uri)}
 };
 
 static void
