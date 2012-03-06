@@ -383,7 +383,7 @@ static void
 setup_menu_bar (GtkBox *box, CutGtkUI *ui)
 {
     GtkUIManager *ui_manager;
-    GtkWidget *menubar;
+    GtkWidget *menu_bar;
 
     ui_manager = gtk_ui_manager_new();
     load_actions(ui, ui_manager);
@@ -391,9 +391,9 @@ setup_menu_bar (GtkBox *box, CutGtkUI *ui)
     gtk_window_add_accel_group(GTK_WINDOW(ui->window),
                                gtk_ui_manager_get_accel_group(ui_manager));
 
-    menubar = gtk_ui_manager_get_widget(ui_manager, "/menu-bar");
-    if (menubar) {
-        gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
+    menu_bar = gtk_ui_manager_get_widget(ui_manager, "/menu-bar");
+    if (menu_bar) {
+        gtk_box_pack_start(GTK_BOX(box), menu_bar, FALSE, FALSE, 0);
     }
 
     g_object_unref(ui_manager);
