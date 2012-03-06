@@ -40,6 +40,7 @@
 #include <cutter/cut-enum-types.h>
 #include <cutter/cut-pipeline.h>
 #include <cutter/cut-backtrace-entry.h>
+#include <cutter/cut-logger.h>
 
 #define CUT_TYPE_GTK_UI            cut_type_gtk_ui
 #define CUT_GTK_UI(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_GTK_UI, CutGtkUI))
@@ -290,6 +291,8 @@ show_uri (const gchar *uri)
     if (success)
         return;
 
+    cut_log_warning("[ui][gtk] failed to show URI: <%s>: %s",
+                    uri, error->message);
     g_error_free(error);
     error = NULL;
 

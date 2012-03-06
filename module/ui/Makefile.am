@@ -30,7 +30,8 @@ ui_factory_module_LTLIBRARIES += gtk_factory.la
 
 gtk_la_CFLAGS =					\
 	$(AM_CFLAGS)				\
-	$(GTK_CFLAGS)
+	$(GTK_CFLAGS)				\
+	-DCUT_LOG_DOMAIN=\""cutter-ui-gtk"\"
 gtk_la_SOURCES = \
 	cut-gtk-ui.c
 gtk_la_LIBADD = $(GTK_LIBS) $(LIBS)
