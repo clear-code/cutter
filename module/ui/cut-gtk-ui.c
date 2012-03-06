@@ -296,11 +296,12 @@ show_uri_fallback (const gchar *uri)
                   &error);
     g_ptr_array_unref(args);
 
-    if (error) {
-        cut_log_warning("[ui][gtk] failed to show URI (fallback): <%s>: %s",
-                        uri, error->message);
-        g_error_free(error);
-    }
+    if (!error)
+        return;
+
+    cut_log_warning("[ui][gtk] failed to show URI (fallback): <%s>: %s",
+                    uri, error->message);
+    g_error_free(error);
 }
 
 static void
