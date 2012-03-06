@@ -553,6 +553,44 @@ AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE], ["$GETTEXT_PACKAGE"], [Gettext package])
 
 dnl **************************************************************
+dnl Check for fallback browser.
+dnl **************************************************************
+
+AC_ARG_WITH([fallback-browser],
+            AS_HELP_STRING([--with-fallback-browser=BROWSER],
+                           [Use BRWOSER for fallback browser to show URL
+                            (default: auto)]),
+            [FALLBACK_BROWSER="$withval"],
+            [FALLBACK_BROWSER="yes"])
+
+if test x"$FALLBACK_BROWSER" = x"no"; then
+  FALLBACK_BROWSER=
+elif test x"$FALLBACK_BROWSER" = x"yes"; then
+  if test "$os_win32" = "yes"; then
+    FALLBACK_BROWSER="explorer"
+  else
+    AC_PATH_PROGS(FALLBACK_BROWSER,
+                  [xdg-open www-browser firefox iceweasel chrome chromium],
+                  [])
+  fi
+else
+  if test "$cross_compiling" = "yes"; then
+    ac_cv_fallback_browser_available="yes"
+  else
+    AC_CHECK_FILE([$FALLBACK_BROWSER],
+                  [],
+                  [AC_MSG_WARN([$FALLBACK_BROWSER is not found.])
+                   FALLBACK_BROWSER=])
+  fi
+fi
+AC_SUBST(FALLBACK_BROWSER)
+
+if test x"$FALLBACK_BROWSER" != x""; then
+  AC_DEFINE_UNQUOTED(CUT_FALLBACK_BROWSER, "$FALLBACK_BROWSER",
+                     [Fallback browser])
+fi
+
+dnl **************************************************************
 dnl Check for SF.net.
 dnl **************************************************************
 

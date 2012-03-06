@@ -283,11 +283,12 @@ cb_run_all_tests (GtkWidget *widget, gpointer data)
 static void
 show_uri_fallback (const gchar *uri)
 {
+#ifdef CUT_FALLBACK_BROWSER
     GError *error = NULL;
     GPtrArray *args;
 
     args = g_ptr_array_new();
-    g_ptr_array_add(args, "chrome");
+    g_ptr_array_add(args, CUT_FALLBACK_BROWSER);
     g_ptr_array_add(args, (gchar *)uri);
     g_ptr_array_add(args, NULL);
 
@@ -302,6 +303,7 @@ show_uri_fallback (const gchar *uri)
     cut_log_warning("[ui][gtk] failed to show URI (fallback): <%s>: %s",
                     uri, error->message);
     g_error_free(error);
+#endif
 }
 
 static void
