@@ -374,7 +374,7 @@ load_ui_file (GtkUIManager *ui_manager)
 #endif
     }
 
-    ui_file = g_build_filename(ui_data_dir, "cut-gtk-ui.ui", NULL);
+    ui_file = g_build_filename(ui_data_dir, "gtk-menu.ui", NULL);
     gtk_ui_manager_add_ui_from_file(ui_manager, ui_file, NULL);
     g_free(ui_file);
 }
