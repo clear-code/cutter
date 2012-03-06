@@ -601,8 +601,8 @@ CUTTER_CFLAGS="$GLIB_CFLAGS "
 if test "$enable_deprecated_glib_api" != "yes"; then
   CUTTER_CFLAGS="$CUTTER_CFLAGS -DG_DISABLE_DEPRECATED"
 fi
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS $GIO_CFLAGS"
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULEDIR=\\\"\"\$(report_factory_moduledir)\"\\\""
