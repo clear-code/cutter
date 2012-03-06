@@ -281,11 +281,26 @@ cb_run_all_tests (GtkWidget *widget, gpointer data)
 #define CUT_REFERENCE_JA "http://cutter.sourceforge.net/reference/ja/"
 
 static void
+show_uri_fallback (const gchar *uri)
+{
+    GError *error = NULL;
+    GPtrArray *args;
+
+    args = g_ptr_array_new();
+    g_ptr_array_add(args, "chrome");
+    g_ptr_array_add(args, (gchar *)uri);
+    g_ptr_array_add(args, NULL);
+
+    g_spawn_async(NULL, (gchar **)args->pdata, NULL,
+                  G_SPAWN_SEARCH_PATH, NULL, NULL, NULL,
+                  &error);
+}
+
+static void
 show_uri (const gchar *uri)
 {
     GError *error = NULL;
     gboolean success;
-    GPtrArray *args;
 
     success = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
     if (success)
@@ -294,16 +309,8 @@ show_uri (const gchar *uri)
     cut_log_warning("[ui][gtk] failed to show URI: <%s>: %s",
                     uri, error->message);
     g_error_free(error);
-    error = NULL;
 
-    /* fallback */
-    args = g_ptr_array_new();
-    g_ptr_array_add(args, "chrome");
-    g_ptr_array_add(args, (gchar *)uri);
-    g_ptr_array_add(args, NULL);
-
-    g_spawn_async(NULL, (gchar **)args->pdata, NULL,
-                  G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
+    show_uri_fallback(uri);
 }
 
 static void
