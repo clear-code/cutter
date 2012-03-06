@@ -18,11 +18,9 @@ LIBS =					\
 ui_module_LTLIBRARIES = console.la
 ui_factory_module_LTLIBRARIES = console_factory.la
 
-console_la_CPPFLAGS =
 console_la_SOURCES = \
 	cut-console-ui.c
 
-console_factory_la_CPPFLAGS =
 console_factory_la_SOURCES = \
 	cut-console-ui-factory.c
 
@@ -30,13 +28,15 @@ if HAVE_GTK
 ui_module_LTLIBRARIES += gtk.la
 ui_factory_module_LTLIBRARIES += gtk_factory.la
 
-gtk_la_CPPFLAGS = \
+gtk_la_CFLAGS =					\
+	$(AM_CFLAGS)				\
 	$(GTK_CFLAGS)
 gtk_la_SOURCES = \
 	cut-gtk-ui.c
 gtk_la_LIBADD = $(GTK_LIBS) $(LIBS)
 
-gtk_factory_la_CPPFLAGS =			\
+gtk_factory_la_CFLAGS =				\
+	$(AM_CFLAGS)				\
 	$(GTK_CFLAGS)
 gtk_factory_la_SOURCES = \
 	cut-gtk-ui-factory.c
