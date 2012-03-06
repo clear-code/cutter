@@ -294,7 +294,7 @@ ui_moduledir="\${moduledir}/ui"
 AC_SUBST(ui_moduledir)
 
 dnl **************************************************************
-dnl Configure for ui factory modules.
+dnl Configure for UI factory modules.
 dnl **************************************************************
 
 ui_factory_moduledir="\${factory_moduledir}/ui"
