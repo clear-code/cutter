@@ -283,10 +283,10 @@ static void
 show_uri (const gchar *uri)
 {
     GError *error = NULL;
-    gboolean status;
+    gboolean success;
 
-    status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
-    if (status != TRUE) {
+    success = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
+    if (success != TRUE) {
         /* fallback */
         GPtrArray *args = g_ptr_array_new();
         g_ptr_array_add(args, "chrome");
