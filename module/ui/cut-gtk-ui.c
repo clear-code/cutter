@@ -308,10 +308,9 @@ static void
 show_uri (const gchar *uri)
 {
     GError *error = NULL;
-    gboolean success;
 
-    success = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
-    if (success)
+    gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
+    if (!error)
         return;
 
     cut_log_warning("[ui][gtk] failed to show URI: <%s>: %s",
