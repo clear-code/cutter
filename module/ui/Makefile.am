@@ -31,7 +31,7 @@ ui_module_LTLIBRARIES += gtk.la
 ui_factory_module_LTLIBRARIES += gtk_factory.la
 
 gtk_la_CPPFLAGS = \
-		$(GTK_CFLAGS)
+	$(GTK_CFLAGS)
 gtk_la_SOURCES = \
 	cut-gtk-ui.c
 gtk_la_LIBADD = $(GTK_LIBS) $(LIBS)
