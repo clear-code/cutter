@@ -377,6 +377,7 @@ setup_menu_bar (GtkBox *box, CutGtkUI *ui)
 
     ui_manager = gtk_ui_manager_new();
     gtk_ui_manager_insert_action_group(ui_manager, action_group, 0);
+    g_object_unref(action_group);
 
     load_ui_file(ui_manager);
 
@@ -389,6 +390,7 @@ setup_menu_bar (GtkBox *box, CutGtkUI *ui)
     if (menubar) {
         gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
     }
+    g_object_unref(ui_manager);
 }
 
 static void
