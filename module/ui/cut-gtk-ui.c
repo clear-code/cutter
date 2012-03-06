@@ -282,12 +282,13 @@ cb_run_all_tests (GtkWidget *widget, gpointer data)
 static void
 cb_open_uri (GtkWidget *widget, gpointer data)
 {
+    GtkAction *action;
+    const gchar *name;
+    const gchar *uri = NULL;
     GError *error = NULL;
 
-    GtkAction *action = GTK_ACTION(widget);
-
-    const gchar *uri = NULL;
-    const gchar *name = gtk_action_get_name(GTK_ACTION(action));
+    action = GTK_ACTION(widget);
+    name = gtk_action_get_name(action);
     if (strcmp(name, "WebsiteEn") == 0) {
         uri = CUT_WEBSITE_EN;
     } else if (strcmp(name, "WebsiteJa") == 0) {
