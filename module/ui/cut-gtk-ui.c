@@ -295,6 +295,10 @@ show_uri_fallback (const gchar *uri)
                   G_SPAWN_SEARCH_PATH, NULL, NULL, NULL,
                   &error);
     g_ptr_array_unref(args);
+
+    if (error) {
+        g_error_free(error);
+    }
 }
 
 static void
