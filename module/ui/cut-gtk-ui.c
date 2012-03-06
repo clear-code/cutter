@@ -323,7 +323,7 @@ cb_help_uri(GtkWidget *widget, gpointer data)
             g_ptr_array_add(args, uri);
             g_ptr_array_add(args, NULL);
 
-            g_spawn_async(NULL, (gchar**)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
+            g_spawn_async(NULL, (gchar **)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
         }
     }
 }
@@ -364,7 +364,7 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
     GtkActionGroup *action_group = gtk_action_group_new("cutmenubar");
     gint i = 0;
     for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
-        gtk_action_group_add_actions(action_group, (GtkActionEntry*)&(menu_entries[i].entry), 1, ui);
+        gtk_action_group_add_actions(action_group, (GtkActionEntry *)&(menu_entries[i].entry), 1, ui);
     }
 
     GtkUIManager *uimanager = gtk_ui_manager_new();
