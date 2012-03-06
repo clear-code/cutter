@@ -302,7 +302,7 @@ cb_open_uri (GtkWidget *widget, gpointer data)
         uri = CUT_REFERENCE_JA;
     }
 
-    if (uri != NULL) {
+    if (uri) {
         gboolean status;
         status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
         if (status != TRUE) {
