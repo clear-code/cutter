@@ -255,14 +255,6 @@ cb_cancel_or_restart (GtkToolButton *button, gpointer data)
     }
 }
 
-typedef struct _CutActionEntry CutActionEntry;
-struct _CutActionEntry {
-    GtkUIManagerItemType type;
-    gboolean is_active;
-    gint value;
-    GtkActionEntry entry;
-};
-
 static void
 cb_file_quit (GtkWidget *widget, gpointer data)
 {
@@ -326,44 +318,29 @@ cb_help_uri (GtkWidget *widget, gpointer data)
     }
 }
 
-static CutActionEntry menu_entries[] = {
-    /* type, is_active, value,
-       {name, stock_id,label, accelerator, tooltip, callback} */
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"FileMenu", NULL, N_("_File"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_file_quit)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"TestMenu", NULL, N_("_Test"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"RunTestAll", GTK_STOCK_REDO, N_("_RunTestAll"), NULL, "",
-      G_CALLBACK(cb_test_runtestall)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"Website", NULL, N_("_Website"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"WebsiteEn", NULL, N_("_Website English"), NULL, "",
-      G_CALLBACK(cb_help_uri)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"WebsiteJa", NULL, N_("_Website Japanese"), NULL, "",
-      G_CALLBACK(cb_help_uri)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"Tutorial", NULL, N_("_Tutorial"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"TutorialEn", NULL, N_("_Tutorial English"), NULL, "",
-      G_CALLBACK(cb_help_uri)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"TutorialJa", NULL, N_("_Tutorial Japanese"), NULL, "",
-      G_CALLBACK(cb_help_uri)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"Reference", NULL, N_("_Reference"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"ReferenceEn", NULL, N_("_Reference English"), NULL, "",
-      G_CALLBACK(cb_help_uri)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"ReferenceJa", NULL, N_("_Reference Japanese"), NULL, "",
-      G_CALLBACK(cb_help_uri)}},
+static GtkActionEntry menu_entries[] = {
+    /* name, stock_id,label, accelerator, tooltip, callback */
+    {"FileMenu", NULL, N_("_File"), NULL, "", NULL},
+    {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_file_quit)},
+    {"TestMenu", NULL, N_("_Test"), NULL, "", NULL},
+    {"RunTestAll", GTK_STOCK_REDO, N_("_RunTestAll"), NULL, "",
+      G_CALLBACK(cb_test_runtestall)},
+    {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL},
+    {"Website", NULL, N_("_Website"), NULL, "", NULL},
+    {"WebsiteEn", NULL, N_("_Website English"), NULL, "",
+     G_CALLBACK(cb_help_uri)},
+    {"WebsiteJa", NULL, N_("_Website Japanese"), NULL, "",
+     G_CALLBACK(cb_help_uri)},
+    {"Tutorial", NULL, N_("_Tutorial"), NULL, "", NULL},
+    {"TutorialEn", NULL, N_("_Tutorial English"), NULL, "",
+     G_CALLBACK(cb_help_uri)},
+    {"TutorialJa", NULL, N_("_Tutorial Japanese"), NULL, "",
+     G_CALLBACK(cb_help_uri)},
+    {"Reference", NULL, N_("_Reference"), NULL, "", NULL},
+    {"ReferenceEn", NULL, N_("_Reference English"), NULL, "",
+     G_CALLBACK(cb_help_uri)},
+    {"ReferenceJa", NULL, N_("_Reference Japanese"), NULL, "",
+     G_CALLBACK(cb_help_uri)}
 };
 
 
@@ -395,10 +372,7 @@ setup_menu_bar (GtkBox *box, CutGtkUI *ui)
     GtkUIManager *uimanager;
     GtkWidget *menubar;
     for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
-        gtk_action_group_add_actions(action_group,
-                                     (GtkActionEntry *)&(menu_entries[i].entry),
-                                     1,
-                                     ui);
+        gtk_action_group_add_actions(action_group, &(menu_entries[i]), 1, ui);
     }
 
     uimanager = gtk_ui_manager_new();
