@@ -391,7 +391,7 @@ setup_menu_bar (GtkBox *box, CutGtkUI *ui)
     gtk_window_add_accel_group(GTK_WINDOW(ui->window),
                                gtk_ui_manager_get_accel_group(ui_manager));
 
-    menubar = gtk_ui_manager_get_widget(ui_manager, "/mainwindow");
+    menubar = gtk_ui_manager_get_widget(ui_manager, "/menu-bar");
     if (menubar) {
         gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
     }

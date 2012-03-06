@@ -1,5 +1,5 @@
 <ui>
-  <menubar name="mainwindow">
+  <menubar name="menu-bar">
     <menu name="FileMenu" action="FileMenu">
       <menuitem name="Quit" action="Quit"/>
     </menu>
