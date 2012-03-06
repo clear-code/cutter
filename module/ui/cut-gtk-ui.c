@@ -286,7 +286,7 @@ cb_open_uri (GtkWidget *widget, gpointer data)
 
     GtkAction *action = GTK_ACTION(widget);
 
-    gchar *uri = NULL;
+    const gchar *uri = NULL;
     const gchar *name = gtk_action_get_name(GTK_ACTION(action));
     if (strcmp(name, "WebsiteEn") == 0) {
         uri = CUT_WEBSITE_EN;
@@ -309,7 +309,7 @@ cb_open_uri (GtkWidget *widget, gpointer data)
             /* fallback */
             GPtrArray *args = g_ptr_array_new();
             g_ptr_array_add(args, "chrome");
-            g_ptr_array_add(args, uri);
+            g_ptr_array_add(args, (gchar *)uri);
             g_ptr_array_add(args, NULL);
 
             g_spawn_async(NULL, (gchar **)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
