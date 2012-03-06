@@ -363,14 +363,17 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
 {
     GtkActionGroup *action_group = gtk_action_group_new("cutmenubar");
     gint i = 0;
+    GtkUIManager *uimanager;
+    gchar *cutter_path;
+    GtkWidget *menubar;
     for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
         gtk_action_group_add_actions(action_group, (GtkActionEntry *)&(menu_entries[i].entry), 1, ui);
     }
 
-    GtkUIManager *uimanager = gtk_ui_manager_new();
+    uimanager = gtk_ui_manager_new();
     gtk_ui_manager_insert_action_group(uimanager, action_group, 0);
 
-    gchar *cutter_path = g_find_program_in_path("cutter");
+    cutter_path = g_find_program_in_path("cutter");
     if (cutter_path != NULL) {
         gchar *root_path = g_path_get_dirname(cutter_path);
         /* expect that .ui file is placed at ../share/cutter/cut-gtk-ui.ui */
@@ -383,7 +386,7 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
 
     gtk_window_add_accel_group(GTK_WINDOW(ui->window), gtk_ui_manager_get_accel_group(uimanager));
 
-    GtkWidget *menubar = gtk_ui_manager_get_widget(GTK_UI_MANAGER(uimanager), "/mainwindow");
+    menubar = gtk_ui_manager_get_widget(GTK_UI_MANAGER(uimanager), "/mainwindow");
 
     if (menubar) {
         gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
