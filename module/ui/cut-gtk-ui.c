@@ -320,9 +320,10 @@ cb_show_uri (GtkWidget *widget, gpointer data)
         uri = CUT_REFERENCE_JA;
     }
 
-    if (uri) {
-        show_uri(uri);
-    }
+    if (!uri)
+        return;
+
+    show_uri(uri);
 }
 
 static GtkActionEntry menu_entries[] = {
