@@ -4,7 +4,7 @@
       <menuitem name="Quit" action="Quit"/>
     </menu>
     <menu name="TestMenu" action="TestMenu">
-      <menuitem name="RunTestAll" action="RunTestAll"/>
+      <menuitem name="RunAllTests" action="RunAllTests"/>
     </menu>
     <menu name="HelpMenu" action="HelpMenu">
       <menu name="Website" action="Website">

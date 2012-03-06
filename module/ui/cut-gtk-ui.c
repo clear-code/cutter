@@ -264,7 +264,7 @@ cb_quit (GtkWidget *widget, gpointer data)
 }
 
 static void
-cb_runtestall (GtkWidget *widget, gpointer data)
+cb_run_all_tests (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
 
@@ -322,8 +322,8 @@ static GtkActionEntry menu_entries[] = {
     {"FileMenu", NULL, N_("_File"), NULL, "", NULL},
     {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_quit)},
     {"TestMenu", NULL, N_("_Test"), NULL, "", NULL},
-    {"RunTestAll", GTK_STOCK_REDO, N_("_RunTestAll"), NULL, "",
-      G_CALLBACK(cb_runtestall)},
+    {"RunAllTests", GTK_STOCK_REDO, N_("_Run all tests"), NULL, "",
+      G_CALLBACK(cb_run_all_tests)},
     {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL},
     {"Website", NULL, N_("_Website"), NULL, "", NULL},
     {"WebsiteEn", NULL, N_("_Website English"), NULL, "",
