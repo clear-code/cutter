@@ -267,7 +267,7 @@ static void
 cb_file_quit (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
-    
+
     if (ui != NULL) {
         ui->window = NULL;
         gtk_main_quit();
@@ -278,7 +278,7 @@ static void
 cb_test_runtestall (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
-    
+
     if (ui != NULL) {
         cb_cancel_or_restart(GTK_TOOL_BUTTON(ui->cancel_or_restart_button), (gpointer)ui);
     }
@@ -313,7 +313,7 @@ cb_help_uri(GtkWidget *widget, gpointer data)
     } else if (strcmp(name, "ReferenceJa") == 0) {
         uri = CUT_REFERENCE_JA;
     }
-    
+
     if (uri != NULL) {
         gboolean status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
         if (status != TRUE) {
@@ -322,7 +322,7 @@ cb_help_uri(GtkWidget *widget, gpointer data)
             g_ptr_array_add(args, "chrome");
             g_ptr_array_add(args, uri);
             g_ptr_array_add(args, NULL);
-    
+
             g_spawn_async(NULL, (gchar**)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
         }
     }
@@ -366,7 +366,7 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
     for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
         gtk_action_group_add_actions(action_group, (GtkActionEntry*)&(menu_entries[i].entry), 1, ui);
     }
-    
+
     GtkUIManager *uimanager = gtk_ui_manager_new();
     gtk_ui_manager_insert_action_group(uimanager, action_group, 0);
 
@@ -376,7 +376,7 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
         /* expect that .ui file is placed at ../share/cutter/cut-gtk-ui.ui */
         gchar *ui_path = g_build_path(G_DIR_SEPARATOR_S, root_path, "..", "share", "cutter", "cut-gtk-ui.ui", NULL);
         gtk_ui_manager_add_ui_from_file(uimanager, ui_path, NULL);
-        
+
         g_free(cutter_path);
         g_free(ui_path);
     }
@@ -384,7 +384,7 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
     gtk_window_add_accel_group(GTK_WINDOW(ui->window), gtk_ui_manager_get_accel_group(uimanager));
 
     GtkWidget *menubar = gtk_ui_manager_get_widget(GTK_UI_MANAGER(uimanager), "/mainwindow");
-    
+
     if (menubar) {
         gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
     }
