@@ -343,6 +343,21 @@ static GtkActionEntry menu_entries[] = {
      G_CALLBACK(cb_help_uri)}
 };
 
+static void
+load_actions (CutGtkUI *ui, GtkUIManager *ui_manager)
+{
+    GtkActionGroup *action_group;
+    gint i;
+
+    action_group = gtk_action_group_new("cutmenubar");
+
+    for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
+        gtk_action_group_add_actions(action_group, &(menu_entries[i]), 1, ui);
+    }
+    gtk_ui_manager_insert_action_group(ui_manager, action_group, 0);
+
+    g_object_unref(action_group);
+}
 
 static void
 load_ui_file (GtkUIManager *ui_manager)
@@ -367,18 +382,11 @@ load_ui_file (GtkUIManager *ui_manager)
 static void
 setup_menu_bar (GtkBox *box, CutGtkUI *ui)
 {
-    GtkActionGroup *action_group = gtk_action_group_new("cutmenubar");
-    gint i = 0;
     GtkUIManager *ui_manager;
     GtkWidget *menubar;
-    for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
-        gtk_action_group_add_actions(action_group, &(menu_entries[i]), 1, ui);
-    }
 
     ui_manager = gtk_ui_manager_new();
-    gtk_ui_manager_insert_action_group(ui_manager, action_group, 0);
-    g_object_unref(action_group);
-
+    load_actions(ui, ui_manager);
     load_ui_file(ui_manager);
 
     gtk_window_add_accel_group(GTK_WINDOW(ui->window),
@@ -386,7 +394,6 @@ setup_menu_bar (GtkBox *box, CutGtkUI *ui)
 
     menubar = gtk_ui_manager_get_widget(GTK_UI_MANAGER(ui_manager),
                                         "/mainwindow");
-
     if (menubar) {
         gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
     }
