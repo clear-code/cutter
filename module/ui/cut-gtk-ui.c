@@ -284,17 +284,20 @@ show_uri (const gchar *uri)
 {
     GError *error = NULL;
     gboolean success;
+    GPtrArray *args;
 
     success = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
-    if (!success) {
-        /* fallback */
-        GPtrArray *args = g_ptr_array_new();
-        g_ptr_array_add(args, "chrome");
-        g_ptr_array_add(args, (gchar *)uri);
-        g_ptr_array_add(args, NULL);
+    if (!success)
+        return;
 
-        g_spawn_async(NULL, (gchar **)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
-    }
+    /* fallback */
+    args = g_ptr_array_new();
+    g_ptr_array_add(args, "chrome");
+    g_ptr_array_add(args, (gchar *)uri);
+    g_ptr_array_add(args, NULL);
+
+    g_spawn_async(NULL, (gchar **)args->pdata, NULL,
+                  G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
 }
 
 static void
