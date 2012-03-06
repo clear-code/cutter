@@ -256,7 +256,7 @@ cb_cancel_or_restart (GtkToolButton *button, gpointer data)
 }
 
 static void
-cb_file_quit (GtkWidget *widget, gpointer data)
+cb_quit (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
 
@@ -321,7 +321,7 @@ cb_open_uri (GtkWidget *widget, gpointer data)
 static GtkActionEntry menu_entries[] = {
     /* name, stock_id,label, accelerator, tooltip, callback */
     {"FileMenu", NULL, N_("_File"), NULL, "", NULL},
-    {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_file_quit)},
+    {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_quit)},
     {"TestMenu", NULL, N_("_Test"), NULL, "", NULL},
     {"RunTestAll", GTK_STOCK_REDO, N_("_RunTestAll"), NULL, "",
       G_CALLBACK(cb_test_runtestall)},
