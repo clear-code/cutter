@@ -115,7 +115,7 @@ cut_report_factory_builder_init (CutReportFactoryBuilder *builder)
                 cut_win32_build_factory_module_dir_name("report");
         dir = win32_report_factory_module_dir;
 #else
-        dir = REPORT_FACTORY_MODULEDIR;
+        dir = REPORT_FACTORY_MODULE_DIR;
 #endif
     }
 

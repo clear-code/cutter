@@ -38,7 +38,7 @@ G_BEGIN_DECLS
 #else
 #  define CUT_DEFINE_ADDITIONAL_LISTENER_VARIABLES(name)
 #  define CUT_LISTENER_RETURN_DEFAULT_MODULE_DIR(name, NAME)    \
-    return NAME ## _MODULEDIR
+    return NAME ## _MODULE_DIR
 #endif
 
 

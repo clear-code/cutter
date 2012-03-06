@@ -609,14 +609,14 @@ if test "$enable_deprecated_glib_api" != "yes"; then
   CUTTER_CFLAGS="$CUTTER_CFLAGS -DG_DISABLE_DEPRECATED"
 fi
 CUTTER_CFLAGS="$CUTTER_CFLAGS $GIO_CFLAGS"
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_MODULE_DIR=\\\"\"\$(ui_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULE_DIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_DATA_DIR=\\\"\"\$(ui_datadir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULEDIR=\\\"\"\$(report_factory_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULEDIR=\\\"\"\$(stream_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULEDIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULEDIR=\\\"\"\$(factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULE_DIR=\\\"\"\$(report_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULE_DIR=\\\"\"\$(report_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULE_DIR=\\\"\"\$(stream_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULE_DIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULE_DIR=\\\"\"\$(factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DICONS_DIR=\\\"\"\$(iconsdir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
 

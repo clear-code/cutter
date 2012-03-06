@@ -96,7 +96,7 @@ cut_ui_factory_builder_init (CutUIFactoryBuilder *builder)
                 cut_win32_build_factory_module_dir_name("ui");
         dir = win32_ui_factory_module_dir;
 #else
-        dir = UI_FACTORY_MODULEDIR;
+        dir = UI_FACTORY_MODULE_DIR;
 #endif
     }
 

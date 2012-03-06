@@ -114,7 +114,7 @@ cut_stream_factory_builder_init (CutStreamFactoryBuilder *builder)
                 cut_win32_build_factory_module_dir_name("stream");
         dir = win32_stream_factory_module_dir;
 #else
-        dir = STREAM_FACTORY_MODULEDIR;
+        dir = STREAM_FACTORY_MODULE_DIR;
 #endif
     }
 

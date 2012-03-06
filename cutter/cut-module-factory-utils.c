@@ -95,7 +95,7 @@ _cut_module_factory_module_dir (void)
             cut_win32_build_factory_module_dir_name(NULL);
     return win32_factory_module_dir;
 #else
-    return FACTORY_MODULEDIR;
+    return FACTORY_MODULE_DIR;
 #endif
 }
 
