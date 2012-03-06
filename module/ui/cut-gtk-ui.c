@@ -289,7 +289,7 @@ cb_test_runtestall (GtkWidget *widget, gpointer data)
 #define CUT_REFERENCE_JA "http://cutter.sourceforge.net/reference/ja/"
 
 static void
-cb_help_uri(GtkWidget *widget, gpointer data)
+cb_help_uri (GtkWidget *widget, gpointer data)
 {
     GError *error = NULL;
 
@@ -388,7 +388,7 @@ load_ui_file (GtkUIManager *ui_manager)
 }
 
 static void
-setup_menu_bar(GtkBox *box, CutGtkUI *ui)
+setup_menu_bar (GtkBox *box, CutGtkUI *ui)
 {
     GtkActionGroup *action_group = gtk_action_group_new("cutmenubar");
     gint i = 0;
