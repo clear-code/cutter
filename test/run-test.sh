@@ -40,6 +40,7 @@ fi
 CUT_ICONS_DIR=$(cd $top_dir/data/icons; pwd)
 CUT_UI_MODULE_DIR=$top_dir/module/ui/.libs
 CUT_UI_FACTORY_MODULE_DIR=$top_dir/module/ui/.libs
+CUT_UI_DATA_DIR=$(cd $top_dir/module/ui; pwd)
 CUT_REPORT_MODULE_DIR=$top_dir/module/report/.libs
 CUT_REPORT_FACTORY_MODULE_DIR=$top_dir/module/report/.libs
 CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
@@ -49,6 +50,7 @@ export CUTTER
 export CUT_ICONS_DIR
 export CUT_UI_MODULE_DIR
 export CUT_UI_FACTORY_MODULE_DIR
+export CUT_UI_DATA_DIR
 export CUT_REPORT_MODULE_DIR
 export CUT_REPORT_FACTORY_MODULE_DIR
 export CUT_STREAM_MODULE_DIR

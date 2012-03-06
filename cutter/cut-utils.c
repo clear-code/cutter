@@ -1001,6 +1001,19 @@ cut_win32_icons_dir (void)
     return win32_icons_dir;
 }
 
+static gchar *win32_ui_data_dir = NULL;
+
+const gchar *
+cut_win32_ui_data_dir (void)
+{
+    if (win32_ui_data_dir)
+        return win32_ui_data_dir;
+
+    win32_ui_data_dir = g_build_filename(cut_win32_base_path(), "share", PACKAGE,
+                                         "ui", NULL);
+    return win32_ui_data_dir;
+}
+
 gchar *
 cut_win32_build_module_dir_name (const gchar *type)
 {

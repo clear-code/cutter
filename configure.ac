@@ -301,6 +301,13 @@ ui_factory_moduledir="\${factory_moduledir}/ui"
 AC_SUBST(ui_factory_moduledir)
 
 dnl **************************************************************
+dnl Configure for UI data.
+dnl **************************************************************
+
+ui_datadir="\${pkgdatadir}/ui"
+AC_SUBST(ui_datadir)
+
+dnl **************************************************************
 dnl Configure for Report modules.
 dnl **************************************************************
 
@@ -604,12 +611,13 @@ fi
 CUTTER_CFLAGS="$CUTTER_CFLAGS $GIO_CFLAGS"
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_MODULEDIR=\\\"\"\$(ui_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_FACTORY_MODULEDIR=\\\"\"\$(ui_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DUI_DATA_DIR=\\\"\"\$(ui_datadir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULEDIR=\\\"\"\$(report_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULEDIR=\\\"\"\$(report_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULEDIR=\\\"\"\$(stream_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULEDIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULEDIR=\\\"\"\$(factory_moduledir)\"\\\""
-CUTTER_CFLAGS="$CUTTER_CFLAGS -DICONSDIR=\\\"\"\$(iconsdir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DICONS_DIR=\\\"\"\$(iconsdir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
 
 dnl **************************************************************

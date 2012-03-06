@@ -4,7 +4,7 @@ INCLUDES =			\
 
 AM_CFLAGS =					\
 	$(GLIB_CFLAGS)				\
-	-DICONS_DIR="\"$(icons_dir)\""		\
+	$(CUTTER_CFLAGS)			\
 	$(COVERAGE_CFLAGS)
 
 AM_LDFLAGS =							\
@@ -41,4 +41,6 @@ gtk_factory_la_CPPFLAGS =			\
 gtk_factory_la_SOURCES = \
 	cut-gtk-ui-factory.c
 gtk_factory_la_LIBADD = $(GTK_LIBS) $(LIBS)
+
+ui_data_DATA = cut-gtk-ui.ui
 endif

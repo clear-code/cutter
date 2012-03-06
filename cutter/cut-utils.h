@@ -88,6 +88,7 @@ gint         cut_utils_compare_direct        (gconstpointer data1,
 #ifdef G_OS_WIN32
 const gchar *cut_win32_base_path                     (void);
 const gchar *cut_win32_icons_dir                     (void);
+const gchar *cut_win32_ui_data_dir                   (void);
 gchar       *cut_win32_build_module_dir_name         (const gchar *type);
 gchar       *cut_win32_build_factory_module_dir_name (const gchar *type);
 gboolean     cut_win32_kill_process                  (GPid pid,
