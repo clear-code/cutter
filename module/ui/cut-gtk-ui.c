@@ -348,7 +348,7 @@ load_actions (CutGtkUI *ui, GtkUIManager *ui_manager)
     GtkActionGroup *action_group;
     gint i;
 
-    action_group = gtk_action_group_new("cutmenubar");
+    action_group = gtk_action_group_new("MenuActions");
 
     for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
         gtk_action_group_add_actions(action_group, &(menu_entries[i]), 1, ui);
