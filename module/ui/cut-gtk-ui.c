@@ -280,12 +280,29 @@ cb_run_all_tests (GtkWidget *widget, gpointer data)
 #define CUT_REFERENCE_JA "http://cutter.sourceforge.net/reference/ja/"
 
 static void
+show_uri (const gchar *uri)
+{
+    GError *error = NULL;
+    gboolean status;
+
+    status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
+    if (status != TRUE) {
+        /* fallback */
+        GPtrArray *args = g_ptr_array_new();
+        g_ptr_array_add(args, "chrome");
+        g_ptr_array_add(args, (gchar *)uri);
+        g_ptr_array_add(args, NULL);
+
+        g_spawn_async(NULL, (gchar **)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
+    }
+}
+
+static void
 cb_show_uri (GtkWidget *widget, gpointer data)
 {
     GtkAction *action;
     const gchar *name;
     const gchar *uri = NULL;
-    GError *error = NULL;
 
     action = GTK_ACTION(widget);
     name = gtk_action_get_name(action);
@@ -304,17 +321,7 @@ cb_show_uri (GtkWidget *widget, gpointer data)
     }
 
     if (uri) {
-        gboolean status;
-        status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
-        if (status != TRUE) {
-            /* fallback */
-            GPtrArray *args = g_ptr_array_new();
-            g_ptr_array_add(args, "chrome");
-            g_ptr_array_add(args, (gchar *)uri);
-            g_ptr_array_add(args, NULL);
-
-            g_spawn_async(NULL, (gchar **)args->pdata, NULL, G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &error);
-        }
+        show_uri(uri);
     }
 }
 
