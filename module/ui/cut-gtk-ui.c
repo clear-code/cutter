@@ -286,7 +286,7 @@ show_uri (const gchar *uri)
     gboolean success;
 
     success = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
-    if (success != TRUE) {
+    if (!success) {
         /* fallback */
         GPtrArray *args = g_ptr_array_new();
         g_ptr_array_add(args, "chrome");
