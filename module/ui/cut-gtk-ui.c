@@ -290,6 +290,9 @@ show_uri (const gchar *uri)
     if (success)
         return;
 
+    g_error_free(error);
+    error = NULL;
+
     /* fallback */
     args = g_ptr_array_new();
     g_ptr_array_add(args, "chrome");
