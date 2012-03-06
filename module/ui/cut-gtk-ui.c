@@ -294,6 +294,7 @@ show_uri_fallback (const gchar *uri)
     g_spawn_async(NULL, (gchar **)args->pdata, NULL,
                   G_SPAWN_SEARCH_PATH, NULL, NULL, NULL,
                   &error);
+    g_ptr_array_unref(args);
 }
 
 static void
