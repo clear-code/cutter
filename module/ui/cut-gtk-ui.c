@@ -287,7 +287,7 @@ show_uri (const gchar *uri)
     GPtrArray *args;
 
     success = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
-    if (!success)
+    if (success)
         return;
 
     /* fallback */
