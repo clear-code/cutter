@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -277,7 +277,8 @@ cb_test_runtestall (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
 
-    cb_cancel_or_restart(GTK_TOOL_BUTTON(ui->cancel_or_restart_button), (gpointer)ui);
+    cb_cancel_or_restart(GTK_TOOL_BUTTON(ui->cancel_or_restart_button),
+                         (gpointer)ui);
 }
 
 #define CUT_WEBSITE_EN "http://cutter.sourceforge.net/"
@@ -311,7 +312,8 @@ cb_help_uri(GtkWidget *widget, gpointer data)
     }
 
     if (uri != NULL) {
-        gboolean status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
+        gboolean status;
+        status = gtk_show_uri(NULL, uri, gtk_get_current_event_time(), &error);
         if (status != TRUE) {
             /* fallback */
             GPtrArray *args = g_ptr_array_new();
@@ -325,30 +327,43 @@ cb_help_uri(GtkWidget *widget, gpointer data)
 }
 
 static CutActionEntry menu_entries[] = {
-    /* type, is_active, value, {name, stock_id,label, accelerator, tooltip, callback} */
-    {GTK_UI_MANAGER_AUTO, 0, 0, {"FileMenu", NULL, N_("_File"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0, {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_file_quit)}},
-
-    {GTK_UI_MANAGER_AUTO, 0, 0, {"TestMenu", NULL, N_("_Test"), NULL, "", NULL}},
+    /* type, is_active, value,
+       {name, stock_id,label, accelerator, tooltip, callback} */
     {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"RunTestAll", GTK_STOCK_REDO, N_("_RunTestAll"), NULL, "", G_CALLBACK(cb_test_runtestall)}},
-
-    {GTK_UI_MANAGER_AUTO, 0, 0, {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL}},
-    {GTK_UI_MANAGER_AUTO, 0, 0, {"Website", NULL, N_("_Website"), NULL, "", NULL}},
+     {"FileMenu", NULL, N_("_File"), NULL, "", NULL}},
     {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"WebsiteEn", NULL, N_("_Website English"), NULL, "", G_CALLBACK(cb_help_uri)}},
+     {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_file_quit)}},
     {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"WebsiteJa", NULL, N_("_Website Japanese"), NULL, "", G_CALLBACK(cb_help_uri)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0, {"Tutorial", NULL, N_("_Tutorial"), NULL, "", NULL}},
+     {"TestMenu", NULL, N_("_Test"), NULL, "", NULL}},
     {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"TutorialEn", NULL, N_("_Tutorial English"), NULL, "", G_CALLBACK(cb_help_uri)}},
+     {"RunTestAll", GTK_STOCK_REDO, N_("_RunTestAll"), NULL, "",
+      G_CALLBACK(cb_test_runtestall)}},
     {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"TutorialJa", NULL, N_("_Tutorial Japanese"), NULL, "", G_CALLBACK(cb_help_uri)}},
-    {GTK_UI_MANAGER_AUTO, 0, 0, {"Reference", NULL, N_("_Reference"), NULL, "", NULL}},
+     {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL}},
     {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"ReferenceEn", NULL, N_("_Reference English"), NULL, "", G_CALLBACK(cb_help_uri)}},
+     {"Website", NULL, N_("_Website"), NULL, "", NULL}},
     {GTK_UI_MANAGER_AUTO, 0, 0,
-     {"ReferenceJa", NULL, N_("_Reference Japanese"), NULL, "", G_CALLBACK(cb_help_uri)}},
+     {"WebsiteEn", NULL, N_("_Website English"), NULL, "",
+      G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"WebsiteJa", NULL, N_("_Website Japanese"), NULL, "",
+      G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"Tutorial", NULL, N_("_Tutorial"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"TutorialEn", NULL, N_("_Tutorial English"), NULL, "",
+      G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"TutorialJa", NULL, N_("_Tutorial Japanese"), NULL, "",
+      G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"Reference", NULL, N_("_Reference"), NULL, "", NULL}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"ReferenceEn", NULL, N_("_Reference English"), NULL, "",
+      G_CALLBACK(cb_help_uri)}},
+    {GTK_UI_MANAGER_AUTO, 0, 0,
+     {"ReferenceJa", NULL, N_("_Reference Japanese"), NULL, "",
+      G_CALLBACK(cb_help_uri)}},
 };
 
 
@@ -363,7 +378,10 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
     gchar *cutter_path;
     GtkWidget *menubar;
     for (i = 0; i < G_N_ELEMENTS(menu_entries); i++) {
-        gtk_action_group_add_actions(action_group, (GtkActionEntry *)&(menu_entries[i].entry), 1, ui);
+        gtk_action_group_add_actions(action_group,
+                                     (GtkActionEntry *)&(menu_entries[i].entry),
+                                     1,
+                                     ui);
     }
 
     uimanager = gtk_ui_manager_new();
@@ -373,16 +391,24 @@ setup_menu_bar(GtkBox *box, CutGtkUI *ui)
     if (cutter_path != NULL) {
         gchar *root_path = g_path_get_dirname(cutter_path);
         /* expect that .ui file is placed at ../share/cutter/cut-gtk-ui.ui */
-        gchar *ui_path = g_build_path(G_DIR_SEPARATOR_S, root_path, "..", "share", "cutter", "cut-gtk-ui.ui", NULL);
+        gchar *ui_path = g_build_path(G_DIR_SEPARATOR_S,
+                                      root_path,
+                                      "..",
+                                      "share",
+                                      "cutter",
+                                      "cut-gtk-ui.ui",
+                                      NULL);
         gtk_ui_manager_add_ui_from_file(uimanager, ui_path, NULL);
 
         g_free(cutter_path);
         g_free(ui_path);
     }
 
-    gtk_window_add_accel_group(GTK_WINDOW(ui->window), gtk_ui_manager_get_accel_group(uimanager));
+    gtk_window_add_accel_group(GTK_WINDOW(ui->window),
+                               gtk_ui_manager_get_accel_group(uimanager));
 
-    menubar = gtk_ui_manager_get_widget(GTK_UI_MANAGER(uimanager), "/mainwindow");
+    menubar = gtk_ui_manager_get_widget(GTK_UI_MANAGER(uimanager),
+                                        "/mainwindow");
 
     if (menubar) {
         gtk_box_pack_start(GTK_BOX(box), menubar, FALSE, FALSE, 0);
