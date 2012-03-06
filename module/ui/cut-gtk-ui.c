@@ -260,8 +260,7 @@ cb_quit (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
 
-    ui->window = NULL;
-    gtk_main_quit();
+    gtk_widget_destroy(ui->window);
 }
 
 static void
