@@ -268,10 +268,8 @@ cb_file_quit (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
 
-    if (ui != NULL) {
-        ui->window = NULL;
-        gtk_main_quit();
-    }
+    ui->window = NULL;
+    gtk_main_quit();
 }
 
 static void
@@ -279,9 +277,7 @@ cb_test_runtestall (GtkWidget *widget, gpointer data)
 {
     CutGtkUI *ui = CUT_GTK_UI(data);
 
-    if (ui != NULL) {
-        cb_cancel_or_restart(GTK_TOOL_BUTTON(ui->cancel_or_restart_button), (gpointer)ui);
-    }
+    cb_cancel_or_restart(GTK_TOOL_BUTTON(ui->cancel_or_restart_button), (gpointer)ui);
 }
 
 #define CUT_WEBSITE_EN "http://cutter.sourceforge.net/"
