@@ -5,6 +5,7 @@
     </menu>
     <menu name="TestMenu" action="TestMenu">
       <menuitem name="RunAllTests" action="RunAllTests"/>
+      <menuitem name="RunTest" action="RunTest"/>
     </menu>
     <menu name="HelpMenu" action="HelpMenu">
       <menu name="Website" action="Website">

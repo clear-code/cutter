@@ -274,6 +274,11 @@ cb_run_all_tests (GtkWidget *widget, gpointer data)
                          (gpointer)ui);
 }
 
+static void
+cb_run_test (GtkWidget *widget, gpointer data)
+{
+}
+
 #define CUT_WEBSITE_EN "http://cutter.sourceforge.net/"
 #define CUT_WEBSITE_JA "http://cutter.sourceforge.net/index.html.ja"
 #define CUT_TUTORIAL_EN "http://cutter.sourceforge.net/reference/tutorial.html"
@@ -359,6 +364,8 @@ static GtkActionEntry menu_entries[] = {
     {"TestMenu", NULL, N_("_Test"), NULL, "", NULL},
     {"RunAllTests", GTK_STOCK_REDO, N_("_Run all tests"), NULL, "",
       G_CALLBACK(cb_run_all_tests)},
+    {"RunTest", GTK_STOCK_REDO, N_("_Run test"), NULL, "",
+      G_CALLBACK(cb_run_test)},
     {"HelpMenu", NULL, N_("_Help"), NULL, "", NULL},
     {"Website", NULL, N_("_Website"), NULL, "", NULL},
     {"WebsiteEn", NULL, N_("_Website English"), NULL, "",
