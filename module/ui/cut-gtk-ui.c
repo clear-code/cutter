@@ -482,7 +482,7 @@ setup_summary_label (GtkBox *box, CutGtkUI *ui)
 }
 
 static void
-setup_tree_view_columns (GtkTreeView *tree_view)
+setup_all_test_result_view_columns (GtkTreeView *tree_view)
 {
     GtkCellRenderer *renderer;
     GtkTreeViewColumn *column;
@@ -523,8 +523,8 @@ setup_tree_view_columns (GtkTreeView *tree_view)
     gtk_tree_view_append_column(tree_view, column);
 }
 
-static void
-setup_tree_view (GtkBox *box, CutGtkUI *ui)
+static GtkWidget *
+create_all_test_result_view (CutGtkUI *ui)
 {
     GtkWidget *tree_view, *scrolled_window;
     GtkTreeStore *tree_store;
@@ -533,7 +533,6 @@ setup_tree_view (GtkBox *box, CutGtkUI *ui)
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
                                    GTK_POLICY_AUTOMATIC,
                                    GTK_POLICY_AUTOMATIC);
-    gtk_box_pack_start(box, scrolled_window, TRUE, TRUE, 0);
 
     tree_store = gtk_tree_store_new(N_COLUMN,
                                     G_TYPE_STRING,
@@ -549,7 +548,35 @@ setup_tree_view (GtkBox *box, CutGtkUI *ui)
     tree_view = gtk_tree_view_new_with_model(GTK_TREE_MODEL(tree_store));
     gtk_container_add(GTK_CONTAINER(scrolled_window), tree_view);
     ui->tree_view = GTK_TREE_VIEW(tree_view);
-    setup_tree_view_columns(ui->tree_view);
+    setup_all_test_result_view_columns(ui->tree_view);
+
+    return scrolled_window;
+}
+
+static GtkWidget *
+create_partial_test_result_view (CutGtkUI *ui)
+{
+    GtkWidget *scrolled_window;
+
+    scrolled_window = gtk_scrolled_window_new(NULL, NULL);
+    return scrolled_window;
+}
+
+static void
+setup_test_result_view (GtkBox *box, CutGtkUI *ui)
+{
+    GtkWidget *hpaned;
+    GtkWidget *all_test_result_view, *partial_test_result_view;
+
+    hpaned = gtk_hpaned_new();
+
+    all_test_result_view = create_all_test_result_view(ui);
+    partial_test_result_view = create_partial_test_result_view(ui);
+
+    gtk_paned_pack1(GTK_PANED(hpaned), all_test_result_view, TRUE, TRUE);
+    gtk_paned_pack2(GTK_PANED(hpaned), partial_test_result_view, TRUE, TRUE);
+
+    gtk_box_pack_start(box, hpaned, TRUE, TRUE, 0);
 }
 
 static void
@@ -606,7 +633,7 @@ setup_window (CutGtkUI *ui)
     setup_menu_bar(GTK_BOX(vbox), ui);
     setup_top_bar(GTK_BOX(vbox), ui);
     setup_summary_label(GTK_BOX(vbox), ui);
-    setup_tree_view(GTK_BOX(vbox), ui);
+    setup_test_result_view(GTK_BOX(vbox), ui);
     setup_statusbar(GTK_BOX(vbox), ui);
 
     gtk_window_set_focus(GTK_WINDOW(window), GTK_WIDGET(ui->tree_view));
