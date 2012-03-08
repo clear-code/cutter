@@ -352,7 +352,7 @@ cb_show_uri (GtkWidget *widget, gpointer data)
 }
 
 static GtkActionEntry menu_entries[] = {
-    /* name, stock_id,label, accelerator, tooltip, callback */
+    /* name, stock_id, label, accelerator, tooltip, callback */
     {"FileMenu", NULL, N_("_File"), NULL, "", NULL},
     {"Quit", GTK_STOCK_QUIT, N_("_Quit"), NULL, "", G_CALLBACK(cb_quit)},
     {"TestMenu", NULL, N_("_Test"), NULL, "", NULL},
