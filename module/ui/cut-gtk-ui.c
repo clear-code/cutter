@@ -33,6 +33,7 @@
 #include <cutter/cut-module-impl.h>
 #include <cutter/cut-listener.h>
 #include <cutter/cut-ui.h>
+#include <cutter/cut-utils.h>
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-case.h>
