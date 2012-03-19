@@ -34,6 +34,7 @@ void test_fail_to_load (void);
 void test_load_test_iterator (void);
 void test_load_cpp_namespace (void);
 void test_load_cpp_multi_namespace (void);
+void test_load_cpp_nested_namespace (void);
 void data_cpp_fixture_function (void);
 void test_cpp_fixture_function (gconstpointer data);
 
@@ -377,6 +378,42 @@ test_load_cpp_multi_namespace (void)
     };
 
     loader = loader_new("cpp", "stub-multi-namespace." G_MODULE_SUFFIX);
+    test_cases = cut_loader_load_test_cases(loader);
+    cut_assert_equal_int(2, g_list_length(test_cases));
+
+    test_names = g_ptr_array_new_with_free_func(g_free);
+    for (test_case_node = test_cases;
+         test_case_node;
+         test_case_node = g_list_next(test_case_node)) {
+        CutTestContainer *container;
+        GList *tests, *test_node;
+
+        container = CUT_TEST_CONTAINER(test_case_node->data);
+        tests = (GList *)cut_test_container_get_children(container);
+        for (test_node = tests; test_node; test_node = g_list_next(test_node)) {
+            CutTest *test = test_node->data;
+
+            cut_assert(CUT_IS_TEST(test));
+            g_ptr_array_add(test_names, g_strdup(cut_test_get_name(test)));
+        }
+    }
+    g_ptr_array_sort(test_names, compare_test_name);
+    g_ptr_array_add(test_names, NULL);
+    cut_assert_equal_string_array(expected_functions,
+                                  (gchar **)test_names->pdata);
+}
+
+void
+test_load_cpp_nested_namespace (void)
+{
+    GList *test_cases, *test_case_node;
+    gchar *expected_functions[] = {
+        "calc::adder::test_compute",
+        "calc::subtracter::test_compute",
+        NULL
+    };
+
+    loader = loader_new("cpp", "stub-nested-namespace." G_MODULE_SUFFIX);
     test_cases = cut_loader_load_test_cases(loader);
     cut_assert_equal_int(2, g_list_length(test_cases));
 

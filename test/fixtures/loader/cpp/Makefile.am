@@ -7,7 +7,8 @@ INCLUDES =					\
 
 noinst_LTLIBRARIES =				\
 	stub-namespace.la			\
-	stub-multi-namespace.la
+	stub-multi-namespace.la			\
+	stub-nested-namespace.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -24,6 +25,7 @@ LIBS =							\
 
 stub_namespace_la_SOURCES	= stub-namespace.cpp
 stub_multi_namespace_la_SOURCES	= stub-multi-namespace.cpp
+stub_nested_namespace_la_SOURCES	= stub-nested-namespace.cpp
 
 echo-tests:
 	@echo $(noinst_LTLIBRARIES)

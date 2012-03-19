@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <glib.h>
 #include <glib-compatible/glib-compatible.h>
 #include <gmodule.h>
@@ -335,23 +336,32 @@ skip_cpp_namespace_gcc (const gchar *name, GString *namespaces)
     if (!name[0])
         return NULL;
 
-    while (name[0] == 'N') {
+    if (name[0] != 'N')
+        return name;
+
+    name++;
+    while (TRUE) {
         gchar *namespace_name_start;
         guint64 namespace_name_length;
+        gchar *next_name;
 
-        name++;
         namespace_name_length = g_ascii_strtoull(name,
                                                  &namespace_name_start,
                                                  10);
         if (namespace_name_length == 0)
             return NULL;
+
+        next_name = namespace_name_start + namespace_name_length;
+        if (!isdigit(next_name[0]))
+            break;
+
         if (namespaces) {
             g_string_append_len(namespaces,
                                 namespace_name_start,
                                 namespace_name_length);
             g_string_append(namespaces, "::");
         }
-        name = namespace_name_start + namespace_name_length;
+        name = next_name;
     }
 
     return name;
