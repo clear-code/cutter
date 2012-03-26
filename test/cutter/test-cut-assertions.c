@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -162,6 +162,11 @@ static gint fail_line;
 } while (0)
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name
+#endif
 
 
 static void
@@ -248,7 +253,8 @@ test_equal_boolean (void)
                            "cut_assert_equal_boolean()", NULL,
                            "<CUT_TRUE == CUT_FALSE>",
                            "true", "false",
-                           FAIL_LOCATION, "stub_equal_boolean",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_boolean"),
                            NULL);
 }
 
@@ -272,7 +278,8 @@ test_not_equal_boolean (void)
                            "cut_assert_not_equal_boolean()", NULL,
                            "<CUT_TRUE != 100>",
                            "true", "true",
-                           FAIL_LOCATION, "stub_not_equal_boolean",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_boolean"),
                            NULL);
 }
 
@@ -294,7 +301,8 @@ test_equal_int (void)
                            "cut_assert_equal_int()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int"),
                            NULL);
 }
 
@@ -316,7 +324,8 @@ test_not_equal_int (void)
                            "cut_assert_not_equal_int()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int"),
                            NULL);
 }
 
@@ -339,7 +348,8 @@ test_equal_int_least8 (void)
                            "cut_assert_equal_int_least8()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_least8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_least8"),
                            NULL);
 }
 
@@ -361,7 +371,8 @@ test_not_equal_int_least8 (void)
                            "cut_assert_not_equal_int_least8()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_least8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_least8"),
                            NULL);
 }
 
@@ -383,7 +394,8 @@ test_equal_int_least16 (void)
                            "cut_assert_equal_int_least16()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_least16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_least16"),
                            NULL);
 }
 
@@ -405,7 +417,8 @@ test_not_equal_int_least16 (void)
                            "cut_assert_not_equal_int_least16()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_least16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_least16"),
                            NULL);
 }
 
@@ -427,7 +440,8 @@ test_equal_int_least32 (void)
                            "cut_assert_equal_int_least32()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_least32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_least32"),
                            NULL);
 }
 
@@ -449,7 +463,8 @@ test_not_equal_int_least32 (void)
                            "cut_assert_not_equal_int_least32()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_least32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_least32"),
                            NULL);
 }
 
@@ -471,7 +486,8 @@ test_equal_int_least64 (void)
                            "cut_assert_equal_int_least64()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_least64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_least64"),
                            NULL);
 }
 
@@ -493,7 +509,8 @@ test_not_equal_int_least64 (void)
                            "cut_assert_not_equal_int_least64()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_least64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_least64"),
                            NULL);
 }
 
@@ -515,7 +532,8 @@ test_equal_int_fast8 (void)
                            "cut_assert_equal_int_fast8()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_fast8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_fast8"),
                            NULL);
 }
 
@@ -537,7 +555,8 @@ test_not_equal_int_fast8 (void)
                            "cut_assert_not_equal_int_fast8()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_fast8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_fast8"),
                            NULL);
 }
 
@@ -559,7 +578,8 @@ test_equal_int_fast16 (void)
                            "cut_assert_equal_int_fast16()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_fast16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_fast16"),
                            NULL);
 }
 
@@ -581,7 +601,8 @@ test_not_equal_int_fast16 (void)
                            "cut_assert_not_equal_int_fast16()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_fast16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_fast16"),
                            NULL);
 }
 
@@ -603,7 +624,8 @@ test_equal_int_fast32 (void)
                            "cut_assert_equal_int_fast32()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_fast32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_fast32"),
                            NULL);
 }
 
@@ -625,7 +647,8 @@ test_not_equal_int_fast32 (void)
                            "cut_assert_not_equal_int_fast32()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_fast32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_fast32"),
                            NULL);
 }
 
@@ -647,7 +670,8 @@ test_equal_int_fast64 (void)
                            "cut_assert_equal_int_fast64()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_int_fast64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int_fast64"),
                            NULL);
 }
 
@@ -669,7 +693,8 @@ test_not_equal_int_fast64 (void)
                            "cut_assert_not_equal_int_fast64()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_int_fast64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int_fast64"),
                            NULL);
 }
 
@@ -691,7 +716,8 @@ test_equal_intptr (void)
                            "cut_assert_equal_intptr()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_intptr",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_intptr"),
                            NULL);
 }
 
@@ -713,7 +739,8 @@ test_not_equal_intptr (void)
                            "cut_assert_not_equal_intptr()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_intptr",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_intptr"),
                            NULL);
 }
 
@@ -735,7 +762,8 @@ test_equal_intmax (void)
                            "cut_assert_equal_intmax()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_intmax",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_intmax"),
                            NULL);
 }
 
@@ -757,7 +785,8 @@ test_not_equal_intmax (void)
                            "cut_assert_not_equal_intmax()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_intmax",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_intmax"),
                            NULL);
 }
 #endif
@@ -779,7 +808,8 @@ test_equal_uint (void)
                            "cut_assert_equal_uint()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint"),
                            NULL);
 }
 
@@ -800,7 +830,8 @@ test_not_equal_uint (void)
                            "cut_assert_not_equal_uint()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint"),
                            NULL);
 }
 
@@ -823,7 +854,8 @@ test_equal_uint_least8 (void)
                            "cut_assert_equal_uint_least8()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_least8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_least8"),
                            NULL);
 }
 
@@ -845,7 +877,8 @@ test_not_equal_uint_least8 (void)
                            "cut_assert_not_equal_uint_least8()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_least8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_least8"),
                            NULL);
 }
 
@@ -867,7 +900,8 @@ test_equal_uint_least16 (void)
                            "cut_assert_equal_uint_least16()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_least16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_least16"),
                            NULL);
 }
 
@@ -889,7 +923,8 @@ test_not_equal_uint_least16 (void)
                            "cut_assert_not_equal_uint_least16()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_least16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_least16"),
                            NULL);
 }
 
@@ -911,7 +946,8 @@ test_equal_uint_least32 (void)
                            "cut_assert_equal_uint_least32()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_least32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_least32"),
                            NULL);
 }
 
@@ -933,7 +969,8 @@ test_not_equal_uint_least32 (void)
                            "cut_assert_not_equal_uint_least32()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_least32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_least32"),
                            NULL);
 }
 
@@ -955,7 +992,8 @@ test_equal_uint_least64 (void)
                            "cut_assert_equal_uint_least64()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_least64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_least64"),
                            NULL);
 }
 
@@ -977,7 +1015,8 @@ test_not_equal_uint_least64 (void)
                            "cut_assert_not_equal_uint_least64()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_least64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_least64"),
                            NULL);
 }
 
@@ -999,7 +1038,8 @@ test_equal_uint_fast8 (void)
                            "cut_assert_equal_uint_fast8()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_fast8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_fast8"),
                            NULL);
 }
 
@@ -1021,7 +1061,8 @@ test_not_equal_uint_fast8 (void)
                            "cut_assert_not_equal_uint_fast8()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_fast8",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_fast8"),
                            NULL);
 }
 
@@ -1043,7 +1084,8 @@ test_equal_uint_fast16 (void)
                            "cut_assert_equal_uint_fast16()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_fast16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_fast16"),
                            NULL);
 }
 
@@ -1065,7 +1107,8 @@ test_not_equal_uint_fast16 (void)
                            "cut_assert_not_equal_uint_fast16()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_fast16",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_fast16"),
                            NULL);
 }
 
@@ -1087,7 +1130,8 @@ test_equal_uint_fast32 (void)
                            "cut_assert_equal_uint_fast32()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_fast32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_fast32"),
                            NULL);
 }
 
@@ -1109,7 +1153,8 @@ test_not_equal_uint_fast32 (void)
                            "cut_assert_not_equal_uint_fast32()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_fast32",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_fast32"),
                            NULL);
 }
 
@@ -1131,7 +1176,8 @@ test_equal_uint_fast64 (void)
                            "cut_assert_equal_uint_fast64()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uint_fast64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint_fast64"),
                            NULL);
 }
 
@@ -1153,7 +1199,8 @@ test_not_equal_uint_fast64 (void)
                            "cut_assert_not_equal_uint_fast64()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uint_fast64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint_fast64"),
                            NULL);
 }
 
@@ -1175,7 +1222,8 @@ test_equal_uintptr (void)
                            "cut_assert_equal_uintptr()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uintptr",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uintptr"),
                            NULL);
 }
 
@@ -1197,7 +1245,8 @@ test_not_equal_uintptr (void)
                            "cut_assert_not_equal_uintptr()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uintptr",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uintptr"),
                            NULL);
 }
 
@@ -1219,7 +1268,8 @@ test_equal_uintmax (void)
                            "cut_assert_equal_uintmax()", NULL,
                            "<2 + 3 == 3 + 4>",
                            "5", "7",
-                           FAIL_LOCATION, "stub_equal_uintmax",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uintmax"),
                            NULL);
 }
 
@@ -1241,7 +1291,8 @@ test_not_equal_uintmax (void)
                            "cut_assert_not_equal_uintmax()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_uintmax",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uintmax"),
                            NULL);
 }
 #endif
@@ -1263,7 +1314,8 @@ test_equal_size (void)
                            "cut_assert_equal_size()", NULL,
                            "<1 == 10>",
                            "1", "10",
-                           FAIL_LOCATION, "stub_equal_size",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_size"),
                            NULL);
 }
 
@@ -1284,7 +1336,8 @@ test_not_equal_size (void)
                            "cut_assert_not_equal_size()", NULL,
                            "<2 + 3 != 3 + 2>",
                            "5", "5",
-                           FAIL_LOCATION, "stub_not_equal_size",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_size"),
                            NULL);
 }
 
@@ -1305,7 +1358,8 @@ test_equal_char (void)
                            "assert-equal-char", NULL,
                            "<'a' == 'b'>",
                            "'a'", "'b'",
-                           FAIL_LOCATION, "stub_equal_char",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_char"),
                            NULL);
 }
 
@@ -1326,7 +1380,8 @@ test_not_equal_char (void)
                            "assert-not-equal-char", NULL,
                            "<'a' != 'a'>",
                            "'a'", "'a'",
-                           FAIL_LOCATION, "stub_not_equal_char",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_char"),
                            NULL);
 }
 
@@ -1348,7 +1403,8 @@ test_equal_string (void)
                            "assert-equal-string", NULL,
                            "<\"abc\" == \"ABC\">",
                            "\"abc\"", "\"ABC\"",
-                           FAIL_LOCATION, "stub_equal_string",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_string"),
                            NULL);
 }
 
@@ -1369,7 +1425,8 @@ test_equal_string_with_null (void)
                            "assert-equal-string-with-null", NULL,
                            "<\"abc\" == NULL>",
                            "\"abc\"", "(null)",
-                           FAIL_LOCATION, "stub_equal_string_with_null",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_string_with_null"),
                            NULL);
 }
 
@@ -1392,7 +1449,8 @@ test_not_equal_string (void)
                            "assert-not-equal-string", NULL,
                            "<\"abc\" != \"abc\">",
                            "\"abc\"", "\"abc\"",
-                           FAIL_LOCATION, "stub_not_equal_string",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_string"),
                            NULL);
 }
 
@@ -1601,7 +1659,8 @@ test_equal_substring (void)
                            "[0..strlen(\"0123456789\")]>",
                            "\"0123456789\"",
                            "\"1234567899\"",
-                           FAIL_LOCATION, "stub_equal_substring",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_substring"),
                            NULL);
 }
 
@@ -1636,7 +1695,8 @@ test_not_equal_substring (void)
                            "[0..strlen(\"0123456789\")]>",
                            "\"0123456789\"",
                            "\"0123456789\"",
-                           FAIL_LOCATION, "stub_not_equal_substring",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_substring"),
                            NULL);
 }
 
@@ -1674,7 +1734,8 @@ test_equal_double (void)
                         expected + error,
                         actual),
         NULL, NULL,
-        FAIL_LOCATION, "stub_equal_double",
+        FAIL_LOCATION,
+        FUNCTION("stub_equal_double"),
         NULL);
 }
 
@@ -1711,7 +1772,8 @@ test_not_equal_double (void)
                         expected + error,
                         actual),
         NULL, NULL,
-        FAIL_LOCATION, "stub_not_equal_double",
+        FAIL_LOCATION,
+        FUNCTION("stub_not_equal_double"),
         NULL);
 }
 
@@ -1748,7 +1810,8 @@ test_operator_int (void)
                            "expected: <1 + 1> >= <2 + 4>\n"
                            "  actual: <2> >= <6>",
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_operator_int",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_operator_int"),
                            NULL);
 }
 
@@ -1773,7 +1836,8 @@ test_operator_uint (void)
                            "expected: <1 + 1> >= <2 + 4>\n"
                            "  actual: <2> >= <6>",
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_operator_uint",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_operator_uint"),
                            NULL);
 }
 
@@ -1798,7 +1862,8 @@ test_operator_size (void)
                            "expected: <1 + 1> >= <2 + 4>\n"
                            "  actual: <2> >= <6>",
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_operator_size",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_operator_size"),
                            NULL);
 }
 
@@ -1829,7 +1894,8 @@ test_operator_double (void)
                         "  actual: <%g> >= <%g>",
                         lhs, rhs),
         NULL, NULL,
-        FAIL_LOCATION, "stub_operator_double",
+        FAIL_LOCATION,
+        FUNCTION("stub_operator_double"),
         NULL);
 }
 
@@ -1863,7 +1929,8 @@ test_equal_memory (void)
                            "0x00 0x01 0x02 0x03 0x04 (size: 5)",
                            "0x00 0x01 0x02 0x03 0x04 "
                            "0x12 0x10 0x0e 0x0c 0x0a (size: 10)",
-                           FAIL_LOCATION, "stub_equal_memory",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_memory"),
                            NULL);
 }
 
@@ -1896,7 +1963,8 @@ test_not_equal_memory (void)
                            "actual(size: sizeof(expected))>",
                            "0x00 0x01 0x02 0x03 0x04 (size: 5)",
                            "0x00 0x01 0x02 0x03 0x04 (size: 5)",
-                           FAIL_LOCATION, "stub_not_equal_memory",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_memory"),
                            NULL);
 }
 
@@ -1922,7 +1990,8 @@ test_equal_string_array (void)
                            "<strings1 == strings2>",
                            "[\"a\", \"b\", \"c\"]",
                            "[\"a\", \"b\", \"c\", \"d\"]",
-                           FAIL_LOCATION, "stub_equal_string_array",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_string_array"),
                            NULL);
 }
 
@@ -1959,7 +2028,8 @@ test_error (void)
                            "stub-error-test",
                            "This test should error", NULL,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_error",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_error"),
                            NULL);
 }
 
@@ -2067,7 +2137,8 @@ test_assert_message (void)
                            "The message of assertion",
                            "expected: <FALSE> is neither FALSE nor NULL",
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_assert_message",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_assert_message"),
                            NULL);
 }
 
@@ -2092,7 +2163,7 @@ test_assert_message_with_format_string (void)
                            "<\"%s\" == \"%d\">",
                            "\"%s\"", "\"%d\"",
                            FAIL_LOCATION,
-                           "stub_assert_message_with_format_string",
+                           FUNCTION("stub_assert_message_with_format_string"),
                            NULL);
 }
 
@@ -2161,7 +2232,8 @@ test_null_string (void)
                            "assert-null-string", NULL,
                            "<\"\"> is NULL",
                            "<NULL>", "",
-                           FAIL_LOCATION, "stub_null_string",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_null_string"),
                            NULL);
 }
 
@@ -2414,7 +2486,8 @@ test_error_errno (void)
                            cut_take_printf("<%d> (%s)",
                                            EACCES, g_strerror(EACCES)),
                            NULL, NULL,
-                           FAIL_LOCATION, "error_errno",
+                           FAIL_LOCATION,
+                           FUNCTION("error_errno"),
                            NULL);
 }
 
@@ -2466,7 +2539,8 @@ test_equal_sockaddr (void)
                            "<address1 == address2>",
                            "inet:127.0.0.1:2929",
                            "inet:192.168.0.254:5959",
-                           FAIL_LOCATION, "stub_equal_sockaddr",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_sockaddr"),
                            NULL);
 #endif
 }
@@ -2515,7 +2589,8 @@ test_equal_file_raw (void)
                                            "sub level data. "
                                            "(size: 15)",
                                            sub_data),
-                           FAIL_LOCATION, "equal_file_raw",
+                           FAIL_LOCATION,
+                           FUNCTION("equal_file_raw"),
                            NULL);
 }
 
@@ -2561,7 +2636,8 @@ test_not_equal_file_raw (void)
                                            "top level data. "
                                            "(size: 15)",
                                            data),
-                           FAIL_LOCATION, "not_equal_file_raw",
+                           FAIL_LOCATION,
+                           FUNCTION("not_equal_file_raw"),
                            NULL);
 }
 
