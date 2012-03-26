@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -57,6 +57,11 @@ static gint fail_line;
 } while (0)
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "(gconstpointer)"
+#else
+#  define FUNCTION(name) name
+#endif
 
 
 static void
@@ -373,7 +378,8 @@ test_failure (void)
                            NULL,
                            "<2 == GPOINTER_TO_INT(data)>",
                            "2", "1",
-                           FAIL_LOCATION, "stub_failure_iterated_test",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_failure_iterated_test"),
                            NULL);
     cut_assert_test_result(run_context, 1, CUT_TEST_RESULT_SUCCESS,
                            "failure test iterator (Second)",
@@ -386,7 +392,8 @@ test_failure (void)
                            NULL,
                            "<2 == GPOINTER_TO_INT(data)>",
                            "2", "3",
-                           FAIL_LOCATION, "stub_failure_iterated_test",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_failure_iterated_test"),
                            NULL);
 }
 
@@ -425,7 +432,8 @@ test_error (void)
                            "ERROR!",
                            NULL,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_error_iterated_test",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_error_iterated_test"),
                            NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "error test iterator (Third)",
@@ -470,7 +478,8 @@ test_pending (void)
                            "PENDING!",
                            NULL,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_pending_iterated_test",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_pending_iterated_test"),
                            NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "pending test iterator (Third)",
@@ -515,7 +524,8 @@ test_notification (void)
                            "NOTIFICATION!",
                            NULL,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_notification_iterated_test",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_notification_iterated_test"),
                            NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "notification test iterator (Second)",
@@ -566,7 +576,8 @@ test_omission (void)
                            "OMISSION!",
                            NULL,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_omission_iterated_test",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_omission_iterated_test"),
                            NULL);
     cut_assert_test_result(run_context, 2, CUT_TEST_RESULT_SUCCESS,
                            "omission test iterator (Second)",
