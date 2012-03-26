@@ -1,5 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
+ *  Copyright (C) 2012  Kouhei Sutou <kou@clear-code.com>
  *  Copyright (C) 2009  Yuto HAYAMIZU <y.hayamizu@gmail.com>
  *
  *  This library is free software: you can redistribute it and/or modify
@@ -49,6 +50,11 @@ static gint fail_line;
 } while (0)
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name
+#endif
 
 static gboolean
 run (void)
@@ -121,7 +127,8 @@ test_message_equal_content_type (void)
                            "<\"text/plain\" == message[response][content-type]>",
                            "\"text/plain\"",
                            "\"text/html\"",
-                           FAIL_LOCATION, "stub_message_equal_content_type",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_message_equal_content_type"),
                            NULL);
 }
 
@@ -185,7 +192,8 @@ test_client_equal_content_type (void)
                            "latest_message(client)[response][content-type]>",
                            "\"text/html\"",
                            "\"text/plain\"",
-                           FAIL_LOCATION, "stub_client_equal_content_type",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_client_equal_content_type"),
                            NULL);
 }
 
@@ -218,7 +226,8 @@ test_client_equal_content_type_null (void)
                            NULL,
                            message,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_client_equal_content_type_null",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_client_equal_content_type_null"),
                            NULL);
 }
 
@@ -256,7 +265,8 @@ test_client_response (void)
                            "<latest_message(client)[response][status] == 2XX>",
                            "2XX",
                            "404(Blog Not Found)",
-                           FAIL_LOCATION, "stub_client_response",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_client_response"),
                            NULL);
 }
 
@@ -289,7 +299,8 @@ test_client_response_null (void)
                            NULL,
                            message,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_client_response_null",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_client_response_null"),
                            NULL);
 }
 
@@ -321,7 +332,8 @@ test_client_equal_body (void)
                            "latest_message(client)[response][body]>",
                            "\"Goodbye\"",
                            "\"Hello\"",
-                           FAIL_LOCATION, "stub_client_equal_body",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_client_equal_body"),
                            NULL);
 }
 
@@ -353,7 +365,8 @@ test_client_equal_body_null (void)
                            NULL,
                            message,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_client_equal_body_null",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_client_equal_body_null"),
                            NULL);
 }
 
@@ -387,7 +400,8 @@ test_client_match_body (void)
                            " pattern: <\"\\\\d+\">",
                            NULL,
                            "\"Hello\"",
-                           FAIL_LOCATION, "stub_client_match_body",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_client_match_body"),
                            NULL);
 }
 
