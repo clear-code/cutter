@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -81,6 +81,11 @@ static gint fail_line;
 } while (0)
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name
+#endif
 
 static gboolean
 run (void)
@@ -201,7 +206,8 @@ test_equal_type (void)
                            NULL,
                            "<G_TYPE_INT == G_TYPE_STRING>",
                            "gint", "gchararray",
-                           FAIL_LOCATION, "stub_equal_type",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_type"),
                            NULL);
 }
 
@@ -234,7 +240,8 @@ test_equal_value (void)
                            "<value1 == value2>",
                            "10 (gint)",
                            "\"String\" (gchararray)",
-                           FAIL_LOCATION, "stub_equal_value",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_value"),
                            NULL);
 }
 
@@ -288,7 +295,8 @@ test_equal_list (void)
         "<stub_equal_list_equal_func(list1[i], list2[i]) == TRUE>",
         "(CCC: <100>, CCC: <-200>)",
         "(CCC: <-1000>, CCC: <2000>)",
-        FAIL_LOCATION, "stub_equal_list",
+        FAIL_LOCATION,
+        FUNCTION("stub_equal_list"),
         NULL);
 }
 
@@ -320,7 +328,8 @@ test_equal_list_int (void)
                            "<list1 == list2>",
                            "(100, -200)",
                            "(-1000, 2000)",
-                           FAIL_LOCATION, "stub_equal_list_int",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_list_int"),
                            NULL);
 }
 
@@ -352,7 +361,8 @@ test_equal_list_uint (void)
                            "<list1 == list2>",
                            "(100, 200)",
                            "(1000, 2000)",
-                           FAIL_LOCATION, "stub_equal_list_uint",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_list_uint"),
                            NULL);
 }
 
@@ -386,7 +396,8 @@ test_equal_list_string (void)
                            "<list1 == list2>",
                            "(\"abc\", \"def\")",
                            "(\"zyx\", \"wvu\")",
-                           FAIL_LOCATION, "stub_equal_list_string",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_list_string"),
                            NULL);
 }
 
@@ -452,7 +463,8 @@ test_equal_list_string_other_null (void)
                            "<list1 == list2>",
                            "(\"abc\", \"abc\", \"def\")",
                            "(NULL, \"abc\", \"def\")",
-                           FAIL_LOCATION, "stub_equal_list_string_other_null",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_list_string_other_null"),
                            NULL);
 }
 
@@ -493,7 +505,8 @@ test_equal_list_enum (void)
                            NULL,
                            "<list1 == list2>",
                            inspected_expected, inspected_actual,
-                           FAIL_LOCATION, "stub_equal_list_enum",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_list_enum"),
                            NULL);
 }
 
@@ -543,7 +556,8 @@ test_equal_list_flags (void)
                            NULL,
                            "<list1 == list2>",
                            inspected_expected, inspected_actual,
-                           FAIL_LOCATION, "stub_equal_list_flags",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_list_flags"),
                            NULL);
 }
 
@@ -603,7 +617,8 @@ test_equal_list_object (void)
                            NULL,
                            "<list1 == list2>",
                            inspected_expected, inspected_actual,
-                           FAIL_LOCATION, "stub_equal_list_object",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_list_object"),
                            NULL);
 }
 
@@ -651,7 +666,8 @@ test_equal_hash_table (void)
                            "<g_str_equal(hash1[key], hash2[key]) == TRUE>",
                            "{1 => \"11\", 10 => \"22\"}",
                            "{2 => \"99\", 20 => \"88\"}",
-                           FAIL_LOCATION, "stub_equal_hash_table",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_hash_table"),
                            NULL);
 }
 
@@ -687,7 +703,8 @@ test_equal_hash_table_string_string (void)
                            "<hash1 == hash2>",
                            "{\"abc\" => \"11\", \"def\" => \"22\"}",
                            "{\"wvu\" => \"88\", \"zyx\" => \"99\"}",
-                           FAIL_LOCATION, "stub_equal_hash_table_string_string",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_hash_table_string_string"),
                            NULL);
 }
 
@@ -714,7 +731,8 @@ test_error (void)
                            "expected: <error> is NULL\n"
                            "  actual: <g-file-error-quark:4: not found>",
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_error",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_error"),
                            NULL);
 }
 
@@ -744,7 +762,8 @@ test_equal_error (void)
                            "<error1 == error2>",
                            "g-file-error-quark:4: not found",
                            "g-file-error-quark:4: no entry",
-                           FAIL_LOCATION, "stub_equal_error",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_error"),
                            NULL);
 }
 
@@ -775,7 +794,8 @@ test_equal_enum (void)
         " (CUT_TYPE_TEST_RESULT_STATUS)",
         "#<CutTestResultStatus: failure(CUT_TEST_RESULT_FAILURE:4)>",
         "#<CutTestResultStatus: pending(CUT_TEST_RESULT_PENDING:3)>",
-        FAIL_LOCATION, "stub_equal_enum",
+        FAIL_LOCATION,
+        FUNCTION("stub_equal_enum"),
         NULL);
 }
 
@@ -816,7 +836,8 @@ test_equal_flags (void)
                            "(CUTTEST_ASSERT_STUB_SECOND:0x2)|"
                            "(CUTTEST_ASSERT_STUB_THIRD:0x4)>",
                            "#<CuttestAssertStubFlags: (unknown flags: 0x8)>",
-                           FAIL_LOCATION, "stub_equal_flags",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_flags"),
                            NULL);
 }
 
@@ -856,7 +877,8 @@ test_equal_object (void)
                            NULL,
                            "<object1 == object2>",
                            inspected_expected, inspected_actual,
-                           FAIL_LOCATION, "stub_equal_object",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_object"),
                            NULL);
 }
 
@@ -888,7 +910,8 @@ test_equal_object_null (void)
                            NULL,
                            "<object1 == NULL>",
                            inspected_expected, "(null)",
-                           FAIL_LOCATION, "stub_equal_object_null",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_object_null"),
                            NULL);
 }
 
@@ -939,7 +962,8 @@ test_equal_object_custom (void)
                            NULL,
                            "<equal_name(object1, object3)>",
                            inspected_expected, inspected_actual,
-                           FAIL_LOCATION, "stub_equal_object_custom",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_object_custom"),
                            NULL);
 }
 
@@ -960,7 +984,8 @@ test_equal_pid (void)
                            "cut_assert_equal_pid()", NULL,
                            "<0 == (GPid)100>",
                            "0", "100",
-                           FAIL_LOCATION, "stub_equal_pid",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_pid"),
                            NULL);
 }
 
@@ -981,7 +1006,8 @@ test_not_equal_pid (void)
                            "cut_assert_not_equal_pid()", NULL,
                            "<0 != 0>",
                            "0", "0",
-                           FAIL_LOCATION, "stub_not_equal_pid",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_pid"),
                            NULL);
 }
 
@@ -1003,7 +1029,8 @@ test_equal_int64 (void)
                            "cut_assert_equal_int64()", NULL,
                            "<G_MAXINT32 == G_MAXINT64>",
                            "2147483647", "9223372036854775807",
-                           FAIL_LOCATION, "stub_equal_int64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_int64"),
                            NULL);
 }
 
@@ -1025,7 +1052,8 @@ test_not_equal_int64 (void)
                            "cut_assert_not_equal_int64()", NULL,
                            "<G_MAXINT64 != G_MAXINT64>",
                            "9223372036854775807", "9223372036854775807",
-                           FAIL_LOCATION, "stub_not_equal_int64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_int64"),
                            NULL);
 }
 
@@ -1047,7 +1075,8 @@ test_equal_uint64 (void)
                            "cut_assert_equal_uint64()", NULL,
                            "<G_MAXUINT32 == G_MAXUINT64>",
                            "4294967295", "18446744073709551615",
-                           FAIL_LOCATION, "stub_equal_uint64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal_uint64"),
                            NULL);
 }
 
@@ -1070,7 +1099,8 @@ test_not_equal_uint64 (void)
                            "cut_assert_not_equal_uint64()", NULL,
                            "<G_MAXUINT64 != G_MAXUINT64>",
                            "18446744073709551615", "18446744073709551615",
-                           FAIL_LOCATION, "stub_not_equal_uint64",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_not_equal_uint64"),
                            NULL);
 }
 
