@@ -54,24 +54,6 @@ namespace cut
                       const char *expression_expected,
                       const char *expression_actual);
 
-    template <class Type> void assert_equal(const Type *expected,
-                                            const Type *actual,
-                                            const char *expression_expected,
-                                            const char *expression_actual)
-    {
-        assert_equal_reference(expected, actual,
-                               expression_expected, expression_actual);
-    };
-
-    template <class Type> void assert_equal(const Type& expected,
-                                            const Type& actual,
-                                            const char *expression_expected,
-                                            const char *expression_actual)
-    {
-        assert_equal_reference(expected, actual,
-                               expression_expected, expression_actual);
-    };
-
     template <class Type> void assert_equal_reference(
         const Type& expected, const Type& actual,
         const char *expression_expected, const char *expression_actual)
@@ -95,6 +77,24 @@ namespace cut
         }
     }
 
+    template <class Type> void assert_equal(const Type *expected,
+                                            const Type *actual,
+                                            const char *expression_expected,
+                                            const char *expression_actual)
+    {
+        assert_equal_reference(expected, actual,
+                               expression_expected, expression_actual);
+    };
+
+    template <class Type> void assert_equal(const Type& expected,
+                                            const Type& actual,
+                                            const char *expression_expected,
+                                            const char *expression_actual)
+    {
+        assert_equal_reference(expected, actual,
+                               expression_expected, expression_actual);
+    };
+
     CPPCUT_DECL
     void assert_not_equal(char *expected, char *actual,
                           const char *expression_expected,
@@ -103,24 +103,6 @@ namespace cut
     void assert_not_equal(const char *expected, const char *actual,
                           const char *expression_expected,
                           const char *expression_actual);
-
-    template <class Type> void assert_not_equal(const Type& expected,
-                                                const Type& actual,
-                                                const char *expression_expected,
-                                                const char *expression_actual)
-    {
-        assert_not_equal_reference(expected, actual,
-                                   expression_expected, expression_actual);
-    };
-
-    template <class Type> void assert_not_equal(const Type *expected,
-                                                const Type *actual,
-                                                const char *expression_expected,
-                                                const char *expression_actual)
-    {
-        assert_not_equal_reference(expected, actual,
-                                   expression_expected, expression_actual);
-    };
 
     template <class Type> void assert_not_equal_reference(
         const Type& expected, const Type& actual,
@@ -144,6 +126,24 @@ namespace cut
             cut_test_fail(message.str().c_str());
         }
     }
+
+    template <class Type> void assert_not_equal(const Type& expected,
+                                                const Type& actual,
+                                                const char *expression_expected,
+                                                const char *expression_actual)
+    {
+        assert_not_equal_reference(expected, actual,
+                                   expression_expected, expression_actual);
+    };
+
+    template <class Type> void assert_not_equal(const Type *expected,
+                                                const Type *actual,
+                                                const char *expression_expected,
+                                                const char *expression_actual)
+    {
+        assert_not_equal_reference(expected, actual,
+                                   expression_expected, expression_actual);
+    };
 
     template <typename Type> void assert_null(const Type *object,
                                               const char *expression_object)
