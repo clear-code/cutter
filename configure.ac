@@ -141,6 +141,8 @@ else
    have_c99_stdint_types=no
 fi
 
+AC_CHECK_FUNCS([fabs], [], [AC_CHECK_LIB([m], [fabs])])
+
 dnl **************************************************************
 dnl Check for MinGW
 dnl **************************************************************
