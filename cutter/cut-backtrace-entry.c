@@ -402,8 +402,13 @@ cut_backtrace_entry_format_string (CutBacktraceEntry *entry, GString *string)
                            "%s:%d",
                            priv->file ? priv->file : "(null)",
                            priv->line);
-    if (priv->function)
-        g_string_append_printf(string, ": %s()", priv->function);
+    if (priv->function) {
+        g_string_append(string, ": ");
+        g_string_append(string, priv->function);
+        if (!g_str_has_suffix(priv->function, ")")) {
+            g_string_append(string, "()");
+        }
+    }
     if (priv->info)
         g_string_append_printf(string, ": %s", priv->info);
     if (priv->function == NULL && priv->info == NULL)

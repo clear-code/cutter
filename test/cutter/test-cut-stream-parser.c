@@ -689,7 +689,7 @@ test_result_error (void)
     cut_assert_equal_string("test-cut-report-xml.c",
                             cut_backtrace_entry_get_file(entry));
     cut_assert_equal_uint(31, cut_backtrace_entry_get_line(entry));
-    cut_assert_equal_string("stub_error_test",
+    cut_assert_equal_string("stub_error_test()",
                             cut_backtrace_entry_get_function(entry));
 
     cut_assert_equal_string("This test should error",

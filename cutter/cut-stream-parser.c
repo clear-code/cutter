@@ -2368,23 +2368,19 @@ text_result_backtrace_entry_info (CutStreamParserPrivate *priv,
 {
     const gchar *info_start;
 
-    info_start = strstr(text, "():");
+    info_start = strstr(text, "):");
     if (info_start) {
         gchar *function;
 
-        function = g_strndup(text, info_start - text);
-        info_start += strlen("():");
+        function = g_strndup(text, info_start - text + strlen(")"));
+        info_start += strlen("):");
         while (info_start[0] && info_start[0] == ' ')
             info_start++;
         cut_backtrace_entry_set_function(priv->backtrace_entry, function);
         cut_backtrace_entry_set_info(priv->backtrace_entry, info_start);
         g_free(function);
-    } else if (g_str_has_suffix(text, "()")) {
-        gchar *function;
-
-        function = g_strndup(text, strlen(text) - 2);
-        cut_backtrace_entry_set_function(priv->backtrace_entry, function);
-        g_free(function);
+    } else if (g_str_has_suffix(text, ")") && strstr(text, "(")) {
+        cut_backtrace_entry_set_function(priv->backtrace_entry, text);
     } else {
         cut_backtrace_entry_set_info(priv->backtrace_entry, text);
     }

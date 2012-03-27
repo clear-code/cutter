@@ -476,7 +476,7 @@ test_new_from_xml (void)
     cut_assert_equal_string("test-cut-report-xml.c",
                             cut_backtrace_entry_get_file(entry));
     cut_assert_equal_uint(31, cut_backtrace_entry_get_line(entry));
-    cut_assert_equal_string("stub_error_test",
+    cut_assert_equal_string("stub_error_test()",
                             cut_backtrace_entry_get_function(entry));
 
     cut_assert_not_null(g_list_next(actual_backtrace));
@@ -484,7 +484,7 @@ test_new_from_xml (void)
     cut_assert_equal_string("test-cut-test-result.c",
                             cut_backtrace_entry_get_file(entry));
     cut_assert_equal_uint(29, cut_backtrace_entry_get_line(entry));
-    cut_assert_equal_string("test_new_from_xml",
+    cut_assert_equal_string("test_new_from_xml()",
                             cut_backtrace_entry_get_function(entry));
     cut_assert_equal_string("additional info",
                             cut_backtrace_entry_get_info(entry));
