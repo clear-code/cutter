@@ -29,17 +29,25 @@ void test_report_pending (void);
 void test_report_notification (void);
 void test_plural_reports (void);
 
-#ifdef __clang__
-#  define FUNCTION(name) "void " name "()"
-#else
-#  define FUNCTION(name) name "()"
-#endif
-
 static CutRunContext *run_context;
 static CutReport *report;
 static CutTest *test;
 static CutTestCase *test_case;
 static CutTestContext *test_context;
+
+static gint fail_line;
+
+#define MARK_FAIL(assertion) do                 \
+{                                               \
+    fail_line = __LINE__;                       \
+    assertion;                                  \
+} while (0)
+
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name "()"
+#endif
 
 static void
 stub_success_test (void)
@@ -49,25 +57,25 @@ stub_success_test (void)
 static void
 stub_failure_test (void)
 {
-    cut_fail("This test should fail");
+    MARK_FAIL(cut_fail("This test should fail"));
 }
 
 static void
 stub_error_test (void)
 {
-    cut_error("This test should error");
+    MARK_FAIL(cut_error("This test should error"));
 }
 
 static void
 stub_pending_test (void)
 {
-    cut_pend("This test has been pending ever!");
+    MARK_FAIL(cut_pend("This test has been pending ever!"));
 }
 
 static void
 stub_notification_test (void)
 {
-    cut_notify("This test has been notifable ever!");
+    MARK_FAIL(cut_notify("This test has been notifable ever!"));
 }
 
 void
@@ -121,6 +129,21 @@ run (void)
     g_object_unref(test_context);
     test_context = NULL;
     return success;
+}
+
+static const gchar *
+fill_fail_line (const gchar *string)
+{
+  const gchar *filled_string;
+  gchar *line_value;
+
+  line_value = g_strdup_printf("<line>%d</line>", fail_line);
+  filled_string = cut_take_replace(string,
+                                   "<line>.+?</line>",
+                                   line_value);
+  g_free(line_value);
+
+  return filled_string;
 }
 
 static const gchar *
@@ -191,7 +214,7 @@ test_report_success (void)
 void
 test_report_failure (void)
 {
-    gchar expected[] =
+    const gchar *expected_template =
         "  <result>\n"
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
@@ -208,7 +231,7 @@ test_report_failure (void)
         "    <backtrace>\n"
         "      <entry>\n"
         "        <file>" __FILE__ "</file>\n"
-        "        <line>28</line>\n"
+        "        <line>0</line>\n"
         "        <info>" FUNCTION("stub_failure_test") ": "
                       "cut_fail(&quot;This test should fail&quot;)</info>\n"
         "      </entry>\n"
@@ -216,6 +239,7 @@ test_report_failure (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    const gchar *expected;
     gchar *result;
     const gchar *normalized_result;
 
@@ -228,6 +252,7 @@ test_report_failure (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
+    expected = fill_fail_line(expected_template);
     result = cut_report_get_failure_results(report);
     normalized_result = normalize_result(result);
     g_free(result);
@@ -237,7 +262,7 @@ test_report_failure (void)
 void
 test_report_pending (void)
 {
-    gchar expected[] =
+    const gchar *expected_template =
         "  <result>\n"
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
@@ -254,7 +279,7 @@ test_report_pending (void)
         "    <backtrace>\n"
         "      <entry>\n"
         "        <file>" __FILE__ "</file>\n"
-        "        <line>40</line>\n"
+        "        <line>0</line>\n"
         "        <info>" FUNCTION("stub_pending_test") ": "
                   "cut_pend(&quot;This test has been pending ever!&quot;)"
                 "</info>\n"
@@ -263,6 +288,7 @@ test_report_pending (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    const gchar *expected;
     gchar *result;
     const gchar *normalized_result;
 
@@ -275,6 +301,7 @@ test_report_pending (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
+    expected = fill_fail_line(expected_template);
     result = cut_report_get_pending_results(report);
     normalized_result = normalize_result(result);
     g_free(result);
@@ -284,7 +311,7 @@ test_report_pending (void)
 void
 test_report_notification (void)
 {
-    gchar expected[] =
+    const gchar *expected_template =
         "  <result>\n"
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
@@ -301,7 +328,7 @@ test_report_notification (void)
         "    <backtrace>\n"
         "      <entry>\n"
         "        <file>" __FILE__ "</file>\n"
-        "        <line>46</line>\n"
+        "        <line>0</line>\n"
         "        <info>" FUNCTION("stub_notification_test") ": "
                   "cut_notify(&quot;This test has been "
                                    "notifable ever!&quot;)"
@@ -311,6 +338,7 @@ test_report_notification (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    const gchar *expected;
     gchar *result;
     const gchar *normalized_result;
 
@@ -323,6 +351,7 @@ test_report_notification (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
+    expected = fill_fail_line(expected_template);
     result = cut_report_get_notification_results(report);
     normalized_result = normalize_result(result);
     g_free(result);
@@ -332,7 +361,7 @@ test_report_notification (void)
 void
 test_report_error (void)
 {
-    gchar expected[] =
+    const gchar *expected_template =
         "  <result>\n"
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
@@ -349,7 +378,7 @@ test_report_error (void)
         "    <backtrace>\n"
         "      <entry>\n"
         "        <file>" __FILE__ "</file>\n"
-        "        <line>34</line>\n"
+        "        <line>0</line>\n"
         "        <info>" FUNCTION("stub_error_test") ": "
                       "cut_error(&quot;This test should error&quot;)"
                 "</info>\n"
@@ -358,6 +387,7 @@ test_report_error (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    const gchar *expected;
     gchar *result;
     const gchar *normalized_result;
 
@@ -370,6 +400,7 @@ test_report_error (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
+    expected = fill_fail_line(expected_template);
     result = cut_report_get_error_results(report);
     normalized_result = normalize_result(result);
     g_free(result);
@@ -379,7 +410,7 @@ test_report_error (void)
 void
 test_plural_reports (void)
 {
-    gchar expected[] =
+    const gchar *expected_template =
         "  <result>\n"
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
@@ -411,7 +442,7 @@ test_plural_reports (void)
         "    <backtrace>\n"
         "      <entry>\n"
         "        <file>" __FILE__ "</file>\n"
-        "        <line>34</line>\n"
+        "        <line>0</line>\n"
         "        <info>" FUNCTION("stub_error_test") ": "
                   "cut_error(&quot;This test should error&quot;)"
                 "</info>\n"
@@ -420,6 +451,7 @@ test_plural_reports (void)
         "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
         "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    const gchar *expected;
     gchar *result;
     const gchar *normalized_result;
 
@@ -439,6 +471,7 @@ test_plural_reports (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
+    expected = fill_fail_line(expected_template);
     result = cut_report_get_all_results(report);
     normalized_result = normalize_result(result);
     g_free(result);
