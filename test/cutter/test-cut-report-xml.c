@@ -1,3 +1,21 @@
+/* -*- indent-tabs-mode: nil; c-basic-offset: 4 -*- */
+/*
+ *  Copyright (C) 2009-2012  Kouhei Sutou <kou@clear-code.com>
+ *
+ *  This library is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This library is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include <cutter.h>
 #include <cutter/cut-test-runner.h>
 #include <cutter/cut-listener.h>
@@ -99,6 +117,22 @@ run (void)
     return success;
 }
 
+static const gchar *
+normalize_result (const gchar *result)
+{
+  const gchar *normalized_result;
+
+  normalized_result = result;
+  normalized_result = cut_take_replace(normalized_result,
+                                       ISO8601_PATTERN,
+                                       "1970-01-01T00:00:00Z");
+  normalized_result = cut_take_replace(normalized_result,
+                                       "<elapsed>.+?</elapsed>",
+                                       "<elapsed>0.0</elapsed>");
+
+  return normalized_result;
+}
+
 void
 test_report_success (void)
 {
@@ -107,16 +141,16 @@ test_report_success (void)
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
         "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>stub-success-test</name>\n"
         "      <description>A success test</description>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "      <option>\n"
         "        <name>price</name>\n"
-        "        <value>\\$199</value>\n"
+        "        <value>$199</value>\n"
         "      </option>\n"
         "      <option>\n"
         "        <name>bug</name>\n"
@@ -124,9 +158,11 @@ test_report_success (void)
         "      </option>\n"
         "    </test>\n"
         "    <status>success</status>\n"
-        "    <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "    <elapsed>.+?</elapsed>\n"
+        "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    gchar *result;
+    const gchar *normalized_result;
 
     test = cut_test_new("stub-success-test", stub_success_test);
     cut_test_set_attribute(test, "description", "A success test");
@@ -140,7 +176,10 @@ test_report_success (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_match_with_free(expected, cut_report_get_success_results(report));
+    result = cut_report_get_success_results(report);
+    normalized_result = normalize_result(result);
+    g_free(result);
+    cut_assert_equal_string(expected, normalized_result);
 }
 
 void
@@ -151,26 +190,28 @@ test_report_failure (void)
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
         "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>stub-failure-test</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test>\n"
         "    <status>failure</status>\n"
         "    <detail>This test should fail</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml\\.c</file>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
         "        <line>28</line>\n"
-        "        <info>stub_failure_test\\(\\): "
-                      "cut_fail\\(&quot;This test should fail&quot;\\)</info>\n"
+        "        <info>stub_failure_test(): "
+                      "cut_fail(&quot;This test should fail&quot;)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "    <elapsed>.+?</elapsed>\n"
+        "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    gchar *result;
+    const gchar *normalized_result;
 
     test = cut_test_new("stub-failure-test", stub_failure_test);
     g_signal_connect_after(test, "failure",
@@ -181,8 +222,10 @@ test_report_failure (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_match_with_free(expected,
-                               cut_report_get_failure_results(report));
+    result = cut_report_get_failure_results(report);
+    normalized_result = normalize_result(result);
+    g_free(result);
+    cut_assert_equal_string(expected, normalized_result);
 }
 
 void
@@ -193,27 +236,29 @@ test_report_pending (void)
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
         "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>stub-pending-test</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test>\n"
         "    <status>pending</status>\n"
         "    <detail>This test has been pending ever!</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml\\.c</file>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
         "        <line>40</line>\n"
-        "        <info>stub_pending_test\\(\\): "
-                  "cut_pend\\(&quot;This test has been pending ever!&quot;\\)"
+        "        <info>stub_pending_test(): "
+                  "cut_pend(&quot;This test has been pending ever!&quot;)"
                 "</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "    <elapsed>.+?</elapsed>\n"
+        "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    gchar *result;
+    const gchar *normalized_result;
 
     test = cut_test_new("stub-pending-test", stub_pending_test);
     g_signal_connect_after(test, "pending",
@@ -224,8 +269,10 @@ test_report_pending (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_match_with_free(expected,
-                               cut_report_get_pending_results(report));
+    result = cut_report_get_pending_results(report);
+    normalized_result = normalize_result(result);
+    g_free(result);
+    cut_assert_equal_string(expected, normalized_result);
 }
 
 void
@@ -236,28 +283,30 @@ test_report_notification (void)
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
         "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>stub-notification-test</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test>\n"
         "    <status>notification</status>\n"
         "    <detail>This test has been notifable ever!</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml\\.c</file>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
         "        <line>46</line>\n"
-        "        <info>stub_notification_test\\(\\): "
-                  "cut_notify\\(&quot;This test has been "
-                                     "notifable ever!&quot;\\)"
+        "        <info>stub_notification_test(): "
+                  "cut_notify(&quot;This test has been "
+                                   "notifable ever!&quot;)"
                 "</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "    <elapsed>.+?</elapsed>\n"
+        "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    gchar *result;
+    const gchar *normalized_result;
 
     test = cut_test_new("stub-notification-test", stub_notification_test);
     g_signal_connect_after(test, "notification",
@@ -268,8 +317,10 @@ test_report_notification (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_match_with_free(expected,
-                               cut_report_get_notification_results(report));
+    result = cut_report_get_notification_results(report);
+    normalized_result = normalize_result(result);
+    g_free(result);
+    cut_assert_equal_string(expected, normalized_result);
 }
 
 void
@@ -280,27 +331,29 @@ test_report_error (void)
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
         "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>stub-error-test</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test>\n"
         "    <status>error</status>\n"
         "    <detail>This test should error</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml\\.c</file>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
         "        <line>34</line>\n"
-        "        <info>stub_error_test\\(\\): "
-                      "cut_error\\(&quot;This test should error&quot;\\)"
+        "        <info>stub_error_test(): "
+                      "cut_error(&quot;This test should error&quot;)"
                 "</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "    <elapsed>.+?</elapsed>\n"
+        "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    gchar *result;
+    const gchar *normalized_result;
 
     test = cut_test_new("stub-error-test", stub_error_test);
     g_signal_connect_after(test, "error",
@@ -311,7 +364,10 @@ test_report_error (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_match_with_free(expected, cut_report_get_error_results(report));
+    result = cut_report_get_error_results(report);
+    normalized_result = normalize_result(result);
+    g_free(result);
+    cut_assert_equal_string(expected, normalized_result);
 }
 
 void
@@ -321,43 +377,45 @@ test_plural_reports (void)
         "  <result>\n"
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>stub-success-test</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test>\n"
         "    <status>success</status>\n"
-        "    <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "    <elapsed>.+?</elapsed>\n"
+        "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "    <elapsed>0.0</elapsed>\n"
         "  </result>\n"
         "  <result>\n"
         "    <test-case>\n"
         "      <name>stub test case</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test-case>\n"
         "    <test>\n"
         "      <name>stub-error-test</name>\n"
-        "      <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "      <elapsed>.+?</elapsed>\n"
+        "      <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "      <elapsed>0.0</elapsed>\n"
         "    </test>\n"
         "    <status>error</status>\n"
         "    <detail>This test should error</detail>\n"
         "    <backtrace>\n"
         "      <entry>\n"
-        "        <file>test-cut-report-xml\\.c</file>\n"
+        "        <file>test-cut-report-xml.c</file>\n"
         "        <line>34</line>\n"
-        "        <info>stub_error_test\\(\\): "
-                  "cut_error\\(&quot;This test should error&quot;\\)"
+        "        <info>stub_error_test(): "
+                  "cut_error(&quot;This test should error&quot;)"
                 "</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
-        "    <start-time>" ISO8601_PATTERN "</start-time>\n"
-        "    <elapsed>.+?</elapsed>\n"
+        "    <start-time>1970-01-01T00:00:00Z</start-time>\n"
+        "    <elapsed>0.0</elapsed>\n"
         "  </result>\n";
+    gchar *result;
+    const gchar *normalized_result;
 
     test = cut_test_new("stub-success-test", stub_success_test);
     g_signal_connect_after(test, "success",
@@ -375,7 +433,10 @@ test_plural_reports (void)
                                          G_CALLBACK(cb_test_signal),
                                          NULL);
 
-    cut_assert_match_with_free(expected, cut_report_get_all_results(report));
+    result = cut_report_get_all_results(report);
+    normalized_result = normalize_result(result);
+    g_free(result);
+    cut_assert_equal_string(expected, normalized_result);
 }
 
 /*
