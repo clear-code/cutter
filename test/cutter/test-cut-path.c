@@ -11,6 +11,12 @@
 
 #include "../lib/cuttest-assertions.h"
 
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name
+#endif
+
 void test_run (void);
 
 static CutRunContext *pipeline;
@@ -62,7 +68,7 @@ test_run (void)
         NULL, NULL,
         cut_take_printf("%s" G_DIR_SEPARATOR_S "parent" G_DIR_SEPARATOR_S "sub"
                         G_DIR_SEPARATOR_S "test-deep.c:%d", test_dir, 12),
-        "test_fail_in_deep_path",
+        FUNCTION("test_fail_in_deep_path"),
         NULL);
 }
 
