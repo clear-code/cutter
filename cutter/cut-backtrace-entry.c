@@ -352,8 +352,13 @@ cut_backtrace_entry_to_xml_string (CutBacktraceEntry *entry, GString *string,
 
     if (priv->line > 0)
         line_string = g_strdup_printf("%d", priv->line);
-    if (priv->function)
-        info_string = g_strdup_printf("%s()", priv->function);
+    if (priv->function) {
+        if (g_str_has_suffix(priv->function, ")")) {
+            info_string = strdup(priv->function);
+        } else {
+            info_string = g_strdup_printf("%s()", priv->function);
+        }
+    }
     if (priv->info) {
         if (info_string) {
             gchar *function_string = info_string;
