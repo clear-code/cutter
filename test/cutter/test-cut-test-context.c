@@ -7,6 +7,12 @@
 
 #include "../lib/cuttest-assertions.h"
 
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name
+#endif
+
 void test_set_data (void);
 void test_set_failed (void);
 void test_simple_xml (void);
@@ -304,8 +310,8 @@ test_relative_path (void)
         NULL,
         "always fail",
         NULL, NULL,
-        assert_location, "cut_assert_always_fail",
-        test_location, "test_fail",
+        assert_location, FUNCTION("cut_assert_always_fail"),
+        test_location, FUNCTION("test_fail"),
         NULL);
 }
 
