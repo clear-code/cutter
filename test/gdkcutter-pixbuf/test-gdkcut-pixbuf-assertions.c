@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2012  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,6 +44,12 @@ static gint fail_line;
 } while (0)
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name
+#endif
+
 
 static gboolean
 run (void)
@@ -160,7 +166,8 @@ test_equal (void)
                            NULL,
                            message,
                            NULL, NULL,
-                           FAIL_LOCATION, "stub_equal",
+                           FAIL_LOCATION,
+                           FUNCTION("stub_equal"),
                            NULL);
 }
 
