@@ -4,6 +4,7 @@
 *.exe
 .deps
 .libs
+*~
 /.gdb_history
 /aclocal.m4
 /autom4te.cache
