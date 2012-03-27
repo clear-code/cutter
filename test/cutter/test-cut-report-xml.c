@@ -29,6 +29,12 @@ void test_report_pending (void);
 void test_report_notification (void);
 void test_plural_reports (void);
 
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "()"
+#else
+#  define FUNCTION(name) name "()"
+#endif
+
 static CutRunContext *run_context;
 static CutReport *report;
 static CutTest *test;
@@ -203,7 +209,7 @@ test_report_failure (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml.c</file>\n"
         "        <line>28</line>\n"
-        "        <info>stub_failure_test(): "
+        "        <info>" FUNCTION("stub_failure_test") ": "
                       "cut_fail(&quot;This test should fail&quot;)</info>\n"
         "      </entry>\n"
         "    </backtrace>\n"
@@ -249,7 +255,7 @@ test_report_pending (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml.c</file>\n"
         "        <line>40</line>\n"
-        "        <info>stub_pending_test(): "
+        "        <info>" FUNCTION("stub_pending_test") ": "
                   "cut_pend(&quot;This test has been pending ever!&quot;)"
                 "</info>\n"
         "      </entry>\n"
@@ -296,7 +302,7 @@ test_report_notification (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml.c</file>\n"
         "        <line>46</line>\n"
-        "        <info>stub_notification_test(): "
+        "        <info>" FUNCTION("stub_notification_test") ": "
                   "cut_notify(&quot;This test has been "
                                    "notifable ever!&quot;)"
                 "</info>\n"
@@ -344,7 +350,7 @@ test_report_error (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml.c</file>\n"
         "        <line>34</line>\n"
-        "        <info>stub_error_test(): "
+        "        <info>" FUNCTION("stub_error_test") ": "
                       "cut_error(&quot;This test should error&quot;)"
                 "</info>\n"
         "      </entry>\n"
@@ -406,7 +412,7 @@ test_plural_reports (void)
         "      <entry>\n"
         "        <file>test-cut-report-xml.c</file>\n"
         "        <line>34</line>\n"
-        "        <info>stub_error_test(): "
+        "        <info>" FUNCTION("stub_error_test") ": "
                   "cut_error(&quot;This test should error&quot;)"
                 "</info>\n"
         "      </entry>\n"
