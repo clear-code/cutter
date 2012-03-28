@@ -10,7 +10,7 @@
 #ifdef __clang__
 #  define FUNCTION(name) "void " name "()"
 #else
-#  define FUNCTION(name) name
+#  define FUNCTION(name) name "()"
 #endif
 
 void test_set_data (void);
