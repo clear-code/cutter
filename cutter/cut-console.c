@@ -33,8 +33,9 @@ cut_console_guess_color_usability (void)
 
     term = g_getenv("TERM");
     if (term && (g_str_has_suffix(term, "term") ||
-                 g_str_has_suffix(term, "term-color") ||
-                 g_str_equal(term, "screen") ||
+                 g_str_has_suffix(term, "-color") ||
+                 g_str_has_suffix(term, "-256color") ||
+                 g_str_has_prefix(term, "screen") ||
                  g_str_equal(term, "linux")))
         return TRUE;
 
