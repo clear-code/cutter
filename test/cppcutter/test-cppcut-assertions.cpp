@@ -411,7 +411,7 @@ namespace cppcut_assertion_equal
     stub_string (void)
     {
         std::string expected("abcde");
-        std::string actual_same(cut_take_printf(expected.c_str()));
+        std::string actual_same(cut_take_printf("%s", expected.c_str()));
         std::string actual_different("ABcDE");
         cppcut_assert_equal(expected, actual_same);
         MARK_FAIL(cppcut_assert_equal(expected, actual_different));
