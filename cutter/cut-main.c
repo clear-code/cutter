@@ -470,7 +470,7 @@ cut_start_run_context (CutRunContext *run_context)
 {
     gboolean success;
     GList *listeners;
-    CutUI *ui;
+    CutUI *ui = NULL;
 
     if (!initialized) {
         g_warning("not initialized");
