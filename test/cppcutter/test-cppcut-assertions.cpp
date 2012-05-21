@@ -572,7 +572,7 @@ namespace cppcut_assertion_not_equal
         cppcut_assert_not_equal(G_MININT64, G_MININT64 + 1);
         MARK_FAIL(cppcut_assert_not_equal(G_MININT64, G_MININT64));
 #else
-        cppcut_assert_not_equal(G_MININT32, G_MININT32 - 1);
+        cppcut_assert_not_equal(G_MININT32, G_MININT32 + 1);
         MARK_FAIL(cppcut_assert_not_equal(G_MININT32, G_MININT32));
 #endif
     }
