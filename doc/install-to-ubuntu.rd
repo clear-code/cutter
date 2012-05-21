@@ -41,8 +41,7 @@ Cutter packages are signed by key of
 kou@cozmixng.org/kou@clear-code.com. If we trust the key, we
 can register the key:
 
-  % gpg --keyserver hkp://subkeys.pgp.net --recv-keys 1C837F31
-  % gpg --export 1C837F31 | sudo apt-key add -
+  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C837F31
 
 If we register the key, we can install Cutter by aptitude:
 

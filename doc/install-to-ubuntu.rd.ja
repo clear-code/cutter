@@ -41,8 +41,7 @@ Oneiricの場合は以下のapt lineを書いた
 パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン
 しています。信用する場合は鍵を登録します。
 
-  % gpg --keyserver hkp://subkeys.pgp.net --recv-keys 1C837F31
-  % gpg --export 1C837F31 | sudo apt-key add -
+  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C837F31
 
 鍵を登録したらaptitudeでインストールできます。
 
