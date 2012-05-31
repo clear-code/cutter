@@ -214,6 +214,8 @@ cut_crash_backtrace_new (jmp_buf *jump_buffer)
     i_will_be_back_action->sa_flags = 0;
     if (sigaction(SIGSEGV, i_will_be_back_action, previous_segv_action) == -1)
         crash_backtrace->set_segv_action = FALSE;
+    if (sigaction(SIGBUS, i_will_be_back_action, previous_segv_action) == -1)
+        crash_backtrace->set_segv_action = FALSE;
     if (sigaction(SIGABRT, i_will_be_back_action, previous_abort_action) == -1)
         crash_backtrace->set_abort_action = FALSE;
     if (sigaction(SIGTERM, i_will_be_back_action,
@@ -240,6 +242,8 @@ cut_crash_backtrace_free (CutCrashBacktrace *crash_backtrace)
         sigaction(SIGABRT, &(crash_backtrace->previous_abort_action), NULL);
     if (crash_backtrace->set_segv_action)
         sigaction(SIGSEGV, &(crash_backtrace->previous_segv_action), NULL);
+    if (crash_backtrace->set_segv_action)
+        sigaction(SIGBUS, &(crash_backtrace->previous_segv_action), NULL);
 
     current_crash_backtrace = crash_backtrace->previous;
 
