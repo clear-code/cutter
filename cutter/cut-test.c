@@ -479,6 +479,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     case SIGSEGV:
     case SIGABRT:
     case SIGTERM:
+    case SIGBUS:
         success = FALSE;
         {
             CutTestSuite *test_suite;

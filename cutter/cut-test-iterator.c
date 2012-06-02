@@ -292,6 +292,7 @@ run_test_without_thread (gpointer data, gpointer user_data)
     case SIGSEGV:
     case SIGABRT:
     case SIGTERM:
+    case SIGBUS:
         success = FALSE;
         cut_crash_backtrace_emit(cut_run_context_get_test_suite(run_context),
                                  test_case, CUT_TEST(iterated_test),

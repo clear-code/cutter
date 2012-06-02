@@ -387,6 +387,7 @@ cut_test_suite_run_test_cases (CutTestSuite *test_suite,
     case SIGSEGV:
     case SIGABRT:
     case SIGTERM:
+    case SIGBUS:
         all_success = FALSE;
         cut_crash_backtrace_emit(test_suite, NULL, NULL, NULL, NULL, NULL);
         break;

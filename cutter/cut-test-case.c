@@ -640,6 +640,7 @@ cut_test_case_run_tests (CutTestCase *test_case, CutRunContext *run_context,
     case SIGSEGV:
     case SIGABRT:
     case SIGTERM:
+    case SIGBUS:
         all_success = FALSE;
         cut_crash_backtrace_emit(test_suite, test_case, NULL, NULL, NULL,
                                  test_context);
