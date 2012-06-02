@@ -172,7 +172,6 @@ i_will_be_back_handler (int signum)
 {
     jmp_buf *jump_buffer;
 
-    g_print("here!\n");
     if (cut_crash_backtrace_signal_received) {
         g_print("signal received on crash\n");
         exit(EXIT_FAILURE);
