@@ -16,6 +16,14 @@ fi
 
 case `uname -s` in
     Darwin)
+        homebrew_aclocal=/usr/local/share/aclocal
+        if [ -d $homebrew_aclocal ]; then
+	  ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I $homebrew_aclocal"
+        fi
+        gettext_aclocal="$(echo /usr/local/Cellar/gettext/*/share/aclocal)"
+        if [ -d $gettext_aclocal ]; then
+	  ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I $gettext_aclocal"
+        fi
 	: ${LIBTOOLIZE=glibtoolize}
 	;;
     FreeBSD)
