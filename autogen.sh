@@ -19,7 +19,7 @@ case `uname -s` in
 	: ${LIBTOOLIZE=glibtoolize}
 	;;
     FreeBSD)
-	: ${ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I /usr/local/share/aclocal/"}
+	ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I /usr/local/share/aclocal/"
 	;;
 esac
 
