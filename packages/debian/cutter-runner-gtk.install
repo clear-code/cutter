@@ -1,2 +1,3 @@
 /usr/lib/cutter/module/ui/gtk*
 /usr/lib/cutter/module/factory/ui/gtk_*
+/usr/share/cutter/ui/gtk*
