@@ -98,6 +98,18 @@ build()
     run rm -rf ${CHROOT_BASE}/$target/tmp/${PACKAGE}-debian
     run cp -rp $source_dir/debian/ \
 	${CHROOT_BASE}/$target/tmp/${PACKAGE}-debian
+    gstreamer_install=gstreamer0.10-plugins-cutter.install
+    case ${code_name} in
+	wheezy|unstable|precise)
+	    if test "$architecture" = "amd64"; then
+		lib_architecture="x86_64-linux-gnu"
+	    else
+		lib_architecture="${architecture}-linux-gnu"
+	    fi
+	    run sed -i'' -e "s/usr\/lib/usr\/lib\/${lib_architecture}/" \
+		${CHROOT_BASE}/$target/tmp/${PACKAGE}-debian/$gstreamer_install
+	    ;;
+    esac
     run echo $PACKAGE > ${CHROOT_BASE}/$target/tmp/build-package
     run echo $VERSION > ${CHROOT_BASE}/$target/tmp/build-version
     run echo $build_user > ${CHROOT_BASE}/$target/tmp/build-user
