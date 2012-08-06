@@ -43,6 +43,5 @@ gtk_factory_la_SOURCES = \
 	cut-gtk-ui-factory.c
 gtk_factory_la_LIBADD = $(GTK_LIBS) $(LIBS)
 
-ui_data_DATA = gtk-menu.ui
 dist_ui_data_DATA = gtk-menu.ui
 endif
