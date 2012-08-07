@@ -52,8 +52,8 @@ $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz:
 build-keyring-deb: keyring-source
 	./build-in-chroot.sh                                    \
 	  $(KEYRING_PACKAGE) $(KEYRING_VERSION)                 \
-          $(srcdir) $(REPOSITORIES_PATH)/                       \
-          $(CHROOT_BASE) '$(ARCHITECTURES)' '$(CODE_NAMES)'
+	  $(srcdir) $(REPOSITORIES_PATH)/                       \
+	  $(CHROOT_BASE) '$(ARCHITECTURES)' '$(CODE_NAMES)'
 
 keyring-source: $(KEYRING_BASE_NAME).tar.gz
 
