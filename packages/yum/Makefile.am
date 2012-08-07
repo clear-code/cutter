@@ -55,7 +55,7 @@ build-release-rpm: RPM-GPG-KEY-$(PACKAGE)
 	  $(HAVE_DEVELOPMENT_BRANCH)
 
 RPM-GPG-KEY-$(PACKAGE):
-	./gpg-public-key.sh > $@
+	gpg --armor --export '$(GPG_UID)' > $@
 
 source: ../$(PACKAGE)-$(VERSION).tar.gz
 
