@@ -143,6 +143,9 @@ fi
 
 AC_CHECK_FUNCS([fabs], [], [AC_CHECK_LIB([m], [fabs])])
 
+GPG_UID=m4_include(gpg_uid)
+AC_SUBST(GPG_UID)
+
 dnl **************************************************************
 dnl Check for MinGW
 dnl **************************************************************
