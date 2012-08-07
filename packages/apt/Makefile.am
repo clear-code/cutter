@@ -3,6 +3,7 @@ DISTRIBUTIONS = debian ubuntu
 CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
 CODE_NAMES = squeeze wheezy unstable lucid natty oneiric precise
+REPOSITORIES_PATH = repositories
 
 release: download build update sign upload
 
@@ -15,7 +16,7 @@ sign:
 
 upload:
 	for distribution in $(DISTRIBUTIONS); do	\
-	  (cd $${distribution};				\
+	  (cd $(REPOSITORIES_PATH)/$${distribution};				\
 	   rsync -avz --delete				\
 	     .htaccess dists pool			\
 	     $(SERVER_PATH)/$${distribution};		\
@@ -27,7 +28,8 @@ download:
 	  (mkdir -p $${distribution} &&				\
 	   cd $${distribution} &&				\
 	   rm -rf pool dists &&					\
-	   rsync -avz $(SERVER_PATH)/$${distribution}/ .;	\
+	   rsync -avz $(SERVER_PATH)/$${distribution}/          \
+	   $(REPOSITORIES_PATH)/;                               \
 	  );							\
 	done
 
