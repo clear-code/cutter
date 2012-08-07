@@ -33,7 +33,9 @@ download:
 	    $(REPOSITORIES_PATH)/;                              \
 	done
 
-build: source
+build: build-package-deb build-keyring-deb
+
+build-package-deb: source
 	./build-in-chroot.sh			\
 	  $(PACKAGE) $(VERSION) $(CHROOT_BASE)	\
           $(srcdir)/.. $(REPOSITORIES_PATH)/    \
