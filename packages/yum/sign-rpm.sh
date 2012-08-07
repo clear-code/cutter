@@ -20,6 +20,6 @@ run()
 }
 
 for distribution in ${DISTRIBUTIONS}; do
-    run rpm -D "_gpg_name `$script_base_dir/gpg-uid.sh`" \
+    run rpm -D "_gpg_name ${GPG_UID}" \
 	--resign $script_base_dir/${distribution}/*/*/*/*.rpm
 done
