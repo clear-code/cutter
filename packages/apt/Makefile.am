@@ -12,7 +12,8 @@ release: download build update sign upload
 
 update:
 	./update-repository.sh \
-	  '$(SF_PROJECT_NAME)' '$(PACKAGE_TITLE)' '$(CODE_NAMES)'
+	  '$(SF_PROJECT_NAME)' '$(PACKAGE_TITLE)'       \
+	  '$(REPOSITORIES_PATH)/' '$(CODE_NAMES)'
 
 sign:
 	./sign-repository.sh '$(CODE_NAMES)'

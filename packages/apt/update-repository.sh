@@ -2,15 +2,16 @@
 
 script_base_dir=`dirname $0`
 
-if [ $# != 3 ]; then
-    echo "Usage: $0 PROJECT_NAME PACKAGE_NAME CODE_NAMES"
-    echo " e.g.: $0 'Cutter' 'Cutter' 'lenny unstable hardy lucid'"
+if [ $# != 4 ]; then
+    echo "Usage: $0 PROJECT_NAME PACKAGE_NAME DESTINATION CODES"
+    echo " e.g.: $0 'Cutter' 'Cutter' repositories/ 'squeeze wheezy unstable lucid natty oneiric precise'"
     exit 1
 fi
 
 PROJECT_NAME=$1
 PACKAGE_NAME=$2
-CODE_NAMES=$3
+DESTINATION=$3
+CODES=$4
 
 run()
 {
@@ -27,6 +28,7 @@ update_repository()
     code_name=$2
     component=$3
 
+    rm -rf dists/${code_name}
     mkdir -p dists/${code_name}/${component}/binary-i386/
     mkdir -p dists/${code_name}/${component}/binary-amd64/
     mkdir -p dists/${code_name}/${component}/source/
@@ -105,7 +107,7 @@ EOF
     mv /tmp/Release dists/${code_name}
 }
 
-for code_name in ${CODE_NAMES}; do
+for code_name in ${CODES}; do
     case ${code_name} in
 	squeeze|wheezy|unstable)
 	    distribution=debian
@@ -116,7 +118,13 @@ for code_name in ${CODE_NAMES}; do
 	    component=main
 	    ;;
     esac
-    mkdir -p ${distribution}
-    (cd ${distribution}
-	update_repository $distribution $code_name $component)
+
+    mkdir -p ${DESTINATION}${distribution}
+    (cd ${DESTINATION}${distribution}
+	update_repository $distribution $code_name $component) &
+    if [ "${PARALLEL}" != "yes" ]; then
+	wait
+    fi
 done
+
+wait
