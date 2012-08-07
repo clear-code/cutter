@@ -1,0 +1,18 @@
+Source: cutter-keyring
+Section: misc
+Priority: important
+Maintainer: cutter project <cutter-users-en@lists.sourceforge.net>
+Build-Depends:
+  debhelper (>= 7.0.50)
+Standards-Version: 3.9.1
+Homepage: http://cutter.sourceforge.net/
+
+Package: cutter-keyring
+Section: misc
+Architecture: all
+Depends:
+  ${misc:Depends},
+  gnupg
+Description: GnuPG archive key of the cutter repository
+ The cutter repository digitally signs its Release files. This
+ package contains the repository key used for that.
