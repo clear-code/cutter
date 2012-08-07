@@ -31,7 +31,7 @@ download:
 	  );							\
 	done
 
-build: build-in-chroot build-repository-rpm
+build: build-in-chroot build-release-rpm
 
 build-in-chroot: source
 	./build-in-chroot.sh			\
@@ -46,8 +46,8 @@ build-in-chroot: source
 	  '$(USE_RPMFORGE)'			\
 	  '$(USE_ATRPMS)'
 
-build-repository-rpm: RPM-GPG-KEY-$(PACKAGE)
-	./build-repository-rpm.sh		\
+build-release-rpm: RPM-GPG-KEY-$(PACKAGE)
+	./build-release-rpm.sh		\
 	  $(PACKAGE)				\
 	  '$(PACKAGE_TITLE)'			\
 	  $(BASE_URL_PREFIX)			\
