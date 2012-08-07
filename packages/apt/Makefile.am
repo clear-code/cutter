@@ -25,12 +25,9 @@ upload:
 
 download:
 	for distribution in $(DISTRIBUTIONS); do		\
-	  (mkdir -p $${distribution} &&				\
-	   cd $${distribution} &&				\
-	   rm -rf pool dists &&					\
-	   rsync -avz $(SERVER_PATH)/$${distribution}/          \
-	   $(REPOSITORIES_PATH)/;                               \
-	  );							\
+	  rsync -avz --progress --delete                        \
+            $(SERVER_PATH)/$${distribution}                     \
+	    $(REPOSITORIES_PATH)/;                              \
 	done
 
 build: source
