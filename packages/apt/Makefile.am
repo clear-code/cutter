@@ -29,7 +29,7 @@ upload:
 download:
 	for distribution in $(DISTRIBUTIONS); do		\
 	  rsync -avz --progress --delete                        \
-            $(SERVER_PATH)/$${distribution}                     \
+	    $(SERVER_PATH)/$${distribution}                     \
 	    $(REPOSITORIES_PATH)/;                              \
 	done
 
