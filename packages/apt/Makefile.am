@@ -4,6 +4,9 @@ CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
 CODE_NAMES = squeeze wheezy unstable lucid natty oneiric precise
 REPOSITORIES_PATH = repositories
+KEYRING_PACKAGE = cutter-keyring
+KEYRING_VERSION = 2012.08.29
+KEYRING_BASE_NAME = $(KEYRING_PACKAGE)-$(KEYRING_VERSION)
 
 release: download build update sign upload
 
@@ -33,6 +36,7 @@ download:
 build: source
 	./build-in-chroot.sh			\
 	  $(PACKAGE) $(VERSION) $(CHROOT_BASE)	\
+          $(srcdir)/.. $(REPOSITORIES_PATH)/    \
 	  '$(ARCHITECTURES)' '$(CODE_NAMES)'
 
 source: ../$(PACKAGE)-$(VERSION).tar.gz
@@ -42,3 +46,24 @@ source: ../$(PACKAGE)-$(VERSION).tar.gz
 
 $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz:
 	cd $(abs_top_builddir) && make dist
+
+build-keyring-deb: keyring-source
+	./build-in-chroot.sh                                    \
+	  $(KEYRING_PACKAGE) $(KEYRING_VERSION)                 \
+          $(srcdir) $(REPOSITORIES_PATH)/                       \
+          $(CHROOT_BASE) '$(ARCHITECTURES)' '$(CODE_NAMES)'
+
+keyring-source: $(KEYRING_BASE_NAME).tar.gz
+
+ensure-public-key:
+	gpg --list-keys '$(GPG_UID)' > /dev/null ||                     \
+	  gpg --keyserver keyserver.ubuntu.com --recv-key '$(GPG_UID)'
+
+$(KEYRING_BASE_NAME).tar.gz:
+	rm -rf $(KEYRING_BASE_NAME)
+	mkdir -p $(KEYRING_BASE_NAME)
+	gpg --armor --export '$(GPG_UID)' > \
+	  $(KEYRING_BASE_NAME)/groonga-keyring.gpg
+	tar cvzf $(KEYRING_BASE_NAME).tar.gz $(KEYRING_BASE_NAME)
+
+
