@@ -36,10 +36,10 @@ download:
 build: build-package-deb build-keyring-deb
 
 build-package-deb: source
-	./build-in-chroot.sh			\
-	  $(PACKAGE) $(VERSION) $(CHROOT_BASE)	\
-          $(srcdir)/.. $(REPOSITORIES_PATH)/    \
-	  '$(ARCHITECTURES)' '$(CODE_NAMES)'
+	./build-in-chroot.sh                                    \
+	  $(PACKAGE) $(VERSION)                                 \
+	  $(srcdir)/.. $(REPOSITORIES_PATH)/                    \
+	  $(CHROOT_BASE) '$(ARCHITECTURES)' '$(CODE_NAMES)'
 
 source: ../$(PACKAGE)-$(VERSION).tar.gz
 
