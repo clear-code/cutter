@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $# != 10 ]; then
+if [ $# != 11 ]; then
     echo "Usage: $0 PACKAGE VERSION SOURCE_BASE_NAME SPEC_DIR DESTINATION CHROOT_BASE ARCHITECTURES DISTRIBUTIONS HAVE_DEVELOPMENT_BRANCH USE_RPMFORGE USE_ATRPMS"
     echo " e.g.: $0 milter-manager 1.1.1 ../milter-manager ../rpm 'repositories/' /var/lib/chroot 'i386 x86_64' 'fedora centos' yes no no"
     exit 1
