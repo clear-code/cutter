@@ -42,15 +42,11 @@ if test "${PACKAGE}" = "cutter"; then
     if test ${ARCHITECTURE} = "amd64"; then
         ARCHITECTURE="x86_64";
     fi
-    case ${CODE_NAME} in
-        wheezy|unstable|precise)
-            if [ -d "/usr/lib/${ARCHITECTURE}-linux-gnu" ]; then
-                LIB_ARCHITECTURE="${ARCHITECTURE}-linux-gnu"
-                sed -i'' -e "s/usr\/lib/usr\/lib\/${LIB_ARCHITECTURE}/" \
-                    /tmp/${PACKAGE}-debian/${GSTREAMER_INSTALL}
-            fi
-            ;;
-    esac
+    if [ -d "/usr/lib/${ARCHITECTURE}-linux-gnu" ]; then
+        LIB_ARCHITECTURE="${ARCHITECTURE}-linux-gnu"
+        sed -i'' -e "s/usr\/lib/usr\/lib\/${LIB_ARCHITECTURE}/" \
+            /tmp/${PACKAGE}-debian/${GSTREAMER_INSTALL}
+    fi
 fi
 
 cat <<EOF > $BUILD_SCRIPT
