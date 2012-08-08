@@ -1,4 +1,5 @@
 SERVER_PATH = $(SF_FRS)
+REPOSITORIES_PATH = repositories
 DISTRIBUTIONS = fedora centos
 ARCHITECTURES = i386 x86_64
 CHROOT_BASE = /var/lib/chroot
@@ -6,21 +7,22 @@ BASE_URL_PREFIX = http://downloads.sourceforge.net/project/$(PACKAGE)
 HAVE_DEVELOPMENT_BRANCH = no
 USE_RPMFORGE = no
 USE_ATRPMS = no
-REPOSITORIES_PATH = repositories
 
-release: download build sign update upload
+release: download build sign-packages update-repository upload
 
-sign:
-	./sign-rpm.sh '$(DISTRIBUTIONS)'
+sign-packages:
+	./sign-rpm.sh '$(GPG_UID)' '$(REPOSITORIES_PATH)/' \
+	  '$(DISTRIBUTIONS)'
 
-update:
-	./update-repository.sh $(PACKAGE) '$(DISTRIBUTIONS)'
+update-repository:
+	./update-repository.sh '$(PACKAGE)' '$(REPOSITORIES_PATH)/' \
+	  '$(DISTRIBUTIONS)'
 
 upload:
 	for distribution in $(DISTRIBUTIONS); do		\
-	  rsync -avz --delete					\
-	    --exclude .gitignore --exclude .svn			\
-	    $${distribution}/ $(SERVER_PATH)/$${distribution};	\
+	  rsync -avz --progress --delete --exclude .gitignore	\
+	    $(REPOSITORIES_PATH)/$${distribution}/		\
+	    $(SERVER_PATH)/$${distribution};			\
 	done
 
 download:
@@ -52,10 +54,15 @@ build-release-rpm: RPM-GPG-KEY-$(PACKAGE)
 	  $(PACKAGE)				\
 	  '$(PACKAGE_TITLE)'			\
 	  $(BASE_URL_PREFIX)			\
+	  $(REPOSITORIES_PATH)/			\
 	  '$(DISTRIBUTIONS)'			\
 	  $(HAVE_DEVELOPMENT_BRANCH)
 
-RPM-GPG-KEY-$(PACKAGE):
+ensure-public-key:
+	gpg --list-keys '$(GPG_UID)' > /dev/null ||			\
+	  gpg --keyserver keyserver.ubuntu.com --recv-key '$(GPG_UID)'
+
+RPM-GPG-KEY-$(PACKAGE): ensure-public-key
 	gpg --armor --export '$(GPG_UID)' > $@
 
 source: ../$(PACKAGE)-$(VERSION).tar.gz
@@ -64,4 +71,4 @@ source: ../$(PACKAGE)-$(VERSION).tar.gz
 	ln -s $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz ../
 
 $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz:
-	cd $(abs_top_builddir) && make dist
+	cd $(abs_top_builddir) && $(MAKE) dist
