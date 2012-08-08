@@ -39,6 +39,7 @@ build-in-chroot: source
 	  $(VERSION)				\
 	  $(top_builddir)/$(PACKAGE)		\
 	  ../rpm				\
+	  $(REPOSITORIES_PATH)/                 \
 	  $(CHROOT_BASE)			\
 	  '$(ARCHITECTURES)'			\
 	  '$(DISTRIBUTIONS)'			\
