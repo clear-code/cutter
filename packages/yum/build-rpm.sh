@@ -71,8 +71,10 @@ EOF
     yum_options="$yum_options --enablerepo=atrpms"
 fi
 
+rpmbuild_options="${BUILD_OPTIONS}"
+
 run yum update ${yum_options} -y
-run yum install ${yum_options} -y rpm-build tar ${DEPENDED_PACKAGES}
+run yum install ${yum_options} -y rpm-build rpmdevtools tar ${DEPENDED_PACKAGES}
 run yum clean ${yum_options} packages
 
 if ! id $USER_NAME >/dev/null 2>&1; then
@@ -82,21 +84,24 @@ fi
 cat <<EOF > $BUILD_SCRIPT
 #!/bin/sh
 
-if [ ! -f ~/.rpmmacros ]; then
+if [ -x /usr/bin/rpmdev-setuptree ]; then
+    rm -rf .rpmmacros
+    rpmdev-setuptree
+else
     cat <<EOM > ~/.rpmmacros
-%_topdir \$HOME/rpm
+%_topdir \$HOME/rpmbuild
 EOM
-fi
 
-mkdir -p rpm/SOURCES
-mkdir -p rpm/SPECS
-mkdir -p rpm/BUILD
-mkdir -p rpm/RPMS
-mkdir -p rpm/SRPMS
+    mkdir -p rpmbuild/SOURCES
+    mkdir -p rpmbuild/SPECS
+    mkdir -p rpmbuild/BUILD
+    mkdir -p rpmbuild/RPMS
+    mkdir -p rpmbuild/SRPMS
+fi
 
 if test -f /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm; then
     if ! rpm -Uvh /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm; then
-        cd rpm/SOURCES
+        cd rpmbuild/SOURCES
         rpm2cpio /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm | cpio -id
         if ! yum info tcp_wrappers-devel >/dev/null 2>&1; then
             sed -i'' -e 's/tcp_wrappers-devel/tcp_wrappers/g' ${PACKAGE}.spec
@@ -109,13 +114,13 @@ if test -f /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm; then
         cd
     fi
 else
-    cp /tmp/${SOURCE_BASE_NAME}-$VERSION.* rpm/SOURCES/
-    cp /tmp/${PACKAGE}.spec rpm/SPECS/
+    cp /tmp/${SOURCE_BASE_NAME}-$VERSION.* rpmbuild/SOURCES/
+    cp /tmp/${PACKAGE}.spec rpmbuild/SPECS/
 fi
 
-chmod o+rx . rpm rpm/RPMS rpm/SRPMS
+chmod o+rx . rpmbuild rpmbuild/RPMS rpmbuild/SRPMS
 
-rpmbuild -ba rpm/SPECS/${PACKAGE}.spec ${BUILD_OPTIONS}
+rpmbuild -ba ${rpmbuild_options} rpmbuild/SPECS/${PACKAGE}.spec
 EOF
 
 run chmod +x $BUILD_SCRIPT
