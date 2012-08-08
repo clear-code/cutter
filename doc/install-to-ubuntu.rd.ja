@@ -11,7 +11,7 @@ UbuntuへのCutterのインストール方法を説明します。
 CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
-現在は、Ubuntu Lucid Lynx/Natty Narwhal i386/amd64
+現在は、Ubuntu Lucid Lynx/Natty Narwhal/Oneiric Ocelot/Precise Pangolin i386/amd64
 用のパッケージのみ提供しています。他のバージョンが必要な場合
 は((<メーリングリスト
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
@@ -38,12 +38,20 @@ Oneiricの場合は以下のapt lineを書いた
   deb http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
   deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
 
-パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン
-しています。信用する場合は鍵を登録します。
+Preciseの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
 
-  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C837F31
+/etc/apt/sources.list.d/cutter.list:
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
 
-鍵を登録したらaptitudeでインストールできます。
+Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
+cutter-keyringパッケージをインストールして鍵を登録してください。
+
+  % sudo aptitude update
+  % sudo aptitude -V -D -y --allow-untrusted install cutter-keyring
+
+cutter-keyringパッケージをインストール後はaptitudeでインストールできます。
 
   % sudo aptitude update
   % sudo aptitude -V -D install cutter-testing-framework

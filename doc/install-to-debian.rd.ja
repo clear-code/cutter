@@ -38,12 +38,13 @@ sidの場合は以下のapt lineを書いた
   deb http://downloads.sourceforge.net/project/cutter/debian/ unstable main
   deb-src http://downloads.sourceforge.net/project/cutter/debian/ unstable main
 
-パッケージはkou@cozmixng.org/kou@clear-code.comの鍵でサイン
-しています。信用する場合は鍵を登録します。
+Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
+cutter-keyringパッケージをインストールして鍵を登録してください。
 
-  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C837F31
+  % sudo aptitude update
+  % sudo aptitude -V -D -y --allow-untrusted install cutter-keyring
 
-鍵を登録したらaptitudeでインストールできます。
+cutter-keyringパッケージをインストール後はaptitudeでインストールできます。
 
   % sudo aptitude update
   % sudo aptitude -V -D install cutter-testing-framework

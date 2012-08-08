@@ -13,7 +13,7 @@ CutterのYumリポジトリが提供されているので、yumでインスト�
 
 まず、Yumリポジトリを登録します。
 
-  % sudo rpm -Uvh http://cutter.sourceforge.net/fedora/cutter-repository-1.0.0-1.noarch.rpm
+  % sudo rpm -Uvh http://cutter.sourceforge.net/fedora/cutter-release-1.1.0-0.noarch.rpm
 
 Yumリポジトリを登録したらyumでインストールできます。
 

@@ -37,13 +37,13 @@ Here are apt lines for for sid. We put them into
   deb http://downloads.sourceforge.net/project/cutter/debian/ unstable main
   deb-src http://downloads.sourceforge.net/project/cutter/debian/ unstable main
 
-Cutter packages are signed by key of
-kou@cozmixng.org/kou@clear-code.com. If we trust the key, we
-can register the key:
+Cutter packages are signed by key of cutter-keyring.
+Register the key by installing cutter-keyring package.
 
-  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C837F31
+  % sudo aptitude update
+  % sudo aptitude -V -D -y --allow-untrusted install cutter-keyring
 
-If we register the key, we can install Cutter by aptitude:
+If you install the keyring package, you can install Cutter by aptitude:
 
   % sudo aptitude update
   % sudo aptitude -V -D install cutter-testing-framework
