@@ -2,6 +2,61 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-2-1] 1.2.1: 2012-08-XX
+
+We improved Clang support and fixed bugs.
+
+=== Cutter
+
+==== Improvements
+
+  * [UI][GTK+] Supported GTK+ < 2.22 for Debian GNU/Linux squeeze.
+  * [UI][console] Supported growlnotify.exe for windows.
+  * Improved not to use SIGCHLD for explicit longjmp() to work on MinGW.
+  * [UI][GTK+] Added menubar.
+  * [UI][GTK+] Improved to log an error message for showing URI.
+  * [UI][GTK+] Supported --with-fallback-browser option to costomize
+    fallback browser.
+  * [Clang][Test] Improved not to embed line number as literal.
+  * Improved to use "()" as a part of function.
+  * [UI][console] Added more color acceptable TERMs
+    (xterm-256color, screen-256color, screen-color)
+  * Added Travis CI integration.
+  * [doc] Improved to use apt-key command.
+  * Supported Ubuntu Precise.
+  * Supported backtrace on SIGBUS [Patch by Kiwamu Okabe]
+  * Added Homebrew related paths by default on Mac OS X.
+
+==== Changes
+
+  * [doc][Mac OS X] Recommended to use the official MacPorts repository.
+    [Suggested by Hiroshi Umemoto]
+  * Supported Fedora 17.
+  * Dropped Fedora 16 support.
+  * Supported Ubuntu Precise.
+  * [Clang][Test] Changed to require return value and "()" for function name.
+  * [Clang][Test] Changed to require return value and "(gconstpointer)"
+    for function name.
+
+==== Fixes
+
+  * [UI][console][win32] Fixed memory leaks if you used growlnotify.
+  * [UI][GTK+] Fixed memory leaks.
+  * [Clang] Fixed not to add extra "()" for function name.
+  * [Clang][test] Fixed to add "void " as return value.
+  * Fixed a bug that ACLOCAL_OPTIONS is ignored on FreeBSD.
+
+=== CppCutter
+
+==== Improvements
+
+  * Supported nested namespace test case built by g++
+
+=== Thanks
+
+  * Hiroshi Umemoto
+  * Kiwamu Okabe
+
 == [release-1-2-0] 1.2.0: 2011-12-31
 
 We improved C++ support and test runner interface.
