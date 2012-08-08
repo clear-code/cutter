@@ -42,7 +42,7 @@ if test "${PACKAGE}" = "cutter"; then
     if test ${ARCHITECTURE} = "amd64"; then
         ARCHITECTURE="x86_64";
     fi
-    if [ -d "/usr/lib/${ARCHITECTURE}-linux-gnu" ]; then
+    if [ -d "/usr/lib/${ARCHITECTURE}-linux-gnu/gstreamer-0.10" ]; then
         LIB_ARCHITECTURE="${ARCHITECTURE}-linux-gnu"
         sed -i'' -e "s/usr\/lib/usr\/lib\/${LIB_ARCHITECTURE}/" \
             /tmp/${PACKAGE}-debian/${GSTREAMER_INSTALL}
