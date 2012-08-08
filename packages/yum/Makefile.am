@@ -6,6 +6,7 @@ BASE_URL_PREFIX = http://downloads.sourceforge.net/project/$(PACKAGE)
 HAVE_DEVELOPMENT_BRANCH = no
 USE_RPMFORGE = no
 USE_ATRPMS = no
+REPOSITORIES_PATH = repositories
 
 release: download build sign update upload
 
@@ -23,12 +24,11 @@ upload:
 	done
 
 download:
-	for distribution in $(DISTRIBUTIONS); do		\
-	  (rm -rf $${distribution} &&				\
-	   mkdir -p $${distribution} &&				\
-	   rsync -avz						\
-	     $(SERVER_PATH)/$${distribution}/ $${distribution};	\
-	  );							\
+	mkdir -p $(REPOSITORIES_PATH)
+	for distribution in $(DISTRIBUTIONS); do                \
+	  rsync -avz --progress --delete                        \
+	    $(SERVER_PATH)/$${distribution}/                    \
+	    $(REPOSITORIES_PATH)/$${distribution};              \
 	done
 
 build: build-in-chroot build-release-rpm
