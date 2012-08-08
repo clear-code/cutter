@@ -3,14 +3,14 @@
 script_base_dir=`dirname $0`
 
 if [ $# != 4 ]; then
-    echo "Usage: $0 PROJECT_NAME PACKAGE_NAME DESTINATION CODES"
-    echo " e.g.: $0 'Cutter' 'Cutter' repositories/ 'squeeze wheezy unstable lucid natty oneiric precise'"
+    echo "Usage: $0 PROJECT_NAME DESTINATION ARCHITECTURES CODES"
+    echo " e.g.: $0 mroonga repositories/ 'i386 amd64' 'lenny unstable hardy karmic'"
     exit 1
 fi
 
 PROJECT_NAME=$1
-PACKAGE_NAME=$2
-DESTINATION=$3
+DESTINATION=$2
+ARCHITECTURES=$3
 CODES=$4
 
 run()
@@ -115,7 +115,7 @@ for code_name in ${CODES}; do
 	    ;;
 	*)
 	    distribution=ubuntu
-	    component=main
+	    component=universe
 	    ;;
     esac
 

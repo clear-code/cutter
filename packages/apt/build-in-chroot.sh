@@ -2,7 +2,7 @@
 
 if [ $# != 7 ]; then
     echo "Usage: $0 PACKAGE VERSION SOURCE_DIR DESTINATION CHROOT_BASE ARCHITECTURES CODES"
-    echo " e.g.: $0 cutter 1.2.1 SOURCE_DIR repositories/ /var/lib/chroot 'i386 amd64' 'squeeze wheezy unstable lucid natty oneiric precise'"
+    echo " e.g.: $0 groonga 0.1.9 SOURCE_DIR repositories/ /var/lib/chroot 'i386 amd64' 'lenny unstable hardy karmic'"
     exit 1
 fi
 
@@ -50,7 +50,9 @@ build_chroot()
 	    run_sudo sed -i'' -e 's/us/jp/' $base_dir/etc/apt/sources.list
 	    ;;
 	*)
-	    run_sudo sed -i'' -e 's/main$/main universe/' \
+	    run_sudo sed -i'' \
+		-e 's,http://archive,http://jp.archive,' \
+		-e 's/main$/main universe/' \
 		$base_dir/etc/apt/sources.list
 	    ;;
     esac
@@ -84,7 +86,7 @@ build()
 	    ;;
 	*)
 	    distribution=ubuntu
-	    component=main
+	    component=universe
 	    ;;
     esac
 
@@ -120,7 +122,9 @@ for architecture in $ARCHITECTURES; do
 	if test "$parallel" = "yes"; then
 	    build $architecture $code_name &
 	else
-	    build $architecture $code_name
+	    mkdir -p tmp
+	    build_log=tmp/build-$code_name-$architecture.log
+	    build $architecture $code_name 2>&1 | tee $build_log
 	fi;
     done;
 done

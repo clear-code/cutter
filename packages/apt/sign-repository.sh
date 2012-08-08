@@ -2,13 +2,15 @@
 
 script_base_dir=`dirname $0`
 
-if [ $# != 1 ]; then
-    echo "Usage: $0 CODE_NAMES"
-    echo " e.g.: $0 'lenny unstable hardy lucid'"
+if [ $# != 3 ]; then
+    echo "Usage: $0 GPG_UID DESTINATION CODES"
+    echo " e.g.: $0 'F10399C0' repositories/ 'lenny unstable hardy karmic'"
     exit 1
 fi
 
-CODE_NAMES=$1
+GPG_UID=$1
+DESTINATION=$2
+CODES=$3
 
 run()
 {
@@ -19,7 +21,7 @@ run()
     fi
 }
 
-for code_name in ${CODE_NAMES}; do
+for code_name in ${CODES}; do
     case ${code_name} in
 	squeeze|wheezy|unstable)
 	    distribution=debian
@@ -28,7 +30,17 @@ for code_name in ${CODE_NAMES}; do
 	    distribution=ubuntu
 	    ;;
     esac
-    release=${distribution}/dists/${code_name}/Release
+
+    release=${DESTINATION}${distribution}/dists/${code_name}/Release
     rm -f ${release}.gpg
-    gpg --sign -ba -o ${release}.gpg ${release}
+    gpg2 --sign --detach-sign --armor \
+	--local-user ${GPG_UID} \
+	--output ${release}.gpg \
+	${release} &
+
+    if [ "${PARALLEL}" != "yes" ]; then
+	wait
+    fi
 done
+
+wait
