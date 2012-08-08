@@ -21,10 +21,6 @@ run()
     fi
 }
 
-if ! id $USER_NAME >/dev/null 2>&1; then
-    run useradd -m $USER_NAME
-fi
-
 yum_options=
 
 distribution=$(cut -d ' ' -f 1 /etc/redhat-release | tr 'A-Z' 'a-z')
@@ -75,82 +71,32 @@ EOF
     yum_options="$yum_options --enablerepo=atrpms"
 fi
 
-rpmbuild_options="${BUILD_OPTIONS}"
-
 run yum update ${yum_options} -y
-run yum install ${yum_options} -y rpm-build rpmdevtools tar ${DEPENDED_PACKAGES}
-if ! rpm -q mecab-devel > /dev/null; then
-    run yum install -y wget
-
-    cat <<EOF > $BUILD_SCRIPT
-#!/bin/sh
-
-base=http://download.fedoraproject.org/pub/fedora/linux/releases/15/Everything/source/SRPMS
-srpm=\$1
-
-cat <<EOM > ~/.rpmmacros
-%_topdir \$HOME/rpmbuild
-EOM
-
-rm -rf rpmbuild
-mkdir -p rpmbuild/SOURCES
-mkdir -p rpmbuild/SPECS
-mkdir -p rpmbuild/BUILD
-mkdir -p rpmbuild/RPMS
-mkdir -p rpmbuild/SRPMS
-
-mkdir -p dependencies/RPMS
-mkdir -p dependencies/SRPMS
-
-mkdir -p tmp
-cd tmp
-wget \$base/\$srpm
-rpm2cpio \$srpm | cpio -id
-rm \$srpm
-mv *.spec ~/rpmbuild/SPECS/
-mv * ~/rpmbuild/SOURCES/
-cd ..
-rm -rf tmp
-rpmbuild -ba rpmbuild/SPECS/*.spec
-
-cp -p rpmbuild/RPMS/*/*.rpm dependencies/RPMS/
-cp -p rpmbuild/SRPMS/*.rpm dependencies/SRPMS/
-EOF
-
-    run chmod +x $BUILD_SCRIPT
-    for rpm in mecab-0.98-1.fc15.src.rpm \
-               mecab-ipadic-2.7.0.20070801-4.fc15.1.src.rpm \
-               mecab-jumandic-5.1.20070304-5.fc15.src.rpm; do
-	run su - $USER_NAME $BUILD_SCRIPT $rpm
-	run rpm -Uvh /home/$USER_NAME/rpmbuild/RPMS/*/*.rpm
-    done
-fi
+run yum install ${yum_options} -y rpm-build tar ${DEPENDED_PACKAGES}
 run yum clean ${yum_options} packages
 
-# for debug
-# rpmbuild_options="$rpmbuild_options --define 'optflags -O0 -ggdb3'"
+if ! id $USER_NAME >/dev/null 2>&1; then
+    run useradd -m $USER_NAME
+fi
 
 cat <<EOF > $BUILD_SCRIPT
 #!/bin/sh
 
-if [ -x /usr/bin/rpmdev-setuptree ]; then
-    rm -rf .rpmmacros
-    rpmdev-setuptree
-else
+if [ ! -f ~/.rpmmacros ]; then
     cat <<EOM > ~/.rpmmacros
-%_topdir \$HOME/rpmbuild
+%_topdir \$HOME/rpm
 EOM
-
-    mkdir -p rpmbuild/SOURCES
-    mkdir -p rpmbuild/SPECS
-    mkdir -p rpmbuild/BUILD
-    mkdir -p rpmbuild/RPMS
-    mkdir -p rpmbuild/SRPMS
 fi
+
+mkdir -p rpm/SOURCES
+mkdir -p rpm/SPECS
+mkdir -p rpm/BUILD
+mkdir -p rpm/RPMS
+mkdir -p rpm/SRPMS
 
 if test -f /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm; then
     if ! rpm -Uvh /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm; then
-        cd rpmbuild/SOURCES
+        cd rpm/SOURCES
         rpm2cpio /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm | cpio -id
         if ! yum info tcp_wrappers-devel >/dev/null 2>&1; then
             sed -i'' -e 's/tcp_wrappers-devel/tcp_wrappers/g' ${PACKAGE}.spec
@@ -163,13 +109,13 @@ if test -f /tmp/${SOURCE_BASE_NAME}-$VERSION-*.src.rpm; then
         cd
     fi
 else
-    cp /tmp/${SOURCE_BASE_NAME}-$VERSION.* rpmbuild/SOURCES/
-    cp /tmp/${PACKAGE}.spec rpmbuild/SPECS/
+    cp /tmp/${SOURCE_BASE_NAME}-$VERSION.* rpm/SOURCES/
+    cp /tmp/${PACKAGE}.spec rpm/SPECS/
 fi
 
-chmod o+rx . rpmbuild rpmbuild/RPMS rpmbuild/SRPMS
+chmod o+rx . rpm rpm/RPMS rpm/SRPMS
 
-rpmbuild -ba ${rpmbuild_options} rpmbuild/SPECS/${PACKAGE}.spec
+rpmbuild -ba rpm/SPECS/${PACKAGE}.spec ${BUILD_OPTIONS}
 EOF
 
 run chmod +x $BUILD_SCRIPT
