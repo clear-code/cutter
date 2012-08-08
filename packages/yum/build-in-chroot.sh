@@ -2,7 +2,7 @@
 
 if [ $# != 11 ]; then
     echo "Usage: $0 PACKAGE VERSION SOURCE_BASE_NAME SPEC_DIR DESTINATION CHROOT_BASE ARCHITECTURES DISTRIBUTIONS HAVE_DEVELOPMENT_BRANCH USE_RPMFORGE USE_ATRPMS"
-    echo " e.g.: $0 milter-manager 1.1.1 ../milter-manager ../rpm 'repositories/' /var/lib/chroot 'i386 x86_64' 'fedora centos' yes no no"
+    echo " e.g.: $0 milter-manager 1.1.1 ../milter-manager ../rpm repositories/ /var/lib/chroot 'i386 x86_64' 'fedora centos' yes no no"
     exit 1
 fi
 
@@ -59,18 +59,13 @@ build_chroot()
 	    distribution_architecture=i686
 	fi
     fi
-    if [ "$distribution_name-$distribution_version" = "fedora-16" ]; then
-	rinse_distribution_version="15"
-    else
-	rinse_distribution_version="$distribution_version"
-    fi
 
     run_sudo mkdir -p ${base_dir}/etc/rpm
     rpm_platform=${distribution_architecture}-${distribution}-linux
     run_sudo sh -c "echo ${rpm_platform} > ${base_dir}/etc/rpm/platform"
     run_sudo rinse \
 	--arch $rinse_architecture \
-	--distribution $distribution_name-$rinse_distribution_version \
+	--distribution $distribution_name-$distribution_version \
 	--directory $base_dir
     run_sudo rinse --arch $rinse_architecture --clean-cache
 
@@ -81,13 +76,6 @@ build_chroot()
     run_sudo mount ${base_dir}/dev
     run_sudo mount ${base_dir}/dev/pts
     run_sudo mount ${base_dir}/proc
-
-    if [ "$distribution_name-$distribution_version" = "fedora-16" ]; then
-	yes | run_sudo su -c "chroot ${base_dir} rpm --import https://fedoraproject.org/static/A82BA4B7.txt"
-	run_sudo su -c "chroot ${base_dir} yum -y update yum"
-	run_sudo su -c "chroot ${base_dir} yum -y clean all"
-	run_sudo su -c "chroot ${base_dir} yum -y --releasever=16 --disableplugin=presto distro-sync"
-    fi
 }
 
 build()
@@ -104,7 +92,7 @@ build()
 
     build_user=${PACKAGE}-build
     build_user_dir=${base_dir}/home/${build_user}
-    rpm_base_dir=${build_user_dir}/rpm
+    rpm_base_dir=${build_user_dir}/rpmbuild
     rpm_dir=${rpm_base_dir}/RPMS/${architecture}
     srpm_dir=${rpm_base_dir}/SRPMS
     pool_base_dir=${DESTINATION}${distribution}/${distribution_version}
@@ -172,7 +160,9 @@ for architecture in $ARCHITECTURES; do
 	    if test "$parallel" = "yes"; then
 		build $architecture $distribution $distribution_version &
 	    else
-		build $architecture $distribution $distribution_version
+		mkdir -p tmp
+		build_log=tmp/build-$distribution-$distribution_version-$architecture.log
+		build $architecture $distribution $distribution_version 2>&1 | tee $build_log
 	    fi;
 	done;
     done;
