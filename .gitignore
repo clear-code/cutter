@@ -42,6 +42,7 @@ Makefile.in
 /packages/yum/cutter.repo
 /packages/yum/cutter-repository.spec
 /packages/apt/repositories/
+/packages/yum/repositories/
 /test/lib/cuttest-echo/cuttest-echo
 /*.tar.gz
 /packages/*.tar.gz
