@@ -86,7 +86,7 @@ build()
 	    ;;
 	*)
 	    distribution=ubuntu
-	    component=universe
+	    component=main
 	    ;;
     esac
 
