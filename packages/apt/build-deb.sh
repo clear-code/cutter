@@ -7,10 +7,8 @@ USER_NAME=$(cat /tmp/build-user)
 VERSION=$(cat /tmp/build-version)
 DEPENDED_PACKAGES=$(cat /tmp/depended-packages)
 BUILD_SCRIPT=/tmp/build-deb-in-chroot.sh
-CODE_NAME=$(cat /tmp/build-code-name)
-ARCHITECTURE=$(cat /tmp/build-architecture)
+CODE_NAME=$(lsb_release -s -c)
 GSTREAMER_INSTALL=gstreamer0.10-plugins-cutter.install
-LIB_ARCHITECTURE="${ARCHITECTURE}-linux-gnu"
 
 run()
 {
@@ -39,13 +37,21 @@ if ! id $USER_NAME >/dev/null 2>&1; then
     run useradd -m $USER_NAME
 fi
 
-case ${CODE_NAME} in
-    wheezy|unstable|precise)
-        if test "${ARCHITECTURE}" = "amd64"; then
-            LIB_ARCHITECTURE="x86_64-linux-gnu"
-        fi
-        ;;
-esac
+if test ${PACKAGE} = "cutter"; then
+    ARCHITECTURE = $(dpkg --print-architecture)
+    if test ${ARCHITECTURE} = "amd64"; then
+        ARCHITECTURE = "x86_64";
+    fi
+    case ${CODE_NAME} in
+        wheezy|unstable|precise)
+            if [ -d "/usr/lib/${ARCHITECTURE}-linux-gnu" ]; then
+                LIB_ARCHITECTURE="${ARCHITECTURE}-linux-gnu"
+                sed -i'' -e "s/usr\/lib/usr\/lib\/${LIB_ARCHITECTURE}/" \
+                    /tmp/${PACKAGE}-debian/${GSTREAMER_INSTALL}
+            fi
+            ;;
+    esac
+fi
 
 cat <<EOF > $BUILD_SCRIPT
 #!/bin/sh
@@ -63,12 +69,6 @@ if ! dpkg -l libgoffice-0.8-dev > /dev/null 2>&1; then
     grep -v libgoffice-0.8-dev debian/control.tmp > debian/control
     rm debian/control.tmp
 fi
-case ${CODE_NAME} in
-    wheezy|unstable|precise)
-        sed -i'' -e "s/usr\/lib/usr\/lib\/${LIB_ARCHITECTURE}/" \
-            debian/${GSTREAMER_INSTALL}
-        ;;
-esac
 debuild -us -uc
 EOF
 
