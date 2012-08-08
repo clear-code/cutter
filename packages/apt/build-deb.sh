@@ -37,10 +37,10 @@ if ! id $USER_NAME >/dev/null 2>&1; then
     run useradd -m $USER_NAME
 fi
 
-if test ${PACKAGE} = "cutter"; then
-    ARCHITECTURE = $(dpkg --print-architecture)
+if test "${PACKAGE}" = "cutter"; then
+    ARCHITECTURE=$(dpkg --print-architecture)
     if test ${ARCHITECTURE} = "amd64"; then
-        ARCHITECTURE = "x86_64";
+        ARCHITECTURE="x86_64";
     fi
     case ${CODE_NAME} in
         wheezy|unstable|precise)
