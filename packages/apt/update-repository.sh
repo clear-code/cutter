@@ -115,7 +115,7 @@ for code_name in ${CODES}; do
 	    ;;
 	*)
 	    distribution=ubuntu
-	    component=universe
+	    component=main
 	    ;;
     esac
 
