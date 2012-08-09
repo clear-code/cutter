@@ -54,7 +54,7 @@ Register the key by installing cutter-keyring package.
 If you install the keyring package, you can install Cutter by aptitude:
 
   % sudo aptitude update
-  % sudo aptitude -V -D install cutter-testing-framework
+  % sudo aptitude -V -D -y install cutter-testing-framework
 
 == The next step
 
