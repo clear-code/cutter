@@ -22,7 +22,6 @@ We improved Clang support and fixed bugs.
   * [UI][console] Added more color acceptable TERMs
     (xterm-256color, screen-256color, screen-color)
   * Added Travis CI integration.
-  * [doc] Improved to use apt-key command.
   * Supported Ubuntu Precise.
   * Supported backtrace on SIGBUS [Patch by Kiwamu Okabe]
   * Added Homebrew related paths by default on Mac OS X.
@@ -40,8 +39,6 @@ We improved Clang support and fixed bugs.
 
 ==== Fixes
 
-  * [UI][console][win32] Fixed memory leaks if you used growlnotify.
-  * [UI][GTK+] Fixed memory leaks.
   * [Clang] Fixed not to add extra "()" for function name.
   * [Clang][test] Fixed to add "void " as return value.
   * Fixed a bug that ACLOCAL_OPTIONS is ignored on FreeBSD.

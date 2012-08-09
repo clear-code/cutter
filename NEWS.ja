@@ -23,7 +23,6 @@
   * [UI][console] ターミナルでカラー対応端末のサポート対象を追加した。
     (xterm-256color, screen-256color, screen-color)
   * Travis CI と統合できるようにした。
-  * [doc] 鍵をインポートするときの手順でapt-keyコマンドを使用するように改めた。
   * SIGBUS発生時のバックトレースのサポートを追加した。[Kiwamu Okabeさんがパッチ提供]
   * Mac OS XでHomebrew関連のデフォルトのパスを追加した。
 
@@ -38,8 +37,6 @@
 
 ==== 修正
 
-  * [UI][console][win32] growlnotifyを使ったときのメモリリークを修正。
-  * [UI][GTK+] GTK+のUIでメモリリークしている問題を修正。
   * [Clang] 関数名に余計な()が付く問題を修正。
   * [Clang][test] 帰り値に"void "が付与されていないのを修正。
   * [FreeBSD] ACLOCAL_OPTIONSが無視される不具合を修正。
