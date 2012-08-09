@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-31 21:21+0900\n"
+"POT-Creation-Date: 2012-08-08 17:14+0900\n"
 "PO-Revision-Date: 2011-07-31 21:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../cutter/cut-console.c:65
+#: ../cutter/cut-console.c:66
 #, c-format
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
@@ -177,7 +177,7 @@ msgstr "ストリームのオプション"
 msgid "Show stream options"
 msgstr "ストリームのオプションを表示"
 
-#: ../cutter/cut-test-context.c:999
+#: ../cutter/cut-test-context.c:1005
 msgid "Treat a failure as a fatal problem, aborting."
 msgstr "失敗を致命的な問題として扱い、異常終了しています。"
 
@@ -502,71 +502,146 @@ msgstr "XMLストリームのオプション"
 msgid "Show XML stream options"
 msgstr "XMLストリームのオプションを表示"
 
-#: ../module/ui/cut-console-ui-factory.c:351
+#: ../module/ui/cut-console-ui-factory.c:368
 #, c-format
 msgid "Invalid notify value: %s"
 msgstr "不正な通知指定です: %s"
 
-#: ../module/ui/cut-console-ui-factory.c:377
+#: ../module/ui/cut-console-ui-factory.c:392
+#, c-format
+msgid "Invalid boolean value: %s"
+msgstr "不正な真偽値です: %s"
+
+#: ../module/ui/cut-console-ui-factory.c:418
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: ../module/ui/cut-console-ui-factory.c:379
+#: ../module/ui/cut-console-ui-factory.c:420
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: ../module/ui/cut-console-ui-factory.c:382
+#: ../module/ui/cut-console-ui-factory.c:423
 msgid "Notify test result"
 msgstr "テスト結果を通知"
 
-#: ../module/ui/cut-console-ui-factory.c:390
+#: ../module/ui/cut-console-ui-factory.c:426
+msgid "Show test detail immediately"
+msgstr "テストの詳細を即座に表示"
+
+#: ../module/ui/cut-console-ui-factory.c:434
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: ../module/ui/cut-console-ui-factory.c:391
+#: ../module/ui/cut-console-ui-factory.c:435
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 
-#: ../module/ui/cut-gtk-ui.c:227
+#. name, stock_id, label, accelerator, tooltip, callback
+#: ../module/ui/cut-gtk-ui.c:362
+msgid "_File"
+msgstr "ファイル"
+
+#: ../module/ui/cut-gtk-ui.c:363
+msgid "_Quit"
+msgstr "終了"
+
+#: ../module/ui/cut-gtk-ui.c:364
+msgid "_Test"
+msgstr "テスト"
+
+#: ../module/ui/cut-gtk-ui.c:365
+msgid "_Run all tests"
+msgstr "すべてのテスト実行"
+
+#: ../module/ui/cut-gtk-ui.c:367
+msgid "_Run test"
+msgstr "テストを実行"
+
+#: ../module/ui/cut-gtk-ui.c:369
+msgid "_Help"
+msgstr "ヘルプ"
+
+#: ../module/ui/cut-gtk-ui.c:370
+msgid "_Website"
+msgstr "ウェブサイト"
+
+#: ../module/ui/cut-gtk-ui.c:371
+msgid "_Website English"
+msgstr "英語ウェブサイト"
+
+#: ../module/ui/cut-gtk-ui.c:373
+msgid "_Website Japanese"
+msgstr "日本語ウェブサイト"
+
+#: ../module/ui/cut-gtk-ui.c:375
+msgid "_Tutorial"
+msgstr "チュートリアル"
+
+#: ../module/ui/cut-gtk-ui.c:376
+msgid "_Tutorial English"
+msgstr "英語チュートリアル"
+
+#: ../module/ui/cut-gtk-ui.c:378
+msgid "_Tutorial Japanese"
+msgstr "日本語チュートリアル"
+
+#: ../module/ui/cut-gtk-ui.c:380
+msgid "_Reference"
+msgstr "リファレンス"
+
+#: ../module/ui/cut-gtk-ui.c:381
+msgid "_Reference English"
+msgstr "英語リファレンス"
+
+#: ../module/ui/cut-gtk-ui.c:383
+msgid "_Reference Japanese"
+msgstr "日本語リファレンス"
+
+#: ../module/ui/cut-gtk-ui.c:478
 msgid "Ready"
 msgstr "準備完了"
 
-#: ../module/ui/cut-gtk-ui.c:242
+#: ../module/ui/cut-gtk-ui.c:493
 msgid "Name"
 msgstr "名前"
 
-#: ../module/ui/cut-gtk-ui.c:268
+#: ../module/ui/cut-gtk-ui.c:519
 msgid "Description"
 msgstr "説明"
 
-#: ../module/ui/cut-gtk-ui.c:602
+#: ../module/ui/cut-gtk-ui.c:879
 #, c-format
 msgid ""
 "%d test(s), %d assertion(s), %d failure(s), %d error(s), %d pending(s), %d "
 "omission(s), %d notification(s)"
 msgstr "%dテスト、%d検証、%d失敗、%dエラー、%d保留、%d省略、%d通知"
 
-#: ../module/ui/cut-gtk-ui.c:623
+#: ../module/ui/cut-gtk-ui.c:900
 #, c-format
 msgid "%dT:%dA:%dF:%d:E:%dP:%dO:%dN"
 msgstr "%dテ:%d検:%d失:%d:エ:%d保:%d略:%d通"
 
-#: ../module/ui/cut-gtk-ui.c:669
+#: ../module/ui/cut-gtk-ui.c:949
 #, c-format
 msgid "%u/%u (%u%%): %.1fs"
 msgstr "%u/%u (%u%%): %.1f秒"
 
-#: ../module/ui/cut-gtk-ui.c:691
+#: ../module/ui/cut-gtk-ui.c:969
 #, c-format
-msgid "Staring test suite %s..."
+msgid "Starting test suite %s..."
 msgstr "テストスイート%sを開始..."
 
-#: ../module/ui/cut-gtk-ui.c:1184
+#: ../module/ui/cut-gtk-ui.c:1443
 #, c-format
 msgid "Running test: %s"
 msgstr "テストを実行中: %s"
 
-#: ../module/ui/cut-gtk-ui.c:1344
+#: ../module/ui/cut-gtk-ui.c:1546
+#, c-format
+msgid "Running iterated test: %s (%s)"
+msgstr "テストを実行中: %s (%s)"
+
+#: ../module/ui/cut-gtk-ui.c:1750
 #, c-format
 msgid "Finished in %0.1f seconds: %s"
 msgstr "%0.1f秒で終了: %s"

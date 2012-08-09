@@ -17,6 +17,7 @@ cutter/cut-helper.c
 cutter/cut-iterated-test.c
 cutter/cut-listener.c
 cutter/cut-loader.c
+cutter/cut-logger.c
 cutter/cut-mach-o-loader.c
 cutter/cut-main.c
 cutter/cut-module-factory-utils.c
