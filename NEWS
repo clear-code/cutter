@@ -40,7 +40,7 @@ We improved Clang support and fixed bugs.
 ==== Fixes
 
   * [Clang] Fixed not to add extra "()" for function name.
-  * [Clang][test] Fixed to add "void " as return value.
+  * [Clang][Test] Fixed to add "void " as return value.
   * Fixed a bug that ACLOCAL_OPTIONS is ignored on FreeBSD.
 
 === CppCutter

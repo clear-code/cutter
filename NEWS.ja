@@ -12,18 +12,17 @@
 
   * [UI][GTK+] Debian GNU/Linux squeeze向けにGTK+ < 2.22より古いバージョンでも
     動くようにした。
-  * [UI][console][win32] growlnotify.exeをサポートした。
-  * [UI][console] Supported growlnotify.exe for windows.
+  * [UI][コンソール][win32] growlnotify.exeをサポートした。
   * MinGWでも動作するようにSIGCHLDをlongjmp()で使用しないようにした。
   * [UI][GTK+] メニューバーを追加した。
   * [UI][GTK+] ドキュメントのURIを表示する際のエラーメッセージを記録するようにした。
   * [UI][GTK+] --with-fallback-browserをオプションによりカスタマイズ指定できるようにした。
-  * [Clang][test] 行番号をリテラルとして埋め込まないようにした。
+  * [Clang][テスト] 行番号をリテラルとして埋め込まないようにした。
   * "()"を関数名の一部とみなして扱うように改善した。
-  * [UI][console] ターミナルでカラー対応端末のサポート対象を追加した。
+  * [UI][コンソール] ターミナルでカラー対応端末のサポート対象を追加した。
     (xterm-256color, screen-256color, screen-color)
   * Travis CI と統合できるようにした。
-  * SIGBUS発生時のバックトレースのサポートを追加した。[Kiwamu Okabeさんがパッチ提供]
+  * SIGBUS発生時のバックトレースのサポートを追加した。[岡部究さんがパッチ提供]
   * Mac OS XでHomebrew関連のデフォルトのパスを追加した。
 
 ==== 変更
@@ -32,13 +31,13 @@
   * Fedora 17をサポートするようにした。
   * Fedora 16のサポートを打ち切った。
   * Ubuntu Preciseをサポートするようにした。
-  * [Clang][test] テストには返り値と"()"を関数名に必須となるよう変更した。
-  * [Clang][test] テストには返り値と"(gconstpointer)"を関数名に必須となるよう変更した。
+  * [Clang][テスト] テストには返り値と"()"を関数名に必須となるよう変更した。
+  * [Clang][テスト] テストには返り値と"(gconstpointer)"を関数名に必須となるよう変更した。
 
 ==== 修正
 
   * [Clang] 関数名に余計な()が付く問題を修正。
-  * [Clang][test] 帰り値に"void "が付与されていないのを修正。
+  * [Clang][テスト] 返り値に"void "が付与されていないのを修正。
   * [FreeBSD] ACLOCAL_OPTIONSが無視される不具合を修正。
 
 === CppCutter
