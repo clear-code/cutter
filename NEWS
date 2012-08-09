@@ -17,12 +17,10 @@ We supported Ubuntu Precise/Fedora 17 and fixed bugs.
   * [UI][GTK+] Improved to log an error message for showing URI.
   * [UI][GTK+] Supported --with-fallback-browser option to costomize
     fallback browser.
-  * [Clang][Test] Improved not to embed line number as literal.
   * Improved to use "()" as a part of function.
   * [UI][console] Added more color acceptable TERMs
     (xterm-256color, screen-256color, screen-color)
   * Added Travis CI integration.
-  * Supported Ubuntu Precise.
   * Supported backtrace on SIGBUS [Patch by Kiwamu Okabe]
   * Added Homebrew related paths by default on Mac OS X.
 
@@ -33,14 +31,10 @@ We supported Ubuntu Precise/Fedora 17 and fixed bugs.
   * Supported Fedora 17.
   * Dropped Fedora 16 support.
   * Supported Ubuntu Precise.
-  * [Clang][Test] Changed to require return value and "()" for function name.
-  * [Clang][Test] Changed to require return value and "(gconstpointer)"
-    for function name.
 
 ==== Fixes
 
   * [Clang] Fixed not to add extra "()" for function name.
-  * [Clang][Test] Fixed to add "void " as return value.
   * Fixed a bug that ACLOCAL_OPTIONS is ignored on FreeBSD.
 
 === CppCutter
