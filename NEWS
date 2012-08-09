@@ -4,7 +4,7 @@
 
 == [release-1-2-1] 1.2.1: 2012-08-XX
 
-We improved Clang support and fixed bugs.
+We supported Ubuntu Precise/Fedora 17 and fixed bugs.
 
 === Cutter
 
