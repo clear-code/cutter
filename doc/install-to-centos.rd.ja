@@ -11,8 +11,15 @@ CentOSへのCutterのインストール方法を説明します。
 CutterのYumリポジトリが提供されているので、yumでインストール
 できます。
 
-まず、Yumリポジトリを登録します。CentOS 5でもCentOS 6でも同
-様の方法で登録できます。
+まず、Yumリポジトリを登録します。
+CentOS 5では事前にRPMパッケージをダウンロードする必要があります。
+
+CentOS 5:
+
+  % wget http://downloads.sourceforge.net/project/cutter/centos/cutter-release-1.1.0-0.noarch.rpm
+  % sudo rpm -Uvh cutter-release-1.1.0-0.noarch.rpm
+
+CentOS 6:
 
   % sudo rpm -Uvh http://downloads.sourceforge.net/project/cutter/centos/cutter-release-1.1.0-0.noarch.rpm
 
