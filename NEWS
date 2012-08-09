@@ -17,7 +17,7 @@ We supported Ubuntu Precise/Fedora 17 and fixed bugs.
   * [UI][GTK+] Improved to log an error message for showing URI.
   * [UI][GTK+] Supported --with-fallback-browser option to costomize
     fallback browser.
-  * Improved to use "()" as a part of function.
+  * Improved to use "()" as a part of function about backtrace.
   * [UI][console] Added more color acceptable TERMs
     (xterm-256color, screen-256color, screen-color)
   * Added Travis CI integration.
@@ -34,7 +34,7 @@ We supported Ubuntu Precise/Fedora 17 and fixed bugs.
 
 ==== Fixes
 
-  * [Clang] Fixed not to add extra "()" for function name.
+  * [Clang] Fixed not to add extra "()" for function name of backtrace.
   * Fixed a bug that ACLOCAL_OPTIONS is ignored on FreeBSD.
 
 === CppCutter
