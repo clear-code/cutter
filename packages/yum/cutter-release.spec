@@ -4,7 +4,7 @@ Version: 1.1.0
 Release: 0
 License: GPLv3+
 URL: http://cutter.sourceforge.net/
-Source: cutter-repository.tar.gz
+Source: cutter-release.tar.gz
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)
 BuildArchitectures: noarch
