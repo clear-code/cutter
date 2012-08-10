@@ -100,7 +100,7 @@ APT::FTPArchive::Release::Architectures "i386 amd64";
 APT::FTPArchive::Release::Codename "${code_name}";
 APT::FTPArchive::Release::Suite "${code_name}";
 APT::FTPArchive::Release::Components "${component}";
-APT::FTPArchive::Release::Description "${PACKAGE_NAME} packages";
+APT::FTPArchive::Release::Description "${PROJECT_NAME} packages";
 EOF
     apt-ftparchive -c release-${code_name}.conf \
 	release dists/${code_name} > /tmp/Release
