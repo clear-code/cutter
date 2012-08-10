@@ -48,13 +48,13 @@ Preciseの場合は以下のapt lineを書いた
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。
 
-  % sudo aptitude update
-  % sudo aptitude -V -D -y --allow-untrusted install cutter-keyring
+  % sudo apt-get update
+  % sudo apt-get -y --allow-unauthenticated install cutter-keyring
 
-cutter-keyringパッケージをインストール後はaptitudeでインストールできます。
+cutter-keyringパッケージをインストール後はapt-getでインストールできます。
 
-  % sudo aptitude update
-  % sudo aptitude -V -D -y install cutter-testing-framework
+  % sudo apt-get update
+  % sudo apt-get -y install cutter-testing-framework
 
 == 次のステップ
 

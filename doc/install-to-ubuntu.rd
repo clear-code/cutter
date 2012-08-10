@@ -48,13 +48,13 @@ Here are apt lines for for Precise. We put them into
 Cutter packages are signed by key of cutter-keyring.
 Register the key by installing cutter-keyring package.
 
-  % sudo aptitude update
-  % sudo aptitude -V -D -y --allow-untrusted install cutter-keyring
+  % sudo apt-get update
+  % sudo apt-get -y --allow-unauthenticated install cutter-keyring
 
-If you install the keyring package, you can install Cutter by aptitude:
+If you install the keyring package, you can install Cutter by apt-get:
 
-  % sudo aptitude update
-  % sudo aptitude -V -D -y install cutter-testing-framework
+  % sudo apt-get update
+  % sudo apt-get -y install cutter-testing-framework
 
 == The next step
 
