@@ -8,7 +8,7 @@ Source: cutter-repository.tar.gz
 Group: System Environment/Base
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)
 BuildArchitectures: noarch
-Obsoletes: cutter-repository < 1.0.0-1
+Obsoletes: cutter-repository < 1.1.0-0
 
 %description
 cutter RPM repository configuration.
