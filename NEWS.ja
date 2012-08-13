@@ -14,7 +14,7 @@
   * [UI][GTK+] Debian GNU/Linux squeeze向けにGTK+ < 2.22より古いバージョンでも
     動くようにした。
   * [UI][コンソール][win32] growlnotify.exeをサポートした。
-  * MinGWでも動作するようにSIGCHLDをlongjmp()で使用しないようにした。
+  * MinGWで動作するように改善した。
   * [UI][GTK+] メニューバーを追加した。
   * [UI][GTK+] ドキュメントのURIを表示する際のエラーメッセージを記録するようにした。
   * [UI][GTK+] --with-fallback-browserオプションを追加し、表示に失敗した時の
@@ -37,7 +37,6 @@
 ==== 修正
 
   * [Clang] バックトレースの関数名に余計な()が付く問題を修正。
-  * [FreeBSD] ACLOCAL_OPTIONSが無視される不具合を修正。
 
 === CppCutter
 
