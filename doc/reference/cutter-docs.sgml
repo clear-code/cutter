@@ -33,6 +33,10 @@
       <title>Getting start</title>
       <xi:include href="tutorial.xml"/>
     </chapter>
+    <chapter id="travis-ci">
+      <title>Travis CI Integration</title>
+      <xi:include href="travis-ci.xml"/>
+    </chapter>
   </part>
 
   <part id="reference">

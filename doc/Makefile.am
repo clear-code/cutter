@@ -23,6 +23,8 @@ EXTRA_DIST =					\
 	install-to-ubuntu.rd.ja			\
 	install-to-others.rd			\
 	install-to-others.rd.ja			\
+	travis-ci.rd				\
+	travis-ci.rd.ja				\
 	$(svg_images)
 
 svg_images =					\

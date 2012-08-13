@@ -188,7 +188,8 @@ content_files =					\
 	install-to-solaris.xml			\
 	install-to-mac-os-x.xml			\
 	install-to-cygwin.xml			\
-	install-to-others.xml
+	install-to-others.xml			\
+	travis-ci.xml
 
 # Extra options to supply to gtkdoc-fixxref
 FIXXREF_OPTIONS=
@@ -228,7 +229,9 @@ generated_xml_files =				\
 	install-to-cygwin.xml			\
 	install-to-cygwin.xml.ja		\
 	install-to-others.xml			\
-	install-to-others.xml.ja
+	install-to-others.xml.ja		\
+	travis-ci.xml				\
+	travis-ci.xml.ja
 
 CLEANFILES +=				\
 	$(DOC_MODULE)-sections.txt	\
@@ -360,6 +363,12 @@ install-to-others.xml: $(top_srcdir)/doc/install-to-others.rd $(RD2REFENTRY_LIB)
 
 install-to-others.xml.ja: $(top_srcdir)/doc/install-to-others.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/install-to-others.rd.ja > install-to-others.xml.ja
+
+travis-ci.xml: $(top_srcdir)/doc/travis-ci.rd $(RD2REFENTRY_LIB) travis-ci.xml.ja
+	$(RD2DOCBOOK) $(top_srcdir)/doc/travis-ci.rd > travis-ci.xml
+
+travis-ci.xml.ja: $(top_srcdir)/doc/travis-ci.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/travis-ci.rd.ja > travis-ci.xml.ja
 
 upload: docs
 	rm -rf tmp/
