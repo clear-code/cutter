@@ -29,7 +29,7 @@ by Travis CI such as Ruby. You should use (({install})) otherwise.
 Add the following (({before_install})) configuration to (({.travisyml}))::
 
   before_install:
-    - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh
+    - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
 
 If you need to use (({install})) hook instead of (({before_install})), you
 just substitute (({before_install:})) with (({install:})).

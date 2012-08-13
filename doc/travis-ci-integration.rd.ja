@@ -34,7 +34,7 @@ Ubuntu 11.10用のapt-lineを使えます。
 以下の (({before_install})) の設定を (({.travis.yml})) に加えます:
 
   before_install:
-    - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh
+    - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
 
 (({before_install})) フックではなく (({install})) フックを使わなければ
 いけない場合は、単に (({before_install:})) を (({install:})) に書き換えてください。
