@@ -49,7 +49,7 @@ rm -rf %{buildroot}
 %{_datadir}/locale/
 
 %changelog
-* Wed Aug 29 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.1-0
+* Wed Aug 15 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.1-0
 - new upstream release.
 
 * Sat Dec 31 2011 Kouhei Sutou <kou@clear-code.com> - 1.2.0-0
