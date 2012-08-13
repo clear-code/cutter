@@ -35,7 +35,7 @@
     </chapter>
     <chapter id="travis-ci">
       <title>Travis CI Integration</title>
-      <xi:include href="travis-ci.xml"/>
+      <xi:include href="travis-ci-integration.xml"/>
     </chapter>
   </part>
 
