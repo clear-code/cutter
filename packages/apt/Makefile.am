@@ -38,7 +38,7 @@ sign-repository:
 upload: 
 	for distribution in $(DISTRIBUTIONS); do		\
 	  (cd $(REPOSITORIES_PATH)/$${distribution};		\
-	   rsync -avz --progress				\
+	   rsync -avz --progress --inplace			\
 	     dists pool $(SERVER_PATH)/$${distribution});	\
 	done
 
