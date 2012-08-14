@@ -14,7 +14,6 @@
   * [UI][GTK+] Debian GNU/Linux squeeze向けにGTK+ < 2.22より古いバージョンでも
     動くようにした。
   * [UI][コンソール][win32] growlnotify.exeをサポートした。
-  * MinGWで動作するように改善した。
   * [UI][GTK+] メニューバーを追加した。
   * [UI][GTK+] ドキュメントのURIを表示する際のエラーメッセージを記録するようにした。
   * [UI][GTK+] --with-fallback-browserオプションを追加し、表示に失敗した時の
