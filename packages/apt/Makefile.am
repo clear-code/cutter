@@ -5,7 +5,7 @@ CHROOT_BASE = /var/lib/chroot
 ARCHITECTURES = i386 amd64
 CODES = squeeze wheezy unstable lucid natty oneiric precise
 KEYRING_PACKAGE = cutter-keyring
-KEYRING_VERSION = 2012.08.29
+KEYRING_VERSION = 2012.08.15
 KEYRING_BASE_NAME = $(KEYRING_PACKAGE)-$(KEYRING_VERSION)
 
 all:
