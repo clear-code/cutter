@@ -12,6 +12,7 @@ deb ${apt_url_base}/${distribution}/ ${code_name} ${component}
 deb-src ${apt_url_base}/${distribution}/ ${code_name} ${component}
 EOF
 
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C837F31
+sudo apt-get update
+sudo apt-get -y --allow-unauthenticated install cutter-keyring
 sudo apt-get update
 sudo apt-get -y -V install cutter-testing-framework
