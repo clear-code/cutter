@@ -14,4 +14,4 @@ EOF
 
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1C837F31
 sudo apt-get update
-sudo apt-get -y install cutter-testing-framework
+sudo apt-get -y -V install cutter-testing-framework
