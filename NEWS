@@ -13,7 +13,6 @@ There are some UI related improvements and fixed bugs.
 
   * [UI][GTK+] Supported GTK+ < 2.22 for Debian GNU/Linux squeeze.
   * [UI][console] Supported growlnotify.exe for windows.
-  * Improved to work on MinGW.
   * [UI][GTK+] Added menubar.
   * [UI][GTK+] Improved to log an error message for showing URI.
   * [UI][GTK+] Supported --with-fallback-browser option to customize
@@ -36,6 +35,7 @@ There are some UI related improvements and fixed bugs.
 ==== Fixes
 
   * [Clang] Fixed not to add extra "()" for function name of backtrace.
+  * Fixed compilation failure on MinGW.
 
 === CppCutter
 
