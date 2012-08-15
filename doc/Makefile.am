@@ -25,6 +25,7 @@ EXTRA_DIST =					\
 	install-to-others.rd.ja			\
 	travis-ci-integration.rd		\
 	travis-ci-integration.rd.ja		\
+	release-cutter.rd.ja			\
 	$(svg_images)
 
 svg_images =					\

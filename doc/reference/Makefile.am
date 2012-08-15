@@ -189,7 +189,8 @@ content_files =					\
 	install-to-mac-os-x.xml			\
 	install-to-cygwin.xml			\
 	install-to-others.xml			\
-	travis-ci-integration.xml
+	travis-ci-integration.xml		\
+	release-cutter.xml
 
 # Extra options to supply to gtkdoc-fixxref
 FIXXREF_OPTIONS=
@@ -231,7 +232,9 @@ generated_xml_files =				\
 	install-to-others.xml			\
 	install-to-others.xml.ja		\
 	travis-ci-integration.xml		\
-	travis-ci-integration.xml.ja
+	travis-ci-integration.xml.ja		\
+	release-cutter.xml			\
+	release-cutter.xml.ja
 
 CLEANFILES +=				\
 	$(DOC_MODULE)-sections.txt	\
@@ -369,6 +372,12 @@ travis-ci-integration.xml: $(top_srcdir)/doc/travis-ci-integration.rd $(RD2REFEN
 
 travis-ci-integration.xml.ja: $(top_srcdir)/doc/travis-ci-integration.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/travis-ci-integration.rd.ja > travis-ci-integration.xml.ja
+
+release-cutter.xml: $(top_srcdir)/doc/release-cutter.rd.ja $(RD2REFENTRY_LIB) ja.po release-cutter.xml.ja
+	$(RD2DOCBOOK) $(top_srcdir)/doc/release-cutter.rd.ja > release-cutter.xml
+
+release-cutter.xml.ja: $(top_srcdir)/doc/release-cutter.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/release-cutter.rd.ja > release-cutter.xml.ja
 
 upload: docs
 	rm -rf tmp/
