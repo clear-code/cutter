@@ -190,7 +190,7 @@ content_files =					\
 	install-to-cygwin.xml			\
 	install-to-others.xml			\
 	travis-ci-integration.xml		\
-	release-cutter.xml
+	release.xml
 
 # Extra options to supply to gtkdoc-fixxref
 FIXXREF_OPTIONS=
