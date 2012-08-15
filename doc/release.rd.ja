@@ -1,0 +1,420 @@
+# -*- rd -*-
+
+= Cutterのリリース方法
+
+== はじめに
+
+このセクションではCutterをリリースするときに必要な手順について
+説明します。
+
+== sourceforge.netアカウントの設定
+
+Cutterは((<URL:http://sourceforge.net/>))にて
+((<プロジェクトのウェブサイト|URL:http://cutter.sourceforge.net>))や
+((<プラットフォームごとのリポジトリなど|URL:https://sourceforge.net/projects/cutter/files/>))
+をホスティングしています。
+
+そのため、リリース作業ではsourceforge.net上のプロジェクト領域へ
+アクセスできる必要があります。
+
+Cutterプロジェクトのメンバでない場合にはプロジェクトの
+管理者にsourceforge.netのアカウント名を以下のProject Membershipページ
+から追加してもらう必要があります。
+
+((<Cutter - Project Membership|URL:https://sourceforge.net/project/admin/project_membership.php?group_id=208375>))
+
+
+== 環境変数の設定
+
+Cutterのリリースではすでに述べたようにsourceforge.netへの
+パッケージやドキュメントファイルのアップロードを行います。
+
+もし、リリース作業を行う端末のアカウントと
+sourceforge.netのアカウントが異なる場合には、
+以下のようにしてsourceforge.netのアカウントを使うように
+環境変数(({SF_USER}))の設定を行います。
+
+    % export SF_USER=(ここにsourceforge.netのアカウントを指定)
+
+永続的に有効にする場合にはシェルの設定ファイルに上記記述を追加します。
+
+== ビルド環境の準備
+
+以下にCutterのリリース作業を行うために事前にインストール しておくべきパッケージを示します。
+
+なお、ビルド環境としては Ubuntu 12.04 LTS(Precise Pangolin)を前提として説明しています。
+その他の環境ではパッケージ名等適宜読み替えて下さい。:
+
+  % sudo apt-get install -V debootstrap rinse createrepo rpm ruby1.8-full gnupg2
+  gtk-doc-tools gnome-doc-utils
+
+
+ただし、デフォルトでインストールされるrinseはバージョンが古く、
+Fedora 17パッケージのビルドを行うことができません。
+
+注:((<Fedora 17をサポートしているrinse|URL:https://www.gitorious.org/rinse/rinse/merge_requests/1>))を取得してファイルを置き換えます。
+
+また、rubyでいくつかパッケージが必要なので以下のコマンドによりインストールします。:
+
+  % sudo gem1.8 install rdtool fast_gettext mechanize
+
+なお、特に明記していない限り本リリース手順でのコマンドラインの 操作はzshを前提としています。
+
+
+== パッケージ署名用秘密鍵のインポート
+
+リリース作業ではパッケージに対する署名を行います。
+その際、パッケージ署名用の鍵が必要です。
+
+Cutterプロジェクトでは署名用の鍵をリリース担当者の公開鍵で暗号化して
+リポジトリのpackages/ディレクトリ以下へと登録しています。
+
+リリース担当者はリポジトリに登録された秘密鍵を復号した後に
+鍵のインポートを以下のコマンドにて行います。:
+
+  % cd packages
+  % gpg --decrypt release-key-secret.asc.gpg.(担当者) > (復号した鍵ファイル)
+  % gpg --import  (復号した鍵ファイル)
+
+鍵のインポートが正常終了すると (({gpg --list-keys})) でCutterの署名用の鍵を
+確認することができます。:
+
+  pub   1024D/F07C74AC 2012-08-07
+  uid                  Cutter Key (Cutter Official Signing Key) <cutter-users-en@lists.sourceforge.net>
+
+鍵をインポートしただけでは使用することができないため、インポートした鍵に対してtrust,signを行う必要があります。
+
+以下のコマンドを実行して署名を行います。(途中の選択肢は省略):
+
+  % gpg --edit-key cutter-users-en@lists.sourceforge.net
+  gpg> trust
+  gpg> sign
+  gpg> save
+  gpg> quit
+
+鍵のインポート作業は初めてリリースを行うときや、
+鍵が更新された場合に行います。
+
+== リリース作業用ディレクトリの作成
+
+Cutterのリリース作業ではリリース専用の環境下(コンパイルフラグ)で
+ビルドする必要があります。
+
+リリース時と開発時でディレクトリを分けずに作業することもできますが、
+誤ったコンパイルフラグでリリースしてしまう危険があります。
+
+そのため、以降の説明では(({$HOME/work/cutter}))以下のディレクトリに
+リリース用の作業ディレクトリ(cutter.clean)を作成したものとします。
+
+  % mkdir -p $HOME/work/cutter
+
+これ以降(({CUTTER_CLEAN_DIR=$HOME/work/cutter/cutter.clean}))として説明します。
+
+リリース用のクリーンな状態でソースコードを(({$CUTTER_CLEAN_DIR}))ディレクトリに
+取得するために以下のコマンドを実行します。:
+
+  % git clone git@github.com:clear-code/cutter.git cutter.clean
+
+この作業はリリース作業ごとに行います。
+
+== autogen.shによるconfigureスクリプト生成
+
+ソースコードをcloneした時点ではconfigureスクリプトが含まれておらず
+そのままmakeコマンドにてビルドすることができません。
+
+Cutterの(({$CUTTER_CLEAN_DIR}))ディレクトリでautogen.shを以下のように実行します。:
+
+  % sh autogen.sh
+
+このコマンドの実行により、configureスクリプトが生成されます。
+
+== configureによるMakefile生成
+
+Makefileを生成するためにconfigureスクリプトを実行します。
+
+リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。:
+
+  % ./configure CFLAGS="-g -O2" CXXFLAGS="-g -O2" \
+  --prefix=/tmp/local  \
+  --enable-gtk-doc  
+
+== リリース日の更新
+
+configureを実行し、Makefileを生成した後に
+リリース日やバージョンの更新を行うためにmake update-latest-releaseを実行します。
+
+(({make update-latest-release}))コマンドでは(({OLD_RELEASE_DATE}))に前回のリリースの日付を、
+(({NEW_RELEASE_DATE}))に次回リリー スの日付を指定します。
+
+1.2.1のリリースを行った際は以下のコマンドを実行しました。::
+
+  % make update-latest-release OLD_RELEASE=1.2.0 OLD_RELEASE_DATE=2011-12-31 NEW_RELEASE_DATE=2012-08-15
+
+これにより、Webサイトのトップページのソース (index.html,index.html.ja)や
+パッケージのspecファイルなどの関連ファイルが更新されます。
+
+== 変更点まとめ
+
+前回リリース時からの変更点をNEWSおよびNEWS.jaへとまとめます。
+ここでまとめた内容についてはリリースアナウンスにも使用します。
+
+前回リリースからの変更履歴を参照するには以下のコマンドを実行します。：
+
+  % git log -p --reverse $(git tag | tail -1)..
+
+ログを^commitで検索しながら、以下の基準を目安として変更点を追記してい きます。
+
+含めるもの
+
+* ユーザへ影響するような変更
+* 互換性がなくなるような変更
+
+含めないもの
+
+* 内部的な変更(変数名の変更やらリファクタリング)
+
+== メッセージカタログの更新
+
+ドキュメントの最新版と各国語版の内容を同期するために、
+poファイルの更新を以下のコマンドにて実行します。:
+
+  % make update-po
+
+make update-poを実行すると、各種poファイルが更新されます。
+
+その後に更新した各種.poファイルを翻訳します。
+
+翻訳結果をHTMLで確認するために、以下のコマンドを実行します。:
+
+  % make -C doc
+
+コマンドの実行により、HTMLは以下の階層に生成されます。
+
+* (({$CUTTER_CLEAN_DIR/doc/reference/html})) 英語リファレンス
+* (({$CUTTER_CLEAN_DIR/doc/reference/ja/html})) 日本語リファレンス
+
+確認が完了したら、翻訳済みpoファイルをコミットします。
+
+== リリースタグの設定
+
+リリース対象のファイルの更新が終了したら以下のコマンドでタグを打ちます。:
+
+
+  % make tag
+
+== リリース用アーカイブファイルの作成
+
+リリース用のソースアーカイブファイルを作成するために
+以下のコマンドを(({$CUTTER_CLEAN_DIR}))で実行します。:
+
+  % make dist
+  % make dist-zip
+
+これにより(({$CUTTER_CLEAN_DIR/cutter-(バージョン).tar.gz}))と
+(({$CUTTER_CLEAN_DIR/cutter-(バージョン).zip}))とが作成されます。
+
+== パッケージのビルド
+
+リリース用のアーカイブファイルができたので、 パッケージ化する作業を行います。
+
+パッケージ化作業は以下の2種類を対象に行います。
+
+* Debian系(.deb)
+* Red Hat系(.rpm)
+
+=== Debian系パッケージのビルド
+
+現在サポートされているのは以下の通りです。
+
+* squeeze i386/amd64
+* wheezy i386/amd64
+* unstable i386/amd64
+* lucid i386/amd64
+* natty i386/amd64
+* oneiric i386/amd64
+* precise i386/amd64
+
+なお以下のコマンドの実行は(({$CUTTER_CLEAN_DIR/packages/apt}))以下で
+行っているものとします。
+
+==== ダウンロード
+
+既存のDebian系リポジトリと同期するために以下のコマンドを実行します。:
+
+  % make download
+     
+==== パッケージのビルド
+
+パッケージをビルドするために以下のコマンドを実行します。:
+
+  % make build PALALLEL=yes
+
+make build PALALLEL=yesコマンドを実行すると、ディストリビューションの
+リリースとアーキテクチャの組み合わせでビルドを平行して行うことができます。
+
+==== パッケージへの署名
+
+生成したパッケージへの署名を行うには以下のコマンドを実行します。:
+
+  % make sign-packages
+
+==== リポジトリの更新
+
+リリース対象のファイルをリポジトリに反映するには以下のコマンドを実行します。:
+
+  % make update-repository
+
+==== リポジトリへの署名
+
+リポジトリにGnuPGで署名を行うために以下のコマンドを実行します。:
+
+  % make sign-repository
+
+
+=== Red Hat系パッケージのビルド
+
+現在サポートされているのは以下の通りです。
+
+* centos-5 i386/x86_64
+* centos-6 i386/x86_64
+* fedora-17 i386/x86_64
+
+
+==== ダウンロード
+
+既存のRed Hat系リポジトリと同期するために以下のコマンドを実行します。:
+
+  % make download
+
+==== パッケージのビルド
+
+パッケージを作成するには以下のコマンドを実行します。:
+
+  % make build PALALLEL=yes
+
+make build PALALLEL=yesコマンドを実行すると、ディストリビューションの
+リリースとアーキテクチャの組み合わせでビルドを平行して行うことができます。
+
+==== パッケージへの署名
+
+リリース対象のRPMに署名を行うには以下のコマンドを実行します。:
+
+  % make sign-packages
+
+==== リポジトリの更新
+
+リリース対象のファイルをリポジトリに反映するには以下のコマンドを実行します。:
+
+  % make update-repository
+
+== パッケージのインストール確認
+
+ビルドしたパッケージに対しリリース前の動作確認を行います。
+
+Debian系もしくはRed Hat系の場合には本番環境へとアップロードする前に
+ローカルのaptないしyumのリポジトリを参照して正常に更新できることを確認します。
+
+そのためには、リポジトリをwebサーバ経由で参照できるようにすることが
+必要です。
+
+また、sourceforge.netとディレクトリ階層を揃える必要があります。
+
+sourceforge.netとディレクトリ階層を合わせるために
+(({$CUTTER_CLEAN_DIR/packages}))ディレクトリで以下のコマンドを実行します。
+
+  % ./check-utility.sh --setup-temp-repository
+
+コマンドを実行するとtemp_repositories/project/cutterディレクトリを作成し、
+apt/repositoriesやyum/repositoriesのディストリビューションの
+ディレクトリへとシンボリックリンクを張ります。
+
+  % ls -la temp_repositories/project/cutter
+  total 24
+  drwxrwxr-x 2 khayashi khayashi 4096 Aug  9 17:21 .
+  drwxrwxr-x 3 khayashi khayashi 4096 Aug  9 17:14 ..
+  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 centos -> /home/khayashi/work/cutter/cutter.clean/packages/yum/repositories/centos
+  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 debian -> /home/khayashi/work/cutter/cutter.clean/packages/apt/repositories/debian
+  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 fedora -> /home/khayashi/work/cutter/cutter.clean/packages/yum/repositories/fedora
+  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 ubuntu -> /home/khayashi/work/cutter/cutter.clean/packages/apt/repositories/ubuntu
+
+次にrubyを利用してリポジトリをwebサーバ経由で参照できるようにします。:
+
+  % sudo ruby1.9.1 -run -e httpd -- temp_repositories
+
+これでchroot環境においてhostsファイルを書き換えて
+downloads.sourceforge.netがローカルホストを参照するようにすれば、
+ローカルに構築したリポジトリの確認を行えます。
+
+== リリースアナウンスの作成
+
+
+リリースの際にはリリースアナウンスをメーリングリストへと流します。
+
+NEWS,NEWS.jaにまとめておいた変更点を元にリリースアナウンスを作成します。
+
+リリースアナウンスには以下を含めます。
+
+* インストール方法へのリンク
+* リリースのトピック紹介
+* リリース変更点へのリンク
+* リリース変更点(NEWS,NEWS.jaの内容)
+
+リリースのトピック紹介では、これからCutterを使う人へアピールする点や
+既存のバージョンを利用している人がアップグレードする際に必要な情報を提供します。
+
+非互換な変更が含まれるのであれば、回避方法等の案内を載せることも重要です。
+
+== アップロード作業
+
+パッケージのインストール確認が完了したら、
+アップロード作業を行います。
+
+=== ドキュメントのアップロード
+
+(({$CUTTER_CLEAN_DIR}))ディレクトリで以下のコマンドを実行します。:
+
+  % make upload
+
+=== パッケージのアップロード
+
+(({$CUTTER_CLEAN_DIR/packages/apt}))ディレクトリで以下のコマンドを実行します。:
+
+  % make upload
+
+(({$CUTTER_CLEAN_DIR/packages/yum}))ディレクトリで以下のコマンドを実行します。:
+
+  % make upload
+
+=== ソースパッケージのアップロード
+
+(({$CUTTER_CLEAN_DIR}))ディレクトリで以下のコマンドを実行します。:
+
+  % make release-official
+  % make release-debian
+
+
+== リリースアナウンス
+
+Cutterにはユーザー向けに提供されているメーリングリストが2つあります。
+
+あらかじめ用意しておいた、リリースアナウンス原稿を
+[ANN] Cutter (バージョン)という件名で投稿します。
+
+* cutter-users-en@sourceforge.net 英語
+* cutter-users-ja@sourceforge.net 日本語
+
+== リリース後にやること
+
+リリースアナウンスまで終わるとリリース作業はひとまず終了し、
+次期バージョンの開発が始まります。
+
+そこで、次期リリースバージョンを更新します。
+
+configure.acの以下の箇所を必要に応じて更新します。:
+
+  m4_define([cutter_version_major], [1])
+  m4_define([cutter_version_minor], [2])
+  m4_define([cutter_version_micro], [2])
+  m4_define([cutter_version],
+            [cutter_version_major.cutter_version_minor.cutter_version_micro])
+

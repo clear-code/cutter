@@ -233,8 +233,8 @@ generated_xml_files =				\
 	install-to-others.xml.ja		\
 	travis-ci-integration.xml		\
 	travis-ci-integration.xml.ja		\
-	release-cutter.xml			\
-	release-cutter.xml.ja
+	release.xml				\
+	release.xml.ja
 
 CLEANFILES +=				\
 	$(DOC_MODULE)-sections.txt	\
@@ -373,11 +373,11 @@ travis-ci-integration.xml: $(top_srcdir)/doc/travis-ci-integration.rd $(RD2REFEN
 travis-ci-integration.xml.ja: $(top_srcdir)/doc/travis-ci-integration.rd.ja $(RD2REFENTRY_LIB) ja.po
 	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/travis-ci-integration.rd.ja > travis-ci-integration.xml.ja
 
-release-cutter.xml: $(top_srcdir)/doc/release-cutter.rd.ja $(RD2REFENTRY_LIB) ja.po release-cutter.xml.ja
-	$(RD2DOCBOOK) $(top_srcdir)/doc/release-cutter.rd.ja > release-cutter.xml
+release.xml: $(top_srcdir)/doc/release.rd.ja $(RD2REFENTRY_LIB) ja.po release.xml.ja
+	$(RD2DOCBOOK) $(top_srcdir)/doc/release.rd.ja > release.xml
 
-release-cutter.xml.ja: $(top_srcdir)/doc/release-cutter.rd.ja $(RD2REFENTRY_LIB) ja.po
-	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/release-cutter.rd.ja > release-cutter.xml.ja
+release.xml.ja: $(top_srcdir)/doc/release.rd.ja $(RD2REFENTRY_LIB) ja.po
+	$(RD2DOCBOOK_JA) $(top_srcdir)/doc/release.rd.ja > release.xml.ja
 
 upload: docs
 	rm -rf tmp/
