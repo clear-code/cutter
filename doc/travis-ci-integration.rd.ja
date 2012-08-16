@@ -28,33 +28,39 @@ Ubuntu 11.10用のapt-lineを使えます。
 .travis.yml"|URL:http://about.travis-ci.org/docs/user/build-configuration/>)) 
 参照。）
 
-プロジェクトの使用言語に応じて (({before_install})) フックまたは (({install})) フックを使います。
+プロジェクトの使用言語に応じて (({before_install:})) フックまたは (({install:}))
+フックを使います。
 
-== C/C++の設定
+=== C/C++の設定
 
-C/C++の場合、デフォルトとなる依存関係のインストールが行われない(*2)ため、
-(({install})) フックを使ってセットアップスクリプトを実行するのがお勧めです。
+C/C++の場合、デフォルトとなる依存関係のインストールが行われないため、
+(({install:})) フックを使ってセットアップスクリプトを実行するのがお勧めです。 ((-
+((<"Travis CI: Building a C 
+Project"|URL:http://about.travis-ci.org/docs/user/languages/c/>))
+「Dependency Management」や((<"Travis CI: Building a C 
+Project"|URL:http://about.travis-ci.org/docs/user/languages/cpp/>))
+「Dependency Management」にはデフォルトの依存関係のインストールを行わないと
+説明があります。-))
 
-  (*2) http://about.travis-ci.org/docs/user/languages/c/「Dependency Management」や
-  http://about.travis-ci.org/docs/user/languages/cpp/「Dependency Management」には
-  デフォルトの依存関係のインストールを行わないと説明があります。
-
-以下の (({install})) の設定を (({.travis.yml})) に加えます:
+以下の (({install:})) の設定を (({.travis.yml})) に加えます:
 
   install:
     - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
 
-== その他の言語の設定
+上記の設定でビルド中にCutterを使えるようになります。
+
+=== その他の言語の設定
 
 ライブラリの言語バインディングを書いていて、そのテストをCutterを使って
 実施しているプロジェクトでは、プロジェクトの言語ごとのデフォルトとなる依存関係の
-インストールルールを上書きしない(*3)ように (({before_install})) フックを使って
-セットアップスクリプトを実行するのがお勧めです。
+インストールルールを上書きしないように (({before_install:})) フックを使って
+セットアップスクリプトを実行するのがお勧めです。 ((-
+((<"Travis CI: Configuring your Travis CI build with 
+.travis.yml"|URL:http://about.travis-ci.org/docs/user/build-configuration/>))
+「Build Lifecycle」には (({install:})) でプロジェクトの言語に応じた依存関係の
+インストールを行うと説明があります。-))
 
-  (*3) http://about.travis-ci.org/docs/user/build-configuration/「Build Lifecycle」には
-  install:でプロジェクトの言語に応じた依存関係のインストールを行うと説明があります。
-
-以下の (({before_install})) の設定を (({.travis.yml})) に加えます:
+以下の (({before_install:})) の設定を (({.travis.yml})) に加えます:
 
   before_install:
     - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
@@ -63,8 +69,7 @@ C/C++の場合、デフォルトとなる依存関係のインストールが行
 
 == 例
 
-Travis CI上でCutterを使っているオープンソースソフトウェアは以下の通り
-です
+Travis CI上でCutterを使っているオープンソースソフトウェアは以下の通りです。
 
   * ((<goonga|URL:http://groonga.org/>))
 
