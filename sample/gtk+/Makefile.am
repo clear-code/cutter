@@ -25,7 +25,7 @@ AM_LDFLAGS =			\
 	-avoid-version		\
 	-no-undefined
 
-noinst_LTLIBRARIES = 			\
+noinst_LTLIBRARIES =			\
 		suite_gtk_test.la	\
 		test_builder.la		\
 		test_floating.la
