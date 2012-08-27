@@ -16,6 +16,7 @@ AM_CFLAGS =			\
 
 LIBS =						\
 	$(top_builddir)/cutter/libcutter.la	\
+	$(GLIB_LIBS)				\
 	$(GTK_LIBS)
 
 AM_LDFLAGS =			\
