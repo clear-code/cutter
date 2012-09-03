@@ -62,7 +62,7 @@ With the above configuration, you can use Cutter for your build.
 
 == Examples
 
-Here is open source software that use Cutter on Travis CI:
+Here is free software that use Cutter on Travis CI:
 
   * ((<groonga|URL:http://groonga.org/>))
 
