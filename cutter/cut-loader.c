@@ -418,7 +418,7 @@ detect_cpp_test_function_symbol_names_gcc (const gchar *name)
 
         data_setup_function_name_string = g_string_new(NULL);
         g_string_append_len(data_setup_function_name_string,
-                            original_name, original_name - test_name_start);
+                            original_name, test_name_start - original_name);
         g_string_append(data_setup_function_name_string,
                         DATA_SETUP_FUNCTION_NAME_PREFIX);
         g_string_append_len(data_setup_function_name_string,
