@@ -2,6 +2,40 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-2-2] 1.2.2: 2012-10-29
+
+We began to support Ubuntu 12.10 (Quantal Quetzal).
+There are some improvements and fixed bugs.
+
+=== Cutter
+
+==== Improvements
+
+  * [doc] Added release procedure documentation.
+  * [doc] Improved documentation about Travis-CI configuraion.
+  * Supported Ubuntu 12.10 (Quantal Quetzal).
+
+==== Fixes
+
+  * [sample][GTK+] Fixed missing GLIB_LIBS that has flags for GModule.
+    [Reported by Hiroshi Umemoto]
+
+=== CppCutter
+
+==== Fixes
+
+  * Fixed a bug that wrong data function is searched.
+
+=== GCutter
+
+==== Fixes
+
+  * [sample] Fixed missing function call in sample code.
+
+=== Thanks
+
+  * Hiroshi Umemoto
+
 == [release-1-2-1] 1.2.1: 2012-08-15
 
 We began to support Ubuntu Precise/Fedora 17.
