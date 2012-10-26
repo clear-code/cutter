@@ -87,7 +87,7 @@ G_BEGIN_DECLS
  * test_translate(gconstpointer data)
  * {
  *     cut_assert_equal_string(gcut_data_get_string(data, "translated"),
- *                             gcut_data_get_int(data, "input"));
+ *                             translate(gcut_data_get_int(data, "input")));
  * }
  * ]|
  *
