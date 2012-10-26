@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.7\n"
-"POT-Creation-Date: 2012-08-13 18:19+0900\n"
+"POT-Creation-Date: 2012-10-26 18:04+0900\n"
 "PO-Revision-Date: 2012-06-19 17:40+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
@@ -11367,7 +11367,7 @@ msgid ""
 "test_translate(gconstpointer data)\n"
 "{\n"
 "    cut_assert_equal_string(gcut_data_get_string(data, \"translated\"),\n"
-"                            gcut_data_get_int(data, \"input\"));\n"
+"                            translate(gcut_data_get_int(data, \"input\")));\n"
 "}\n"
 msgstr ""
 
@@ -14954,6 +14954,7 @@ msgid "cut_get_current_test_context ()"
 msgstr ""
 
 #: xml/cutter.xml:265(programlisting)
+#, no-wrap
 msgid "<link linkend=\"CutTestContext\"><returnvalue>CutTestContext</returnvalue></link> *    cut_get_current_test_context        (<parameter><type>void</type></parameter>);"
 msgstr ""
 
@@ -15618,7 +15619,7 @@ msgstr "Cutterのメジャーバージョン。"
 
 #: xml/cut-version.xml:69(programlisting)
 #, no-wrap
-msgid "#define CUTTER_VERSION_MICRO 1\n"
+msgid "#define CUTTER_VERSION_MICRO 2\n"
 msgstr ""
 
 #: xml/cut-version.xml:71(para)
@@ -15636,7 +15637,7 @@ msgstr "Cutterのマイナーバージョン。"
 
 #: xml/cut-version.xml:85(programlisting)
 #, no-wrap
-msgid "#define CUTTER_VERSION_STRING \"1.2.1\"\n"
+msgid "#define CUTTER_VERSION_STRING \"1.2.2\"\n"
 msgstr ""
 
 #: xml/cut-version.xml:87(para)
@@ -25093,139 +25094,143 @@ msgstr "はじめよう"
 msgid "Travis CI Integration"
 msgstr ""
 
-#: cutter-docs.sgml:43(title)
+#: cutter-docs.sgml:41(title)
+msgid "How to release Cutter"
+msgstr "Cutterのリリース方法"
+
+#: cutter-docs.sgml:47(title)
 msgid "Reference"
 msgstr "リファレンス"
 
-#: cutter-docs.sgml:45(title)
+#: cutter-docs.sgml:49(title)
 msgid "Command"
 msgstr "コマンド"
 
-#: cutter-docs.sgml:50(title)
+#: cutter-docs.sgml:54(title)
 msgid "Writing test"
 msgstr "テスト作成"
 
-#: cutter-docs.sgml:80(title)
+#: cutter-docs.sgml:84(title)
 msgid "Writing assertion"
 msgstr "検証作成"
 
-#: cutter-docs.sgml:123(title)
+#: cutter-docs.sgml:127(title)
 msgid "Index of all symbols"
 msgstr "すべてのシンボル一覧"
 
-#: cutter-docs.sgml:126(title)
+#: cutter-docs.sgml:130(title)
 msgid "Index of deprecated symbols"
 msgstr "非推奨のシンボル一覧"
 
-#: cutter-docs.sgml:129(title)
+#: cutter-docs.sgml:133(title)
 msgid "Index of new symbols in 1.2.0"
 msgstr "1.2.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:132(title)
+#: cutter-docs.sgml:136(title)
 msgid "Index of new symbols in 1.1.9"
 msgstr "1.1.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:135(title)
+#: cutter-docs.sgml:139(title)
 msgid "Index of new symbols in 1.1.8"
 msgstr "1.1.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:138(title)
+#: cutter-docs.sgml:142(title)
 msgid "Index of new symbols in 1.1.7"
 msgstr "1.1.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:141(title)
+#: cutter-docs.sgml:145(title)
 msgid "Index of new symbols in 1.1.6"
 msgstr "1.1.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:144(title)
+#: cutter-docs.sgml:148(title)
 msgid "Index of new symbols in 1.1.5"
 msgstr "1.1.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:147(title)
+#: cutter-docs.sgml:151(title)
 msgid "Index of new symbols in 1.1.4"
 msgstr "1.1.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:150(title)
+#: cutter-docs.sgml:154(title)
 msgid "Index of new symbols in 1.1.3"
 msgstr "1.1.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:153(title)
+#: cutter-docs.sgml:157(title)
 msgid "Index of new symbols in 1.1.2"
 msgstr "1.1.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:156(title)
+#: cutter-docs.sgml:160(title)
 msgid "Index of new symbols in 1.1.1"
 msgstr "1.1.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:159(title)
+#: cutter-docs.sgml:163(title)
 msgid "Index of new symbols in 1.1.0"
 msgstr "1.1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:162(title)
+#: cutter-docs.sgml:166(title)
 msgid "Index of new symbols in 1.0.9"
 msgstr "1.0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:165(title)
+#: cutter-docs.sgml:169(title)
 msgid "Index of new symbols in 1.0.8"
 msgstr "1.0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:168(title)
+#: cutter-docs.sgml:172(title)
 msgid "Index of new symbols in 1.0.7"
 msgstr "1.0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:171(title)
+#: cutter-docs.sgml:175(title)
 msgid "Index of new symbols in 1.0.6"
 msgstr "1.0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:174(title)
+#: cutter-docs.sgml:178(title)
 msgid "Index of new symbols in 1.0.5"
 msgstr "1.0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:177(title)
+#: cutter-docs.sgml:181(title)
 msgid "Index of new symbols in 1.0.4"
 msgstr "1.0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:180(title)
+#: cutter-docs.sgml:184(title)
 msgid "Index of new symbols in 1.0.3"
 msgstr "1.0.3での新しいシンボル一覧"
 
-#: cutter-docs.sgml:183(title)
+#: cutter-docs.sgml:187(title)
 msgid "Index of new symbols in 1.0.2"
 msgstr "1.0.2での新しいシンボル一覧"
 
-#: cutter-docs.sgml:186(title)
+#: cutter-docs.sgml:190(title)
 msgid "Index of new symbols in 1.0.1"
 msgstr "1.0.1での新しいシンボル一覧"
 
-#: cutter-docs.sgml:189(title)
+#: cutter-docs.sgml:193(title)
 msgid "Index of new symbols in 1.0"
 msgstr "1.0での新しいシンボル一覧"
 
-#: cutter-docs.sgml:192(title)
+#: cutter-docs.sgml:196(title)
 msgid "Index of new symbols in 0.9"
 msgstr "0.9での新しいシンボル一覧"
 
-#: cutter-docs.sgml:195(title)
+#: cutter-docs.sgml:199(title)
 msgid "Index of new symbols in 0.8"
 msgstr "0.8での新しいシンボル一覧"
 
-#: cutter-docs.sgml:198(title)
+#: cutter-docs.sgml:202(title)
 msgid "Index of new symbols in 0.7"
 msgstr "0.7での新しいシンボル一覧"
 
-#: cutter-docs.sgml:201(title)
+#: cutter-docs.sgml:205(title)
 msgid "Index of new symbols in 0.6"
 msgstr "0.6での新しいシンボル一覧"
 
-#: cutter-docs.sgml:204(title)
+#: cutter-docs.sgml:208(title)
 msgid "Index of new symbols in 0.5"
 msgstr "0.5での新しいシンボル一覧"
 
-#: cutter-docs.sgml:207(title)
+#: cutter-docs.sgml:211(title)
 msgid "Index of new symbols in 0.4"
 msgstr "0.4での新しいシンボル一覧"
 
-#: cutter-docs.sgml:210(title)
+#: cutter-docs.sgml:214(title)
 msgid "Index of new symbols in 0.3"
 msgstr "0.3での新しいシンボル一覧"
 
