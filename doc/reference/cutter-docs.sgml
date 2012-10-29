@@ -37,7 +37,7 @@
       <title>Travis CI Integration</title>
       <xi:include href="travis-ci-integration.xml"/>
     </chapter>
-    <chapter id="release">
+    <chapter id="release-howto">
       <title>How to release Cutter</title>
       <xi:include href="release.xml"/>
     </chapter>
