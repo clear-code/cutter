@@ -233,6 +233,7 @@ make update-poを実行すると、各種poファイルが更新されます。
 * natty i386/amd64
 * oneiric i386/amd64
 * precise i386/amd64
+* quantal i386/amd64
 
 なお以下のコマンドの実行は(({$CUTTER_CLEAN_DIR/packages/apt}))以下で
 行っているものとします。
