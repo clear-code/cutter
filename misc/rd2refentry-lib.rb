@@ -28,6 +28,7 @@ module RD
 
     @@po = nil
     @@name = nil
+    @@target_file_name = nil
     class << self
       def version
         VERSION
@@ -39,6 +40,10 @@ module RD
 
       def name=(name)
         @@name = name
+      end
+
+      def target_file_name=(file_name)
+        @@target_file_name = file_name
       end
     end
 
@@ -309,7 +314,7 @@ module RD
     end
 
     def ref_entry_id(filename=nil)
-      filename ||= $target_file_name
+      filename ||= @@target_file_name
       remove_suffix(File.basename(filename)).downcase
     end
 
@@ -434,7 +439,7 @@ module RD
 end
 
 $Visitor_Class = RD::RD2RefEntryVisitor
-$target_file_name = ARGV.last
+RD::RD2RefEntryVisitor.target_file_name = ARGV.last
 ARGV.options do |opts|
   opts.on("--name=NAME", "The library name") do |name|
     RD::RD2RefEntryVisitor.name = name
