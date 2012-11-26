@@ -439,6 +439,7 @@ module RD
 end
 
 $Visitor_Class = RD::RD2RefEntryVisitor
+# FIXME: Couldn't get target file name by ARGF.filename
 RD::RD2RefEntryVisitor.target_file_name = ARGV.last
 ARGV.options do |opts|
   opts.on("--name=NAME", "The library name") do |name|
