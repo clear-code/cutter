@@ -309,7 +309,7 @@ module RD
     end
 
     def ref_entry_id(filename=nil)
-      filename ||= ARGF.filename
+      filename ||= $target_file_name
       remove_suffix(File.basename(filename)).downcase
     end
 
@@ -434,6 +434,7 @@ module RD
 end
 
 $Visitor_Class = RD::RD2RefEntryVisitor
+$target_file_name = ARGV.last
 ARGV.options do |opts|
   opts.on("--name=NAME", "The library name") do |name|
     RD::RD2RefEntryVisitor.name = name
