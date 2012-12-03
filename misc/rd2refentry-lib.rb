@@ -325,7 +325,7 @@ module RD
 
     def tag(name, attributes={}, *contents)
       encoded_attributes = attributes.collect do |key, value|
-        "#{key}=\"#{h(value)}\""
+        "#{key}=\'#{h(value)}\'"
       end.join(" ")
       unless encoded_attributes.empty?
         encoded_attributes = " #{encoded_attributes}"
