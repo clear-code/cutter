@@ -29,6 +29,7 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
+%find_lang %{name}
 
 %clean
 rm -rf %{buildroot}
@@ -37,7 +38,7 @@ rm -rf %{buildroot}
 
 %postun -p /sbin/ldconfig
 
-%files
+%files -f %{name}.lang
 %defattr(-, root, root, -)
 %doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja
 %doc %{_datadir}/gtk-doc/html/cutter/
