@@ -29,6 +29,7 @@ make %{?_smp_mflags}
 %install
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
+find %{buildroot} -name keep-me -size 0 -delete
 %find_lang %{name}
 
 %clean
