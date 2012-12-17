@@ -42,9 +42,9 @@ rm -rf %{buildroot}
 %defattr(-, root, root, -)
 %doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja
 %doc %{_datadir}/gtk-doc/html/cutter/
-%{_bindir}/
+%{_bindir}/*
 %{_includedir}/cutter/
-%{_libdir}/
+%{_libdir}/*
 %{_mandir}/man1/*
 %{_mandir}/ja/man1/*
 %{_datadir}/aclocal/
