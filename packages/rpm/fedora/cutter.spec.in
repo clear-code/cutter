@@ -33,6 +33,10 @@ make install DESTDIR=%{buildroot}
 %clean
 rm -rf %{buildroot}
 
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
+
 %files
 %defattr(-, root, root, -)
 %doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja
