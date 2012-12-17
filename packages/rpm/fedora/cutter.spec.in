@@ -44,7 +44,8 @@ rm -rf %{buildroot}
 %{_bindir}/
 %{_includedir}/cutter/
 %{_libdir}/
-%{_mandir}/
+%{_mandir}/man1/*
+%{_mandir}/ja/man1/*
 %{_datadir}/aclocal/
 %{_datadir}/cutter/
 %{_datadir}/locale/
