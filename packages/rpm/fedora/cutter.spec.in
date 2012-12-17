@@ -2,7 +2,7 @@ Summary: A Unit Testing Framework for C
 Name: cutter
 Version: @VERSION@
 Release: 0%{?dist}
-License: LGPL3+
+License: LGPLv3+
 URL: http://cutter.sourceforge.net/
 Group: Development/Tools
 Source: http://downloads.sourceforge.net/cutter/cutter-%{version}.tar.gz
