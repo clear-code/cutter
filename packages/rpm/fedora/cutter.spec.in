@@ -1,7 +1,7 @@
 Summary: A Unit Testing Framework for C/C++
 Name: cutter
 Version: @VERSION@
-Release: 1%{?dist}
+Release: 2%{?dist}
 License: LGPLv3+
 URL: http://cutter.sourceforge.net/
 Group: Development/Tools
@@ -12,6 +12,16 @@ BuildRequires: glib2-devel
 BuildRequires: libsoup-devel
 
 %description
+Cutter is a xUnit family Unit Testing Framework for C/C++.
+Cutter provides easy to write test and easy to debug code environment.
+
+%package devel
+Summary:        Libraries and header files for Cutter development
+Group:          Development/Tools
+Requires:       %{name} = %{version}-%{release}
+
+%description devel
+Libraries and header files for Cutter.
 Cutter is a xUnit family Unit Testing Framework for C/C++.
 Cutter provides easy to write test and easy to debug code environment.
 
@@ -41,16 +51,32 @@ rm -rf %{buildroot}
 %files -f %{name}.lang
 %defattr(-, root, root, -)
 %doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja
-%doc %{_datadir}/gtk-doc/html/cutter/
 %{_bindir}/*
-%{_includedir}/cutter/
-%{_libdir}/*
+%{_libdir}/cutter/*
+%{_libdir}/libcutter.so.*
+%{_libdir}/libcppcutter.so.*
+%{_libdir}/libsoupcutter.so.*
 %{_mandir}/man1/*
 %{_mandir}/ja/man1/*
-%{_datadir}/aclocal/
-%{_datadir}/cutter/
+%{_datadir}/cutter/icons/*
+%{_datadir}/cutter/license/*
+%{_datadir}/cutter/ui
+
+%files devel
+%defattr(-, root, root, -)
+%doc %{_datadir}/gtk-doc/html/cutter/
+%{_includedir}/cutter/*
+%{_libdir}/libcutter.so
+%{_libdir}/libcppcutter.so
+%{_libdir}/libsoupcutter.so
+%{_libdir}/pkgconfig/*
+%{_datadir}/aclocal/*
+%{_datadir}/cutter/stack/*
 
 %changelog
+* Tue Dec 18 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-2
+- split libraries and header files into devel package
+
 * Mon Dec 17 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-1
 - fix rpmlint issues
 - follow fedora packaging guidelines
