@@ -1,4 +1,4 @@
-Summary: A Unit Testing Framework for C
+Summary: A Unit Testing Framework for C/C++
 Name: cutter
 Version: @VERSION@
 Release: 1%{?dist}
@@ -12,7 +12,7 @@ BuildRequires: glib2-devel
 BuildRequires: libsoup-devel
 
 %description
-Cutter is a xUnit family Unit Testing Framework for C.
+Cutter is a xUnit family Unit Testing Framework for C/C++.
 Cutter provides easy to write test and easy to debug code environment.
 
 %prep
