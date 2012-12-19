@@ -68,9 +68,16 @@ find %{buildroot} -name '*.la' -delete
 %doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja license/fdl-1.3.txt license/lgpl-3.txt
 %{_bindir}/*
 %dir %{_libdir}/cutter
-%{_libdir}/cutter/module/factory
-%{_libdir}/cutter/module/report
-%{_libdir}/cutter/module/stream
+%dir %{_libdir}/cutter/module
+%dir %{_libdir}/cutter/module/factory
+%dir %{_libdir}/cutter/module/factory/ui
+%dir %{_libdir}/cutter/module/ui
+%{_libdir}/cutter/module/factory/report/
+%{_libdir}/cutter/module/factory/stream/
+%{_libdir}/cutter/module/factory/ui/console_factory.so
+%{_libdir}/cutter/module/report/
+%{_libdir}/cutter/module/stream/
+%{_libdir}/cutter/module/ui/console.so
 %{_libdir}/libcutter.so.*
 %{_libdir}/libcppcutter.so.*
 %{_libdir}/libsoupcutter.so.*
@@ -101,8 +108,11 @@ find %{buildroot} -name '*.la' -delete
 %defattr(-, root, root, -)
 %dir %{_libdir}/cutter
 %dir %{_libdir}/cutter/module
+%dir %{_libdir}/cutter/module/factory
+%dir %{_libdir}/cutter/module/factory/ui
 %dir %{_libdir}/cutter/module/ui
-%{_libdir}/cutter/module/ui/*
+%{_libdir}/cutter/module/factory/ui/gtk_factory.so
+%{_libdir}/cutter/module/ui/gtk.so
 %dir %{_datadir}/cutter/ui
 %{_datadir}/cutter/ui/*
 
