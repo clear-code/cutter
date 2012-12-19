@@ -17,7 +17,7 @@ Cutter provides easy to write test and easy to debug code environment.
 %package devel
 Summary:        Libraries and header files for Cutter development
 Group:          Development/Libraries
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 Libraries and header files for Cutter.
