@@ -46,7 +46,7 @@ find %{buildroot} -name '*.la' -delete
 
 %files -f %{name}.lang
 %defattr(-, root, root, -)
-%doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja fdl-1.3.txt lpgl-3.txt
+%doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja license/fdl-1.3.txt license/lgpl-3.txt
 %{_bindir}/*
 %{_libdir}/cutter/*
 %{_libdir}/libcutter.so.*
