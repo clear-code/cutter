@@ -49,7 +49,6 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 V=1 make %{?_smp_mflags}
 
 %install
-rm -rf %{buildroot}
 # replace to proper directory
 sed -i 's|/usr/local/share/doc/cutter|%{_defaultdocdir}/%{name}-%{version}|g' doc/cutter.man
 sed -i "s|/usr/local/share/doc/cutter/ja|%{_defaultdocdir}/%{name}-%{version}|g" doc/cutter.jman
