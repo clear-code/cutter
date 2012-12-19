@@ -53,7 +53,6 @@ find %{buildroot} -name '*.la' -delete
 %{_libdir}/libcppcutter.so.*
 %{_libdir}/libsoupcutter.so.*
 %{_mandir}/man1/*
-%{_mandir}/ja/man1/*
 %{_datadir}/cutter/icons/*
 %{_datadir}/cutter/license/*
 %{_datadir}/cutter/ui
