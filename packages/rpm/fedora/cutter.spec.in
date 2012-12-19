@@ -1,4 +1,4 @@
-Summary: A Unit Testing Framework for C/C++
+Summary: Unit Testing Framework for C/C++
 Name: cutter
 Version: @VERSION@
 Release: 2%{?dist}
