@@ -37,6 +37,9 @@ Cutter is a xUnit family Unit Testing Framework for C/C++.
 Cutter provides easy to write test and easy to debug code environment.
 
 %prep
+# follow guide line: https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries
+# bundled pcre library is required for older version of glib (2.12) only.
+rm -fr %{buildroot}/glib-compatible/pcre
 %setup -q
 
 %build
