@@ -40,9 +40,6 @@ find %{buildroot} -name keep-me -size 0 -delete
 find %{buildroot} -name '*.la' -delete
 %find_lang %{name}
 
-%clean
-rm -rf %{buildroot}
-
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
