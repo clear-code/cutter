@@ -6,7 +6,6 @@ License: LGPLv3+
 URL: http://cutter.sourceforge.net/
 Group: Development/Libraries
 Source: http://downloads.sourceforge.net/cutter/cutter-%{version}.tar.gz
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)
 BuildRequires: intltool
 BuildRequires: glib2-devel
 BuildRequires: libsoup-devel
