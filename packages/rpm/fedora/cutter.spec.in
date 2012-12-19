@@ -4,7 +4,7 @@ Version: @VERSION@
 Release: 2%{?dist}
 License: LGPLv3+
 URL: http://cutter.sourceforge.net/
-Group: Development/Tools
+Group: Development/Libraries
 Source: http://downloads.sourceforge.net/cutter/cutter-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)
 BuildRequires: intltool
@@ -17,7 +17,7 @@ Cutter provides easy to write test and easy to debug code environment.
 
 %package devel
 Summary:        Libraries and header files for Cutter development
-Group:          Development/Tools
+Group:          Development/Libraries
 Requires:       %{name} = %{version}-%{release}
 
 %description devel
