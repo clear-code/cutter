@@ -6,3 +6,4 @@ gcc-c++
 make
 glib2-devel
 libsoup-devel
+gtk2-devel
