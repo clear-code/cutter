@@ -58,6 +58,9 @@ rm -fr %{buildroot}%{_datadir}/cutter/stack/config
 find %{buildroot} -name '*.la' -delete
 %find_lang %{name} --with-man --all-name
 
+%check
+V=1 LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdkcutter-pixbuf/.libs:$(pwd)/soupcutter/.libs:$(pwd)/test/lib/.libs make check
+
 %post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
