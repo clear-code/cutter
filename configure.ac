@@ -353,10 +353,8 @@ if test "$gtk_exists" != "no"; then
     AC_RUN_IFELSE([AC_LANG_PROGRAM([
 #include <stdlib.h>
 #include <gtk/gtk.h>
-
-int
-main (int argc, char **argv)
-{
+                                   ],
+      [
     GOptionGroup *option_group;
     GOptionContext *option_context;
     gchar *help;
@@ -373,7 +371,6 @@ main (int argc, char **argv)
     g_option_context_free(option_context);
 
     return debug_mode ? EXIT_SUCCESS : EXIT_FAILURE;
-}
       ])],
       [AC_DEFINE(HAVE_GTK_ENABLE_DEBUG, 1,
 		 [Define to 1 if you have GTK+ installed and built with debug mode])
