@@ -259,8 +259,8 @@ test_help_all (void)
         "  --gtk-name=NAME                                   Program name as used by the window manager" LINE_FEED_CODE
         "  --screen=SCREEN                                   X screen to use" LINE_FEED_CODE
 #  ifdef HAVE_GTK_ENABLE_DEBUG
-        "  --gdk-debug=FLAGS                                 Gdk debugging flags to set" LINE_FEED_CODE
-        "  --gdk-no-debug=FLAGS                              Gdk debugging flags to unset" LINE_FEED_CODE
+        "  --gdk-debug=FLAGS                                 GDK debugging flags to set" LINE_FEED_CODE
+        "  --gdk-no-debug=FLAGS                              GDK debugging flags to unset" LINE_FEED_CODE
 #  endif
 #  ifdef GDK_WINDOWING_X11
         "  --sync                                            Make X calls synchronous" LINE_FEED_CODE
