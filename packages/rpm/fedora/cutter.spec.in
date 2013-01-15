@@ -130,15 +130,6 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %dir %{_datadir}/cutter/ui
 %{_datadir}/cutter/ui/*
 
-%changelog
-* Tue Dec 18 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-2
-- split libraries and header files into devel package
-
-* Mon Dec 17 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-1
-- fix rpmlint issues
-- follow fedora packaging guidelines
-
-* Mon Oct 29 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-0
 %files report
 %defattr(-, root, root, -)
 %dir %{_libdir}/cutter
@@ -148,6 +139,30 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %{_libdir}/cutter/module/factory/report/pdf_factory.so
 %{_libdir}/cutter/module/report/pdf.so
 
+%changelog
+* Tue Jan 15 2013 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-3
+- update packages Summary: section.
+- change Group: from Development/Tools to Development/Libraries.
+- remove needless BuiltRoot: tag.
+- add arch-specific macro to Requires: tag.
+- remove needless %%clean.
+- add license file to %%doc.
+- collect manual pages by %%find_lang additional option.
+- remove bundled pcre library explicitly.
+- fix default doc directory path in manual page.
+- split gtk related module into -gui subpackage.
+- add %%check section.
+- split pdf related module into -report subpackage.
+- split gstreamer related module into -gstreamer subpackage.
+
+* Tue Dec 18 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-2
+- split libraries and header files into devel package
+
+* Mon Dec 17 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-1
+- fix rpmlint issues
+- follow fedora packaging guidelines
+
+* Mon Oct 29 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-0
 - new upstream release.
 
 * Wed Aug 15 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.1-0
