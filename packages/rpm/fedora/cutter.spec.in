@@ -1,7 +1,7 @@
 Summary: Unit Testing Framework for C/C++
 Name: cutter
 Version: @VERSION@
-Release: 2%{?dist}
+Release: 3%{?dist}
 License: LGPLv3+
 URL: http://cutter.sourceforge.net/
 Group: Development/Libraries
