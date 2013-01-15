@@ -37,12 +37,6 @@ GUI Test module for Cutter.
 Cutter is a xUnit family Unit Testing Framework for C/C++.
 Cutter provides easy to write test and easy to debug code environment.
 
-%prep
-# follow guide line: https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries
-# bundled pcre library is required for older version of glib (2.12) only.
-rm -fr %{buildroot}/glib-compatible/pcre
-%setup -q
-
 %package report
 Summary:        PDF report module for Cutter
 Group:          Development/Libraries
@@ -53,6 +47,23 @@ Requires:       goffice08
 PDF report module for Cutter.
 Cutter is a xUnit family Unit Testing Framework for C/C++.
 Cutter provides easy to write test and easy to debug code environment.
+
+%package gstreamer
+Summary:        Cutter GStreamer plugin
+Group:          Development/Libraries
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       gstreamer
+
+%description gstreamer
+Cutter GStreamer plugin.
+Cutter is a xUnit family Unit Testing Framework for C/C++.
+Cutter provides easy to write test and easy to debug code environment.
+
+%prep
+# follow guide line: https://fedoraproject.org/wiki/Packaging:No_Bundled_Libraries
+# bundled pcre library is required for older version of glib (2.12) only.
+rm -fr %{buildroot}/glib-compatible/pcre
+%setup -q
 
 %build
 %configure --disable-bfd
@@ -139,6 +150,11 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %dir %{_libdir}/cutter/module/report
 %{_libdir}/cutter/module/factory/report/pdf_factory.so
 %{_libdir}/cutter/module/report/pdf.so
+
+%files gstreamer
+%defattr(-, root, root, -)
+%dir %{_libdir}/gstreamer-0.10
+%{_libdir}/gstreamer-0.10/libgstcuttertest.so
 
 %changelog
 * Tue Jan 15 2013 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-3
