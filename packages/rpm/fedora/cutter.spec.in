@@ -84,12 +84,13 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %dir %{_libdir}/cutter
 %dir %{_libdir}/cutter/module
 %dir %{_libdir}/cutter/module/factory
+%dir %{_libdir}/cutter/module/factory/report
 %dir %{_libdir}/cutter/module/factory/ui
 %dir %{_libdir}/cutter/module/ui
-%{_libdir}/cutter/module/factory/report/
+%{_libdir}/cutter/module/factory/report/xml_factory.so
 %{_libdir}/cutter/module/factory/stream/
 %{_libdir}/cutter/module/factory/ui/console_factory.so
-%{_libdir}/cutter/module/report/
+%{_libdir}/cutter/module/report/xml.so
 %{_libdir}/cutter/module/stream/
 %{_libdir}/cutter/module/ui/console.so
 %{_libdir}/libcutter.so.*
