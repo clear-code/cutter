@@ -11,6 +11,7 @@ BuildRequires: glib2-devel
 BuildRequires: libsoup-devel
 BuildRequires: gtk2-devel
 BuildRequires: goffice08-devel
+BuildRequires: gstreamer-devel
 
 %description
 Cutter is a xUnit family Unit Testing Framework for C/C++.
