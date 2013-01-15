@@ -43,6 +43,17 @@ Cutter provides easy to write test and easy to debug code environment.
 rm -fr %{buildroot}/glib-compatible/pcre
 %setup -q
 
+%package report
+Summary:        PDF report module for Cutter
+Group:          Development/Libraries
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       goffice08
+
+%description report
+PDF report module for Cutter.
+Cutter is a xUnit family Unit Testing Framework for C/C++.
+Cutter provides easy to write test and easy to debug code environment.
+
 %build
 %configure --disable-bfd
 sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
@@ -128,6 +139,15 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 - follow fedora packaging guidelines
 
 * Mon Oct 29 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-0
+%files report
+%defattr(-, root, root, -)
+%dir %{_libdir}/cutter
+%dir %{_libdir}/cutter/module
+%dir %{_libdir}/cutter/module/factory
+%dir %{_libdir}/cutter/module/report
+%{_libdir}/cutter/module/factory/report/pdf_factory.so
+%{_libdir}/cutter/module/report/pdf.so
+
 - new upstream release.
 
 * Wed Aug 15 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.1-0
