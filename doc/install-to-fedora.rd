@@ -16,7 +16,15 @@ First, we need to register Cutter Yum repository:
 
 Now, we can install Cutter by yum:
 
-  % sudo yum install -y cutter
+  % sudo yum install -y cutter-devel
+
+Install cutter-gui package if you want to use GTK+ frontend.
+
+  % sudo yum install -y cutter-gui
+
+Install cutter-report package if you want to save testing results as PDF format.
+
+  % sudo yum install -y cutter-report
 
 == The next step
 
