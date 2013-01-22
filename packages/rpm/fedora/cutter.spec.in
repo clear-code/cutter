@@ -95,6 +95,7 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %dir %{_libdir}/cutter/module/factory
 %dir %{_libdir}/cutter/module/factory/report
 %dir %{_libdir}/cutter/module/factory/ui
+%dir %{_libdir}/cutter/module/report
 %dir %{_libdir}/cutter/module/ui
 %{_libdir}/cutter/module/factory/report/xml_factory.so
 %{_libdir}/cutter/module/factory/stream/
@@ -130,11 +131,6 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 
 %files gui
 %defattr(-, root, root, -)
-%dir %{_libdir}/cutter
-%dir %{_libdir}/cutter/module
-%dir %{_libdir}/cutter/module/factory
-%dir %{_libdir}/cutter/module/factory/ui
-%dir %{_libdir}/cutter/module/ui
 %{_libdir}/cutter/module/factory/ui/gtk_factory.so
 %{_libdir}/cutter/module/ui/gtk.so
 %dir %{_datadir}/cutter/ui
@@ -142,10 +138,6 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 
 %files report
 %defattr(-, root, root, -)
-%dir %{_libdir}/cutter
-%dir %{_libdir}/cutter/module
-%dir %{_libdir}/cutter/module/factory
-%dir %{_libdir}/cutter/module/report
 %{_libdir}/cutter/module/factory/report/pdf_factory.so
 %{_libdir}/cutter/module/report/pdf.so
 
