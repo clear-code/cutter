@@ -31,7 +31,6 @@ Cutter provides easy to write test and easy to debug code environment.
 Summary:        GUI Test module for Cutter
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       gtk2
 
 %description gui
 GUI Test module for Cutter.
@@ -42,7 +41,6 @@ Cutter provides easy to write test and easy to debug code environment.
 Summary:        PDF report module for Cutter
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       goffice08
 
 %description report
 PDF report module for Cutter.
@@ -53,7 +51,6 @@ Cutter provides easy to write test and easy to debug code environment.
 Summary:        Cutter GStreamer plugin
 Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
-Requires:       gstreamer
 
 %description gstreamer
 Cutter GStreamer plugin.
