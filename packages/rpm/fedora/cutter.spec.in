@@ -116,6 +116,8 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 
 %files devel
 %defattr(-, root, root, -)
+%dir %{_datadir}/gtk-doc/
+%dir %{_datadir}/gtk-doc/html/
 %doc %{_datadir}/gtk-doc/html/cutter/
 %dir %{_includedir}/cutter
 %{_includedir}/cutter/*
