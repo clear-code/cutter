@@ -53,7 +53,7 @@ Group:          Development/Libraries
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description gstreamer
-Cutter GStreamer plugin.
+Cutter plugin which relays testing results via GStreamer.
 Cutter is a xUnit family Unit Testing Framework for C/C++.
 Cutter provides easy to write test and easy to debug code environment.
 
