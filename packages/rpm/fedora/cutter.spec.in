@@ -1,3 +1,5 @@
+%global __provides_exclude_from ^%{_libdir}/%{name}/module/.*\\.so$
+
 Summary: Unit Testing Framework for C/C++
 Name: cutter
 Version: @VERSION@
