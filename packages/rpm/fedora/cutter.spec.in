@@ -3,7 +3,7 @@
 Summary: Unit Testing Framework for C/C++
 Name: cutter
 Version: @VERSION@
-Release: 3%{?dist}
+Release: 4%{?dist}
 License: LGPLv3+
 URL: http://cutter.sourceforge.net/
 Group: Development/Libraries
@@ -147,6 +147,14 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %{_libdir}/gstreamer-0.10/libgstcuttertest.so
 
 %changelog
+* Tue Jan 30 2013 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-4
+- remove needless %%defattr.
+- remove needless Requires:.
+- aggregate redundant %%dir ownership to cutter base package.
+- update gstreamer package description.
+- don't export private module soname.
+- remove unused shared library dependency.
+
 * Tue Jan 15 2013 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-3
 - update packages Summary: section.
 - change Group: from Development/Tools to Development/Libraries.
