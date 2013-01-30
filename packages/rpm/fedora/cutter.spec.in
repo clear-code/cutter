@@ -87,7 +87,6 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
-%defattr(-, root, root, -)
 %doc README README.ja NEWS NEWS.ja TODO FEATURES FEATURES.ja TUTORIAL TUTORIAL.ja USERS USERS.ja license/fdl-1.3.txt license/lgpl-3.txt
 %{_bindir}/*
 %dir %{_libdir}/cutter
@@ -115,7 +114,6 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %{_datadir}/cutter/license/*
 
 %files devel
-%defattr(-, root, root, -)
 %dir %{_datadir}/gtk-doc/
 %dir %{_datadir}/gtk-doc/html/
 %doc %{_datadir}/gtk-doc/html/cutter/
@@ -132,19 +130,16 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %{_datadir}/cutter/stack/*
 
 %files gui
-%defattr(-, root, root, -)
 %{_libdir}/cutter/module/factory/ui/gtk_factory.so
 %{_libdir}/cutter/module/ui/gtk.so
 %dir %{_datadir}/cutter/ui
 %{_datadir}/cutter/ui/*
 
 %files report
-%defattr(-, root, root, -)
 %{_libdir}/cutter/module/factory/report/pdf_factory.so
 %{_libdir}/cutter/module/report/pdf.so
 
 %files gstreamer
-%defattr(-, root, root, -)
 %dir %{_libdir}/gstreamer-0.10
 %{_libdir}/gstreamer-0.10/libgstcuttertest.so
 
