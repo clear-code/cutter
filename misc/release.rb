@@ -119,15 +119,14 @@ end
 
 def submit_news(agent, submit_news_page, project_name, package_name,
                 release_name, readme, news)
-  submit_news_form = submit_news_page.forms.find do |form|
-    /\bnews\b/ =~ form.action
+  submit_news_page.form_with(:action => "save") do |form|
+    title = "#{project_name}: #{package_name} #{release_name} Released"
+    form.title = title
+    details = [project_summary(readme),
+               latest_release_changes(news)].join("\n\n")
+    form.text = remove_rd_link_markup(details).gsub(/\n/, "\r\n")
+    form.submit
   end
-  title = "#{project_name}: #{package_name} #{release_name} Released"
-  submit_news_form.title = title
-  text = [project_summary(readme),
-          latest_release_changes(news)].join("\n\n")
-  submit_news_form.text = remove_rd_link_markup(text).gsub(/\n/, "\r\n")
-  agent.submit(submit_news_form, submit_news_form.buttons.first)
 end
 
 def main(sf_user_name, project_id, project_name,
