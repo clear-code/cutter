@@ -147,7 +147,7 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 %{_libdir}/gstreamer-0.10/libgstcuttertest.so
 
 %changelog
-* Tue Jan 30 2013 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-4
+* Wed Jan 30 2013 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.2-4
 - remove needless %%defattr.
 - remove needless Requires:.
 - aggregate redundant %%dir ownership to cutter base package.
@@ -214,15 +214,15 @@ make check LD_LIBRARY_PATH=$(pwd)/cppcutter/.libs:$(pwd)/cutter/.libs:$(pwd)/gdk
 - (1.1.2-0)
 - new upstream release
 
-* Thu Mar 3 2010 Kouhei Sutou <kou@clear-code.com>
+* Wed Mar 3 2010 Kouhei Sutou <kou@clear-code.com>
 - (1.1.1-0)
 - new upstream release
 
-* Thu Nov 3 2009 Kouhei Sutou <kou@clear-code.com>
+* Tue Nov 3 2009 Kouhei Sutou <kou@clear-code.com>
 - (1.1.0-0)
 - new upstream release
 
-* Mon Oct 20 2009 Kouhei Sutou <kou@clear-code.com>
+* Tue Oct 20 2009 Kouhei Sutou <kou@clear-code.com>
 - (1.0.9-0)
 - new upstream release
 
