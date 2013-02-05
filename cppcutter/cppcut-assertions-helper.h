@@ -77,6 +77,10 @@ namespace cut
         }
     }
 
+    template <> void assert_equal_reference<std::type_info>(
+        const std::type_info& expected, const std::type_info& actual,
+        const char *expression_expected, const char *expression_actual);
+
     template <class Type> void assert_equal(const Type *expected,
                                             const Type *actual,
                                             const char *expression_expected,
