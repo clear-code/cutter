@@ -17,6 +17,7 @@
  *
  */
 
+#include <typeinfo>
 #include <cppcutter.h>
 #include <cutter/cut-test.h>
 #include <cutter/cut-test-result.h>
@@ -432,6 +433,32 @@ namespace cppcut_assertion_equal
                                "\"abcde\"", "\"ABcDE\"",
                                FAIL_LOCATION,
                                "void cppcut_assertion_equal::stub_string()",
+                               NULL);
+    }
+
+    static void
+    stub_type_info (void)
+    {
+        cppcut_assert_equal(typeid(int), typeid(1));
+        MARK_FAIL(cppcut_assert_equal(typeid(int), typeid(1.0)));
+    }
+
+    void
+    test_type_info (void)
+    {
+        test = cut_test_new("equal_type_info test", stub_type_info);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 1, 0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "equal_type_info test",
+                               NULL,
+                               "<typeid(int) == typeid(1.0)>",
+                               cut_take_printf("%s", typeid(int).name()),
+                               cut_take_printf("%s", typeid(double).name()),
+                               FAIL_LOCATION,
+                               "void cppcut_assertion_equal::stub_type_info()",
                                NULL);
     }
 }

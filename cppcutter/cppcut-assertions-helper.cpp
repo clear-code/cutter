@@ -17,6 +17,7 @@
  *
  */
 
+#include <typeinfo>
 #include "cppcut-assertions-helper.h"
 
 CPPCUT_DECL void
@@ -58,6 +59,27 @@ cut::assert_equal(const char *expected, const char *actual,
 {
     cut_assert_equal_string_helper(expected, actual,
                                    expression_expected, expression_actual);
+}
+
+template <>
+CPPCUT_DECL void
+cut::assert_equal_reference<std::type_info>(const std::type_info& expected,
+                                            const std::type_info& actual,
+                                            const char *expression_expected,
+                                            const char *expression_actual)
+{
+    if (expected == actual) {
+        cut_test_pass();
+    } else {
+        std::ostringstream message;
+
+        cut_set_expected(expected.name());
+        cut_set_actual(actual.name());
+
+        message << "<" << expression_expected << " == ";
+        message << expression_actual << ">";
+        cut_test_fail(message.str().c_str());
+    }
 }
 
 CPPCUT_DECL void
