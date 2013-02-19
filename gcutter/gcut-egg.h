@@ -85,7 +85,7 @@ G_BEGIN_DECLS
  *     GError *error = NULL;
  *
  *     egg = gcut_egg_new("echo", "XXX", NULL);
- *     g_signal_connect(egg, "receive-output",
+ *     g_signal_connect(egg, "output-received",
  *                      G_CALLBACK(cb_output_received), NULL);
  *
  *     gcut_egg_hatch(egg, &error);
