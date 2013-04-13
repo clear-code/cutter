@@ -20,22 +20,22 @@ Here are apt lines for for squeeze. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/debian/ squeeze main
-  deb-src http://downloads.sourceforge.net/cutter/debian/ squeeze main
+  deb http://downloads.sourceforge.net/project/cutter/debian/ squeeze main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ squeeze main
 
 Here are apt lines for for wheezy. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/debian/ wheezy main
-  deb-src http://downloads.sourceforge.net/cutter/debian/ wheezy main
+  deb http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
 
 Here are apt lines for for sid. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/debian/ unstable main
-  deb-src http://downloads.sourceforge.net/cutter/debian/ unstable main
+  deb http://downloads.sourceforge.net/project/cutter/debian/ unstable main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ unstable main
 
 Cutter packages are signed by key of cutter-keyring.
 Register the key by installing cutter-keyring package.

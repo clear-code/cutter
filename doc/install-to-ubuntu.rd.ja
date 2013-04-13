@@ -21,36 +21,36 @@ Lucidの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
-  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
 
 Nattyの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/ubuntu/ natty main
-  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ natty main
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
 
 Oneiricの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/ubuntu/ oneiric main
-  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ oneiric main
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
 
 Preciseの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/ubuntu/ precise main
-  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ precise main
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
 
 Quantalの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/cutter/ubuntu/ quantal main
-  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ quantal main
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
 
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。
