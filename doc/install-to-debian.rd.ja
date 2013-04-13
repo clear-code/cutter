@@ -21,22 +21,22 @@ squeezeの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/debian/ squeeze main
-  deb-src http://downloads.sourceforge.net/project/cutter/debian/ squeeze main
+  deb http://downloads.sourceforge.net/cutter/debian/ squeeze main
+  deb-src http://downloads.sourceforge.net/cutter/debian/ squeeze main
 
 wheezyの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
-  deb-src http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
+  deb http://downloads.sourceforge.net/cutter/debian/ wheezy main
+  deb-src http://downloads.sourceforge.net/cutter/debian/ wheezy main
 
 sidの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/debian/ unstable main
-  deb-src http://downloads.sourceforge.net/project/cutter/debian/ unstable main
+  deb http://downloads.sourceforge.net/cutter/debian/ unstable main
+  deb-src http://downloads.sourceforge.net/cutter/debian/ unstable main
 
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。

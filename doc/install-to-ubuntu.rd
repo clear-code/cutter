@@ -21,36 +21,36 @@ Here are apt lines for for Lucid. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ lucid main
 
 Here are apt lines for for Natty. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ natty main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ natty main
 
 Here are apt lines for for Oneiric. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ oneiric main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ oneiric main
 
 Here are apt lines for for Precise. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ precise main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ precise main
 
 Here are apt lines for for Quantal. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
+  deb http://downloads.sourceforge.net/cutter/ubuntu/ quantal main
+  deb-src http://downloads.sourceforge.net/cutter/ubuntu/ quantal main
 
 Cutter packages are signed by key of cutter-keyring.
 Register the key by installing cutter-keyring package.
