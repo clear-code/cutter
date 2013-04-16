@@ -25,6 +25,11 @@
 #include <cutter/cut-helper.h>
 #include <cppcutter/cppcut-macros.h>
 
+namespace std
+{
+    class type_info;
+}
+
 namespace cut
 {
     CPPCUT_DECL
