@@ -52,6 +52,12 @@ char **environ = NULL;
 #  include <winsock2.h>
 #endif
 
+#if GLIB_CHECK_VERSION(2, 32, 0)
+#  define g_type_init()
+#  define g_thread_supported() TRUE
+#  define g_thread_init(vtable)
+#endif
+
 typedef enum {
     MODE_TEST,
     MODE_ANALYZE,
