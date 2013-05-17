@@ -52,8 +52,11 @@ char **environ = NULL;
 #  include <winsock2.h>
 #endif
 
-#if GLIB_CHECK_VERSION(2, 32, 0)
+#if GLIB_CHECK_VERSION(2, 36, 0)
 #  define g_type_init()
+#endif
+
+#if GLIB_CHECK_VERSION(2, 32, 0)
 #  define g_thread_supported() TRUE
 #  define g_thread_init(vtable)
 #endif
