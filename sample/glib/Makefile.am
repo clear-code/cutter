@@ -20,7 +20,6 @@ noinst_LTLIBRARIES = 			\
 		test_base64.la		\
 		test_iochannel.la	\
 		test_keyfile.la		\
-		test_thread.la		\
 		test_utf8_pointer.la	\
 		test_utf8_validate.la	\
 		test_uri.la
@@ -45,8 +44,6 @@ test_base64_la_SOURCES = base64.c
 test_iochannel_la_SOURCES = iochannel.c
 test_keyfile_la_SOURCES = keyfile.c
 test_regex_la_SOURCES = regex.c
-test_thread_la_SOURCES = thread.c
-test_thread_la_CFLAGS = $(AM_CFLAGS) $(NO_STRICT_ALIASING_CFLAGS)
 test_uri_la_SOURCES = uri.c
 test_utf8_pointer_la_SOURCES = utf8-pointer.c
 test_utf8_validate_la_SOURCES = utf8-validate.c
