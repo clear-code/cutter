@@ -414,13 +414,13 @@ AC_ARG_ENABLE([gstreamer],
               AS_HELP_STRING([--disable-gstreamer],
                              [Disable GStreamer support]),
               [enable_gstreamer=$enableval],
-              [enable_gstreamer=yes])
+              [enable_gstreamer=no]) dnl TODO: enable me again against GStreamer 1.0.0 or later
 AC_MSG_RESULT([$enable_gstreamer])
 
 gstreamer_exists=no
 if test "x$enable_gstreamer" = "xyes"; then
   PKG_CHECK_MODULES(GSTREAMER,
-                    gstreamer-0.10 >= 0.10.0 gstreamer-base-0.10 >= 0.10.0,
+                    gstreamer-1.0 >= 1.0.0 gstreamer-base-1.0 >= 1.0.0,
 		    [gstreamer_exists=yes], [gstreamer_exists=no])
   AC_SUBST([GSTREAMER_CFLAGS])
   AC_SUBST([GSTREAMER_LIBS])
@@ -434,7 +434,7 @@ if test "x$enable_gstreamer" = "xyes"; then
 		[gst_pluginsdir="$withval"],
 		[gst_pluginsdir="auto"])
     if test "$gst_pluginsdir" = "auto"; then
-      gst_pluginsdir=`pkg-config --variable=pluginsdir gstreamer-0.10`
+      gst_pluginsdir=`pkg-config --variable=pluginsdir gstreamer-1.0`
     fi
     AC_MSG_RESULT([$gst_pluginsdir])
     AC_SUBST(gst_pluginsdir)
