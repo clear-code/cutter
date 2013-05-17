@@ -57,7 +57,9 @@ char **environ = NULL;
 #endif
 
 #if GLIB_CHECK_VERSION(2, 32, 0)
-#  define g_thread_supported() TRUE
+#  ifndef g_thread_supported
+#    define g_thread_supported() TRUE
+#  endif
 #  define g_thread_init(vtable)
 #endif
 
