@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2012  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -53,6 +53,13 @@
 #include "cut-process.h"
 #include "cut-backtrace-entry.h"
 #include "cut-utils.h"
+
+#if !GLIB_CHECK_VERSION(2, 32, 0)
+#  define GPrivate                  GStaticPrivate
+#  define G_PRIVATE_INIT(notify)    G_STATIC_PRIVATE_INIT
+#  define g_private_get(key)        g_static_private_get(key)
+#  define g_private_set(key, value) g_static_private_set(key, value, NULL)
+#endif
 
 #define CUT_SIGNAL_EXPLICIT_JUMP G_MININT
 
@@ -174,7 +181,7 @@ taken_list_free (TakenList *taken_list)
     g_slice_free(TakenList, taken_list);
 }
 
-static GStaticPrivate current_context_private;
+static GPrivate current_context_private = G_PRIVATE_INIT(NULL);
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -513,20 +520,17 @@ cut_test_context_error_quark (void)
 void
 cut_test_context_current_init (void)
 {
-    g_static_private_init(&current_context_private);
 }
 
 void
 cut_test_context_current_quit (void)
 {
-    g_static_private_free(&current_context_private);
-}
-
-static void
-contexts_free (gpointer data)
-{
-    GPtrArray *contexts = data;
-    g_ptr_array_free(contexts, TRUE);
+    GPtrArray *contexts;
+    contexts = g_private_get(&current_context_private);
+    if (contexts) {
+        g_ptr_array_free(contexts, TRUE);
+    }
+    g_private_set(&current_context_private, NULL);
 }
 
 void
@@ -540,10 +544,10 @@ cut_test_context_current_push (CutTestContext *context)
         context = cut_test_context_new_sub(context);
     }
 
-    contexts = g_static_private_get(&current_context_private);
+    contexts = g_private_get(&current_context_private);
     if (!contexts) {
         contexts = g_ptr_array_new();
-        g_static_private_set(&current_context_private, contexts, contexts_free);
+        g_private_set(&current_context_private, contexts);
     }
     g_ptr_array_add(contexts, context);
 }
@@ -554,7 +558,7 @@ cut_test_context_current_pop (void)
     GPtrArray *contexts;
     CutTestContext *context = NULL;
 
-    contexts = g_static_private_get(&current_context_private);
+    contexts = g_private_get(&current_context_private);
     if (contexts) {
         context = g_ptr_array_index(contexts, contexts->len - 1);
         g_ptr_array_remove_index(contexts, contexts->len - 1);
@@ -568,7 +572,7 @@ cut_test_context_current_peek (void)
 {
     GPtrArray *contexts;
 
-    contexts = g_static_private_get(&current_context_private);
+    contexts = g_private_get(&current_context_private);
     if (contexts)
         return g_ptr_array_index(contexts, contexts->len - 1);
     else
