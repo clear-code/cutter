@@ -114,9 +114,9 @@ AC_DEFUN([AC_CHECK_CUTTER],
       cutter_use_cutter=no
     else
       m4_ifdef([PKG_CHECK_MODULES], [
-      PKG_CHECK_MODULES(CUTTER, cutter $1,
-                        [cutter_use_cutter=yes],
-                        [cutter_use_cutter=no])
+	PKG_CHECK_MODULES(CUTTER, cutter $1,
+			  [cutter_use_cutter=yes],
+			  [cutter_use_cutter=no])
         ],
         [cutter_use_cutter=no])
     fi
@@ -139,9 +139,9 @@ AC_DEFUN([AC_CHECK_GCUTTER],
   fi
   if test "x$cutter_use_gcutter" = "x"; then
     m4_ifdef([PKG_CHECK_MODULES], [
-    PKG_CHECK_MODULES(GCUTTER, gcutter $1,
-                      [cutter_use_gcutter=yes],
-                      [cutter_use_gcutter=no])
+      PKG_CHECK_MODULES(GCUTTER, gcutter $1,
+			[cutter_use_gcutter=yes],
+			[cutter_use_gcutter=no])
       ],
       [cutter_use_gcutter=no])
   fi
@@ -158,9 +158,9 @@ AC_DEFUN([AC_CHECK_CPPCUTTER],
   fi
   if test "x$cutter_use_cppcutter" = "x"; then
     m4_ifdef([PKG_CHECK_MODULES], [
-    PKG_CHECK_MODULES(CPPCUTTER, cppcutter $1,
-                      [cutter_use_cppcutter=yes],
-                      [cutter_use_cppcutter=no])
+      PKG_CHECK_MODULES(CPPCUTTER, cppcutter $1,
+			[cutter_use_cppcutter=yes],
+			[cutter_use_cppcutter=no])
       ],
       [cutter_use_cppcutter=no])
   fi
@@ -177,9 +177,9 @@ AC_DEFUN([AC_CHECK_GDKCUTTER_PIXBUF],
   fi
   if test "x$cutter_use_gdkcutter_pixbuf" = "x"; then
     m4_ifdef([PKG_CHECK_MODULES], [
-    PKG_CHECK_MODULES(GDKCUTTER_PIXBUF, gdkcutter-pixbuf $1,
-                      [cutter_use_gdkcutter_pixbuf=yes],
-                      [cutter_use_gdkcutter_pixbuf=no])
+      PKG_CHECK_MODULES(GDKCUTTER_PIXBUF, gdkcutter-pixbuf $1,
+			[cutter_use_gdkcutter_pixbuf=yes],
+			[cutter_use_gdkcutter_pixbuf=no])
       ],
       [cutter_use_gdkcutter_pixbuf=no])
   fi
@@ -196,9 +196,9 @@ AC_DEFUN([AC_CHECK_SOUPCUTTER],
   fi
   if test "$cutter_use_soupcutter" != "no"; then
     m4_ifdef([PKG_CHECK_MODULES], [
-    PKG_CHECK_MODULES(SOUPCUTTER, soupcutter $1,
-                      [cutter_use_soupcutter=yes],
-		      [cutter_use_soupcutter=no])
+      PKG_CHECK_MODULES(SOUPCUTTER, soupcutter $1,
+			[cutter_use_soupcutter=yes],
+			[cutter_use_soupcutter=no])
       ],
       [cutter_use_soupcutter=no])
   fi
