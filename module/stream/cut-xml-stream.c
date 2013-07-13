@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
- *  Copyright (C) 2011  Kouhei Sutou  <kou@clear-code.com>
+ *  Copyright (C) 2011-2013  Kouhei Sutou  <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -35,6 +35,7 @@
 #include <cutter/cut-test-result.h>
 #include <cutter/cut-enum-types.h>
 #include <cutter/cut-utils.h>
+#include <cutter/cut-glib-compatible.h>
 
 #define CUT_TYPE_XML_STREAM            cut_type_xml_stream
 #define CUT_XML_STREAM(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CUT_TYPE_XML_STREAM, CutXMLStream))
