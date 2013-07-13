@@ -1,7 +1,7 @@
 SUBDIRS =					\
 	pcre
 
-INCLUDES =					\
+AM_CPPFLAGS =					\
 	 -I$(top_srcdir)
 
 AM_CFLAGS = 					\

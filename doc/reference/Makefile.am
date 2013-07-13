@@ -133,7 +133,7 @@ IGNORE_HFILES=					\
 	cppcut-message.h			\
 	gbsearcharray.h
 
-INCLUDES =					\
+AM_CPPFLAGS =					\
 	-I$(top_srcdir)/cutter			\
 	-I$(top_srcdir)/gcutter			\
 	-I$(top_srcdir)/cppcutter		\

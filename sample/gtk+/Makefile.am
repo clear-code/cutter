@@ -5,7 +5,7 @@ TESTS_ENVIRONMENT = NO_MAKE=yes
 
 EXTRA_DIST = run-test.sh
 
-INCLUDES =			\
+AM_CPPFLAGS =			\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter

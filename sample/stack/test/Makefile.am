@@ -5,7 +5,7 @@ TESTS_ENVIRONMENT = NO_MAKE=yes CUTTER="$(CUTTER)"
 noinst_LTLIBRARIES = test_stack.la
 endif
 
-INCLUDES = -I$(top_srcdir)/src
+AM_CPPFLAGS = -I$(top_srcdir)/src
 LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
 
 AM_CFLAGS = $(CUTTER_CFLAGS)

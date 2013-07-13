@@ -9,7 +9,7 @@ noinst_HEADERS = 			\
 	gst-cutter-console-output.h	\
 	gst-cutter-server.h
 
-INCLUDES = 			\
+AM_CPPFLAGS = 			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)
 

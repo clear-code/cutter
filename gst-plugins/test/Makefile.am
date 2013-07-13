@@ -1,5 +1,5 @@
 if HAVE_GSTREAMER
-INCLUDES = $(CUTTER_CFLAGS)	\
+AM_CPPFLAGS = $(CUTTER_CFLAGS)	\
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/cutter

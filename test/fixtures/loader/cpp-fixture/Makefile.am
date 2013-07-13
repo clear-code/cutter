@@ -1,4 +1,4 @@
-INCLUDES =					\
+AM_CPPFLAGS =					\
 	$(CUTTER_CFLAGS)			\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
