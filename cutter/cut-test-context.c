@@ -53,31 +53,7 @@
 #include "cut-process.h"
 #include "cut-backtrace-entry.h"
 #include "cut-utils.h"
-
-#if !GLIB_CHECK_VERSION(2, 32, 0)
-#  define GPrivate                  GStaticPrivate
-#  define G_PRIVATE_INIT(notify)    G_STATIC_PRIVATE_INIT
-#  define g_private_get(key)        g_static_private_get(key)
-#  define g_private_set(key, value) g_static_private_set(key, value, NULL)
-#else
-#  define g_mutex_new()             mutex_new()
-#  define g_mutex_free(mutex)       mutex_free(mutex)
-static GMutex *
-mutex_new(void)
-{
-    GMutex *mutex;
-    mutex = g_new(GMutex, 1);
-    g_mutex_init(mutex);
-    return mutex;
-}
-
-static void
-mutex_free(GMutex *mutex)
-{
-    g_mutex_clear(mutex);
-    g_free(mutex);
-}
-#endif
+#include "cut-glib-compatible.h"
 
 #define CUT_SIGNAL_EXPLICIT_JUMP G_MININT
 

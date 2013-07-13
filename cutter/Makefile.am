@@ -77,6 +77,7 @@ libcutter_public_headers =		\
 noinst_headers =		\
 	cut-crash-backtrace.h	\
 	cut-elf-loader.h	\
+	cut-glib-compatible.h	\
 	cut-loader.h		\
 	cut-mach-o-loader.h	\
 	cut-module-impl.h	\
@@ -131,6 +132,7 @@ libcutter_sources =			\
 	cut-elf-loader.c		\
 	cut-factory-builder.c		\
 	cut-file-stream-reader.c	\
+	cut-glib-compatible.c		\
 	cut-helper.c			\
 	cut-iterated-test.c		\
 	cut-listener.c			\
