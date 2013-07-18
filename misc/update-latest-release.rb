@@ -40,6 +40,8 @@ files.each do |file|
 
       EOC
     end
+    replaced_content = replaced_content.sub(/^(Release:\s+)\d+/,
+                                            "\\11")
   when /debian\/changelog\z/
     date = Time.parse(new_release_date).rfc2822
     if content !~ /#{Regexp.escape(new_version)}/
