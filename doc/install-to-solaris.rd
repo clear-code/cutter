@@ -54,7 +54,7 @@ make:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://downloads.sourceforge.net/project/cutter/cutter-1.2.2.tar.gz
+  % wget http://downloads.sourceforge.net/cutter/cutter-1.2.2.tar.gz
   % tar xvzf cutter-1.2.2.tar.gz
   % cd cutter-1.2.2
   % ./configure
