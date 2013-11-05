@@ -16,12 +16,12 @@ Travis CI一般については
 
 == 設定
 
-Travis CIは32-bit版のUbuntu 11.10を使っています。（
+Travis CIは64-bit版のUbuntu 12.04を使っています。（
 ((<"Travis CI: About Travis CI 
 Environment"|URL:http://about.travis-ci.org/docs/user/ci-environment/>)) 
 参照。）
 Travis CIにCutterをインストールするために、Cutterプロジェクトが提供している
-Ubuntu 11.10用のapt-lineを使えます。
+Ubuntu 12.04用のapt-lineを使えます。
 
 (({.travis.yml})) でビルド方法を変更することができます。（ 
 ((<"Travis CI:Conifugration your Travis CI build with 

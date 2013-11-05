@@ -14,9 +14,9 @@ about general Travis CI.
 
 == Configuration
 
-Travis CI is running on 32-bit Ubuntu 11.10. (See ((<Travis CI: About
+Travis CI is running on 64-bit Ubuntu 12.04. (See ((<Travis CI: About
 Travis CI Environment|URL:http://about.travis-ci.org/docs/user/ci-environment/>)).)
-You can use apt-line for Ubuntu 11.10 provided by Cutter project to install
+You can use apt-line for Ubuntu 12.04 provided by Cutter project to install
 Cutter on Travis CI.
 
 You can custom build lifecycle by (({.travis.yml})). (See ((<Travis CI:
