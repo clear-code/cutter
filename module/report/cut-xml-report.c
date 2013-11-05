@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -405,7 +405,7 @@ attach_to_run_context (CutListener *listener,
     CutXMLReport *report = CUT_XML_REPORT(listener);
     if (report->run_context)
         detach_from_run_context(listener, report->run_context);
-    
+
     if (run_context) {
         report->run_context = g_object_ref(run_context);
         connect_to_run_context(CUT_XML_REPORT(listener), run_context);
