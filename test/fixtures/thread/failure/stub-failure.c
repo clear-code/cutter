@@ -19,6 +19,11 @@
 
 #include <gcutter.h>
 
+#if !GLIB_CHECK_VERSION(2, 32, 0)
+#  define g_thread_try_new(name, func, data, error) \
+    g_thread_create(func, data, TRUE, error)
+#endif
+
 void test_failure (void);
 
 static gpointer
@@ -44,10 +49,10 @@ test_failure (void)
 
     for (i = 0; i < sizeof(threads) / sizeof(*threads); i++) {
         GError *error = NULL;
-        threads[i] = g_thread_create(fail,
-                                     cut_get_current_test_context(),
-                                     TRUE,
-                                     &error);
+        threads[i] = g_thread_try_new(NULL,
+                                      fail,
+                                      cut_get_current_test_context(),
+                                      &error);
         gcut_assert_error(error);
     }
 
