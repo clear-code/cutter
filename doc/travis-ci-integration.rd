@@ -64,8 +64,8 @@ With the above configuration, you can use Cutter for your build.
 
 Here is free software that use Cutter on Travis CI:
 
-  * ((<groonga|URL:http://groonga.org/>))
+  * ((<Groonga|URL:http://groonga.org/>))
 
-    * ((<groonga on Travis CI|URL:http://travis-ci.org/#!/groonga/groonga>))
-    * ((<.travis.yml for groonga|URL:https://github.com/groonga/groonga/blob/master/.travis.yml>))
+    * ((<Groonga on Travis CI|URL:http://travis-ci.org/#!/groonga/groonga>))
+    * ((<.travis.yml for Groonga|URL:https://github.com/groonga/groonga/blob/master/.travis.yml>))
 
