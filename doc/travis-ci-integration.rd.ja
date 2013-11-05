@@ -73,5 +73,5 @@ Travis CI上でCutterを使っているフリーソフトウェアは以下の�
 
   * ((<Goonga|URL:http://groonga.org/>))
 
-    * ((<Travis CIでのGroongaのビルド結果|URL:http://travis-ci.org/#!/groonga/groonga>))
+    * ((<Travis CIでのGroongaのビルド結果|URL:http://travis-ci.org/groonga/groonga>))
     * ((<Groonga用の.travis.yml|URL:https://github.com/groonga/groonga/blob/master/.travis.yml>))

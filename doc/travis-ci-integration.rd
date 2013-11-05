@@ -66,6 +66,6 @@ Here is free software that use Cutter on Travis CI:
 
   * ((<Groonga|URL:http://groonga.org/>))
 
-    * ((<Groonga on Travis CI|URL:http://travis-ci.org/#!/groonga/groonga>))
+    * ((<Groonga on Travis CI|URL:http://travis-ci.org/groonga/groonga>))
     * ((<.travis.yml for Groonga|URL:https://github.com/groonga/groonga/blob/master/.travis.yml>))
 
