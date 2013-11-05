@@ -1,6 +1,6 @@
 ACLOCAL_AMFLAGS = -I acmacros -I m4macros $$ACLOCAL_OPTIONS
 
-SUBDIRS = 			\
+SUBDIRS =			\
 	m4macros		\
 	glib-compatible		\
 	gcutter			\
@@ -22,7 +22,7 @@ SUBDIRS = 			\
 	packages
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = 	\
+pkgconfig_DATA =	\
 	cutter.pc	\
 	gcutter.pc	\
 	cppcutter.pc	\
