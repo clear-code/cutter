@@ -16,7 +16,7 @@ AC_CONFIG_MACRO_DIR([acmacros])
 AC_CONFIG_SRCDIR([cutter/cut-main.c])
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 
 PACKAGE_TITLE=Cutter
