@@ -6,7 +6,7 @@ AC_DEFUN([AC_CHECK_ENABLE_COVERAGE],
                 [cutter_enable_coverage=$enableval],
                 [cutter_enable_coverage=no])
   if test "x$cutter_enable_coverage" != "xno"; then
-    ltp_version_list="1.6 1.7 1.8 1.9"
+    ltp_version_list="1.6 1.7 1.8 1.9 1.10"
     AC_PATH_TOOL(LCOV, lcov)
     AC_PATH_TOOL(GENHTML, genhtml)
 
