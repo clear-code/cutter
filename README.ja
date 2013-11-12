@@ -216,23 +216,31 @@ test_test_case_count()関数内で起こったことがわかります。
 います。
 
   <report>
+    <!-- テスト結果毎にresultタグを出力する。
+         通常は1つのテストにつき1つだが、
+         cut_message()を使うと1つのテストにつき複数のテスト結果が含まれる。 -->
     <result>
       <test-case>
         <name>テストケース名</name>
         <description>テストケースの説明（もしあれば）</description>
+        <start-time>テストケースの開始時間（ISO 8601形式）[例：2013-11-12T03:32:56.691676Z]</start-time>
+        <elapsed>テストケースの実行時間（単位は秒）[例：0.030883]</elapsed>
       </test-case>
       <test>
         <name>テスト名</name>
         <description>テストの説明（もしあれば）</description>
+        <start-time>テストの開始時間（ISO 8601形式）[例：2013-11-12T03:32:56.691823Z]</start-time>
+        <elapsed>テストの実行時間（単位は秒）[例：0.030883]</elapsed>
         <option><!-- 属性情報（もしあれば） -->
-          <name>属性名（例: bug）</name>
-          <value>属性値（例: 1234）</value>
+          <name>属性名[例：bug]</name>
+          <value>属性値[例：1234]</value>
         </option>
         <option>
           ...
         </option>
+        ...
       </test>
-      <status>テスト結果（[success|failure|error|pending|notification]）</status>
+      <status>テスト結果（次のうちのどれか：success, notification, omission, pending, failure, error, crash）</status>
       <detail>テスト結果の詳細（もしあれば）</detail>
       <backtrace><!-- バックトレース（もしあれば） -->
         <entry>
@@ -244,7 +252,8 @@ test_test_case_count()関数内で起こったことがわかります。
           ...
         </entry>
       </backtrace>
-      <elapsed>実行時間（例: 0.000010）</elapsed>
+      <start-time>テストの開始時間（ISO 8601形式）[例：2013-11-12T03:32:56.691823Z]</start-time>
+      <elapsed>テストの実行時間（単位は秒）[例：0.030883]</elapsed>
     </result>
     <result>
       ...

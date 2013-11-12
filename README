@@ -205,23 +205,32 @@ option is specified. A reported XML has the following
 structure:
 
   <report>
+    <!-- "result" tag is generated for a test result.
+          Normally, a "result" tag is generated for a test.
+          If you use cut_message(), you will get two or more "result" tags
+          for a test. -->
     <result>
       <test-case>
         <name>TEST CASE NAME</name>
         <description>DESCRIPTION OF TEST CASE (if exists)</description>
+        <start-time>START TIME OF TEST CASE (ISO 8601 format) [e.g.: 2013-11-12T03:32:56.691676Z]</start-time>
+        <elapsed>ELAPSED TIME OF TEST CASE (in seconds) [e.g.: 0.030883]</elapsed>
       </test-case>
       <test>
         <name>TEST NAME</name>
         <description>DESCRIPTION OF TEST CASE (if exists)</description>
+        <start-time>START TIME OF TEST (ISO 8601 format) [e.g.: 2013-11-12T03:32:56.691823Z]</start-time>
+        <elapsed>ELAPSED TIME OF TEST (in seconds) [e.g.: 0.030883]</elapsed>
         <option><!-- ATTRIBUTE INFORMATION (if exists) -->
-          <name>ATTRIBUTE NAME (e.g.: bug)</name>
-          <value>ATTRIBUTE VALUE (e.g.: 1234)</value>
+          <name>ATTRIBUTE NAME [e.g.: bug]</name>
+          <value>ATTRIBUTE VALUE [e.g.: 1234]</value>
         </option>
         <option>
           ...
         </option>
+        ...
       </test>
-      <status>TEST RESULT ([success|failure|error|pending|notification])</status>
+      <status>TEST RESULT (one of them: success, notification, omission, pending, failure, error, crash)</status>
       <detail>DETAIL OF TEST RESULT (if exists)</detail>
       <backtrace><!-- BACKTRACE (if exists) -->
         <entry>
@@ -233,7 +242,8 @@ structure:
           ...
         </entry>
       </backtrace>
-      <elapsed>ELAPSED TIME (e.g.: 0.000010)</elapsed>
+      <start-time>START TIME OF TEST (ISO 8601 format) [e.g.: 2013-11-12T03:32:56.691823Z]</start-time>
+      <elapsed>ELAPSED TIME OF TEST (in seconds) [e.g.: 0.030883]</elapsed>
     </result>
     <result>
       ...
