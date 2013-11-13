@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2012  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -40,6 +40,7 @@
 #include "cut-pe-loader.h"
 #include "cut-test-iterator.h"
 #include "cut-experimental.h"
+#include "cut-logger.h"
 
 #define TEST_SUITE_SO_NAME_PREFIX "suite"
 #define TEST_NAME_PREFIX "test_"
@@ -1217,6 +1218,7 @@ cut_loader_load_test_cases (CutLoader *loader)
     if (!priv->so_filename)
         return NULL;
 
+    cut_log_trace("[loader][test-cases][open] <%s>", priv->so_filename);
     priv->module = g_module_open(priv->so_filename,
                                  G_MODULE_BIND_LAZY | G_MODULE_BIND_LOCAL);
     if (!priv->module) {
@@ -1230,24 +1232,39 @@ cut_loader_load_test_cases (CutLoader *loader)
         g_object_unref(priv->elf_loader);
         priv->elf_loader = NULL;
     }
+    cut_log_trace("[loader][test-cases][elf][%s] <%s>",
+                  priv->elf_loader ? "yes" : "no",
+                  priv->so_filename);
 
     priv->mach_o_loader = cut_mach_o_loader_new(priv->so_filename);
     if (!cut_mach_o_loader_is_mach_o(priv->mach_o_loader)) {
         g_object_unref(priv->mach_o_loader);
         priv->mach_o_loader = NULL;
     }
+    cut_log_trace("[loader][test-cases][mach-o][%s] <%s>",
+                  priv->mach_o_loader ? "yes" : "no",
+                  priv->so_filename);
 
     priv->pe_loader = cut_pe_loader_new(priv->so_filename);
     if (!cut_pe_loader_is_dll(priv->pe_loader)) {
         g_object_unref(priv->pe_loader);
         priv->pe_loader = NULL;
     }
+    cut_log_trace("[loader][test-cases][pe][%s] <%s>",
+                  priv->pe_loader ? "yes" : "no",
+                  priv->so_filename);
 
     priv->symbols = collect_symbols(priv);
+    cut_log_trace("[loader][test-cases][collect-symbols] <%d>:<%s>",
+                  g_list_length(priv->symbols),
+                  priv->so_filename);
     if (!priv->symbols)
         return NULL;
 
     test_names = collect_test_functions(priv);
+    cut_log_trace("[loader][test-cases][collect-test-functions] <%d>:<%s>",
+                  g_list_length(test_names),
+                  priv->so_filename);
     if (!test_names)
         return NULL;
 
@@ -1334,6 +1351,7 @@ cut_loader_load_test_suite (CutLoader *loader)
     if (!priv->so_filename)
         return NULL;
 
+    cut_log_trace("[loader][test-suite][open] <%s>", priv->so_filename);
     priv->module = g_module_open(priv->so_filename, G_MODULE_BIND_LAZY);
     if (!priv->module) {
         g_warning("can't load a shared object for test suite: %s: %s",
@@ -1345,10 +1363,16 @@ cut_loader_load_test_suite (CutLoader *loader)
 
     warmup_function_name = g_strconcat(prefix, "_", "warmup", NULL);
     g_module_symbol(priv->module, warmup_function_name, (gpointer)&warmup);
+    cut_log_trace("[loader][test-suite][warmup][%s] <%s>",
+                  warmup ? "found" : "not-found",
+                  warmup_function_name);
     g_free(warmup_function_name);
 
     cooldown_function_name = g_strconcat(prefix, "_", "cooldown", NULL);
     g_module_symbol(priv->module, cooldown_function_name, (gpointer)&cooldown);
+    cut_log_trace("[loader][test-suite][cooldown][%s] <%s>",
+                  cooldown ? "found" : "not-found",
+                  cooldown_function_name);
     g_free(cooldown_function_name);
 
     g_free(prefix);
