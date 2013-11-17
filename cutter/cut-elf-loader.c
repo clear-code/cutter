@@ -392,8 +392,8 @@ cut_elf_loader_collect_symbols (CutELFLoader *loader)
             section_header_index = symbol_64->st_shndx;
         }
 
-        if ((info & STT_FUNC) &&
-            (bind & STB_GLOBAL) &&
+        if ((info == STT_FUNC) &&
+            (bind == STB_GLOBAL) &&
             (section_header_index == text_section_header_index)) {
             const gchar *name;
 
