@@ -6,16 +6,16 @@
 
 This document explains how to install Cutter to Cygwin.
 
-We can install Cutter to Cygwin 1.7.
+You can install Cutter to Cygwin 1.7.
 
 == Install Cygwin
 
-First, we download Cygwin 1.7 installer:
+First, download Cygwin 1.7 installer:
 
   * ((<Installer for 32-bit environment|URL:http://cygwin.com/setup-x86.exe>))
   * ((<Installer for 64-bit environment|URL:http://cygwin.com/setup-x86_64.exe>))
 
-Next, we install the following packages with the downloaded
+Next, install the following packages with the downloaded
 installer:
 
    * gcc4
@@ -29,11 +29,11 @@ installer:
    * pkg-config
    * wget
 
-We enter into Cygwin. We run Cygwin.
+Enter into Cygwin. Now, you can run Cygwin.
 
 == Install Cutter
 
-We install Cutter.
+Install Cutter:
 
   % cd
   % wget http://downloads.sourceforge.net/cutter/cutter-1.2.2.tar.gz
@@ -45,5 +45,5 @@ We install Cutter.
 
 == The next step
 
-Installation is completed. We should try
+Installation is completed. You should try
 ((<tutorial|TUTORIAL>)) with the installed Cutter.
