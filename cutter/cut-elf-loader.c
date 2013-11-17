@@ -321,7 +321,7 @@ collect_symbol_information (CutELFLoaderPrivate *priv,
     if (priv->bit == ARCHITECTURE_32BIT) {
         if (dynsym_32 && dynstr_32 && _text_section_header_index > 0) {
             collected = TRUE;
-            *symbol_section_offset = dynsym_32->sh_offset;;
+            *symbol_section_offset = dynsym_32->sh_offset;
             *symbol_entry_size = dynsym_32->sh_entsize;
             if (*symbol_entry_size > 0)
                 *n_entries = dynsym_32->sh_size / *symbol_entry_size;
@@ -333,7 +333,7 @@ collect_symbol_information (CutELFLoaderPrivate *priv,
     } else {
         if (dynsym_64 && dynstr_64 && _text_section_header_index > 0) {
             collected = TRUE;
-            *symbol_section_offset = dynsym_64->sh_offset;;
+            *symbol_section_offset = dynsym_64->sh_offset;
             *symbol_entry_size = dynsym_64->sh_entsize;
             if (*symbol_entry_size > 0)
                 *n_entries = dynsym_64->sh_size / *symbol_entry_size;
