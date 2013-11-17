@@ -210,7 +210,7 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
 
         memcpy(&type, priv->content + sizeof(ident), sizeof(type));
         if (type != ET_DYN) {
-            g_warning("not dynamic library: 0x%x", type);
+            g_warning("not dynamic library: %#x", type);
             g_free(priv->content);
             priv->content = NULL;
         }
