@@ -13,7 +13,8 @@ but we need to apply a patch to GLib).
 
 First, we download Cygwin 1.7 installer:
 
-((<URL:http://cygwin.com/setup.exe>))
+  * ((<Installer for 32-bit environment|URL:http://cygwin.com/setup-x86.exe>))
+  * ((<Installer for 64-bit environment|URL:http://cygwin.com/setup-x86_64.exe>))
 
 Next, we install the following packages with the downloaded
 installer:

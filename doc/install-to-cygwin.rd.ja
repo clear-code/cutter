@@ -12,7 +12,8 @@ Cygwin 1.7を対象とします。
 
 まず、Cygwin 1.7のインストーラをダウンロードします。
 
-((<URL:http://cygwin.com/setup.exe>))
+  * ((<32bit用インストーラ|URL:http://cygwin.com/setup-x86.exe>))
+  * ((<64bit用インストーラ|URL:http://cygwin.com/setup-x86_64.exe>))
 
 次に、インストーラを使って以下のパッケージをインストールしま
 す。
