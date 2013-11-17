@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,6 +31,7 @@
 #include <glib/gstdio.h>
 
 #include "cut-pe-loader.h"
+#include "cut-logger.h"
 
 #define CUT_PE_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_PE_LOADER, CutPELoaderPrivate))
 
@@ -171,6 +172,7 @@ cut_pe_loader_is_dll (CutPELoader *loader)
     IMAGE_DOS_HEADER *dos_header;
 
     priv = CUT_PE_LOADER_GET_PRIVATE(loader);
+    cut_log_trace("[loader][pe][open] <%s>", priv->so_filename);
     if (!g_file_get_contents(priv->so_filename, &priv->content, &priv->length,
                              &error)) {
         g_warning("can't read shared library file: %s", error->message);
@@ -187,9 +189,13 @@ cut_pe_loader_is_dll (CutPELoader *loader)
 
     priv->nt_headers =
         (IMAGE_NT_HEADERS *)(priv->content + dos_header->e_lfanew);
+    cut_log_trace("[loader][pe][header][signature] <%#lx>",
+                  priv->nt_headers->Signature);
     if (priv->nt_headers->Signature != IMAGE_NT_SIGNATURE)
         return FALSE;
 
+    cut_log_trace("[loader][pe][header][characteristics] <%#x>",
+                  priv->nt_headers->FileHeader.Characteristics);
     return priv->nt_headers->FileHeader.Characteristics & IMAGE_FILE_DLL;
 #else
     return FALSE;
@@ -225,10 +231,14 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
 
     priv = CUT_PE_LOADER_GET_PRIVATE(loader);
     first_section = IMAGE_FIRST_SECTION(priv->nt_headers);
+    cut_log_trace("[loader][pe][collect-symbols][n-sections] <%d>",
+                  priv->nt_headers->FileHeader.NumberOfSections);
     for (i = 0; i < priv->nt_headers->FileHeader.NumberOfSections; i++) {
         const gchar *section_name;
 
         section_name = (const gchar *)((first_section + i)->Name);
+        cut_log_trace("[loader][pe][collect-symbols][section] <%s>",
+                      section_name);
         if (g_str_equal(".text", section_name)) {
             text_section = first_section + i;
         } else if (g_str_equal(".edata", section_name)) {
@@ -276,15 +286,22 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
     min_text_section_address = text_section->VirtualAddress;
     max_text_section_address =
         min_text_section_address + text_section->SizeOfRawData;
+    cut_log_trace("[loader][pe][collect-symbols][n-symbols] <%ld>",
+                  export_directory->NumberOfNames);
     for (i = 0; i < export_directory->NumberOfNames; i++) {
         const gchar *name;
         DWORD function_address;
 
         name = base_address + name_addresses[i];
         function_address = function_addresses[i];
+        cut_log_trace("[loader][pe][collect-symbols][symbol] <%s>:<%#lx>",
+                      name, function_address);
         if (min_text_section_address < function_address &&
-            function_address < max_text_section_address)
+            function_address < max_text_section_address) {
+            cut_log_trace("[loader][pe][collect-symbols][symbol][collect] <%s>",
+                          name);
             symbols = g_list_prepend(symbols, g_strdup(name));
+        }
     }
 
     return symbols;
