@@ -244,7 +244,7 @@ stamp-$(enum_source_prefix)-h: $(enum_sources_h) Makefile
 	  $(GLIB_MKENUMS) \
 	    --fhead "#ifndef $${mark}\n#define $${mark}\n\n#include <glib-object.h>\n\nG_BEGIN_DECLS\n" \
 	    --fprod "/* enumerations from \"@filename@\" */\n" \
-	    --vhead "GType @enum_name@_get_type (void);\n#define CUT_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n" 	\
+	    --vhead "GType @enum_name@_get_type (void);\n#define CUT_TYPE_@ENUMSHORT@ (@enum_name@_get_type())\n"	\
 	    --ftail "G_END_DECLS\n\n#endif /* $${mark} */" \
 	    $(enum_sources_h)) > tmp-$(enum_source_prefix).h && \
 	(cmp -s tmp-$(enum_source_prefix).h $(enum_source_prefix).h || \
