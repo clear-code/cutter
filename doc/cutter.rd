@@ -49,11 +49,12 @@ option is specified.
 
    Here are available levels:
 
-   * default: equals to "critical|error|warning".
+   * default: equals to "critical|error|warning|message".
    * none: logs nothing.
    * critical: logs only critial information.
    * error: logs only error information.
    * warning: logs only warning information.
+   * message: logs only normal messages.
    * info: logs only additional information.
    * debug: logs only debug information.
    * traces: logs only trace information.

@@ -50,11 +50,12 @@ Cutterはプログラマが新しいテストを書くこと、すでにある�
 
    指定できるレベルは以下の通りです。
 
-   * default: 「critical|error|warning」と同じ。
+   * default: 「critical|error|warning|message」と同じ。
    * none: なにも出力しない。
    * critical: 致命的な問題のみ出力。
    * error: エラーのみ出力。
    * warning: 警告のみ出力。
+   * message: 通常のメッセージのみ出力。
    * info: 付加情報のみ出力。
    * debug: デバッグ情報のみ出力。
    * traces: トレース情報のみ出力。

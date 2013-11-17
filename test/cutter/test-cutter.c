@@ -105,8 +105,8 @@ cut_setup (void)
         "  --version                                         Show version" LINE_FEED_CODE
         "  --log-level=LEVEL                                 "
         "Set log level to LEVEL. LEVEL can be combined them with '|': "
-        "(all|default|none|critical|error|warning|info|debug|trace) "
-        "(default: critical|error|warning)" LINE_FEED_CODE
+        "(all|default|none|critical|error|warning|message|info|debug|trace) "
+        "(default: critical|error|warning|message)" LINE_FEED_CODE
         "  --mode=[test|analyze|play]                        Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                  Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                              Specify tests" LINE_FEED_CODE
@@ -287,8 +287,8 @@ test_help_all (void)
         "  --version                                         Show version" LINE_FEED_CODE
         "  --log-level=LEVEL                                 "
         "Set log level to LEVEL. LEVEL can be combined them with '|': "
-        "(all|default|none|critical|error|warning|info|debug|trace) "
-        "(default: critical|error|warning)" LINE_FEED_CODE
+        "(all|default|none|critical|error|warning|message|info|debug|trace) "
+        "(default: critical|error|warning|message)" LINE_FEED_CODE
         "  --mode=[test|analyze|play]                        Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                  Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                              Specify tests" LINE_FEED_CODE

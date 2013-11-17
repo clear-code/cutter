@@ -176,8 +176,8 @@ static const GOptionEntry option_entries[] =
      N_("Show version"), NULL},
     {"log-level", 0, 0, G_OPTION_ARG_CALLBACK, parse_log_level,
      N_("Set log level to LEVEL. LEVEL can be combined them with '|': "
-        "(all|default|none|critical|error|warning|info|debug|trace) "
-        "(default: critical|error|warning)"),
+        "(all|default|none|critical|error|warning|message|info|debug|trace) "
+        "(default: critical|error|warning|message)"),
      "LEVEL"},
     {"mode", 0, 0, G_OPTION_ARG_CALLBACK, parse_mode,
      N_("Set run mode (default: test)"), "[test|analyze|play]"},
