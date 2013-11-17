@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2012  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2012-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -51,10 +51,6 @@ do {                                                            \
     cut_log(CUT_LOG_LEVEL_DEBUG, format, ## __VA_ARGS__)
 #define cut_log_trace(format, ...)                              \
     cut_log(CUT_LOG_LEVEL_TRACE, format, ## __VA_ARGS__)
-#define cut_log_statistics(format, ...)                         \
-    cut_log(CUT_LOG_LEVEL_STATISTICS, format, ## __VA_ARGS__)
-#define cut_log_profile(format, ...)                            \
-    cut_log(CUT_LOG_LEVEL_PROFILE, format, ## __VA_ARGS__)
 
 #define cut_set_log_level(level)                        \
     cut_logger_set_target_level(cut_logger(), (level))
@@ -79,10 +75,6 @@ do {                                                            \
     (cut_need_log(CUT_LOG_LEVEL_DEBUG))
 #define cut_need_trace_log()                    \
     (cut_need_log(CUT_LOG_LEVEL_TRACE))
-#define cut_need_statistics_log()               \
-    (cut_need_log(CUT_LOG_LEVEL_STATISTICS))
-#define cut_need_profile_log()                  \
-    (cut_need_log(CUT_LOG_LEVEL_PROFILE))
 
 #define CUT_TYPE_LOGGER            (cut_logger_get_type())
 #define CUT_LOGGER(obj)            (G_TYPE_CHECK_INSTANCE_CAST((obj), CUT_TYPE_LOGGER, CutLogger))
@@ -101,9 +93,7 @@ typedef enum
     CUT_LOG_LEVEL_MESSAGE    = 1 << 4,
     CUT_LOG_LEVEL_INFO       = 1 << 5,
     CUT_LOG_LEVEL_DEBUG      = 1 << 6,
-    CUT_LOG_LEVEL_TRACE      = 1 << 7,
-    CUT_LOG_LEVEL_STATISTICS = 1 << 8,
-    CUT_LOG_LEVEL_PROFILE    = 1 << 9
+    CUT_LOG_LEVEL_TRACE      = 1 << 7
 } CutLogLevelFlags;
 
 #define CUT_LOG_LEVEL_ALL (CUT_LOG_LEVEL_CRITICAL |          \
@@ -112,9 +102,7 @@ typedef enum
                            CUT_LOG_LEVEL_MESSAGE |           \
                            CUT_LOG_LEVEL_INFO |              \
                            CUT_LOG_LEVEL_DEBUG |             \
-                           CUT_LOG_LEVEL_TRACE |             \
-                           CUT_LOG_LEVEL_STATISTICS |        \
-                           CUT_LOG_LEVEL_PROFILE)
+                           CUT_LOG_LEVEL_TRACE)
 
 #define CUT_LOG_NULL_SAFE_STRING(string) ((string) ? (string) : "(null)")
 

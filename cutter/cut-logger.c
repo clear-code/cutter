@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2012  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2012-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -39,8 +39,7 @@
     (CUT_LOG_LEVEL_CRITICAL |                \
      CUT_LOG_LEVEL_ERROR |                   \
      CUT_LOG_LEVEL_WARNING |                 \
-     CUT_LOG_LEVEL_MESSAGE |                 \
-     CUT_LOG_LEVEL_STATISTICS)
+     CUT_LOG_LEVEL_MESSAGE)
 #define DEFAULT_ITEM                            \
     (CUT_LOG_ITEM_TIME)
 
@@ -456,12 +455,6 @@ log_message_colorize_console (GString *log,
         break;
     case CUT_LOG_LEVEL_TRACE:
         color = WHITE_COLOR MAGENTA_BACK_COLOR;
-        break;
-    case CUT_LOG_LEVEL_STATISTICS:
-        color = BLUE_COLOR WHITE_BACK_COLOR;
-        break;
-    case CUT_LOG_LEVEL_PROFILE:
-        color = GREEN_COLOR BLACK_BACK_COLOR;
         break;
     default:
         color = NULL;

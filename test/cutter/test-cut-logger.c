@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2012  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2012-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -128,13 +128,11 @@ data_level_from_string (void)
         CUT_LOG_LEVEL_WARNING |
         CUT_LOG_LEVEL_MESSAGE |
         CUT_LOG_LEVEL_INFO |
-        CUT_LOG_LEVEL_DEBUG |
-        CUT_LOG_LEVEL_STATISTICS,
+        CUT_LOG_LEVEL_DEBUG,
         "+info|debug");
     ADD("remove",
         CUT_LOG_LEVEL_CRITICAL |
-        CUT_LOG_LEVEL_MESSAGE |
-        CUT_LOG_LEVEL_STATISTICS,
+        CUT_LOG_LEVEL_MESSAGE,
         "-error|warning");
 
 #undef ADD
@@ -291,15 +289,13 @@ test_interesting_level (void)
                             CUT_LOG_LEVEL_MESSAGE |
                             CUT_LOG_LEVEL_WARNING |
                             CUT_LOG_LEVEL_ERROR |
-                            CUT_LOG_LEVEL_CRITICAL |
-                            CUT_LOG_LEVEL_STATISTICS,
+                            CUT_LOG_LEVEL_CRITICAL,
                             cut_logger_get_interesting_level(logger));
 
     cut_logger_set_target_level(logger,
-                                CUT_LOG_LEVEL_INFO |
-                                CUT_LOG_LEVEL_STATISTICS);
+                                CUT_LOG_LEVEL_INFO | CUT_LOG_LEVEL_TRACE);
     gcut_assert_equal_flags(CUT_TYPE_LOG_LEVEL_FLAGS,
-                            CUT_LOG_LEVEL_INFO | CUT_LOG_LEVEL_STATISTICS,
+                            CUT_LOG_LEVEL_INFO | CUT_LOG_LEVEL_TRACE,
                             cut_logger_get_interesting_level(logger));
 
     cut_logger_set_interesting_level(logger,
@@ -308,7 +304,7 @@ test_interesting_level (void)
     gcut_assert_equal_flags(CUT_TYPE_LOG_LEVEL_FLAGS,
                             CUT_LOG_LEVEL_INFO |
                             CUT_LOG_LEVEL_DEBUG |
-                            CUT_LOG_LEVEL_STATISTICS,
+                            CUT_LOG_LEVEL_TRACE,
                             cut_logger_get_interesting_level(logger));
 }
 
