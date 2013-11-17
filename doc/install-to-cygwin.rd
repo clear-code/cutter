@@ -6,8 +6,7 @@
 
 This document explains how to install Cutter to Cygwin.
 
-We can install Cutter to Cygwin 1.7 (should be confirmed:
-but we need to apply a patch to GLib).
+We can install Cutter to Cygwin 1.7.
 
 == Install Cygwin
 
