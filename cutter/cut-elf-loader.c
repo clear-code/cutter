@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009-2013  Kouhei Sutou <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,6 +31,7 @@
 #include <glib/gstdio.h>
 
 #include "cut-elf-loader.h"
+#include "cut-logger.h"
 
 #define CUT_ELF_LOADER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_ELF_LOADER, CutELFLoaderPrivate))
 
@@ -173,6 +174,7 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
     unsigned char ident[EI_NIDENT];
 
     priv = CUT_ELF_LOADER_GET_PRIVATE(loader);
+    cut_log_trace("[loader][elf][open] <%s>", priv->so_filename);
     if (!g_file_get_contents(priv->so_filename, &priv->content, &priv->length,
                              &error)) {
         g_warning("can't read shared library file: %s", error->message);
@@ -189,9 +191,11 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
         (ident[EI_MAG3] == ELFMAG3)) {
         switch (ident[EI_CLASS]) {
         case ELFCLASS32:
+            cut_log_trace("[loader][elf][bit] <32>");
             priv->bit = ARCHITECTURE_32BIT;
             break;
         case ELFCLASS64:
+            cut_log_trace("[loader][elf][bit] <64>");
             priv->bit = ARCHITECTURE_64BIT;
             break;
         default:
@@ -201,6 +205,7 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
             break;
         }
     } else {
+        cut_log_trace("[loader][elf][header][unknown]");
         g_free(priv->content);
         priv->content = NULL;
     }
@@ -209,6 +214,7 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
         uint16_t type;
 
         memcpy(&type, priv->content + sizeof(ident), sizeof(type));
+        cut_log_trace("[loader][elf][type] <%#x>", type);
         if (type != ET_DYN) {
             g_warning("not dynamic library: %#x", type);
             g_free(priv->content);
@@ -286,6 +292,7 @@ collect_symbol_information (CutELFLoaderPrivate *priv,
         section_names = priv->content + section_name_header->sh_offset;
     }
 
+    cut_log_trace("[loader][elf][collect-symbols][n-header] <%d>", n_headers);
     for (i = 0; i < n_headers; i++) {
         Elf32_Shdr *section_header_32 = NULL;
         Elf64_Shdr *section_header_64 = NULL;
@@ -346,6 +353,40 @@ collect_symbol_information (CutELFLoaderPrivate *priv,
 
     return collected;
 }
+
+static const gchar *
+inspect_type (unsigned char info)
+{
+    switch (info) {
+    case STT_NOTYPE:
+        return "no type";
+    case STT_OBJECT:
+        return "object";
+    case STT_FUNC:
+        return "function";
+    case STT_SECTION:
+        return "section";
+    case STT_FILE:
+        return "file";
+    default:
+        return "unknown";
+    }
+}
+
+static const gchar *
+inspect_bind (unsigned char bind)
+{
+    switch (bind) {
+    case STB_LOCAL:
+        return "local";
+    case STB_GLOBAL:
+        return "global";
+    case STB_WEAK:
+        return "weak";
+    default:
+        return "unknown";
+    }
+}
 #endif
 
 GList *
@@ -369,6 +410,7 @@ cut_elf_loader_collect_symbols (CutELFLoader *loader)
                                     &text_section_header_index))
         return NULL;
 
+    cut_log_trace("[loader][elf][collect-symbols][n-symbols] <%d>", n_entries);
     for (i = 0; i < n_entries; i++) {
         Elf32_Sym *symbol_32;
         Elf64_Sym *symbol_64;
@@ -376,6 +418,7 @@ cut_elf_loader_collect_symbols (CutELFLoader *loader)
         unsigned char info, type, bind;
         uint16_t section_header_index;
         gsize offset;
+        const gchar *name;
 
         offset = symbol_section_offset + (i * symbol_entry_size);
         if (priv->bit == ARCHITECTURE_32BIT) {
@@ -394,12 +437,16 @@ cut_elf_loader_collect_symbols (CutELFLoader *loader)
             section_header_index = symbol_64->st_shndx;
         }
 
+        name = priv->content + name_section_offset + name_index;
+        cut_log_trace("[loader][elf][collect-symbols][symbol] <%s>:<%s>:<%s>",
+                      name_index > 0 ? name : "null",
+                      inspect_type(type),
+                      inspect_bind(bind));
         if ((type == STT_FUNC) &&
             (bind == STB_GLOBAL) &&
             (section_header_index == text_section_header_index)) {
-            const gchar *name;
-
-            name = priv->content + name_section_offset + name_index;
+            cut_log_trace("[loader][elf][collect-symbols][symbol][collect] <%s>",
+                          name);
             symbols = g_list_prepend(symbols, g_strdup(name));
         }
     }
