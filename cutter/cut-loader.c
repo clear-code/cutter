@@ -676,6 +676,8 @@ collect_symbols_bfd (CutLoaderPrivate *priv)
     char symbol_leading_char;
     bfd *abfd;
 
+    cut_log_trace("[loader][bfd][open] <%s>",
+                  priv->so_filename);
     abfd = bfd_openr(priv->so_filename, NULL);
     if (!abfd)
         return NULL;
@@ -693,6 +695,8 @@ collect_symbols_bfd (CutLoaderPrivate *priv)
 
     symbol_table = (asymbol **)g_new(char, storage_needed);
     number_of_symbols = bfd_canonicalize_symtab(abfd, symbol_table);
+    cut_log_trace("[loader][bfd][collect-symbols][n-smbols] <%d>",
+                  number_of_symbols);
 
     symbol_leading_char = bfd_get_symbol_leading_char(abfd);
     if (bfd_get_flavour(abfd) == bfd_target_mach_o_flavour)
@@ -702,6 +706,8 @@ collect_symbols_bfd (CutLoaderPrivate *priv)
         symbol_info info;
 
         bfd_symbol_info(symbol_table[i], &info);
+        cut_log_trace("[loader][bfd][collect-symbols][symbol] <%s>:<%c>",
+                      info.name, info.type);
         if (info.type == 'T' ||
             (priv->binary_type == CUT_BINARY_TYPE_MACH_O_BUNDLE &&
              info.type == 'U')) {
@@ -710,6 +716,8 @@ collect_symbols_bfd (CutLoaderPrivate *priv)
             while (symbol_leading_char == name[0])
                 name++;
             symbols = g_list_prepend(symbols, g_strdup(name));
+            cut_log_trace("[loader][bfd][collect-symbols][symbol][collect] <%s>",
+                          name);
         }
     }
 
@@ -775,6 +783,8 @@ collect_symbols_scan (CutLoaderPrivate *priv)
     GList *symbols;
     gboolean first_buffer = TRUE;
 
+    cut_log_trace("[loader][scan][open] <%s>",
+                  priv->so_filename);
     input = g_fopen(priv->so_filename, "rb");
     if (!input)
         return NULL;
@@ -794,7 +804,12 @@ collect_symbols_scan (CutLoaderPrivate *priv)
                                                 size, priv->binary_type)) {
                 g_string_append_c(name, buffer[i]);
             } else if (name->len > 0) {
+                cut_log_trace("[loader][scan][collect-symbols][symbol] <%s>",
+                              name->str);
                 if (is_valid_symbol_name(name)) {
+                    cut_log_trace("[loader][scan][collect-symbols][symbol]"
+                                  "[collect] <%s>",
+                                  name->str);
                     g_hash_table_insert(symbol_name_table,
                                         g_strdup(name->str), NULL);
                 }
@@ -803,10 +818,18 @@ collect_symbols_scan (CutLoaderPrivate *priv)
         }
     }
 
-    if (is_valid_symbol_name(name))
+    cut_log_trace("[loader][scan][collect-symbols][symbol][last] <%s>",
+                  name->str);
+    if (is_valid_symbol_name(name)) {
+        cut_log_trace("[loader][scan][collect-symbols][symbol][last][collect] "
+                      "<%s>",
+                      name->str);
         g_hash_table_insert(symbol_name_table, g_strdup(name->str), NULL);
+    }
     g_string_free(name, TRUE);
 
+    cut_log_trace("[loader][scan][collect-symbols][n-symbols] <%d>",
+                  g_hash_table_size(symbol_name_table));
     symbols = g_hash_table_get_keys(symbol_name_table);
     g_hash_table_unref(symbol_name_table);
 
