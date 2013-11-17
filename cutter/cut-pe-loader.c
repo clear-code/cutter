@@ -246,7 +246,7 @@ cut_pe_loader_collect_symbols (CutPELoader *loader)
     if (edata_section) {
         export_directory =
             (IMAGE_EXPORT_DIRECTORY *)(priv->content +
-                                   edata_section->PointerToRawData);
+                                       edata_section->PointerToRawData);
         base_address =
             priv->content +
             edata_section->PointerToRawData -
