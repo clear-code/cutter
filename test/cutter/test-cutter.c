@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -103,6 +103,10 @@ cut_setup (void)
         "" LINE_FEED_CODE
         "Application Options:" LINE_FEED_CODE
         "  --version                                         Show version" LINE_FEED_CODE
+        "  --log-level=LEVEL                                 "
+        "Set log level to LEVEL. LEVEL can be combined them with '|': "
+        "(all|default|none|critical|error|warning|info|debug|trace) "
+        "(default: critical|error|warning)" LINE_FEED_CODE
         "  --mode=[test|analyze|play]                        Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                  Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                              Specify tests" LINE_FEED_CODE
@@ -281,6 +285,10 @@ test_help_all (void)
 #endif
         "Application Options:" LINE_FEED_CODE
         "  --version                                         Show version" LINE_FEED_CODE
+        "  --log-level=LEVEL                                 "
+        "Set log level to LEVEL. LEVEL can be combined them with '|': "
+        "(all|default|none|critical|error|warning|info|debug|trace) "
+        "(default: critical|error|warning)" LINE_FEED_CODE
         "  --mode=[test|analyze|play]                        Set run mode (default: test)" LINE_FEED_CODE
         "  -s, --source-directory=DIRECTORY                  Set directory of source code" LINE_FEED_CODE
         "  -n, --name=TEST_NAME                              Specify tests" LINE_FEED_CODE

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2013  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -45,6 +45,7 @@ char **environ = NULL;
 #include "cut-module-factory.h"
 #include "cut-contractor.h"
 #include "cut-utils.h"
+#include "cut-logger.h"
 #include "../gcutter/gcut-main.h"
 #include "../gcutter/gcut-error.h"
 
@@ -103,6 +104,31 @@ print_version (const gchar *option_name, const gchar *value,
 }
 
 static gboolean
+parse_log_level (const gchar *option_name,
+                 const gchar *value,
+                 gpointer data,
+                 GError **error)
+{
+    GError *log_level_error = NULL;
+    gboolean success;
+
+    success = cut_logger_set_target_level_by_string(cut_logger(),
+                                                    value,
+                                                    &log_level_error);
+    if (!success) {
+        g_set_error(error,
+                    G_OPTION_ERROR,
+                    G_OPTION_ERROR_BAD_VALUE,
+                    "%s: %s",
+                    option_name,
+                    log_level_error->message);
+        g_error_free(log_level_error);
+    }
+
+    return success;
+}
+
+static gboolean
 parse_mode (const gchar *option_name, const gchar *value,
             gpointer data, GError **error)
 {
@@ -148,6 +174,11 @@ static const GOptionEntry option_entries[] =
 {
     {"version", 0, G_OPTION_FLAG_NO_ARG, G_OPTION_ARG_CALLBACK, print_version,
      N_("Show version"), NULL},
+    {"log-level", 0, 0, G_OPTION_ARG_CALLBACK, parse_log_level,
+     N_("Set log level to LEVEL. LEVEL can be combined them with '|': "
+        "(all|default|none|critical|error|warning|info|debug|trace) "
+        "(default: critical|error|warning)"),
+     "LEVEL"},
     {"mode", 0, 0, G_OPTION_ARG_CALLBACK, parse_mode,
      N_("Set run mode (default: test)"), "[test|analyze|play]"},
     {"source-directory", 's', 0, G_OPTION_ARG_STRING, &source_directory,

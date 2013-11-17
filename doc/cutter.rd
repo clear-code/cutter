@@ -35,6 +35,32 @@ option is specified.
 
    Cutter shows its own version and exits.
 
+: --log-level=LEVEL
+
+   It sets log level to LEVEL.
+
+   LEVEL can be combined them with '|' like "error|warning".
+
+   You can add a level to the default level by prepending "+" to level
+   like "+trace|+info".
+
+   You can remove a level from the default level by prepending "-" to level
+   like "-error|-warning".
+
+   Here are available levels:
+
+   * default: equals to "critical|error|warning".
+   * none: logs nothing.
+   * critical: logs only critial information.
+   * error: logs only error information.
+   * warning: logs only warning information.
+   * info: logs only additional information.
+   * debug: logs only debug information.
+   * traces: logs only trace information.
+   * all: logs all log information.
+
+   The default is "default".
+
 : --mode=[test|analyze]
 
    It specifies run mode. Cutter runs tests when run mode is
