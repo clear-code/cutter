@@ -523,17 +523,44 @@ m4_ifdef([GTK_DOC_CHECK],
           AM_CONDITIONAL([ENABLE_GTK_DOC], [false])])
 
 dnl **************************************************************
+dnl Checks for Ruby
+dnl **************************************************************
+ruby_available="no"
+AC_ARG_WITH([ruby],
+            AS_HELP_STRING([--with-ruby=PATH],
+                           [Ruby interpreter path (default: auto-detect)]),
+            [RUBY="$withval"])
+
+if test "$RUBY" = "no"; then
+  : # ignore
+elif test "$RUBY" = ""; then
+  AC_PATH_PROG(RUBY, ruby, ruby-not-found)
+else
+  AC_CHECK_FILE([$RUBY],
+                [ruby_available="yes"],
+                [AC_MSG_ERROR([$RUBY is not found.])])
+fi
+
+dnl **************************************************************
 dnl Checks for RD2
 dnl **************************************************************
-
-AC_PATH_PROG(RUBY, ruby, ruby-not-found)
-AC_PATH_PROG(RD2, rd2, rd2-not-found)
-if test x"$RD2" != x"rd2-not-found"; then
-  rd2_available=yes
+rd2_available="no"
+AC_ARG_WITH([rd2],
+            AS_HELP_STRING([--with-rd2=PATH],
+                           [rd2 command path. (default: auto-detect)]),
+            [RD2="$withval"])
+if test "$RD2" = "no"; then
+  : # ignore
+elif test "$RD2" = ""; then
+  AC_PATH_PROG(RD2, rd2, rd2-not-found)
+  if test x"$RD2" != x"rd2-not-found"; then
+    rd2_available=yes
+  fi
 else
-  rd2_available=no
+  AC_CHECK_FILE([$RD2],
+                [rd2_available="yes"],
+                [AC_MSG_ERROR([$RD2 is not found.])])
 fi
-AM_CONDITIONAL([HAVE_RD2], [test "$rd2_available" = "yes"])
 
 if test "$rd2_available" = "yes" -o -f "$srcdir/doc/man-build.stamp"; then
   man_available=yes
