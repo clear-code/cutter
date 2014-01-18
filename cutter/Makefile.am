@@ -8,6 +8,8 @@ AM_CFLAGS =					\
 	$(CUTTER_CFLAGS)			\
 	$(COVERAGE_CFLAGS)
 
+AM_CXXFLAGS = $(AM_CFLAGS)
+
 CLEANFILES = *.gcno *.gcda
 
 lib_LTLIBRARIES = libcutter.la
@@ -169,6 +171,7 @@ libcutter_sources =			\
 	cut-test-suite.c		\
 	cut-test-utils-helper.c		\
 	cut-test.c			\
+	cut-test-cpp-helpers.cpp	\
 	cut-ui-factory-builder.c	\
 	cut-ui.c			\
 	cut-unified-differ.c		\
