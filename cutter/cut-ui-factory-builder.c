@@ -188,6 +188,9 @@ build_all (CutFactoryBuilder *builder)
         factories = g_list_prepend(factories, module_factory);
     }
 
+    g_list_foreach(factory_names, (GFunc)g_free, NULL);
+    g_list_free(factory_names);
+
     return g_list_reverse(factories);
 }
 
