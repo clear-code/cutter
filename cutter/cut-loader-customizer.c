@@ -69,7 +69,7 @@ cut_loader_customizer_customize (CutLoaderCustomizer *customizer,
 {
     CutLoaderCustomizerClass *klass;
 
-    g_return_val_if_fail(CUT_IS_LOADER_CUSTOMIZER(customizer), NULL);
+    g_return_if_fail(CUT_IS_LOADER_CUSTOMIZER(customizer));
 
     klass = CUT_LOADER_CUSTOMIZER_GET_CLASS(customizer);
     if (klass->customize) {
