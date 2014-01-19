@@ -18,11 +18,11 @@ cppcutter_public_headers =			\
 	cppcut-macros.h				\
 	cppcut-message.h
 
-pkginclude_HEADERS = 	\
+pkginclude_HEADERS =	\
 	cppcutter.h
 
 cppcutter_includedir=$(pkgincludedir)/cppcutter
-cppcutter_include_HEADERS = 		\
+cppcutter_include_HEADERS =		\
 	$(cppcutter_public_headers)
 
 libcppcutter_sources =			\
