@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,6 +38,7 @@ struct _CutRepositoryPrivate
     gchar *directory;
     GList *exclude_files_regexs;
     GList *exclude_dirs_regexs;
+    GList *loader_customizers;
     GList *loaders;
 
     gint deep;
@@ -96,6 +97,7 @@ cut_repository_init (CutRepository *repository)
     priv->loaders = NULL;
     priv->exclude_files_regexs = NULL;
     priv->exclude_dirs_regexs = NULL;
+    priv->loader_customizers = NULL;
     priv->deep = 0;
     priv->test_suite_loader = NULL;
     priv->keep_opening_modules = FALSE;
@@ -133,6 +135,12 @@ dispose (GObject *object)
     if (priv->exclude_dirs_regexs) {
         free_regexs(priv->exclude_dirs_regexs);
         priv->exclude_dirs_regexs = NULL;
+    }
+
+    if (priv->loader_customizers) {
+        g_list_foreach(priv->loader_customizers, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->loader_customizers);
+        priv->loader_customizers = NULL;
     }
 
     if (priv->test_suite_loader) {
@@ -305,6 +313,7 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
         } else {
             CutLoader *loader;
             gchar *relative_path;
+            GList *node;
 
             if (cut_utils_filter_match(priv->exclude_files_regexs, entry) ||
                 !g_str_has_suffix(entry, "."G_MODULE_SUFFIX)) {
@@ -318,6 +327,10 @@ cut_repository_collect_loader (CutRepository *repository, const gchar *dir_name,
             cut_loader_set_keep_opening(loader, priv->keep_opening_modules);
             cut_loader_set_enable_convenience_attribute_definition(
                 loader, priv->enable_convenience_attribute_definition);
+            for (node = priv->loader_customizers; node; node = g_list_next(node)) {
+                CutLoaderCustomizer *customizer = node->data;
+                cut_loader_customizer_customize(customizer, loader);
+            }
             if (is_test_suite_so_path_name(path_name)) {
                 update_test_suite_loader(priv, loader, paths->len);
             } else {
@@ -392,6 +405,17 @@ cut_repository_set_exclude_directories (CutRepository *repository, const gchar *
 
     if (dirs)
         priv->exclude_dirs_regexs = cut_utils_filter_to_regexs(dirs);
+}
+
+void
+cut_repository_add_loader_customizer (CutRepository *repository,
+                                      CutLoaderCustomizer *customizer)
+{
+    CutRepositoryPrivate *priv = CUT_REPOSITORY_GET_PRIVATE(repository);
+
+    g_object_ref(customizer);
+    priv->loader_customizers =
+        g_list_append(priv->loader_customizers, customizer);
 }
 
 /*

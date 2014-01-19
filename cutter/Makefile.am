@@ -71,7 +71,9 @@ libcutter_public_headers =		\
 	cut-ui.h			\
 	cut-unified-differ.h		\
 	cut-verbose-level.h		\
-	cut-logger.h
+	cut-logger.h			\
+	cut-loader-customizer-factory-builder.h	\
+	cut-loader-customizer.h
 
 noinst_headers =		\
 	cut-crash-backtrace.h	\
@@ -173,7 +175,9 @@ libcutter_sources =			\
 	cut-unified-differ.c		\
 	cut-utils.c			\
 	cut-verbose-level.c		\
-	cut-logger.c
+	cut-logger.c			\
+	cut-loader-customizer-factory-builder.c	\
+	cut-loader-customizer.c
 
 libcutter_la_SOURCES =			\
 	$(cutter_public_headers)	\

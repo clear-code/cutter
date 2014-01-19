@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,6 +24,7 @@
 
 #include "cut-test.h"
 #include "cut-test-suite.h"
+#include "cut-loader-customizer.h"
 
 G_BEGIN_DECLS
 
@@ -66,6 +67,9 @@ void           cut_repository_set_exclude_files (CutRepository *repository,
 void           cut_repository_set_exclude_directories
                                                 (CutRepository *repository,
                                                  const gchar  **directory_names);
+void           cut_repository_add_loader_customizer
+                                                (CutRepository *repository,
+                                                 CutLoaderCustomizer *customizer);
 
 G_END_DECLS
 

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2013  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -77,6 +77,7 @@ struct _CutRunContextPrivate
     gchar *log_directory;
     gchar **target_test_case_names;
     gchar **target_test_names;
+    GList *loader_customizers;
     gboolean canceled;
     CutTestSuite *test_suite;
     GList *listeners;
@@ -972,6 +973,7 @@ cut_run_context_init (CutRunContext *context)
     priv->exclude_directories = NULL;
     priv->target_test_case_names = NULL;
     priv->target_test_names = NULL;
+    priv->loader_customizers = NULL;
     priv->canceled = FALSE;
     priv->test_suite = NULL;
     priv->listeners = NULL;
@@ -1051,6 +1053,10 @@ dispose (GObject *object)
 
     g_strfreev(priv->target_test_names);
     priv->target_test_names = NULL;
+
+    g_list_foreach(priv->loader_customizers, (GFunc)g_object_unref, NULL);
+    g_list_free(priv->loader_customizers);
+    priv->loader_customizers = NULL;
 
     g_strfreev(priv->command_line_args);
     priv->command_line_args = NULL;
@@ -1718,6 +1724,24 @@ cut_run_context_get_target_test_names (CutRunContext *context)
     return (const gchar **)priv->target_test_names;
 }
 
+void
+cut_run_context_add_loader_customizer (CutRunContext *context,
+                                       CutLoaderCustomizer *customizer)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+
+    g_object_ref(customizer);
+    priv->loader_customizers = g_list_append(priv->loader_customizers,
+                                             customizer);
+}
+
+const GList *
+cut_run_context_get_loader_customizers (CutRunContext *context)
+{
+    CutRunContextPrivate *priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
+    return priv->loader_customizers;
+}
+
 guint
 cut_run_context_get_n_tests (CutRunContext *context)
 {
@@ -1852,6 +1876,7 @@ cut_run_context_create_test_suite (CutRunContext *context)
     CutRepository *repository;
     CutTestSuite *suite;
     const gchar **exclude_files, **exclude_directories;
+    GList *node;
 
     priv = CUT_RUN_CONTEXT_GET_PRIVATE(context);
     repository = cut_repository_new(priv->test_directory);
@@ -1863,6 +1888,11 @@ cut_run_context_create_test_suite (CutRunContext *context)
     cut_repository_set_exclude_files(repository, exclude_files);
     exclude_directories = (const gchar **)priv->exclude_directories;
     cut_repository_set_exclude_directories(repository, exclude_directories);
+    for (node = priv->loader_customizers; node; node = g_list_next(node)) {
+        CutLoaderCustomizer *customizer = node->data;
+        cut_repository_add_loader_customizer(repository, customizer);
+    }
+
     suite = cut_repository_create_test_suite(repository);
     g_object_unref(repository);
 

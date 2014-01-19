@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -31,6 +31,7 @@
 #include "cut-report-factory-builder.h"
 #include "cut-stream-factory-builder.h"
 #include "cut-ui-factory-builder.h"
+#include "cut-loader-customizer-factory-builder.h"
 
 #define CUT_CONTRACTOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTRACTOR, CutContractorPrivate))
 
@@ -38,6 +39,7 @@ typedef struct _CutContractorPrivate    CutContractorPrivate;
 struct _CutContractorPrivate
 {
     GList *listener_builders;
+    CutLoaderCustomizerFactoryBuilder *loader_customizer_factory_builder;
 };
 
 G_DEFINE_TYPE(CutContractor, cut_contractor, G_TYPE_OBJECT)
@@ -89,14 +91,31 @@ load_ui_factory (CutContractor *contractor)
 }
 
 static void
+load_loader_customizer_factory (CutContractor *contractor)
+{
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+    CutFactoryBuilder *builder;
+    const gchar *module_dir;
+
+    builder = CUT_FACTORY_BUILDER(priv->loader_customizer_factory_builder);
+
+    module_dir = cut_factory_builder_get_module_dir(builder);
+
+    cut_module_factory_load(module_dir, "loader-customizer");
+}
+
+static void
 cut_contractor_init (CutContractor *contractor)
 {
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
     cut_module_factory_init();
     priv->listener_builders = create_default_listener_builders();
+    priv->loader_customizer_factory_builder =
+        g_object_new(CUT_TYPE_LOADER_CUSTOMIZER_FACTORY_BUILDER, NULL);
 
     load_ui_factory(contractor);
+    load_loader_customizer_factory(contractor);
 }
 
 static void

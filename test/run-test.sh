@@ -45,6 +45,8 @@ CUT_REPORT_MODULE_DIR=$top_dir/module/report/.libs
 CUT_REPORT_FACTORY_MODULE_DIR=$top_dir/module/report/.libs
 CUT_STREAM_MODULE_DIR=$top_dir/module/stream/.libs
 CUT_STREAM_FACTORY_MODULE_DIR=$top_dir/module/stream/.libs
+CUT_LOADER_CUSTOMIZER_MODULE_DIR=$top_dir/module/loader-customizer/.libs
+CUT_LOADER_CUSTOMIZER_FACTORY_MODULE_DIR=$top_dir/module/loader-customizer/.libs
 
 export CUTTER
 export CUT_ICONS_DIR
@@ -55,6 +57,8 @@ export CUT_REPORT_MODULE_DIR
 export CUT_REPORT_FACTORY_MODULE_DIR
 export CUT_STREAM_MODULE_DIR
 export CUT_STREAM_FACTORY_MODULE_DIR
+export CUT_LOADER_CUSTOMIZER_MODULE_DIR
+export CUT_LOADER_CUSTOMIZER_FACTORY_MODULE_DIR
 
 CUTTER_ARGS="$CUTTER_ARGS -s $BASE_DIR --exclude-directory fixtures"
 CUTTER_ARGS="$CUTTER_ARGS --exclude-directory lib"

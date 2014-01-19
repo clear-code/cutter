@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -24,6 +24,7 @@
 
 #include <cutter/cut-test-suite.h>
 #include <cutter/cut-test-iterator.h>
+#include <cutter/cut-loader-customizer.h>
 #include <cutter/cut-private.h>
 
 G_BEGIN_DECLS
@@ -251,6 +252,10 @@ const gchar  **cut_run_context_get_target_test_case_names(CutRunContext *context
 void           cut_run_context_set_target_test_names(CutRunContext *context,
                                                      const gchar  **names);
 const gchar  **cut_run_context_get_target_test_names(CutRunContext *context);
+void           cut_run_context_add_loader_customizer(CutRunContext *context,
+                                                     CutLoaderCustomizer *customizer);
+const GList   *cut_run_context_get_loader_customizers
+                                                    (CutRunContext *context);
 
 guint          cut_run_context_get_n_tests          (CutRunContext *context);
 guint          cut_run_context_get_n_successes      (CutRunContext *context);

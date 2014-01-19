@@ -333,6 +333,16 @@ stream_factory_moduledir="\${factory_moduledir}/stream"
 AC_SUBST(stream_factory_moduledir)
 
 dnl **************************************************************
+dnl Configure for LoaderCustomizer modules.
+dnl **************************************************************
+
+loader_customizer_moduledir="\${moduledir}/loader-customizer"
+AC_SUBST(loader_customizer_moduledir)
+
+loader_customizer_factory_moduledir="\${factory_moduledir}/loader-customizer"
+AC_SUBST(loader_customizer_factory_moduledir)
+
+dnl **************************************************************
 dnl Check for GTK+
 dnl **************************************************************
 m4_ifdef([AM_PATH_GTK_2_0],
@@ -683,6 +693,8 @@ CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_MODULE_DIR=\\\"\"\$(report_moduledir)\"\\
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DREPORT_FACTORY_MODULE_DIR=\\\"\"\$(report_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_MODULE_DIR=\\\"\"\$(stream_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DSTREAM_FACTORY_MODULE_DIR=\\\"\"\$(stream_factory_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DLOADER_CUSTOMIZER_MODULE_DIR=\\\"\"\$(loader_customizer_moduledir)\"\\\""
+CUTTER_CFLAGS="$CUTTER_CFLAGS -DLOADER_CUSTOMIZER_FACTORY_MODULE_DIR=\\\"\"\$(loader_customizer_factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DFACTORY_MODULE_DIR=\\\"\"\$(factory_moduledir)\"\\\""
 CUTTER_CFLAGS="$CUTTER_CFLAGS -DICONS_DIR=\\\"\"\$(iconsdir)\"\\\""
 AC_SUBST(CUTTER_CFLAGS)
