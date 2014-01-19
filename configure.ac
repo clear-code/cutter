@@ -87,6 +87,23 @@ AC_PROG_INSTALL
 AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
+# For debug
+AC_ARG_ENABLE(debug,
+  [AS_HELP_STRING([--enable-debug],
+                  [use debug flags (default=no)])],
+  [cutter_debug="$enableval"],
+  [cutter_debug="no"])
+if test "x$cutter_debug" != "xno"; then
+  cutter_debug="yes"
+  if test "$CLANG" = "yes"; then
+    CFLAGS="$CFLAGS -O0 -g"
+    CXXFLAGS="$CXXFLAGS -O0 -g"
+  elif test "$GCC" = "yes"; then
+    CFLAGS="$CFLAGS -O0 -g3"
+    CXXFLAGS="$CXXFLAGS -O0 -g3"
+  fi
+fi
+
 if test "x$GCC" = "xyes"; then
   case " $CFLAGS " in
   *[\ \	]-Wall[\ \	]*) ;;
