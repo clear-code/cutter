@@ -52,6 +52,8 @@ GList         *cut_contractor_build_listener_factories
                                                  (CutContractor *contractor);
 GList         *cut_contractor_build_all_listener_factories
                                                  (CutContractor *contractor);
+GList         *cut_contractor_build_all_loader_customizer_factories
+                                                 (CutContractor *contractor);
 gboolean       cut_contractor_has_listener_builder
                                                  (CutContractor *contractor,
                                                   const gchar *type_name);

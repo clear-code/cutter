@@ -86,6 +86,7 @@ static gboolean use_multi_thread = FALSE;
 static gint max_threads = 10;
 static gboolean disable_signal_handling = FALSE;
 static GList *listener_factories = NULL;
+static GList *loader_customizer_factories = NULL;
 static CutContractor *contractor = NULL;
 static gchar **original_argv = NULL;
 static gchar *cutter_command_path = NULL;
@@ -311,6 +312,9 @@ cut_init (int *argc, char ***argv)
     if (!listener_factories)
         listener_factories = cut_contractor_build_listener_factories(contractor);
 
+    loader_customizer_factories =
+        cut_contractor_build_all_loader_customizer_factories(contractor);
+
     g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, FALSE);
     if (!g_option_context_parse(option_context, argc, argv, &error)) {
@@ -392,6 +396,19 @@ cut_quit (void)
 
     cut_ui_quit();
 
+    if (listener_factories) {
+        g_list_foreach(listener_factories, (GFunc)g_object_unref, NULL);
+        g_list_free(listener_factories);
+        listener_factories = NULL;
+    }
+
+    if (loader_customizer_factories) {
+        g_list_foreach(loader_customizer_factories,
+                       (GFunc)g_object_unref, NULL);
+        g_list_free(loader_customizer_factories);
+        loader_customizer_factories = NULL;
+    }
+
     if (contractor) {
         g_object_unref(contractor);
         contractor = NULL;
@@ -416,6 +433,20 @@ cut_quit (void)
 #endif
 
     initialized = FALSE;
+}
+
+static void
+set_loader_customizers (CutRunContext *run_context)
+{
+    GList *node;
+
+    for (node = loader_customizer_factories; node; node = g_list_next(node)) {
+        GObject *customizer;
+        customizer = cut_module_factory_create(CUT_MODULE_FACTORY(node->data));
+        cut_run_context_add_loader_customizer(run_context,
+                                              CUT_LOADER_CUSTOMIZER(customizer));
+        g_object_unref(customizer);
+    }
 }
 
 void
@@ -443,6 +474,7 @@ cut_setup_run_context (CutRunContext *run_context)
                                                                 enable_convenience_attribute_definition);
     cut_run_context_set_stop_before_test(run_context, stop_before_test);
     cut_run_context_set_command_line_args(run_context, original_argv);
+    set_loader_customizers(run_context);
 }
 
 CutRunContext *

@@ -189,6 +189,16 @@ cut_contractor_build_all_listener_factories (CutContractor *contractor)
     return factories;
 }
 
+GList *
+cut_contractor_build_all_loader_customizer_factories (CutContractor *contractor)
+{
+    CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
+    CutFactoryBuilder *builder;
+
+    builder = CUT_FACTORY_BUILDER(priv->loader_customizer_factory_builder);
+    return cut_factory_builder_build_all(builder);
+}
+
 void
 cut_contractor_set_option_context (CutContractor *contractor, GOptionContext *context)
 {
