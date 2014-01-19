@@ -28,7 +28,6 @@
 #include <cutter/cut-loader-customizer.h>
 
 #include <cppcutter/cppcut-test.h>
-#include <cppcutter/cppcut-iterated-test.h>
 
 #define CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER    \
     cut_type_exception_loader_customizer
