@@ -25,10 +25,9 @@
 
 #include "cut-stream.h"
 #include "cut-module.h"
-#include "cut-listener-utils.h"
 
 G_DEFINE_ABSTRACT_TYPE (CutStream, cut_stream, G_TYPE_OBJECT)
-CUT_DEFINE_LISTENER_MODULE(stream, STREAM)
+CUT_MODULE_DEFINE_INTERNAL_DEFINITIONS(stream, STREAM)
 
 static void
 cut_stream_class_init (CutStreamClass *klass)

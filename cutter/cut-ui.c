@@ -25,9 +25,8 @@
 
 #include "cut-ui.h"
 #include "cut-module.h"
-#include "cut-listener-utils.h"
 
-CUT_DEFINE_LISTENER_MODULE(ui, UI)
+CUT_MODULE_DEFINE_INTERNAL_DEFINITIONS(ui, UI)
 
 void
 cut_ui_init (void)

@@ -1,7 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2008  g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>
- *  Copyright (C) 2009  Kouhei Sutou  <kou@cozmixng.org>
+ *  Copyright (C) 2009-2014  Kouhei Sutou  <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -26,7 +26,6 @@
 
 #include "cut-report.h"
 #include "cut-module.h"
-#include "cut-listener-utils.h"
 
 #define CUT_REPORT_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_REPORT, CutReportPrivate))
 
@@ -53,7 +52,7 @@ static void get_property   (GObject         *object,
                             GParamSpec      *pspec);
 
 G_DEFINE_ABSTRACT_TYPE (CutReport, cut_report, G_TYPE_OBJECT)
-CUT_DEFINE_LISTENER_MODULE(report, REPORT)
+CUT_MODULE_DEFINE_INTERNAL_DEFINITIONS(report, REPORT)
 
 static void
 cut_report_class_init (CutReportClass *klass)

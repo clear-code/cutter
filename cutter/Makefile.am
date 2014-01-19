@@ -39,7 +39,6 @@ libcutter_public_headers =		\
 	cut-factory-builder.h		\
 	cut-file-stream-reader.h	\
 	cut-iterated-test.h		\
-	cut-listener-utils.h		\
 	cut-listener.h			\
 	cut-main.h			\
 	cut-module-factory-utils.h	\
