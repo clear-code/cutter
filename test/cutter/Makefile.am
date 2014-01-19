@@ -8,6 +8,8 @@ AM_CFLAGS =			\
 	$(CUTTER_CFLAGS)	\
 	$(GTK_CFLAGS)
 
+AM_CXXFLAGS = $(AM_CFLAGS)
+
 CLEANFILES = *.gcno *.gcda
 
 check_LTLIBRARIES =			\
@@ -50,7 +52,8 @@ check_LTLIBRARIES =			\
 	test-cut-path.la		\
 	test-cut-test-utils.la		\
 	test-cut-thread.la		\
-	test-cut-logger.la
+	test-cut-logger.la		\
+	test-cut-cpp-helpers.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -108,6 +111,7 @@ test_cut_path_la_SOURCES		= test-cut-path.c
 test_cut_test_utils_la_SOURCES		= test-cut-test-utils.c
 test_cut_thread_la_SOURCES		= test-cut-thread.c
 test_cut_logger_la_SOURCES		= test-cut-logger.c
+test_cut_cpp_helpers_la_SOURCES		= test-cut-cpp-helpers.cpp
 
 echo-tests:
 	@echo $(noinst_LTLIBRARIES)
