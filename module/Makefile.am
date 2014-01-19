@@ -1,1 +1,5 @@
-SUBDIRS = ui report stream
+SUBDIRS =					\
+	ui					\
+	report					\
+	stream					\
+	loader-customizer

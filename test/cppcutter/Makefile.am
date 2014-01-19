@@ -1,4 +1,4 @@
-AM_CPPFLAGS = 					\
+AM_CPPFLAGS =					\
 	-I$(top_builddir)			\
 	-I$(top_srcdir)				\
 	-I$(top_srcdir)/cutter			\
@@ -10,8 +10,8 @@ AM_CXXFLAGS = $(CUTTER_CFLAGS)
 
 CLEANFILES = *.gcno *.gcda
 
-check_LTLIBRARIES = 			\
-	test-cppcut-assertions.la
+check_LTLIBRARIES =			\
+	test-cppcut.la
 
 AM_LDFLAGS =			\
 	-module			\
@@ -25,4 +25,6 @@ LIBS =							\
 	$(top_builddir)/test/lib/libcuttest-utils.la	\
 	$(GLIB_LIBS)
 
-test_cppcut_assertions_la_SOURCES	= test-cppcut-assertions.cpp
+test_cppcut_la_SOURCES =			\
+	test-cppcut-assertions.cpp		\
+	test-cppcut-test.cpp

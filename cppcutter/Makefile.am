@@ -16,7 +16,8 @@ cppcutter_public_headers =			\
 	cppcut-assertions.h			\
 	cppcut-assertions-helper.h		\
 	cppcut-macros.h				\
-	cppcut-message.h
+	cppcut-message.h			\
+	cppcut-test.h
 
 pkginclude_HEADERS =	\
 	cppcutter.h
@@ -25,9 +26,10 @@ cppcutter_includedir=$(pkgincludedir)/cppcutter
 cppcutter_include_HEADERS =		\
 	$(cppcutter_public_headers)
 
-libcppcutter_sources =			\
-	cppcut-assertions-helper.cpp	\
-	cppcut-message.cpp
+libcppcutter_sources =				\
+	cppcut-assertions-helper.cpp		\
+	cppcut-message.cpp			\
+	cppcut-test.cpp
 
 libcppcutter_la_SOURCES =		\
 	$(cppcutter_public_headers)	\

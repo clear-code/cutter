@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,6 +38,9 @@ G_BEGIN_DECLS
 typedef struct _CutLoader      CutLoader;
 typedef struct _CutLoaderClass CutLoaderClass;
 
+typedef CutTest *(*CutCreateTestFunction) (const gchar     *name,
+                                           CutTestFunction  function,
+                                           gpointer         user_data);
 struct _CutLoader
 {
     GObject object;
@@ -62,6 +65,10 @@ void          cut_loader_set_enable_convenience_attribute_definition
 const gchar  *cut_loader_get_base_directory(CutLoader *loader);
 void          cut_loader_set_base_directory(CutLoader *loader,
                                             const gchar *base_directory);
+void          cut_loader_set_create_test_function
+                                           (CutLoader *loader,
+                                            CutCreateTestFunction create_test_function,
+                                            gpointer   user_data);
 GList        *cut_loader_load_test_cases   (CutLoader *loader);
 CutTestCase  *cut_loader_load_test_case    (CutLoader *loader);
 CutTestSuite *cut_loader_load_test_suite   (CutLoader *loader);

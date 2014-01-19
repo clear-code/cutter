@@ -959,6 +959,7 @@ AC_CONFIG_FILES([Makefile
 		 module/ui/Makefile
 		 module/report/Makefile
 		 module/stream/Makefile
+		 module/loader-customizer/Makefile
 		 gst-plugins/Makefile
 		 gst-plugins/test/Makefile
 		 data/Makefile

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2013  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -80,6 +80,8 @@ struct _CutLoaderPrivate
     gboolean keep_opening;
     gboolean enable_convenience_attribute_definition;
     gchar *base_directory;
+    CutCreateTestFunction create_test_function;
+    gpointer create_test_function_user_data;
 };
 
 enum
@@ -179,6 +181,8 @@ cut_loader_init (CutLoader *loader)
     priv->keep_opening = FALSE;
     priv->enable_convenience_attribute_definition = FALSE;
     priv->base_directory = NULL;
+    priv->create_test_function = NULL;
+    priv->create_test_function_user_data = NULL;
 }
 
 static void
@@ -323,6 +327,18 @@ cut_loader_set_base_directory (CutLoader *loader, const gchar *base_directory)
     if (priv->base_directory)
         g_free(priv->base_directory);
     priv->base_directory = g_strdup(base_directory);
+}
+
+void
+cut_loader_set_create_test_function (CutLoader *loader,
+                                     CutCreateTestFunction create_test_function,
+                                     gpointer user_data)
+{
+    CutLoaderPrivate *priv;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+    priv->create_test_function = create_test_function;
+    priv->create_test_function_user_data = user_data;
 }
 
 static inline const gchar *
@@ -1017,6 +1033,19 @@ apply_attributes (CutLoaderPrivate *priv, CutTest *test, SymbolNames *names)
     }
 }
 
+static CutTest *
+create_test (CutLoaderPrivate *priv,
+             const gchar      *name,
+             CutTestFunction   test_function)
+{
+    if (priv->create_test_function) {
+        return priv->create_test_function(name, test_function,
+                                          priv->create_test_function_user_data);
+    } else {
+        return cut_test_new(name, test_function);
+    }
+}
+
 static void
 register_valid_test (CutLoader *loader, CutTestCase *test_case,
                      SymbolNames *names)
@@ -1054,7 +1083,7 @@ register_valid_test (CutLoader *loader, CutTestCase *test_case,
                                               data_setup_function);
         test = CUT_TEST(test_iterator);
     } else {
-        test = cut_test_new(names->test_name, test_function);
+        test = create_test(priv, names->test_name, test_function);
     }
     cut_test_set_base_directory(test, priv->base_directory);
 
