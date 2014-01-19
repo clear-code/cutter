@@ -37,7 +37,7 @@
 typedef struct _CutContractorPrivate    CutContractorPrivate;
 struct _CutContractorPrivate
 {
-    GList *builders;
+    GList *listener_builders;
 };
 
 G_DEFINE_TYPE(CutContractor, cut_contractor, G_TYPE_OBJECT)
@@ -57,7 +57,7 @@ cut_contractor_class_init (CutContractorClass *klass)
 }
 
 static GList *
-create_default_builders (void)
+create_default_listener_builders (void)
 {
     GList *list = NULL;
 
@@ -74,7 +74,7 @@ load_ui_factory (CutContractor *contractor)
     GList *node;
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
-    for (node = priv->builders; node; node = g_list_next(node)) {
+    for (node = priv->listener_builders; node; node = g_list_next(node)) {
         const gchar *module_dir, *type_name;
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
 
@@ -94,7 +94,7 @@ cut_contractor_init (CutContractor *contractor)
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
     cut_module_factory_init();
-    priv->builders = create_default_builders();
+    priv->listener_builders = create_default_listener_builders();
 
     load_ui_factory(contractor);
 }
@@ -104,10 +104,15 @@ dispose (GObject *object)
 {
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(object);
 
-    if (priv->builders) {
-        g_list_foreach(priv->builders, (GFunc)g_object_unref, NULL);
-        g_list_free(priv->builders);
-        priv->builders = NULL;
+    if (priv->listener_builders) {
+        g_list_foreach(priv->listener_builders, (GFunc)g_object_unref, NULL);
+        g_list_free(priv->listener_builders);
+        priv->listener_builders = NULL;
+    }
+
+    if (priv->loader_customizer_factory_builder) {
+        g_object_unref(priv->loader_customizer_factory_builder);
+        priv->loader_customizer_factory_builder = NULL;
     }
 
     cut_module_factory_quit();
@@ -122,12 +127,13 @@ cut_contractor_new (void)
 }
 
 gboolean
-cut_contractor_has_builder (CutContractor *contractor, const gchar *type_name)
+cut_contractor_has_listener_builder (CutContractor *contractor,
+                                     const gchar *type_name)
 {
     GList *node;
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
-    for (node = priv->builders; node; node = g_list_next(node)) {
+    for (node = priv->listener_builders; node; node = g_list_next(node)) {
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
         const gchar *name;
         name = cut_factory_builder_get_type_name(builder);
@@ -139,12 +145,12 @@ cut_contractor_has_builder (CutContractor *contractor, const gchar *type_name)
 }
 
 GList *
-cut_contractor_build_factories (CutContractor *contractor)
+cut_contractor_build_listener_factories (CutContractor *contractor)
 {
     GList *factories = NULL, *node;
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
-    for (node = priv->builders; node; node = g_list_next(node)) {
+    for (node = priv->listener_builders; node; node = g_list_next(node)) {
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
         factories = g_list_concat(cut_factory_builder_build(builder), factories);
     }
@@ -152,12 +158,12 @@ cut_contractor_build_factories (CutContractor *contractor)
 }
 
 GList *
-cut_contractor_build_all_factories (CutContractor *contractor)
+cut_contractor_build_all_listener_factories (CutContractor *contractor)
 {
     GList *factories = NULL, *node;
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
-    for (node = priv->builders; node; node = g_list_next(node)) {
+    for (node = priv->listener_builders; node; node = g_list_next(node)) {
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
         factories = g_list_concat(cut_factory_builder_build_all(builder), factories);
     }
@@ -170,7 +176,7 @@ cut_contractor_set_option_context (CutContractor *contractor, GOptionContext *co
     GList *node;
     CutContractorPrivate *priv = CUT_CONTRACTOR_GET_PRIVATE(contractor);
 
-    for (node = priv->builders; node; node = g_list_next(node)) {
+    for (node = priv->listener_builders; node; node = g_list_next(node)) {
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
         cut_factory_builder_set_option_context(builder, context);
     }

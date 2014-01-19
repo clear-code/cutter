@@ -1,7 +1,7 @@
 #include "cutter.h"
 #include "cut-contractor.h"
 
-void test_has_builder (void);
+void test_has_listener_builder (void);
 
 static CutContractor *contractor;
 
@@ -19,13 +19,13 @@ cut_teardown (void)
 }
 
 void
-test_has_builder (void)
+test_has_listener_builder (void)
 {
     contractor = cut_contractor_new();
     cut_assert(contractor);
-    cut_assert(cut_contractor_has_builder(contractor, "ui"));
-    cut_assert(cut_contractor_has_builder(contractor, "report"));
-    cut_assert(!cut_contractor_has_builder(contractor, "XXX"));
+    cut_assert(cut_contractor_has_listener_builder(contractor, "ui"));
+    cut_assert(cut_contractor_has_listener_builder(contractor, "report"));
+    cut_assert(!cut_contractor_has_listener_builder(contractor, "XXX"));
 }
 
 /*

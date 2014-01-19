@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2013  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -85,7 +85,7 @@ static CutOrder test_case_order = CUT_ORDER_NONE_SPECIFIED;
 static gboolean use_multi_thread = FALSE;
 static gint max_threads = 10;
 static gboolean disable_signal_handling = FALSE;
-static GList *factories = NULL;
+static GList *listener_factories = NULL;
 static CutContractor *contractor = NULL;
 static gchar **original_argv = NULL;
 static gchar *cutter_command_path = NULL;
@@ -302,13 +302,14 @@ cut_init (int *argc, char ***argv)
 
     for (i = 1; i < *argc; i++) {
         if (g_str_has_prefix((*argv)[i], "--help-")) {
-            factories = cut_contractor_build_all_factories(contractor);
+            listener_factories =
+                cut_contractor_build_all_listener_factories(contractor);
             break;
         }
     }
 
-    if (!factories)
-        factories = cut_contractor_build_factories(contractor);
+    if (!listener_factories)
+        listener_factories = cut_contractor_build_listener_factories(contractor);
 
     g_option_context_set_help_enabled(option_context, TRUE);
     g_option_context_set_ignore_unknown_options(option_context, FALSE);
@@ -459,7 +460,7 @@ create_listeners (void)
 {
     GList *listeners = NULL, *node;
 
-    for (node = factories; node; node = g_list_next(node)) {
+    for (node = listener_factories; node; node = g_list_next(node)) {
         GObject *listener;
         listener = cut_module_factory_create(CUT_MODULE_FACTORY(node->data));
         listeners = g_list_prepend(listeners, listener);

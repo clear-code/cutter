@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -48,9 +48,12 @@ GType          cut_contractor_get_type    (void) G_GNUC_CONST;
 
 CutContractor *cut_contractor_new         (void);
 
-GList         *cut_contractor_build_factories    (CutContractor *contractor);
-GList         *cut_contractor_build_all_factories(CutContractor *contractor);
-gboolean       cut_contractor_has_builder        (CutContractor *contractor, 
+GList         *cut_contractor_build_listener_factories
+                                                 (CutContractor *contractor);
+GList         *cut_contractor_build_all_listener_factories
+                                                 (CutContractor *contractor);
+gboolean       cut_contractor_has_listener_builder
+                                                 (CutContractor *contractor,
                                                   const gchar *type_name);
 void           cut_contractor_set_option_context (CutContractor *contractor,
                                                   GOptionContext *context);
