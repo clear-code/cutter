@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2013  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2009-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -182,8 +182,15 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
         return FALSE;
     }
 
-    if (priv->length >= sizeof(ident))
-        memcpy(ident, priv->content, sizeof(ident));
+    if (priv->length < sizeof(ident)) {
+        cut_log_warning("ELF file must have at least %zd size: %" G_GSIZE_FORMAT,
+                        sizeof(ident), priv->length);
+        g_free(priv->content);
+        priv->content = NULL;
+        return FALSE;
+    }
+
+    memcpy(ident, priv->content, sizeof(ident));
 
     if ((ident[EI_MAG0] == ELFMAG0) &&
         (ident[EI_MAG1] == ELFMAG1) &&
