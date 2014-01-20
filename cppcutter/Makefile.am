@@ -3,7 +3,7 @@ AM_CPPFLAGS =			\
 	 -I$(top_srcdir)	\
 	 -I$(top_srcdir)/cutter
 
-AM_CXXFLAGS = 			\
+AM_CXXFLAGS =			\
 	-DCPPCUT_BUILDING	\
 	$(CUTTER_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
