@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -47,6 +47,12 @@ struct _CutTestIteratorClass
 {
     CutTestContainerClass parent_class;
 
+    CutIteratedTest *
+         (*create_iterated_test)
+                          (CutTestIterator *test_iterator,
+                           const gchar     *name,
+                           CutIteratedTestFunction iterated_test_function,
+                           CutTestData     *test_data);
     void (*ready)         (CutTestIterator *test_iterator,
                            guint            n_tests);
     void (*start_iterated_test)
@@ -66,6 +72,12 @@ CutTestIterator *cut_test_iterator_new         (const gchar     *name,
                                                 CutIteratedTestFunction function,
                                                 CutDataSetupFunction data_setup_function);
 CutTestIterator *cut_test_iterator_new_empty   (void);
+
+CutIteratedTest *cut_test_iterator_create_iterated_test
+                                               (CutTestIterator *test_iterator,
+                                                const gchar     *name,
+                                                CutIteratedTestFunction iterated_test_function,
+                                                CutTestData     *test_data);
 void             cut_test_iterator_add_test    (CutTestIterator *test_iterator,
                                                 CutIteratedTest *test);
 

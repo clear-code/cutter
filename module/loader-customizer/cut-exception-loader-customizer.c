@@ -28,6 +28,7 @@
 #include <cutter/cut-loader-customizer.h>
 
 #include <cppcutter/cppcut-test.h>
+#include <cppcutter/cppcut-test-iterator.h>
 
 #define CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER    \
     cut_type_exception_loader_customizer
@@ -142,10 +143,24 @@ create_test (const gchar     *name,
     return CUT_TEST(cppcut_test_new(name, function));
 }
 
+static CutTestIterator *
+create_test_iterator (const gchar     *name,
+                      CutIteratedTestFunction function,
+                      CutDataSetupFunction data_setup_function,
+                      gpointer         user_data)
+{
+    return CUT_TEST_ITERATOR(cppcut_test_iterator_new(name,
+                                                      function,
+                                                      data_setup_function));
+}
+
 static void
 customize (CutLoaderCustomizer *customizer, CutLoader *loader)
 {
     cut_loader_set_create_test_function(loader, create_test, NULL);
+    cut_loader_set_create_test_iterator_function(loader,
+                                                 create_test_iterator,
+                                                 NULL);
 }
 
 /*

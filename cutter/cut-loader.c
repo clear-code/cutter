@@ -82,6 +82,8 @@ struct _CutLoaderPrivate
     gchar *base_directory;
     CutCreateTestFunction create_test_function;
     gpointer create_test_function_user_data;
+    CutCreateTestIteratorFunction create_test_iterator_function;
+    gpointer create_test_iterator_function_user_data;
 };
 
 enum
@@ -183,6 +185,8 @@ cut_loader_init (CutLoader *loader)
     priv->base_directory = NULL;
     priv->create_test_function = NULL;
     priv->create_test_function_user_data = NULL;
+    priv->create_test_iterator_function = NULL;
+    priv->create_test_iterator_function_user_data = NULL;
 }
 
 static void
@@ -339,6 +343,19 @@ cut_loader_set_create_test_function (CutLoader *loader,
     priv = CUT_LOADER_GET_PRIVATE(loader);
     priv->create_test_function = create_test_function;
     priv->create_test_function_user_data = user_data;
+}
+
+void
+cut_loader_set_create_test_iterator_function (
+    CutLoader *loader,
+    CutCreateTestIteratorFunction create_test_iterator_function,
+    gpointer user_data)
+{
+    CutLoaderPrivate *priv;
+
+    priv = CUT_LOADER_GET_PRIVATE(loader);
+    priv->create_test_iterator_function = create_test_iterator_function;
+    priv->create_test_iterator_function_user_data = user_data;
 }
 
 static inline const gchar *
@@ -1046,6 +1063,25 @@ create_test (CutLoaderPrivate *priv,
     }
 }
 
+static CutTestIterator *
+create_test_iterator (CutLoaderPrivate *priv,
+                      const gchar      *name,
+                      CutIteratedTestFunction iterated_test_function,
+                      CutDataSetupFunction data_setup_function)
+{
+    if (priv->create_test_iterator_function) {
+        gpointer user_data = priv->create_test_iterator_function_user_data;
+        return priv->create_test_iterator_function(name,
+                                                   iterated_test_function,
+                                                   data_setup_function,
+                                                   user_data);
+    } else {
+        return cut_test_iterator_new(name,
+                                     iterated_test_function,
+                                     data_setup_function);
+    }
+}
+
 static void
 register_valid_test (CutLoader *loader, CutTestCase *test_case,
                      SymbolNames *names)
@@ -1075,12 +1111,11 @@ register_valid_test (CutLoader *loader, CutTestCase *test_case,
 
     if (data_setup_function) {
         CutTestIterator *test_iterator;
-        CutIteratedTestFunction iterated_test_function;
-
-        iterated_test_function = (CutIteratedTestFunction)test_function;
-        test_iterator = cut_test_iterator_new(names->test_name,
-                                              iterated_test_function,
-                                              data_setup_function);
+        test_iterator =
+            create_test_iterator(priv,
+                                 names->test_name,
+                                 (CutIteratedTestFunction)test_function,
+                                 data_setup_function);
         test = CUT_TEST(test_iterator);
     } else {
         test = create_test(priv, names->test_name, test_function);

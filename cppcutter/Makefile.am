@@ -16,8 +16,13 @@ cppcutter_public_headers =			\
 	cppcut-assertions.h			\
 	cppcut-assertions-helper.h		\
 	cppcut-macros.h				\
-	cppcut-message.h			\
-	cppcut-test.h
+	cppcut-message.h
+
+cppcutter_private_headers =			\
+	cppcut-test.h				\
+	cppcut-test-iterator.h			\
+	cppcut-iterated-test.h			\
+	cppcut-test-invoke.h
 
 pkginclude_HEADERS =	\
 	cppcutter.h
@@ -29,10 +34,14 @@ cppcutter_include_HEADERS =		\
 libcppcutter_sources =				\
 	cppcut-assertions-helper.cpp		\
 	cppcut-message.cpp			\
-	cppcut-test.cpp
+	cppcut-test.cpp				\
+	cppcut-test-iterator.cpp		\
+	cppcut-iterated-test.cpp		\
+	cppcut-test-invoke.cpp
 
 libcppcutter_la_SOURCES =		\
 	$(cppcutter_public_headers)	\
+	$(cppcutter_private_headers)	\
 	$(libcppcutter_sources)
 
 libcppcutter_la_LDFLAGS =			\

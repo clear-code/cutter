@@ -21,21 +21,19 @@
 #  include <config.h>
 #endif
 
-#include "cppcut-test.h"
+#include "cppcut-iterated-test.h"
 #include "cppcut-test-invoke.h"
-
-#include <cutter.h>
 
 G_BEGIN_DECLS
 
-G_DEFINE_TYPE(CppCutTest, cppcut_test, CUT_TYPE_TEST)
+G_DEFINE_TYPE(CppCutIteratedTest, cppcut_iterated_test, CUT_TYPE_ITERATED_TEST)
 
 static void         invoke       (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
 
 static void
-cppcut_test_class_init (CppCutTestClass *klass)
+cppcut_iterated_test_class_init (CppCutIteratedTestClass *klass)
 {
     CutTestClass *cut_test_class;
 
@@ -45,28 +43,32 @@ cppcut_test_class_init (CppCutTestClass *klass)
 }
 
 static void
-cppcut_test_init (CppCutTest *test)
+cppcut_iterated_test_init (CppCutIteratedTest *test)
 {
 }
 
-CppCutTest *
-cppcut_test_new (const gchar *name, CutTestFunction function)
+CppCutIteratedTest *
+cppcut_iterated_test_new (const gchar *name,
+                          CutIteratedTestFunction function,
+                          CutTestData *data)
 {
     gpointer object;
 
-    object = g_object_new(CPPCUT_TYPE_TEST,
-                          "element-name", "test",
+    object = g_object_new(CPPCUT_TYPE_ITERATED_TEST,
+                          "element-name", "iterated-test",
                           "name", name,
-                          "test-function", function,
+                          "iterated-test-function", function,
+                          "data", data,
                           NULL);
-    return CPPCUT_TEST(object);
+    return CPPCUT_ITERATED_TEST(object);
 }
 
 static void
 invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
-    CutTestClass *cut_test_class = CUT_TEST_CLASS(cppcut_test_parent_class);
+    CutTestClass *cut_test_class;
 
+    cut_test_class = CUT_TEST_CLASS(cppcut_iterated_test_parent_class);
     cut::test::invoke(cut_test_class, test, test_context, run_context);
 }
 

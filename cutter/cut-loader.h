@@ -41,6 +41,15 @@ typedef struct _CutLoaderClass CutLoaderClass;
 typedef CutTest *(*CutCreateTestFunction) (const gchar     *name,
                                            CutTestFunction  function,
                                            gpointer         user_data);
+typedef CutTestIterator *
+                 (*CutCreateTestIteratorFunction)
+                                          (const gchar     *name,
+                                           CutIteratedTestFunction
+                                                            iterated_test_function,
+                                           CutDataSetupFunction
+                                                            data_setup_function,
+                                           gpointer         user_data);
+
 struct _CutLoader
 {
     GObject object;
@@ -68,6 +77,11 @@ void          cut_loader_set_base_directory(CutLoader *loader,
 void          cut_loader_set_create_test_function
                                            (CutLoader *loader,
                                             CutCreateTestFunction create_test_function,
+                                            gpointer   user_data);
+void          cut_loader_set_create_test_iterator_function
+                                           (CutLoader *loader,
+                                            CutCreateTestIteratorFunction
+                                                       create_test_iterator_function,
                                             gpointer   user_data);
 GList        *cut_loader_load_test_cases   (CutLoader *loader);
 CutTestCase  *cut_loader_load_test_case    (CutLoader *loader);

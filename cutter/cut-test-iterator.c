@@ -219,6 +219,27 @@ cut_test_iterator_new_empty (void)
     return cut_test_iterator_new(NULL, NULL, NULL);
 }
 
+CutIteratedTest *
+cut_test_iterator_create_iterated_test (CutTestIterator *test_iterator,
+                                        const gchar     *name,
+                                        CutIteratedTestFunction iterated_test_function,
+                                        CutTestData     *test_data)
+{
+    CutTestIteratorClass *klass;
+
+    klass = CUT_TEST_ITERATOR_GET_CLASS(test_iterator);
+    if (klass->create_iterated_test) {
+        return klass->create_iterated_test(test_iterator,
+                                           name,
+                                           iterated_test_function,
+                                           test_data);
+    } else {
+        return cut_iterated_test_new(name,
+                                     iterated_test_function,
+                                     test_data);
+    }
+}
+
 void
 cut_test_iterator_add_test (CutTestIterator *test_iterator,
                             CutIteratedTest *test)
@@ -428,9 +449,11 @@ run_iterated_tests (CutTest *test, CutTestContext *test_context,
         CutTestData *test_data;
 
         test_data = cut_test_context_get_current_data(test_context);
-        iterated_test = cut_iterated_test_new(cut_test_get_name(test),
-                                              priv->iterated_test_function,
-                                              test_data);
+        iterated_test =
+            cut_test_iterator_create_iterated_test(test_iterator,
+                                                   cut_test_get_name(test),
+                                                   priv->iterated_test_function,
+                                                   test_data);
         cut_test_iterator_add_test(test_iterator, iterated_test);
         g_object_unref(iterated_test);
 

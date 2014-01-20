@@ -27,4 +27,5 @@ LIBS =							\
 
 test_cppcut_la_SOURCES =			\
 	test-cppcut-assertions.cpp		\
-	test-cppcut-test.cpp
+	test-cppcut-test.cpp			\
+	test-cppcut-iterated-test.cpp
