@@ -182,6 +182,7 @@ cut_elf_loader_is_elf (CutELFLoader *loader)
         return FALSE;
     }
 
+    bzero(ident, EI_NIDENT);
     if (priv->length >= sizeof(ident))
         memcpy(ident, priv->content, sizeof(ident));
 
