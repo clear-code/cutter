@@ -97,6 +97,10 @@ struct _CutTestClass
                                  (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutTestResult  *result);
+    void         (*longjmp_function)
+                                 (CutTest        *test,
+                                  jmp_buf        *jump_buffer,
+                                  int             val);
 };
 
 GType        cut_test_get_type  (void) G_GNUC_CONST;

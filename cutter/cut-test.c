@@ -111,6 +111,10 @@ static void         emit_result_signal
                                  (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutTestResult  *result);
+static void         longjmp_function
+                                 (CutTest        *test,
+                                  jmp_buf        *jump_buffer,
+                                  int             val);
 
 static void
 cut_test_class_init (CutTestClass *klass)
@@ -131,6 +135,7 @@ cut_test_class_init (CutTestClass *klass)
     klass->is_available = is_available;
     klass->invoke = invoke;
     klass->emit_result_signal = emit_result_signal;
+    klass->longjmp_function = longjmp_function;
 
     spec = g_param_spec_string("name",
                                "Test name",
@@ -764,6 +769,12 @@ emit_result_signal (CutTest *test,
     status = cut_test_result_get_status(result);
     status_signal_name = cut_test_result_status_to_signal_name(status);
     g_signal_emit_by_name(test, status_signal_name, test_context, result);
+}
+
+static void
+longjmp_function (CutTest *test, jmp_buf *jump_buffer, int val)
+{
+    longjmp(*jump_buffer, val);
 }
 
 void
