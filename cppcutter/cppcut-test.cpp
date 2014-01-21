@@ -112,6 +112,8 @@ invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
     LongJumpParam long_jump_param;
     bool catch_term_exception = false;
+    const gchar *unhandled_exception_msg = NULL;
+
     CutTestClass *cut_test_class = CUT_TEST_CLASS(cppcut_test_parent_class);
     CppCutTestPrivate *priv = CPPCUT_TEST_GET_PRIVATE(test);
     priv->jump_buffer_at_invoke = cut_test_context_get_jump(test_context);
@@ -122,18 +124,14 @@ invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         catch_term_exception = true;
         long_jump_param = term_exception.param;
     } catch (const std::exception &exception) {
-        const gchar *message;
-        priv->jump_buffer_at_invoke = NULL;
+        const char *message;
         message = cut_take_printf("Unhandled C++ standard exception is thrown: "
                                   "<%s>: %s",
                                   typeid(exception).name(),
                                   exception.what());
-        cut_test_terminate(ERROR, message);
+        unhandled_exception_msg = message;
     } catch (...) {
-        const gchar *message;
-        priv->jump_buffer_at_invoke = NULL;
-        message = "Unhandled C++ non-standard exception is thrown";
-        cut_test_terminate(ERROR, message);
+        unhandled_exception_msg = "Unhandled C++ non-standard exception is thrown";
     }
 
     priv->jump_buffer_at_invoke = NULL;
@@ -142,6 +140,11 @@ invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         call_parent_longjmp_function(test, long_jump_param.buf,
                                      long_jump_param.val);
     }
+
+    // cut_test_terminate() must be called outside of the above
+    // try-catch block. Or an exception instance is not destroyed.
+    if (unhandled_exception_msg)
+        cut_test_terminate(ERROR, unhandled_exception_msg);
 }
 
 static void
