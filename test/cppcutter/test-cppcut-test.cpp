@@ -19,6 +19,7 @@
  */
 
 #include <typeinfo>
+#include <vector>
 
 #include <cppcutter.h>
 
@@ -41,6 +42,7 @@ namespace cppcut_test
     CutRunContext *run_context;
     CutTestContext *test_context;
     CutTestResult *test_result;
+    std::vector<bool> destructor_called_flags;
 
     gint fail_line;
 
@@ -68,6 +70,7 @@ namespace cppcut_test
         run_context = NULL;
         test_context = NULL;
         test_result = NULL;
+        destructor_called_flags.clear();
 
         fail_line = 0;
     }
@@ -156,6 +159,78 @@ namespace cppcut_test
                                NULL,
                                "void cppcut_test::stub_not_standard_exception()",
                                NULL);
+    }
+
+    struct DestructorCallChecker {
+        const size_t index_;
+
+        DestructorCallChecker(const size_t &index)
+        : index_(index)
+        {
+            set(false);
+        }
+
+        virtual ~DestructorCallChecker()
+        {
+            set(true);
+        }
+
+        void set(const bool &val)
+        {
+            cppcut_assert_equal(true, destructor_called_flags.size() > index_);
+            destructor_called_flags[index_] = val;
+        }
+    };
+
+    static void
+    stub_stack_unwinding (void)
+    {
+
+        struct {
+            void operator()(size_t &num_remaining_recursion)
+            {
+                size_t idx = destructor_called_flags.size();
+                idx -= num_remaining_recursion;
+                DestructorCallChecker obj(idx);
+                if (num_remaining_recursion == 1)
+                    MARK_FAIL(cut_fail("Failure for unwinding the stack"));
+                else 
+                    (*this)(--num_remaining_recursion);
+            }
+        } recursive_runner;
+
+        size_t num_recursion = destructor_called_flags.size();
+        cppcut_assert_equal(true, num_recursion >= 1);
+        recursive_runner(num_recursion);
+    }
+
+    void
+    test_stack_unwinding (void)
+    {
+        const size_t num_using_stack_frames = 3;
+        for (size_t i = 0; i < num_using_stack_frames; i++)
+            destructor_called_flags.push_back(false);
+
+        test = cppcut_test_new("stack unwinding test",
+                               stub_stack_unwinding);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        const size_t n_tests = num_using_stack_frames * 2 + 1;
+        cut_assert_test_result_summary(run_context, 1, n_tests,
+                                       0, 1, 0, 0, 0, 0);
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_FAILURE,
+                               "stack unwinding test",
+                               "Failure for unwinding the stack",
+                               NULL, NULL, NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_test::stub_stack_unwinding()::<anonymous struct>::operator()(size_t&)",
+                               NULL);
+
+        for (size_t i = 0; i < num_using_stack_frames; i++) {
+            cppcut_assert_equal(true,
+                                static_cast<bool>(destructor_called_flags[i]));
+        }
     }
 }
 

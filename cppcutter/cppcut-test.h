@@ -65,6 +65,7 @@ struct _CppCutTest
 struct _CppCutTestClass
 {
     CutTestClass parent_class;
+    void (*parent_longjmp_function) (CutTest *test, jmp_buf *jump_buffer, int val);
 };
 
 GType        cppcut_test_get_type  (void) G_GNUC_CONST;

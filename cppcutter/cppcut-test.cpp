@@ -25,31 +25,66 @@
 #include <exception>
 #include <typeinfo>
 
+#include <glib.h>
+
 #include "cppcut-test.h"
 
 #include <cutter.h>
 
 G_BEGIN_DECLS
 
+#define CPPCUT_TEST_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CPPCUT_TYPE_TEST, CppCutTestPrivate))
+typedef struct _CppCutTestPrivate	CppCutTestPrivate;
+struct _CppCutTestPrivate
+{
+    jmp_buf *jump_buffer_at_invoke;
+};
+
+struct LongJumpParam {
+    jmp_buf *buf;
+    int      val;
+};
+
+struct CppCutTermException {
+    LongJumpParam param;
+
+    CppCutTermException (jmp_buf *jump_buffer, int val)
+    {
+        param.buf = jump_buffer;
+        param.val = val;
+    }
+};
+
 G_DEFINE_TYPE(CppCutTest, cppcut_test, CUT_TYPE_TEST)
 
 static void         invoke       (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
+static void         longjmp_function
+                                 (CutTest *test,
+                                  jmp_buf *jump_buffer, int val);
 
 static void
 cppcut_test_class_init (CppCutTestClass *klass)
 {
+    GObjectClass *gobject_class;
     CutTestClass *cut_test_class;
 
+    gobject_class = G_OBJECT_CLASS(klass);
     cut_test_class = CUT_TEST_CLASS(klass);
 
     cut_test_class->invoke = invoke;
+    klass->parent_longjmp_function = cut_test_class->longjmp_function;
+    cut_test_class->longjmp_function = longjmp_function;
+
+    g_type_class_add_private(gobject_class, sizeof(CppCutTestPrivate)); 
 }
 
 static void
 cppcut_test_init (CppCutTest *test)
 {
+    CppCutTestPrivate *priv = CPPCUT_TEST_GET_PRIVATE(test);
+    priv->jump_buffer_at_invoke = NULL;
 }
 
 CppCutTest *
@@ -66,14 +101,29 @@ cppcut_test_new (const gchar *name, CutTestFunction function)
 }
 
 static void
+call_parent_longjmp_function (CutTest *test, jmp_buf *jump_buffer, int val)
+{
+    CppCutTestClass *klass = CPPCUT_TEST_GET_CLASS(test);
+    (*klass->parent_longjmp_function)(test, jump_buffer, val);
+}
+
+static void
 invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 {
+    LongJumpParam long_jump_param;
+    bool catch_term_exception = false;
     CutTestClass *cut_test_class = CUT_TEST_CLASS(cppcut_test_parent_class);
+    CppCutTestPrivate *priv = CPPCUT_TEST_GET_PRIVATE(test);
+    priv->jump_buffer_at_invoke = cut_test_context_get_jump(test_context);
 
     try {
         cut_test_class->invoke(test, test_context, run_context);
+    } catch (const CppCutTermException &term_exception) {
+        catch_term_exception = true;
+        long_jump_param = term_exception.param;
     } catch (const std::exception &exception) {
         const gchar *message;
+        priv->jump_buffer_at_invoke = NULL;
         message = cut_take_printf("Unhandled C++ standard exception is thrown: "
                                   "<%s>: %s",
                                   typeid(exception).name(),
@@ -81,9 +131,27 @@ invoke (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
         cut_test_terminate(ERROR, message);
     } catch (...) {
         const gchar *message;
+        priv->jump_buffer_at_invoke = NULL;
         message = "Unhandled C++ non-standard exception is thrown";
         cut_test_terminate(ERROR, message);
     }
+
+    priv->jump_buffer_at_invoke = NULL;
+
+    if (catch_term_exception) {
+        call_parent_longjmp_function(test, long_jump_param.buf,
+                                     long_jump_param.val);
+    }
+}
+
+static void
+longjmp_function (CutTest *test, jmp_buf *jump_buffer, int val)
+{
+    CppCutTestPrivate *priv = CPPCUT_TEST_GET_PRIVATE(test);
+    if (jump_buffer == priv->jump_buffer_at_invoke)
+        throw CppCutTermException(jump_buffer, val);
+    else
+        call_parent_longjmp_function(test, jump_buffer, val);
 }
 
 G_END_DECLS
