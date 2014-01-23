@@ -6,7 +6,10 @@ AM_CPPFLAGS =					\
 	-I$(top_srcdir)/gcutter			\
 	-I$(top_srcdir)/cppcutter
 
-noinst_LTLIBRARIES = 		\
+AM_CXXFLAGS =					\
+	$(COVERAGE_CFLAGS)
+
+noinst_LTLIBRARIES =		\
 	with-prefix.la		\
 	without-prefix.la	\
 	all.la

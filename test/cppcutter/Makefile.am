@@ -6,7 +6,9 @@ AM_CPPFLAGS =					\
 	-I$(top_srcdir)/cppcutter		\
 	-I$(top_srcdir)/test/lib
 
-AM_CXXFLAGS = $(CUTTER_CFLAGS)
+AM_CXXFLAGS =					\
+	$(CUTTER_CFLAGS)			\
+	$(COVERAGE_CFLAGS)
 
 CLEANFILES = *.gcno *.gcda
 
