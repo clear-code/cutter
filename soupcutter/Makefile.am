@@ -40,7 +40,8 @@ libsoupcutter_la_LDFLAGS =		\
 
 libsoupcutter_la_LIBADD =			\
 	$(top_builddir)/cutter/libcutter.la	\
-	$(LIBSOUP_LIBS)
+	$(LIBSOUP_LIBS)				\
+	$(COVERAGE_LIBS)
 
 echo-public-headers:
 	@for header in $(soupcutter_include_HEADERS); do	\

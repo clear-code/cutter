@@ -48,10 +48,13 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   AC_CHECK_ENABLE_COVERAGE
 
   COVERAGE_CFLAGS=
+  COVERAGE_LIBS=
   if test "$cutter_enable_coverage" = "yes"; then
     COVERAGE_CFLAGS="--coverage"
+    COVERAGE_LIBS="-lgcov"
   fi
   AC_SUBST(COVERAGE_CFLAGS)
+  AC_SUBST(COVERAGE_LIBS)
   AM_CONDITIONAL([ENABLE_COVERAGE], [test "$cutter_enable_coverage" = "yes"])
 
   COVERAGE_INFO_FILE="coverage.info"

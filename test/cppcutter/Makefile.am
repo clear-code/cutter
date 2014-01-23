@@ -25,7 +25,8 @@ LIBS =							\
 	$(top_builddir)/cutter/libcutter.la		\
 	$(top_builddir)/cppcutter/libcppcutter.la	\
 	$(top_builddir)/test/lib/libcuttest-utils.la	\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)					\
+	$(COVERAGE_LIBS)
 
 test_cppcut_la_SOURCES =			\
 	test-cppcut-assertions.cpp		\

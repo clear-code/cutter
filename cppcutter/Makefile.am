@@ -50,7 +50,8 @@ libcppcutter_la_LDFLAGS =			\
 
 libcppcutter_la_LIBADD =			\
 	$(top_builddir)/cutter/libcutter.la	\
-	$(GLIB_LIBS)
+	$(GLIB_LIBS)				\
+	$(COVERAGE_LIBS)
 
 echo-public-headers:
 	@for header in $(cppcutter_include_HEADERS); do			\

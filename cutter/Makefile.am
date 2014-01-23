@@ -194,7 +194,8 @@ libcutter_la_LIBADD =				\
 	$(top_builddir)/gcutter/libgcutter.la	\
 	$(GLIB_LIBS)				\
 	$(BFD_LIBS)				\
-	$(WINDOWS_LIBS)
+	$(WINDOWS_LIBS)				\
+	$(COVERAGE_LIBS)
 
 if GLIB_2_12
 libcutter_la_LIBADD +=						\

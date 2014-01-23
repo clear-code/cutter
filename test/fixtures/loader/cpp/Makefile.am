@@ -26,7 +26,8 @@ LIBS =							\
 	$(top_builddir)/gcutter/libgcutter.la		\
 	$(top_builddir)/cppcutter/libcppcutter.la	\
 	$(GLIB_LIBS)					\
-	$(GIO_LIBS)
+	$(GIO_LIBS)					\
+	$(COVERAGE_LIBS)
 
 stub_namespace_la_SOURCES	= stub-namespace.cpp
 stub_multi_namespace_la_SOURCES	= stub-multi-namespace.cpp
