@@ -1,10 +1,10 @@
-AM_CPPFLAGS = 			\
+AM_CPPFLAGS =			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)	\
 	 -I$(top_srcdir)/cutter	\
 	 -I$(top_srcdir)/gcutter
 
-AM_CFLAGS = 			\
+AM_CFLAGS =			\
 	$(CUTTER_CFLAGS)	\
 	$(LIBSOUP_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
@@ -14,11 +14,11 @@ CLEANFILES = *.gcno *.gcda
 if HAVE_LIBSOUP
 lib_LTLIBRARIES = libsoupcutter.la
 
-pkginclude_HEADERS = 		\
+pkginclude_HEADERS =		\
 	soupcutter.h
 
 soupcutter_includedir=$(pkgincludedir)/soupcutter
-soupcutter_include_HEADERS = 		\
+soupcutter_include_HEADERS =		\
 	$(soupcutter_public_headers)
 endif
 

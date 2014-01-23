@@ -1,9 +1,9 @@
-AM_CPPFLAGS = 			\
+AM_CPPFLAGS =			\
 	 -I$(top_builddir)	\
 	 -I$(top_srcdir)	\
 	 -I$(top_srcdir)/cutter
 
-AM_CFLAGS = 			\
+AM_CFLAGS =			\
 	$(CUTTER_CFLAGS)	\
 	$(COVERAGE_CFLAGS)
 
@@ -47,14 +47,14 @@ gcutter_public_headers =		\
 	gcut-glib-event-loop.h		\
 	gcut-main.h
 
-noinst_headers = 	\
+noinst_headers =	\
 	gbsearcharray.h
 
-pkginclude_HEADERS = 	\
+pkginclude_HEADERS =	\
 	gcutter.h
 
 gcutter_includedir=$(pkgincludedir)/gcutter
-gcutter_include_HEADERS = 		\
+gcutter_include_HEADERS =		\
 	$(gcutter_public_headers)
 
 libgcutter_sources =			\
