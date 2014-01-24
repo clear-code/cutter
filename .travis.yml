@@ -11,4 +11,4 @@ before_script:
 script:
   - test/run-test.sh
 after_success:
-  - coveralls
+  - coveralls --exclude test
