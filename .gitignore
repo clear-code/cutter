@@ -5,6 +5,9 @@
 .deps
 .libs
 *.gcno
+*.gcda
+*.log
+*.trs
 *~
 /.gdb_history
 /aclocal.m4
