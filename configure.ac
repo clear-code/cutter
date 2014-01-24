@@ -1040,6 +1040,7 @@ echo "Configure Result:"
 echo
 echo " Options:"
 echo "  coverage                         : $cutter_enable_coverage"
+echo "  coverage report by LCOV          : $cutter_enable_coverage_report_lcov"
 echo
 echo " Libraries:"
 echo "  GLib <= 2.12                     : $glib_2_12"

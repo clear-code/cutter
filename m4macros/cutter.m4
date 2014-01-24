@@ -1,10 +1,13 @@
 AC_DEFUN([AC_CHECK_ENABLE_COVERAGE],
 [
+  AC_MSG_CHECKING([for enabling coverage])
   AC_ARG_ENABLE([coverage],
                 AS_HELP_STRING([--enable-coverage],
                                [Enable coverage]),
                 [cutter_enable_coverage=$enableval],
                 [cutter_enable_coverage=no])
+  AC_MSG_RESULT($cutter_enable_coverage)
+  cutter_enable_coverage_report_lcov=no
   if test "x$cutter_enable_coverage" != "xno"; then
     ltp_version_list="1.6 1.7 1.8 1.9 1.10"
     AC_PATH_TOOL(LCOV, lcov)
@@ -24,17 +27,17 @@ AC_DEFUN([AC_CHECK_ENABLE_COVERAGE],
       ])
     fi
 
+    AC_MSG_CHECKING([for enabling coverage report by LCOV])
     case "$cutter_cv_ltp_version" in
       *\(ok\)*)
-        cutter_enable_coverage=yes
+        cutter_enable_coverage_report_lcov=yes
         ;;
       *)
-        cutter_enable_coverage=no
+        cutter_enable_coverage_report_lcov=no
         ;;
     esac
+    AC_MSG_RESULT($cutter_enable_coverage_report_lcov)
   fi
-  AC_MSG_CHECKING([for enabling coverage])
-  AC_MSG_RESULT($cutter_enable_coverage)
 ])
 
 AC_DEFUN([AC_CHECK_COVERAGE],
@@ -56,6 +59,8 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   AC_SUBST(COVERAGE_CFLAGS)
   AC_SUBST(COVERAGE_LIBS)
   AM_CONDITIONAL([ENABLE_COVERAGE], [test "$cutter_enable_coverage" = "yes"])
+  AM_CONDITIONAL([ENABLE_COVERAGE_REPORT_LCOV],
+                 [test "$cutter_enable_coverage_report_lcov" = "yes"])
 
   COVERAGE_INFO_FILE="coverage.info"
   AC_SUBST(COVERAGE_INFO_FILE)
@@ -68,8 +73,8 @@ AC_DEFUN([AC_CHECK_COVERAGE],
   fi
   AC_SUBST(GENHTML_OPTIONS)
 
-  if test "$cutter_enable_coverage" = "yes"; then
-    AC_CONFIG_COMMANDS([coverage], [
+  if test "$cutter_enable_coverage_report_lcov" = "yes"; then
+    AC_CONFIG_COMMANDS([coverage-report-lcov], [
       if test -e "$ac_check_coverage_makefile" && \
          grep -q '^coverage:' $ac_check_coverage_makefile; then
         : # do nothing
