@@ -4,6 +4,7 @@
 *.exe
 .deps
 .libs
+*.gcno
 *~
 /.gdb_history
 /aclocal.m4
