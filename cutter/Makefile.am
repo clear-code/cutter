@@ -8,7 +8,10 @@ AM_CFLAGS =					\
 	$(CUTTER_CFLAGS)			\
 	$(COVERAGE_CFLAGS)
 
-CLEANFILES = *.gcno *.gcda
+CLEANFILES =					\
+	*.gcno					\
+	*.gcda					\
+	*.gcov
 
 lib_LTLIBRARIES = libcutter.la
 
