@@ -6,6 +6,7 @@
 .libs
 *.gcno
 *.gcda
+*.gcov
 *.log
 *.trs
 *~
