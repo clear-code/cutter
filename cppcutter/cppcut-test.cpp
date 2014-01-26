@@ -30,6 +30,9 @@ G_BEGIN_DECLS
 
 G_DEFINE_TYPE(CppCutTest, cppcut_test, CUT_TYPE_TEST)
 
+static void         long_jump    (CutTest        *test,
+                                  jmp_buf        *jump_buffer,
+                                  gint            value);
 static void         invoke       (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
@@ -41,7 +44,8 @@ cppcut_test_class_init (CppCutTestClass *klass)
 
     cut_test_class = CUT_TEST_CLASS(klass);
 
-    cut_test_class->invoke = invoke;
+    cut_test_class->long_jump = long_jump;
+    cut_test_class->invoke    = invoke;
 }
 
 static void
@@ -60,6 +64,14 @@ cppcut_test_new (const gchar *name, CutTestFunction function)
                           "test-function", function,
                           NULL);
     return CPPCUT_TEST(object);
+}
+
+static void
+long_jump (CutTest *test, jmp_buf *jump_buffer, gint value)
+{
+    CutTestClass *cut_test_class = CUT_TEST_CLASS(cppcut_test_parent_class);
+
+    cut::test::long_jump(cut_test_class, test, jump_buffer, value);
 }
 
 static void

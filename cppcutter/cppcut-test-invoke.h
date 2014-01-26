@@ -26,10 +26,14 @@ namespace cut
 {
     namespace test
     {
-        void invoke (CutTestClass *cut_test_class,
-                     CutTest *test,
-                     CutTestContext *test_context,
-                     CutRunContext *run_context);
+        void long_jump (CutTestClass  *cut_test_class,
+                        CutTest       *test,
+                        jmp_buf       *jump_buffer,
+                        gint           value);
+        void invoke    (CutTestClass  *cut_test_class,
+                        CutTest        *test,
+                        CutTestContext *test_context,
+                        CutRunContext  *run_context);
     }
 }
 

@@ -28,6 +28,9 @@ G_BEGIN_DECLS
 
 G_DEFINE_TYPE(CppCutIteratedTest, cppcut_iterated_test, CUT_TYPE_ITERATED_TEST)
 
+static void         long_jump    (CutTest        *test,
+                                  jmp_buf        *jump_buffer,
+                                  gint            value);
 static void         invoke       (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
@@ -39,7 +42,8 @@ cppcut_iterated_test_class_init (CppCutIteratedTestClass *klass)
 
     cut_test_class = CUT_TEST_CLASS(klass);
 
-    cut_test_class->invoke = invoke;
+    cut_test_class->long_jump = long_jump;
+    cut_test_class->invoke    = invoke;
 }
 
 static void
@@ -61,6 +65,15 @@ cppcut_iterated_test_new (const gchar *name,
                           "data", data,
                           NULL);
     return CPPCUT_ITERATED_TEST(object);
+}
+
+static void
+long_jump (CutTest *test, jmp_buf *jump_buffer, gint value)
+{
+    CutTestClass *cut_test_class;
+
+    cut_test_class = CUT_TEST_CLASS(cppcut_iterated_test_parent_class);
+    cut::test::long_jump(cut_test_class, test, jump_buffer, value);
 }
 
 static void

@@ -855,7 +855,13 @@ cut_test_context_long_jump (CutTestContext *context)
     }
 
     if (cut_test_context_in_user_message_jump(context) || same_thread_p) {
-        longjmp(*(priv->jump_buffer), CUT_SIGNAL_EXPLICIT_JUMP);
+        if (priv->test) {
+            cut_test_long_jump(priv->test,
+                               priv->jump_buffer,
+                               CUT_SIGNAL_EXPLICIT_JUMP);
+        } else {
+            longjmp(*(priv->jump_buffer), CUT_SIGNAL_EXPLICIT_JUMP);
+        }
     } else {
         if (priv->parent && cut_test_context_is_failed(context)) {
             cut_test_context_set_failed(priv->parent, TRUE);

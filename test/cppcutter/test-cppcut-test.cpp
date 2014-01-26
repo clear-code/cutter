@@ -27,22 +27,13 @@
 
 #include "../lib/cuttest-assertions.h"
 
-#define MARK_FAIL(assertion) do                 \
-{                                               \
-    fail_line = __LINE__;                       \
-    assertion;                                  \
-} while (0)
-
-#define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
-
 namespace cppcut_test
 {
     CppCutTest *test;
     CutRunContext *run_context;
     CutTestContext *test_context;
     CutTestResult *test_result;
-
-    gint fail_line;
+    gint n_destructor_calls;
 
     static gboolean
     run (void)
@@ -69,7 +60,7 @@ namespace cppcut_test
         test_context = NULL;
         test_result = NULL;
 
-        fail_line = 0;
+        n_destructor_calls = 0;
     }
 
     void
@@ -156,6 +147,34 @@ namespace cppcut_test
                                NULL,
                                "void cppcut_test::stub_not_standard_exception()",
                                NULL);
+    }
+
+    class DestructorCallCounter
+    {
+    public:
+        ~DestructorCallCounter()
+        {
+            n_destructor_calls++;
+        }
+    };
+
+    static void
+    stub_unwind_stack (void)
+    {
+        DestructorCallCounter counter;
+
+        cut_fail("return from the test");
+    }
+
+    void
+    test_unwind_stack (void)
+    {
+        test = cppcut_test_new("unwind stack test", stub_unwind_stack);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+        cut_assert_equal_int(1, n_destructor_calls);
     }
 }
 

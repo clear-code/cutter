@@ -29,25 +29,78 @@
 
 #include <cutter.h>
 
+struct LongJumpArguments {
+    jmp_buf *jump_buffer;
+    gint     value;
+};
+
+struct CppCutTestTerminated {
+    LongJumpArguments long_jump_arguments;
+
+    CppCutTestTerminated (jmp_buf *jump_buffer, gint value)
+    {
+        long_jump_arguments.jump_buffer = jump_buffer;
+        long_jump_arguments.value       = value;
+    }
+};
+
+static const gchar *invoking_data_key = "cppcut-test-invoking";
+
+void
+cut::test::long_jump (CutTestClass  *cut_test_class,
+                      CutTest       *test,
+                      jmp_buf       *jump_buffer,
+                      gint           value)
+{
+    gpointer invoking_data;
+    gboolean *invoking;
+
+    invoking_data = g_object_get_data(G_OBJECT(test), invoking_data_key);
+    invoking = static_cast<gboolean *>(invoking_data);
+    if (invoking && *invoking &&
+        cut_test_is_own_jump_buffer(test, jump_buffer)) {
+        throw CppCutTestTerminated(jump_buffer, value);
+    } else {
+        cut_test_class->long_jump(test, jump_buffer, value);
+    }
+}
+
 void
 cut::test::invoke (CutTestClass *cut_test_class,
                    CutTest *test,
                    CutTestContext *test_context,
                    CutRunContext *run_context)
 {
+    LongJumpArguments long_jump_arguments;
+    bool is_terminated = false;
+    const gchar *terminate_message = NULL;
+    gboolean invoking = TRUE;
+
+    g_object_set_data(G_OBJECT(test), invoking_data_key, &invoking);
     try {
         cut_test_class->invoke(test, test_context, run_context);
+    } catch (const CppCutTestTerminated &terminated) {
+        is_terminated = true;
+        long_jump_arguments = terminated.long_jump_arguments;
     } catch (const std::exception &exception) {
-        const gchar *message;
-        message = cut_take_printf("Unhandled C++ standard exception is thrown: "
-                                  "<%s>: %s",
-                                  typeid(exception).name(),
-                                  exception.what());
-        cut_test_terminate(ERROR, message);
+        terminate_message =
+            cut_take_printf("Unhandled C++ standard exception is thrown: "
+                            "<%s>: %s",
+                            typeid(exception).name(),
+                            exception.what());
     } catch (...) {
-        const gchar *message;
-        message = "Unhandled C++ non-standard exception is thrown";
-        cut_test_terminate(ERROR, message);
+        terminate_message = "Unhandled C++ non-standard exception is thrown";
+    }
+    g_object_steal_data(G_OBJECT(test), invoking_data_key);
+
+    if (is_terminated) {
+        cut_test_class->long_jump(test,
+                                  long_jump_arguments.jump_buffer,
+                                  long_jump_arguments.value);
+    }
+
+    if (terminate_message) {
+        cut_test_terminate(ERROR, terminate_message);
     }
 }
 

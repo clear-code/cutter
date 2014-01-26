@@ -33,6 +33,7 @@ namespace cppcut_iterated_test
     CutRunContext *run_context;
     CutTestContext *test_context;
     CutTestResult *test_result;
+    gint n_destructor_calls;
 
     static gboolean
     run (void)
@@ -60,6 +61,7 @@ namespace cppcut_iterated_test
         run_context = NULL;
         test_context = NULL;
         test_result = NULL;
+        n_destructor_calls = 0;
     }
 
     void
@@ -151,6 +153,36 @@ namespace cppcut_iterated_test
                                NULL,
                                "void cppcut_test::stub_not_standard_exception()",
                                NULL);
+    }
+
+    class DestructorCallCounter
+    {
+    public:
+        ~DestructorCallCounter()
+        {
+            n_destructor_calls++;
+        }
+    };
+
+    static void
+    stub_unwind_stack (gconstpointer data)
+    {
+        DestructorCallCounter counter;
+
+        cut_fail("return from the test");
+    }
+
+    void
+    test_unwind_stack (void)
+    {
+        iterated_test = cppcut_iterated_test_new("unwind stack test",
+                                                 stub_unwind_stack,
+                                                 test_data);
+        cut_assert_not_null(iterated_test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 0, 0, 1, 0, 0, 0, 0);
+        cut_assert_equal_int(1, n_destructor_calls);
     }
 }
 

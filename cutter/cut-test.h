@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -19,6 +19,8 @@
 
 #ifndef __CUT_TEST_H__
 #define __CUT_TEST_H__
+
+#include <setjmp.h>
 
 #include <glib-object.h>
 
@@ -87,6 +89,9 @@ struct _CutTestClass
     gboolean     (*run)          (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
+    void         (*long_jump)    (CutTest        *test,
+                                  jmp_buf        *jump_buffer,
+                                  gint            value);
     gboolean     (*is_available) (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
@@ -107,6 +112,12 @@ CutTest     *cut_test_new_empty           (void);
 gboolean     cut_test_run                 (CutTest        *test,
                                            CutTestContext *test_context,
                                            CutRunContext  *run_context);
+
+void         cut_test_long_jump           (CutTest        *test,
+                                           jmp_buf        *jump_buffer,
+                                           gint            value);
+gboolean     cut_test_is_own_jump_buffer  (CutTest        *test,
+                                           jmp_buf        *jump_buffer);
 
 const gchar *cut_test_get_name            (CutTest     *test);
 void         cut_test_set_name            (CutTest     *test,

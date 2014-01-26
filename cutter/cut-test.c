@@ -1,6 +1,7 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
  *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2014  Kazuhiro Yamato <kz0817@gmail.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -54,6 +55,7 @@ struct _CutTestPrivate
     gdouble elapsed;
     GHashTable *attributes;
     gchar *base_directory;
+    jmp_buf *jump_buffer;
 };
 
 enum
@@ -101,6 +103,9 @@ static void         set_elapsed  (CutTest  *test, gdouble elapsed);
 static gboolean     run          (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
+static void         long_jump    (CutTest        *test,
+                                  jmp_buf        *jump_buffer,
+                                  gint            value);
 static gboolean     is_available (CutTest        *test,
                                   CutTestContext *test_context,
                                   CutRunContext  *run_context);
@@ -128,6 +133,7 @@ cut_test_class_init (CutTestClass *klass)
     klass->get_elapsed = get_elapsed;
     klass->set_elapsed = set_elapsed;
     klass->run = run;
+    klass->long_jump = long_jump;
     klass->is_available = is_available;
     klass->invoke = invoke;
     klass->emit_result_signal = emit_result_signal;
@@ -274,6 +280,7 @@ cut_test_init (CutTest *test)
     priv->elapsed = -1.0;
     priv->attributes = g_hash_table_new_full(g_str_hash, g_str_equal,
                                              g_free, g_free);
+    priv->jump_buffer = NULL;
 }
 
 static void
@@ -440,8 +447,12 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     priv = CUT_TEST_GET_PRIVATE(test);
     klass = CUT_TEST_GET_CLASS(test);
 
-    if (!klass->is_available(test, test_context, run_context))
+    priv->jump_buffer = &jump_buffer;
+
+    if (!klass->is_available(test, test_context, run_context)) {
+        priv->jump_buffer = NULL;
         return FALSE;
+    }
 
     test_case = cut_test_context_get_test_case(test_context);
     test_iterator = cut_test_context_get_test_iterator(test_context);
@@ -508,7 +519,15 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 
     g_signal_emit_by_name(test, "complete", test_context, success);
 
+    priv->jump_buffer = NULL;
+
     return success;
+}
+
+static void
+long_jump (CutTest *test, jmp_buf *jump_buffer, gint value)
+{
+    longjmp(*jump_buffer, value);
 }
 
 gboolean
@@ -516,6 +535,20 @@ cut_test_run (CutTest *test, CutTestContext *test_context,
               CutRunContext *run_context)
 {
     return CUT_TEST_GET_CLASS(test)->run(test, test_context, run_context);
+}
+
+void
+cut_test_long_jump (CutTest *test, jmp_buf *jump_buffer, gint value)
+{
+    return CUT_TEST_GET_CLASS(test)->long_jump(test, jump_buffer, value);
+}
+
+gboolean
+cut_test_is_own_jump_buffer (CutTest *test, jmp_buf *jump_buffer)
+{
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+
+    return priv->jump_buffer == jump_buffer;
 }
 
 const gchar *
