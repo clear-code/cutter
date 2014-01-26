@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2009  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -526,7 +526,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
 
     cut_test_context_set_test_iterator(test_context, test_iterator);
     if (priv->data_setup_function) {
-        cut_test_context_set_jump(test_context, &jump_buffer);
+        cut_test_context_set_jump_buffer(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
             priv->data_setup_function();
         }

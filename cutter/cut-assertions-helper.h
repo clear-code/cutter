@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -34,14 +34,14 @@ extern "C" {
                                                                         \
     cut_test_context_start_user_message_jump(cut_get_current_test_context()); \
     cut_previous_jump_buffer =                                          \
-        cut_test_context_get_jump(cut_get_current_test_context());      \
-    cut_test_context_set_jump(cut_get_current_test_context(),           \
-                              &cut_jump_buffer);                        \
+        cut_test_context_get_jump_buffer(cut_get_current_test_context()); \
+    cut_test_context_set_jump_buffer(cut_get_current_test_context(),    \
+                                     &cut_jump_buffer);                 \
     if (setjmp(cut_jump_buffer) == 0) {                                 \
         assertion;                                                      \
     }                                                                   \
-    cut_test_context_set_jump(cut_get_current_test_context(),           \
-                              cut_previous_jump_buffer);                \
+    cut_test_context_set_jump_buffer(cut_get_current_test_context(),    \
+                                     cut_previous_jump_buffer);         \
     cut_test_context_finish_user_message_jump(cut_get_current_test_context()); \
                                                                         \
     do {                                                                \

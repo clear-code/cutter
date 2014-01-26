@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2013  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -823,7 +823,7 @@ cut_test_context_get_n_data (CutTestContext *context)
 }
 
 void
-cut_test_context_set_jump (CutTestContext *context, jmp_buf *buffer)
+cut_test_context_set_jump_buffer (CutTestContext *context, jmp_buf *buffer)
 {
     CutTestContextPrivate *priv = CUT_TEST_CONTEXT_GET_PRIVATE(context);
 
@@ -831,7 +831,7 @@ cut_test_context_set_jump (CutTestContext *context, jmp_buf *buffer)
 }
 
 jmp_buf *
-cut_test_context_get_jump (CutTestContext *context)
+cut_test_context_get_jump_buffer (CutTestContext *context)
 {
     return CUT_TEST_CONTEXT_GET_PRIVATE(context)->jump_buffer;
 }

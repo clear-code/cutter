@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2012  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -459,7 +459,7 @@ run (CutTest *test, CutTestContext *test_context, CutRunContext *run_context)
     case 0:
         g_signal_emit_by_name(test, "start", test_context);
 
-        cut_test_context_set_jump(test_context, &jump_buffer);
+        cut_test_context_set_jump_buffer(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
             if (priv->timer) {
                 g_timer_start(priv->timer);

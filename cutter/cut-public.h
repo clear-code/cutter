@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -108,9 +108,11 @@ void         cut_test_context_finish_user_message_jump
                                             (CutTestContext *context);
 cut_boolean  cut_test_context_in_user_message_jump
                                             (CutTestContext *context);
-void         cut_test_context_set_jump      (CutTestContext *context,
+void         cut_test_context_set_jump_buffer
+                                            (CutTestContext *context,
                                              jmp_buf        *buffer);
-jmp_buf     *cut_test_context_get_jump      (CutTestContext *context);
+jmp_buf     *cut_test_context_get_jump_buffer
+                                            (CutTestContext *context);
 void         cut_test_context_long_jump     (CutTestContext *context);
 
 const void *cut_test_context_take           (CutTestContext *context,

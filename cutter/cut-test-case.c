@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -373,7 +373,7 @@ cut_test_case_run_setup (CutTestCase *test_case, CutTestContext *test_context)
     if (priv->setup) {
         jmp_buf jump_buffer;
 
-        cut_test_context_set_jump(test_context, &jump_buffer);
+        cut_test_context_set_jump_buffer(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
             priv->setup();
         }
@@ -389,7 +389,7 @@ cut_test_case_run_teardown (CutTestCase *test_case, CutTestContext *test_context
     if (priv->teardown) {
         jmp_buf jump_buffer;
 
-        cut_test_context_set_jump(test_context, &jump_buffer);
+        cut_test_context_set_jump_buffer(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
             priv->teardown();
         }
@@ -479,7 +479,7 @@ cut_test_case_run_startup (CutTestCase *test_case, CutTestContext *test_context)
     if (priv->startup) {
         jmp_buf jump_buffer;
 
-        cut_test_context_set_jump(test_context, &jump_buffer);
+        cut_test_context_set_jump_buffer(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
             priv->startup();
         }
@@ -495,7 +495,7 @@ cut_test_case_run_shutdown (CutTestCase *test_case, CutTestContext *test_context
     if (priv->shutdown) {
         jmp_buf jump_buffer;
 
-        cut_test_context_set_jump(test_context, &jump_buffer);
+        cut_test_context_set_jump_buffer(test_context, &jump_buffer);
         if (setjmp(jump_buffer) == 0) {
             priv->shutdown();
         }
