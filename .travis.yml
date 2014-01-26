@@ -4,16 +4,12 @@ notifications:
 install:
   - sudo apt-get update -qq -y
   - sudo apt-get install -qq -y autotools-dev intltool gtk-doc-tools libgtk2.0-dev libgoffice-0.8-dev libgstreamer0.10-dev libsoup2.4-dev
-#  - sudo pip install cpp-coveralls
-  - sudo pip install requests
+  - sudo pip install cpp-coveralls
 before_script:
   - ./autogen.sh
   - ./configure --enable-coverage
 script:
   - test/run-test.sh
 after_success:
-#  - coveralls --exclude test
-  - git clone https://github.com/kou/cpp-coveralls
-  - (cd cpp-coveralls && git checkout support-libtool)
-  - PYTHONPATH=$PWD/cpp-coveralls python -c 'import coveralls; coveralls.run()'
+  - coveralls --exclude test
 
