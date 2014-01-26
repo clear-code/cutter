@@ -17,8 +17,8 @@
  *
  */
 
-#ifndef __CPPCUT_TEST_INVOKE_H__
-#define __CPPCUT_TEST_INVOKE_H__
+#ifndef __CPPCUT_TEST_METHODS_H__
+#define __CPPCUT_TEST_METHODS_H__
 
 #include <cutter/cut-test.h>
 
@@ -37,7 +37,7 @@ namespace cut
     }
 }
 
-#endif /* __CPPCUT_TEST_INVOKE_H__ */
+#endif /* __CPPCUT_TEST_METHODS_H__ */
 
 /*
 vi:ts=4:nowrap:ai:expandtab:sw=4

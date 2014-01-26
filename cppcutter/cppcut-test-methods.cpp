@@ -25,7 +25,7 @@
 #include <exception>
 #include <typeinfo>
 
-#include "cppcut-test-invoke.h"
+#include "cppcut-test-methods.h"
 
 #include <cutter.h>
 

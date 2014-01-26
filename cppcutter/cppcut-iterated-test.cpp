@@ -22,7 +22,7 @@
 #endif
 
 #include "cppcut-iterated-test.h"
-#include "cppcut-test-invoke.h"
+#include "cppcut-test-methods.h"
 
 G_BEGIN_DECLS
 

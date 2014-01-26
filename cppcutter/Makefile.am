@@ -22,7 +22,7 @@ cppcutter_private_headers =			\
 	cppcut-test.h				\
 	cppcut-test-iterator.h			\
 	cppcut-iterated-test.h			\
-	cppcut-test-invoke.h
+	cppcut-test-methods.h
 
 pkginclude_HEADERS =	\
 	cppcutter.h
@@ -37,7 +37,7 @@ libcppcutter_sources =				\
 	cppcut-test.cpp				\
 	cppcut-test-iterator.cpp		\
 	cppcut-iterated-test.cpp		\
-	cppcut-test-invoke.cpp
+	cppcut-test-methods.cpp
 
 libcppcutter_la_SOURCES =		\
 	$(cppcutter_public_headers)	\
