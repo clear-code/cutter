@@ -35,20 +35,20 @@ cut::test::invoke (CutTestClass *cut_test_class,
                    CutTestContext *test_context,
                    CutRunContext *run_context)
 {
-  try {
-    cut_test_class->invoke(test, test_context, run_context);
-  } catch (const std::exception &exception) {
-    const gchar *message;
-    message = cut_take_printf("Unhandled C++ standard exception is thrown: "
-                              "<%s>: %s",
-                              typeid(exception).name(),
-                              exception.what());
-    cut_test_terminate(ERROR, message);
-  } catch (...) {
-    const gchar *message;
-    message = "Unhandled C++ non-standard exception is thrown";
-    cut_test_terminate(ERROR, message);
-  }
+    try {
+        cut_test_class->invoke(test, test_context, run_context);
+    } catch (const std::exception &exception) {
+        const gchar *message;
+        message = cut_take_printf("Unhandled C++ standard exception is thrown: "
+                                  "<%s>: %s",
+                                  typeid(exception).name(),
+                                  exception.what());
+        cut_test_terminate(ERROR, message);
+    } catch (...) {
+        const gchar *message;
+        message = "Unhandled C++ non-standard exception is thrown";
+        cut_test_terminate(ERROR, message);
+    }
 }
 
 /*
