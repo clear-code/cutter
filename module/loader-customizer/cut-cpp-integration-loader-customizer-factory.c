@@ -29,41 +29,41 @@
 #include <cutter/cut-module-factory.h>
 #include <cutter/cut-loader-customizer.h>
 
-#define CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER_FACTORY    \
-    cut_type_exception_loader_customizer_factory
-#define CUT_EXCEPTION_LOADER_CUSTOMIZER_FACTORY(obj)                    \
+#define CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY    \
+    cut_type_cpp_integration_loader_customizer_factory
+#define CUT_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY(obj)              \
     (G_TYPE_CHECK_INSTANCE_CAST((obj),                                  \
-                                CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER_FACTORY, \
-                                CutExceptionLoaderCustomizerFactory))
-#define CUT_EXCEPTION_LOADER_CUSTOMIZER_FACTORY_CLASS(klass)            \
+                                CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY, \
+                                CutCppIntegrationLoaderCustomizerFactory))
+#define CUT_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY_CLASS(klass)      \
     (G_TYPE_CHECK_CLASS_CAST((klass),                                   \
-                             CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER_FACTORY, \
-                             CutExceptionLoaderCustomizerFactoryClass))
-#define CUT_IS_EXCEPTION_LOADER_CUSTOMIZER_FACTORY(obj)                 \
+                             CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY, \
+                             CutCppIntegrationLoaderCustomizerFactoryClass))
+#define CUT_IS_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY(obj)           \
     (G_TYPE_CHECK_INSTANCE_TYPE((obj),                                  \
-                                CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER_FACTORY))
-#define CUT_IS_EXCEPTION_LOADER_CUSTOMIZER_FACTORY_CLASS(klass)         \
+                                CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY))
+#define CUT_IS_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY_CLASS(klass)   \
     (G_TYPE_CHECK_CLASS_TYPE((klass),                                   \
-                             CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER_FACTORY))
-#define CUT_EXCEPTION_LOADER_CUSTOMIZER_FACTORY_GET_CLASS(obj)          \
+                             CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY))
+#define CUT_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY_GET_CLASS(obj)    \
     (G_TYPE_INSTANCE_GET_CLASS((obj),                                   \
-                             CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER_FACTORY, \
-                             CutExceptionLoaderCustomizerFactoryClass))
+                             CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY, \
+                             CutCppIntegrationLoaderCustomizerFactoryClass))
 
-typedef struct _CutExceptionLoaderCustomizerFactory CutExceptionLoaderCustomizerFactory;
-typedef struct _CutExceptionLoaderCustomizerFactoryClass CutExceptionLoaderCustomizerFactoryClass;
+typedef struct _CutCppIntegrationLoaderCustomizerFactory CutCppIntegrationLoaderCustomizerFactory;
+typedef struct _CutCppIntegrationLoaderCustomizerFactoryClass CutCppIntegrationLoaderCustomizerFactoryClass;
 
-struct _CutExceptionLoaderCustomizerFactory
+struct _CutCppIntegrationLoaderCustomizerFactory
 {
     CutModuleFactory     object;
 };
 
-struct _CutExceptionLoaderCustomizerFactoryClass
+struct _CutCppIntegrationLoaderCustomizerFactoryClass
 {
     CutModuleFactoryClass parent_class;
 };
 
-static GType cut_type_exception_loader_customizer_factory = 0;
+static GType cut_type_cpp_integration_loader_customizer_factory = 0;
 static CutModuleFactoryClass *parent_class;
 
 static GObject   *create           (CutModuleFactory    *factory);
@@ -81,7 +81,7 @@ class_init (CutModuleFactoryClass *klass)
 }
 
 static void
-init (CutExceptionLoaderCustomizerFactory *console)
+init (CutCppIntegrationLoaderCustomizerFactory *console)
 {
 }
 
@@ -89,21 +89,21 @@ static void
 register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info = {
-        sizeof(CutExceptionLoaderCustomizerFactoryClass),
+        sizeof(CutCppIntegrationLoaderCustomizerFactoryClass),
         (GBaseInitFunc)NULL,
         (GBaseFinalizeFunc)NULL,
         (GClassInitFunc)class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof(CutExceptionLoaderCustomizerFactory),
+        sizeof(CutCppIntegrationLoaderCustomizerFactory),
         0,
         (GInstanceInitFunc)init,
     };
 
-    cut_type_exception_loader_customizer_factory =
+    cut_type_cpp_integration_loader_customizer_factory =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_MODULE_FACTORY,
-                                    "CutExceptionLoaderCustomizerFactory",
+                                    "CutCppIntegrationLoaderCustomizerFactory",
                                     &info, 0);
 }
 
@@ -113,10 +113,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_exception_loader_customizer_factory) {
+    if (cut_type_cpp_integration_loader_customizer_factory) {
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_exception_loader_customizer_factory));
+                           (gchar *)g_type_name(cut_type_cpp_integration_loader_customizer_factory));
     }
 
     return registered_types;
@@ -130,13 +130,13 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER_FACTORY, first_property, var_args);
+    return g_object_new_valist(CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER_FACTORY, first_property, var_args);
 }
 
 GObject *
 create (CutModuleFactory *factory)
 {
-    return G_OBJECT(cut_loader_customizer_new("exception",
+    return G_OBJECT(cut_loader_customizer_new("cpp-integration",
                                               NULL));
 }
 

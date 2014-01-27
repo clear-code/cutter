@@ -21,12 +21,12 @@ LIBS =							\
 	$(top_builddir)/cppcutter/libcppcutter.la
 
 loader_customizer_module_LTLIBRARIES =		\
-	exception.la
+	cpp-integration.la
 loader_customizer_factory_module_LTLIBRARIES =	\
-	exception-factory.la
+	cpp-integration-factory.la
 
-exception_la_SOURCES =				\
-	cut-exception-loader-customizer.c
+cpp_integration_la_SOURCES =				\
+	cut-cpp-integration-loader-customizer.c
 
-exception_factory_la_SOURCES =				\
-	cut-exception-loader-customizer-factory.c
+cpp_integration_factory_la_SOURCES =			\
+	cut-cpp-integration-loader-customizer-factory.c

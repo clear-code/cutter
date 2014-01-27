@@ -30,48 +30,48 @@
 #include <cppcutter/cppcut-test.h>
 #include <cppcutter/cppcut-test-iterator.h>
 
-#define CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER    \
-    cut_type_exception_loader_customizer
-#define CUT_EXCEPTION_LOADER_CUSTOMIZER(obj)                            \
+#define CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER      \
+    cut_type_cpp_integration_loader_customizer
+#define CUT_CPP_INTEGRATION_LOADER_CUSTOMIZER(obj)                      \
     (G_TYPE_CHECK_INSTANCE_CAST((obj),                                  \
-                                CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER,   \
-                                CutExceptionLoaderCustomizer))
-#define CUT_EXCEPTION_LOADER_CUSTOMIZER_CLASS(klass)                    \
+                                CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER, \
+                                CutCppIntegrationLoaderCustomizer))
+#define CUT_CPP_INTEGRATION_LOADER_CUSTOMIZER_CLASS(klass)              \
     (G_TYPE_CHECK_CLASS_CAST((klass),                                   \
-                             CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER,      \
-                             CutExceptionLoaderCustomizerClass))
-#define CUT_IS_EXCEPTION_LOADER_CUSTOMIZER(obj)                         \
+                             CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER, \
+                             CutCppIntegrationLoaderCustomizerClass))
+#define CUT_IS_CPP_INTEGRATION_LOADER_CUSTOMIZER(obj)                   \
     (G_TYPE_CHECK_INSTANCE_TYPE((obj),                                  \
-                                CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER))
-#define CUT_IS_EXCEPTION_LOADER_CUSTOMIZER_CLASS(klass)                 \
+                                CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER))
+#define CUT_IS_CPP_INTEGRATION_LOADER_CUSTOMIZER_CLASS(klass)           \
     (G_TYPE_CHECK_CLASS_TYPE((klass),                                   \
-                             CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER))
-#define CUT_EXCEPTION_LOADER_CUSTOMIZER_GET_CLASS(obj)                  \
+                             CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER))
+#define CUT_CPP_INTEGRATION_LOADER_CUSTOMIZER_GET_CLASS(obj)            \
     (G_TYPE_INSTANCE_GET_CLASS((obj),                                   \
-                               CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER,    \
-                               CutExceptionLoaderCustomizerClass))
+                               CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER, \
+                               CutCppIntegrationLoaderCustomizerClass))
 
-typedef struct _CutExceptionLoaderCustomizer CutExceptionLoaderCustomizer;
-typedef struct _CutExceptionLoaderCustomizerClass CutExceptionLoaderCustomizerClass;
+typedef struct _CutCppIntegrationLoaderCustomizer CutCppIntegrationLoaderCustomizer;
+typedef struct _CutCppIntegrationLoaderCustomizerClass CutCppIntegrationLoaderCustomizerClass;
 
-struct _CutExceptionLoaderCustomizer
+struct _CutCppIntegrationLoaderCustomizer
 {
     CutLoaderCustomizer parent;
 };
 
-struct _CutExceptionLoaderCustomizerClass
+struct _CutCppIntegrationLoaderCustomizerClass
 {
     CutLoaderCustomizerClass parent_class;
 };
 
-static GType cut_type_exception_loader_customizer = 0;
+static GType cut_type_cpp_integration_loader_customizer = 0;
 static GObjectClass *parent_class;
 
 static void     customize   (CutLoaderCustomizer *customizer,
                              CutLoader           *loader);
 
 static void
-class_init (CutExceptionLoaderCustomizerClass *klass)
+class_init (CutCppIntegrationLoaderCustomizerClass *klass)
 {
     CutLoaderCustomizerClass *loader_customizer_class;
 
@@ -82,7 +82,7 @@ class_init (CutExceptionLoaderCustomizerClass *klass)
 }
 
 static void
-init (CutExceptionLoaderCustomizer *customizer)
+init (CutCppIntegrationLoaderCustomizer *customizer)
 {
 }
 
@@ -90,21 +90,21 @@ static void
 register_type (GTypeModule *type_module)
 {
     static const GTypeInfo info = {
-        sizeof(CutExceptionLoaderCustomizerClass),
+        sizeof(CutCppIntegrationLoaderCustomizerClass),
         (GBaseInitFunc)NULL,
         (GBaseFinalizeFunc)NULL,
         (GClassInitFunc)class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof(CutExceptionLoaderCustomizer),
+        sizeof(CutCppIntegrationLoaderCustomizer),
         0,
         (GInstanceInitFunc)init,
     };
 
-    cut_type_exception_loader_customizer =
+    cut_type_cpp_integration_loader_customizer =
         g_type_module_register_type(type_module,
                                     CUT_TYPE_LOADER_CUSTOMIZER,
-                                    "CutExceptionLoaderCustomizer",
+                                    "CutCppIntegrationLoaderCustomizer",
                                     &info, 0);
 }
 
@@ -114,10 +114,10 @@ CUT_MODULE_IMPL_INIT (GTypeModule *type_module)
     GList *registered_types = NULL;
 
     register_type(type_module);
-    if (cut_type_exception_loader_customizer) {
+    if (cut_type_cpp_integration_loader_customizer) {
         registered_types =
             g_list_prepend(registered_types,
-                           (gchar *)g_type_name(cut_type_exception_loader_customizer));
+                           (gchar *)g_type_name(cut_type_cpp_integration_loader_customizer));
     }
 
     return registered_types;
@@ -131,7 +131,7 @@ CUT_MODULE_IMPL_EXIT (void)
 G_MODULE_EXPORT GObject *
 CUT_MODULE_IMPL_INSTANTIATE (const gchar *first_property, va_list var_args)
 {
-    return g_object_new_valist(CUT_TYPE_EXCEPTION_LOADER_CUSTOMIZER,
+    return g_object_new_valist(CUT_TYPE_CPP_INTEGRATION_LOADER_CUSTOMIZER,
                                first_property, var_args);
 }
 
