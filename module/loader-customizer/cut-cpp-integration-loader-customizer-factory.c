@@ -75,7 +75,7 @@ class_init (CutModuleFactoryClass *klass)
 
     parent_class = g_type_class_peek_parent(klass);
 
-    factory_class  = CUT_MODULE_FACTORY_CLASS(klass);
+    factory_class = CUT_MODULE_FACTORY_CLASS(klass);
 
     factory_class->create = create;
 }
