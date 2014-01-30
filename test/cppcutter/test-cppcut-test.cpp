@@ -164,7 +164,6 @@ namespace cppcut_test
     {
         struct {
             bool operator ()(void) {
-                stub_not_std_exception();
                 throw "exception on stacked jump buffer";
             }
         } stub_throw;
