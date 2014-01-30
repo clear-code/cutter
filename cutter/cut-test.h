@@ -118,6 +118,7 @@ void         cut_test_long_jump           (CutTest        *test,
                                            gint            value);
 gboolean     cut_test_is_own_jump_buffer  (CutTest        *test,
                                            jmp_buf        *jump_buffer);
+jmp_buf     *cut_test_get_jump_buffer     (CutTest        *test);
 
 const gchar *cut_test_get_name            (CutTest     *test);
 void         cut_test_set_name            (CutTest     *test,

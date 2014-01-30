@@ -27,6 +27,14 @@
 
 #include "../lib/cuttest-assertions.h"
 
+#define MARK_FAIL(assertion) do                 \
+{                                               \
+    fail_line = __LINE__;                       \
+    assertion;                                  \
+} while (0)
+
+#define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
+
 namespace cppcut_test
 {
     CppCutTest *test;
@@ -34,6 +42,7 @@ namespace cppcut_test
     CutTestContext *test_context;
     CutTestResult *test_result;
     gint n_destructor_calls;
+    gint fail_line;
 
     static gboolean
     run (void)
@@ -61,6 +70,7 @@ namespace cppcut_test
         test_result = NULL;
 
         n_destructor_calls = 0;
+        fail_line = 0;
     }
 
     void
@@ -146,6 +156,39 @@ namespace cppcut_test
                                NULL, NULL,
                                NULL,
                                "void cppcut_test::stub_not_standard_exception()",
+                               NULL);
+    }
+
+    static void
+    stub_exception_on_stacked_jump_buffer (void)
+    {
+        struct {
+            bool operator ()(void) {
+                stub_not_std_exception();
+                throw "exception on stacked jump buffer";
+            }
+        } stub_throw;
+        MARK_FAIL(cppcut_assert_equal(true, stub_throw()));
+    }
+
+    void
+    test_exception_on_stacked_jump_buffer (void)
+    {
+        test = cppcut_test_new("exception on stacked jump buffer test",
+                               stub_exception_on_stacked_jump_buffer);
+        cut_assert_not_null(test);
+
+        cut_assert_false(run());
+        cut_assert_test_result_summary(run_context, 1, 0, 0, 0, 1, 0, 0, 0);
+        const gchar *system_message =
+            "Unhandled C++ non-standard exception is thrown";
+        cut_assert_test_result(run_context, 0, CUT_TEST_RESULT_ERROR,
+                               "exception on stacked jump buffer test",
+                               NULL,
+                               system_message,
+                               NULL, NULL,
+                               FAIL_LOCATION,
+                               "void cppcut_test::stub_exception_on_stacked_jump_buffer()",
                                NULL);
     }
 
