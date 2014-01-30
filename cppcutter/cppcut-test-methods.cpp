@@ -47,12 +47,12 @@ struct CppCutTestTerminated {
 static const gchar *invoking_data_key = "cppcut-test-invoking";
 
 static void
-force_unwind_jump_buffers (CutTest *test)
+force_unwind_jump_buffers (CutTest *test, jmp_buf *base_jump_buffer)
 {
     CutTestContext *test_context = cut_get_current_test_context();
     while (cut_test_context_in_user_message_jump(test_context))
         cut_test_context_finish_user_message_jump(test_context);
-    cut_test_context_set_jump_buffer(test_context, cut_test_get_jump_buffer(test));
+    cut_test_context_set_jump_buffer(test_context, base_jump_buffer);
 }
 
 void
@@ -84,7 +84,9 @@ cut::test::invoke (CutTestClass *cut_test_class,
     bool is_terminated = false;
     const gchar *terminate_message = NULL;
     gboolean invoking = TRUE;
+    jmp_buf *base_jump_buffer;
 
+    base_jump_buffer = cut_test_context_get_jump_buffer(test_context);
     g_object_set_data(G_OBJECT(test), invoking_data_key, &invoking);
     try {
         cut_test_class->invoke(test, test_context, run_context);
@@ -109,7 +111,7 @@ cut::test::invoke (CutTestClass *cut_test_class,
     }
 
     if (terminate_message) {
-        force_unwind_jump_buffers(test);
+        force_unwind_jump_buffers(test, base_jump_buffer);
         cut_test_terminate(ERROR, terminate_message);
     }
 }
