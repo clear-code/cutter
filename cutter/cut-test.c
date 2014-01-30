@@ -551,6 +551,13 @@ cut_test_is_own_jump_buffer (CutTest *test, jmp_buf *jump_buffer)
     return priv->jump_buffer == jump_buffer;
 }
 
+jmp_buf *
+cut_test_get_jump_buffer (CutTest *test)
+{
+    CutTestPrivate *priv = CUT_TEST_GET_PRIVATE(test);
+    return priv->jump_buffer;
+}
+
 const gchar *
 cut_test_get_name (CutTest *test)
 {
