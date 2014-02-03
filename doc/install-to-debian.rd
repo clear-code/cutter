@@ -11,7 +11,7 @@ GNU/Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Debian GNU/Linux squeeze/wheezy/sid
+There are packages for Debian GNU/Linux wheezy/jessie/sid
 i386/amd64. If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
