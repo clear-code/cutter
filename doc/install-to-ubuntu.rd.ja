@@ -11,32 +11,11 @@ UbuntuへのCutterのインストール方法を説明します。
 CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
-現在は、Ubuntu Lucid Lynx/Natty Narwhal/Oneiric Ocelot/Precise Pangolin i386/amd64
+現在は、Ubuntu Precise Pangolin/Quantal Quetzal/Saucy Salamander i386/amd64
 用のパッケージのみ提供しています。他のバージョンが必要な場合
 は((<メーリングリスト
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
 でリクエストしてください。
-
-Lucidの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
-
-Nattyの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
-
-Oneiricの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
 
 Preciseの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
@@ -51,6 +30,13 @@ Quantalの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.list:
   deb http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
   deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
+
+Saucyの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ saucy main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ saucy main
 
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。
