@@ -8,11 +8,7 @@ This document explains how to install Cutter to Fedora.
 
 == Install
 
-We can use yum because Cutter provides a Yum repository.
-
-First, we need to register Cutter Yum repository:
-
-  % sudo rpm -Uvh http://downloads.sourceforge.net/project/cutter/fedora/cutter-release-1.1.0-0.noarch.rpm
+We can install Cutter from Fedora's official yum repository.
 
 Now, we can install Cutter by yum:
 

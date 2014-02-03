@@ -8,14 +8,9 @@ FedoraへのCutterのインストール方法を説明します。
 
 == インストール
 
-CutterのYumリポジトリが提供されているので、yumでインストール
-できます。
+CutterはFedoraプロジェクトの提供するリポジトリから、yumでインストールできます。
 
-まず、Yumリポジトリを登録します。
-
-  % sudo rpm -Uvh http://cutter.sourceforge.net/fedora/cutter-release-1.1.0-0.noarch.rpm
-
-Yumリポジトリを登録したらyumでインストールできます。
+次のようにしてyumでインストールできます。
 
   % sudo yum install -y cutter-devel
 
