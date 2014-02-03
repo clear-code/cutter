@@ -16,19 +16,19 @@ i386/amd64. If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
-Here are apt lines for for squeeze. We put them into
-/etc/apt/sources.list.d/cutter.list.
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/debian/ squeeze main
-  deb-src http://downloads.sourceforge.net/project/cutter/debian/ squeeze main
-
 Here are apt lines for for wheezy. We put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
   deb http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
   deb-src http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
+
+Here are apt lines for for jessie. We put them into
+/etc/apt/sources.list.d/cutter.list.
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://downloads.sourceforge.net/project/cutter/debian/ jessie main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ jessie main
 
 Here are apt lines for for sid. We put them into
 /etc/apt/sources.list.d/cutter.list.
