@@ -14,6 +14,9 @@ SOURCE_DIR_OPTIONS=					\
 	`test "$(top_builddir)" != "$(top_srcdir)" &&	\
 	   echo --source-dir="$(top_builddir)/cutter"`
 
+GTKDOC_CFLAGS =						\
+	$(GLIB_CFLAGS)
+
 # Extra options to supply to gtkdoc-scan
 SCAN_OPTIONS =						\
 	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"	\
