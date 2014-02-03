@@ -1,6 +1,6 @@
 SERVER_PATH = $(SF_FRS)
 REPOSITORIES_PATH = repositories
-DISTRIBUTIONS = fedora centos
+DISTRIBUTIONS = centos
 ARCHITECTURES = i386 x86_64
 CHROOT_BASE = /var/lib/chroot
 BASE_URL_PREFIX = http://downloads.sourceforge.net/project/$(PACKAGE)
