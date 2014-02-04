@@ -2,6 +2,65 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-2-3] 1.2.3: 2014-02-09
+
+As long time has passed since Cutter 1.2.2 release,
+there are some improvements and fixed bugs.
+
+After Cutter 1.2.2 release, you can install Cutter from
+Fedora's official yum repository. No need to register Cutter yum repository on Fedora anymore.
+
+=== Cutter
+
+==== Improvements
+
+  * [doc] Removed a needless period from installation link.
+    [GitHub #6] [Patch by Masafumi Yokoyama]
+  * Supported lcov 1.10. [cutter-users-ja:92] [Reported by Siganai SE]
+  * [doc] Updated download URL on SF.net. [cutter-users-ja:91] [Reported by Siganai SE]
+  * [doc] Updated XML report format. [cutter-users-ja:91] [Reported by Siganai SE]
+  * Added more trace logs for loader. It helps you to investigate the case when no tests are loaded.
+  * [doc] Updated Cygwin's setup.exe URL.
+  * Added --log-level option. The value of default log level is "critical|error|warning|message".
+
+==== Fixes
+
+  * [loader] Fixed a bug that ELF loader can't collect symbol because of wrong comparison.
+  * Fixed memory leaks on loading all modules.
+  * Fixed a warning from GCC 4.8.1 on Ubuntu 13.10
+    [GitHub #9] [Reported by Kazuhiro Yamato]
+
+=== CppCutter
+
+==== Improvements
+
+  * Supported cppcut_assert_equal(const type_info &, const type_info &)
+    [GitHub #4] [Patch by Kazuhiro Yamato]
+  * Supported to catch unhandled C++ exception in test case.
+    This change avoids to crash when unexpected exception is thrown.
+    [GitHub #8] [Suggested by Kazuhiro Yamato] [Patch by Kazuhiro Yamato]
+  * Supported to call destructors of objects on a stack even when an assertion is failed.
+    [GitHub #10] [Patch by Kazuhiro Yamato]
+
+==== Fixes
+
+  * [Clang] Fixed a compile error which is caused by missing std::type_info forward declaration.
+  * Fixed an invalid memory access when an exception is thrown in cutter's
+    assertion function.
+    [GitHub #11] [Patch by Kazuhiro Yamato]
+
+=== GCutter
+
+==== Fixes
+
+  * [doc] Fixed a signal name typo about gcut-egg example.
+
+=== Thanks
+
+  * Kazuhiro Yamato
+  * Masafumi Yokoyama
+  * Siganai SE
+
 == [release-1-2-2] 1.2.2: 2012-10-29
 
 We began to support Ubuntu 12.10 (Quantal Quetzal).
