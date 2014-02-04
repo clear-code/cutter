@@ -1028,8 +1028,6 @@ AC_CONFIG_FILES([Makefile
 		 packages/rpm/Makefile
 		 packages/rpm/centos/Makefile
 		 packages/rpm/centos/cutter.spec
-		 packages/rpm/fedora/Makefile
-		 packages/rpm/fedora/cutter.spec
 		 packages/apt/Makefile
 		 packages/yum/Makefile])
 
