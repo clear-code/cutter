@@ -8,7 +8,6 @@ Build-Depends: debhelper (>= 7.0.50),
                gtk-doc-tools,
                libgtk2.0-dev,
                libgoffice-0.8-dev,
-               libgstreamer0.10-dev,
                libsoup2.4-dev
 Standards-Version: 3.9.1
 Section: libs
@@ -26,7 +25,6 @@ Depends: ${misc:Depends},
          libsoupcutter-dev (= ${binary:Version}),
          cutter-report (= ${binary:Version}),
          cutter-runner-gtk (= ${binary:Version}),
-         gstreamer0.10-plugins-cutter (= ${binary:Version}),
          cutter-doc (= ${binary:Version})
 Description: Cutter testing framework suite (meta-package)
  Cutter is a xUnit family Unit Testing Framework for C and C++.
@@ -151,17 +149,6 @@ Description: Test result reporting module for Cutter
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
  This provides a module that reports test result output by Cutter.
-
-Package: gstreamer0.10-plugins-cutter
-Section: libs
-Architecture: any
-Depends: ${misc:Depends},
-         ${shlibs:Depends},
-         libcutter0 (= ${binary:Version})
-Description: Cutter GStreamer integration
- Cutter is a xUnit family Unit Testing Framework for C and C++.
- .
- This provides GStreamer elements that stream test result of Cutter.
 
 Package: libsoupcutter0
 Section: libs
