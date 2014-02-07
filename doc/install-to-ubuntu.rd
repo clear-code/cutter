@@ -11,32 +11,10 @@ Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Ubuntu Lucid Lynx/Natty Narwhal/Oneiric Ocelot/
-Precise Pangloin i386/amd64.
+There are packages for Ubuntu Precise Pangolin/Quantal Quetzal/Saucy Salamander i386/amd64.
 If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
-
-Here are apt lines for for Lucid. We put them into
-/etc/apt/sources.list.d/cutter.list.
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ lucid main
-
-Here are apt lines for for Natty. We put them into
-/etc/apt/sources.list.d/cutter.list.
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ natty main
-
-Here are apt lines for for Oneiric. We put them into
-/etc/apt/sources.list.d/cutter.list.
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ oneiric main
 
 Here are apt lines for for Precise. We put them into
 /etc/apt/sources.list.d/cutter.list.
@@ -51,6 +29,13 @@ Here are apt lines for for Quantal. We put them into
 /etc/apt/sources.list.d/cutter.list:
   deb http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
   deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
+
+Here are apt lines for for Saucy. We put them into
+/etc/apt/sources.list.d/cutter.list.
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ saucy main
+  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ saucy main
 
 Cutter packages are signed by key of cutter-keyring.
 Register the key by installing cutter-keyring package.
