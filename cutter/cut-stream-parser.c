@@ -812,8 +812,6 @@ cut_stream_parser_parse (CutStreamParser *stream_parser,
 {
     CutStreamParserPrivate *priv = CUT_STREAM_PARSER_GET_PRIVATE(stream_parser);
 
-    if (text_len < 0)
-        text_len = strlen(text);
     return g_markup_parse_context_parse(priv->context, text, text_len, error);
 }
 
