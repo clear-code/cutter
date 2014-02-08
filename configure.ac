@@ -146,6 +146,7 @@ CHECK_BUILD_FLAG([-Wpointer-arith])
 CHECK_BUILD_FLAG([-Wcast-align])
 CHECK_CFLAG([-Wmissing-declarations])
 CHECK_CFLAG([-Wmissing-prototypes])
+CHECK_CFLAG([-fexceptions])
 
 # Checks for headers
 AC_HEADER_SYS_WAIT
