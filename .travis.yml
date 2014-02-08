@@ -11,12 +11,12 @@ env:
 install:
   - sudo apt-get update -qq -y
   - sudo apt-get install -qq -y autotools-dev intltool gtk-doc-tools libgtk2.0-dev libgoffice-0.8-dev libgstreamer0.10-dev libsoup2.4-dev
-  - test "$ENABLE_COVERAGE" = "yes" && sudo pip install cpp-coveralls
+  - if test "$ENABLE_COVERAGE" = "yes"; then; sudo pip install cpp-coveralls; fi
 before_script:
   - ./autogen.sh
   - ./configure ${CONFIGURE_OPTIONS}
 script:
   - test/run-test.sh
 after_success:
-  - test "$ENABLE_COVERAGE" = "yes" && coveralls --exclude test
+  - if test "$ENABLE_COVERAGE" = "yes"; then; coveralls --exclude test; fi
 
