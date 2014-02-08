@@ -104,32 +104,48 @@ if test "x$cutter_debug" != "xno"; then
   fi
 fi
 
-if test "x$GCC" = "xyes"; then
-  case " $CFLAGS " in
-  *[\ \	]-Wall[\ \	]*) ;;
-  *) CFLAGS="$CFLAGS -Wall" ;;
-  esac
+AC_DEFUN([CHECK_CFLAG], [
+  AC_MSG_CHECKING([if gcc supports $1])
+  old_CFLAGS=$CFLAGS
+  flag=`echo '$1' | sed -e 's,^-Wno-,-W,'`
+  CFLAGS="$CFLAGS $flag -Werror"
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
+    [check_cflag=yes],
+    [check_cflag=no])
+  CFLAGS="$old_CFLAGS"
+  if test "x$check_cflag" = "xyes"; then
+    CFLAGS="$CFLAGS $1"
+  fi
+  AC_MSG_RESULT([$check_cflag])
+])
 
-  case " $CFLAGS " in
-  *[\ \	]-Wmissing-declarations[\ \	]*) ;;
-  *) CFLAGS="$CFLAGS -Wmissing-declarations" ;;
-  esac
+AC_DEFUN([CHECK_CXXFLAG], [
+  AC_MSG_CHECKING([if g++ supports $1])
+  old_CXXFLAGS=$CXXFLAGS
+  flag=`echo '$1' | sed -e 's,^-Wno-,-W,'`
+  CXXFLAGS="$CXXFLAGS $flag -Werror"
+  AC_LANG_PUSH([C++])
+  AC_COMPILE_IFELSE([AC_LANG_PROGRAM([])],
+    [check_cxxflag=yes],
+    [check_cxxflag=no])
+  AC_LANG_POP([C++])
+  CXXFLAGS="$old_CXXFLAGS"
+  if test "x$check_cxxflag" = "xyes"; then
+    CXXFLAGS="$CXXFLAGS $1"
+  fi
+  AC_MSG_RESULT([$check_cxxflag])
+])
 
-  case " $CFLAGS " in
-  *[\ \	]-Wmissing-prototypes[\ \	]*) ;;
-  *) CFLAGS="$CFLAGS -Wmissing-prototypes" ;;
-  esac
+AC_DEFUN([CHECK_BUILD_FLAG], [
+  CHECK_CFLAG([$1])
+  CHECK_CXXFLAG([$1])
+])
 
-  case " $CFLAGS " in
-  *[\ \	]-Wpointer-arith[\ \	]*) ;;
-  *) CFLAGS="$CFLAGS -Wpointer-arith" ;;
-  esac
-
-  case " $CFLAGS " in
-  *[\ \	]-Wcast-align[\ \	]*) ;;
-  *) CFLAGS="$CFLAGS -Wcast-align" ;;
-  esac
-fi
+CHECK_BUILD_FLAG([-Wall])
+CHECK_BUILD_FLAG([-Wpointer-arith])
+CHECK_BUILD_FLAG([-Wcast-align])
+CHECK_CFLAG([-Wmissing-declarations])
+CHECK_CFLAG([-Wmissing-prototypes])
 
 NO_STRICT_ALIASING_CFLAGS=
 if test "x$GCC" = "xyes"; then
