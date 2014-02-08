@@ -27,6 +27,8 @@ G_BEGIN_DECLS
 #if !GLIB_CHECK_VERSION(2, 32, 0)
 #  define GPrivate                  GStaticPrivate
 #  define G_PRIVATE_INIT(notify)    G_STATIC_PRIVATE_INIT
+#  undef g_private_get
+#  undef g_private_set
 #  define g_private_get(key)        g_static_private_get(key)
 #  define g_private_set(key, value) g_static_private_set(key, value, NULL)
 #else
