@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -u
+
 run()
 {
     "$@"
@@ -31,10 +33,5 @@ case `uname -s` in
 	;;
 esac
 
-run ${ACLOCAL:-aclocal} -I acmacros -I m4macros $ACLOCAL_OPTIONS
-run ${LIBTOOLIZE:-libtoolize} --copy --force
 run ${INTLTOOLIZE:-intltoolize} --force --copy
-#run ${GTKDOCIZE:-gtkdocize} --copy
-run ${AUTOHEADER:-autoheader}
-run ${AUTOMAKE:-automake} --add-missing --copy
-run ${AUTOCONF:-autoconf}
+run autoreconf --install
