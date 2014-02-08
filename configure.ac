@@ -147,12 +147,6 @@ CHECK_BUILD_FLAG([-Wcast-align])
 CHECK_CFLAG([-Wmissing-declarations])
 CHECK_CFLAG([-Wmissing-prototypes])
 
-NO_STRICT_ALIASING_CFLAGS=
-if test "x$GCC" = "xyes"; then
-  NO_STRICT_ALIASING_CFLAGS=-fno-strict-aliasing
-fi
-AC_SUBST(NO_STRICT_ALIASING_CFLAGS)
-
 # Checks for headers
 AC_HEADER_SYS_WAIT
 
