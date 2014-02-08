@@ -1,6 +1,9 @@
 notifications:
   recipients:
     - travis@clear-code.com
+compiler:
+  - gcc
+  - clang
 install:
   - sudo apt-get update -qq -y
   - sudo apt-get install -qq -y autotools-dev intltool gtk-doc-tools libgtk2.0-dev libgoffice-0.8-dev libgstreamer0.10-dev libsoup2.4-dev
