@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -808,7 +808,7 @@ cut_test_result_parser_new (void)
 
 gboolean
 cut_stream_parser_parse (CutStreamParser *stream_parser,
-                         const gchar *text, gsize text_len, GError **error)
+                         const gchar *text, gssize text_len, GError **error)
 {
     CutStreamParserPrivate *priv = CUT_STREAM_PARSER_GET_PRIVATE(stream_parser);
 

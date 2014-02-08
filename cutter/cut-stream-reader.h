@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -73,7 +73,7 @@ gboolean       cut_stream_reader_read_from_io_channel_to_end
                                             GIOChannel      *channel);
 gboolean       cut_stream_reader_read      (CutStreamReader *stream_reader,
                                             const gchar     *stream,
-                                            gsize            length);
+                                            gssize           length);
 gboolean       cut_stream_reader_end_read  (CutStreamReader *stream_reader);
 
 G_END_DECLS

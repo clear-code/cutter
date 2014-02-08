@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2014  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -57,7 +57,7 @@ CutStreamParser *cut_test_result_parser_new  (void);
 
 gboolean         cut_stream_parser_parse     (CutStreamParser *parser,
                                               const gchar     *text,
-                                              gsize            text_len,
+                                              gssize           text_len,
                                               GError         **error);
 gboolean         cut_stream_parser_end_parse (CutStreamParser *stream_parser,
                                               GError         **error);
