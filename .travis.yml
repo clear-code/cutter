@@ -5,15 +5,18 @@ language: cpp
 compiler:
   - gcc
   - clang
+env:
+  - ENABLE_COVERAGE=no
+  - ENABLE_COVERAGE=yes CONFIGURE_OPTIONS=--enable-coverage
 install:
   - sudo apt-get update -qq -y
   - sudo apt-get install -qq -y autotools-dev intltool gtk-doc-tools libgtk2.0-dev libgoffice-0.8-dev libgstreamer0.10-dev libsoup2.4-dev
-  - sudo pip install cpp-coveralls
+  - [ "$ENABLE_COVERAGE" = "yes" ] && sudo pip install cpp-coveralls
 before_script:
   - ./autogen.sh
-  - ./configure --enable-coverage
+  - ./configure ${CONFIGURE_OPTIONS}
 script:
   - test/run-test.sh
 after_success:
-  - coveralls --exclude test
+  - [ "$ENABLE_COVERAGE" = "yes" ] && coveralls --exclude test
 
