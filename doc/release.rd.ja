@@ -394,6 +394,14 @@ NEWS,NEWS.jaにまとめておいた変更点を元にリリースアナウン�
   % make release-debian
 
 
+SF.netにtar.gzをアップロードしたあとに、最新版へのリンクを更新するには、
+次のようにする。例: 1.2.3の場合
+
+https://sourceforge.net/projects/cutter/files/cutter/1.2.3/にアクセス
+し、(i)マークのView detailsリンクをクリックしファイルプロパティを表示する。
+Default download forという項目があるので、zipはwindows、tar.gzはその他
+というようにチェックを入れると最新版へのリンクが更新される。
+
 == リリースアナウンス
 
 Cutterにはユーザー向けに提供されているメーリングリストが2つあります。
