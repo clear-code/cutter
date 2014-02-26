@@ -398,14 +398,12 @@ cut_quit (void)
 
     if (listener_factories) {
         g_list_foreach(listener_factories, (GFunc)g_object_unref, NULL);
-        g_list_free(listener_factories);
         listener_factories = NULL;
     }
 
     if (loader_customizer_factories) {
         g_list_foreach(loader_customizer_factories,
                        (GFunc)g_object_unref, NULL);
-        g_list_free(loader_customizer_factories);
         loader_customizer_factories = NULL;
     }
 
