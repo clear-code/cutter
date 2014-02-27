@@ -171,7 +171,9 @@ cut_contractor_build_listener_factories (CutContractor *contractor)
 
     for (node = priv->listener_builders; node; node = g_list_next(node)) {
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
-        factories = g_list_concat(cut_factory_builder_build(builder), factories);
+        GList *built_factories;
+        built_factories = cut_factory_builder_build(builder);
+        factories = g_list_concat(g_list_copy(built_factories), factories);
     }
     return factories;
 }
@@ -184,7 +186,9 @@ cut_contractor_build_all_listener_factories (CutContractor *contractor)
 
     for (node = priv->listener_builders; node; node = g_list_next(node)) {
         CutFactoryBuilder *builder = CUT_FACTORY_BUILDER(node->data);
-        factories = g_list_concat(cut_factory_builder_build_all(builder), factories);
+        GList *built_factories;
+        built_factories = cut_factory_builder_build_all(builder);
+        factories = g_list_concat(g_list_copy(built_factories), factories);
     }
     return factories;
 }
@@ -196,7 +200,7 @@ cut_contractor_build_all_loader_customizer_factories (CutContractor *contractor)
     CutFactoryBuilder *builder;
 
     builder = CUT_FACTORY_BUILDER(priv->loader_customizer_factory_builder);
-    return cut_factory_builder_build_all(builder);
+    return g_list_copy(cut_factory_builder_build_all(builder));
 }
 
 void
