@@ -26,6 +26,8 @@ Depends: ${misc:Depends},
          cutter-report (= ${binary:Version}),
          cutter-runner-gtk (= ${binary:Version}),
          cutter-doc (= ${binary:Version})
+Replaces: gstreamer0.10-plugins-cutter (<< 1.2.3-1)
+Breaks: gstreamer0.10-plugins-cutter (<< 1.2.3-1)
 Description: Cutter testing framework suite (meta-package)
  Cutter is a xUnit family Unit Testing Framework for C and C++.
  .
