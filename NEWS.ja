@@ -8,6 +8,14 @@
 
 === Cutter
 
+==== 改良
+
+  * Ubuntu 14.04 (Trusty Tahr)をサポートしました。
+
+==== 変更
+
+  * Ubuntu 12.10 (Quantal Quetzal)のサポートをやめました。
+
 ==== 修正
 
   * C++で書かれた例外処理とCのコードをリンクしても問題ないようにするために、-fexceptionsを指定するようにしました。 [OBATA Akioさんが報告]

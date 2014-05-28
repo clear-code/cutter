@@ -8,6 +8,14 @@ In this release, there are some bugfixes since Cutter 1.2.3 released.
 
 === Cutter
 
+==== Improvements
+
+  * Supported Ubuntu 14.04 (Trusty Tahr).
+
+==== Changes
+
+  * Dropped Ubuntu 12.10 (Quantal Quetzal) support.
+
 ==== Fixes
 
   * Added -fexceptions to use C code with C++ exceptions. [Reported by OBATA Akio]
