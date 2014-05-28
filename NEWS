@@ -10,7 +10,7 @@ In this release, there are some bugfixes since Cutter 1.2.3 released.
 
 ==== Fixes
 
-  * Added -fexections to use C code with C++ exceptions. [Reported by OBATA Akio]
+  * Added -fexceptions to use C code with C++ exceptions. [Reported by OBATA Akio]
   * Fixed a problem that bash isn't found when executing make check on FreeBSD.
   * Fixed a crash bug because of double free allocated memory. [GitHub #12] [Reported by Kazuhiro Yamato]
 
