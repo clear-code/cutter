@@ -2,6 +2,23 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-2-4] 1.2.4: 2014-05-29
+
+In this release, there are some bugfixes since Cutter 1.2.3 released.
+
+=== Cutter
+
+==== Fixes
+
+  * Added -fexections to use C code with C++ exceptions. [Reported by OBATA Akio]
+  * Fixed a problem that bash isn't found when executing make check on FreeBSD.
+  * Fixed a crash bug because of double free allocated memory. [GitHub #12] [Reported by Kazuhiro Yamato]
+
+=== Thanks
+
+  * OBATA Akio
+  * Kazuhiro Yamato
+
 == [release-1-2-3] 1.2.3: 2014-02-09
 
 As long time has passed since Cutter 1.2.2 release,
