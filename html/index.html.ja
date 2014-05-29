@@ -28,7 +28,7 @@
 	<li id="menu-install"><a href="reference/ja/install.html">インストール</a></li>
 	<li id="menu-tutorial"><a href="reference/ja/tutorial.html">チュートリアル</a></li>
 	<li id="menu-reference"><a href="reference/ja/">リファレンス</a></li>
-	<li id="menu-download"><a href="http://downloads.sourceforge.net/cutter/cutter-1.2.4.tar.gz">ダウンロード</a></li>
+	<li id="menu-download"><a href="http://sourceforge.net/projects/cutter/files/cutter/1.2.4/cutter-1.2.4.tar.gz">ダウンロード</a></li>
 	<!--li id="menu-blog"><a href="blog/ja/">ブログ</a></li-->
       </ul>
     </div>
@@ -40,7 +40,7 @@
 	  2014-05-29にリリースされた1.2.4が最新です。
         </p>
 	<p>
-          [<a href="http://downloads.sourceforge.net/cutter/cutter-1.2.4.tar.gz">ダウンロード</a>]
+          [<a href="http://sourceforge.net/projects/cutter/files/cutter/1.2.4/cutter-1.2.4.tar.gz">ダウンロード</a>]
           [<a href="reference/ja/news.html#news.release-1-2-4">変更点</a>]
 	</p>
 
