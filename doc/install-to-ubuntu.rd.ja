@@ -11,7 +11,7 @@ UbuntuへのCutterのインストール方法を説明します。
 CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 
-現在は、Ubuntu Precise Pangolin/Quantal Quetzal/Saucy Salamander i386/amd64
+現在は、Ubuntu Precise Pangolin/Saucy Salamander/Trusty Tahr i386/amd64
 用のパッケージのみ提供しています。他のバージョンが必要な場合
 は((<メーリングリスト
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
@@ -21,22 +21,22 @@ Preciseの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ precise main
-
-Quantalの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ quantal main
+  deb http://sourceforge.net/projects/cutter/files/ubuntu/ precise main
+  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ precise main
 
 Saucyの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/ubuntu/ saucy main
-  deb-src http://downloads.sourceforge.net/project/cutter/ubuntu/ saucy main
+  deb http://sourceforge.net/projects/cutter/files/ubuntu/ saucy main
+  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ saucy main
+
+Trustyの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://sourceforge.net/projects/cutter/files/ubuntu/ trusty main
+  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ trusty main
 
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。
