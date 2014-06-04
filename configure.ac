@@ -700,6 +700,16 @@ SF_FRS="$SF_FRS_HOST:$SF_FRS_PATH"
 AC_SUBST(SF_FRS)
 
 dnl **************************************************************
+dnl Check for Launchpad.net
+dnl **************************************************************
+AC_ARG_WITH(launchpad-uploader-pgp-key,
+            [AS_HELP_STRING([--with-launchpad-uploader-pgp-key=KEY],
+            [specify PGP key UID to upload Groonga packages to Launchpad.])],
+            [LAUNCHPAD_UPLOADER_PGP_KEY="$withval"],
+            [LAUNCHPAD_UPLOADER_PGP_KEY=""])
+AC_SUBST(LAUNCHPAD_UPLOADER_PGP_KEY)
+
+dnl **************************************************************
 dnl Cutter related variables.
 dnl **************************************************************
 
@@ -1083,3 +1093,6 @@ if test "$cutter_enable_coverage" = "yes"; then
 echo "  lcov                             : $LCOV"
 echo "  genhtml                          : $GENHTML"
 fi
+echo
+echo " For packages:"
+echo "  Launchpad PGP key                : $LAUNCHPAD_UPLOADER_PGP_KEY"
