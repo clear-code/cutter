@@ -22,7 +22,6 @@ require "pathname"
 class Uploader
   def initialize
     @dput_configuration_name = "cutter-ppa"
-    @dput_configuration_name = "cutter-nightly"
   end
 
   def run
