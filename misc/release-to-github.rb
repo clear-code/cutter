@@ -8,6 +8,11 @@ end
 require "octokit"
 require "optparse"
 
+def extract_sections(file)
+  normalized_text = File.read(file).gsub(/==+\n.*\n==+\n/, '')
+  normalized_text.split(/.*\n^(?:==\s+|=+$).*\n\n\n*/)
+end
+
 def main
   github_repository = nil
   github_tag = nil
@@ -22,8 +27,9 @@ def main
   parser.on("--tag=TAG", "Specify tag name") do |tag|
     github_tag = tag
   end
-  parser.on("--body-file=FILE", "Body file") do |file|
-    github_release_body = File.read(file)
+  parser.on("--news-file=FILE", "NEWS file") do |file|
+    latest_release_changes = extract_sections(file)[1].chomp
+    github_release_body = latest_release_changes.gsub(/^(=+)/){ $1.tr("=", "#") }
   end
   parser.on("--asset-file=FILE", "Asset file") do |file|
     github_release_asset_file = file
