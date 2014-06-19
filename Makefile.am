@@ -78,7 +78,7 @@ release-github: dist
 	$(srcdir)/misc/release-to-github.rb \
 	  --repository=clear-code/cutter \
 	  --tag=$(VERSION) \
-      --news-file=NEWS \
+	  --news-file=NEWS \
 	  --asset-file=$(PACKAGE)-$(VERSION).tar.gz \
 	  --access-token-file=$(ACCESS_TOKEN_FILE)
 
