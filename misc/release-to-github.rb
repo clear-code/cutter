@@ -44,6 +44,27 @@ def main
     warn ex.message
   end
 
+  unless github_repository
+    warn parser.help
+    exit false
+  end
+  unless github_tag
+    warn parser.help
+    exit false
+  end
+  unless github_release_body
+    warn parser.help
+    exit false
+  end
+  unless github_release_asset_file
+    warn parser.help
+    exit false
+  end
+  unless github_access_token
+    warn parser.help
+    exit false
+  end
+
   client = Octokit::Client.new(access_token: github_access_token)
 
   new_release = client.create_release(github_repository, github_tag, body: github_release_body)
