@@ -13,6 +13,11 @@ def extract_sections(file)
   normalized_text.split(/.*\n^(?:==\s+|=+$).*\n\n\n*/)
 end
 
+def error(message)
+  $stderr.puts message
+  exit false
+end
+
 def main
   github_repository = nil
   github_tag = nil
@@ -41,29 +46,14 @@ def main
   begin
     parser.parse!
   rescue OptionParser::ParseError => ex
-    warn ex.message
+    error ex.message
   end
 
-  unless github_repository
-    warn parser.help
-    exit false
-  end
-  unless github_tag
-    warn parser.help
-    exit false
-  end
-  unless github_release_body
-    warn parser.help
-    exit false
-  end
-  unless github_release_asset_file
-    warn parser.help
-    exit false
-  end
-  unless github_access_token
-    warn parser.help
-    exit false
-  end
+  error parser.help unless github_repository
+  error parser.help unless github_tag
+  error parser.help unless github_release_body
+  error parser.help unless github_release_asset_file
+  error parser.help unless github_access_token
 
   client = Octokit::Client.new(access_token: github_access_token)
 
