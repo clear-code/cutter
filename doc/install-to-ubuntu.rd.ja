@@ -8,45 +8,32 @@ UbuntuへのCutterのインストール方法を説明します。
 
 == インストール
 
-CutterのDebianパッケージが提供されているので、aptitudeでインス
-トールできます。
+CutterのDebianパッケージが提供されているので、APTでインストールできます。
 
-現在は、Ubuntu Precise Pangolin/Saucy Salamander/Trusty Tahr i386/amd64
-用のパッケージのみ提供しています。他のバージョンが必要な場合
-は((<メーリングリスト
-|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
-でリクエストしてください。
+現在は、Ubuntu Precise Pangolin/Saucy Salamander/Trusty Tahr i386/amd64用のパッケージのみ提供しています。他のバージョンが必要な場合は((<メーリングリスト|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))でリクエストしてください。
 
-Preciseの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
+=== PPA (Personal Package Archive)
 
-/etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/ubuntu/ precise main
-  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ precise main
+UbuntuではCutterのリポジトリとしてLaunchpadのPPA (Personal Package Archive)をCutter 1.2.4から使っています。 PPAからAPTでCutterをインストールできます。
 
-Saucyの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
+現在サポートしているUbuntuのバージョンは次のとおりです:
 
-/etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/ubuntu/ saucy main
-  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ saucy main
+  * 12.04 LTS Precise Pangolin
+  * 13.10 Saucy Salamander
+  * 14.04 LTS Trusty Tahr
 
-Trustyの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
+Cutterをインストールするためにuniverseリポトリを有効にします:
 
-/etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/ubuntu/ trusty main
-  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ trusty main
+  % sudo apt-get -y install software-properties-common
+  % sudo add-apt-repository -y universe
 
-Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
-cutter-keyringパッケージをインストールして鍵を登録してください。
+(({ppa:cutter-testing-framework/ppa})) PPA を登録します:
 
+  % sudo add-apt-repository -y ppa:cutter-testing-framework/ppa
   % sudo apt-get update
-  % sudo apt-get -y --allow-unauthenticated install cutter-keyring
 
-cutter-keyringパッケージをインストール後はapt-getでインストールできます。
+apt-getでインストールします::
 
-  % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework
 
 == 次のステップ

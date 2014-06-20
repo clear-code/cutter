@@ -16,36 +16,28 @@ If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
-Here are apt lines for for Precise. We put them into
-/etc/apt/sources.list.d/cutter.list.
+=== PPA (Personal Package Archive)
 
-/etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/ubuntu/ precise main
-  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ precise main
+The Cutter APT repository for Ubuntu uses PPA (Personal Package Archive) on Launchpad since Cutter 1.2.4. You can install Cutter by APT from the PPA.
 
-Here are apt lines for for Saucy. We put them into
-/etc/apt/sources.list.d/cutter.list.
+Here are supported Ubuntu versions:
 
-/etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/ubuntu/ saucy main
-  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ saucy main
+  * 12.04 LTS Precise Pangolin
+  * 13.10 Saucy Salamander
+  * 14.04 LTS Trusty Tahr
 
-Here are apt lines for for Trusty. We put them into
-/etc/apt/sources.list.d/cutter.list.
+Enable the universe repository to install Cutter:
 
-/etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/ubuntu/ trusty main
-  deb-src http://sourceforge.net/projects/cutter/files/ubuntu/ trusty main
+  % sudo apt-get -y install software-properties-common
+  % sudo add-apt-repository -y universe
 
-Cutter packages are signed by key of cutter-keyring.
-Register the key by installing cutter-keyring package.
+Add the (({ppa:cutter-testing-framework/ppa})) PPA to your system:
 
+  % sudo add-apt-repository -y ppa:cutter-testing-framework/ppa
   % sudo apt-get update
-  % sudo apt-get -y --allow-unauthenticated install cutter-keyring
 
-If you install the keyring package, you can install Cutter by apt-get:
+Install:
 
-  % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework
 
 == The next step
