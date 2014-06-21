@@ -26,13 +26,9 @@ Here are supported Ubuntu versions:
   * 13.10 Saucy Salamander
   * 14.04 LTS Trusty Tahr
 
-Enable the universe repository to install Cutter:
-
-  % sudo apt-get -y install software-properties-common
-  % sudo add-apt-repository -y universe
-
 Add the (({ppa:cutter-testing-framework/ppa})) PPA to your system:
 
+  % sudo apt-get -y install software-properties-common
   % sudo add-apt-repository -y ppa:cutter-testing-framework/ppa
   % sudo apt-get update
 
