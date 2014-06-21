@@ -821,7 +821,7 @@ test/run-test.sh:
           export DYLD_LIBRARY_PATH
           ;;
       *BSD)
-          LD_LIBRARY_PATH="$top_dir/src.libs:$LD_LIBRARY_PATH"
+          LD_LIBRARY_PATH="$top_dir/src/.libs:$LD_LIBRARY_PATH"
           export LD_LIBRARY_PATH
           ;;
       *)
