@@ -73,7 +73,6 @@ struct {
   /* last sequence of each length */
   { "\x7f", -1, 1, TRUE },
   { "\xdf\xbf", -1, 2, TRUE },
-  { "\xef\xbf\xbf", -1, 0, FALSE },
   { "\xf7\xbf\xbf\xbf", -1, 0, FALSE },
   { "\xfb\xbf\xbf\xbf\xbf", -1, 0, FALSE },
   { "\xfd\xbf\xbf\xbf\xbf\xbf", -1, 0, FALSE },
