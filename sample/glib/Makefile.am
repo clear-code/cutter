@@ -24,11 +24,6 @@ noinst_LTLIBRARIES = 			\
 		test_utf8_validate.la	\
 		test_uri.la
 
-if !GLIB_2_12
-noinst_LTLIBRARIES +=			\
-	test_regex.la
-endif
-
 AM_LDFLAGS =			\
 	-rpath `pwd`/.libs	\
 	-module			\
@@ -43,7 +38,6 @@ test_array_la_SOURCES = array.c
 test_base64_la_SOURCES = base64.c
 test_iochannel_la_SOURCES = iochannel.c
 test_keyfile_la_SOURCES = keyfile.c
-test_regex_la_SOURCES = regex.c
 test_uri_la_SOURCES = uri.c
 test_utf8_pointer_la_SOURCES = utf8-pointer.c
 test_utf8_validate_la_SOURCES = utf8-validate.c
