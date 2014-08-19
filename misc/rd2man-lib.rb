@@ -22,9 +22,9 @@ EOT
         @title = @title.upcase
         ""
       when 2
-        ".SH #{title}\n"
+        ".SH #{title.join}\n"
       else
-        ".SS #{title}\n"
+        ".SS #{title.join}\n"
       end
     end
 
