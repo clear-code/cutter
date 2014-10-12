@@ -79,8 +79,8 @@ def go_development_page(agent, project_page, project_id)
 end
 
 def extract_sections(file)
-  normalized_text = File.read(file).gsub(/==+\n.*\n==+\n/, '')
-  normalized_text.split(/.*\n^(?:==\s+|=+$).*\n\n\n*/)
+  normalized_text = File.read(file).gsub(/[=#]{2,}\n.*\n[=#]{2,}\n/, '')
+  normalized_text.split(/.*\n^(?:[=#]{2}\s+|[=#]+$).*\n\n\n*/)
 end
 
 def guess_target_index(file, default_index)
