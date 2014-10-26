@@ -27,11 +27,11 @@ ensure
 end
 
 def login(agent, user_name, password=nil)
-  page = agent.get("https://sourceforge.net/account/login.php")
+  page = agent.get("https://sourceforge.net/auth/")
 
-  login_form = page.form("login_userpw")
-  login_form.form_loginname = user_name
-  login_form.form_pw = password || yield
+  login_form = page.forms.find {|form| /login/ =~ form.action}
+  login_form.username = user_name
+  login_form.password = password || yield
 
   begin
     page = agent.submit(login_form, login_form.buttons.first)
