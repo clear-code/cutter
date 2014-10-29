@@ -38,7 +38,7 @@ dependency installation. -))
 Add the following (({install:})) configuration to (({.travis.yml})):
 
   install:
-    - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
+    - curl --silent --location https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
 
 With the above configuration, you can use Cutter for your build.
 
