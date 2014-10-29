@@ -329,6 +329,7 @@ search_notify_command (void)
 {
     const gchar *notify_send = "notify-send";
     const gchar *growlnotify = "growlnotify";
+    const gchar *terminal_notifier = "terminal-notifier";
 
     if (program_exist(notify_send) &&
         g_getenv("DBUS_SESSION_BUS_ADDRESS")) {
@@ -337,6 +338,10 @@ search_notify_command (void)
 
     if (program_exist(growlnotify)) {
         return growlnotify;
+    }
+
+    if (program_exist(terminal_notifier)) {
+        return terminal_notifier;
     }
 
     return NULL;
