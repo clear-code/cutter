@@ -56,7 +56,7 @@ dependency installation at (({install:})) hook. -))
 Add the following (({before_install:})) configuration to (({.travis.yml})):
 
   before_install:
-    - curl https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
+    - curl --silent --location https://raw.github.com/clear-code/cutter/master/data/travis/setup.sh | sh
 
 With the above configuration, you can use Cutter for your build.
 
