@@ -1229,6 +1229,35 @@ notify_by_notify_send (CutConsoleUI *console, CutRunContext *run_context,
 }
 
 static void
+notify_by_terminal_notifier (CutConsoleUI *console, CutRunContext *run_context,
+                             gboolean success)
+{
+    GPtrArray *args;
+    CutTestResultStatus status;
+    gchar *icon_path;
+
+    status = cut_run_context_get_status(run_context);
+    icon_path = search_icon_path(status, success);
+
+    args = g_ptr_array_new();
+    g_ptr_array_add(args, g_strdup(console->notify_command));
+    g_ptr_array_add(args, g_strdup("-title"));
+    g_ptr_array_add(args, format_notify_message(run_context));
+    g_ptr_array_add(args, g_strdup("-message"));
+    g_ptr_array_add(args, format_summary(run_context));
+    if (icon_path) {
+        g_ptr_array_add(args, g_strdup("-appIcon"));
+        g_ptr_array_add(args, icon_path);
+    }
+    g_ptr_array_add(args, NULL);
+
+    run_notify_command(console, (gchar **)args->pdata);
+
+    g_ptr_array_foreach(args, (GFunc)g_free, NULL);
+    g_ptr_array_free(args, TRUE);
+}
+
+static void
 notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
 {
     if (!console->notify_command)
@@ -1238,6 +1267,8 @@ notify (CutConsoleUI *console, CutRunContext *run_context, gboolean success)
         notify_by_notify_send(console, run_context, success);
     } else if (strcmp(console->notify_command, "growlnotify") == 0) {
         notify_by_growlnotify(console, run_context, success);
+    } else if (strcmp(console->notify_command, "terminal-notifier") == 0) {
+        notify_by_terminal_notifier(console, run_context, success);
     }
 }
 
