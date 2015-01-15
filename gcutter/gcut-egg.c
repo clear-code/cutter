@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2015  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -650,9 +650,8 @@ read_from_io_channel (GIOChannel *channel, GCutEgg *egg, guint signal)
 }
 
 static gboolean
-watch_output (GIOChannel *source, GIOCondition condition, gpointer user_data)
+watch_common (GIOChannel *source, GIOCondition condition, WatchOutputData *data)
 {
-    WatchOutputData *data = user_data;
     gboolean keep_callback = TRUE;
 
     if (condition & (G_IO_IN | G_IO_PRI)) {
@@ -674,6 +673,40 @@ watch_output (GIOChannel *source, GIOCondition condition, gpointer user_data)
 
     if (condition & G_IO_HUP)
         keep_callback = FALSE;
+
+    return keep_callback;
+}
+
+static gboolean
+watch_output (GIOChannel *source, GIOCondition condition, gpointer user_data)
+{
+    WatchOutputData *data = user_data;
+    gboolean keep_callback = TRUE;
+
+    keep_callback = watch_common(source, condition, user_data);
+
+    if (!keep_callback) {
+        GCutEggPrivate *priv;
+        priv = GCUT_EGG_GET_PRIVATE(data->egg);
+        priv->output_watch_id = 0;
+    }
+
+    return keep_callback;
+}
+
+static gboolean
+watch_error (GIOChannel *source, GIOCondition condition, gpointer user_data)
+{
+    WatchOutputData *data = user_data;
+    gboolean keep_callback = TRUE;
+
+    keep_callback = watch_common(source, condition, user_data);
+
+    if (!keep_callback) {
+        GCutEggPrivate *priv;
+        priv = GCUT_EGG_GET_PRIVATE(data->egg);
+        priv->error_watch_id = 0;
+    }
 
     return keep_callback;
 }
@@ -747,7 +780,7 @@ gcut_egg_hatch (GCutEgg *egg, GError **error)
         priv->watch_error_data->signal = signals[ERROR_RECEIVED];
         priv->error = create_input_channel(error_fd,
                                            &(priv->error_watch_id),
-                                           watch_output,
+                                           watch_error,
                                            priv->watch_error_data);
     }
 
