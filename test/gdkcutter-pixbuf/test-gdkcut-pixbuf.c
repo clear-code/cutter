@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2015  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,6 +22,11 @@
 #include <gdkcutter-pixbuf.h>
 #include <gdkcutter-pixbuf/gdkcut-pixbuf.h>
 #include "../lib/cuttest-utils.h"
+
+#if (GDK_PIXBUF_MAJOR > 2 ||                            \
+     (GDK_PIXBUF_MAJOR == 2 && GDK_PIXBUF_MINOR >= 31))
+#  define HAVE_PIXEL_BYTES
+#endif
 
 void test_equal_property(void);
 void test_equal_content(void);
@@ -136,6 +141,10 @@ test_inspect (void)
                                "height=<100>, "
                                "rowstride=<400>, "
                                "pixels=<((gpointer) %p)>"
+#ifdef HAVE_PIXEL_BYTES
+                               ", "
+                               "pixel-bytes=<NULL>"
+#endif
                                ">",
                                pixbuf1,
                                gdk_pixbuf_get_pixels(pixbuf1));
@@ -152,6 +161,10 @@ test_inspect (void)
                                "height=<50>, "
                                "rowstride=<152>, "
                                "pixels=<((gpointer) %p)>"
+#ifdef HAVE_PIXEL_BYTES
+                               ", "
+                               "pixel-bytes=<NULL>"
+#endif
                                ">",
                                pixbuf2,
                                gdk_pixbuf_get_pixels(pixbuf2));
