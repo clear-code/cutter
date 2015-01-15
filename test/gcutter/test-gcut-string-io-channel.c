@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2015  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -254,6 +254,7 @@ cb_timeout_detect (gpointer user_data)
     *timed_out = TRUE;
     limit = gcut_string_io_channel_get_buffer_limit(channel);
     gcut_string_io_channel_set_buffer_limit(channel, limit + 1);
+    timeout_id = 0;
     return FALSE;
 }
 
@@ -361,6 +362,7 @@ cb_timeout (gpointer data)
 
     *emitted = TRUE;
     gcut_string_io_channel_set_limit(channel, 0);
+    timeout_id = 0;
     return FALSE;
 }
 
