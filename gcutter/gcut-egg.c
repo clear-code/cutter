@@ -342,7 +342,8 @@ dispose (GObject *object)
                                             &is_timeout);
             while (!is_timeout && priv->process_watch_id > 0 && priv->pid > 0)
                 g_main_context_iteration(NULL, TRUE);
-            g_source_remove(timeout_wait_id);
+            if (!is_timeout)
+                g_source_remove(timeout_wait_id);
         }
     }
 
@@ -874,7 +875,8 @@ gcut_egg_wait (GCutEgg *egg, guint timeout, GError **error)
     timeout_id = g_timeout_add(timeout, cb_timeout_wait, &is_timeout);
     while (!is_timeout && priv->pid > 0)
         g_main_context_iteration(NULL, TRUE);
-    g_source_remove(timeout_id);
+    if (!is_timeout)
+        g_source_remove(timeout_id);
 
     if (is_timeout) {
         gchar *command;
