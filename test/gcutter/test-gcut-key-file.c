@@ -136,7 +136,11 @@ data_get_enum (void)
                      0,
                      g_error_new(G_KEY_FILE_ERROR,
                                  G_KEY_FILE_ERROR_KEY_NOT_FOUND,
-                                 "Key file does not have key 'unknown-key'")),
+                                 "Key file does not have key 'unknown-key'"
+#if GLIB_CHECK_VERSION(2, 43, 0)
+                                 " in group 'group'"
+#endif
+                                )),
                  enum_test_data_free,
                  "invalid enum value",
                  get_enum_test_data_new(
@@ -218,7 +222,11 @@ data_get_flags (void)
                      0,
                      g_error_new(G_KEY_FILE_ERROR,
                                  G_KEY_FILE_ERROR_KEY_NOT_FOUND,
-                                 "Key file does not have key 'unknown-key'")),
+                                 "Key file does not have key 'unknown-key'"
+#if GLIB_CHECK_VERSION(2, 43, 0)
+                                 " in group 'group'"
+#endif
+                                )),
                  enum_test_data_free,
                  "invalid flags value",
                  get_flags_test_data_new(
