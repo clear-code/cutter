@@ -8,11 +8,6 @@ Debian GNU/LinuxへのCutterのインストール方法を説明します。
 
 == インストール
 
-パッケージはCutterリリース用の鍵でサインされています。信用する場合は鍵
-を登録します。
-
-  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F07C74AC
-
 CutterのDebianパッケージが提供されているので、aptitudeでインス
 トールできます。
 

@@ -9,10 +9,6 @@ GNU/Linux.
 
 == Install
 
-We register the key of the package repository:
-
-  % sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F07C74AC
-
 We can use aptitude because Cutter provides Debian packages.
 
 There are packages for Debian GNU/Linux wheezy/jessie/sid
