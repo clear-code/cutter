@@ -8,7 +8,7 @@ Debian GNU/LinuxへのCutterのインストール方法を説明します。
 
 == インストール
 
-CutterのDebianパッケージが提供されているので、aptitudeでインス
+CutterのDebianパッケージが提供されているので、apt-getでインス
 トールできます。
 
 現在は、Debian GNU/Linux wheezy/jessie/sid i386/amd64用のパッ
@@ -44,7 +44,7 @@ cutter-keyringパッケージをインストールして鍵を登録してくだ
   % sudo apt-get update
   % sudo apt-get -y --allow-unauthenticated install cutter-keyring
 
-cutter-keyringパッケージをインストール後はaptitudeでインストールできます。
+cutter-keyringパッケージをインストール後はapt-getでインストールできます。
 
   % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework

@@ -9,7 +9,7 @@ GNU/Linux.
 
 == Install
 
-We can use aptitude because Cutter provides Debian packages.
+We can use apt-get because Cutter provides Debian packages.
 
 There are packages for Debian GNU/Linux wheezy/jessie/sid
 i386/amd64. If you need a package for another environment,
@@ -43,7 +43,7 @@ Register the key by installing cutter-keyring package.
   % sudo apt-get update
   % sudo apt-get -y --allow-unauthenticated install cutter-keyring
 
-If you install the keyring package, you can install Cutter by aptitude:
+If you install the keyring package, you can install Cutter by apt-get:
 
   % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework
