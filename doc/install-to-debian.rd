@@ -9,28 +9,28 @@ GNU/Linux.
 
 == Install
 
-We can use apt-get because Cutter provides Debian packages.
+You can use apt-get because Cutter provides Debian packages.
 
 There are packages for Debian GNU/Linux wheezy/jessie/sid
 i386/amd64. If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
 
-Here are apt lines for wheezy. We put them into
+Here are apt lines for wheezy. Put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
   deb http://sourceforge.net/projects/cutter/files/debian/ wheezy main
   deb-src http://sourceforge.net/projects/cutter/files/debian/ wheezy main
 
-Here are apt lines for jessie. We put them into
+Here are apt lines for jessie. Put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
   deb http://sourceforge.net/projects/cutter/files/debian/ jessie main
   deb-src http://sourceforge.net/projects/cutter/files/debian/ jessie main
 
-Here are apt lines for sid. We put them into
+Here are apt lines for sid. Put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
@@ -50,5 +50,5 @@ If you install the keyring package, you can install Cutter by apt-get:
 
 == The next step
 
-Installation is completed. We should try
-((<tutorial|TUTORIAL>)) with the installed Cutter.
+Installation is completed. You should try ((<tutorial|TUTORIAL>)) with
+the installed Cutter.
