@@ -49,8 +49,6 @@ cutter-keyringパッケージをインストール後はapt-getでインスト�
   % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework
 
-
-
 == 次のステップ
 
 以上でインストールは完了です。
