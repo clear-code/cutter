@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<!DOCTYPE html
-  PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="ja" xml:lang="ja">
+<!DOCTYPE html>
+<html lang="ja">
   <head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="C言語用の書きやすくデバッグしやすいxUnit系のテスティングフレームワーク（単体テスト・ユニットテストを自動化するツール）" />
     <link rel="stylesheet" href="cutter.css" type="text/css" />
     <link rel="shortcut icon" href="favicon.ico" />
@@ -46,8 +44,8 @@
 
         <h2 id="about">Cutterとは</h2>
         <div class="eye-catch">
-          <img alt="GNOME上での通知" src="notify-on-gnome.png" />
-          <img alt="Mac OS X上での通知" src="notify-on-mac-os-x.png" />
+          <img alt="GNOME上での通知" src="notify-on-gnome.png">
+          <img alt="Mac OS X上での通知" src="notify-on-mac-os-x.png">
         </div>
 	<p>
 	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語・C++言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
@@ -130,37 +128,24 @@
     <div class="sponsors">
       <p id="sponsor-sf-net">
 	<a href="http://sourceforge.net/projects/cutter">
-	  <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&amp;type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。" />
+	  <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&amp;type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。">
 	</a>
       </p>
       <p id="sponsor-github">
         <a href="http://github.com/clear-code/cutter">
-          <img src="github-logo.png" width="100" height="45" border="0" alt="GitHubの提供するgitリポジトリを利用しています。" />
+          <img src="github-logo.png" width="100" height="45" border="0" alt="GitHubの提供するgitリポジトリを利用しています。">
         </a>
       </p>
       <p id="sponsor-tango">
 	<a href="http://tango.freedesktop.org/">
-          <img width="120" height="53" border="0" alt="Tango Desktop Projectのアイコンを利用しています。" src="tango-logo.png" />
+          <img width="120" height="53" border="0" alt="Tango Desktop Projectのアイコンを利用しています。" src="tango-logo.png">
         </a>
       </p>
       <p id="sponsor-famfamfam">
 	<a href="http://www.famfamfam.com/">
-          <img width="120" height="18" border="0" alt="famfamfam.comの国旗を利用しています。" src="famfamfam-logo.png" />
+          <img width="120" height="18" border="0" alt="famfamfam.comの国旗を利用しています。" src="famfamfam-logo.png">
         </a>
       </p>
-
-<!-- Piwik -->
-<script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://apps.sourceforge.net/piwik/cutter/" : "http://apps.sourceforge.net/piwik/cutter/");
-document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
-</script><script type="text/javascript">
-piwik_action_name = '';
-piwik_idsite = 1;
-piwik_url = pkBaseURL + "piwik.php";
-piwik_log(piwik_action_name, piwik_idsite, piwik_url);
-</script>
-<object><noscript><p><img src="http://apps.sourceforge.net/piwik/cutter/piwik.php?idsite=1" alt="piwik"/></p></noscript></object>
-<!-- End Piwik Tag -->
     </div>
   </body>
 </html>
