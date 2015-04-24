@@ -112,7 +112,7 @@ end
 
 def go_submit_news_page(agent, news_page)
   submit_news_page_link = news_page.links.find do |link|
-    /\bnews\b/ =~ link.href and /\ANew Post\z/ =~ link.text
+    /\bnews\b/ =~ link.href and /\ANew Post\z/ =~ link.text.strip
   end
   agent.click(submit_news_page_link)
 end
