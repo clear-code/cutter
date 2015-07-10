@@ -229,17 +229,16 @@ stop (GstBaseSink *base_sink)
 static GstFlowReturn
 render (GstBaseSink *base_sink, GstBuffer *buffer)
 {
-    guint size;
-    guint8 *data;
     GstCutterConsoleOutputPrivate *priv;
+    GstMapInfo info;
 
     priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(base_sink);
-    size = GST_BUFFER_SIZE(buffer);
-    data = GST_BUFFER_DATA(buffer);
+    gst_buffer_map(buffer, &info, GST_MAP_READ);
 
-    if (size > 0)
+    if (info.size > 0)
         cut_stream_reader_read(CUT_STREAM_READER(priv->reader),
-                               (gchar *)data, size);
+                               (gchar *)info.data, info.size);
+    gst_buffer_unmap(buffer, &info);
 
     return GST_FLOW_OK;
 }
