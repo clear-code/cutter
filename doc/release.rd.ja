@@ -127,9 +127,7 @@ Makefileを生成するためにconfigureスクリプトを実行します。
 
 リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。:
 
-  % ./configure CFLAGS="-g -O2" CXXFLAGS="-g -O2" \
-  --prefix=/tmp/local  \
-  --enable-gtk-doc  
+  % ./configure --enable-gtk-doc
 
 == リリース日の更新
 
