@@ -46,7 +46,7 @@ struct _GstCutterConsoleOutputPrivate
     gchar *verbose_level_string;
 };
 
-GST_BOILERPLATE(GstCutterConsoleOutput, gst_cutter_console_output, GstBaseSink, GST_TYPE_BASE_SINK);
+G_DEFINE_TYPE(GstCutterConsoleOutput, gst_cutter_console_output, GST_TYPE_BASE_SINK);
 
 enum
 {
@@ -120,8 +120,7 @@ gst_cutter_console_output_class_init (GstCutterConsoleOutputClass * klass)
 }
 
 static void
-gst_cutter_console_output_init (GstCutterConsoleOutput *cutter_console_output,
-                                GstCutterConsoleOutputClass * klass)
+gst_cutter_console_output_init (GstCutterConsoleOutput *cutter_console_output)
 {
     GstCutterConsoleOutputPrivate *priv = GST_CUTTER_CONSOLE_OUTPUT_GET_PRIVATE(cutter_console_output);
 
