@@ -59,7 +59,7 @@ struct _GstCutterServerPrivate
     GstPad *sink_pad;
 };
 
-GST_BOILERPLATE(GstCutterServer, gst_cutter_server, GstElement, GST_TYPE_ELEMENT);
+G_DEFINE_TYPE(GstCutterServer, gst_cutter_server, GST_TYPE_ELEMENT);
 
 enum
 {
@@ -143,16 +143,16 @@ gst_cutter_server_class_init (GstCutterServerClass * klass)
 }
 
 static void
-gst_cutter_server_init (GstCutterServer *cutter_server, GstCutterServerClass * klass)
+gst_cutter_server_init (GstCutterServer *cutter_server)
 {
     GstPadTemplate *pad_template;
     GstCutterServerPrivate *priv = GST_CUTTER_SERVER_GET_PRIVATE(cutter_server);
 
-    pad_template = gst_element_class_get_pad_template(GST_ELEMENT_CLASS(klass), "src");
+    pad_template = gst_element_class_get_pad_template(GST_ELEMENT_CLASS(cutter_server), "src");
     priv->src_pad = gst_pad_new_from_template(pad_template, "src");
     gst_element_add_pad(GST_ELEMENT(cutter_server), priv->src_pad);
 
-    pad_template = gst_element_class_get_pad_template(GST_ELEMENT_CLASS(klass), "sink");
+    pad_template = gst_element_class_get_pad_template(GST_ELEMENT_CLASS(cutter_server), "sink");
     priv->sink_pad = gst_pad_new_from_template(pad_template, "sink");
     gst_element_add_pad(GST_ELEMENT(cutter_server), priv->sink_pad);
 
