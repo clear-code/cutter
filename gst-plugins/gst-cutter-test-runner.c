@@ -75,7 +75,6 @@ static GstFlowReturn create          (GstBaseSrc *basr_src,
                                       guint64     offset,
                                       guint       length,
                                       GstBuffer **buffer);
-static gboolean      check_get_range (GstBaseSrc *base_src);
 
 static GstStateChangeReturn change_state (GstElement *element,
                                           GstStateChange transition);
@@ -100,7 +99,6 @@ gst_cutter_test_runner_class_init (GstCutterTestRunnerClass * klass)
     base_src_class->stop            = stop;
     base_src_class->is_seekable     = is_seekable;
     base_src_class->create          = create;
-    base_src_class->check_get_range = check_get_range;
 
     spec = g_param_spec_string("test-directory",
                                "Test directory",
@@ -244,12 +242,6 @@ stop (GstBaseSrc *base_src)
 
 static gboolean
 is_seekable (GstBaseSrc *base_src)
-{
-    return FALSE;
-}
-
-static gboolean
-check_get_range (GstBaseSrc *base_src)
 {
     return FALSE;
 }
