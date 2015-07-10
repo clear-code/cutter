@@ -49,7 +49,7 @@ struct _GstCutterTestRunnerPrivate
     GString *xml_string;
 };
 
-GST_BOILERPLATE(GstCutterTestRunner, gst_cutter_test_runner, GstBaseSrc, GST_TYPE_BASE_SRC);
+G_DEFINE_TYPE(GstCutterTestRunner, gst_cutter_test_runner, GST_TYPE_BASE_SRC);
 
 enum
 {
@@ -129,7 +129,7 @@ gst_cutter_test_runner_class_init (GstCutterTestRunnerClass * klass)
 }
 
 static void
-gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner, GstCutterTestRunnerClass * klass)
+gst_cutter_test_runner_init (GstCutterTestRunner *cutter_test_runner)
 {
     GstCutterTestRunnerPrivate *priv = GST_CUTTER_TEST_RUNNER_GET_PRIVATE(cutter_test_runner);
 
