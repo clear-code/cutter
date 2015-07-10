@@ -46,6 +46,7 @@ struct _GstCutterConsoleOutputPrivate
     gchar *verbose_level_string;
 };
 
+#define gst_cutter_console_output_parent_class parent_class
 G_DEFINE_TYPE(GstCutterConsoleOutput, gst_cutter_console_output, GST_TYPE_BASE_SINK);
 
 enum
