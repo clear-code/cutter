@@ -284,7 +284,7 @@ create (GstBaseSrc *base_src, guint64 offset,
     GST_BUFFER_OFFSET_END(buf) = offset + send_size;
     *buffer = buf;
 
-    return !is_end_of_buffer ? GST_FLOW_OK : GST_FLOW_UNEXPECTED;
+    return !is_end_of_buffer ? GST_FLOW_OK : GST_FLOW_EOS;
 }
 
 static GstStateChangeReturn
