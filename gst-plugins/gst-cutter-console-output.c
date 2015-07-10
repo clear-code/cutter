@@ -29,11 +29,6 @@
 #include <cutter/cut-verbose-level.h>
 #include <cutter/cut-enum-types.h>
 
-static const GstElementDetails cutter_console_output_details =
-    GST_ELEMENT_DETAILS("Cutter console output",
-                        "Cutter console output",
-                        "Cutter console output",
-                        "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 static GstStaticPadTemplate cutter_console_output_sink_template_factory =
     GST_STATIC_PAD_TEMPLATE("sink",
                             GST_PAD_SINK,
@@ -83,7 +78,11 @@ gst_cutter_console_output_base_init (gpointer klass)
     gst_element_class_add_pad_template(element_class,
         gst_static_pad_template_get(&cutter_console_output_sink_template_factory));
 
-    gst_element_class_set_details(element_class, &cutter_console_output_details);
+    gst_element_class_set_metadata(element_class,
+                                   "Cutter console output",
+                                   "Cutter console output",
+                                   "Cutter console output",
+                                   "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 }
 
 static void
