@@ -42,7 +42,7 @@ sourceforge.netのアカウントが異なる場合には、
 
 以下にCutterのリリース作業を行うために事前にインストール しておくべきパッケージを示します。
 
-なお、ビルド環境としては Ubuntu 12.04 LTS(Precise Pangolin)を前提として説明しています。
+なお、ビルド環境としては Debian GNU/Linux (sid)を前提として説明しています。
 その他の環境ではパッケージ名等適宜読み替えて下さい。:
 
   % sudo apt-get install -V debootstrap rinse createrepo rpm ruby1.8-full gnupg2
