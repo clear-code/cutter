@@ -59,6 +59,7 @@ struct _GstCutterServerPrivate
     GstPad *sink_pad;
 };
 
+#define gst_cutter_server_parent_class parent_class
 G_DEFINE_TYPE(GstCutterServer, gst_cutter_server, GST_TYPE_ELEMENT);
 
 enum
