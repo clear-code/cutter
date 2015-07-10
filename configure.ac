@@ -452,7 +452,7 @@ AC_ARG_ENABLE([gstreamer],
               AS_HELP_STRING([--disable-gstreamer],
                              [Disable GStreamer support]),
               [enable_gstreamer=$enableval],
-              [enable_gstreamer=no]) dnl TODO: enable me again against GStreamer 1.0.0 or later
+              [enable_gstreamer=yes])
 AC_MSG_RESULT([$enable_gstreamer])
 
 gstreamer_exists=no
