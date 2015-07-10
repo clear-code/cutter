@@ -72,26 +72,12 @@ static GstFlowReturn render          (GstBaseSink *base_sink,
                                       GstBuffer   *buffer);
 
 static void
-gst_cutter_console_output_base_init (gpointer klass)
-{
-    GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
-
-    gst_element_class_add_pad_template(element_class,
-        gst_static_pad_template_get(&cutter_console_output_sink_template_factory));
-
-    gst_element_class_set_metadata(element_class,
-                                   "Cutter console output",
-                                   "Cutter console output",
-                                   "Cutter console output",
-                                   "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
-}
-
-static void
 gst_cutter_console_output_class_init (GstCutterConsoleOutputClass * klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
     GstBaseSinkClass *base_sink_class = GST_BASE_SINK_CLASS(klass);
     GParamSpec *spec;
+    GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
 
     parent_class = g_type_class_peek_parent(klass);
 
@@ -118,6 +104,15 @@ gst_cutter_console_output_class_init (GstCutterConsoleOutputClass * klass)
     g_object_class_install_property(gobject_class, ARG_VERBOSE_LEVEL, spec);
 
     g_type_class_add_private(gobject_class, sizeof(GstCutterConsoleOutputPrivate));
+
+    gst_element_class_add_pad_template(element_class,
+        gst_static_pad_template_get(&cutter_console_output_sink_template_factory));
+
+    gst_element_class_set_metadata(element_class,
+                                   "Cutter console output",
+                                   "Cutter console output",
+                                   "Cutter console output",
+                                   "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 }
 
 static void
