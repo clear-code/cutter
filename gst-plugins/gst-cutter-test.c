@@ -42,7 +42,7 @@ plugin_init (GstPlugin * plugin)
 }
 
 GST_PLUGIN_DEFINE (GST_VERSION_MAJOR, GST_VERSION_MINOR, 
-                   "cutter-test", "Cutter element",
+                   cutter-test, "Cutter element",
                    plugin_init, VERSION, "LGPL",
                    "GstCutterTest", "http://cutter.sf.net");
 
