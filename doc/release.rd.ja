@@ -49,7 +49,7 @@ sourceforge.netのアカウントが異なる場合には、
 
 また、rubyでいくつかパッケージが必要なので以下のコマンドによりインストールします。:
 
-  % sudo gem1.8 install rdtool fast_gettext mechanize
+  % sudo gem install rdtool fast_gettext mechanize
 
 なお、特に明記していない限り本リリース手順でのコマンドラインの 操作はzshを前提としています。
 
