@@ -49,6 +49,7 @@ struct _GstCutterTestRunnerPrivate
     GString *xml_string;
 };
 
+#define gst_cutter_test_runner_parent_class parent_class
 G_DEFINE_TYPE(GstCutterTestRunner, gst_cutter_test_runner, GST_TYPE_BASE_SRC);
 
 enum
