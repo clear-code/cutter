@@ -32,11 +32,6 @@
 GST_DEBUG_CATEGORY_STATIC(cutter_test_runner_debug);
 #define GST_CAT_DEFAULT cutter_test_runner_debug
 
-static const GstElementDetails cutter_test_runner_details =
-    GST_ELEMENT_DETAILS("Cutter test runner",
-                        "Cutter test runner",
-                        "Cutter test runner",
-                        "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 static GstStaticPadTemplate cutter_test_runner_src_template_factory =
     GST_STATIC_PAD_TEMPLATE("src",
                             GST_PAD_SRC,
@@ -92,7 +87,11 @@ gst_cutter_test_runner_base_init (gpointer klass)
     gst_element_class_add_pad_template(element_class,
         gst_static_pad_template_get(&cutter_test_runner_src_template_factory));
 
-    gst_element_class_set_details(element_class, &cutter_test_runner_details);
+    gst_element_class_set_metadata(element_class,
+                                   "Cutter test runner",
+                                   "Cutter test runner",
+                                   "Cutter test runner",
+                                   "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 }
 
 static void
