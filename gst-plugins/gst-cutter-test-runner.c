@@ -80,21 +80,6 @@ static GstStateChangeReturn change_state (GstElement *element,
                                           GstStateChange transition);
 
 static void
-gst_cutter_test_runner_base_init (gpointer klass)
-{
-    GstElementClass *element_class = GST_ELEMENT_CLASS(klass);
-
-    gst_element_class_add_pad_template(element_class,
-        gst_static_pad_template_get(&cutter_test_runner_src_template_factory));
-
-    gst_element_class_set_metadata(element_class,
-                                   "Cutter test runner",
-                                   "Cutter test runner",
-                                   "Cutter test runner",
-                                   "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
-}
-
-static void
 gst_cutter_test_runner_class_init (GstCutterTestRunnerClass * klass)
 {
     GObjectClass *gobject_class = G_OBJECT_CLASS(klass);
@@ -126,6 +111,15 @@ gst_cutter_test_runner_class_init (GstCutterTestRunnerClass * klass)
     g_type_class_add_private(gobject_class, sizeof(GstCutterTestRunnerPrivate));
 
     GST_DEBUG_CATEGORY_INIT(cutter_test_runner_debug, "cutter-test", 0, "Cutter test elements");
+
+    gst_element_class_add_pad_template(element_class,
+        gst_static_pad_template_get(&cutter_test_runner_src_template_factory));
+
+    gst_element_class_set_metadata(element_class,
+                                   "Cutter test runner",
+                                   "Cutter test runner",
+                                   "Cutter test runner",
+                                   "g新部 Hiroyuki Ikezoe  <poincare@ikezoe.net>");
 }
 
 static void
