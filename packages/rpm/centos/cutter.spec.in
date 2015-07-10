@@ -49,6 +49,9 @@ rm -rf %{buildroot}
 %{_datadir}/locale/
 
 %changelog
+* Wed Jul 29 2015 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.5-1
+- new upstream release.
+
 * Thu May 29 2014 HAYASHI Kentaro <kenhys@gmail.com> - 1.2.4-1
 - new upstream release.
 
