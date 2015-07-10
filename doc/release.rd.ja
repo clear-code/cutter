@@ -47,12 +47,6 @@ sourceforge.netのアカウントが異なる場合には、
 
   % sudo apt-get install -V debootstrap createrepo rpm ruby-full gnupg2 gtk-doc-tools gnome-doc-utils
 
-
-ただし、デフォルトでインストールされるrinseはバージョンが古く、
-Fedora 17パッケージのビルドを行うことができません。
-
-注:((<Fedora 17をサポートしているrinse|URL:https://www.gitorious.org/rinse/rinse/merge_requests/1>))を取得してファイルを置き換えます。
-
 また、rubyでいくつかパッケージが必要なので以下のコマンドによりインストールします。:
 
   % sudo gem1.8 install rdtool fast_gettext mechanize
