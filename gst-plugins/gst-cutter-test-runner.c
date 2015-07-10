@@ -272,7 +272,7 @@ create (GstBaseSrc *base_src, guint64 offset,
     send_size = priv->xml_string->len - offset;
 
     buf = gst_buffer_new_and_alloc(send_size);
-    memcpy(GST_BUFFER_DATA(buf), priv->xml_string->str + offset, send_size);
+    gst_buffer_fill(buf, 0, priv->xml_string->str + offset, send_size);
     GST_BUFFER_SIZE(buf) = send_size;
     GST_BUFFER_OFFSET(buf) = offset;
     GST_BUFFER_OFFSET_END(buf) = offset + send_size;
