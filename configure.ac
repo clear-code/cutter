@@ -1050,6 +1050,7 @@ AC_CONFIG_FILES([Makefile
 		 packages/rpm/centos/Makefile
 		 packages/rpm/centos/cutter.spec
 		 packages/apt/Makefile
+		 packages/apt/env.sh
 		 packages/ubuntu/Makefile
 		 packages/yum/Makefile
 		 packages/yum/env.sh])
