@@ -67,10 +67,10 @@ tmp/$(PACKAGE)-$(VERSION).tar.gz: $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.
 	mkdir -p tmp
 	cp $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz $@
 
-build-keyring-deb: keyring-source
+build-keyring-deb: prepare-build-keyring-deb
 	$(MAKE) run-vagrant
 
-keyring-source: $(KEYRING_BASE_NAME).tar.gz
+keyring-source: tmp/$(KEYRING_BASE_NAME).tar.gz
 
 ensure-public-key:
 	gpg --list-keys '$(GPG_UID)' > /dev/null ||			\
