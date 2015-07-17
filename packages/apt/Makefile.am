@@ -81,7 +81,8 @@ tmp/$(KEYRING_BASE_NAME).tar.gz: ensure-public-key
 	mkdir -p $(KEYRING_BASE_NAME)
 	gpg --armor --export '$(GPG_UID)' > \
 	  $(KEYRING_BASE_NAME)/cutter-keyring.gpg
-	tar cvzf $(KEYRING_BASE_NAME).tar.gz $(KEYRING_BASE_NAME)
+	mkdir -p tmp/
+	tar cvzf tmp/$(KEYRING_BASE_NAME).tar.gz $(KEYRING_BASE_NAME)
 
 prepare-build-keyring-deb: keyring-source
 	echo "PACKAGE=$(KEYRING_PACKAGE)" > tmp/env.sh
