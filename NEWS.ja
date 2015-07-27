@@ -2,6 +2,45 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-2-5] 1.2.5: 2015-07-29
+
+このリリースでは、GCutterの不具合が修正されています。
+CutterをGLibサポートつきで利用している場合には、アップグレードをおすすめします。
+
+=== Cutter
+
+==== 改良
+
+  * [deb][ubuntu] Launchpad PPAにてパッケージをリリースするようにしました。[GitHub #13]
+  * LCOV 1.11をサポートしました。
+  * [doc][ubuntu] Launchpad PPA経由のインストール方法に更新しました。
+  * [doc][tutorial] LD_LIBRARY_PATHに'/'が抜けていたのを修正しました。 [GitHub #14]
+    [横山さんがパッチ提供]
+  * [doc] 運用統合ソフトウェア「Hatohol」をユーザーに追加しました。 [GitHub #15] [中村さんがパッチ提供]
+  * [doc] Travisの設定に --location オプションを追加しました。 [GitHub#13] [Ikeharaさんが報告]
+  * [OS X] terminal-notifierによる通知をサポートしました。 [GitHub #17] [畑ケさんがパッチ提供]
+  * gdk-pixbuf 2.31.0以降をサポートしました。 インスペクト結果に pixel-bytesが含まれるようになったので
+    それに対応しました。 [GitHub #19] [mtasakaさんが報告]
+  * CutterのGStreamerプラグインをGStreamer 1.0向けに移植しました。
+  * [deb][ubuntu] Ubuntu 13.10. (Saucy Salamander)のサポートをやめました。
+  * [deb][ubuntu] Ubuntu 15.04. (Vivid Vervet)をサポートしました。
+  * [rpm][centos] CentOS 7をサポートしました。
+
+=== GCutter
+
+==== 修正
+
+* モニタリング対象を意図せずに二重に削除してしまう不具合を修正しました。
+  この不具合により、再発行された同じ値のソースIDも削除されてしまう可能性がありました。
+
+=== Thanks
+
+  * 横山昌史さん
+  * 中村矩揮さん
+  * Ikehara Kiyoshiさん
+  * 畑ケ宇宙さん
+  * mtasakaさん
+
 == [release-1-2-4] 1.2.4: 2014-05-29
 
 今回のリリースでは、報告のあったいくつかの不具合修正を行いました。
