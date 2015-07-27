@@ -23,6 +23,10 @@ CentOS 6:
 
   % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.1.0-0.noarch.rpm
 
+CentOS 7:
+
+  % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.1.0-0.noarch.rpm
+
 Now, we can install Cutter by yum:
 
   % sudo yum install -y cutter
