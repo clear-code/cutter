@@ -31,6 +31,12 @@ esac
 run yum groupinstall -y "Development Tools"
 run yum install -y rpm-build rpmdevtools tar ${DEPENDED_PACKAGES}
 
+case "${distribution_version}" in
+    7)
+        run yum install -y gstreamer1-plugins-base-devel
+        ;;
+esac
+
 if [ -x /usr/bin/rpmdev-setuptree ]; then
     rm -rf .rpmmacros
     run rpmdev-setuptree
