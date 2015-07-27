@@ -30,13 +30,6 @@ Here are apt lines for jessie. Put them into
   deb http://sourceforge.net/projects/cutter/files/debian/ jessie main
   deb-src http://sourceforge.net/projects/cutter/files/debian/ jessie main
 
-Here are apt lines for sid. Put them into
-/etc/apt/sources.list.d/cutter.list.
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/debian/ unstable main
-  deb-src http://sourceforge.net/projects/cutter/files/debian/ unstable main
-
 Cutter packages are signed by key of cutter-keyring.
 Register the key by installing cutter-keyring package.
 
