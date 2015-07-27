@@ -24,6 +24,7 @@ Here are supported Ubuntu versions:
 
   * 12.04 LTS Precise Pangolin
   * 14.04 LTS Trusty Tahr
+  * 15.04 Vivid Vervet
 
 Add the (({ppa:cutter-testing-framework/ppa})) PPA to your system:
 

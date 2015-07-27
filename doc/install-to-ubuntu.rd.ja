@@ -20,6 +20,7 @@ UbuntuではCutterのリポジトリとしてLaunchpadのPPA (Personal Package A
 
   * 12.04 LTS Precise Pangolin
   * 14.04 LTS Trusty Tahr
+  * 15.04 Vivid Vervet
 
 (({ppa:cutter-testing-framework/ppa})) PPA を登録します:
 
