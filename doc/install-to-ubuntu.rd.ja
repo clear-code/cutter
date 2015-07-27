@@ -19,7 +19,6 @@ UbuntuではCutterのリポジトリとしてLaunchpadのPPA (Personal Package A
 現在サポートしているUbuntuのバージョンは次のとおりです:
 
   * 12.04 LTS Precise Pangolin
-  * 13.10 Saucy Salamander
   * 14.04 LTS Trusty Tahr
 
 (({ppa:cutter-testing-framework/ppa})) PPA を登録します:

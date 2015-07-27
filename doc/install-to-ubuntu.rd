@@ -23,7 +23,6 @@ The Cutter APT repository for Ubuntu uses PPA (Personal Package Archive) on Laun
 Here are supported Ubuntu versions:
 
   * 12.04 LTS Precise Pangolin
-  * 13.10 Saucy Salamander
   * 14.04 LTS Trusty Tahr
 
 Add the (({ppa:cutter-testing-framework/ppa})) PPA to your system:
