@@ -48,7 +48,11 @@ Makefile.in
 /packages/yum/RPM-GPG-KEY-cutter
 /packages/yum/cutter.repo
 /packages/yum/cutter-repository.spec
+/packages/apt/env.sh
+/packages/apt/tmp/
 /packages/apt/repositories/
+/packages/yum/env.sh
+/packages/yum/tmp/
 /packages/yum/repositories/
 /packages/*/*.log
 /test/lib/cuttest-echo/cuttest-echo
