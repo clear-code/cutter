@@ -2,6 +2,46 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-2-5] 1.2.5: 2015-07-29
+
+In this release, there is a bugfix about GCutter.
+Please upgrade Cutter if you use Cutter with GLib support.
+
+=== Cutter
+
+==== Improvements
+
+  * [deb][ubuntu] Changed to release packages via Launchpad PPA. [GitHub #13]
+  * Supported LCOV 1.11.
+  * [doc][ubuntu] Updated install document how to install via Launchpad PPA.
+  * [doc][tutorial] Added mising slash in LD_LIBRARY_PATH. [GitHub #14]
+    [Patch by Masafumi Yokoyama]
+  * [doc] Added Project Hatohol which is operational integrated management software
+    as a Cutter user. [GitHub #15] [Patch by Noriki Nakamura]
+  * [doc] Added missing --location option in travis recipe. [GitHub#13] [Reported by Kiyoshi Ikehara]
+  * [OS X] Supported terminal-notifier notification. [GitHub #17] [Patch by Hiroshi Hatake]
+  * Supported gdk-pixbuf 2.31.0 or later. The result of inspect is a bit changed because
+    gdk-pixbuf 2.31.0 introduces pixel-bytes property. [GitHub #19] [Reported by mtasaka]
+  * Ported Cutter gstreamer plugin for GStreamer 1.0.
+  * [deb][ubuntu] Dropped Ubuntu 13.10. (Saucy Salamander)
+  * [deb][ubuntu] Supported Ubuntu 15.04. (Vivid Vervet)
+  * [rpm][centos] Supported CentOS 7.
+
+=== GCutter
+
+==== Fixes
+
+* Fixed a bug that monitoring source is unexpectedly removed twice.
+  As a result, there was a possibility that reissued source ID is also removed.
+
+=== Thanks
+
+  * Masafumi Yokoyama
+  * Noriki Nakamura
+  * Kiyoshi Ikehara
+  * Hiroshi Hatake
+  * mtasaka
+
 == [release-1-2-4] 1.2.4: 2014-05-29
 
 In this release, there are some bugfixes since Cutter 1.2.3 released.
