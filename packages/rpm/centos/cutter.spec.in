@@ -1,3 +1,5 @@
+%{!?centos_ver:%define centos_ver 6}
+
 Summary: A Unit Testing Framework for C
 Name: cutter
 Version: @VERSION@
