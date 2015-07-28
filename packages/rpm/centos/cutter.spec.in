@@ -12,7 +12,7 @@ BuildRequires: gcc
 BuildRequires: gcc-c++
 BuildRequires: glib2-devel
 BuildRequires: libsoup-devel
-%if 0%{?centos} == 7
+%if %{centos_ver} == 7
 BuildRequires: gstreamer1-plugins-base-devel
 %endif
 Requires: glib2
