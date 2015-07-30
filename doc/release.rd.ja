@@ -410,6 +410,14 @@ https://sourceforge.net/projects/cutter/files/cutter/1.2.3/にアクセス
 Default download forという項目があるので、zipはwindows、tar.gzはその他
 というようにチェックを入れると最新版へのリンクが更新される。
 
+=== GitHubへのアップロード
+
+(({$CUTTER_CLEAN_DIR}))ディレクトリで以下のコマンドを実行します。:
+
+  % make release-to-github
+
+すると https://github.com/clear-code/cutter/releases 以下に新しいリリースとしてアップロードできます。
+
 == リリースアナウンス
 
 Cutterにはユーザー向けに提供されているメーリングリストが2つあります。
