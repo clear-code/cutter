@@ -231,6 +231,8 @@ make update-poを実行すると、各種poファイルが更新されます。
 なお以下のコマンドの実行は(({$CUTTER_CLEAN_DIR/packages/apt}))以下で
 行っているものとします。
 
+UbuntuはLaunchpadを利用しているので後述します。
+
 ==== ダウンロード
 
 既存のDebian系リポジトリと同期するために以下のコマンドを実行します。:
@@ -264,6 +266,19 @@ make build PALALLEL=yesコマンドを実行すると、ディストリビュー
 
   % make sign-repository
 
+=== Ubuntuのパッケージのビルド
+
+Ubuntu向けのパッケージのビルドはLaunchpadのPPAを利用しています。
+
+なお以下のコマンドの実行は(({$CUTTER_CLEAN_DIR/packages/ubuntu}))以下で
+行っているものとします。
+
+  % make upload
+
+すると、ソースパッケージをPPAへとアップロードします。
+あとはパッケージのビルドが終了するのを待ちます。
+
+  https://launchpad.net/~cutter-testing-framework/+archive/ubuntu/ppa
 
 === Red Hat系パッケージのビルド
 
