@@ -132,7 +132,7 @@ Makefileを生成するためにconfigureスクリプトを実行します。
 
 リリース用にビルドするためには以下のオプションを指定してconfigureを実行します。:
 
-  % ./configure --enable-gtk-doc
+  % ./configure --enable-gtk-doc --with-launchpad-uploader-pgp-key=(Launchpadに登録してある公開鍵の鍵ID)
 
 == リリース日の更新
 
