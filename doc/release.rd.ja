@@ -219,12 +219,9 @@ make update-poを実行すると、各種poファイルが更新されます。
 
 * squeeze i386/amd64
 * wheezy i386/amd64
-* unstable i386/amd64
-* lucid i386/amd64
-* natty i386/amd64
-* oneiric i386/amd64
 * precise i386/amd64
-* quantal i386/amd64
+* trusty i386/amd64
+* vivid i386/amd64
 
 なお以下のコマンドの実行は(({$CUTTER_CLEAN_DIR/packages/apt}))以下で
 行っているものとします。
@@ -269,7 +266,7 @@ make build PALALLEL=yesコマンドを実行すると、ディストリビュー
 
 * centos-5 i386/x86_64
 * centos-6 i386/x86_64
-* fedora-17 i386/x86_64
+* centos-7 i386/x86_64
 
 
 ==== ダウンロード
