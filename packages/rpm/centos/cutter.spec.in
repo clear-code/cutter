@@ -48,6 +48,9 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_includedir}/cutter/
 %{_libdir}/cutter/
+%{_libdir}/gstreamer-1.0/*
+%{_libdir}/pkgconfig/*
+%{_libdir}/*
 %{_mandir}/*
 %{_datadir}/aclocal/
 %{_datadir}/cutter/
