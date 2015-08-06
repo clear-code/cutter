@@ -2,7 +2,7 @@ SERVER_PATH = $(SF_FRS)
 REPOSITORIES_PATH = repositories
 DISTRIBUTIONS = centos
 ARCHITECTURES = i386 x86_64
-BASE_URL_PREFIX = http://downloads.sourceforge.net/project/$(PACKAGE)
+BASE_URL_PREFIX = http://downloads.sourceforge.net/projects/$(PACKAGE)
 HAVE_DEVELOPMENT_BRANCH = no
 CENTOS_VERSIONS = 5 6 7
 
