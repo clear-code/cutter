@@ -1,6 +1,6 @@
-Summary: cutter RPM repository configuration
+Summary: Cutter RPM repository configuration
 Name: cutter-release
-Version: 1.1.0
+Version: 1.2.0
 Release: 0
 License: GPLv3+
 URL: http://cutter.sourceforge.net/
@@ -38,6 +38,9 @@ cutter RPM repository configuration.
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-cutter
 
 %changelog
+* Fri Aug 7 2015 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.0-0
+- Update link to sourceforge download URL.
+
 * Tue Aug 7 2012 HAYASHI Kentaro <hayashi@clear-code.com> - 1.1.0-0
 - Rename to cutter-release from cutter-repository to follow
   Yum RPM name convention such as centos-release and fedora-release.
