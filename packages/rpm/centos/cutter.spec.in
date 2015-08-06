@@ -48,7 +48,9 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_includedir}/cutter/
 %{_libdir}/cutter/
+%if %{centos_ver} == 7
 %{_libdir}/gstreamer-1.0/*
+%endif
 %{_libdir}/pkgconfig/*
 %{_libdir}/*
 %{_mandir}/*
