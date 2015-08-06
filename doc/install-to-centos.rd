@@ -15,17 +15,17 @@ Note that you must download RPM package on CentOS 5.
 
 CentOS 5:
 
-  % wget http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.1.0-0.noarch.rpm
-  % rpm -Uvh cutter-release-1.1.0-0.noarch.rpm
+  % wget http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.2.0-0.noarch.rpm
+  % rpm -Uvh cutter-release-1.2.0-0.noarch.rpm
 
 
 CentOS 6:
 
-  % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.1.0-0.noarch.rpm
+  % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.2.0-0.noarch.rpm
 
 CentOS 7:
 
-  % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.1.0-0.noarch.rpm
+  % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.2.0-0.noarch.rpm
 
 Now, we can install Cutter by yum:
 
