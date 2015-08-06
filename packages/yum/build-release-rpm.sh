@@ -93,7 +93,9 @@ EOR
 
     for distribution_version in $distribution_versions; do
 	cp $top_dir/*.src.rpm $top_dir/$distribution_version/source/SRPMS/
-	cp $top_dir/*.noarch.rpm $top_dir/$distribution_version/i386/Packages/
+	if [ -d $top_dir/$distribution_version/i386/Packages/ ]; then
+	    cp $top_dir/*.noarch.rpm $top_dir/$distribution_version/i386/Packages/
+	fi
 	cp $top_dir/*.noarch.rpm $top_dir/$distribution_version/x86_64/Packages/
     done
 done
