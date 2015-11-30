@@ -107,7 +107,7 @@ def remove_rd_link_markup(text)
 end
 
 def go_news_page(agent, development_page)
-  agent.click(development_page.links.find {|link| /\ANews\z/ =~ link.text})
+  agent.click(development_page.links.find {|link| /\ANews\z/ =~ link.text.strip})
 end
 
 def go_submit_news_page(agent, news_page)
