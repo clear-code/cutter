@@ -4,7 +4,7 @@ script_base_dir=`dirname $0`
 
 if [ $# != 6 ]; then
     echo "Usage: $0 PACKAGE PACKAGE_TITLE BASE_URL_PREFIX DESTINATION DISTRIBUTIONS HAVE_DEVELOPMENT_BRANCH"
-    echo " e.g.: $0 milter-manager 'milter manager' http://downloads.sourceforge.net/milter-manager' repositories/ 'fedora centos' yes"
+    echo " e.g.: $0 milter-manager 'milter manager' http://sourceforge.net/milter-manager' repositories/ 'fedora centos' yes"
     exit 1
 fi
 
