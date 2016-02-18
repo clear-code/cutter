@@ -1,7 +1,7 @@
 Summary: Cutter RPM repository configuration
 Name: cutter-release
-Version: 1.2.0
-Release: 0
+Version: 1.3.0
+Release: 1
 License: GPLv3+
 URL: http://cutter.sourceforge.net/
 Source: cutter-release.tar.gz
@@ -38,6 +38,9 @@ cutter RPM repository configuration.
 %{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-cutter
 
 %changelog
+* Thu Feb 18 2016 HAYASHI Kentaro <hayashi@clear-code.com> - 1.3.0-1
+- Update link to sourceforge download URL.
+
 * Fri Aug 7 2015 HAYASHI Kentaro <hayashi@clear-code.com> - 1.2.0-0
 - Update link to sourceforge download URL.
 
