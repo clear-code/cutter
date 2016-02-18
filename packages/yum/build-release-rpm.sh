@@ -54,14 +54,14 @@ for distribution in ${DISTRIBUTIONS}; do
 	run cat <<EOR > $repo
 [$PACKAGE]
 name=$PACKAGE_TITLE for $distribution_label \$releasever - \$basearch
-baseurl=$BASE_URL_PREFIX/files/$distribution/\$releasever/stable/\$basearch/
+baseurl=$BASE_URL_PREFIX/$distribution/\$releasever/stable/\$basearch/
 gpgcheck=1
 enabled=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-$PACKAGE
 
 [$PACKAGE-development]
 name=$PACKAGE_TITLE for $distribution_label \$releasever - development - \$basearch
-baseurl=$BASE_URL_PREFIX/files/$distribution/\$releasever/development/\$basearch/
+baseurl=$BASE_URL_PREFIX/$distribution/\$releasever/development/\$basearch/
 gpgcheck=1
 enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-$PACKAGE
@@ -70,7 +70,7 @@ EOR
 	run cat <<EOR > $repo
 [$PACKAGE]
 name=$PACKAGE_TITLE for $distribution_label \$releasever - \$basearch
-baseurl=$BASE_URL_PREFIX/files/$distribution/\$releasever/\$basearch/
+baseurl=$BASE_URL_PREFIX/$distribution/\$releasever/\$basearch/
 gpgcheck=1
 enabled=1
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-$PACKAGE
