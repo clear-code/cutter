@@ -21,15 +21,15 @@ wheezyの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/debian/ wheezy main
-  deb-src http://sourceforge.net/projects/cutter/files/debian/ wheezy main
+  deb http://downloads.sourceforge.net/project/cutter/files/debian/ wheezy main
+  deb-src http://downloads.sourceforge.net/project/cutter/files/debian/ wheezy main
 
 jessieの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/debian/ jessie main
-  deb-src http://sourceforge.net/projects/cutter/files/debian/ jessie main
+  deb http://downloads.sourceforge.net/project/cutter/files/debian/ jessie main
+  deb-src http://downloads.sourceforge.net/project/cutter/files/debian/ jessie main
 
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。

@@ -20,15 +20,15 @@ Here are apt lines for wheezy. Put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/debian/ wheezy main
-  deb-src http://sourceforge.net/projects/cutter/files/debian/ wheezy main
+  deb http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ wheezy main
 
 Here are apt lines for jessie. Put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://sourceforge.net/projects/cutter/files/debian/ jessie main
-  deb-src http://sourceforge.net/projects/cutter/files/debian/ jessie main
+  deb http://downloads.sourceforge.net/project/cutter/debian/ jessie main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ jessie main
 
 Cutter packages are signed by key of cutter-keyring.
 Register the key by installing cutter-keyring package.
