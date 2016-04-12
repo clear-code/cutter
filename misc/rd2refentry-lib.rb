@@ -114,7 +114,12 @@ module RD
       when "# RT"
         apply_to_RT(lines.join)
       when "# note"
-        contents = lines[1..-1].collect {|line| apply_to_String(line)}
+        contents = []
+        sub_content = lines[1..-1].join("")
+        sub_tree = RD::RDTree.new("=begin\n#{sub_content}\n=end\n")
+        sub_tree.root.children.each do |child|
+          contents << child.accept(self)
+        end
         tag("note", {}, contents.join("").chomp)
       else
         contents = lines.collect {|line| apply_to_String(line)}
