@@ -1,4 +1,4 @@
-CODE_NAMES = precise,trusty,vivid
+CODE_NAMES = precise,trusty
 SOURCE = $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz
 
 all:
