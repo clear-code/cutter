@@ -42,7 +42,7 @@ files.each do |file|
     end
     replaced_content = replaced_content.sub(/^(Release:\s+)\d+/,
                                             "\\11")
-  when /(debian|jessie)[^\/]*\/changelog\z/
+  when /debian[^\/]*\/changelog\z/
     date = Time.parse(new_release_date).rfc2822
     if content !~ /#{Regexp.escape(new_version)}/
       replaced_content = content.sub(/\A/, <<-EOC)
