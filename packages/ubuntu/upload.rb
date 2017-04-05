@@ -104,6 +104,10 @@ allow_unsigned_uploads = 0
                     "--newversion", deb_version,
                     "Build for #{code_name}.")
         run_command("debuild",
+                    # Workaround for Launchpad. Launchpad doesn't accept
+                    # .buildinfo yet.
+                    # See also: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=853795
+                    "--buildinfo-option=-O",
                     "-d",
                     "-S",
                     "-sa",
