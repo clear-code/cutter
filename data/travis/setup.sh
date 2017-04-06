@@ -6,6 +6,9 @@ distribution=$(lsb_release --short --id | tr 'A-Z' 'a-z')
 case $distribution in
     debian)
 	code_name=$(lsb_release --short --codename)
+        if test -n $CODE_NAME; then
+            code_name=$CODE_NAME
+        fi
 	component=main
 	apt_url_base=https://sourceforge.net/projects/cutter/files
 	cat <<EOF | sudo tee /etc/apt/sources.list.d/cutter.list
