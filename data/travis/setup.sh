@@ -7,7 +7,7 @@ case $distribution in
     debian)
 	code_name=$(lsb_release --short --codename)
 	component=main
-	apt_url_base=http://sourceforge.net/project/cutter/files
+	apt_url_base=https://sourceforge.net/projects/cutter/files
 	cat <<EOF | sudo tee /etc/apt/sources.list.d/cutter.list
 deb ${apt_url_base}/${distribution}/ ${code_name} ${component}
 deb-src ${apt_url_base}/${distribution}/ ${code_name} ${component}
