@@ -6,7 +6,7 @@ distribution=$(lsb_release --short --id | tr 'A-Z' 'a-z')
 case $distribution in
     debian)
 	code_name=$(lsb_release --short --codename)
-        if test -n $CODE_NAME; then
+        if [ "x${CODE_NAME}" != "x" ]; then
             code_name=$CODE_NAME
         fi
 	component=main
