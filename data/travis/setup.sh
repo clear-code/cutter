@@ -2,6 +2,22 @@
 
 set -e
 
+if [ "$CUTTER_MASTER" = "yes" ]; then
+    sudo apt-get update -qq
+    sudo apt-get install -qq -y \
+         autotools-dev \
+         intltool \
+         libgtk2.0-dev \
+         libgoffice-0.8-dev \
+         libsoup2.4-dev
+    git clone --depth 1 --branch master https://github.com/clear-code/cutter.git
+    cd cutter
+    ./autogen.sh
+    ./configure --prefix=/usr --localstatedir=/var --enable-debug
+    make -j > /dev/null
+    sudo make install > /dev/null
+    cd ..
+else
 distribution=$(lsb_release --short --id | tr 'A-Z' 'a-z')
 case $distribution in
     debian)
@@ -26,3 +42,4 @@ esac
 
 sudo apt-get update -qq
 sudo apt-get install -qq -y -V cutter-testing-framework
+fi
