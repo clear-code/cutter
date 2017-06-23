@@ -163,6 +163,7 @@ run_cutter (const gchar *options)
     cut_assert(cutter_command);
 
     g_setenv("LANG", "C", TRUE);
+    g_setenv("CHARSET", "UTF-8", TRUE);
 
     if (options)
         command = g_strdup_printf("\"%s\" %s", cutter_command, options);
