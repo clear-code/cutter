@@ -85,9 +85,15 @@ cut_setup (void)
 
     format =
         "Usage:" LINE_FEED_CODE
+#if GLIB_CHECK_VERSION(2, 52, 0)
+        "  %s [OPTION…] TEST_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=analyze [OPTION…] LOG_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=play [OPTION…] LOG_FILE" LINE_FEED_CODE
+#else
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=play [OPTION...] LOG_FILE" LINE_FEED_CODE
+#endif
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
 #if GLIB_CHECK_VERSION(2, 21, 0)

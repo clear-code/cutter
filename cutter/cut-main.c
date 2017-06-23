@@ -278,8 +278,13 @@ cut_init (int *argc, char ***argv)
         g_strdup_printf(N_("TEST_DIRECTORY\n"
                            "  %s --mode=analyze %s LOG_DIRECTORY\n"
                            "  %s --mode=play %s LOG_FILE"),
+#if GLIB_CHECK_VERSION(2, 52, 0)
+                        program_name, _("[OPTION…]"),
+                        program_name, _("[OPTION…]"));
+#else
                         program_name, _("[OPTION...]"),
                         program_name, _("[OPTION...]"));
+#endif
     option_context = g_option_context_new(parameter_string);
     g_free(program_name);
     g_free(parameter_string);
