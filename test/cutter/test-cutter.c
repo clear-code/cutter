@@ -59,6 +59,7 @@ static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
 static gint exit_status = 0;
 static gchar *lang = NULL;
+static gchar *charset = NULL;
 
 static const gchar *help_message;
 
@@ -82,6 +83,7 @@ cut_setup (void)
     stderr_string = NULL;
     exit_status = 0;
     lang = g_strdup(g_getenv("LANG"));
+    charset = g_strdup(g_getenv("CHARSET"));
 
     format =
         "Usage:" LINE_FEED_CODE
@@ -147,6 +149,12 @@ cut_teardown (void)
         g_free(lang);
     } else {
         g_unsetenv("LANG");
+    }
+    if (charset) {
+        g_setenv("CHARSET", charset, TRUE);
+        g_free(charset);
+    } else {
+        g_unsetenv("CHARSET ");
     }
 }
 
