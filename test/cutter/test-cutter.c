@@ -59,6 +59,7 @@ static gchar *stdout_string = NULL;
 static gchar *stderr_string = NULL;
 static gint exit_status = 0;
 static gchar *lang = NULL;
+static gchar *charset = NULL;
 
 static const gchar *help_message;
 
@@ -82,12 +83,19 @@ cut_setup (void)
     stderr_string = NULL;
     exit_status = 0;
     lang = g_strdup(g_getenv("LANG"));
+    charset = g_strdup(g_getenv("CHARSET"));
 
     format =
         "Usage:" LINE_FEED_CODE
+#if GLIB_CHECK_VERSION(2, 52, 0)
+        "  %s [OPTION…] TEST_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=analyze [OPTION…] LOG_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=play [OPTION…] LOG_FILE" LINE_FEED_CODE
+#else
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=play [OPTION...] LOG_FILE" LINE_FEED_CODE
+#endif
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
 #if GLIB_CHECK_VERSION(2, 21, 0)
@@ -142,6 +150,12 @@ cut_teardown (void)
     } else {
         g_unsetenv("LANG");
     }
+    if (charset) {
+        g_setenv("CHARSET", charset, TRUE);
+        g_free(charset);
+    } else {
+        g_unsetenv("CHARSET ");
+    }
 }
 
 static gboolean
@@ -157,6 +171,7 @@ run_cutter (const gchar *options)
     cut_assert(cutter_command);
 
     g_setenv("LANG", "C", TRUE);
+    g_setenv("CHARSET", "UTF-8", TRUE);
 
     if (options)
         command = g_strdup_printf("\"%s\" %s", cutter_command, options);
@@ -213,9 +228,15 @@ test_help_all (void)
 
     format =
         "Usage:" LINE_FEED_CODE
+#if GLIB_CHECK_VERSION(2, 52, 0)
+        "  %s [OPTION…] TEST_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=analyze [OPTION…] LOG_DIRECTORY" LINE_FEED_CODE
+        "  %s --mode=play [OPTION…] LOG_FILE" LINE_FEED_CODE
+#else
         "  %s [OPTION...] TEST_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=analyze [OPTION...] LOG_DIRECTORY" LINE_FEED_CODE
         "  %s --mode=play [OPTION...] LOG_FILE" LINE_FEED_CODE
+#endif
         "" LINE_FEED_CODE
         "Help Options:" LINE_FEED_CODE
 #if GLIB_CHECK_VERSION(2, 21, 0)

@@ -234,7 +234,11 @@ test_flags (void)
     cut_assert_false(gcut_process_run(process, &actual_error));
     expected_error =
         g_error_new(G_SPAWN_ERROR, G_SPAWN_ERROR_NOENT,
+#if GLIB_CHECK_VERSION(2, 52, 0)
+                    "Failed to execute child process “%s” (%s)",
+#else
                     "Failed to execute child process \"%s\" (%s)",
+#endif
                     "echo", g_strerror(ENOENT));
     gcut_assert_equal_error(expected_error, actual_error);
 
