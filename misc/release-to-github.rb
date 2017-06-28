@@ -22,7 +22,7 @@ def main
   github_repository = nil
   github_tag = nil
   github_release_body = nil
-  github_release_asset_file = nil
+  github_release_asset_files = []
   github_access_token = nil
 
   parser = OptionParser.new
@@ -37,7 +37,7 @@ def main
     github_release_body = latest_release_changes.gsub(/^(=+)/){ $1.tr("=", "#") }
   end
   parser.on("--asset-file=FILE", "Asset file") do |file|
-    github_release_asset_file = file
+    github_release_asset_files << file
   end
   parser.on("--access-token-file=FILE", "Access token file") do |file|
     github_access_token = File.read(file).chomp
@@ -52,13 +52,15 @@ def main
   error parser.help unless github_repository
   error parser.help unless github_tag
   error parser.help unless github_release_body
-  error parser.help unless github_release_asset_file
+  error parser.help if github_release_asset_files.empty?
   error parser.help unless github_access_token
 
   client = Octokit::Client.new(access_token: github_access_token)
 
   new_release = client.create_release(github_repository, github_tag, body: github_release_body)
-  client.upload_asset(new_release[:url], github_release_asset_file)
+  github_release_asset_files.each do |asset_file|
+    client.upload_asset(new_release[:url], asset_file)
+  end
 end
 
 main
