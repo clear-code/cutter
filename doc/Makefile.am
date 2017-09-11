@@ -94,7 +94,7 @@ RD2MAN = $(RUBY) -I $(RD2LIB_DIR) $(RD2) -r $(RD2MAN_LIB_FILE)
 	$(RD2MAN) $< > $@
 
 .rd.jman: # dirty...
-	$(RD2MAN) $<.ja > $@
+	LC_ALL=en_US.UTF-8 $(RD2MAN) $<.ja > $@
 
 .svg.png:
 	inkscape --export-png $@ $<
