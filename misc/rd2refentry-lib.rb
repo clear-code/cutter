@@ -17,10 +17,6 @@ require 'rd-visitor-util'
 require "rubygems"
 require "fast_gettext/po_file"
 
-if Object.const_defined?(:Encoding)
-  Encoding.default_external = Encoding::UTF_8
-end
-
 module RD
   class RD2RefEntryVisitor < RDVisitor
     include ERB::Util
