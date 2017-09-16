@@ -118,7 +118,6 @@ update-latest-release:
 	  $(PACKAGE)						\
 	  $(OLD_RELEASE) $(OLD_RELEASE_DATE)			\
 	  $(VERSION) $(NEW_RELEASE_DATE)			\
-	  packages/rpm/fedora/cutter.spec.in			\
 	  packages/rpm/centos/cutter.spec.in			\
 	  packages/debian/changelog				\
 	  html/index.html					\
