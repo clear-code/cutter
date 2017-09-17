@@ -14,7 +14,7 @@ run()
 . /vagrant/tmp/env.sh
 
 run apt-get update
-run apt-get install -y lsb-release
+run apt-get install -y lsb-release apt-transport-https
 
 distribution=$(lsb_release --id --short | tr 'A-Z' 'a-z')
 code_name=$(lsb_release --codename --short)
