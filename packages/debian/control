@@ -9,7 +9,7 @@ Build-Depends: debhelper (>= 7.0.50),
                libgtk2.0-dev,
                libgoffice-0.8-dev,
                libsoup2.4-dev
-Standards-Version: 3.9.1
+Standards-Version: 3.9.5
 Section: libs
 Homepage: http://cutter.sourceforge.net/
 
