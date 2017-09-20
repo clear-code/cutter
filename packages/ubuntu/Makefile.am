@@ -1,4 +1,4 @@
-CODE_NAMES = precise,trusty,xenial
+CODE_NAMES = trusty,xenial
 SOURCE = $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz
 
 all:
