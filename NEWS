@@ -2,6 +2,53 @@
 
 = NEWS --- The history of Cutter
 
+== [release-1-2-6] 1.2.6: 2017-09-24
+
+=== Cutter
+
+==== Improvements
+
+  * [deb] Supported Debian stretch. Debian wheezy supported was
+    dropped.
+  * Supported LCOV 1.12 and 1.13.
+  * Added missing GPLv3 text. [Reported by tSU_RooT]
+  * [deb][ubuntu] Supported Ubuntu 16.04 and 17.04. Ubuntu 12.04
+    (precise) and 15.04 (vivid) support was dropped.
+  * [travis] Fixed to use https in setup.sh for APT.
+  * [travis] Supported to use CODE_NAME environment variable for
+    installing cutter package on Debian sid. Use "env
+    CODE_NAME=unstable setup.sh" on Debian sid.
+  * Changed to use recommended Unicode characters in translatable
+    strings since GLib 2.52.0.
+  * Dropped CentOS 5 support.
+
+==== Fixes
+
+  * [doc] Fixed broken sourceforge.net APT-line. [GitHub#25] [Patch by
+    Hiroshi Ohkubo]
+  * [doc] Fixed man document build error on non-UTF-8
+    environment. [GitHub#30] [Reported by Hideki Yamane]
+
+=== CppCutter
+
+==== Fixes
+
+  * [GitHub#23] Fixed a bug that inline instance method in destructor
+    causes invalid UTF-8 assertion warning message.
+
+=== cut-diff
+
+==== Improvements
+
+  * Invert deleted and inserted colors. Now red means inserted
+    segment, green means deleted segment.
+
+=== Thanks
+
+  * tSU_RooT
+  * Hiroshi Ohkubo
+  * Hideki Yamane
+
 == [release-1-2-5] 1.2.5: 2015-07-29
 
 In this release, there is a bugfix about GCutter.
