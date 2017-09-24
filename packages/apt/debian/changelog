@@ -1,3 +1,10 @@
+cutter-keyring (2017.09.24-1) unstable; urgency=medium
+
+  * Bump up compat level to 9.
+  * Bump up standards version to 3.9.5.
+
+ -- Kentaro Hayashi <hayashi@clear-code.com>  Sun, 24 Sep 2017 00:32:05 +0900
+
 cutter-keyring (2012.08.15-1) unstable; urgency=low
 
   * Initial release.
