@@ -1,2 +1,2 @@
-/usr/lib/cutter/module/report/pdf*
-/usr/lib/cutter/module/factory/report/pdf_*
+/usr/lib/*/cutter/module/report/pdf*
+/usr/lib/*/cutter/module/factory/report/pdf_*

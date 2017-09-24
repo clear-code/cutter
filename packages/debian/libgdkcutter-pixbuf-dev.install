@@ -1,5 +1,5 @@
 /usr/include/cutter/gdkcutter-pixbuf.h
 /usr/include/cutter/gdkcutter-pixbuf/
-/usr/lib/libgdkcutter-pixbuf*.la
-/usr/lib/libgdkcutter-pixbuf*.so
-/usr/lib/pkgconfig/gdkcutter-pixbuf.pc
+/usr/lib/*/libgdkcutter-pixbuf*.la
+/usr/lib/*/libgdkcutter-pixbuf*.so
+/usr/lib/*/pkgconfig/gdkcutter-pixbuf.pc

@@ -1,9 +1,9 @@
-/usr/lib/cutter/module/ui/console*
-/usr/lib/cutter/module/stream/
-/usr/lib/cutter/module/report/xml*
-/usr/lib/cutter/module/factory/ui/console_*
-/usr/lib/cutter/module/factory/stream/
-/usr/lib/cutter/module/factory/report/xml_*
-/usr/lib/libcutter*.so.*
+/usr/lib/*/cutter/module/ui/console*
+/usr/lib/*/cutter/module/stream/
+/usr/lib/*/cutter/module/report/xml*
+/usr/lib/*/cutter/module/factory/ui/console_*
+/usr/lib/*/cutter/module/factory/stream/
+/usr/lib/*/cutter/module/factory/report/xml_*
+/usr/lib/*/libcutter*.so.*
 /usr/share/cutter/icons/kinotan/
 /usr/share/locale/
