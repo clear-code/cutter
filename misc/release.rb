@@ -30,8 +30,11 @@ def login(agent, user_name, password=nil)
   page = agent.get("https://sourceforge.net/auth/")
 
   login_form = page.forms.find {|form| /login/ =~ form.action}
-  login_form.username = user_name
-  login_form.password = password || yield
+  user_name_label = page.labels.find {|label| /Username:/ =~ label.text}
+  password_label = page.labels.find {|label| /Password:/ =~ label.text}
+
+  login_form.field_with(:id => user_name_label.node[:for]).value = user_name
+  login_form.field_with(:id => password_label.node[:for]).value = password
 
   begin
     page = agent.submit(login_form, login_form.buttons.first)
