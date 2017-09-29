@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.7\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-08 17:14+0900\n"
+"POT-Creation-Date: 2017-09-26 00:34+0900\n"
 "PO-Revision-Date: 2011-07-31 21:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Invalid color value: %s"
 msgstr "不正な色指定です: %s"
 
-#: ../cutter/cut-diff.c:58 ../cutter/cut-main.c:139
+#: ../cutter/cut-diff.c:58 ../cutter/cut-main.c:177
 msgid "Show version"
 msgstr "バージョンを表示"
 
@@ -46,37 +46,44 @@ msgstr "ラベルとしてLABELを使う"
 msgid "FILE_FROM FILE_TO"
 msgstr "変更前ファイル 変更後ファイル"
 
-#: ../cutter/cut-main.c:108
+#: ../cutter/cut-main.c:146
 #, c-format
 msgid "Invalid run mode: %s"
 msgstr "不正な実行モードです: %s"
 
-#: ../cutter/cut-main.c:129
+#: ../cutter/cut-main.c:167
 #, c-format
 msgid "Invalid test case order value: %s"
 msgstr "不正なテストケース順序指定です: %s"
 
-#: ../cutter/cut-main.c:141
+#: ../cutter/cut-main.c:179
+msgid ""
+"Set log level to LEVEL. LEVEL can be combined them with '|': (all|default|"
+"none|critical|error|warning|message|info|debug|trace) (default: critical|"
+"error|warning|message)"
+msgstr ""
+
+#: ../cutter/cut-main.c:184
 msgid "Set run mode (default: test)"
 msgstr "実行モードを設定（既定値: test）"
 
-#: ../cutter/cut-main.c:143
+#: ../cutter/cut-main.c:186
 msgid "Set directory of source code"
 msgstr "ソースコードのディレクトリを設定"
 
-#: ../cutter/cut-main.c:145
+#: ../cutter/cut-main.c:188
 msgid "Specify tests"
 msgstr "テストを指定"
 
-#: ../cutter/cut-main.c:147
+#: ../cutter/cut-main.c:190
 msgid "Specify test cases"
 msgstr "テストケースを指定"
 
-#: ../cutter/cut-main.c:149
+#: ../cutter/cut-main.c:192
 msgid "Run test cases and iterated tests with multi-thread"
 msgstr "マルチスレッドでテストケースと繰り返しテストを実行"
 
-#: ../cutter/cut-main.c:151
+#: ../cutter/cut-main.c:194
 msgid ""
 "Run test cases and iterated tests with MAX_THREADS threads concurrently at a "
 "maximum (default: 10; -1 is no limit)"
@@ -84,32 +91,32 @@ msgstr ""
 "最大MAX_THREADSスレッドを同時に動かしてテストケースと繰り返しテストを実行しま"
 "す（既定値: 10; -1は制限なし）"
 
-#: ../cutter/cut-main.c:157
+#: ../cutter/cut-main.c:200
 msgid "Disable signal handling"
 msgstr "シグナルを処理しない"
 
-#: ../cutter/cut-main.c:159
+#: ../cutter/cut-main.c:202
 msgid "Sort test case by. Default is 'none'."
 msgstr "テストケースを並び替える。既定値は'none'（並び替えない）"
 
-#: ../cutter/cut-main.c:161
+#: ../cutter/cut-main.c:204
 msgid "Skip files"
 msgstr "ファイルをスキップ"
 
-#: ../cutter/cut-main.c:163
+#: ../cutter/cut-main.c:206
 msgid "Skip directories"
 msgstr "ディレクトリをスキップ"
 
-#: ../cutter/cut-main.c:165
+#: ../cutter/cut-main.c:208
 msgid "Treat failures as fatal problem"
 msgstr "失敗を致命的な問題として扱う"
 
-#: ../cutter/cut-main.c:167
+#: ../cutter/cut-main.c:210
 msgid "Keep opening loaded modules to resolve symbols for debugging"
 msgstr ""
 "デバッグ時にシンボルを解決できるようにロードしたモジュールを開いたままにする"
 
-#: ../cutter/cut-main.c:170
+#: ../cutter/cut-main.c:213
 msgid ""
 "Enable convenience but danger '#{ATTRIBUTE_NAME}_#{TEST_NAME - 'test_' "
 "PREFIX}' attribute set function"
@@ -117,7 +124,7 @@ msgstr ""
 "便利だが危険な'#{属性名}_#{テスト名 - 'test_'プリフィックス}'属性設定関数を有"
 "効にする"
 
-#: ../cutter/cut-main.c:175
+#: ../cutter/cut-main.c:218
 msgid ""
 "Set breakpoints at each line which invokes test. You can step into a test "
 "function with your debugger easily."
@@ -125,7 +132,7 @@ msgstr ""
 "テストを実行する前の行にブレークポイントを設定する。デバッガでステップイン実"
 "行すれば簡単にテスト関数に入れます。"
 
-#: ../cutter/cut-main.c:235
+#: ../cutter/cut-main.c:278
 #, c-format
 msgid ""
 "TEST_DIRECTORY\n"
@@ -136,7 +143,12 @@ msgstr ""
 "  %s --mode=analyze %s ログディレクトリ\n"
 "  %s --mode=play %s ログファイル"
 
-#: ../cutter/cut-main.c:238 ../cutter/cut-main.c:239
+#: ../cutter/cut-main.c:282 ../cutter/cut-main.c:283
+#, fuzzy
+msgid "[OPTION…]"
+msgstr "[オプション...]"
+
+#: ../cutter/cut-main.c:285 ../cutter/cut-main.c:286
 msgid "[OPTION...]"
 msgstr "[オプション...]"
 
@@ -177,7 +189,7 @@ msgstr "ストリームのオプション"
 msgid "Show stream options"
 msgstr "ストリームのオプションを表示"
 
-#: ../cutter/cut-test-context.c:1005
+#: ../cutter/cut-test-context.c:1009
 msgid "Treat a failure as a fatal problem, aborting."
 msgstr "失敗を致命的な問題として扱い、異常終了しています。"
 
@@ -502,37 +514,37 @@ msgstr "XMLストリームのオプション"
 msgid "Show XML stream options"
 msgstr "XMLストリームのオプションを表示"
 
-#: ../module/ui/cut-console-ui-factory.c:368
+#: ../module/ui/cut-console-ui-factory.c:373
 #, c-format
 msgid "Invalid notify value: %s"
 msgstr "不正な通知指定です: %s"
 
-#: ../module/ui/cut-console-ui-factory.c:392
+#: ../module/ui/cut-console-ui-factory.c:397
 #, c-format
 msgid "Invalid boolean value: %s"
 msgstr "不正な真偽値です: %s"
 
-#: ../module/ui/cut-console-ui-factory.c:418
+#: ../module/ui/cut-console-ui-factory.c:423
 msgid "Set verbose level"
 msgstr "詳細度を設定"
 
-#: ../module/ui/cut-console-ui-factory.c:420
+#: ../module/ui/cut-console-ui-factory.c:425
 msgid "Output log with colors"
 msgstr "色付きでログを出力"
 
-#: ../module/ui/cut-console-ui-factory.c:423
+#: ../module/ui/cut-console-ui-factory.c:428
 msgid "Notify test result"
 msgstr "テスト結果を通知"
 
-#: ../module/ui/cut-console-ui-factory.c:426
+#: ../module/ui/cut-console-ui-factory.c:431
 msgid "Show test detail immediately"
 msgstr "テストの詳細を即座に表示"
 
-#: ../module/ui/cut-console-ui-factory.c:434
+#: ../module/ui/cut-console-ui-factory.c:439
 msgid "Console UI Options"
 msgstr "コンソールUIのオプション"
 
-#: ../module/ui/cut-console-ui-factory.c:435
+#: ../module/ui/cut-console-ui-factory.c:440
 msgid "Show console UI options"
 msgstr "コンソールUIのオプションの表示"
 
