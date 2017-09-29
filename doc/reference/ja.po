@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.7\n"
 "POT-Creation-Date: 2017-09-29 17:54+0900\n"
-"PO-Revision-Date: 2012-06-19 17:40+0900\n"
+"PO-Revision-Date: 2017-09-29 18:22+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -416,9 +416,8 @@ msgid "SoupServer"
 msgstr ""
 
 #: xml/soupcut-server.xml:23(entry) xml/soupcut-server.xml:25(entry)
-#, fuzzy
 msgid "<link linkend=\"SoupServer\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/soupcut-server.xml:24(link) xml/soupcut-server.xml:45(primary)
 #: xml/api-index-full.xml:583(link) xml/api-index-1.0.8.xml:24(link)
@@ -1014,9 +1013,8 @@ msgstr ""
 #: xml/cut-console-diff-writer.xml:39(entry)
 #: xml/cut-console-diff-writer.xml:43(entry)
 #: xml/cut-console-diff-writer.xml:47(entry)
-#, fuzzy
 msgid "const <link linkend=\"gchar\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/soupcut-server.xml:28(link) xml/soupcut-server.xml:93(primary)
 #: xml/api-index-full.xml:582(link) xml/api-index-1.0.8.xml:23(link)
@@ -1364,16 +1362,11 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-server.xml:72(para)
-#, fuzzy
 msgid ""
 "Creates and returns a new <link linkend=\"SoupServer\"><type>SoupServer</"
 "type></link>, whose context is <parameter>context</parameter> . The server "
 "is shut down and unref when tear down."
-msgstr ""
-"コンテキストが<parameter>context</parameter>である<link linkend=\"SoupServer"
-"\"><type>SoupServer</type></link>オブジェクトを生成して返します。サーバーは"
-"tear down 時に自動的にシャットダウンされ、<link linkend=\\\"g-object-unref\\"
-"\"><function>g_object_unref()</function></link>により解放されます。"
+msgstr "コンテキストが<parameter>context</parameter>である<link linkend=\"SoupServer\"><type>SoupServer</type></link>オブジェクトを生成して返します。サーバーはtear down 時に自動的にシャットダウンされ、解放されます。"
 
 #: xml/soupcut-server.xml:83(para) xml/gcut-glib-event-loop.xml:58(para)
 msgid "context"
@@ -1411,12 +1404,10 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-server.xml:97(para)
-#, fuzzy
 msgid ""
 "an URI is built and returned with the base uri of <parameter>server</"
 "parameter> and <parameter>path</parameter> ."
-msgstr ""
-"@server のベースURIにパスとして @path を組み合わせたURIの文字列を作成します。"
+msgstr "<parameter>server</parameter> のベースURIと <parameter>path</parameter> を組み合わせたURIの文字列を作成します。"
 
 #: xml/soupcut-server.xml:111(para) xml/gcut-test-utils.xml:721(para)
 #: xml/gcut-assertions.xml:733(para) xml/gcut-assertions.xml:759(para)
@@ -1427,7 +1418,6 @@ msgstr ""
 #: xml/cut-assertions.xml:2498(para) xml/cut-assertions.xml:2530(para)
 #: xml/cut-assertions.xml:2560(para) xml/cut-assertions.xml:2592(para)
 #: xml/cut-assertions.xml:2622(para) xml/cut-assertions.xml:2745(para)
-#, fuzzy
 msgid "path"
 msgstr "パス。"
 
@@ -1472,11 +1462,8 @@ msgid "SoupCutClient"
 msgstr ""
 
 #: xml/soupcut-client.xml:23(entry)
-#, fuzzy
 msgid "<link linkend=\"SoupCutClient\"><placeholder-1/></link> *"
 msgstr ""
-"<link linkend=\"CutCallbackFunction\">CutCallbackFunction<type></type></link>"
-"コールバック。"
 
 #: xml/soupcut-client.xml:24(link) xml/soupcut-client.xml:76(primary)
 #: xml/api-index-full.xml:577(link) xml/api-index-1.0.8.xml:19(link)
@@ -1714,9 +1701,8 @@ msgid "SoupMessage"
 msgstr ""
 
 #: xml/soupcut-client.xml:33(entry)
-#, fuzzy
 msgid "<link linkend=\"SoupMessage\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/soupcut-client.xml:34(link) xml/soupcut-client.xml:203(primary)
 #: xml/api-index-full.xml:575(link) xml/api-index-1.0.8.xml:17(link)
@@ -1729,9 +1715,8 @@ msgid "GMainContext"
 msgstr ""
 
 #: xml/soupcut-client.xml:35(entry) xml/gcut-string-io-channel.xml:45(entry)
-#, fuzzy
 msgid "<link linkend=\"GMainContext\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/soupcut-client.xml:36(link) xml/soupcut-client.xml:226(primary)
 #: xml/api-index-full.xml:574(link) xml/api-index-1.0.8.xml:16(link)
@@ -1850,7 +1835,6 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-client.xml:90(para)
-#, fuzzy
 msgid ""
 "Set <parameter>uri</parameter> as a base uri of <parameter>client</"
 "parameter> ."
@@ -1897,7 +1881,6 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-client.xml:115(para)
-#, fuzzy
 msgid ""
 "Send <parameter>message</parameter> with <parameter>client</parameter> . "
 "<parameter>client</parameter> remebers all the messages it sent."
@@ -1935,7 +1918,6 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-client.xml:146(para)
-#, fuzzy
 msgid ""
 "Send a GET request to <parameter>uri</parameter> with queries. If the base "
 "URI of <parameter>client</parameter> is set by <link linkend=\"soupcut-"
@@ -2051,7 +2033,6 @@ msgid "..."
 msgstr ""
 
 #: xml/soupcut-client.xml:170(para)
-#, fuzzy
 msgid ""
 "pairs of query parameter names and values, starting with "
 "<parameter>first_query_name</parameter> , terminated by <link linkend=\"NULL:"
@@ -2118,12 +2099,10 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-client.xml:229(para)
-#, fuzzy
 msgid "Returns the asynch_context of <parameter>client</parameter> ."
 msgstr "<parameter>client</parameter>の非同期コンテキスト。"
 
 #: xml/soupcut-client.xml:245(para)
-#, fuzzy
 msgid ""
 "a <link linkend=\"GMainContext\"><type>GMainContext</type></link> of "
 "<parameter>client</parameter> , which may be <link linkend=\"NULL:CAPS"
@@ -2139,7 +2118,6 @@ msgid "Property Details"
 msgstr "プロパティ詳細"
 
 #: xml/soupcut-client.xml:256(title)
-#, fuzzy
 msgid "The <literal>“async”</literal> property"
 msgstr "<literal>\"async\"</literal>プロパティ"
 
@@ -2148,7 +2126,7 @@ msgid "SoupCutClient:async"
 msgstr ""
 
 #: xml/soupcut-client.xml:258(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "  “async”                    <link linkend=\"gboolean\"><type>gboolean</type></link>"
 msgstr "<link linkend=\"gboolean\"><type>gboolean</type></link>の値。"
 
@@ -2212,7 +2190,6 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-assertions.xml:55(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>expected</parameter> == <parameter>message-&gt;"
 "response_headers-&gt;content_type</parameter> ."
@@ -2273,7 +2250,6 @@ msgstr ""
 #: xml/cut-assertions.xml:2769(para) xml/cut-assertions.xml:2795(para)
 #: xml/cut-assertions.xml:2821(para) xml/cppcut-assertions.xml:68(para)
 #: xml/cppcut-assertions.xml:105(para)
-#, fuzzy
 msgid "expected"
 msgstr "期待するリスト。"
 
@@ -2366,7 +2342,6 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-assertions.xml:85(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>expected</parameter> equals to Content-Type of the "
 "latest message of <parameter>client</parameter> ."
@@ -2404,7 +2379,6 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-assertions.xml:139(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>expected</parameter> == <parameter>client-&gt;"
 "response_body-&gt;data</parameter> ."
@@ -2430,7 +2404,6 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-assertions.xml:168(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>pattern</parameter> matches the response body of the "
 "latest message of <parameter>client</parameter> ."
@@ -2543,9 +2516,8 @@ msgid ""
 msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:94(title)
-#, fuzzy
 msgid "soupcut_client_assert_match_body_helper ()"
-msgstr "cut_assert_match_with_free ()"
+msgstr ""
 
 #: xml/soupcut-assertions-helper.xml:96(programlisting)
 #, no-wrap
@@ -2670,9 +2642,8 @@ msgid "GdkPixbuf"
 msgstr ""
 
 #: xml/gdkcut-pixbuf.xml:27(entry)
-#, fuzzy
 msgid "<link linkend=\"GdkPixbuf\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gdkcut-pixbuf.xml:28(link) xml/gdkcut-pixbuf.xml:67(primary)
 #: xml/api-index-full.xml:448(link)
@@ -2688,9 +2659,8 @@ msgstr ""
 #: xml/gcut-hash-table.xml:26(entry) xml/gcut-hash-table.xml:28(entry)
 #: xml/gcut-hash-table.xml:32(entry) xml/gcut-error.xml:26(entry)
 #: xml/gcut-enum.xml:26(entry) xml/gcut-enum.xml:30(entry)
-#, fuzzy
 msgid "<link linkend=\"gchar\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gdkcut-pixbuf.xml:30(link) xml/gdkcut-pixbuf.xml:77(primary)
 #: xml/api-index-full.xml:451(link)
@@ -2777,7 +2747,6 @@ msgid ""
 msgstr ""
 
 #: xml/gdkcut-pixbuf-assertions.xml:47(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>expected</parameter> == <parameter>actual</parameter> . "
 "If difference of each corresponding pixel value is within threshold, "
@@ -2790,7 +2759,6 @@ msgstr ""
 "て扱います。"
 
 #: xml/gdkcut-pixbuf-assertions.xml:54(para)
-#, fuzzy
 msgid ""
 "If threshold is 3, pixel value of <parameter>expected</parameter> at (1, 1) "
 "is 127 and pixel value of <parameter>actual</parameter> at (1, 1) is 131, "
@@ -3106,7 +3074,6 @@ msgid "value2"
 msgstr ""
 
 #: xml/gcut-value-equal.xml:73(para)
-#, fuzzy
 msgid ""
 "TRUE if <parameter>value1</parameter> equals to <parameter>value2</"
 "parameter> , FALSE otherwise."
@@ -3170,7 +3137,6 @@ msgid "e.g.:"
 msgstr "例:"
 
 #: xml/gcut-value-equal.xml:90(para)
-#, fuzzy
 msgid ""
 "Registers equality check function between <link linkend=\"GValue"
 "\"><type>GValue</type></link> of <parameter>type1</parameter> and <link "
@@ -3203,7 +3169,6 @@ msgid "equal_func"
 msgstr ""
 
 #: xml/gcut-value-equal.xml:109(para)
-#, fuzzy
 msgid ""
 "a function that compares <parameter>type1</parameter> 's <link linkend="
 "\"GValue\"><type>GValue</type></link> with <parameter>type2</parameter> 's "
@@ -3264,7 +3229,6 @@ msgid ""
 msgstr ""
 
 #: xml/gcut-types.xml:46(para)
-#, fuzzy
 msgid ""
 "Specifies the type of function which is called when the <parameter>data</"
 "parameter> element is inspected. It is passed the pointer to the data "
@@ -3287,7 +3251,6 @@ msgstr ""
 #: xml/cut-test-utils.xml:158(para) xml/cut-test-utils.xml:183(para)
 #: xml/cut-test-utils.xml:211(para) xml/cut-test-utils.xml:385(para)
 #: xml/cut-test-utils.xml:416(para) xml/cut-assertions.xml:388(para)
-#, fuzzy
 msgid "string"
 msgstr "文字列。"
 
@@ -3376,9 +3339,8 @@ msgstr "テストをもっと簡単に書くためのGLibサポート付きユ�
 
 #: xml/gcut-test-utils.xml:24(entry) xml/gcut-public.xml:23(entry)
 #: xml/gcut-data.xml:46(entry)
-#, fuzzy
 msgid "<link linkend=\"GObject\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:25(link) xml/gcut-test-utils.xml:88(primary)
 #: xml/api-index-full.xml:437(link) xml/api-index-1.0.3.xml:22(link)
@@ -3391,9 +3353,8 @@ msgid "GError"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:26(entry)
-#, fuzzy
 msgid "<link linkend=\"GError\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:27(link) xml/gcut-test-utils.xml:113(primary)
 #: xml/api-index-full.xml:426(link) xml/api-index-1.0.3.xml:20(link)
@@ -3417,9 +3378,8 @@ msgstr ""
 #: xml/gcut-test-utils.xml:28(entry) xml/gcut-test-utils.xml:46(entry)
 #: xml/gcut-test-utils.xml:48(entry) xml/gcut-test-utils.xml:50(entry)
 #: xml/gcut-test-utils.xml:53(entry) xml/gcut-public.xml:27(entry)
-#, fuzzy
 msgid "const <link linkend=\"GList\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:29(link) xml/gcut-test-utils.xml:139(primary)
 #: xml/api-index-full.xml:428(link) xml/api-index-1.0.3.xml:21(link)
@@ -3437,9 +3397,8 @@ msgstr ""
 #: xml/gcut-test-utils.xml:30(entry) xml/gcut-test-utils.xml:60(entry)
 #: xml/gcut-test-utils.xml:62(entry) xml/gcut-test-utils.xml:64(entry)
 #: xml/gcut-public.xml:29(entry) xml/gcut-hash-table.xml:34(entry)
-#, fuzzy
 msgid "<link linkend=\"GHashTable\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:31(link) xml/gcut-test-utils.xml:171(primary)
 #: xml/api-index-full.xml:427(link) xml/api-index-1.0.4.xml:10(link)
@@ -3461,9 +3420,8 @@ msgstr ""
 #: xml/gcut-public.xml:31(entry) xml/gcut-public.xml:33(entry)
 #: xml/gcut-public.xml:35(entry) xml/gcut-process.xml:58(entry)
 #: xml/gcut-process.xml:60(entry)
-#, fuzzy
 msgid "<link linkend=\"GString\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:33(link) xml/gcut-test-utils.xml:197(primary)
 #: xml/api-index-full.xml:438(link) xml/api-index-1.1.6.xml:26(link)
@@ -3478,9 +3436,8 @@ msgstr ""
 #: xml/gcut-test-utils.xml:36(entry) xml/gcut-test-utils.xml:38(entry)
 #: xml/gcut-test-utils.xml:40(entry) xml/gcut-test-utils.xml:42(entry)
 #: xml/gcut-test-utils.xml:44(entry)
-#, fuzzy
 msgid "<link linkend=\"GList\"><placeholder-1/></link> *"
-msgstr "<link linkend=\"gchar\"><type>gchar</type></link>の値。"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:37(link) xml/gcut-test-utils.xml:246(primary)
 #: xml/api-index-full.xml:367(link) xml/api-index-1.1.1.xml:14(link)
@@ -3582,25 +3539,21 @@ msgid "The utilities work with GLib."
 msgstr "このユーティリティはGLibと一緒に使います。"
 
 #: xml/gcut-test-utils.xml:87(title)
-#, fuzzy
 msgid "gcut_take_object ()"
-msgstr "cut_take_memdup ()"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:89(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "<link linkend=\"GObject\"><returnvalue>GObject</returnvalue></link> *\n"
 "gcut_take_object (<parameter><link linkend=\"GObject\"><type>GObject</type></link> *object</parameter>);"
 msgstr "詳細を示す<link linkend=\"GObject\"><type>GObject</type></link>の<link linkend=\"GList\"><type>GList</type></link>。"
 
 #: xml/gcut-test-utils.xml:91(para)
-#, fuzzy
 msgid ""
 "Passes ownership of <parameter>object</parameter> to Cutter and returns "
 "<parameter>object</parameter> ."
-msgstr ""
-"<parameter>object</parameter>の所有権をCutterに渡し、<parameter>object</"
-"parameter>を返します。"
+msgstr "<parameter>object</parameter>の所有権をCutterに渡し、<parameter>object</parameter>を返します。"
 
 #: xml/gcut-test-utils.xml:102(para) xml/gcut-test-utils.xml:551(para)
 #: xml/gcut-object.xml:108(para) xml/gcut-object.xml:136(para)
@@ -3635,16 +3588,15 @@ msgid "Since: <link linkend=\"api-index-1.0.3\">1.0.3</link>"
 msgstr ""
 
 #: xml/gcut-test-utils.xml:112(title)
-#, fuzzy
 msgid "gcut_take_error ()"
-msgstr "cut_take_memdup ()"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:114(programlisting)
-#, fuzzy, no-wrap
+#, no-wrap
 msgid ""
 "<link linkend=\"GError\"><returnvalue>GError</returnvalue></link> *\n"
 "gcut_take_error (<parameter><link linkend=\"GError\"><type>GError</type></link> *error</parameter>);"
-msgstr "ふたつの<link linkend=\"GError\"><type>GError</type></link>、<parameter>error1</parameter>と<parameter>error2</parameter>を比較します。"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:116(para)
 msgid ""
@@ -3684,9 +3636,8 @@ msgstr ""
 "いでください。"
 
 #: xml/gcut-test-utils.xml:138(title)
-#, fuzzy
 msgid "gcut_take_list ()"
-msgstr "cut_take_memdup ()"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:140(programlisting)
 #, no-wrap
@@ -3722,12 +3673,10 @@ msgstr ""
 "Cutterに所有権を渡す<link linkend=\"GList\"><type>GList</type></link>。"
 
 #: xml/gcut-test-utils.xml:158(para) xml/cut-test-utils.xml:105(para)
-#, fuzzy
 msgid "destroy_function"
-msgstr "はじめに"
+msgstr ""
 
 #: xml/gcut-test-utils.xml:159(para)
-#, fuzzy
 msgid ""
 "the destroy function that destroys the elements of <parameter>list</"
 "parameter> , or <link linkend=\"NULL:CAPS\"><literal>NULL</literal></link>."
