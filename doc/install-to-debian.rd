@@ -23,6 +23,13 @@ Here are apt lines for jessie. Put them into
   deb http://downloads.sourceforge.net/project/cutter/debian/ jessie main
   deb-src http://downloads.sourceforge.net/project/cutter/debian/ jessie main
 
+Here are apt lines for stretch. Put them into
+/etc/apt/sources.list.d/cutter.list.
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://downloads.sourceforge.net/project/cutter/debian/ stretch main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ stretch main
+
 Cutter packages are signed by key of cutter-keyring.
 Register the key by installing cutter-keyring package.
 
