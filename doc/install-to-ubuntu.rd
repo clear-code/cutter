@@ -11,7 +11,7 @@ Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Ubuntu Precise Pangolin/Saucy Salamander/Trusty Tahr i386/amd64.
+There are packages for Ubuntu Trusty Tahr/Xenial Xerus/Zesty Zapus i386/amd64.
 If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
@@ -22,9 +22,9 @@ The Cutter APT repository for Ubuntu uses PPA (Personal Package Archive) on Laun
 
 Here are supported Ubuntu versions:
 
-  * 12.04 LTS Precise Pangolin
   * 14.04 LTS Trusty Tahr
-  * 15.04 Vivid Vervet
+  * 16.04 LTS Xenial Xerus
+  * 17.04 Zesty Zapus
 
 Add the (({ppa:cutter-testing-framework/ppa})) PPA to your system:
 

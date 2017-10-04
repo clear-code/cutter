@@ -10,7 +10,7 @@ UbuntuへのCutterのインストール方法を説明します。
 
 CutterのDebianパッケージが提供されているので、APTでインストールできます。
 
-現在は、Ubuntu Precise Pangolin/Saucy Salamander/Trusty Tahr i386/amd64用のパッケージのみ提供しています。他のバージョンが必要な場合は((<メーリングリスト|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))でリクエストしてください。
+現在は、Ubuntu Precise Trusty Tahr/Xenial Xerus/Zesty Zapus i386/amd64用のパッケージのみ提供しています。他のバージョンが必要な場合は((<メーリングリスト|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))でリクエストしてください。
 
 === PPA (Personal Package Archive)
 
@@ -18,9 +18,9 @@ UbuntuではCutterのリポジトリとしてLaunchpadのPPA (Personal Package A
 
 現在サポートしているUbuntuのバージョンは次のとおりです:
 
-  * 12.04 LTS Precise Pangolin
   * 14.04 LTS Trusty Tahr
-  * 15.04 Vivid Vervet
+  * 16.04 LTS Xenial Xerus
+  * 17.04 Zesty Zapus
 
 (({ppa:cutter-testing-framework/ppa})) PPA を登録します:
 
