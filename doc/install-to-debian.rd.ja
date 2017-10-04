@@ -24,6 +24,13 @@ jessieの場合は以下のapt lineを書いた
   deb http://downloads.sourceforge.net/project/cutter/debian/ jessie main
   deb-src http://downloads.sourceforge.net/project/cutter/debian/ jessie main
 
+stretchの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
+
+/etc/apt/sources.list.d/cutter.list:
+  deb http://downloads.sourceforge.net/project/cutter/debian/ stretch main
+  deb-src http://downloads.sourceforge.net/project/cutter/debian/ stretch main
+
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。
 
