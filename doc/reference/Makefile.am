@@ -20,6 +20,7 @@ GTKDOC_CFLAGS =						\
 # Extra options to supply to gtkdoc-scan
 SCAN_OPTIONS =						\
 	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"	\
+	--rebuild-types					\
 	$(SOURCE_DIR_OPTIONS)
 
 # Extra options to supply to gtkdoc-scangobj
