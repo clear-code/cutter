@@ -554,11 +554,11 @@ dnl **************************************************************
 dnl Checks for gtk-doc
 dnl **************************************************************
 
-m4_ifdef([GTK_DOC_CHECK],
-         [GTK_DOC_CHECK([1.16],[--flavour no-tmpl])],
-         [enable_gtk_doc=no
-          AM_CONDITIONAL([GTK_DOC_USE_LIBTOOL], [false])
-          AM_CONDITIONAL([ENABLE_GTK_DOC], [false])])
+m4_ifdef([GTK_DOC_CHECK], [
+GTK_DOC_CHECK([1.16],[--flavour no-tmpl])
+], [enable_gtk_doc=no
+    AM_CONDITIONAL([GTK_DOC_USE_LIBTOOL], [false])
+    AM_CONDITIONAL([ENABLE_GTK_DOC], [false])])
 
 dnl **************************************************************
 dnl Checks for Ruby
