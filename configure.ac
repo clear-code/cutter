@@ -458,7 +458,10 @@ AC_MSG_RESULT([$enable_gstreamer])
 gstreamer_exists=no
 if test "x$enable_gstreamer" = "xyes"; then
   PKG_CHECK_MODULES(GSTREAMER,
-                    gstreamer-1.0 >= 1.0.0 gstreamer-base-1.0 >= 1.0.0,
+                    gstreamer-1.0 >= 1.0.0
+                    gstreamer-1.0 < 1.14.0
+                    gstreamer-base-1.0 >= 1.0.0
+                    gstreamer-base-1.0 < 1.14.0,
 		    [gstreamer_exists=yes], [gstreamer_exists=no])
   AC_SUBST([GSTREAMER_CFLAGS])
   AC_SUBST([GSTREAMER_LIBS])
