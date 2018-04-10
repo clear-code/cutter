@@ -7,34 +7,34 @@
 このセクションではCutterをリリースするときに必要な手順について
 説明します。
 
-== sourceforge.netアカウントの設定
+== osdn.netアカウントの設定
 
-Cutterは((<URL:http://sourceforge.net/>))にて
-((<プロジェクトのウェブサイト|URL:http://cutter.sourceforge.net>))や
-((<プラットフォームごとのリポジトリなど|URL:https://sourceforge.net/projects/cutter/files/>))
+Cutterは((<URL:https://osdn.net/>))にて
+((<プロジェクトのウェブサイト|URL:https://osdn.net/projects/cutter/>))や
+((<プラットフォームごとのリポジトリなど|URL:https://osdn.net/projects/cutter/storage/>))
 をホスティングしています。
 
-そのため、リリース作業ではsourceforge.net上のプロジェクト領域へ
+そのため、リリース作業ではosdn.net上のプロジェクト領域へ
 アクセスできる必要があります。
 
 Cutterプロジェクトのメンバでない場合にはプロジェクトの
-管理者にsourceforge.netのアカウント名を以下のProject Membershipページ
+管理者にosdn.netのアカウント名を以下のProject Membershipページ
 から追加してもらう必要があります。
 
-((<Cutter - Project Membership|URL:https://sourceforge.net/project/admin/project_membership.php?group_id=208375>))
+((<メンバーリスト - Cutter - OSDN|URL:https://osdn.net/projects/cutter/memberlist?show_detail=1>))
 
 
 == 環境変数の設定
 
-Cutterのリリースではすでに述べたようにsourceforge.netへの
+Cutterのリリースではすでに述べたようにosdn.netへの
 パッケージやドキュメントファイルのアップロードを行います。
 
 もし、リリース作業を行う端末のアカウントと
-sourceforge.netのアカウントが異なる場合には、
-以下のようにしてsourceforge.netのアカウントを使うように
-環境変数(({SF_USER}))の設定を行います。
+osdn.netのアカウントが異なる場合には、
+以下のようにしてosdn.netのアカウントを使うように
+環境変数(({OSDN_USER}))の設定を行います。
 
-    % export SF_USER=(ここにsourceforge.netのアカウントを指定)
+    % export OSDN_USER=(ここにosdn.netのアカウントを指定)
 
 永続的に有効にする場合にはシェルの設定ファイルに上記記述を追加します。
 

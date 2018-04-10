@@ -664,43 +664,43 @@ dnl **************************************************************
 dnl Check for SF.net.
 dnl **************************************************************
 
-SF_PROJECT_ID=cutter
-AC_SUBST(SF_PROJECT_ID)
-SF_PROJECT_NAME=Cutter
-AC_SUBST(SF_PROJECT_NAME)
+OSDN_PROJECT_ID=cutter
+AC_SUBST(OSDN_PROJECT_ID)
+OSDN_PROJECT_NAME=Cutter
+AC_SUBST(OSDN_PROJECT_NAME)
 
-AC_ARG_WITH([sf-user],
-            AS_HELP_STRING([--with-sf-user=NAME],
-                           [Use NAME to access sf.net]),
-            [SF_USER="$withval"])
-AC_SUBST(SF_USER)
+AC_ARG_WITH([osdn-user],
+            AS_HELP_STRING([--with-osdn-user=NAME],
+                           [Use NAME to access osdn.net]),
+            [OSDN_USER="$withval"])
+AC_SUBST(OSDN_USER)
 
-SF_USER_OPTION=""
-if test -n "$SF_USER"; then
-   SF_USER_OPTION="--username $SF_USER"
+OSDN_USER_OPTION=""
+if test -n "$OSDN_USER"; then
+   OSDN_USER_OPTION="--username $OSDN_USER"
 fi
-AC_SUBST(SF_USER_OPTION)
+AC_SUBST(OSDN_USER_OPTION)
 
-SF_WEB_HOST="web.sourceforge.net"
-SF_FRS_HOST="frs.sourceforge.net"
-if test -n "$SF_USER"; then
-   SF_WEB_HOST="$SF_USER,$SF_PROJECT_ID@$SF_WEB_HOST"
-   SF_FRS_HOST="$SF_USER,$SF_PROJECT_ID@$SF_FRS_HOST"
+OSDN_WEB_HOST="shell.osdn.net"
+OSDN_FS_HOST="frs.sourceforge.net"
+if test -n "$OSDN_USER"; then
+   OSDN_WEB_HOST="$OSDN_USER,$OSDN_PROJECT_ID@$OSDN_WEB_HOST"
+   OSDN_FS_HOST="$OSDN_USER,$OSDN_PROJECT_ID@$OSDN_FS_HOST"
 fi
-AC_SUBST(SF_WEB_HOST)
-AC_SUBST(SF_FRS_HOST)
+AC_SUBST(OSDN_WEB_HOST)
+AC_SUBST(OSDN_FS_HOST)
 
-SF_PROJECT_ID_HEAD_1=`echo $SF_PROJECT_ID | sed -e 's/^\(.\).*/\1/'`
-SF_PROJECT_ID_HEAD_2=`echo $SF_PROJECT_ID | sed -e 's/^\(..\).*/\1/'`
-SF_HTDOCS_PATH="/home/groups/${SF_PROJECT_ID_HEAD_1}/${SF_PROJECT_ID_HEAD_2}/${SF_PROJECT_ID}/htdocs"
-AC_SUBST(SF_HTDOCS_PATH)
-SF_HTDOCS="$SF_WEB_HOST:$SF_HTDOCS_PATH"
-AC_SUBST(SF_HTDOCS)
+OSDN_PROJECT_ID_HEAD_1=`echo $OSDN_PROJECT_ID | sed -e 's/^\(.\).*/\1/'`
+OSDN_PROJECT_ID_HEAD_2=`echo $OSDN_PROJECT_ID | sed -e 's/^\(..\).*/\1/'`
+OSDN_HTDOCS_PATH="/home/groups/${OSDN_PROJECT_ID_HEAD_1}/${OSDN_PROJECT_ID_HEAD_2}/${OSDN_PROJECT_ID}/htdocs"
+AC_SUBST(OSDN_HTDOCS_PATH)
+OSDN_HTDOCS="$OSDN_WEB_HOST:$OSDN_HTDOCS_PATH"
+AC_SUBST(OSDN_HTDOCS)
 
-SF_FRS_PATH="/home/frs/project/${SF_PROJECT_ID_HEAD_1}/${SF_PROJECT_ID_HEAD_2}/${SF_PROJECT_ID}"
-AC_SUBST(SF_FRS_PATH)
-SF_FRS="$SF_FRS_HOST:$SF_FRS_PATH"
-AC_SUBST(SF_FRS)
+OSDN_FS_PATH="/storage/groups/${OSDN_PROJECT_ID_HEAD_1}/${OSDN_PROJECT_ID_HEAD_2}/${OSDN_PROJECT_ID}"
+AC_SUBST(OSDN_FS_PATH)
+OSDN_FS="$OSDN_FS_HOST:$OSDN_FS_PATH"
+AC_SUBST(OSDN_FS)
 
 dnl **************************************************************
 dnl Check for Launchpad.net

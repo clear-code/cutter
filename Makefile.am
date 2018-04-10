@@ -55,7 +55,7 @@ release: dist release-official release-debian
 
 release-official:
 	$(srcdir)/misc/release.rb				\
-	  $(SF_USER) $(SF_PROJECT_ID) $(SF_PROJECT_NAME)	\
+	  $(OSDN_USER) $(OSDN_PROJECT_ID) $(OSDN_PROJECT_NAME)	\
 	  $(PACKAGE_NAME) $(VERSION) README NEWS		\
 	  $(PACKAGE)-$(VERSION).tar.gz				\
 	  $(PACKAGE)-$(VERSION).zip
@@ -72,7 +72,7 @@ release-debian:
 	echo "Options +Indexes" > tmp/archives/.htaccess
 	mv tmp/$(PACKAGE)-testing-framework-$(VERSION).tar.gz \
 	  tmp/archives/debian/
-	rsync -avz tmp/archives $(SF_HTDOCS)/
+	rsync -avz tmp/archives $(OSDN_HTDOCS)/
 
 release-github: dist
 	$(srcdir)/misc/release-to-github.rb \
