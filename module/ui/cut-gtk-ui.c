@@ -279,12 +279,12 @@ cb_run_test (GtkWidget *widget, gpointer data)
 {
 }
 
-#define CUT_WEBSITE_EN "http://cutter.sourceforge.net/"
-#define CUT_WEBSITE_JA "http://cutter.sourceforge.net/index.html.ja"
-#define CUT_TUTORIAL_EN "http://cutter.sourceforge.net/reference/tutorial.html"
-#define CUT_TUTORIAL_JA "http://cutter.sourceforge.net/reference/ja/tutorial.html"
-#define CUT_REFERENCE_EN "http://cutter.sourceforge.net/reference/"
-#define CUT_REFERENCE_JA "http://cutter.sourceforge.net/reference/ja/"
+#define CUT_WEBSITE_EN "http://cutter.osdn.jp/"
+#define CUT_WEBSITE_JA "http://cutter.osdn.jp/index.html.ja"
+#define CUT_TUTORIAL_EN "http://cutter.osdn.jp/reference/tutorial.html"
+#define CUT_TUTORIAL_JA "http://cutter.osdn.jp/reference/ja/tutorial.html"
+#define CUT_REFERENCE_EN "http://cutter.osdn.jp/reference/"
+#define CUT_REFERENCE_JA "http://cutter.osdn.jp/reference/ja/"
 
 static void
 show_uri_fallback (const gchar *uri)
