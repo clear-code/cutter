@@ -682,7 +682,7 @@ fi
 AC_SUBST(OSDN_USER_OPTION)
 
 OSDN_WEB_HOST="shell.osdn.net"
-OSDN_FS_HOST="frs.sourceforge.net"
+OSDN_FS_HOST="storage.osdn.net"
 if test -n "$OSDN_USER"; then
    OSDN_WEB_HOST="$OSDN_USER,$OSDN_PROJECT_ID@$OSDN_WEB_HOST"
    OSDN_FS_HOST="$OSDN_USER,$OSDN_PROJECT_ID@$OSDN_FS_HOST"
