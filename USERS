@@ -4,14 +4,14 @@
 
 == List
 
-  * ((<Cutter|URL:http://cutter.sourceforge.net/>)): self test.
+  * ((<Cutter|URL:https://osdn.net/projects/cutter/>)): self test.
   * ((<Senna|URL:http://qwik.jp/senna/>)):
     full-text search engine.
   * ((<groonga|URL:http://groonga.org/>)):
     full-text search engine and column store.
   * ((<mroonga|URL:http://wiki.github.com/mroonga/mroonga>)):
     a MySQL pluggable storage engine for groonga.
-  * ((<milter manager|URL:http://milter-manager.sourceforge.net/>)):
+  * ((<milter manager|URL:https://milter-manager.osdn.jp/>)):
     a milter to use milters effectively.
   * ((<Kazehakase|URL:http://kazehakase.sourceforge.jp/>)):
     a browser.
