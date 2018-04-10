@@ -25,7 +25,7 @@ else
                 code_name=$CODE_NAME
             fi
 	    component=main
-	    apt_url_base=https://sourceforge.net/projects/cutter/files
+	    apt_url_base=https://osdn.net/projects/cutter/storage
 	    cat <<EOF | sudo tee /etc/apt/sources.list.d/cutter.list
 deb ${apt_url_base}/${distribution}/ ${code_name} ${component}
 deb-src ${apt_url_base}/${distribution}/ ${code_name} ${component}
