@@ -2,7 +2,7 @@ SERVER_PATH = $(OSDN_FS)
 REPOSITORIES_PATH = repositories
 DISTRIBUTIONS = centos
 ARCHITECTURES = i386 x86_64
-BASE_URL_PREFIX = http://downloads.sourceforge.net/project/$(PACKAGE)
+BASE_URL_PREFIX = https://osdn.net/projects/cutter/storage/$(PACKAGE)
 HAVE_DEVELOPMENT_BRANCH = no
 CENTOS_VERSIONS = 6 7
 
