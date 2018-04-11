@@ -14,7 +14,7 @@ You can use apt-get because Cutter provides Debian packages.
 There are packages for Debian GNU/Linux jessie/stretch
 i386/amd64. If you need a package for another environment,
 you can request on ((<mailing
-list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
+list|URL:https://lists.osdn.me/mailman/listinfo/cutter-users-en>)).
 
 Here are apt lines for stretch. Put them into
 /etc/apt/sources.list.d/cutter.list.
