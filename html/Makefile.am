@@ -21,6 +21,7 @@ svg_images =					\
 	favicon.svg
 
 images =					\
+	github-logo.png				\
 	famfamfam-logo.png			\
 	tango-logo.png				\
 	jp.png					\
