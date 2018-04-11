@@ -156,14 +156,20 @@ test_level_from_string (gconstpointer data)
                             actual);
 }
 
-#define cut_assert_equal_log(level, message)                        \
-    cut_assert_equal_string(CUT_LOG_DOMAIN, logged_domain);         \
-    gcut_assert_equal_flags(CUT_TYPE_LOG_LEVEL_FLAGS,               \
-                            level,                                  \
-                            logged_level);                          \
-    cut_assert_equal_string(__FILE__, logged_file);                 \
-    cut_assert_equal_string(__PRETTY_FUNCTION__, logged_function);  \
-    cut_assert_equal_uint(line, logged_line);                       \
+#ifdef __clang__
+#  define FUNCTION(name) "void " name "(void)"
+#else
+#  define FUNCTION(name) name
+#endif
+
+#define cut_assert_equal_log(level, message)                                \
+    cut_assert_equal_string(CUT_LOG_DOMAIN, logged_domain);                 \
+    gcut_assert_equal_flags(CUT_TYPE_LOG_LEVEL_FLAGS,                       \
+                            level,                                          \
+                            logged_level);                                  \
+    cut_assert_equal_string(__FILE__, logged_file);                         \
+    cut_assert_equal_string(__PRETTY_FUNCTION__, FUNCTION(logged_function); \
+    cut_assert_equal_uint(line, logged_line);                               \
     cut_assert_equal_string(message, logged_message);
 
 static void
