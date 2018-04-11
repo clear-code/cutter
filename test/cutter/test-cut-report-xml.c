@@ -44,7 +44,7 @@ static gint fail_line;
 } while (0)
 
 #ifdef __clang__
-#  define FUNCTION(name) "void " name "()"
+#  define FUNCTION(name) "void " name "(void)"
 #else
 #  define FUNCTION(name) name "()"
 #endif

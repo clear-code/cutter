@@ -52,6 +52,12 @@ static GPrintFunc original_print_hander;
 
 static gboolean default_handler_disconnected;
 
+#ifdef __clang__
+#  define FUNCTION(name) cut_take_string(g_strconcat("void ", name, "(void)", NULL))
+#else
+#  define FUNCTION(name) name
+#endif
+
 static void
 cb_log (CutLogger *logger,
         const gchar *domain, CutLogLevelFlags level,
@@ -63,7 +69,7 @@ cb_log (CutLogger *logger,
     logged_level = level;
     logged_file = cut_take_strdup(file);
     logged_line = line;
-    logged_function = cut_take_strdup(function);
+    logged_function = cut_take_strdup(FUNCTION(function));
 
     logged_message = cut_take_strdup(message);
 }
@@ -156,14 +162,14 @@ test_level_from_string (gconstpointer data)
                             actual);
 }
 
-#define cut_assert_equal_log(level, message)                        \
-    cut_assert_equal_string(CUT_LOG_DOMAIN, logged_domain);         \
-    gcut_assert_equal_flags(CUT_TYPE_LOG_LEVEL_FLAGS,               \
-                            level,                                  \
-                            logged_level);                          \
-    cut_assert_equal_string(__FILE__, logged_file);                 \
-    cut_assert_equal_string(__PRETTY_FUNCTION__, logged_function);  \
-    cut_assert_equal_uint(line, logged_line);                       \
+#define cut_assert_equal_log(level, message)                       \
+    cut_assert_equal_string(CUT_LOG_DOMAIN, logged_domain);        \
+    gcut_assert_equal_flags(CUT_TYPE_LOG_LEVEL_FLAGS,              \
+                            level,                                 \
+                            logged_level);                         \
+    cut_assert_equal_string(__FILE__, logged_file);                \
+    cut_assert_equal_string(__PRETTY_FUNCTION__, logged_function); \
+    cut_assert_equal_uint(line, logged_line);                      \
     cut_assert_equal_string(message, logged_message);
 
 static void
