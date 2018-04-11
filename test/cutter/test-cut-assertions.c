@@ -163,7 +163,7 @@ static gint fail_line;
 
 #define FAIL_LOCATION (cut_take_printf("%s:%d", __FILE__, fail_line))
 #ifdef __clang__
-#  define FUNCTION(name) "void " name "()"
+#  define FUNCTION(name) "void " name "(void)"
 #else
 #  define FUNCTION(name) name
 #endif
