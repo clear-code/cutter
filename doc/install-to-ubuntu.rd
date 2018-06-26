@@ -11,7 +11,7 @@ Linux.
 
 We can use aptitude because Cutter provides Debian packages.
 
-There are packages for Ubuntu Trusty Tahr/Xenial Xerus/Zesty Zapus i386/amd64.
+There are packages for Ubuntu Trusty Tahr/Xenial Xerus/Bionic Beaver i386/amd64.
 If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
@@ -24,7 +24,7 @@ Here are supported Ubuntu versions:
 
   * 14.04 LTS Trusty Tahr
   * 16.04 LTS Xenial Xerus
-  * 17.04 Zesty Zapus
+  * 18.04 LTS Bionic Beaver
 
 Add the (({ppa:cutter-testing-framework/ppa})) PPA to your system:
 
