@@ -71,10 +71,10 @@ namespace cut
 
         CUT_EXPORT void printf(const char *format=NULL, ...);
 
-        CUT_EXPORT inline const char *
+        CUT_EXPORT inline const std::string
         string() const
         {
-            return buffer_.str().c_str();
+            return buffer_.str();
         }
 
     private:
