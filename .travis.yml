@@ -60,5 +60,9 @@ matrix:
       <<: *enable_coverage
     - name: "macOS"
       os: osx
+      env:
+        CONFIGURE_OPTIONS:
+          PKG_CONFIG_PATH="$(brew --prefix libffi)/pkgconfig"
+          PATH="$(brew --prefix gettext)/bin:${PATH}"
       install:
         - brew bundle
