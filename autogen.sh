@@ -23,11 +23,13 @@ case $(uname -s) in
       if brew --prefix gettext > /dev/null 2>&1; then
         ACLOCAL_OPTIONS="${ACLOCAL_OPTIONS} -I $(brew --prefix gettext)/share/aclocal"
       fi
+      export ACLOCAL_OPTIONS
       : ${LIBTOOLIZE=glibtoolize}
     fi
     ;;
   FreeBSD)
     ACLOCAL_OPTIONS="${ACLOCAL_OPTIONS:-} -I /usr/local/share/aclocal/"
+    export ACLOCAL_OPTIONS
     ;;
 esac
 
