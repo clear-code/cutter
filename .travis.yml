@@ -1,26 +1,70 @@
 notifications:
-  recipients:
-    - travis@clear-code.com
+  webhooks:
+    - https://webhook.commit-email.info/
+
 language: cpp
+
 compiler:
   - gcc
   - clang
 env:
   - ENABLE_COVERAGE=no
   - ENABLE_COVERAGE=yes CONFIGURE_OPTIONS=--enable-coverage
-matrix:
-  allow_failures:
-    - compiler: clang
-      env: ENABLE_COVERAGE=yes CONFIGURE_OPTIONS=--enable-coverage
-install:
-  - sudo apt-get update -qq -y
-  - sudo apt-get install -qq -y autotools-dev intltool gtk-doc-tools libgtk2.0-dev libgoffice-0.8-dev libgstreamer0.10-dev libsoup2.4-dev
-  - if test "$ENABLE_COVERAGE" = "yes"; then sudo pip install cpp-coveralls; fi
+
+apt_packages: &apt_packages
+  packages:
+    - autotools-dev
+    - intltool
+    - gtk-doc-tools
+    - libgtk2.0-dev
+    - libgoffice-0.8-dev
+    - libgstreamer0.10-dev
+    - libsoup2.4-dev
+
 before_script:
   - ./autogen.sh
   - ./configure ${CONFIGURE_OPTIONS}
+
 script:
   - test/run-test.sh
-after_success:
-  - if test "$ENABLE_COVERAGE" = "yes"; then coveralls --exclude test; fi
 
+matrix:
+  include:
+    - name: "GCC"
+      os: linux
+      compiler: gcc
+      addons:
+        apt:
+          <<: *apt_packages
+    - name: "GCC with coverage"
+      os: linux
+      compiler: gcc
+      addons:
+        apt:
+          <<: *apt_packages
+        install:
+          - sudo pip install cpp-coveralls
+      env:
+        CONFIGURE_OPTIONS: --enable-coverage
+      after_success:
+        - coveralls --exclude test
+    - name: "Clang"
+      os: linux
+      compiler: clang
+      addons:
+        apt:
+          <<: *apt_packages
+    - name: "Clang with coverage"
+      os: linux
+      compiler: clang
+      addons:
+        apt:
+          <<: *apt_packages
+        install:
+          - sudo pip install cpp-coveralls
+      after_success:
+        - coveralls --exclude test
+    - name: "macOS"
+      os: osx
+      install:
+        - brew bundle

@@ -1,0 +1,5 @@
+brew "automake"
+brew "gettext"
+brew "gtk-doc"
+brew "intltool"
+brew "libtool"
