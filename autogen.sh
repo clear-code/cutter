@@ -19,15 +19,15 @@ fi
 case $(uname -s) in
   Darwin)
     if brew --version > /dev/null 2>&1; then
-      ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I $(brew --prefix)/share/aclocal"
+      ACLOCAL_OPTIONS="${ACLOCAL_OPTIONS:-} -I $(brew --prefix)/share/aclocal"
       if brew --prefix gettext > /dev/null 2>&1; then
-        ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I $(brew --prefix gettext)/share/aclocal"
+        ACLOCAL_OPTIONS="${ACLOCAL_OPTIONS} -I $(brew --prefix gettext)/share/aclocal"
       fi
       : ${LIBTOOLIZE=glibtoolize}
     fi
     ;;
   FreeBSD)
-    ACLOCAL_OPTIONS="$ACLOCAL_OPTIONS -I /usr/local/share/aclocal/"
+    ACLOCAL_OPTIONS="${ACLOCAL_OPTIONS:-} -I /usr/local/share/aclocal/"
     ;;
 esac
 
