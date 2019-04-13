@@ -4,13 +4,6 @@ notifications:
 
 language: cpp
 
-compiler:
-  - gcc
-  - clang
-env:
-  - ENABLE_COVERAGE=no
-  - ENABLE_COVERAGE=yes CONFIGURE_OPTIONS=--enable-coverage
-
 apt_packages: &apt_packages
   packages:
     - autotools-dev
@@ -20,6 +13,14 @@ apt_packages: &apt_packages
     - libgoffice-0.8-dev
     - libgstreamer0.10-dev
     - libsoup2.4-dev
+
+enable_coverage: &enable_coverage
+  env:
+    CONFIGURE_OPTIONS: --enable-coverage
+  install:
+    - sudo pip install cpp-coveralls
+  after_success:
+    - coveralls --exclude test
 
 before_script:
   - ./autogen.sh
@@ -42,12 +43,7 @@ matrix:
       addons:
         apt:
           <<: *apt_packages
-        install:
-          - sudo pip install cpp-coveralls
-      env:
-        CONFIGURE_OPTIONS: --enable-coverage
-      after_success:
-        - coveralls --exclude test
+      <<: *enable_coverage
     - name: "Clang"
       os: linux
       compiler: clang
@@ -60,10 +56,7 @@ matrix:
       addons:
         apt:
           <<: *apt_packages
-        install:
-          - sudo pip install cpp-coveralls
-      after_success:
-        - coveralls --exclude test
+      <<: *enable_coverage
     - name: "macOS"
       os: osx
       install:
