@@ -808,7 +808,7 @@ test/Makefile.am:
 
 We need to add src/.libs/ to PATH environment variable
 before run cutter to find DLL generated under src/.libs/ on
-Cygwin:
+Cygwin, Darwin (including MacOS), and BSD Unix:
 
 test/run-test.sh:
   ...
