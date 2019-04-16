@@ -791,10 +791,10 @@ test/Makefile.am:
   LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
   ...
 
-Cygwin環境の場合はsrc/.libs/以下に生成されるスタックを実装し
-たDLLを利用するために、src/.libs/にパスを通す必要がある。その
-ため、以下のようにtest/run-test.shでcutterを実行する前にPATH
-を設定する。
+Cygwin・macOS・BSD環境の場合はsrc/.libs/以下に生成されるスタックを実装
+したライブラリーを利用するために、src/.libs/にパスを通す必要がある。そ
+のため、以下のようにtest/run-test.shでcutterを実行する前に環境変数を設
+定する。
 
 test/run-test.sh:
   ...
