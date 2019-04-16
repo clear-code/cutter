@@ -806,9 +806,10 @@ test/Makefile.am:
   LIBS = $(CUTTER_LIBS) $(top_builddir)/src/libstack.la
   ...
 
-We need to add src/.libs/ to PATH environment variable
-before run cutter to find DLL generated under src/.libs/ on
-Cygwin, Darwin (including MacOS), and BSD Unix:
+We need to add src/.libs to library search paths in the environment,
+before running cutter, so that it will find our code libraries.
+The following makes the settings neeeded for
+Cygwin, Darwin (including macOS), and BSD Unix:
 
 test/run-test.sh:
   ...
