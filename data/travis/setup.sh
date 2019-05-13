@@ -3,12 +3,11 @@
 set -e
 
 if [ "$CUTTER_MASTER" = "yes" ]; then
-    sudo apt-get update -qq
-    sudo apt-get install -qq -y \
+    sudo apt update -qq
+    sudo apt install -qq -y \
          autotools-dev \
          intltool \
          libgtk2.0-dev \
-         libgoffice-0.8-dev \
          libsoup2.4-dev
     git clone --depth 1 --branch master https://github.com/clear-code/cutter.git
     cd cutter
@@ -31,15 +30,15 @@ else
 deb ${apt_url_base}/${distribution}/ ${code_name} ${component}
 deb-src ${apt_url_base}/${distribution}/ ${code_name} ${component}
 EOF
-	    sudo apt-get update -qq
-	    sudo apt-get install -qq -y --allow-unauthenticated cutter-keyring
+	    sudo apt update -qq
+	    sudo apt install -qq -y --allow-unauthenticated cutter-keyring
 	    ;;
         ubuntu)
-	    sudo apt-get install -qq -y -V software-properties-common
+	    sudo apt install -qq -y -V software-properties-common
 	    sudo add-apt-repository -y ppa:cutter-testing-framework/ppa
 	    ;;
     esac
 
-    sudo apt-get update -qq
-    sudo apt-get install -qq -y -V cutter-testing-framework
+    sudo apt update -qq
+    sudo apt install -qq -y -V cutter-testing-framework
 fi
