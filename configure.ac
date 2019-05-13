@@ -712,6 +712,22 @@ AC_ARG_WITH(launchpad-uploader-pgp-key,
             [LAUNCHPAD_UPLOADER_PGP_KEY=""])
 AC_SUBST(LAUNCHPAD_UPLOADER_PGP_KEY)
 
+AC_ARG_WITH([groonga-source-path],
+            AS_HELP_STRING([--with-groonga-source-path=PATH],
+                             [Specify Groonga source path for
+                              Cutter's release manager.]),
+              [GROONGA_SOURCE_PATH="$withval"],
+              [GROONGA_SOURCE_PATH=""])
+case "$GROONGA_SOURCE_PATH" in
+""|/*)
+  : # do nothing
+  ;;
+*)
+  GROONGA_SOURCE_PATH="\$(top_builddir)/${GROONGA_SOURCE_PATH}"
+  ;;
+esac
+AC_SUBST(GROONGA_SOURCE_PATH)
+
 dnl **************************************************************
 dnl Cutter related variables.
 dnl **************************************************************
