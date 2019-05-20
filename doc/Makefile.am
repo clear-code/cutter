@@ -15,8 +15,8 @@ EXTRA_DIST =					\
 	install-to-centos.rd.ja			\
 	install-to-freebsd.rd			\
 	install-to-freebsd.rd.ja		\
-	install-to-mac-os-x.rd			\
-	install-to-mac-os-x.rd.ja		\
+	install-to-macos.rd			\
+	install-to-macos.rd.ja			\
 	install-to-solaris.rd			\
 	install-to-solaris.rd.ja		\
 	install-to-ubuntu.rd			\

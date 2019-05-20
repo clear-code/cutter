@@ -45,13 +45,13 @@
         <h2 id="about">Cutterとは</h2>
         <div class="eye-catch">
           <img alt="GNOME上での通知" src="notify-on-gnome.png">
-          <img alt="Mac OS X上での通知" src="notify-on-mac-os-x.png">
+          <img alt="macOS上での通知" src="notify-on-macos.png">
         </div>
 	<p>
 	  Cutterは書きやすさ・デバッグのしやすさを重視したC言語・C++言語用のテスティングフレームワークです。メンテナンスしやすく、利用効果の高い単体テスト（ユニットテスト）の開発を支援します。
 	</p>
         <p>
-          また、テストを苦痛ではなく、楽しいものにすることも重視しています。スクリーンショットはテスト結果の通知機能を利用している様子です。文字としてテストのパス・失敗を伝えるだけではなく、視覚的にも通知することで、テスト結果をわかりやすくします。わかりやすいので、頻繁にテストを実行したくなります。この機能はnotify-sendコマンド（Linuxや*BSDなどの場合）またはgrowlnotifyコマンド（Mac OS Xの場合）を利用します。
+          また、テストを苦痛ではなく、楽しいものにすることも重視しています。スクリーンショットはテスト結果の通知機能を利用している様子です。文字としてテストのパス・失敗を伝えるだけではなく、視覚的にも通知することで、テスト結果をわかりやすくします。わかりやすいので、頻繁にテストを実行したくなります。この機能はnotify-sendコマンド（Linuxや*BSDなどの場合）またはgrowlnotifyコマンド（macOSの場合）を利用します。
         </p>
 
         <h2 id="platform">動作環境</h2>
@@ -62,7 +62,7 @@
 	  <a href="reference/ja/install-to-centos.html">CentOS</a>,
 	  <a href="reference/ja/install-to-freebsd.html">FreeBSD</a>,
 	  <a href="reference/ja/install-to-solaris.html">Solaris</a>,
-	  <a href="reference/ja/install-to-mac-os-x.html">Mac OS X</a>,
+	  <a href="reference/ja/install-to-macos.html">macOS</a>,
 	  <a href="reference/ja/install-to-cygwin.html">Cygwin</a>など多くのUNIX互換環境で動作します。環境によってはパッケージが用意されているため、容易にインストールすることができます。
 	</p>
 
@@ -95,7 +95,7 @@
 		<li><a href="reference/ja/install-to-centos.html">CentOS</a></li>
 		<li><a href="reference/ja/install-to-freebsd.html">FreeBSD</a></li>
 		<li><a href="reference/ja/install-to-solaris.html">Solaris</a></li>
-		<li><a href="reference/ja/install-to-mac-os-x.html">Mac OS X</a></li>
+		<li><a href="reference/ja/install-to-macos.html">macOS</a></li>
 		<li><a href="reference/ja/install-to-cygwin.html">Cygwin</a></li>
 		<li><a href="reference/ja/install-to-others.html">その他</a></li>
 	      </ul>

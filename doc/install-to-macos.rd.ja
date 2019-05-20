@@ -1,0 +1,20 @@
+# -*- rd -*-
+
+= macOSへインストール --- macOSへのCutterのインストール方法
+
+== はじめに
+
+macOSへのCutterのインストール方法を説明します。
+
+== インストール
+
+Cutterは((<Homebrew|URL:https://formulae.brew.sh/>))でインストールできます。
+
+  % brew install cutter
+
+== 次のステップ
+
+以上でインストールは完了です。
+
+まずは((<チュートリアル|TUTORIAL.ja>))を一通り試してください。
+Cutterを使った開発の流れがわかります。
