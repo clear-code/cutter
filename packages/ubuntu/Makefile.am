@@ -1,5 +1,5 @@
-UBUNTU_CODE_NAMES = xenial,bionic,cosmic,disco
-UBUNTU_VERSIONS = 16.04,18.04,18.10,19.04
+UBUNTU_CODE_NAMES = xenial,bionic,disco
+UBUNTU_VERSIONS = 16.04,18.04,19.04
 PPA = cutter-ppa
 PPA_INCOMING = ~cutter-testing-framework/ppa/ubuntu/
 SOURCE = $(abs_top_builddir)/$(PACKAGE)-$(VERSION).tar.gz
