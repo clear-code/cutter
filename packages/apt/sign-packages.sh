@@ -23,7 +23,7 @@ run()
 
 for code_name in ${CODES}; do
     case ${code_name} in
-	stretch)
+	stretch|buster)
 	    distribution=debian
 	    ;;
 	*)
