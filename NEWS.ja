@@ -2,6 +2,36 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-2-7] 1.2.7: 2019-09-13
+
+しばらくぶりのメンテナンスリリースです。報告のあった不具合をいくつか修正しています。
+
+=== Cutter
+
+==== Improvements
+
+  * [deb][ubuntu] Ubuntu 14.04/17.04/17.10/18.10のサポートをやめました。
+  * [gstreamer] 明示的にGStreamer 1.14以降をサポートしないことにしました。
+  * [deb][ubuntu] Ubuntu 18.04/19.04をサポートしました。
+  * [homebrew] Homebrewのインストール先が変更されていても問題ないようにしました。
+    これまでは Homebrewのaclocalのパスは/usr/local/share/aclocalに決め打ちしていました。
+  * [travis] macOSをCIの対象に加えました。
+  * [doc][tutorial] DYLD_LIBRARY_PATHが必要な環境について追記しました。
+    [GitHub#41] [Douglas Lovellさんがパッチ提供]
+  * [doc][tutorial] 共有ライブラリーをロードする方法の説明を更新しました。
+
+=== cppcutter
+
+==== Fixes
+
+  * Messageクラスの実装で誤ったc_str()の使用により不正なアドレスを返す問題を修正しました。
+    [GitHub#39][dcb314さんが報告]
+
+=== Thanks
+
+  * dcb314さん
+  * Douglas Lovellさん
+
 == [release-1-2-6] 1.2.6: 2017-09-26
 
 しばらくぶりのメンテナンスリリースです。報告のあった不具合をいくつか修正しています。
