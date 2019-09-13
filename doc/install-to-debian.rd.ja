@@ -11,7 +11,7 @@ Debian GNU/LinuxへのCutterのインストール方法を説明します。
 CutterのDebianパッケージが提供されているので、apt-getでインス
 トールできます。
 
-現在は、Debian GNU/Linux jessie/stretch i386/amd64用のパッ
+現在は、Debian GNU/Linux stretch/buster i386/amd64用のパッ
 ケージを提供しています。他のバージョンが必要な場合は((<メーリ
 ングリスト
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
@@ -21,17 +21,21 @@ stretchの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb https://osdn.net/projects/cutter/storage/debian/ stretch main
-  deb-src https://osdn.net/projects/cutter/storage/debian/ stretch main
+  deb [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ stretch main
+  deb-src [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ stretch main
 
-Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
-cutter-keyringパッケージをインストールして鍵を登録してください。
+  % sudo wget -O /usr/share/keyrings/cutter-keyring.gpg https://osdn.net/projects/cutter/storage/debian/cutter-keyring.gpg
+  % sudo apt-get update
+  % sudo apt-get -y install cutter-testing-framework
 
-  % sudo apt-get update --allow-insecure-repositories
-  % sudo apt-get -y --allow-unauthenticated install cutter-keyring
+busterの場合は以下のapt lineを書いた
+/etc/apt/sources.list.d/cutter.listを作成してください。
 
-cutter-keyringパッケージをインストール後はapt-getでインストールできます。
+/etc/apt/sources.list.d/cutter.list:
+  deb [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ buster main
+  deb-src [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ buster main
 
+  % sudo wget -O /usr/share/keyrings/cutter-keyring.gpg https://osdn.net/projects/cutter/storage/debian/cutter-keyring.gpg
   % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework
 

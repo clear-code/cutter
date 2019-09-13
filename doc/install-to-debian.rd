@@ -11,7 +11,7 @@ GNU/Linux.
 
 You can use apt-get because Cutter provides Debian packages.
 
-There are packages for Debian GNU/Linux jessie/stretch
+There are packages for Debian GNU/Linux stretch/buster 
 i386/amd64. If you need a package for another environment,
 you can request on ((<mailing
 list|URL:https://lists.osdn.me/mailman/listinfo/cutter-users-en>)).
@@ -20,17 +20,21 @@ Here are apt lines for stretch. Put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb https://osdn.net/projects/cutter/storage/debian/ stretch main
-  deb-src https://osdn.net/projects/cutter/storage/debian/ stretch main
+  deb [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ stretch main
+  deb-src [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ stretch main
 
-Cutter packages are signed by key of cutter-keyring.
-Register the key by installing cutter-keyring package.
+  % sudo wget -O /usr/share/keyrings/cutter-keyring.gpg https://osdn.net/projects/cutter/storage/debian/cutter-keyring.gpg
+  % sudo apt-get update
+  % sudo apt-get -y install cutter-testing-framework
 
-  % sudo apt-get update --allow-insecure-repositories
-  % sudo apt-get -y --allow-unauthenticated install cutter-keyring
+Here are apt lines for buster. Put them into
+/etc/apt/sources.list.d/cutter.list.
 
-If you install the keyring package, you can install Cutter by apt-get:
+/etc/apt/sources.list.d/cutter.list:
+  deb [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ buster main
+  deb-src [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ buster main
 
+  % sudo wget -O /usr/share/keyrings/cutter-keyring.gpg https://osdn.net/projects/cutter/storage/debian/cutter-keyring.gpg
   % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework
 
