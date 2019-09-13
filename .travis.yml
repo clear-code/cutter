@@ -62,7 +62,7 @@ matrix:
       os: osx
       env:
         CONFIGURE_OPTIONS:
-          PKG_CONFIG_PATH="$(brew --prefix libffi)/pkgconfig"
+          PKG_CONFIG_PATH="$(brew --prefix libffi)/lib/pkgconfig"
           PATH="$(brew --prefix gettext)/bin:${PATH}"
       install:
         - brew update
