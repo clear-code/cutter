@@ -65,4 +65,5 @@ matrix:
           PKG_CONFIG_PATH="$(brew --prefix libffi)/pkgconfig"
           PATH="$(brew --prefix gettext)/bin:${PATH}"
       install:
+        - brew update
         - brew bundle
