@@ -25,7 +25,7 @@
       <xi:include href="install-to-centos.xml"/>
       <xi:include href="install-to-freebsd.xml"/>
       <xi:include href="install-to-solaris.xml"/>
-      <xi:include href="install-to-mac-os-x.xml"/>
+      <xi:include href="install-to-macos.xml"/>
       <xi:include href="install-to-cygwin.xml"/>
       <xi:include href="install-to-others.xml"/>
     </chapter>
