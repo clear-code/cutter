@@ -21,6 +21,7 @@ svg_images =					\
 	favicon.svg
 
 images =					\
+	github-logo.png				\
 	famfamfam-logo.png			\
 	tango-logo.png				\
 	jp.png					\
@@ -47,7 +48,7 @@ generated_images =				\
 MAINTAINER_CLEANFILES = $(generated_images)
 
 upload: $(web_contents)
-	(cd $(srcdir) && rsync -avz $(web_contents) $(SF_HTDOCS)/)
+	(cd $(srcdir) && rsync -avz $(web_contents) $(OSDN_HTDOCS)/)
 
 SUFFIXES = .svg .png
 

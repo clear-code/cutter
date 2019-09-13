@@ -5,9 +5,9 @@ Name: cutter
 Version: @VERSION@
 Release: 1%{?dist}
 License: LGPL3+
-URL: http://cutter.sourceforge.net/
+URL: https://osdn.net/projects/cutter/
 Group: Development/Tools
-Source: http://downloads.sourceforge.net/cutter/cutter-%{version}.tar.gz
+Source: https://osdn.net/dl/cutter/cutter-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-%(%{__id_u} -n)
 BuildRequires: intltool
 BuildRequires: gcc

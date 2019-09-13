@@ -22,8 +22,8 @@ case "${distribution}" in
   debian)
     component=main
     run cat <<EOF > /etc/apt/sources.list.d/cutter.list
-deb http://sourceforge.net/projects/cutter/files/debian/ ${code_name} main
-deb-src http://sourceforge.net/projects/cutter/files/debian/ ${code_name} main
+deb https://osdn.net/projects/cutter/storage/debian/ ${code_name} main
+deb-src https://osdn.net/projects/cutter/storage/debian/ ${code_name} main
 EOF
     run apt-get update
     run apt-get install -y --allow-unauthenticated cutter-keyring

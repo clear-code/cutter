@@ -8,7 +8,7 @@ Cutterを導入するときの参考になるかもしれません。
 
 もし、まだCutterについて知らない場合は、はじめに((<チュートリ
 アル
-|URL:http://cutter.sourceforge.net/reference/ja/tutorial.html>))
+|URL:http://cutter.osdn.jp/reference/ja/tutorial.html>))
 を読んでください。
 
 == はじめに
@@ -43,7 +43,7 @@ CutterはGNUビルドシステムサポート用の機能をいくつか提供�
 
 もし、これからプロジェクトを始める場合でGNUビルドシステムを
 採用する場合は((<Cutterのチュートリアル
-|URL:http://cutter.sourceforge.net/reference/ja/tutorial.html>))
+|URL:http://cutter.osdn.jp/reference/ja/tutorial.html>))
 が参考になるでしょう。
 
 == ビルドシステムへのCutterの組み込み
@@ -453,7 +453,7 @@ API|URL:http://qwik.jp/senna/APIJ.html#snippet_API>))のテスト
   (5) sen_snip_close()で生成したsen_snipオブジェクトを開放
 
 基本的なCutterのテスト作成方法については((<チュートリアル
-|URL:http://cutter.sourceforge.net/reference/ja/tutorial.html>))
+|URL:http://cutter.osdn.jp/reference/ja/tutorial.html>))
 を参考にしてください。
 
 === sen_snip_open()のテスト
@@ -493,7 +493,7 @@ sen_snip_open()は引数が多いですが、ここでは気にする必要は�
 ません。sen_snip_open()によりsen_snip *が生成されることだけ知っ
 ていれば問題ありません。
 
-((<cut_assert_not_null|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-not-null>))(snip)
+((<cut_assert_not_null|URL:http://cutter.osdn.jp/reference/ja/cutter-cut-assertions.html#cut-assert-not-null>))(snip)
 でsen_snip *が正常に生成されているかを確認します。これは、
 sen_snip_open()は失敗時にはNULLを返すからです。
 
@@ -530,7 +530,7 @@ test/unit/test-snip.c:
   }
 
 sen_snip_add_cond()の結果は
-((<cut_assert_equal_int|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-equal-int>))
+((<cut_assert_equal_int|URL:http://cutter.osdn.jp/reference/ja/cutter-cut-assertions.html#cut-assert-equal-int>))
 で検証しています。
 
 ただし、ここで問題があります。cut_assert*()は検証が失敗すると
@@ -688,7 +688,7 @@ test/unit/test-snip.c:
 せっかくなのでCutterのテスト結果の出力方法を紹介します。
 
 Cutterは
-((<cut_assert_equal_string|URL:http://cutter.sourceforge.net/reference/ja/cutter-cut-assertions.html#cut-assert-equal-string>))
+((<cut_assert_equal_string|URL:http://cutter.osdn.jp/reference/ja/cutter-cut-assertions.html#cut-assert-equal-string>))
 で文字列の比較が失敗したときには、どの部分が異なったかという
 差分情報を表示します。
 

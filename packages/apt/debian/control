@@ -1,11 +1,11 @@
 Source: cutter-keyring
 Section: misc
 Priority: important
-Maintainer: cutter project <cutter-users-en@lists.sourceforge.net>
+Maintainer: cutter project <cutter@clear-code.com>
 Build-Depends:
   debhelper (>= 7.0.50)
 Standards-Version: 3.9.5
-Homepage: http://cutter.sourceforge.net/
+Homepage: https://osdn.net/projects/cutter/
 
 Package: cutter-keyring
 Section: misc

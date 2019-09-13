@@ -14,7 +14,7 @@ We can use aptitude because Cutter provides Debian packages.
 There are packages for Ubuntu Trusty Tahr/Xenial Xerus/Bionic Beaver i386/amd64.
 If you need a package for another environment,
 you can request on ((<mailing
-list|URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-en>)).
+list|URL:https://lists.osdn.me/mailman/listinfo/cutter-users-en>)).
 
 === PPA (Personal Package Archive)
 

@@ -7,34 +7,34 @@
 このセクションではCutterをリリースするときに必要な手順について
 説明します。
 
-== sourceforge.netアカウントの設定
+== osdn.netアカウントの設定
 
-Cutterは((<URL:http://sourceforge.net/>))にて
-((<プロジェクトのウェブサイト|URL:http://cutter.sourceforge.net>))や
-((<プラットフォームごとのリポジトリなど|URL:https://sourceforge.net/projects/cutter/files/>))
+Cutterは((<URL:https://osdn.net/>))にて
+((<プロジェクトのウェブサイト|URL:https://osdn.net/projects/cutter/>))や
+((<プラットフォームごとのリポジトリなど|URL:https://osdn.net/projects/cutter/storage/>))
 をホスティングしています。
 
-そのため、リリース作業ではsourceforge.net上のプロジェクト領域へ
+そのため、リリース作業ではosdn.net上のプロジェクト領域へ
 アクセスできる必要があります。
 
 Cutterプロジェクトのメンバでない場合にはプロジェクトの
-管理者にsourceforge.netのアカウント名を以下のProject Membershipページ
+管理者にosdn.netのアカウント名を以下のProject Membershipページ
 から追加してもらう必要があります。
 
-((<Cutter - Project Membership|URL:https://sourceforge.net/project/admin/project_membership.php?group_id=208375>))
+((<メンバーリスト - Cutter - OSDN|URL:https://osdn.net/projects/cutter/memberlist?show_detail=1>))
 
 
 == 環境変数の設定
 
-Cutterのリリースではすでに述べたようにsourceforge.netへの
+Cutterのリリースではすでに述べたようにosdn.netへの
 パッケージやドキュメントファイルのアップロードを行います。
 
 もし、リリース作業を行う端末のアカウントと
-sourceforge.netのアカウントが異なる場合には、
-以下のようにしてsourceforge.netのアカウントを使うように
-環境変数(({SF_USER}))の設定を行います。
+osdn.netのアカウントが異なる場合には、
+以下のようにしてosdn.netのアカウントを使うように
+環境変数(({OSDN_USER}))の設定を行います。
 
-    % export SF_USER=(ここにsourceforge.netのアカウントを指定)
+    % export OSDN_USER=(ここにosdn.netのアカウントを指定)
 
 永続的に有効にする場合にはシェルの設定ファイルに上記記述を追加します。
 
@@ -326,18 +326,18 @@ Debian系もしくはRed Hat系の場合には本番環境へとアップロー�
 そのためには、リポジトリをwebサーバ経由で参照できるようにすることが
 必要です。
 
-また、sourceforge.netとディレクトリ階層を揃える必要があります。
+また、osdn.netとディレクトリ階層を揃える必要があります。
 
-sourceforge.netとディレクトリ階層を合わせるために
+osdn.netとディレクトリ階層を合わせるために
 (({$CUTTER_CLEAN_DIR/packages}))ディレクトリで以下のコマンドを実行します。
 
   % ./check-utility.sh --setup-temp-repository
 
-コマンドを実行するとtemp_repositories/project/cutterディレクトリを作成し、
+コマンドを実行するとtemp_repositories/projects/cutter/storageディレクトリを作成し、
 apt/repositoriesやyum/repositoriesのディストリビューションの
 ディレクトリへとシンボリックリンクを張ります。
 
-  % ls -la temp_repositories/project/cutter
+  % ls -la temp_repositories/projects/cutter/storage
   total 24
   drwxrwxr-x 2 khayashi khayashi 4096 Aug  9 17:21 .
   drwxrwxr-x 3 khayashi khayashi 4096 Aug  9 17:14 ..
@@ -351,7 +351,7 @@ apt/repositoriesやyum/repositoriesのディストリビューションの
   % sudo ruby1.9.1 -run -e httpd -- temp_repositories
 
 これでchroot環境においてhostsファイルを書き換えて
-downloads.sourceforge.netがローカルホストを参照するようにすれば、
+osdn.netがローカルホストを参照するようにすれば、
 ローカルに構築したリポジトリの確認を行えます。
 
 == リリースアナウンスの作成
@@ -401,14 +401,11 @@ NEWS,NEWS.jaにまとめておいた変更点を元にリリースアナウン�
   % make release-official
   % make release-debian
 
-
-SF.netにtar.gzをアップロードしたあとに、最新版へのリンクを更新するには、
+osdn.netにtar.gzをアップロードしたあとに、最新版へのリンクを更新するには、
 次のようにする。例: 1.2.3の場合
 
-https://sourceforge.net/projects/cutter/files/cutter/1.2.3/にアクセス
-し、(i)マークのView detailsリンクをクリックしファイルプロパティを表示する。
-Default download forという項目があるので、zipはwindows、tar.gzはその他
-というようにチェックを入れると最新版へのリンクが更新される。
+https://osdn.net/projects/cutter/releases/ にアクセスし、「優先ダウンロードファイルの編集」ボタンをクリックすると、
+プラットフォームごとに優先してダウンロードさせるファイルを設定することができる。
 
 === GitHubへのアップロード
 
@@ -425,8 +422,8 @@ Cutterにはユーザー向けに提供されているメーリングリスト�
 あらかじめ用意しておいた、リリースアナウンス原稿を
 [ANN] Cutter (バージョン)という件名で投稿します。
 
-* cutter-users-en@sourceforge.net 英語
-* cutter-users-ja@sourceforge.net 日本語
+* cutter-users-en@lists.osdn.me 英語
+* cutter-users-ja@lists.osdn.me 日本語
 
 == リリース後にやること
 

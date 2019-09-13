@@ -256,7 +256,6 @@ EXTRA_DIST +=				\
 	html-build.stamp		\
 	version.xml.in			\
 	$(generated_xml_files)		\
-	sf-logo.html			\
 	overrides.txt			\
 	ja.po
 
@@ -405,4 +404,4 @@ upload: docs
 	ruby $(top_srcdir)/misc/prepare-gtk-doc-html-for-publishing.rb	\
 	  --template-directory=$(srcdir) --title "$(PACKAGE_TITLE)"	\
 	  --language=ja tmp/reference/ja/*.html
-	rsync -avz --delete tmp/reference/ $(SF_HTDOCS)/reference/
+	rsync -avz --delete tmp/reference/ $(OSDN_HTDOCS)/reference/

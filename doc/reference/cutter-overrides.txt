@@ -1,24 +1,6 @@
 # cutter.h
 
 <FUNCTION>
-<NAME>cut_set_attributes</NAME>
-<RETURNS>void</RETURNS>
-const char *first_attribute_name, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_get_current_test_context</NAME>
-<RETURNS>CutTestContext *</RETURNS>
-void
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_set_current_test_context</NAME>
-<RETURNS>void</RETURNS>
-CutTestContext *test_context
-</FUNCTION>
-
-<FUNCTION>
 <NAME>cut_set_message</NAME>
 <RETURNS>void</RETURNS>
 const char *format, ...
@@ -413,21 +395,9 @@ const char *path, ...
 </FUNCTION>
 
 <FUNCTION>
-<NAME>cut_build_fixture_path</NAME>
-<RETURNS>const char *</RETURNS>
-const char *path, ...
-</FUNCTION>
-
-<FUNCTION>
 <NAME>cut_get_fixture_data_string</NAME>
 <RETURNS>const char *</RETURNS>
 const char *path, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>cut_get_fixture_data</NAME>
-<RETURNS>const char *</RETURNS>
-size_t *size, const char *path, ...
 </FUNCTION>
 
 <FUNCTION>
@@ -539,18 +509,6 @@ GHashTable *hash_table
 </FUNCTION>
 
 <FUNCTION>
-<NAME>gcut_take_string</NAME>
-<RETURNS>GString *</RETURNS>
-GString *string
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_take_new_string</NAME>
-<RETURNS>GString *</RETURNS>
-const gchar *string
-</FUNCTION>
-
-<FUNCTION>
 <NAME>gcut_take_new_list_string</NAME>
 <RETURNS>const GList *</RETURNS>
 const gchar *value, ...
@@ -578,12 +536,6 @@ guint n, guint value, ...
 <NAME>gcut_take_new_hash_table_string_string</NAME>
 <RETURNS>GHashTable *</RETURNS>
 const gchar *key, ...
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_get_fixture_data</NAME>
-<RETURNS>GString *</RETURNS>
-const gchar *path, ...
 </FUNCTION>
 
 # gcut-assertions.h
@@ -851,24 +803,6 @@ gconstpointer data, const gchar *field_name
 <FUNCTION>
 <NAME>gcut_data_get_boxed</NAME>
 <RETURNS>gconstpointer</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_object</NAME>
-<RETURNS>GObject *</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_boolean</NAME>
-<RETURNS>gboolean</RETURNS>
-gconstpointer data, const gchar *field_name
-</FUNCTION>
-
-<FUNCTION>
-<NAME>gcut_data_get_double</NAME>
-<RETURNS>gdouble</RETURNS>
 gconstpointer data, const gchar *field_name
 </FUNCTION>
 

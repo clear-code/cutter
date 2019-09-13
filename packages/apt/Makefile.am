@@ -1,4 +1,4 @@
-SERVER_PATH = $(SF_FRS)
+SERVER_PATH = $(OSDN_FS)
 REPOSITORIES_PATH = repositories
 DISTRIBUTIONS = debian
 ARCHITECTURES = i386 amd64
@@ -28,7 +28,7 @@ sign-packages:
 	./sign-packages.sh '$(GPG_UID)' '$(REPOSITORIES_PATH)/' '$(CODES)'
 
 update-repository:
-	./update-repository.sh '$(SF_PROJECT_NAME)' '$(REPOSITORIES_PATH)/' \
+	./update-repository.sh '$(OSDN_PROJECT_NAME)' '$(REPOSITORIES_PATH)/' \
 	  '$(ARCHITECTURES)' '$(CODES)'
 
 sign-repository:

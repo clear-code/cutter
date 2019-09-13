@@ -53,12 +53,17 @@ upload: upload-doc
 
 release: dist release-official release-debian
 
-release-official:
-	$(srcdir)/misc/release.rb				\
-	  $(SF_USER) $(SF_PROJECT_ID) $(SF_PROJECT_NAME)	\
-	  $(PACKAGE_NAME) $(VERSION) README NEWS		\
-	  $(PACKAGE)-$(VERSION).tar.gz				\
-	  $(PACKAGE)-$(VERSION).zip
+release-official: $(PACKAGE)-$(VERSION).tar.gz.asc $(PACKAGE)-$(VERSION).zip.asc
+	$(srcdir)/misc/release-to-osdn.rb				\
+	  --credential=$(OSDN_CREDENTIAL_FILE) \
+	  --project=$(PACKAGE) \
+	  --new-version=$(VERSION) \
+	  --news-file=NEWS \
+	  --package=$(PACKAGE) \
+	  --asset-file=$(PACKAGE)-$(VERSION).tar.gz \
+	  --asset-file=$(PACKAGE)-$(VERSION).tar.gz.asc \
+	  --asset-file=$(PACKAGE)-$(VERSION).zip \
+	  --asset-file=$(PACKAGE)-$(VERSION).zip.asc
 
 release-debian:
 	rm -rf tmp
@@ -72,7 +77,7 @@ release-debian:
 	echo "Options +Indexes" > tmp/archives/.htaccess
 	mv tmp/$(PACKAGE)-testing-framework-$(VERSION).tar.gz \
 	  tmp/archives/debian/
-	rsync -avz tmp/archives $(SF_HTDOCS)/
+	rsync -avz tmp/archives $(OSDN_HTDOCS)/
 
 release-github: dist
 	$(srcdir)/misc/release-to-github.rb \
@@ -81,6 +86,14 @@ release-github: dist
 	  --news-file=NEWS \
 	  --asset-file=$(PACKAGE)-$(VERSION).tar.gz \
 	  --access-token-file=$(ACCESS_TOKEN_FILE)
+
+sign-archives: sign-archive-targz sign-archive-zip
+
+sign-archive-targz: $(PACKAGE)-$(VERSION).tar.gz
+	gpg --local-user $(GPG_UID) --armor --detach-sign $(PACKAGE)-$(VERSION).tar.gz
+
+sign-archive-zip: $(PACKAGE)-$(VERSION).zip
+	gpg --local-user $(GPG_UID) --armor --detach-sign $(PACKAGE)-$(VERSION).zip
 
 upload-doc:
 	cd html && $(MAKE) upload

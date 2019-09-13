@@ -4,14 +4,14 @@
 
 == 一覧
 
-  * ((<Cutter|URL:http://cutter.sourceforge.net/>)): セルフテスト
+  * ((<Cutter|URL:https://osdn.net/projects/cutter/>)): セルフテスト
   * ((<Senna|URL:http://qwik.jp/senna/FrontPageJ.html>)):
     全文検索エンジン
   * ((<groonga|URL:http://groonga.org/>)):
     全文検索エンジンとカラムストア
   * ((<mroonga|URL:http://wiki.github.com/mroonga/mroonga>)):
     バックエンドにgroongaを使うMySQLのストレージエンジン
-  * ((<milter manager|URL:http://milter-manager.sourceforge.net/index.html.ja>)):
+  * ((<milter manager|URL:https://milter-manager.osdn.jp/index.html.ja>)):
     milterを効果的に使うためのmilter
   * ((<風博士|URL:http://kazehakase.sourceforge.jp/ja/>)):
     ブラウザ
