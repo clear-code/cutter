@@ -22,11 +22,10 @@ case "${distribution}" in
   debian)
     component=main
     run cat <<EOF > /etc/apt/sources.list.d/cutter.list
-deb https://osdn.net/projects/cutter/storage/debian/ ${code_name} main
-deb-src https://osdn.net/projects/cutter/storage/debian/ ${code_name} main
+deb [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ ${code_name} main
+deb-src [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ ${code_name} main
 EOF
-    run apt-get update
-    run apt-get install -y --allow-unauthenticated cutter-keyring
+    run wget -O /usr/share/keyrings/cutter-keyring.gpg https://osdn.net/projects/cutter/storage/debian/cutter-keyring.gpg
     run apt-get update
     ;;
   ubuntu)
