@@ -17,13 +17,6 @@ CutterのDebianパッケージが提供されているので、apt-getでイン�
 |URL:https://lists.sourceforge.net/lists/listinfo/cutter-users-ja>))
 でリクエストしてください。
 
-jessieの場合は以下のapt lineを書いた
-/etc/apt/sources.list.d/cutter.listを作成してください。
-
-/etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/debian/ jessie main
-  deb-src http://downloads.sourceforge.net/project/cutter/debian/ jessie main
-
 stretchの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
