@@ -36,7 +36,7 @@ Enter into Cygwin. Now, you can run Cygwin.
 Install Cutter:
 
   % cd
-  % wget https://osdn.net/dl/cutter/1.2.7/cutter-1.2.7.tar.gz
+  % wget https://osdn.net/dl/cutter/cutter-1.2.6.tar.gz
   % tar xvzf cutter-1.2.6.tar.gz
   % cd cutter-1.2.7
   % ./configure

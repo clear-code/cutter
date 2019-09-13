@@ -26,7 +26,7 @@
 	<li id="menu-install"><a href="reference/ja/install.html">インストール</a></li>
 	<li id="menu-tutorial"><a href="reference/ja/tutorial.html">チュートリアル</a></li>
 	<li id="menu-reference"><a href="reference/ja/">リファレンス</a></li>
-	<li id="menu-download"><a href="https://osdn.net/dl/cutter-1.2.7.tar.gz">ダウンロード</a></li>
+	<li id="menu-download"><a href="https://osdn.net/dl/cutter/cutter-1.2.7.tar.gz">ダウンロード</a></li>
 	<!--li id="menu-blog"><a href="blog/ja/">ブログ</a></li-->
       </ul>
     </div>
@@ -38,7 +38,7 @@
 	  2019-09-13にリリースされた1.2.7が最新です。
         </p>
 	<p>
-          [<a href="https://osdn.net/dl/cutter-1.2.7.tar.gz">ダウンロード</a>]
+          [<a href="https://osdn.net/dl/cutter/cutter-1.2.7.tar.gz">ダウンロード</a>]
           [<a href="reference/ja/news.html#news.release-1-2-7">変更点</a>]
 	</p>
 
