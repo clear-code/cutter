@@ -26,7 +26,7 @@
 	<li id="menu-install"><a href="reference/ja/install.html">インストール</a></li>
 	<li id="menu-tutorial"><a href="reference/ja/tutorial.html">チュートリアル</a></li>
 	<li id="menu-reference"><a href="reference/ja/">リファレンス</a></li>
-	<li id="menu-download"><a href="http://sourceforge.net/projects/cutter/files/cutter/1.2.7/cutter-1.2.7.tar.gz">ダウンロード</a></li>
+	<li id="menu-download"><a href="https://osdn.net/dl/cutter-1.2.7.tar.gz">ダウンロード</a></li>
 	<!--li id="menu-blog"><a href="blog/ja/">ブログ</a></li-->
       </ul>
     </div>
@@ -38,7 +38,7 @@
 	  2019-09-13にリリースされた1.2.7が最新です。
         </p>
 	<p>
-          [<a href="http://sourceforge.net/projects/cutter/files/cutter/1.2.7/cutter-1.2.7.tar.gz">ダウンロード</a>]
+          [<a href="https://osdn.net/dl/cutter-1.2.7.tar.gz">ダウンロード</a>]
           [<a href="reference/ja/news.html#news.release-1-2-7">変更点</a>]
 	</p>
 
@@ -117,7 +117,7 @@
         <div class="sidebar-item">
 	  <h2>プロジェクト情報</h2>
 	  <ul>
-	    <li><a href="http://sourceforge.net/projects/cutter/">プロジェクトページ</a></li>
+	    <li><a href="https://osdn.net/projects/cutter/">プロジェクトページ</a></li>
 	    <li><a href="reference/ja/users.html">Cutter採用プロジェクト</a></li>
 	    <li><a href="https://lists.sourceforge.net/lists/listinfo/cutter-users-ja">メーリングリスト</a></li>
 	  </ul>
@@ -126,10 +126,10 @@
     </div>
 
     <div class="sponsors">
-      <p id="sponsor-sf-net">
-	<a href="http://sourceforge.net/projects/cutter">
-	  <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=208375&amp;type=12" width="120" height="30" border="0" alt="SourceForge.netからCutterをダウンロード。高速で安全なフリーオープンソースソフトウェアダウンロード。">
-	</a>
+      <p id="sponsor-osdn-net">
+        <a href="https://osdn.net/">
+          <img src="//osdn.net/sflogo.php?group_id=10282&type=1" width="96" height="29" border="0" alt="OSDN">
+        </a>
       </p>
       <p id="sponsor-github">
         <a href="http://github.com/clear-code/cutter">
