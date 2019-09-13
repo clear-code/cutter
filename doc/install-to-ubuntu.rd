@@ -22,9 +22,9 @@ The Cutter APT repository for Ubuntu uses PPA (Personal Package Archive) on Laun
 
 Here are supported Ubuntu versions:
 
-  * 14.04 LTS Trusty Tahr
   * 16.04 LTS Xenial Xerus
   * 18.04 LTS Bionic Beaver
+  * 19.04 Disco Dingo
 
 Add the (({ppa:cutter-testing-framework/ppa})) PPA to your system:
 

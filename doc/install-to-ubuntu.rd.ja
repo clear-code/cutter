@@ -18,9 +18,9 @@ UbuntuではCutterのリポジトリとしてLaunchpadのPPA (Personal Package A
 
 現在サポートしているUbuntuのバージョンは次のとおりです:
 
-  * 14.04 LTS Trusty Tahr
   * 16.04 LTS Xenial Xerus
   * 18.04 LTS Bionic Beaver
+  * 19.04 Disco Dingo
 
 (({ppa:cutter-testing-framework/ppa})) PPA を登録します:
 
