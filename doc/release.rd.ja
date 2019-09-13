@@ -326,18 +326,18 @@ Debian系もしくはRed Hat系の場合には本番環境へとアップロー�
 そのためには、リポジトリをwebサーバ経由で参照できるようにすることが
 必要です。
 
-また、sourceforge.netとディレクトリ階層を揃える必要があります。
+また、osdn.netとディレクトリ階層を揃える必要があります。
 
-sourceforge.netとディレクトリ階層を合わせるために
+osdn.netとディレクトリ階層を合わせるために
 (({$CUTTER_CLEAN_DIR/packages}))ディレクトリで以下のコマンドを実行します。
 
   % ./check-utility.sh --setup-temp-repository
 
-コマンドを実行するとtemp_repositories/project/cutterディレクトリを作成し、
+コマンドを実行するとtemp_repositories/projects/cutter/storageディレクトリを作成し、
 apt/repositoriesやyum/repositoriesのディストリビューションの
 ディレクトリへとシンボリックリンクを張ります。
 
-  % ls -la temp_repositories/project/cutter
+  % ls -la temp_repositories/projects/cutter/storage
   total 24
   drwxrwxr-x 2 khayashi khayashi 4096 Aug  9 17:21 .
   drwxrwxr-x 3 khayashi khayashi 4096 Aug  9 17:14 ..
@@ -351,7 +351,7 @@ apt/repositoriesやyum/repositoriesのディストリビューションの
   % sudo ruby1.9.1 -run -e httpd -- temp_repositories
 
 これでchroot環境においてhostsファイルを書き換えて
-downloads.sourceforge.netがローカルホストを参照するようにすれば、
+osdn.netがローカルホストを参照するようにすれば、
 ローカルに構築したリポジトリの確認を行えます。
 
 == リリースアナウンスの作成
@@ -401,14 +401,11 @@ NEWS,NEWS.jaにまとめておいた変更点を元にリリースアナウン�
   % make release-official
   % make release-debian
 
-
-SF.netにtar.gzをアップロードしたあとに、最新版へのリンクを更新するには、
+osdn.netにtar.gzをアップロードしたあとに、最新版へのリンクを更新するには、
 次のようにする。例: 1.2.3の場合
 
-https://sourceforge.net/projects/cutter/files/cutter/1.2.3/にアクセス
-し、(i)マークのView detailsリンクをクリックしファイルプロパティを表示する。
-Default download forという項目があるので、zipはwindows、tar.gzはその他
-というようにチェックを入れると最新版へのリンクが更新される。
+https://osdn.net/projects/cutter/releases/ にアクセスし、「優先ダウンロードファイルの編集」ボタンをクリックすると、
+プラットフォームごとに優先してダウンロードさせるファイルを設定することができる。
 
 === GitHubへのアップロード
 

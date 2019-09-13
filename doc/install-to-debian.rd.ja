@@ -21,13 +21,13 @@ stretchの場合は以下のapt lineを書いた
 /etc/apt/sources.list.d/cutter.listを作成してください。
 
 /etc/apt/sources.list.d/cutter.list:
-  deb http://downloads.sourceforge.net/project/cutter/debian/ stretch main
-  deb-src http://downloads.sourceforge.net/project/cutter/debian/ stretch main
+  deb https://osdn.net/projects/cutter/storage/debian/ stretch main
+  deb-src https://osdn.net/projects/cutter/storage/debian/ stretch main
 
 Cutterパッケージはcutter-keyringが提供している鍵で署名されています。
 cutter-keyringパッケージをインストールして鍵を登録してください。
 
-  % sudo apt-get update
+  % sudo apt-get update --allow-insecure-repositories
   % sudo apt-get -y --allow-unauthenticated install cutter-keyring
 
 cutter-keyringパッケージをインストール後はapt-getでインストールできます。

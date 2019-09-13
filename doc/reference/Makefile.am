@@ -256,7 +256,6 @@ EXTRA_DIST +=				\
 	html-build.stamp		\
 	version.xml.in			\
 	$(generated_xml_files)		\
-	sf-logo.html			\
 	overrides.txt			\
 	ja.po
 

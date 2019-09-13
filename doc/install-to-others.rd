@@ -36,7 +36,7 @@ Cutter uses GNU build tools:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://sourceforge.net/projects/cutter/files/cutter/1.2.7/cutter-1.2.7.tar.gz
+  % wget https://osdn.net/dl/cutter/cutter-1.2.7.tar.gz
   % tar xvzf cutter-1.2.7.tar.gz
   % cd cutter-1.2.7
   % ./configure
@@ -49,7 +49,7 @@ into ~/local/:
 
   % mkdir -p ~/src
   % cd ~/src
-  % wget http://sourceforge.net/projects/cutter/files/cutter/1.2.7/cutter-1.2.7.tar.gz
+  % wget https://osdn.net/dl/cutter/cutter-1.2.7.tar.gz
   % tar xvzf cutter-1.2.7.tar.gz
   % cd cutter-1.2.7
   % ./configure PKG_CONFIG_PATH=$HOME/local/lib/pkgconfig LD_LIBRARY_PATH=$HOME/local/lib --prefix=$HOME/local

@@ -14,11 +14,11 @@ First, we need to register Cutter Yum repository.
 
 CentOS 6:
 
-  % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.3.0-1.noarch.rpm
+  % sudo yum install -y https://osdn.net/projects/cutter/storage/centos/cutter-release-1.3.0-1.noarch.rpm
 
 CentOS 7:
 
-  % sudo rpm -Uvh http://sourceforge.net/projects/cutter/files/centos/cutter-release-1.3.0-1.noarch.rpm
+  % sudo yum install -y https://osdn.net/projects/cutter/storage/centos/cutter-release-1.3.0-1.noarch.rpm
 
 Now, we can install Cutter by yum:
 

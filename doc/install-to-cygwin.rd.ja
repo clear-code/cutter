@@ -36,7 +36,7 @@ Cygwin 1.7を対象とします。
 これで下準備は整ったのでCutterをインストールします。
 
   % cd
-  % http://sourceforge.net/projects/cutter/files/cutter/1.2.7/cutter-1.2.7.tar.gz
+  % https://osdn.net/dl/cutter/1.2.7/cutter-1.2.7.tar.gz
   % tar xvzf cutter-1.2.7.tar.gz
   % cd cutter-1.2.7
   % ./configure
