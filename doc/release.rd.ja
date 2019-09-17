@@ -253,6 +253,7 @@ make build PALALLEL=yesコマンドを実行すると、ディストリビュー
 
 生成したパッケージへの署名を行うには以下のコマンドを実行します。:
 
+  % export GPG_TTY=$(tty)
   % make sign-packages
 
 ==== リポジトリの更新
@@ -308,6 +309,7 @@ make build PALALLEL=yesコマンドを実行すると、ディストリビュー
 
 リリース対象のRPMに署名を行うには以下のコマンドを実行します。:
 
+  % export GPG_TTY=$(tty)
   % make sign-packages
 
 ==== リポジトリの更新
