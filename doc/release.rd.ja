@@ -221,12 +221,13 @@ make update-poを実行すると、各種poファイルが更新されます。
 === Debian系パッケージのビルド
 
 現在サポートされているのは以下の通りです。
+UbuntuはPPAでサポートされているものを対象としています。
 
-* squeeze i386/amd64
-* wheezy i386/amd64
-* precise i386/amd64
-* trusty i386/amd64
-* vivid i386/amd64
+* stretch i386/amd64
+* buster i386/amd64
+* xenial i386/amd64
+* bionic i386/amd64
+* disco i386/amd64
 
 なお以下のコマンドの実行は(({$CUTTER_CLEAN_DIR/packages/apt}))以下で
 行っているものとします。
@@ -284,7 +285,6 @@ Ubuntu向けのパッケージのビルドはLaunchpadのPPAを利用してい�
 
 現在サポートされているのは以下の通りです。
 
-* centos-5 i386/x86_64
 * centos-6 i386/x86_64
 * centos-7 i386/x86_64
 
