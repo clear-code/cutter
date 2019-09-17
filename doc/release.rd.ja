@@ -43,6 +43,14 @@ osdn.netのアカウントが異なる場合には、
 
     % export ACCESS_TOKEN_FILE=(ここにアクセストークンを保存したファイルのパスを指定)
 
+また、OSDNへソースアーカイブのリリースを行うために、
+アクセストークンを保存したファイルへのパスを環境変数(({{OSDN_CREDENTIAL_FILE}))で指定します。
+
+    % export OSDN_CREDENTIAL_FILE=(ここにアクセストークンを保存したファイルのパスを指定)
+
+OSDN_CREDENTIAL_FILEはosdn-cliをインストールしてosdn loginを実行すると、
+$HOME/.config/osdn/credential.ymlとして作成されます。
+
 == ビルド環境の準備
 
 以下にCutterのリリース作業を行うために事前にインストール しておくべきパッケージを示します。
