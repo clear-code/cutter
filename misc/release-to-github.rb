@@ -68,6 +68,8 @@ def main
       if ex.errors.first[:code] == "already_exists"
         new_release = client.releases(github_repository).first
       end
+    else
+      raise
     end
   end
   github_release_asset_files.each do |asset_file|
