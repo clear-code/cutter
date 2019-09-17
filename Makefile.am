@@ -54,7 +54,7 @@ upload: upload-doc
 release: dist release-official release-debian
 
 release-official: $(PACKAGE)-$(VERSION).tar.gz.asc $(PACKAGE)-$(VERSION).zip.asc
-	$(srcdir)/misc/release-to-osdn.rb				\
+	cd $(srcdir)/misc && ./release-to-osdn.rb				\
 	  --credential=$(OSDN_CREDENTIAL_FILE) \
 	  --project=$(PACKAGE) \
 	  --new-version=$(VERSION) \
@@ -80,7 +80,7 @@ release-debian:
 	rsync -avz tmp/archives $(OSDN_HTDOCS)/
 
 release-github: dist
-	$(srcdir)/misc/release-to-github.rb \
+	cd $(srcdir)/misc && ./release-to-github.rb \
 	  --repository=clear-code/cutter \
 	  --tag=$(VERSION) \
 	  --news-file=NEWS \
