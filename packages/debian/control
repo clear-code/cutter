@@ -7,7 +7,6 @@ Build-Depends: debhelper (>= 7.0.50),
                intltool,
                gtk-doc-tools,
                libgtk2.0-dev,
-               libgoffice-0.8-dev,
                libsoup2.4-dev
 Standards-Version: 3.9.5
 Section: libs
