@@ -24,6 +24,7 @@ def main
   github_release_body = nil
   github_release_asset_files = []
   github_access_token = nil
+  github_force_upload = nil
 
   parser = OptionParser.new
   parser.on("--repository=OWNER/REPO_NAME", "GitHub repository name") do |repo|
@@ -42,6 +43,9 @@ def main
   parser.on("--access-token-file=FILE", "Access token file") do |file|
     github_access_token = File.read(file).chomp
   end
+  parser.on("--force-upload", "Upload latest asset files even though tag is already created") do |boolean|
+    github_force_upload = boolean
+  end
 
   begin
     parser.parse!
@@ -57,7 +61,15 @@ def main
 
   client = Octokit::Client.new(access_token: github_access_token)
 
-  new_release = client.create_release(github_repository, github_tag, body: github_release_body)
+  begin
+    new_release = client.create_release(github_repository, github_tag, body: github_release_body)
+  rescue Octokit::UnprocessableEntity => ex
+    if github_force_upload
+      if ex.errors.first[:code] == "already_exists"
+        new_release = client.releases(github_repository).first
+      end
+    end
+  end
   github_release_asset_files.each do |asset_file|
     client.upload_asset(new_release[:url], asset_file)
   end
