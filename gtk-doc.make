@@ -215,6 +215,45 @@ html-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files) $(expand_con
 	  test -f $$file && cp $$file $(abs_builddir)/html; \
 	done;
 	$(GTK_DOC_V_XREF)gtkdoc-fixxref --module=$(DOC_MODULE) --module-dir=html --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS)
+	for catalog in $(CATALOGS); do					\
+	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
+	  echo "$$lang:";						\
+	  rm -rf $$lang;						\
+	  mkdir -p $$lang/html;						\
+	  mkdir -p $$lang/xml;						\
+	  xml2po -k -p $(srcdir)/$$catalog -l $$lang			\
+	    $(DOC_MAIN_SGML_FILE) > $$lang/$(DOC_MAIN_SGML_FILE);	\
+	  for xml in $(builddir)/xml/*.xml; do				\
+	    xml2po -k -p $(srcdir)/$$catalog -l $$lang $$xml >		\
+	      $$lang/xml/`basename $$xml`;				\
+	  done;								\
+	  for file in $(content_files); do				\
+	    if test -f $$file; then					\
+	      if test -f $$file.$$lang; then				\
+	        cp $$file.$$lang $$lang/$$file;				\
+	      else							\
+	        cp $$file $$lang;					\
+	      fi;							\
+	    else							\
+	      if test -f $(builddir)/$$file.$$lang; then		\
+	        cp $(builddir)/$$file.$$lang $$lang/$$file;		\
+	      else							\
+	        cp $(builddir)/$$file $$lang;				\
+	      fi;							\
+	    fi;								\
+	  done;								\
+	  (cd $$lang/html &&						\
+	     gtkdoc-mkhtml $(DOC_MODULE) ../$(DOC_MAIN_SGML_FILE));	\
+	  sed -i'' -e "s,/,/$$lang/,g" $$lang/html/index.sgml;		\
+	  if test "x$(HTML_IMAGES)" != "x"; then			\
+	    for image in $(HTML_IMAGES); do				\
+	      cp $(srcdir)/$$image $$lang/html/;			\
+	    done;							\
+	  fi;								\
+	  echo 'gtk-doc: Fixing cross-references';			\
+	  gtkdoc-fixxref --module=$(DOC_MODULE) --module-dir=$$lang/html\
+	    --html-dir=$(HTML_DIR) $(FIXXREF_OPTIONS);			\
+	done
 	$(AM_V_at)touch html-build.stamp
 
 #### pdf ####
@@ -315,6 +354,14 @@ dist-hook: dist-check-gtkdoc all-gtk-doc dist-hook-local
 	@-cp ./$(DOC_MODULE).pdf $(distdir)/
 	@-cp ./$(DOC_MODULE).types $(distdir)/
 	@-cp ./$(DOC_MODULE)-sections.txt $(distdir)/
+	for catalog in $(CATALOGS); do					\
+	  lang=`echo $$catalog | sed 's/.po$$//'`;			\
+	  mkdir -p $(distdir)/$$lang/html;				\
+	  mkdir -p $(distdir)/$$lang/xml;				\
+	  cp -rp $$lang/html/* $(distdir)/$$lang/html;			\
+	  cp -rp $$lang/xml/* $(distdir)/$$lang/html;			\
+	  cp -rp $$lang/$(DOC_MAIN_SGML_FILE) $(distdir)/$$lang/;	\
+	done
 	@cd $(distdir) && rm -f $(DISTCLEANFILES)
 	@$(GTKDOC_REBASE) --online --relative --html-dir=$(distdir)/html
 
