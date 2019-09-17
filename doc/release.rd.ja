@@ -328,32 +328,6 @@ Debian系もしくはRed Hat系の場合には本番環境へとアップロー�
 
 また、osdn.netとディレクトリ階層を揃える必要があります。
 
-osdn.netとディレクトリ階層を合わせるために
-(({$CUTTER_CLEAN_DIR/packages}))ディレクトリで以下のコマンドを実行します。
-
-  % ./check-utility.sh --setup-temp-repository
-
-コマンドを実行するとtemp_repositories/projects/cutter/storageディレクトリを作成し、
-apt/repositoriesやyum/repositoriesのディストリビューションの
-ディレクトリへとシンボリックリンクを張ります。
-
-  % ls -la temp_repositories/projects/cutter/storage
-  total 24
-  drwxrwxr-x 2 khayashi khayashi 4096 Aug  9 17:21 .
-  drwxrwxr-x 3 khayashi khayashi 4096 Aug  9 17:14 ..
-  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 centos -> /home/khayashi/work/cutter/cutter.clean/packages/yum/repositories/centos
-  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 debian -> /home/khayashi/work/cutter/cutter.clean/packages/apt/repositories/debian
-  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 fedora -> /home/khayashi/work/cutter/cutter.clean/packages/yum/repositories/fedora
-  lrwxrwxrwx 1 khayashi khayashi   72 Aug  9 17:21 ubuntu -> /home/khayashi/work/cutter/cutter.clean/packages/apt/repositories/ubuntu
-
-次にrubyを利用してリポジトリをwebサーバ経由で参照できるようにします。:
-
-  % sudo ruby1.9.1 -run -e httpd -- temp_repositories
-
-これでchroot環境においてhostsファイルを書き換えて
-osdn.netがローカルホストを参照するようにすれば、
-ローカルに構築したリポジトリの確認を行えます。
-
 == リリースアナウンスの作成
 
 
