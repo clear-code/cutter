@@ -374,6 +374,7 @@ NEWS,NEWS.jaにまとめておいた変更点を元にリリースアナウン�
 
 (({$CUTTER_CLEAN_DIR}))ディレクトリで以下のコマンドを実行します。:
 
+  % make sign-archives
   % make release-official
   % make release-debian
 
