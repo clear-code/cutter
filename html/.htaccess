@@ -1,4 +1,2 @@
 Redirect permanent /debian/ https://osdn.net/projects/cutter/storage/debian/
-Redirect permanent /ubuntu/ https://osdn.net/projects/cutter/storage/ubuntu/
 Redirect permanent /centos/ https://osdn.net/projects/cutter/storage/centos/
-Redirect permanent /fedora/ https://osdn.net/projects/cutter/storage/fedora/
