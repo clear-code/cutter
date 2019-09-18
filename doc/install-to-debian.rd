@@ -31,10 +31,10 @@ Here are apt lines for buster. Put them into
 /etc/apt/sources.list.d/cutter.list.
 
 /etc/apt/sources.list.d/cutter.list:
-  deb [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ buster main
-  deb-src [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://osdn.net/projects/cutter/storage/debian/ buster main
+  deb [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://cutter.osdn.jp/debian/ buster main
+  deb-src [signed-by=/usr/share/keyrings/cutter-keyring.gpg] https://cutter.osdn.jp/debian/ buster main
 
-  % sudo wget -O /usr/share/keyrings/cutter-keyring.gpg https://osdn.net/projects/cutter/storage/debian/cutter-keyring.gpg
+  % sudo wget -O /usr/share/keyrings/cutter-keyring.gpg https://cutter.osdn.jp/debian/cutter-keyring.gpg
   % sudo apt-get update
   % sudo apt-get -y install cutter-testing-framework
 
