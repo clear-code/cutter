@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2012-2013  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2012-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -168,7 +168,7 @@ struct _CutLoggerClass
                  const gchar      *file,
                  guint             line,
                  const gchar      *function,
-                 GTimeVal         *time_value,
+                 GDateTime        *time_value,
                  const gchar      *message);
 };
 
@@ -191,7 +191,7 @@ void             cut_logger_default_log_handler
                                             const gchar      *file,
                                             guint             line,
                                             const gchar      *function,
-                                            GTimeVal         *time_value,
+                                            GDateTime        *time_value,
                                             const gchar      *message,
                                             gpointer          user_data);
 CutLogger       *cut_logger_new            (void);

@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -29,7 +29,8 @@
 #include "cut-utils.h"
 
 #define CUT_BACKTRACE_ENTRY_GET_PRIVATE(obj) \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_BACKTRACE_ENTRY, CutBacktraceEntryPrivate))
+    ((CutBacktraceEntryPrivate *) \
+     cut_backtrace_entry_get_instance_private(CUT_BACKTRACE_ENTRY(obj)))
 
 typedef struct _CutBacktraceEntryPrivate	CutBacktraceEntryPrivate;
 struct _CutBacktraceEntryPrivate
@@ -50,7 +51,9 @@ enum
 };
 
 
-G_DEFINE_TYPE(CutBacktraceEntry, cut_backtrace_entry, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE(CutBacktraceEntry,
+                           cut_backtrace_entry,
+                           G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -101,8 +104,6 @@ cut_backtrace_entry_class_init (CutBacktraceEntryClass *klass)
                                NULL,
                                G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_INFO, spec);
-
-    g_type_class_add_private(gobject_class, sizeof(CutBacktraceEntryPrivate));
 }
 
 static void

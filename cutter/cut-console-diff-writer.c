@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,7 +38,9 @@
     CUT_CONSOLE_COLOR_WHITE                     \
     CUT_CONSOLE_COLOR_RED_BACK
 
-#define CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONSOLE_DIFF_WRITER, CutConsoleDiffWriterPrivate))
+#define CUT_CONSOLE_DIFF_WRITER_GET_PRIVATE(obj)\
+    ((CutConsoleDiffWriterPrivate *)\
+     cut_console_diff_writer_get_instance_private(CUT_CONSOLE_DIFF_WRITER(obj)))
 
 typedef struct _CutConsoleDiffWriterPrivate         CutConsoleDiffWriterPrivate;
 struct _CutConsoleDiffWriterPrivate
@@ -57,7 +59,9 @@ enum {
     PROP_USE_COLOR
 };
 
-G_DEFINE_TYPE(CutConsoleDiffWriter, cut_console_diff_writer, CUT_TYPE_DIFF_WRITER)
+G_DEFINE_TYPE_WITH_PRIVATE(CutConsoleDiffWriter,
+                           cut_console_diff_writer,
+                           CUT_TYPE_DIFF_WRITER)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -101,8 +105,6 @@ cut_console_diff_writer_class_init (CutConsoleDiffWriterClass *klass)
                                 FALSE,
                                 G_PARAM_READWRITE);
     g_object_class_install_property(gobject_class, PROP_USE_COLOR, spec);
-
-    g_type_class_add_private(gobject_class, sizeof(CutConsoleDiffWriterPrivate));
 }
 
 static void

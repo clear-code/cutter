@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2019  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,9 @@
 #  include <unistd.h>
 #endif
 
-#include <glib.h>
+#include <gcutter/gcutter.h>
+#include "cut-helper.h"
+
 #include <glib/gstdio.h>
 
 #if defined(HAVE_STDINT_H) && !defined(HAVE_INTTYPES_H)
@@ -66,9 +68,6 @@
 #endif
 
 #include <errno.h>
-
-#include "cut-helper.h"
-#include <gcutter/gcut-assertions-helper.h>
 
 void
 cut_assert_helper (cut_boolean     result,

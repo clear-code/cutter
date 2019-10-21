@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,7 +27,9 @@
 #include "cut-analyzer.h"
 #include "cut-file-stream-reader.h"
 
-#define CUT_ANALYZER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE((obj), CUT_TYPE_ANALYZER, CutAnalyzerPrivate))
+#define CUT_ANALYZER_GET_PRIVATE(obj)                           \
+    ((CutAnalyzerPrivate *)                                     \
+     cut_analyzer_get_instance_private(CUT_ANALYZER(obj)))
 
 typedef struct _CutAnalyzerPrivate	CutAnalyzerPrivate;
 struct _CutAnalyzerPrivate
@@ -35,7 +37,7 @@ struct _CutAnalyzerPrivate
     GList *run_contexts;
 };
 
-G_DEFINE_TYPE(CutAnalyzer, cut_analyzer, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE(CutAnalyzer, cut_analyzer, G_TYPE_OBJECT)
 
 static void     dispose          (GObject         *object);
 
@@ -47,8 +49,6 @@ cut_analyzer_class_init (CutAnalyzerClass *klass)
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
-
-    g_type_class_add_private(gobject_class, sizeof(CutAnalyzerPrivate));
 }
 
 static void

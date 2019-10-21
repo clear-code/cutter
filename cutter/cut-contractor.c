@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -33,7 +33,9 @@
 #include "cut-ui-factory-builder.h"
 #include "cut-loader-customizer-factory-builder.h"
 
-#define CUT_CONTRACTOR_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_CONTRACTOR, CutContractorPrivate))
+#define CUT_CONTRACTOR_GET_PRIVATE(obj)                         \
+    ((CutContractorPrivate *)                                   \
+     cut_contractor_get_instance_private(CUT_CONTRACTOR(obj)))
 
 typedef struct _CutContractorPrivate    CutContractorPrivate;
 struct _CutContractorPrivate
@@ -42,7 +44,7 @@ struct _CutContractorPrivate
     CutLoaderCustomizerFactoryBuilder *loader_customizer_factory_builder;
 };
 
-G_DEFINE_TYPE(CutContractor, cut_contractor, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE(CutContractor, cut_contractor, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 
@@ -54,8 +56,6 @@ cut_contractor_class_init (CutContractorClass *klass)
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
-
-    g_type_class_add_private(gobject_class, sizeof(CutContractorPrivate));
 }
 
 static GList *

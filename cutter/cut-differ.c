@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -30,7 +30,9 @@
 #include "cut-string-diff-writer.h"
 #include "cut-utils.h"
 
-#define CUT_DIFFER_GET_PRIVATE(obj) (G_TYPE_INSTANCE_GET_PRIVATE ((obj), CUT_TYPE_DIFFER, CutDifferPrivate))
+#define CUT_DIFFER_GET_PRIVATE(obj)                     \
+    ((CutDifferPrivate *)                               \
+     cut_differ_get_instance_private(CUT_DIFFER(obj)))
 
 typedef struct _CutDifferPrivate         CutDifferPrivate;
 struct _CutDifferPrivate
@@ -46,7 +48,7 @@ enum {
     PROP_TO
 };
 
-G_DEFINE_TYPE(CutDiffer, cut_differ, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE(CutDiffer, cut_differ, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -84,8 +86,6 @@ cut_differ_class_init (CutDifferClass *klass)
                                NULL,
                                G_PARAM_WRITABLE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_TO, spec);
-
-    g_type_class_add_private(gobject_class, sizeof(CutDifferPrivate));
 }
 
 static void
