@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2011-2019  Kouhei Sutou <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -22,11 +22,6 @@
 #endif /* HAVE_CONFIG_H */
 
 #include "gcut-event-loop.h"
-
-#define GCUT_EVENT_LOOP_GET_PRIVATE(obj)                \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj),                 \
-                                 GCUT_TYPE_EVENT_LOOP,  \
-                                 GCutEventLoopPrivate))
 
 G_DEFINE_ABSTRACT_TYPE(GCutEventLoop, gcut_event_loop, G_TYPE_OBJECT)
 

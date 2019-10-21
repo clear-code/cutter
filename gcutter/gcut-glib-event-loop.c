@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2011-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,15 +21,11 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
-#include "gcut-glib-event-loop.h"
+#include <gcutter/gcutter.h>
 
-#define GCUT_GLIB_EVENT_LOOP_GET_PRIVATE(obj)                   \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj),                         \
-                                 GCUT_TYPE_GLIB_EVENT_LOOP,     \
-                                 GCutGLibEventLoopPrivate))
-
-G_DEFINE_TYPE(GCutGLibEventLoop, gcut_glib_event_loop,
-              GCUT_TYPE_EVENT_LOOP)
+#define GCUT_GLIB_EVENT_LOOP_GET_PRIVATE(obj)                           \
+    ((GCutGLibEventLoopPrivate *)                                       \
+     gcut_glib_event_loop_get_instance_private(GCUT_GLIB_EVENT_LOOP(obj)))
 
 typedef struct _GCutGLibEventLoopPrivate	GCutGLibEventLoopPrivate;
 struct _GCutGLibEventLoopPrivate
@@ -37,6 +33,10 @@ struct _GCutGLibEventLoopPrivate
     GMainContext *context;
     GMainLoop *loop;
 };
+
+G_DEFINE_TYPE_WITH_PRIVATE(GCutGLibEventLoop,
+                           gcut_glib_event_loop,
+                           GCUT_TYPE_EVENT_LOOP)
 
 enum
 {
@@ -120,8 +120,6 @@ gcut_glib_event_loop_class_init (GCutGLibEventLoopClass *klass)
                                 "Use the GMainContext for the event loop",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY);
     g_object_class_install_property(gobject_class, PROP_CONTEXT, spec);
-
-    g_type_class_add_private(gobject_class, sizeof(GCutGLibEventLoopPrivate));
 }
 
 static GObject *

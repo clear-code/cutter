@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,13 +21,11 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
-
-#include "gcut-assertions.h"
+#include <gcutter.h>
 
 #define GCUT_DYNAMIC_DATA_GET_PRIVATE(obj)                              \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj),                                 \
-                                 GCUT_TYPE_DYNAMIC_DATA,                \
-                                 GCutDynamicDataPrivate))
+    ((GCutDynamicDataPrivate *)                                         \
+     gcut_dynamic_data_get_instance_private(GCUT_DYNAMIC_DATA(obj)))
 
 typedef struct _Field
 {
@@ -219,7 +217,7 @@ field_equal (gconstpointer data1, gconstpointer data2)
     return result;
 }
 
-G_DEFINE_TYPE(GCutDynamicData, gcut_dynamic_data, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE(GCutDynamicData, gcut_dynamic_data, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 
@@ -231,8 +229,6 @@ gcut_dynamic_data_class_init (GCutDynamicDataClass *klass)
     gobject_class = G_OBJECT_CLASS(klass);
 
     gobject_class->dispose      = dispose;
-
-    g_type_class_add_private(gobject_class, sizeof(GCutDynamicDataPrivate));
 }
 
 static void

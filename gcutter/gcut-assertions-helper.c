@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,15 +21,14 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
+#include <gcutter.h>
+#include <cutter/cut-utils.h>
+
 #include <string.h>
 #ifdef HAVE_UNISTD_H
 #  include <unistd.h>
 #endif
-#include <glib.h>
 #include <glib/gstdio.h>
-
-#include <cutter/cut-utils.h>
-#include "gcut-assertions-helper.h"
 
 void
 gcut_assert_equal_type_helper (GType           expected,

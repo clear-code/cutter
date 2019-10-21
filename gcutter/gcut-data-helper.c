@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -21,8 +21,7 @@
 #  include <config.h>
 #endif /* HAVE_CONFIG_H */
 
-#include "gcut-data-helper.h"
-#include "gcut-assertions-helper.h"
+#include <gcutter.h>
 
 #define DEFINE_GETTER_HELPER(type_name, type)                           \
 type                                                                    \

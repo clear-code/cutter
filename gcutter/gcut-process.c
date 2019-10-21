@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2012 Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -27,23 +27,21 @@
 #endif
 #include <signal.h>
 
-#include <glib.h>
+#include <gcutter.h>
+#include <cutter/cut-utils.h>
+#include "gcut-marshalers.h"
+
 #include <glib/gstdio.h>
 #include <gmodule.h>
 #include <errno.h>
-
-#include "gcut-io.h"
-#include "gcut-process.h"
-#include "gcut-glib-event-loop.h"
-#include "gcut-marshalers.h"
-#include "cut-utils.h"
 
 #ifdef ERROR
 #  undef ERROR
 #endif
 
-#define GCUT_PROCESS_GET_PRIVATE(obj)                                     \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj), GCUT_TYPE_PROCESS, GCutProcessPrivate))
+#define GCUT_PROCESS_GET_PRIVATE(obj)                                   \
+    ((GCutProcessPrivate *)                                             \
+     gcut_process_get_instance_private(GCUT_PROCESS(obj)))
 
 typedef struct _WatchOutputData
 {
@@ -105,7 +103,7 @@ enum
 
 static guint signals[LAST_SIGNAL] = {0};
 
-G_DEFINE_TYPE(GCutProcess, gcut_process, G_TYPE_OBJECT)
+G_DEFINE_TYPE_WITH_PRIVATE(GCutProcess, gcut_process, G_TYPE_OBJECT)
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -250,8 +248,6 @@ gcut_process_class_init (GCutProcessClass *klass)
                        NULL, NULL,
                        g_cclosure_marshal_VOID__POINTER,
                        G_TYPE_NONE, 1, G_TYPE_POINTER);
-
-    g_type_class_add_private(gobject_class, sizeof(GCutProcessPrivate));
 }
 
 static void
