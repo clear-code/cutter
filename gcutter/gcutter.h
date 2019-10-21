@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -17,8 +17,17 @@
  *
  */
 
-#ifndef __GCUTTER_H__
-#define __GCUTTER_H__
+#pragma once
+
+/*
+ * CentOS 6: GLib 2.28
+ * CentOS 7: GLib 2.50
+ * Ubuntu 16.04: GLib 2.48
+ * Ubuntu 18.04: GLib 2.54
+ */
+#ifndef GLIB_VERSION_MIN_REQUIRED
+#  define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_28
+#endif
 
 #include <cutter.h>
 #include <gcutter/gcut-assertions.h>
@@ -69,8 +78,6 @@
  * Since: 1.0.6
  */
 #define GCUTTER_ENABLED 1
-
-#endif /* __GCUTTER_H__ */
 
 /*
 vi:nowrap:ai:expandtab:sw=4
