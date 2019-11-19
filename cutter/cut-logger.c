@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2012-2013  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2012-2019  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -44,9 +44,8 @@
     (CUT_LOG_ITEM_TIME)
 
 #define CUT_LOGGER_GET_PRIVATE(obj)                     \
-    (G_TYPE_INSTANCE_GET_PRIVATE((obj),                 \
-                                 CUT_TYPE_LOGGER,       \
-                                 CutLoggerPrivate))
+    ((CutLoggerPrivate *)                               \
+     cut_logger_get_instance_private(CUT_LOGGER(obj)))
 
 #define INTERNAL_INTERESTING_LOG_LEVEL                          \
     (cut_logger_get_interesting_level(singleton_cut_logger))
@@ -91,7 +90,7 @@ static gint signals[LAST_SIGNAL] = {0};
 
 static CutLogger *singleton_cut_logger = NULL;
 
-G_DEFINE_TYPE(CutLogger, cut_logger, G_TYPE_OBJECT);
+G_DEFINE_TYPE_WITH_PRIVATE(CutLogger, cut_logger, G_TYPE_OBJECT);
 
 static void dispose        (GObject         *object);
 static void set_property   (GObject         *object,
@@ -149,8 +148,6 @@ cut_logger_class_init (CutLoggerClass *klass)
                      G_TYPE_NONE, 7,
                      G_TYPE_STRING, CUT_TYPE_LOG_LEVEL_FLAGS, G_TYPE_STRING,
                      G_TYPE_UINT, G_TYPE_STRING, G_TYPE_POINTER, G_TYPE_STRING);
-
-    g_type_class_add_private(gobject_class, sizeof(CutLoggerPrivate));
 }
 
 static void
