@@ -527,12 +527,15 @@ check_cut_debug (CutLogLevelFlags level)
 }
 
 void
-cut_logger_default_log_handler (CutLogger *logger, const gchar *domain,
-                                   CutLogLevelFlags level,
-                                   const gchar *file, guint line,
-                                   const gchar *function,
-                                   GTimeVal *time_value, const gchar *message,
-                                   gpointer user_data)
+cut_logger_default_log_handler (CutLogger *logger,
+                                const gchar *domain,
+                                CutLogLevelFlags level,
+                                const gchar *file,
+                                guint line,
+                                const gchar *function,
+                                GDateTime *timestamp,
+                                const gchar *message,
+                                gpointer user_data)
 {
     CutLoggerPrivate *priv;
     CutLogLevelFlags target_level;
@@ -575,7 +578,7 @@ cut_logger_default_log_handler (CutLogger *logger, const gchar *domain,
     if (target_item & CUT_LOG_ITEM_TIME) {
         gchar *time_string;
 
-        time_string = g_time_val_to_iso8601(time_value);
+        time_string = g_date_time_format_iso8601(timestamp);
         g_string_append_printf(log, "[%s]", time_string);
         g_free(time_string);
     }
@@ -665,14 +668,14 @@ cut_logger_log_va_list (CutLogger *logger,
                         const gchar *file, guint line, const gchar *function,
                         const gchar *format, va_list args)
 {
-    GTimeVal time_value;
+    GDateTime *timestamp;
     gchar *message;
 
-    g_get_current_time(&time_value);
-
+    timestamp = g_date_time_new_now_local();
     message = g_strdup_vprintf(format, args);
     g_signal_emit(logger, signals[LOG], 0,
-                  domain, level, file, line, function, &time_value, message);
+                  domain, level, file, line, function, timestamp, message);
+    g_date_time_unref(timestamp);
     g_free(message);
 }
 

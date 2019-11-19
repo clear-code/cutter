@@ -168,7 +168,7 @@ struct _CutLoggerClass
                  const gchar      *file,
                  guint             line,
                  const gchar      *function,
-                 GDateTime        *time_value,
+                 GDateTime        *timestamp,
                  const gchar      *message);
 };
 
@@ -191,7 +191,7 @@ void             cut_logger_default_log_handler
                                             const gchar      *file,
                                             guint             line,
                                             const gchar      *function,
-                                            GDateTime        *time_value,
+                                            GDateTime        *timestamp,
                                             const gchar      *message,
                                             gpointer          user_data);
 CutLogger       *cut_logger_new            (void);
