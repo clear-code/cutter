@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2012-2019  Sutou Kouhei <kou@clear-code.com>
+ *  Copyright (C) 2012-2020  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -32,6 +32,7 @@
 
 #include "cut-logger.h"
 #include "cut-enum-types.h"
+#include "cut-glib-compatible.h"
 #include "../gcutter/gcut-marshalers.h"
 
 #define DEFAULT_KEY "default"
