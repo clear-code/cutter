@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2013  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2013-2020  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -38,6 +38,11 @@ G_BEGIN_DECLS
 GMutex *cut_glib_compatible_mutex_new (void);
 void    cut_glib_compatible_mutex_free(GMutex *mutex);
 
+#endif
+
+#if !GLIB_CHECK_VERSION(2, 62, 0)
+#  define g_date_time_format_iso8601(datetime)                  \
+    g_date_time_foramt((datetime), "%Y-%m-%dT%H:%M:%S%:::z")
 #endif
 
 G_END_DECLS
