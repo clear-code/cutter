@@ -42,7 +42,7 @@ void    cut_glib_compatible_mutex_free(GMutex *mutex);
 
 #if !GLIB_CHECK_VERSION(2, 62, 0)
 #  define g_date_time_format_iso8601(datetime)                  \
-    g_date_time_foramt((datetime), "%Y-%m-%dT%H:%M:%S%:::z")
+    g_date_time_format((datetime), "%Y-%m-%dT%H:%M:%S%:::z")
 #endif
 
 G_END_DECLS
