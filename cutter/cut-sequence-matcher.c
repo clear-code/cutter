@@ -147,8 +147,8 @@ cut_sequence_matcher_class_init (CutSequenceMatcherClass *klass)
     g_object_class_install_property(gobject_class, PROP_COMPARE_FUNC_USER_DATA, spec);
 
     spec = g_param_spec_pointer("to-indices",
-                                "To Indecies",
-                                "To Indecies",
+                                "To Indices",
+                                "To Indices",
                                 G_PARAM_READWRITE | G_PARAM_CONSTRUCT);
     g_object_class_install_property(gobject_class, PROP_TO_INDICES, spec);
 
