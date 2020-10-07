@@ -15,7 +15,6 @@ RUN \
     gcc-c++ \
     gettext \
     glib2-devel \
-    goffice08-devel \
     gstreamer1-plugins-base-devel \
     gtk-doc \
     gtk2-devel \
