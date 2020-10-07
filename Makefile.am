@@ -52,7 +52,7 @@ EXTRA_DIST =		\
 
 upload: upload-doc
 
-release: dist release-official release-debian
+release: dist dist-zip release-official release-debian
 
 release-official: $(PACKAGE)-$(VERSION).tar.gz.asc $(PACKAGE)-$(VERSION).zip.asc
 	cd $(srcdir)/misc && ./release-to-osdn.rb				\
@@ -88,12 +88,10 @@ release-github: dist
 	  --asset-file=$(PACKAGE)-$(VERSION).tar.gz \
 	  --access-token-file=$(ACCESS_TOKEN_FILE)
 
-sign-archives: sign-archive-targz sign-archive-zip
-
-sign-archive-targz: $(PACKAGE)-$(VERSION).tar.gz
+$(PACKAGE)-$(VERSION).tar.gz.asc: $(PACKAGE)-$(VERSION).tar.gz
 	gpg --local-user $(GPG_UID_RSA4096) --armor --detach-sign $(PACKAGE)-$(VERSION).tar.gz
 
-sign-archive-zip: $(PACKAGE)-$(VERSION).zip
+$(PACKAGE)-$(VERSION).zip.asc: $(PACKAGE)-$(VERSION).zip
 	gpg --local-user $(GPG_UID_RSA4096) --armor --detach-sign $(PACKAGE)-$(VERSION).zip
 
 upload-doc:
