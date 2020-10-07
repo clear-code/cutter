@@ -2,6 +2,31 @@
 
 = お知らせ --- Cutterの歴史
 
+== [release-1-2-8] 1.2.8: 2020-10-07
+
+=== All
+
+==== Improvements
+
+  * Suppress some warnings with the latest GLib.
+
+  * [deb][ubuntu] Dropped support for Ubuntu 19.04.
+
+  * [deb][ubuntu] Added support for Ubuntu 20.04.
+
+  * [deb][debian] Added cutter-apt-source package to register APT
+    repository.
+
+=== GCutter
+
+==== Improvements
+
+  * Added (({gcut_take_bytes()})).
+
+  * (({gcut_object_inspect()})): Ignored (({GdkPixbuf}))'s
+    (({pixels})) and (({pixel-bytes})) properties because they are
+    meaningless.
+
 == [release-1-2-7] 1.2.7: 2019-09-13
 
 しばらくぶりのメンテナンスリリースです。報告のあった不具合をいくつか修正しています。
