@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2010  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2020  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -134,6 +134,20 @@ G_BEGIN_DECLS
 #define gcut_take_new_string(string)            \
     gcut_take_string(g_string_new(string))
 
+/**
+ * gcut_take_bytes:
+ * @bytes: the #GBytes to be owned by Cutter.
+ *
+ * Passes ownership of @bytes to Cutter and returns
+ * @bytes itself.
+ *
+ * Returns: a #GBytes owned by Cutter. Don't g_bytes_unref() it.
+ *
+ * Since: 1.2.8
+ */
+#define gcut_take_bytes(bytes)                                          \
+    cut_test_context_take_g_bytes(cut_get_current_test_context(),       \
+                                  (bytes))
 /**
  * gcut_list_new:
  * @element: the first #gpointer.

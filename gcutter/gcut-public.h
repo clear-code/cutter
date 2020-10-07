@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2020  Sutou Kouhei <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -40,6 +40,8 @@ GHashTable   *cut_test_context_take_g_hash_table
                                               GHashTable         *hash_table);
 GString      *cut_test_context_take_g_string (CutTestContext     *context,
                                               GString            *string);
+GBytes       *cut_test_context_take_g_bytes  (CutTestContext     *context,
+                                              GBytes             *bytes);
 
 GString      *gcut_utils_get_fixture_data    (CutTestContext *context,
                                               const gchar   **full_path,

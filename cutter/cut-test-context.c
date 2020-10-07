@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007-2014  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2007-2020  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -1201,6 +1201,21 @@ cut_test_context_take_g_string (CutTestContext *context,
     return (GString *)cut_test_context_take(context,
                                             string,
                                             (CutDestroyFunction) cut_test_context_g_string_free);
+}
+
+static void
+cut_test_context_g_bytes_unref (GBytes *bytes)
+{
+    g_bytes_unref(bytes);
+}
+
+GBytes *
+cut_test_context_take_g_bytes (CutTestContext *context,
+                               GBytes         *bytes)
+{
+    return (GBytes *)cut_test_context_take(context,
+                                           bytes,
+                                           (CutDestroyFunction) cut_test_context_g_bytes_unref);
 }
 
 int
