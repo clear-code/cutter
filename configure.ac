@@ -5,7 +5,7 @@ AC_PREREQ(2.59)
 
 m4_define([cutter_version_major], [1])
 m4_define([cutter_version_minor], [2])
-m4_define([cutter_version_micro], [8])
+m4_define([cutter_version_micro], [9])
 m4_define([cutter_version],
           [cutter_version_major.cutter_version_minor.cutter_version_micro])
 
