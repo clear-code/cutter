@@ -171,8 +171,8 @@ fi
 
 AC_CHECK_FUNCS([fabs], [], [AC_CHECK_LIB([m], [fabs])])
 
-GPG_UID=m4_include(gpg_uid)
-AC_SUBST(GPG_UID)
+GPG_UID_RSA4096=m4_include(gpg_uid_rsa4096)
+AC_SUBST(GPG_UID_RSA4096)
 
 dnl **************************************************************
 dnl Check for MinGW
@@ -703,32 +703,6 @@ OSDN_FS="$OSDN_FS_HOST:$OSDN_FS_PATH"
 AC_SUBST(OSDN_FS)
 
 dnl **************************************************************
-dnl Check for Launchpad.net
-dnl **************************************************************
-AC_ARG_WITH(launchpad-uploader-pgp-key,
-            [AS_HELP_STRING([--with-launchpad-uploader-pgp-key=KEY],
-            [specify PGP key UID to upload Groonga packages to Launchpad.])],
-            [LAUNCHPAD_UPLOADER_PGP_KEY="$withval"],
-            [LAUNCHPAD_UPLOADER_PGP_KEY=""])
-AC_SUBST(LAUNCHPAD_UPLOADER_PGP_KEY)
-
-AC_ARG_WITH([groonga-source-path],
-            AS_HELP_STRING([--with-groonga-source-path=PATH],
-                             [Specify Groonga source path for
-                              Cutter's release manager.]),
-              [GROONGA_SOURCE_PATH="$withval"],
-              [GROONGA_SOURCE_PATH=""])
-case "$GROONGA_SOURCE_PATH" in
-""|/*)
-  : # do nothing
-  ;;
-*)
-  GROONGA_SOURCE_PATH="\$(top_builddir)/${GROONGA_SOURCE_PATH}"
-  ;;
-esac
-AC_SUBST(GROONGA_SOURCE_PATH)
-
-dnl **************************************************************
 dnl Cutter related variables.
 dnl **************************************************************
 
@@ -1063,16 +1037,7 @@ AC_CONFIG_FILES([Makefile
 		 doc/reference/version.xml
 		 doc/reference/Makefile
 		 html/Makefile
-		 vcc/Makefile
-		 packages/Makefile
-		 packages/rpm/Makefile
-		 packages/rpm/centos/Makefile
-		 packages/rpm/centos/cutter.spec
-		 packages/apt/Makefile
-		 packages/apt/env.sh
-		 packages/ubuntu/Makefile
-		 packages/yum/Makefile
-		 packages/yum/env.sh])
+		 vcc/Makefile])
 
 AC_OUTPUT
 
@@ -1115,6 +1080,3 @@ if test "$cutter_enable_coverage" = "yes"; then
 echo "  lcov                             : $LCOV"
 echo "  genhtml                          : $GENHTML"
 fi
-echo
-echo " For packages:"
-echo "  Launchpad PGP key                : $LAUNCHPAD_UPLOADER_PGP_KEY"

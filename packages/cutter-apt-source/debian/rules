@@ -1,0 +1,38 @@
+#!/usr/bin/make -f
+# -*- makefile-gmake -*-
+#
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+# This has to be exported to make some magic below work.
+export DH_OPTIONS
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	gpg \
+	  --no-default-keyring \
+	  --keyring ./cutter-archive-keyring.gpg \
+	  --import keys
+
+	( \
+	  distribution=$$(lsb_release --id --short | tr 'A-Z' 'a-z'); \
+	  code_name=$$(lsb_release --codename --short); \
+	  component=main; \
+	  echo "Types: deb deb-src"; \
+	  echo "URIs: https://osdn.net/projects/cutter/storage/$${distribution}/"; \
+	  echo "Suites: $${code_name}"; \
+	  echo "Components: $${component}"; \
+	  echo "Signed-By: /usr/share/keyrings/cutter-archive-keyring.gpg"; \
+	) > cutter.sources
+
+override_dh_install:
+	install -d debian/tmp/usr/share/keyrings/
+	install -m 0644 cutter-archive-keyring.gpg \
+	  debian/tmp/usr/share/keyrings/
+
+	install -d debian/tmp/etc/apt/sources.list.d/
+	install -m 0644 cutter.sources \
+	  debian/tmp/etc/apt/sources.list.d/
+
+	dh_install

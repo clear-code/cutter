@@ -7,12 +7,12 @@ DOC_MODULE=cutter
 DOC_MAIN_SGML_FILE=cutter-docs.sgml
 
 SOURCE_DIR_OPTIONS=					\
+	--source-dir="$(top_srcdir)/cutter"		\
+	--source-dir="$(top_builddir)/cutter"		\
 	--source-dir="$(top_srcdir)/gcutter"		\
 	--source-dir="$(top_srcdir)/cppcutter"		\
 	--source-dir="$(top_srcdir)/gdkcutter-pixbuf"	\
-	--source-dir="$(top_srcdir)/soupcutter"		\
-	`test "$(top_builddir)" != "$(top_srcdir)" &&	\
-	   echo --source-dir="$(top_builddir)/cutter"`
+	--source-dir="$(top_srcdir)/soupcutter"
 
 GTKDOC_CFLAGS =						\
 	$(GLIB_CFLAGS)
@@ -20,12 +20,7 @@ GTKDOC_CFLAGS =						\
 # Extra options to supply to gtkdoc-scan
 SCAN_OPTIONS =						\
 	--deprecated-guards="CUTTER_DISABLE_DEPRECATED"	\
-	--rebuild-types					\
 	$(SOURCE_DIR_OPTIONS)
-
-# Extra options to supply to gtkdoc-scangobj
-SCANGOBJ_OPTIONS =					\
-	--types="$(srcdir)/$(DOC_MODULE).types"
 
 # The directory containing the source code. Relative to $(srcdir)
 DOC_SOURCE_DIR=../../cutter

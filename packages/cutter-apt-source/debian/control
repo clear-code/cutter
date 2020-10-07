@@ -1,0 +1,21 @@
+Source: cutter-apt-source
+Section: misc
+Priority: important
+Maintainer: Sutou Kouhei <kou@clear-code.com>
+Build-Depends:
+  debhelper (>= 9),
+  gnupg,
+  lsb-release
+Standards-Version: 3.9.7
+Homepage: https://cutter.osdn.jp/
+
+Package: cutter-apt-source
+Section: misc
+Architecture: all
+Depends:
+  ${misc:Depends},
+  apt-transport-https,
+  gnupg
+Description: GnuPG archive key and APT source of the Cutter archive
+ Cutter digitally signs its Release files. This package contains the
+ archive key used for that.

@@ -20,9 +20,7 @@ LIBS =						\
 	$(GLIB_LIBS)				\
 	$(top_builddir)/cutter/libcutter.la
 
-xml_la_CPPFLAGS =
 xml_la_SOURCES = cut-xml-stream.c
 
-xml_factory_la_CPPFLAGS =
 xml_factory_la_SOURCES = cut-xml-stream-factory.c
 

@@ -1,0 +1,55 @@
+require_relative "../cutter-osdn-jp-package-task"
+
+class CutterPackageTask < CutterOSDNJpPackageTask
+  def initialize
+    super("cutter", detect_version, detect_release_time)
+  end
+
+  private
+  def detect_version
+    version_env = ENV["VERSION"]
+    return version_env if version_env
+
+    configure_ac = File.join(__dir__,
+                             "..",
+                             "..",
+                             "configure.ac")
+    version = ""
+    File.foreach(configure_ac) do |line|
+      case line
+      when /\Am4_define\(\[cutter_version_major\], \[(\d+)\]\)/
+        version << $1
+      when /\Am4_define\(\[cutter_version_minor\], \[(\d+)\]\)/
+        version << ".#{$1}"
+      when /\Am4_define\(\[cutter_version_micro\], \[(\d+)\]\)/
+        version << ".#{$1}"
+        break
+      end
+    end
+    version
+  end
+
+  def define_archive_task
+    file @archive_name do
+      File.symlink("../../#{@archive_name}",
+                   @archive_name)
+    end
+  end
+
+  def apt_targets_default
+    [
+      "debian-buster",
+      "debian-buster-i386",
+    ]
+  end
+
+  def yum_targets_default
+    [
+      "centos-7",
+      "centos-8",
+    ]
+  end
+end
+
+task = CutterPackageTask.new
+task.define

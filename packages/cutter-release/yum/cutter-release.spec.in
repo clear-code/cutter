@@ -1,0 +1,66 @@
+# -*- sh-shell: rpm -*-
+
+%define _centos_ver %{?centos_ver:%{centos_ver}}%{!?centos_ver:6}
+
+%if %{_centos_ver} >= 8
+  %define disable_repository() (dnf config-manager --disable %1)
+  %define enable_repository() (dnf config-manager --enable %1)
+%else
+  %define disable_repository() (yum-config-manager --disable %1)
+  %define enable_repository() (yum-config-manager --enable %1)
+%endif
+
+Summary: Cutter release files
+Name: cutter-release
+Version: @VERSION@
+Release: 1
+License: CC0-1.0
+URL: https://cutter.osdn.jp/
+Source: %{name}-%{version}.tar.gz
+Group: System Environment/Base
+BuildArchitectures: noarch
+Requires: epel-release
+%if %{_centos_ver} >= 8
+Requires: dnf-command(config-manager)
+%else
+Requires: yum-utils
+%endif
+Obsoletes: cutter-repository < 1.1.0-0
+
+%description
+Cutter release files
+
+%prep
+%setup -c
+
+%build
+
+%install
+cd %{name}-%{version}
+
+mkdir -p %{buildroot}%{_sysconfdir}/pki/rpm-gpg/
+%{__install} -Dp -t %{buildroot}%{_sysconfdir}/pki/rpm-gpg/ -m0644 RPM-GPG-KEY-*
+
+mkdir -p %{buildroot}%{_sysconfdir}/yum.repos.d/
+%{__install} -Dp -t %{buildroot}%{_sysconfdir}/yum.repos.d/ -m0644 *.repo
+
+%clean
+%{__rm} -rf %{buildroot}
+
+%files
+%defattr(-, root, root, 0755)
+%dir %{_sysconfdir}/yum.repos.d/
+%config(noreplace) %{_sysconfdir}/yum.repos.d/*.repo
+%dir %{_sysconfdir}/pki/rpm-gpg/
+%{_sysconfdir}/pki/rpm-gpg/RPM-GPG-KEY-*
+
+%post
+if grep -q 'Amazon Linux release 2' /etc/system-release 2>/dev/null; then
+  %{disable_repository cutter-centos}
+  %{enable_repository cutter-linux}
+else
+  %{disable_repository cutter-amazon-linux}
+  %{enable_repository cutter-centos}
+fi
+
+%changelog

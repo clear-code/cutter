@@ -1,0 +1,25 @@
+packages_red_data_tools_org_repository = ENV["PACKAGES_RED_DATA_TOOLS_ORG_REPOSITORY"]
+if packages_red_data_tools_org_repository.nil?
+  raise "Specify PACKAGES_RED_DATA_TOOLS_ORG_REPOSITORY environment variable"
+end
+require "#{packages_red_data_tools_org_repository}/repository-task"
+
+require_relative "repository-helper"
+
+class CutterRepositoryTask < RepositoryTask
+  include RepositoryHelper
+
+  private
+  def repository_gpg_key_id
+    repository_gpg_key_ids.first
+  end
+
+  def apt_targets
+    [
+      ["debian", "buster", "main"],
+    ]
+  end
+end
+
+repository_task = CutterRepositoryTask.new
+repository_task.define

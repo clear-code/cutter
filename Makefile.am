@@ -18,8 +18,7 @@ SUBDIRS =			\
 	license			\
 	doc			\
 	html			\
-	vcc			\
-	packages
+	vcc
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA =	\
@@ -39,6 +38,8 @@ endif
 EXTRA_DIST =		\
 	autogen.sh	\
 	config.h.in	\
+	gpg_uid_dsa1024 \
+	gpg_uid_rsa4096 \
 	TUTORIAL	\
 	TUTORIAL.ja	\
 	README.ja	\
@@ -90,10 +91,10 @@ release-github: dist
 sign-archives: sign-archive-targz sign-archive-zip
 
 sign-archive-targz: $(PACKAGE)-$(VERSION).tar.gz
-	gpg --local-user $(GPG_UID) --armor --detach-sign $(PACKAGE)-$(VERSION).tar.gz
+	gpg --local-user $(GPG_UID_RSA4096) --armor --detach-sign $(PACKAGE)-$(VERSION).tar.gz
 
 sign-archive-zip: $(PACKAGE)-$(VERSION).zip
-	gpg --local-user $(GPG_UID) --armor --detach-sign $(PACKAGE)-$(VERSION).zip
+	gpg --local-user $(GPG_UID_RSA4096) --armor --detach-sign $(PACKAGE)-$(VERSION).zip
 
 upload-doc:
 	cd html && $(MAKE) upload

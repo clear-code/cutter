@@ -1,0 +1,81 @@
+require_relative "../cutter-osdn-jp-package-task"
+
+class CutterAptSourcePackageTask < CutterOSDNJpPackageTask
+  def initialize
+    super("cutter-apt-source",
+          repository_version,
+          latest_commit_time(File.join(__dir__, "..", "..")))
+  end
+
+  def define
+    super
+    define_apt_latest_task
+  end
+
+  private
+  def define_archive_task
+    file @archive_name do
+      rm_rf(@archive_base_name)
+      mkdir(@archive_base_name)
+      repository_gpg_key_ids.each do |gpg_key_id|
+        unless system("gpg", "--list-keys", gpg_key_id, out: IO::NULL)
+          sh("gpg",
+             "--keyserver", "keyserver.ubuntu.com",
+             "--recv-key", gpg_key_id)
+        end
+      end
+      sh("gpg", "--armor", "--export", *repository_gpg_key_ids,
+         out: "#{@archive_base_name}/keys")
+      sh("tar", "czf", @archive_name, @archive_base_name)
+      rm_rf(@archive_base_name)
+    end
+  end
+
+  def apt_targets_default
+    [
+      "debian-buster",
+    ]
+  end
+
+  def define_apt_latest_task
+    namespace :apt do
+      apt_targets.each do |target|
+        distribution, code_name = target.split("-", 2)
+        component = "main"
+        deb = [
+          apt_dir,
+          "repositories",
+          distribution,
+          "pool",
+          code_name,
+          component,
+          @package[0],
+          @package,
+          "#{@package}_#{@version}-#{@deb_release}_all.deb",
+        ].join("/")
+        latest_deb = [
+          apt_dir,
+          "repositories",
+          distribution,
+          "#{@package}-latest-#{code_name}.deb",
+        ].join("/")
+        file latest_deb => deb do
+          cp(deb, latest_deb)
+        end
+        task :latest => latest_deb
+      end
+      task :release => :latest
+    end
+  end
+
+  def enable_ubuntu?
+    false
+  end
+
+  def enable_yum?
+    false
+  end
+end
+
+task = CutterAptSourcePackageTask.new
+task.define

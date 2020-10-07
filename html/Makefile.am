@@ -56,7 +56,7 @@ SUFFIXES = .svg .png
 	inkscape --export-png $@ $<
 
 mini-install.png: install.png
-	convert install.png -resize 12x12 mini-install.png
+	convert $(srcdir)/install.png -resize 12x12 mini-install.png
 
 mini-heading-mark.png: heading-mark.png
-	convert heading-mark.png -resize 19x19 mini-heading-mark.png
+	convert $(srcdir)/heading-mark.png -resize 19x19 mini-heading-mark.png
