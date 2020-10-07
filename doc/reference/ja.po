@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Cutter 1.1.7\n"
 "POT-Creation-Date: 2017-10-04 23:21+0900\n"
-"PO-Revision-Date: 2017-09-29 18:22+0900\n"
+"PO-Revision-Date: 2020-10-07 16:18+0900\n"
 "Last-Translator: Kouhei Sutou <kou@clear-code.com>\n"
 "Language-Team: Japanese\n"
 "Language: \n"
@@ -20397,15 +20397,11 @@ msgid ""
 msgstr ""
 
 #: xml/cut-assertions.xml:2672(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>pattern</parameter> matches <parameter>string</"
 "parameter> . See <link linkend=\"cut-assert-match"
 "\"><function>cut_assert_match()</function></link> for detail."
-msgstr ""
-"<parameter>pattern</parameter>が<parameter>string</parameter>にマッチしたとき"
-"パスします。詳細は<link linkend=\\\"cut-assert-match\\"
-"\"><function>cut_assert_match()</function></link>を見てください。"
+msgstr "<parameter>pattern</parameter>が<parameter>string</parameter>にマッチしたときパスします。詳細は<link linkend=\"cut-assert-match\"><function>cut_assert_match()</function></link>を見てください。"
 
 #: xml/cut-assertions.xml:2685(para)
 msgid "the regular expression as string."
@@ -20416,9 +20412,8 @@ msgid "the string to be matched that is freed."
 msgstr "マッチされる文字列。（チェック後に開放される）"
 
 #: xml/cut-assertions.xml:2696(title)
-#, fuzzy
 msgid "cut_assert_equal_pointer ()"
-msgstr "cut_assert_match_with_free ()"
+msgstr ""
 
 #: xml/cut-assertions.xml:2698(programlisting)
 #, no-wrap
@@ -20451,7 +20446,6 @@ msgid ""
 msgstr ""
 
 #: xml/cut-assertions.xml:2731(para)
-#, fuzzy
 msgid ""
 "Passes if <parameter>expected</parameter> == "
 "cut_get_fixture_data_string(<parameter>path</parameter> , ...)."

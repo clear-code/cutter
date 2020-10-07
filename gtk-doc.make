@@ -221,10 +221,10 @@ html-build.stamp: sgml.stamp $(DOC_MAIN_SGML_FILE) $(content_files) $(expand_con
 	  rm -rf $$lang;						\
 	  mkdir -p $$lang/html;						\
 	  mkdir -p $$lang/xml;						\
-	  xml2pot -k -p $(srcdir)/$$catalog -l $$lang			\
-	    $(DOC_MAIN_SGML_FILE) > $$lang/$(DOC_MAIN_SGML_FILE);	\
+	  po2xml $(DOC_MAIN_SGML_FILE) $(srcdir)/$$catalog		\
+	     > $$lang/$(DOC_MAIN_SGML_FILE);				\
 	  for xml in $(builddir)/xml/*.xml; do				\
-	    xml2pot -k -p $(srcdir)/$$catalog -l $$lang $$xml >		\
+	    po2xml $$xml $(srcdir)/$$catalog >				\
 	      $$lang/xml/`basename $$xml`;				\
 	  done;								\
 	  for file in $(content_files); do				\
