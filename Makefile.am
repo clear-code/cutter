@@ -54,12 +54,13 @@ upload: upload-doc
 
 release: dist dist-zip release-official release-debian
 
+OSDN_CREDENTIAL_FILE = $${HOME}/.config/osdn/credential.yml
 release-official: $(PACKAGE)-$(VERSION).tar.gz.asc $(PACKAGE)-$(VERSION).zip.asc
-	cd $(srcdir)/misc && ./release-to-osdn.rb				\
+	$(srcdir)/misc/release-to-osdn.rb \
 	  --credential=$(OSDN_CREDENTIAL_FILE) \
 	  --project=$(PACKAGE) \
 	  --new-version=$(VERSION) \
-	  --news-file=NEWS \
+	  --news-file=$(srcdir)/NEWS \
 	  --package=$(PACKAGE) \
 	  --asset-file=$(PACKAGE)-$(VERSION).tar.gz \
 	  --asset-file=$(PACKAGE)-$(VERSION).tar.gz.asc \
