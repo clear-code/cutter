@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2009-2015  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2009-2020  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -139,15 +139,8 @@ test_inspect (void)
                                "bits-per-sample=<8>, "
                                "width=<100>, "
                                "height=<100>, "
-                               "rowstride=<400>, "
-                               "pixels=<((gpointer) %p)>"
-#ifdef HAVE_PIXEL_BYTES
-                               ", "
-                               "pixel-bytes=<NULL>"
-#endif
-                               ">",
-                               pixbuf1,
-                               gdk_pixbuf_get_pixels(pixbuf1));
+                               "rowstride=<400>>",
+                               pixbuf1);
     cut_assert_equal_string_with_free(expected,
                                       gcut_object_inspect(G_OBJECT(pixbuf1)));
 
@@ -159,15 +152,8 @@ test_inspect (void)
                                "bits-per-sample=<8>, "
                                "width=<50>, "
                                "height=<50>, "
-                               "rowstride=<152>, "
-                               "pixels=<((gpointer) %p)>"
-#ifdef HAVE_PIXEL_BYTES
-                               ", "
-                               "pixel-bytes=<NULL>"
-#endif
-                               ">",
-                               pixbuf2,
-                               gdk_pixbuf_get_pixels(pixbuf2));
+                               "rowstride=<152>>",
+                               pixbuf2);
     cut_assert_equal_string_with_free(expected,
                                       gcut_object_inspect(G_OBJECT(pixbuf2)));
 }

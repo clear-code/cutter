@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2008-2020  Sutou Kouhei <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -48,7 +48,9 @@ static void
 inspect_object (GString *string, gconstpointer const_object, gpointer data)
 {
     GObject *object = (GObject *)const_object;
-    guint i, n_properties = 0;
+    guint i;
+    guint n_used_properties = 0;
+    guint n_properties = 0;
     GParamSpec **param_specs = NULL;
 
     g_string_append_printf(string, "#<%s:%p",
@@ -61,7 +63,15 @@ inspect_object (GString *string, gconstpointer const_object, gpointer data)
         GValue value = {0,};
         gchar *value_string;
 
-        if (i > 0)
+        /* TODO: Implement more generic mechanism. */
+        if (strcmp(G_OBJECT_TYPE_NAME(object), "GdkPixbuf") == 0 &&
+            /* They are difficult to assert and meaningless properties. */
+            (strcmp(spec->name, "pixels") == 0 ||
+             strcmp(spec->name, "pixel-bytes") == 0)) {
+            continue;
+        }
+
+        if (n_used_properties > 0)
             g_string_append(string, ",");
 
         g_value_init(&value, spec->value_type);
@@ -81,6 +91,7 @@ inspect_object (GString *string, gconstpointer const_object, gpointer data)
         g_string_append_printf(string, " %s=<%s>", spec->name, value_string);
         g_free(value_string);
         g_value_unset(&value);
+        n_used_properties++;
     }
     g_free(param_specs);
     g_string_append(string, ">");
