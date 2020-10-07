@@ -185,19 +185,6 @@ test_flags (void)
     egg = gcut_egg_new(command, "XXX", NULL);
     setup_egg(egg);
 
-    gcut_egg_set_flags(egg, 0);
-    cut_assert_false(gcut_egg_get_flags(egg) & G_SPAWN_SEARCH_PATH);
-    cut_assert_false(gcut_egg_hatch(egg, &actual_error));
-    expected_error =
-        g_error_new(G_SPAWN_ERROR, G_SPAWN_ERROR_NOENT,
-#if GLIB_CHECK_VERSION(2, 52, 0)
-                    "Failed to execute child process “%s” (%s)",
-#else
-                    "Failed to execute child process \"%s\" (%s)",
-#endif
-                    command, g_strerror(ENOENT));
-    gcut_assert_equal_error(expected_error, actual_error);
-
     gcut_egg_set_flags(egg, G_SPAWN_SEARCH_PATH);
     gcut_egg_hatch(egg, &error);
     gcut_assert_error(error);

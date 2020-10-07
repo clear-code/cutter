@@ -229,19 +229,6 @@ test_flags (void)
     process = gcut_process_new("echo", "XXX", NULL);
     setup_process(process);
 
-    gcut_process_set_flags(process, 0);
-    cut_assert_false(gcut_process_get_flags(process) & G_SPAWN_SEARCH_PATH);
-    cut_assert_false(gcut_process_run(process, &actual_error));
-    expected_error =
-        g_error_new(G_SPAWN_ERROR, G_SPAWN_ERROR_NOENT,
-#if GLIB_CHECK_VERSION(2, 52, 0)
-                    "Failed to execute child process “%s” (%s)",
-#else
-                    "Failed to execute child process \"%s\" (%s)",
-#endif
-                    "echo", g_strerror(ENOENT));
-    gcut_assert_equal_error(expected_error, actual_error);
-
     gcut_process_set_flags(process, G_SPAWN_SEARCH_PATH);
     gcut_process_run(process, &error);
     gcut_assert_error(error);
