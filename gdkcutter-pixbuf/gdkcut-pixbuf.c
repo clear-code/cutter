@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2008-2011  Kouhei Sutou <kou@clear-code.com>
+ *  Copyright (C) 2008-2020  Sutou Kouhei <kou@clear-code.com>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -18,6 +18,11 @@
  */
 
 #include "gdkcut-pixbuf.h"
+
+#if !(GDK_PIXBUF_MAJOR > 2 ||                                   \
+      (GDK_PIXBUF_MAJOR == 2 && GDK_PIXBUF_MINOR >= 31))
+#  define gdk_pixbuf_read_pixels gdk_pixbuf_get_pixels
+#endif
 
 gboolean
 gdkcut_pixbuf_equal_property (const GdkPixbuf *pixbuf1, const GdkPixbuf *pixbuf2)
@@ -67,7 +72,7 @@ equal_channel (guchar channel1, guchar channel2, guint threshold)
 }
 
 static gboolean
-pixels_equal (const guchar *pixels1, const guchar *pixels2,
+pixels_equal (const guint8 *pixels1, const guint8 *pixels2,
               guint threshold, gint n_channels, gboolean has_alpha,
               gint bits_per_sample, gint width, gint height, gint row_stride)
 {
@@ -106,8 +111,8 @@ gdkcut_pixbuf_equal_content (const GdkPixbuf *pixbuf1,
     if (!gdkcut_pixbuf_equal_property(pixbuf1, pixbuf2))
         return FALSE;
 
-    return pixels_equal(gdk_pixbuf_get_pixels(pixbuf1),
-                        gdk_pixbuf_get_pixels(pixbuf2),
+    return pixels_equal(gdk_pixbuf_read_pixels(pixbuf1),
+                        gdk_pixbuf_read_pixels(pixbuf2),
                         threshold,
                         gdk_pixbuf_get_n_channels(pixbuf1),
                         gdk_pixbuf_get_has_alpha(pixbuf1),
@@ -173,7 +178,8 @@ static void
 draw_pixbuf (GdkPixbuf *diff, const GdkPixbuf *source,
              gint x_offset, gint y_offset)
 {
-    guchar *pixels, *source_pixels;
+    guchar *pixels;
+    const guint8 *source_pixels;
     gint n_channels, row_stride;
     gint source_n_channels, source_row_stride, source_width, source_height;
     gint x, y, channel;
@@ -186,15 +192,17 @@ draw_pixbuf (GdkPixbuf *diff, const GdkPixbuf *source,
     source_row_stride = gdk_pixbuf_get_rowstride(source);
     source_width = gdk_pixbuf_get_width(source);
     source_height = gdk_pixbuf_get_height(source);
-    source_pixels = gdk_pixbuf_get_pixels(source);
+    source_pixels = gdk_pixbuf_read_pixels(source);
 
     for (y = 0; y < source_height; y++) {
-        guchar *row, *source_row;
+        guchar *row;
+        const guint8 *source_row;
 
         row = pixels + (y + y_offset) * row_stride;
         source_row = source_pixels + y * source_row_stride;
         for (x = 0; x < source_width; x++) {
-            guchar *target_pixel, *source_target_pixel;
+            guchar *target_pixel;
+            const guint8 *source_target_pixel;
 
             target_pixel = row + (x + x_offset) * n_channels;
             source_target_pixel = source_row + x * source_n_channels;
@@ -213,7 +221,8 @@ draw_diff_highlight (GdkPixbuf *diff,
                      const GdkPixbuf *pixbuf1, const GdkPixbuf *pixbuf2,
                      guint threshold, gint x_offset, gint y_offset)
 {
-    guchar *pixels, *target_pixels1, *target_pixels2;
+    guchar *pixels;
+    const guint8 *target_pixels1, *target_pixels2;
     guchar same_pixel[4], different_pixel[4];
     gint n_channels, row_stride;
     gint target_n_channels, target_row_stride, target_width, target_height;
@@ -227,8 +236,8 @@ draw_diff_highlight (GdkPixbuf *diff,
     target_row_stride = gdk_pixbuf_get_rowstride(pixbuf1);
     target_width = gdk_pixbuf_get_width(pixbuf1);
     target_height = gdk_pixbuf_get_height(pixbuf1);
-    target_pixels1 = gdk_pixbuf_get_pixels(pixbuf1);
-    target_pixels2 = gdk_pixbuf_get_pixels(pixbuf2);
+    target_pixels1 = gdk_pixbuf_read_pixels(pixbuf1);
+    target_pixels2 = gdk_pixbuf_read_pixels(pixbuf2);
 
     same_pixel[0] = 0x00;
     same_pixel[1] = 0x00;
@@ -241,7 +250,8 @@ draw_diff_highlight (GdkPixbuf *diff,
     different_pixel[3] = 0xff;
 
     for (y = 0; y < target_height; y++) {
-        guchar *row, *target_row1, *target_row2;
+        guchar *row;
+        const guint8 *target_row1, *target_row2;
 
         row = pixels + (y + y_offset) * row_stride;
         target_row1 = target_pixels1 + y * target_row_stride;
@@ -249,13 +259,14 @@ draw_diff_highlight (GdkPixbuf *diff,
         for (x = 0; x < target_width; x++) {
             gboolean different = FALSE;
             guchar *result_pixel;
-            guchar *pixel, *target_pixel1, *target_pixel2;
+            guchar *pixel;
+            const guint8 *target_pixel1, *target_pixel2;
 
             pixel = row + (x + x_offset) * n_channels;
             target_pixel1 = target_row1 + x * target_n_channels;
             target_pixel2 = target_row2 + x * target_n_channels;
             for (channel = 0; channel < target_n_channels; channel++) {
-                guchar value1, value2;
+                guint8 value1, value2;
 
                 value1 = target_pixel1[channel];
                 value2 = target_pixel2[channel];
@@ -282,7 +293,8 @@ draw_diff_emphasis (GdkPixbuf *diff,
                     const GdkPixbuf *pixbuf1, const GdkPixbuf *pixbuf2,
                     guint threshold, gint x_offset, gint y_offset)
 {
-    guchar *pixels, *target_pixels1, *target_pixels2;
+    guchar *pixels;
+    const guint8 *target_pixels1, *target_pixels2;
     gint n_channels, row_stride;
     gint target_n_channels, target_row_stride, target_width, target_height;
     gint x, y, channel;
@@ -295,11 +307,12 @@ draw_diff_emphasis (GdkPixbuf *diff,
     target_row_stride = gdk_pixbuf_get_rowstride(pixbuf1);
     target_width = gdk_pixbuf_get_width(pixbuf1);
     target_height = gdk_pixbuf_get_height(pixbuf1);
-    target_pixels1 = gdk_pixbuf_get_pixels(pixbuf1);
-    target_pixels2 = gdk_pixbuf_get_pixels(pixbuf2);
+    target_pixels1 = gdk_pixbuf_read_pixels(pixbuf1);
+    target_pixels2 = gdk_pixbuf_read_pixels(pixbuf2);
 
     for (y = 0; y < target_height; y++) {
-        guchar *row, *target_row1, *target_row2;
+        guchar *row;
+        const guint8 *target_row1, *target_row2;
 
         row = pixels + (y + y_offset) * row_stride;
         target_row1 = target_pixels1 + y * target_row_stride;
@@ -307,13 +320,14 @@ draw_diff_emphasis (GdkPixbuf *diff,
         for (x = 0; x < target_width; x++) {
             gboolean different = FALSE;
             guchar result_pixel[4];
-            guchar *pixel, *target_pixel1, *target_pixel2;
+            guchar *pixel;
+            const guint8 *target_pixel1, *target_pixel2;
 
             pixel = row + (x + x_offset) * n_channels;
             target_pixel1 = target_row1 + x * target_n_channels;
             target_pixel2 = target_row2 + x * target_n_channels;
             for (channel = 0; channel < target_n_channels; channel++) {
-                guchar value1, value2;
+                guint8 value1, value2;
 
                 value1 = target_pixel1[channel];
                 value2 = target_pixel2[channel];
