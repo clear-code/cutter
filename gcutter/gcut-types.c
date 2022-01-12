@@ -29,12 +29,16 @@
 GType
 gcut_error_get_type (void)
 {
+#if GLIB_CHECK_VERSION(2, 26, 0)
+    return G_TYPE_ERROR();
+#else
     static GType type_id = 0;
     if (!type_id)
         type_id = g_boxed_type_register_static(g_intern_static_string("GError"),
                                                (GBoxedCopyFunc)g_error_copy,
                                                (GBoxedFreeFunc)g_error_free);
     return type_id;
+#endif
 }
 
 static void
