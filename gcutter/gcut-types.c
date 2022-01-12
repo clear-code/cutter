@@ -30,7 +30,7 @@ GType
 gcut_error_get_type (void)
 {
 #if GLIB_CHECK_VERSION(2, 26, 0)
-    return G_TYPE_ERROR();
+    return G_TYPE_ERROR;
 #else
     static GType type_id = 0;
     if (!type_id)
