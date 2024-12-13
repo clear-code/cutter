@@ -3,7 +3,12 @@ if groonga_repository.nil?
   raise "Specify GROONGA_REPOSITORY environment variable"
 end
 require "#{groonga_repository}/packages/launchpad-helper"
-require "#{groonga_repository}/vendor/apache-arrow-source/dev/tasks/linux-packages/package-task"
+
+apache_arrow_repository = ENV["APACHE_ARROW_REPOSITORY"]
+if apache_arrow_repository.nil?
+  raise "Specify APACHE_ARROW_REPOSITORY environment variable"
+end
+require "#{apache_arrow_repository}/dev/tasks/linux-packages/package-task"
 
 require_relative "repository-helper"
 
