@@ -127,35 +127,36 @@ module RD
       require "rt/rtparser"
 
       rt = RT::RTParser.parse(content)
-      elements = [tag("caption", {}, apply_to_String(rt.config["caption"]))]
+      elements = []
+      elements << tag("caption", {}, *apply_to_String(rt.config["caption"]))
 
       header_rows = []
       rt.header.each do |row|
         header_cells = []
         row.each do |cell|
           if cell.class == RT::RTCell
-            header_cells << [tag("th", {}, apply_to_String(cell.value))]
+            header_cells << tag("th", {}, *apply_to_String(cell.value))
           end
         end
-        header_rows << [tag("tr", {}, header_cells)]
+        header_rows << tag("tr", {}, *header_cells)
       end
-      elements << [tag("thead", {}, header_rows)]
+      elements << tag("thead", {}, *header_rows)
 
       rows = []
       rt.body.each do |row|
         cells = []
         row.each do |cell|
           if cell.class == RT::RTCell
-            cells << [tag("td", {}, apply_to_String(cell.value))]
+            cells << tag("td", {}, *apply_to_String(cell.value))
           end
         end
-        rows << [tag("tr", {}, cells)]
+        rows << tag("tr", {}, *cells)
       end
-      elements << [tag("tbody", {}, rows)]
+      elements << tag("tbody", {}, *rows)
 
       attributes = {}
       attributes["id"] = rt.config["id"] if rt.config["id"]
-      tag("table", attributes, elements)
+      tag("table", attributes, *elements)
     end
 
     def apply_to_Reference_with_RDLabel(element, contents)
@@ -336,11 +337,13 @@ module RD
         encoded_attributes = " #{encoded_attributes}"
       end
 
-      if contents.size == 1 and contents[0] !~ /</
+      if contents.size == 1 and /</ !~ contents[0]
         indented_contents = contents[0]
       else
         indented_contents = contents.collect do |content|
-          "  #{content}"
+          content.each_line.collect do |line|
+            "  #{line}"
+          end.join
         end.join("\n")
         indented_contents = "\n#{indented_contents}\n"
       end
