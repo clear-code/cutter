@@ -180,15 +180,13 @@ module RD
         url = url.sub(/svg\z/, "png")
         return tag("inlinemediaobject",
                    {},
-                   [
-                    tag("imageobject", {},
-                        tag("imagedata",
+                   tag("imageobject", {},
+                       *tag("imagedata",
                             {
                               :fileref => url.sub(/svg\z/, "png"),
                               :format => "PNG"
-                            })),
-                    tag("textobject", {}, tag("phrase", {}, label)),
-                   ])
+                            })) +
+                   tag("textobject", {}, *tag("phrase", {}, label)))
       else
         case url
         when /#/
