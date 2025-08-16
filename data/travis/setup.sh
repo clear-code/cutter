@@ -2,14 +2,13 @@
 
 set -e
 
-if [ "$CUTTER_MASTER" = "yes" ]; then
+if [ "$CUTTER_MASTER" = "yes" ] || [ "$CUTTER_MAIN" = "yes" ] ; then
     sudo apt update -qq
     sudo apt install -qq -y \
          autotools-dev \
          intltool \
-         libgtk2.0-dev \
          libsoup2.4-dev
-    git clone --depth 1 --branch master https://github.com/clear-code/cutter.git
+    git clone --depth 1 https://github.com/clear-code/cutter.git
     cd cutter
     ./autogen.sh
     ./configure --prefix=/usr --localstatedir=/var --enable-debug
