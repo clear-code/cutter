@@ -1,6 +1,6 @@
 /* -*- Mode: C; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
- *  Copyright (C) 2007  Kouhei Sutou <kou@cozmixng.org>
+ *  Copyright (C) 2007-2025  Sutou Kouhei <kou@cozmixng.org>
  *
  *  This library is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Lesser General Public License as published by
@@ -90,7 +90,7 @@ constructor (GType type, guint n_props, GObjectConstructParam *props)
         object = klass->constructor(type, n_props, props);
         the_builder = CUT_REPORT_FACTORY_BUILDER(object);
     } else {
-        object = g_object_ref(the_builder);
+        object = g_object_ref(G_OBJECT(the_builder));
     }
 
     return object;
