@@ -1,0 +1,116 @@
+# Copyright (C) 2025  Sutou Kouhei <kou@clear-code.com>
+#
+# This library is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+name: Release
+on:
+  push:
+    paths:
+      - '.github/workflows/release.yaml'
+      - 'NEWS.md'
+    branches:
+      - "*"
+    tags:
+      - "*"
+  pull_request:
+    paths:
+      - '.github/workflows/release.yaml'
+      - 'NEWS.md'
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    environment: release
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/cache
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y -V \
+            ccache \
+            g++ \
+            gtk-doc-tools \
+            imagemagick \
+            inkscape \
+            intltool \
+            libglib2.0-dev \
+            libsoup2.4-dev \
+            libtool \
+            make \
+            rdtool \
+            ruby-fast-gettext
+      - uses: actions/cache@v4
+        with:
+          path: cache
+          key: release-${{ hashFiles('*cutter/**') }}
+          restore-keys: release-
+      - name: Prepare
+        run: |
+          version_major=$(grep -F '[cutter_version_major]' configure.ac | grep -o '[0-9]*' | tail -n1)
+          version_minor=$(grep -F '[cutter_version_minor]' configure.ac | grep -o '[0-9]*' | tail -n1)
+          version_micro=$(grep -F '[cutter_version_micro]' configure.ac | grep -o '[0-9]*' | tail -n1)
+          echo "VERSION=${version_major}.${version_minor}.${version_micro}" >> "${GITHUB_ENV}"
+      - name: Autogen
+        run: |
+          ./autogen.sh
+      - name: Configure
+        run: |
+          ./configure PATH=/usr/lib/ccache:$PATH
+      - name: Build source archive
+        run: |
+          make -j$(nproc)
+          make dist
+          sha256sum cutter-${VERSION}.tar.gz > cutter-${VERSION}.tar.gz.sha256
+      - name: Generate release note
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -o pipefail
+
+          ruby \
+            -e 'print("## Cutter "); \
+                puts(ARGF.read.split(/^## /)[1]. \
+                       gsub(/\[(.+?)\]\[.+?\]/) {$1})' \
+            NEWS.md | tee release-note.md
+
+          previous_tag=$(gh release list \
+                           --jq '.[].tagName' \
+                           --json tagName \
+                           --limit 1)
+
+          echo | tee -a release-note.md
+          echo "### Contributors" | tee -a release-note.md
+          echo | tee -a release-note.md
+          command_line="git shortlog -sn ${previous_tag}.."
+          echo '```console' | tee -a release-note.md
+          echo "\$ ${command_line}" | tee -a release-note.md
+          ${command_line} | tee -a release-note.md
+          echo '```' | tee -a release-note.md
+      - name: Publish release page
+        if: |
+          github.ref_type == 'tag'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="$(head -n1 release-note.md | sed -e 's/^## //')"
+          tail -n +2 release-note.md > release-note-without-version.md
+          gh release create "${GITHUB_REF_NAME}" \
+            --discussion-category Announcements \
+            --notes-file release-note-without-version.md \
+            --title "${title}" \
+            cutter-${VERSION}.tar.gz*
