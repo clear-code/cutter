@@ -97,4 +97,4 @@ RD2MAN = $(RUBY) -Eutf-8 -I $(RD2LIB_DIR) $(RD2) -r $(RD2MAN_LIB_FILE)
 	$(RD2MAN) $<.ja > $@
 
 .svg.png:
-	inkscape --export-png $@ $<
+	inkscape --export-filename $@ $<
